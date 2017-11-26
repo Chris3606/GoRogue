@@ -19,7 +19,7 @@ Significant portions of code in the GoRogue.Random namespace, as well as some im
 ### Doryen Library (libtcod)
 This classic roguelike toolkit library was a significant general inspiration for GoRogue.
 - [Libtcod](https://bitbucket.org/libtcod/libtcod)
-- [Libtcod](https://bitbucket.org/libtcod/libtcod/src/default/LIBTCOD-LICENSE.txt?at=default)
+- [Libtcod License](https://bitbucket.org/libtcod/libtcod/src/default/LIBTCOD-LICENSE.txt?at=default)
 ### SquidLib
 This Java roguelike library is another big inspiration for much of the functionality of GoRogue.  A similar RIPPLE algorithm is used in SenseMap/LOS. As well, inspiration for the way Coord and SpatialMap function is taken from SquidLib's implementations.  No source code from SquidLib is directly used, and no project in GoRogue depends on SquidLib or uses SquidLib binaries.
 - [SquidLib](https://github.com/SquidPony/SquidLib)
