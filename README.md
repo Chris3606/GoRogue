@@ -1,5 +1,11 @@
 # GoRogue
-New roguelike library in C#.  Code coming soon!
+Welcome to the homepage for GoRogue, the roguelike/2D game utility library!  This library offers a number of features that may be useful in roguelike development, including features such as FOV, lighting, map generation utilities, and much more!  See feature list below.
+
+## Roadmap
+This library is still in development - there are a number of important features on the horizon! These include:
+- Pathfinding (Coming Soon)
+  - At least AStar pathing, as well as Dijkstra maps (commonly known as Goal Maps) will be provided soon!
+- Statistics Library
 
 ## Licensing
 ### GoRogue
