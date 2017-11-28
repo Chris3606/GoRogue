@@ -1,4 +1,4 @@
-Many elements from the DiceNotation namespace are taken directly from the Dice Notation .NET library located (here)[https://dicenotation.codeplex.com/SourceControl/latest], and the C# roguelike library RogueSharp's implementation located (here)[https://bitbucket.org/FaronBracy/roguesharp].  Both of these projects are MIT licensed; their licenses can be viewed via links in the Credits section of the main repository.  Their licenses are also copied below:
+Many elements from the DiceNotation namespace are taken directly from the Dice Notation .NET library located [here](https://dicenotation.codeplex.com/SourceControl/latest), and the C# roguelike library RogueSharp's implementation located [here](https://bitbucket.org/FaronBracy/roguesharp).  Both of these projects are MIT licensed; their licenses can be viewed via links in the Credits section of the main repository.  Their licenses are also copied below:
 
 ### Dice Notation .NET
 The MIT License (MIT) Copyright (c) 2011 Chris Wagner
