@@ -1,7 +1,7 @@
 var searchData=
 [
   ['makeunion',['MakeUnion',['../class_go_rogue_1_1_disjoint_set.html#af0289bbcf9b0acad251172b13340db9b',1,'GoRogue::DisjointSet']]],
-  ['manhattan',['MANHATTAN',['../class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0',1,'GoRogue::Distance']]],
+  ['manhattan',['MANHATTAN',['../class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0',1,'GoRogue.Distance.MANHATTAN()'],['../namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506a20548c3a17d5b27db0c2995b6646a792',1,'GoRogue.MANHATTAN()']]],
   ['maparea',['MapArea',['../class_go_rogue_1_1_map_generation_1_1_map_area.html#a9928b04d1b95a31b87f60bc40e22de9c',1,'GoRogue::MapGeneration::MapArea']]],
   ['maparea',['MapArea',['../class_go_rogue_1_1_map_generation_1_1_map_area.html',1,'GoRogue::MapGeneration']]],
   ['mapareafinder',['MapAreaFinder',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html',1,'GoRogue::MapGeneration']]],

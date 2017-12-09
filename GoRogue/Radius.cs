@@ -1,11 +1,37 @@
 ﻿namespace GoRogue
 {
     /// <summary>
-    /// Enum representing types.  Useful for easy mapping of primitive types to radius types (for cases like a switch statement).
+    /// Enum representing types.  Useful for easy mapping of radius types to a primitive type (for cases like a switch statement).
     /// </summary>
-    public enum RadiusType { SQUARE, DIAMOND, CIRCLE, CUBE, OCTAHEDRON, SPHERE };
+    public enum RadiusType
+    {
+        /// <summary>
+        /// Type for Radius.SQUARE.
+        /// </summary>
+        SQUARE,
+        /// <summary>
+        /// Type for Radius.DIAMOND.
+        /// </summary>
+        DIAMOND,
+        /// <summary>
+        /// Type for Radius.CIRCLE.
+        /// </summary>
+        CIRCLE,
+        /// <summary>
+        /// Type for Radius.CUBE.
+        /// </summary>
+        CUBE,
+        /// <summary>
+        /// Type for Radius.OCTAHEDRON.
+        /// </summary>
+        OCTAHEDRON,
+        /// <summary>
+        /// Type for Radius.SPHERE.
+        /// </summary>
+        SPHERE
+    };
 
-    // TODO: A crapton more utility stuff to add here.  Probably Get around to it closer to LOS/area of effect libs.
+    // TODO: Potentially a crapton more utility stuff to add here.  Probably Get around to it closer to LOS/area of effect libs.
     /// <summary>
     /// Class representing different radius types.  Similar in architecture to Coord in architecture -- it cannot be instantiated. Instead it simply has pre-allocated static variables
     /// for each type of radius, that should be used whenever a variable of type Radius is required.

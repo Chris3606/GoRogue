@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['up',['UP',['../class_go_rogue_1_1_direction.html#a86c2b981e6a3a6f2d13a190b4beec0cc',1,'GoRogue::Direction']]],
-  ['up_5fleft',['UP_LEFT',['../class_go_rogue_1_1_direction.html#a7d3baec7ccdc55b03a4746c5b395ca96',1,'GoRogue::Direction']]],
-  ['up_5fright',['UP_RIGHT',['../class_go_rogue_1_1_direction.html#a39961cc3ef5068d4e390853e3432064b',1,'GoRogue::Direction']]]
+  ['termtype',['TermType',['../class_go_rogue_1_1_dice_notation_1_1_term_result.html#a0fefa97f242f0079c4ab368ab30d0dd7',1,'GoRogue::DiceNotation::TermResult']]],
+  ['this_5bcoord_20pos_5d',['this[Coord pos]',['../class_go_rogue_1_1_array_map_of.html#a149df866b32ddcddde58901b51359eda',1,'GoRogue.ArrayMapOf.this[Coord pos]()'],['../interface_go_rogue_1_1_i_map_of.html#abe3d1a5641eee30d95f8c4e44e6cecc7',1,'GoRogue.IMapOf.this[Coord pos]()'],['../interface_go_rogue_1_1_i_settable_map_of.html#a69de0714fcc16c501215ab10db73eb54',1,'GoRogue.ISettableMapOf.this[Coord pos]()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#abd68c6d8bf8ee664c7d05ebdf74513fe',1,'GoRogue.SenseMapping.SenseMap.this[Coord pos]()']]],
+  ['this_5bcoord_20position_5d',['this[Coord position]',['../class_go_rogue_1_1_l_o_s.html#afd7a578e0a806e9ebae88bbde020cbb3',1,'GoRogue::LOS']]],
+  ['this_5bint_20x_2c_20int_20y_5d',['this[int x, int y]',['../class_go_rogue_1_1_array_map_of.html#abdf3fc0218315ae972c96ac3a6ee36b0',1,'GoRogue.ArrayMapOf.this[int x, int y]()'],['../interface_go_rogue_1_1_i_map_of.html#a473b9083438fa8c7e4969fad8d7be2d2',1,'GoRogue.IMapOf.this[int x, int y]()'],['../interface_go_rogue_1_1_i_settable_map_of.html#a41a05fd12c6c4da8006329ea8cd0468a',1,'GoRogue.ISettableMapOf.this[int x, int y]()'],['../class_go_rogue_1_1_l_o_s.html#a4a972be3a79c7b910c6492635f24ba94',1,'GoRogue.LOS.this[int x, int y]()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1aae889fdb2f5b98e44332d6ef30e7be',1,'GoRogue.SenseMapping.SenseMap.this[int x, int y]()']]],
+  ['type',['Type',['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#aea1cade51595618bc8874d3fc22d58b9',1,'GoRogue::SenseMapping::SenseSource']]]
 ];

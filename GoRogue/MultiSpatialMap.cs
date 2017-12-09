@@ -25,7 +25,13 @@ namespace GoRogue
         private Dictionary<uint, SpatialTuple<T>> itemMapping;
         private Dictionary<Coord, List<SpatialTuple<T>>> positionMapping;
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Count.
+        /// </summary>
         public int Count { get => itemMapping.Count; }
+        /// <summary>
+        /// See IReadOnlySpatialMap.Items.
+        /// </summary>
         public IEnumerable<T> Items
         {
             get
@@ -34,7 +40,9 @@ namespace GoRogue
                     yield return item.Item;
             }
         }
-
+        /// <summary>
+        /// See IReadOnlySpatialMap.Positions.
+        /// </summary>
         public IEnumerable<Coord> Positions
         {
             get
@@ -44,8 +52,17 @@ namespace GoRogue
             }
         }
 
+        /// <summary>
+        /// See ISpatialMap.ItemAdded.
+        /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemAdded;
+        /// <summary>
+        /// See ISpatialMap.ItemRemoved.
+        /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemRemoved;
+        /// <summary>
+        /// See ISpatialMap.ItemMoved.
+        /// </summary>
         public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
         /// <summary>
@@ -186,8 +203,17 @@ namespace GoRogue
             }
         }
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
         public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+        /// <summary>
+        /// See IReadOnlySpatialMap.GetPosition.
+        /// </summary>
         public Coord GetPosition(T item)
         {
             SpatialTuple<T> tuple;
@@ -196,6 +222,9 @@ namespace GoRogue
             return tuple.Position;
         }
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.GetItems.
+        /// </summary>
         public IEnumerable<T> GetItems(Coord position)
         {
             if (positionMapping.ContainsKey(position))
@@ -203,6 +232,9 @@ namespace GoRogue
                     yield return tuple.Item;
         }
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Clear.
+        /// </summary>
         public void Clear()
         {
             itemMapping.Clear();

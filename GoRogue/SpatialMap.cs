@@ -39,8 +39,14 @@ namespace GoRogue
         private Dictionary<uint, SpatialTuple<T>> itemMapping;
         private Dictionary<Coord, SpatialTuple<T>> positionMapping;
 
-        public int Count { get { return itemMapping.Count; } }
+        /// <summary>
+        /// See IReadOnlySpatialMap.Count.
+        /// </summary>
+        public int Count => itemMapping.Count;
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Items.
+        /// </summary>
         public IEnumerable<T> Items
         {
             get
@@ -50,6 +56,9 @@ namespace GoRogue
             }
         }
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Positions.
+        /// </summary>
         public IEnumerable<Coord> Positions
         {
             get
@@ -59,8 +68,17 @@ namespace GoRogue
             }
         }
 
+        /// <summary>
+        /// See ISpatialMap.ItemAdded.
+        /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemAdded;
+        /// <summary>
+        /// See ISpatialMap.ItemRemoved.
+        /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemRemoved;
+        /// <summary>
+        /// See ISpatialMap.ItemMoved.
+        /// </summary>
         public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
 
@@ -184,8 +202,17 @@ namespace GoRogue
             }
         }
 
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
         public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+        /// <summary>
+        /// See IReadOnlySpatialMap.GetPosition.
+        /// </summary>
         public Coord GetPosition(T item)
         {
             SpatialTuple<T> tuple;
@@ -232,6 +259,9 @@ namespace GoRogue
             return default(T);
         }
 
+        /// <summary>
+        /// See ISpatialMap.Clear.
+        /// </summary>
         public void Clear()
         {
             itemMapping.Clear();
@@ -253,6 +283,9 @@ namespace GoRogue
         /// </summary>
         /// <returns>Enumerator to ISpatialTuple instances.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public IReadOnlySpatialMap<T> AsReadOnly() => (IReadOnlySpatialMap<T>)this;
+        /// <summary>
+        /// See IReadOnlySpatialMap.AsReadOnly.
+        /// </summary>
+        public IReadOnlySpatialMap<T> AsReadOnly() => this;
     }
 }

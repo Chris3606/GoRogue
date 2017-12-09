@@ -5,7 +5,21 @@ namespace GoRogue
     /// <summary>
     /// Enum for types used under the hood in Direction classes -- allows for convenient switch statements to be used with respect to directions.
     /// </summary>
-    public enum DistanceType { MANHATTAN, EUCLIDIAN, CHEBYSHEV };
+    public enum DistanceType
+    {
+        /// <summary>
+        /// Enum type for Distance.MANHATTAN.
+        /// </summary>
+        MANHATTAN,
+        /// <summary>
+        /// Enum type for Distance.EUCLIDIAN.
+        /// </summary>
+        EUCLIDIAN,
+        /// <summary>
+        /// Enum type for Distance.CHEBYSHEV.
+        /// </summary>
+        CHEBYSHEV
+    };
 
     /// <summary>
     /// Class representing a method of calculating distance.  You cannot create instances of this class using a constructor -- instead this class

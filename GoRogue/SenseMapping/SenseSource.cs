@@ -4,22 +4,34 @@ using System.Collections.Generic;
 namespace GoRogue.SenseMapping
 {
     /// <summary>
-    /// Different types of spreading mechanics for source.
-    ///
-    /// RIPPLE: Performs calculation by pushing values out from the source location.  Source values spread around corners a bit.
-    ///
-    /// RIPPLE_LOOSE: Similar to RIPPLE but with different spread mechanics.  Values spread around edges like smoke or water, but maintains
-    /// a tendency to curl towards the start position as it goes around edges.
-    ///
-    /// RIPPLE_TIGHT: Similar to RIPPLE, but values spread around corners only very slightly.
-    ///
-    /// RIPPLE_VERY_LOOSE: Similar to RIPPLE, but values spread around corners a lot.
-    ///
-    /// SHADOW: Uses a Shadowcasting algorithm.  All partially resistant grid locations are treated as being fully
-    /// transparent (it's on-off blocking, where 1.0 in the resistance map blocks, and all lower values don't).
-    /// Returns percentage from 1.0 at center of source to 0.0 outside of range of source.
+    /// Different types of algorithms that model how values spread from the source.
     /// </summary>
-    public enum SourceType { RIPPLE, RIPPLE_LOOSE, RIPPLE_TIGHT, RIPPLE_VERY_LOOSE, SHADOW };
+    public enum SourceType
+    {
+        /// <summary>
+        /// Performs calculation by pushing values out from the source location.  Source values spread around corners a bit.
+        /// </summary>
+        RIPPLE,
+        /// <summary>
+        /// Similar to RIPPLE but with different spread mechanics.  Values spread around edges like smoke or water, but maintains
+        /// a tendency to curl towards the start position as it goes around edges.
+        /// </summary>
+        RIPPLE_LOOSE,
+        /// <summary>
+        /// Similar to RIPPLE, but values spread around corners only very slightly.
+        /// </summary>
+        RIPPLE_TIGHT,
+        /// <summary>
+        /// Similar to RIPPLE, but values spread around corners a lot.
+        /// </summary>
+        RIPPLE_VERY_LOOSE,
+        /// <summary>
+        /// Uses a Shadowcasting algorithm.  All partially resistant grid locations are treated as being fully
+        /// transparent (it's on-off blocking, where 1.0 in the resistance map blocks, and all lower values don't).
+        /// Returns percentage from 1.0 at center of source to 0.0 outside of range of source.
+        /// </summary>
+        SHADOW
+    };
 
     /// <summary>
     /// Represents a source location to be used in a SenseMap.  One would typically create these and call SenseMap.AddSenseSource with them, and perhaps

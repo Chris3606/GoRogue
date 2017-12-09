@@ -64,10 +64,17 @@ namespace GoRogue
         /// <param name="startY">Coordinate y-value of the origin.</param>
         /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.  If no radius is specified, it is
         /// effectively infinite.</param>
-        public void Calculate(int startX, int startY, int radius = int.MaxValue)
-        {
-            Calculate(startX, startY, radius, Radius.CIRCLE);
-        }
+        public void Calculate(int startX, int startY, int radius = int.MaxValue) => Calculate(startX, startY, radius, Radius.CIRCLE);
+
+        /// <summary>
+        /// Calculates LOS, given an origin point, with a given radius.  If no radius is specified, simply calculates with a radius of
+        /// maximum integer value, which is effectively infinite.  Radius is computed as a circle around the source (type Radius.CIRCLE).
+        /// </summary>
+        /// <param name="start">Position of LOS origin.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.  If no radius is specified, it is
+        /// effectively infinite.</param>
+        public void Calculate(Coord start, int radius = int.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
+
 
         /// <summary>
         /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy.
@@ -91,6 +98,14 @@ namespace GoRogue
                 shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, resMap, distanceTechnique);
             }
         }
+
+        /// <summary>
+        /// Calculates LOS, given an origin point, with the given radius and radius calculation strategy.
+        /// </summary>
+        /// <param name="start">Coordinate of the origin.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
+        public void Calculate(Coord start, int radius, Radius radiusTechnique) => Calculate(start.X, start.Y, radius, radiusTechnique);
 
         /// <summary>
         /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming LOS is restricted to the area
@@ -134,6 +149,17 @@ namespace GoRogue
                 }
             }
         }
+
+        /// <summary>
+        /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming LOS is restricted to the area
+        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular LOS radius will be actually in LOS.
+        /// </summary>
+        /// <param name="start">Coordinate of the origin.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
+        /// <param name="angle">The angle in degrees that specifies the outermost center point of the LOS cone.  0 degrees points right.</param>
+        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the LOS cone -- angle/2 degrees are included on either side of the span line.</param>
+        public void Calculate(Coord start, int radius, Radius radiusTechnique, double angle, double span) => Calculate(start.X, start.Y, radius, radiusTechnique, angle, span);
 
         private void initializeLightMap()
         {

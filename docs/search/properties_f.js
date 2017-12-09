@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['width',['Width',['../class_go_rogue_1_1_array_map_of.html#a83c51f5b96c74284529b858e90e192bf',1,'GoRogue.ArrayMapOf.Width()'],['../interface_go_rogue_1_1_i_map_of.html#a7e626580ee9781c64b08e5b8278e5eeb',1,'GoRogue.IMapOf.Width()'],['../class_go_rogue_1_1_l_o_s.html#a44babb5ed4f082dd2d28df1aee115e1d',1,'GoRogue.LOS.Width()'],['../struct_go_rogue_1_1_rectangle.html#aec63fc2a22ff1056a93248c1deeb66ea',1,'GoRogue.Rectangle.Width()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a315598d06b65cf04835c88e440de6fa4',1,'GoRogue.SenseMapping.SenseMap.Width()']]]
+  ['value',['Value',['../class_go_rogue_1_1_dice_notation_1_1_dice_result.html#a876f383f1e4a278d1eca8e285e23e0c7',1,'GoRogue.DiceNotation.DiceResult.Value()'],['../class_go_rogue_1_1_dice_notation_1_1_term_result.html#ae47988a98936e1196ccd004133e225df',1,'GoRogue.DiceNotation.TermResult.Value()']]]
 ];

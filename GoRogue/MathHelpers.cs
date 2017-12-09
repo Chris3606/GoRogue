@@ -39,10 +39,16 @@ namespace GoRogue
         /// <returns>The wrapped result, as outlined in function description.  Guaranteed to lie in range [0, wrapTo - 1], inclusive.</returns>
         public static int WrapAround(int num, int wrapTo) => (num % wrapTo + wrapTo) % wrapTo;
         
-        // TODO: Implement
-        public static int RoundToMultiple(int number, int multipleOf)
+        /// <summary>
+        /// Rounds the given number up (toward highest number), to the nearest multiple of the specified value.
+        /// </summary>
+        /// <param name="number">Number to round.</param>
+        /// <param name="toMultipleOf">Number given is rounded up to nearest multiple of this number.</param>
+        /// <returns>The number parameter, rouded up to the nearest multiple of toMultipleOf.</returns>
+        public static int RoundToMultiple(int number, int toMultipleOf)
         {
-            throw new NotImplementedException();
+            int isPositive = (number >= 0) ? 1 : 0;
+            return ((number + isPositive * (toMultipleOf - 1)) / toMultipleOf) * toMultipleOf;
         }
     }
 }

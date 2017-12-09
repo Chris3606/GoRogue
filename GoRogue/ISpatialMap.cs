@@ -3,11 +3,26 @@ using System;
 
 namespace GoRogue
 {
+    /// <summary>
+    /// Event args for spatial map events pertaining to an item (item added, item removed, etc.)
+    /// </summary>
+    /// <typeparam name="T">Type of item.</typeparam>
     public class ItemEventArgs<T> : EventArgs
     {
+        /// <summary>
+        /// Item being represented.
+        /// </summary>
         public T Item { get; private set; }
+        /// <summary>
+        /// Current position of that item at time of event.
+        /// </summary>
         public Coord Position { get; private set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="item">Item being represented.</param>
+        /// <param name="position">Current position of the item.</param>
         public ItemEventArgs(T item, Coord position)
         {
             Item = item;
@@ -15,12 +30,31 @@ namespace GoRogue
         }
     }
 
+    /// <summary>
+    /// Event args for SpatialMap's ItemMoved event.
+    /// </summary>
+    /// <typeparam name="T">Type of item being stored.</typeparam>
     public class ItemMovedEventArgs<T> : EventArgs
     {
+        /// <summary>
+        /// Item being represented.
+        /// </summary>
         public T Item { get; private set; }
+        /// <summary>
+        /// Position of item before it was moved.
+        /// </summary>
         public Coord OldPosition { get; private set; }
+        /// <summary>
+        /// Position of item after it has been moved.
+        /// </summary>
         public Coord NewPosition { get; private set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="item">Item being represented.</param>
+        /// <param name="oldPosition">Position of item before it was moved.</param>
+        /// <param name="newPosition">Position of item after it has been moved.</param>
         public ItemMovedEventArgs(T item, Coord oldPosition, Coord newPosition)
         {
             Item = item;

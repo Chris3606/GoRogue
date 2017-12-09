@@ -1,5 +1,8 @@
 ﻿namespace GoRogue
 {
+    /// <summary>
+    /// Static class full of miscellaneous helper methods.
+    /// </summary>
     public static class Utility
     {
         /// <summary>

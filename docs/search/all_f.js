@@ -19,6 +19,10 @@ var searchData=
   ['results',['Results',['../class_go_rogue_1_1_dice_notation_1_1_dice_result.html#a0b0bb8677282c83049107cd5702e044a',1,'GoRogue::DiceNotation::DiceResult']]],
   ['retriesperroom',['RetriesPerRoom',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a76fc52a5530203d9533e510149d0a126',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]],
   ['right',['RIGHT',['../class_go_rogue_1_1_direction.html#a987bc8450d0b0e38df58353d4bdc5934',1,'GoRogue::Direction']]],
+  ['ripple',['RIPPLE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a3b68550e169b363f0d4937bba677d76d',1,'GoRogue::SenseMapping']]],
+  ['ripple_5floose',['RIPPLE_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a450e61693b6ddefa09d369fcd289a5bb',1,'GoRogue::SenseMapping']]],
+  ['ripple_5ftight',['RIPPLE_TIGHT',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42addbfc9ad7f292b04c5003106a7268a35',1,'GoRogue::SenseMapping']]],
+  ['ripple_5fvery_5floose',['RIPPLE_VERY_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a507c2c185aefa93e554ecfb94076867c',1,'GoRogue::SenseMapping']]],
   ['roll',['Roll',['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a10ab43e6ba1988bcc5554c51f2621664',1,'GoRogue.DiceNotation.DiceExpression.Roll(IRandom random)'],['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#aabbc9fd9ef966ad83797ab4401fb3bb6',1,'GoRogue.DiceNotation.DiceExpression.Roll()']]],
   ['roommaxsize',['RoomMaxSize',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a16095afe778c3a22fadbed4fb97de179',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]],
   ['roomminsize',['RoomMinSize',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a3a3eb25ef6b92aa155bde6644c8ad247',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]]
