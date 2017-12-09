@@ -1,11 +1,15 @@
 # GoRogue
-Welcome to the homepage for GoRogue, the roguelike/2D game utility library!  This library offers a number of features that may be useful in roguelike development, including features such as FOV, lighting, map generation utilities, and much more!  See feature list below.
+Welcome to the homepage for GoRogue, the roguelike/2D game utility library!  This library offers a number of features that may be useful in roguelike development, including features such as FOV, lighting, map generation utilities, and much more!  See feature list below (which will be added soon).
+
+## Documentation
+A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API documentation is hosted on GitHub pages [here](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.
 
 ## Roadmap
 This library is still in development - there are a number of important features on the horizon! These include:
 - Pathfinding (Coming Soon)
   - At least AStar pathing, as well as Dijkstra maps (commonly known as Goal Maps) will be provided soon!
 - Statistics Library
+- Demo Project/writeup
 
 ## Licensing
 ### GoRogue
