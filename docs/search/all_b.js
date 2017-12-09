@@ -7,6 +7,7 @@ var searchData=
   ['mapareafinder',['MapAreaFinder',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html',1,'GoRogue::MapGeneration']]],
   ['mapareafinder',['MapAreaFinder',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a968ab5c32e7b43f487482c5b00eaa954',1,'GoRogue::MapGeneration::MapAreaFinder']]],
   ['mapareas',['MapAreas',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a10821d5f602f8b86d17d19da04c55322',1,'GoRogue::MapGeneration::MapAreaFinder']]],
+  ['mathhelpers',['MathHelpers',['../class_go_rogue_1_1_math_helpers.html',1,'GoRogue']]],
   ['maxcorner',['MaxCorner',['../struct_go_rogue_1_1_rectangle.html#a995b9dd90c658121834d6f64a8448ee0',1,'GoRogue::Rectangle']]],
   ['maxrandom',['MaxRandom',['../class_go_rogue_1_1_random_1_1_max_random.html',1,'GoRogue::Random']]],
   ['maxroll',['MaxRoll',['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a8d1edf972a59671648145b669c33f50e',1,'GoRogue::DiceNotation::DiceExpression']]],

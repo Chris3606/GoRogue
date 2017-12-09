@@ -1,7 +1,10 @@
 var searchData=
 [
-  ['radius',['Radius',['../class_go_rogue_1_1_radius.html',1,'GoRogue']]],
+  ['readme',['README',['../md__go_rogue__dice_notation__r_e_a_d_m_e.html',1,'']]],
+  ['readme',['README',['../md__go_rogue__map_generation__r_e_a_d_m_e.html',1,'']]],
+  ['readme',['README',['../md__go_rogue__random__r_e_a_d_m_e.html',1,'']]],
   ['radius',['Radius',['../class_go_rogue_1_1_radius_area_provider.html#ab0db330130d7c47cb7bc8d0ad90e570d',1,'GoRogue.RadiusAreaProvider.Radius()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a84d03b5f26a57ff8b85c7f65f952ab1b',1,'GoRogue.SenseMapping.SenseSource.Radius()']]],
+  ['radius',['Radius',['../class_go_rogue_1_1_radius.html',1,'GoRogue']]],
   ['radiusareaprovider',['RadiusAreaProvider',['../class_go_rogue_1_1_radius_area_provider.html',1,'GoRogue']]],
   ['radiusareaprovider',['RadiusAreaProvider',['../class_go_rogue_1_1_radius_area_provider.html#a4aef0dc8e9c4d00c3a599e33f76dfbb0',1,'GoRogue.RadiusAreaProvider.RadiusAreaProvider(Coord center, int radius, Radius shape, Rectangle bounds)'],['../class_go_rogue_1_1_radius_area_provider.html#a43d847daff1a37a9dd49390cbdd5529c',1,'GoRogue.RadiusAreaProvider.RadiusAreaProvider(Coord center, int radius, Radius shape)'],['../class_go_rogue_1_1_radius_area_provider.html#ac1815f07c8ff00599c10155d71ac9b7f',1,'GoRogue.RadiusAreaProvider.RadiusAreaProvider(Coord center, int radius, Distance distanceCalc, Rectangle bounds)'],['../class_go_rogue_1_1_radius_area_provider.html#a954bba232b1110e1ef6b65303159a008',1,'GoRogue.RadiusAreaProvider.RadiusAreaProvider(Coord center, int radius, Distance distanceCalc)']]],
   ['radiusshape',['RadiusShape',['../class_go_rogue_1_1_radius_area_provider.html#ac0d257ad53e0b23e2577dc22008b50a9',1,'GoRogue::RadiusAreaProvider']]],
@@ -23,7 +26,8 @@ var searchData=
   ['ripple_5floose',['RIPPLE_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a450e61693b6ddefa09d369fcd289a5bb',1,'GoRogue::SenseMapping']]],
   ['ripple_5ftight',['RIPPLE_TIGHT',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42addbfc9ad7f292b04c5003106a7268a35',1,'GoRogue::SenseMapping']]],
   ['ripple_5fvery_5floose',['RIPPLE_VERY_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a507c2c185aefa93e554ecfb94076867c',1,'GoRogue::SenseMapping']]],
-  ['roll',['Roll',['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a10ab43e6ba1988bcc5554c51f2621664',1,'GoRogue.DiceNotation.DiceExpression.Roll(IRandom random)'],['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#aabbc9fd9ef966ad83797ab4401fb3bb6',1,'GoRogue.DiceNotation.DiceExpression.Roll()']]],
+  ['roll',['Roll',['../class_go_rogue_1_1_dice_notation_1_1_dice.html#aa400d7f7043f4641a477c9a8834d9081',1,'GoRogue.DiceNotation.Dice.Roll(string expression, IRandom random)'],['../class_go_rogue_1_1_dice_notation_1_1_dice.html#ae298eed91fec30345464b870b75577c6',1,'GoRogue.DiceNotation.Dice.Roll(string expression)'],['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a10ab43e6ba1988bcc5554c51f2621664',1,'GoRogue.DiceNotation.DiceExpression.Roll(IRandom random)'],['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#aabbc9fd9ef966ad83797ab4401fb3bb6',1,'GoRogue.DiceNotation.DiceExpression.Roll()']]],
   ['roommaxsize',['RoomMaxSize',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a16095afe778c3a22fadbed4fb97de179',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]],
-  ['roomminsize',['RoomMinSize',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a3a3eb25ef6b92aa155bde6644c8ad247',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]]
+  ['roomminsize',['RoomMinSize',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a3a3eb25ef6b92aa155bde6644c8ad247',1,'GoRogue::MapGeneration::RandomRoomsMapGenerator']]],
+  ['roundtomultiple',['RoundToMultiple',['../class_go_rogue_1_1_math_helpers.html#a7bf21677685a35e12435161207be6c2c',1,'GoRogue::MathHelpers']]]
 ];

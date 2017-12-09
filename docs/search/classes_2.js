@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dice',['Dice',['../class_go_rogue_1_1_dice_notation_1_1_dice.html',1,'GoRogue::DiceNotation']]],
   ['diceexpression',['DiceExpression',['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html',1,'GoRogue::DiceNotation']]],
   ['diceparser',['DiceParser',['../class_go_rogue_1_1_dice_notation_1_1_dice_parser.html',1,'GoRogue::DiceNotation']]],
   ['diceresult',['DiceResult',['../class_go_rogue_1_1_dice_notation_1_1_dice_result.html',1,'GoRogue::DiceNotation']]],
