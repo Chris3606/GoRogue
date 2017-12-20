@@ -44,7 +44,7 @@ namespace GoRogue_UnitTests
                 generator.Generate();
 
                 // Ensure it's connected
-                var finder = new MapAreaFinder(map);
+                var finder = new MapAreaFinder(map, Distance.MANHATTAN);
                 finder.FindMapAreas();
                 Assert.AreEqual(1, finder.Count);
 

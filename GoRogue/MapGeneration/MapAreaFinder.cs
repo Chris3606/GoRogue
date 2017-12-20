@@ -8,7 +8,7 @@ namespace GoRogue.MapGeneration
     /// area of the map.
     /// </summary>
     /// <remarks>
-    /// The class takes in an IMapOf&lt;bool&gt;, where a value of true for a given position indicates it should
+    /// The class takes in an IMapOf, where a value of true for a given position indicates it should
     /// be part of a map area, and false indicates it should not be part of any map area.  In a classic
     /// roguelike dungeon example, this might be a walkability map where floors return a value of true and walls
     /// a value of false.
@@ -33,15 +33,42 @@ namespace GoRogue.MapGeneration
 
         private bool[,] visited;
 
+        private Distance _distanceCalc;
+        /// <summary>
+        /// The calculation used to determine distance between two points.
+        /// </summary>
+        public Distance DistanceCalc
+        {
+            get => _distanceCalc;
+
+            set
+            {
+                _distanceCalc = value;
+                neighbors = Direction.GetNeighbors(value);
+            }
+        }
+
+        private Direction.NeighborsGetter neighbors;
+
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="map">IMapOf indicating which cells should be considered part of a map area and which should not.</param>
-        public MapAreaFinder(IMapOf<bool> map)
+        /// <param name="shape">The shape of a radius - determines calculation used to define distance, and thus what are considered neighbors.</param>
+        public MapAreaFinder(IMapOf<bool> map, Radius shape)
+            : this(map, (Distance)shape) { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">IMapOf indicating which cells should be considered part of a map area and which should not.</param>
+        /// <param name="distanceCalc">The calculation used to determine distance.</param>
+        public MapAreaFinder(IMapOf<bool> map, Distance distanceCalc)
         {
             this.map = map;
             _mapAreas = new List<MapArea>();
             visited = null;
+            DistanceCalc = distanceCalc;
         }
 
         /// <summary>
@@ -80,7 +107,7 @@ namespace GoRogue.MapGeneration
                 area.Add(position);
                 visited[position.X, position.Y] = true;
 
-                foreach (Direction d in Direction.CardinalsClockwise())
+                foreach (Direction d in neighbors())
                 {
                     Coord c = position + d;
 

@@ -161,7 +161,7 @@ namespace GoRogue.MapGeneration
 
 		private void connectCaves()
 		{
-			var areaFinder = new MapAreaFinder(map);
+			var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
 			areaFinder.FindMapAreas();
 
 			var ds = new DisjointSet(areaFinder.Count);
