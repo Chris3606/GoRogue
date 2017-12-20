@@ -9,7 +9,15 @@ This library is still in development - there are a number of important features 
 - Pathfinding (Coming Soon)
   - At least AStar pathing, as well as Dijkstra maps (commonly known as Goal Maps) will be provided soon!
 - Statistics Library
+  - Utility classes to assist in dealing with interdependent character/monster statistics.
 - Demo Project/writeup
+- Consider switching project to .NET Standard library.
+  - Not sure if this is viable but if so it would allow it to be used with both .NET Framework and .NET Core projects.
+- Map generation improvements (Coming soon)
+  - More map generation algorithms (BSP Tree)
+  - Possibly improve RandomRoomsMapGenerator - change room determination?
+  - Map generation algorithms may become functions rather than classes - semantic change
+  - Split area connection algorithms off from actual generation of areas to allow max flexibility/customization of those algorithms.
 
 ## Licensing
 ### GoRogue
