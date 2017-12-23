@@ -1,5 +1,5 @@
 ﻿using GoRogue;
-using GoRogue.MapGeneration;
+using Generators = GoRogue.MapGeneration.Generators;
 using GoRogue.Pathing;
 using System;
 using System.Diagnostics;
@@ -13,7 +13,7 @@ namespace GoRogue_PerformanceTests
             Stopwatch s = new Stopwatch();
 
             var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
-            RectangleMap.Generate(map);
+            Generators.RectangleMap.Generate(map);
 
             DijkstraMap dMap = new DijkstraMap(map);
 

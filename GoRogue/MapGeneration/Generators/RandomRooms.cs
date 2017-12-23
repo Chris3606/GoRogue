@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using GoRogue.Random;
 
-namespace GoRogue.MapGeneration
+namespace GoRogue.MapGeneration.Generators
 {
     /// <summary>
     /// Generates a map by attempting to randomly place the specified number of rooms, ranging in size between the specified
@@ -33,7 +33,7 @@ namespace GoRogue.MapGeneration
                 for (int y = 0; y < map.Height; y++)
                     map[x, y] = false;
 
-            var rooms = new List<Rectangle>();
+            var rooms = new List<GoRogue.Rectangle>();
             for (int r = 0; r < maxRooms; r++)
             {
                 int roomWidth = rng.Next(roomMinSize, roomMaxSize);
@@ -42,7 +42,7 @@ namespace GoRogue.MapGeneration
                 int roomXPos = rng.Next(map.Width - roomWidth - 1);
                 int roomYPos = rng.Next(map.Height - roomHeight - 1);
 
-                var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
+                var newRoom = new GoRogue.Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                 bool newRoomIntersects = checkOverlap(newRoom, rooms);
 
                 int positionAttempts = 1;
@@ -51,7 +51,7 @@ namespace GoRogue.MapGeneration
                     roomXPos = rng.Next(map.Width - roomWidth - 1);
                     roomYPos = rng.Next(map.Height - roomHeight - 1);
 
-                    newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
+                    newRoom = new GoRogue.Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                     newRoomIntersects = checkOverlap(newRoom, rooms);
 
                     positionAttempts++;
@@ -85,7 +85,7 @@ namespace GoRogue.MapGeneration
         // TODO: ConnectRooms function that can connect the rooms properly, in method specific
         // to this generation type.
 
-        static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
+        static private bool checkOverlap(GoRogue.Rectangle room, List<GoRogue.Rectangle> existingRooms)
         {
             foreach (var existingRoom in existingRooms)
                 if (room.Intsersects(existingRoom))
@@ -93,7 +93,7 @@ namespace GoRogue.MapGeneration
 
             return false;
         }
-        static private void createRoom(ISettableMapOf<bool> map, Rectangle room)
+        static private void createRoom(ISettableMapOf<bool> map, GoRogue.Rectangle room)
         {
             for (int x = room.X + 1; x < room.MaxX; x++)
                 for (int y = room.Y + 1; y < room.MaxY; y++)

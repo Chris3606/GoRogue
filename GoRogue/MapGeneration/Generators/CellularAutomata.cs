@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.Random;
-namespace GoRogue.MapGeneration
+namespace GoRogue.MapGeneration.Generators
 {
 	/// <summary>
 	/// Implements a cellular automata genereation algorithm to generate a cave-like map.

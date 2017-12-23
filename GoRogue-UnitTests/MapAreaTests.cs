@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
+using Generators = GoRogue.MapGeneration.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -29,7 +30,7 @@ namespace GoRogue_UnitTests
         public void TestSingleAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            RectangleMap.Generate(map);
+            Generators.RectangleMap.Generate(map);
 
             var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
             areaFinder.FindMapAreas();
@@ -44,7 +45,7 @@ namespace GoRogue_UnitTests
         public void TestTwoAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            RectangleMap.Generate(map);
+            Generators.RectangleMap.Generate(map);
 
             for (int y = 0; y < 50; y++)
                 map[40, y] = false;
@@ -59,7 +60,7 @@ namespace GoRogue_UnitTests
         public void TestOneRoomAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            RectangleMap.Generate(map);
+            Generators.RectangleMap.Generate(map);
 
             for (int y = 0; y < 50; y++)
                 map[40, y] = false;

@@ -70,11 +70,11 @@
     <Compile Include="ISettableMapOf.cs" />
     <Compile Include="ISpatialMap.cs" />
     <Compile Include="LOS.cs" />
-    <Compile Include="MapGeneration\CellularAutomata.cs" />
+    <Compile Include="MapGeneration\Generators\CellularAutomata.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />
     <Compile Include="MapGeneration\MapAreaFinder.cs" />
-    <Compile Include="MapGeneration\RandomRooms.cs" />
-    <Compile Include="MapGeneration\RectangleMap.cs" />
+    <Compile Include="MapGeneration\Generators\RandomRooms.cs" />
+    <Compile Include="MapGeneration\Generators\RectangleMap.cs" />
     <Compile Include="MathHelpers.cs" />
     <Compile Include="MultiSpatialMap.cs" />
     <Compile Include="Pathing\DijkstraMap.cs" />
@@ -93,6 +93,9 @@
     <Compile Include="SenseMapping\SenseSource.cs" />
     <Compile Include="SpatialMap.cs" />
     <Compile Include="Utility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MapGeneration\Connectors\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
