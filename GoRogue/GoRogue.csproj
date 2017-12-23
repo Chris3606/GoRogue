@@ -70,6 +70,7 @@
     <Compile Include="ISettableMapOf.cs" />
     <Compile Include="ISpatialMap.cs" />
     <Compile Include="LOS.cs" />
+    <Compile Include="MapGeneration\Connectors\RandomPointArea.cs" />
     <Compile Include="MapGeneration\Generators\CellularAutomata.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />
     <Compile Include="MapGeneration\MapAreaFinder.cs" />
@@ -94,8 +95,6 @@
     <Compile Include="SpatialMap.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MapGeneration\Connectors\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
