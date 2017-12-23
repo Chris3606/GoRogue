@@ -1,44 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoRogue.Random;
 
 namespace GoRogue.MapGeneration
 {
     /// <summary>
     /// Generates a map by attempting to randomly place the specified number of rooms, ranging in size between the specified
     /// min size and max size, trying the specified number of times to position a room without overlap before discarding the room entirely.
-    /// The given
-    /// map will have a value of false set to all non-passable tiles, and true set to all passable ones.
+    /// The given map will have a value of false set to all non-passable tiles, and true set to all passable ones.
     /// </summary>
     /// <remarks>
     /// This algorithm may set the cell value for each position more than once.  As such, it is highly recommended to use
-    /// and ArrayMapOf as the ISettableMapOf given in the constructor.  Any translation/interpretation of the result can
-    /// be performed after the ArrayMapOf is set using Generate.  Attempting to do any expensive allocation/operations
+    /// and ArrayMapOf as the ISettableMapOf given.  Any translation/interpretation of the result can
+    /// be performed after the ArrayMapOf is set.  Attempting to do any expensive allocation/operations
     /// in the setting functions of a SettableMapOf given to the algorithm may result in performance deterioration.
     /// </remarks>
-    public class RandomRoomsMapGenerator : IMapGenerator
+    static public class RandomRooms
     {
         /// <summary>
-        /// The maximum number of rooms that will be on the map.
-        /// </summary>
-        public int MaxRooms;
-        /// <summary>
-        /// The minimum size in tile width/height for any given room.
-        /// </summary>
-        public int RoomMinSize;
-        /// <summary>
-        /// The maximum size in tile width/height for any given room.
-        /// </summary>
-        public int RoomMaxSize;
-        /// <summary>
-        /// The maximum number of times a given room will be repositioned randomly, if it overlaps, before abandoning the room entirely.
-        /// </summary>
-        public int RetriesPerRoom;
-
-        private ISettableMapOf<bool> map;
-        private Random.IRandom rng;
-
-        /// <summary>
-        /// Constructor.  Specified generation parameters.
+        /// Generates the map.  After this function has been completed, non-passable tiles will have a value of false
+        /// in the ISettableMapOf given, and passable ones will have a value of true.
         /// </summary>
         /// <param name="map">The map to set values to.</param>
         /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
@@ -46,41 +27,26 @@ namespace GoRogue.MapGeneration
         /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
         /// <param name="retriesPerRoom">If a room is placed in a way that overlaps with another room, the maximum number of times the position will be regenerated to try to position it properly, before simply discarding the room.</param>
         /// <param name="rng">The RNG to use to place rooms and determine room size.</param>
-        public RandomRoomsMapGenerator(ISettableMapOf<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, Random.IRandom rng)
-        {
-            this.map = map;
-            MaxRooms = maxRooms;
-            RoomMinSize = roomMinSize;
-            RoomMaxSize = roomMaxSize;
-            RetriesPerRoom = retriesPerRoom;
-            this.rng = rng;
-        }
-
-        /// <summary>
-        /// Generates the map.  After this function has been completed, non-passable tiles will have a value of false
-        /// in the ISettableMapOf given in the constructor.
-        /// Passable tiles will have a value of true.
-        /// </summary>
-        public void Generate()
+        static public void Generate(ISettableMapOf<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng)
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
                     map[x, y] = false;
 
             var rooms = new List<Rectangle>();
-            for (int r = 0; r < MaxRooms; r++)
+            for (int r = 0; r < maxRooms; r++)
             {
-                int roomWidth = rng.Next(RoomMinSize, RoomMaxSize);
-                int roomHeight = rng.Next(RoomMinSize, RoomMaxSize);
+                int roomWidth = rng.Next(roomMinSize, roomMaxSize);
+                int roomHeight = rng.Next(roomMinSize, roomMaxSize);
 
                 int roomXPos = rng.Next(map.Width - roomWidth - 1);
                 int roomYPos = rng.Next(map.Height - roomHeight - 1);
-                
+
                 var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                 bool newRoomIntersects = checkOverlap(newRoom, rooms);
 
                 int positionAttempts = 1;
-                while (newRoomIntersects && positionAttempts < RetriesPerRoom)
+                while (newRoomIntersects && positionAttempts < retriesPerRoom)
                 {
                     roomXPos = rng.Next(map.Width - roomWidth - 1);
                     roomYPos = rng.Next(map.Height - roomHeight - 1);
@@ -96,7 +62,7 @@ namespace GoRogue.MapGeneration
             }
 
             foreach (var room in rooms)
-                createRoom(room);
+                createRoom(map, room);
 
             for (int i = 1; i < rooms.Count; i++)
             {
@@ -105,13 +71,13 @@ namespace GoRogue.MapGeneration
 
                 if (rng.Next(2) == 0) // Favors vertical tunnels
                 {
-                    createHTunnel(prevRoomCenter.X, currRoomCenter.X, prevRoomCenter.Y);
-                    createVTunnel(prevRoomCenter.Y, currRoomCenter.Y, currRoomCenter.X);
+                    createHTunnel(map, prevRoomCenter.X, currRoomCenter.X, prevRoomCenter.Y);
+                    createVTunnel(map, prevRoomCenter.Y, currRoomCenter.Y, currRoomCenter.X);
                 }
                 else
                 {
-                    createVTunnel(prevRoomCenter.Y, currRoomCenter.Y, prevRoomCenter.X);
-                    createHTunnel(prevRoomCenter.X, currRoomCenter.X, currRoomCenter.Y);
+                    createVTunnel(map, prevRoomCenter.Y, currRoomCenter.Y, prevRoomCenter.X);
+                    createHTunnel(map, prevRoomCenter.X, currRoomCenter.X, currRoomCenter.Y);
                 }
             }
         }
@@ -119,7 +85,7 @@ namespace GoRogue.MapGeneration
         // TODO: ConnectRooms function that can connect the rooms properly, in method specific
         // to this generation type.
 
-        private static bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
+        static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
         {
             foreach (var existingRoom in existingRooms)
                 if (room.Intsersects(existingRoom))
@@ -127,20 +93,20 @@ namespace GoRogue.MapGeneration
 
             return false;
         }
-        private void createRoom(Rectangle room)
+        static private void createRoom(ISettableMapOf<bool> map, Rectangle room)
         {
             for (int x = room.X + 1; x < room.MaxX; x++)
                 for (int y = room.Y + 1; y < room.MaxY; y++)
                     map[x, y] = true;
         }
 
-        private void createHTunnel(int xStart, int xEnd, int yPos)
+        static private void createHTunnel(ISettableMapOf<bool> map, int xStart, int xEnd, int yPos)
         {
             for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
                 map[x, yPos] = true;
         }
 
-        private void createVTunnel(int yStart, int yEnd, int xPos)
+        static private void createVTunnel(ISettableMapOf<bool> map, int yStart, int yEnd, int xPos)
         {
             for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
                 map[xPos, y] = true;

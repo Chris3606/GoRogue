@@ -14,7 +14,7 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(30, 30);
-            new RandomRoomsMapGenerator(map, 7, 4, 7, 5, random).Generate();
+            RandomRooms.Generate(map, 7, 4, 7, 5, random);
 
             displayMap(map);
             // TODO: Some assert here
@@ -25,7 +25,7 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
-            new CellularAutomataMapGenerator(map, random, 40, 7, 4).Generate();
+            CellularAutomata.Generate(map, random, 40, 7, 4);
 
             displayMap(map);
 
@@ -37,11 +37,11 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
-            var generator = new CellularAutomataMapGenerator(map, random, 40, 7, 4);
+            CellularAutomata.Generate(map, random, 40, 7, 4);
 
             for (int i = 0; i < 500; i++)
             {
-                generator.Generate();
+                CellularAutomata.Generate(map, random, 40, 7, 4);
 
                 // Ensure it's connected
                 var finder = new MapAreaFinder(map, Distance.MANHATTAN);

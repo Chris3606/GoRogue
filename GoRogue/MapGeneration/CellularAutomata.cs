@@ -1,11 +1,10 @@
-﻿using GoRogue.Random;
-using System;
+﻿using System;
 using System.Collections.Generic;
-
+using GoRogue.Random;
 namespace GoRogue.MapGeneration
 {
 	/// <summary>
-	/// Uses a cellular automata genereation algorithm to generate a cave-like map.
+	/// Implements a cellular automata genereation algorithm to generate a cave-like map.
 	/// </summary>
 	/// <remarks>
 	/// Generates a map by randomly filling the map surface with floor or wall values (true and false respectively) based on a probability
@@ -13,7 +12,7 @@ namespace GoRogue.MapGeneration
 	/// 
 	/// After generate is called, the passed in map will have had a value of true set to all floor tiles, and a value of false set to all wall tiles.
 	///
-	/// Like RandomRoomsMapGenerator, it is recommended to use ArrayMapOf&lt;bool&gt; as the SettableMapOf instance passed in, as this class must
+	/// Like RandomRoomsMapGenerator, it is recommended to use ArrayMapOf as the SettableMapOf instance passed in, as this class must
 	/// call set for each location very likely more than one time, overwriting any previous values(thus doing significant processing on each
 	/// call to set is inadvisable).  It will likely be faster to take the resulting ArrayMapOf after completion, and process it to do any required
 	/// translation.
@@ -21,30 +20,11 @@ namespace GoRogue.MapGeneration
 	/// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below:
 	/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
 	/// </remarks>
-	public class CellularAutomataMapGenerator : IMapGenerator
+	static public class CellularAutomata
 	{
 		/// <summary>
-		/// Represents the percent chance that a given cell will be a floor cell when the map is initially
-		/// randomly filled.  Recommended to be in range [40, 60] (40 is used in roguebasin article).
-		/// </summary>
-		public int FillProbability;
-		/// <summary>
-		/// Total number of times the cellular automata-based smoothing algorithm is executed.
-		/// Recommended to be in range [2, 10] (7 is used on roguebasin article).
-		/// </summary>
-		public int TotalIterations;
-		/// <summary>
-		/// Total number of times the cellular automata smoothing variation that is more likely to result
-		/// in "breaking up" large areas will be run before switching to the more standard nearest neighbors
-		/// version.  Recommended to be in range [2, 7] (4 is used in roguebasin article).
-		/// </summary>
-		public int CutoffBigAreaFill;
-
-		private ISettableMapOf<bool> map;
-		private IRandom rng;
-
-		/// <summary>
-		/// Constructor.
+		/// Generates the map.  Floor tiles will be set to true in the provided map, and wall tiles will be
+		/// set to false.
 		/// </summary>
 		/// <param name="map">The map to fill with values when generate is called.</param>
 		/// <param name="rng">The RNG to use to initially fill the map.</param>
@@ -57,52 +37,39 @@ namespace GoRogue.MapGeneration
 		/// that is more likely to result in "breaking up" large areas will be run before switching to the
 		/// more standard nearest neighbors version.  Recommended to be in range [2, 7] (4 is used in roguebasin
 		/// article).</param>
-		public CellularAutomataMapGenerator(ISettableMapOf<bool> map, IRandom rng, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
+		static public void Generate(ISettableMapOf<bool> map, IRandom rng, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
-			this.map = map;
-			FillProbability = fillProbability;
-			TotalIterations = totalIterations;
-			CutoffBigAreaFill = cutoffBigAreaFill;
-			this.rng = rng;
-		}
+			randomlyFillCells(map, rng, fillProbability);
 
-		/// <summary>
-		/// Generates the map.  Floor tiles will be set to true in the provided map, and wall tiles will be
-		/// set to false.
-		/// </summary>
-		public void Generate()
-		{
-			randomlyFillCells();
-
-			for (int i = 0; i < TotalIterations; i++)
+			for (int i = 0; i < totalIterations; i++)
 			{
-				if (i < CutoffBigAreaFill)
-					cellAutoBigAreaAlgo();
+				if (i < cutoffBigAreaFill)
+					cellAutoBigAreaAlgo(map);
 				else
-					cellAutoNearestNeighborsAlgo();
+					cellAutoNearestNeighborsAlgo(map);
 			}
 
 			// Ensure it's enclosed before we try to connect, so we can't possibly connect a path that ruins the enclosure.
 			// Doing this before connection ensures that filling it can't kill the path to an area.
-			fillToRectangle();
-			connectCaves();
+			fillToRectangle(map);
+			connectCaves(map, rng);
 		}
 
-		private void randomlyFillCells()
+		static private void randomlyFillCells(ISettableMapOf<bool> map, IRandom rng, int fillProbability)
 		{
 			for (int x = 0; x < map.Width; x++)
 				for (int y = 0; y < map.Height; y++)
 				{
 					if (x == 0 || y == 0 || x == map.Width - 1 || y == map.Height - 1) // Borders are always walls
 						map[x, y] = false;
-					else if (rng.Next(99) < FillProbability)
+					else if (rng.Next(99) < fillProbability)
 						map[x, y] = true;
 					else
 						map[x, y] = false;
 				}
 		}
 
-		private void fillToRectangle()
+		static private void fillToRectangle(ISettableMapOf<bool> map)
 		{
 			for (int x = 0; x < map.Width; x++)
 			{
@@ -117,7 +84,7 @@ namespace GoRogue.MapGeneration
 			}
 		}
 
-		private void cellAutoBigAreaAlgo()
+		static private void cellAutoBigAreaAlgo(ISettableMapOf<bool> map)
 		{
 			var oldMap = new ArrayMapOf<bool>(map.Width, map.Height);
 
@@ -138,7 +105,7 @@ namespace GoRogue.MapGeneration
 				}
 		}
 
-		private void cellAutoNearestNeighborsAlgo()
+		static private void cellAutoNearestNeighborsAlgo(ISettableMapOf<bool> map)
 		{
 			var oldMap = new ArrayMapOf<bool>(map.Width, map.Height);
 
@@ -159,7 +126,7 @@ namespace GoRogue.MapGeneration
 				}
 		}
 
-		private void connectCaves()
+		static private void connectCaves(ISettableMapOf<bool> map, IRandom rng)
 		{
 			var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
 			areaFinder.FindMapAreas();
@@ -201,7 +168,7 @@ namespace GoRogue.MapGeneration
 			}
 		}
 
-		private static int findNearestMapArea(IList<MapArea> mapAreas, int mapAreaIndex, DisjointSet ds)
+		static private int findNearestMapArea(IList<MapArea> mapAreas, int mapAreaIndex, DisjointSet ds)
 		{
 			int closestIndex = mapAreaIndex;
 			double distance = double.MaxValue;
@@ -225,7 +192,7 @@ namespace GoRogue.MapGeneration
 			return closestIndex;
 		}
 
-		private static int countWallsNear(ISettableMapOf<bool> mapToUse, int posX, int posY, int distance)
+		static private int countWallsNear(ISettableMapOf<bool> mapToUse, int posX, int posY, int distance)
 		{
 			int count = 0;
 			int xMin = Math.Max(posX - distance, 0);

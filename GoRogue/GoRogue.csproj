@@ -70,12 +70,11 @@
     <Compile Include="ISettableMapOf.cs" />
     <Compile Include="ISpatialMap.cs" />
     <Compile Include="LOS.cs" />
-    <Compile Include="MapGeneration\CellularAutomataMapGenerator.cs" />
-    <Compile Include="MapGeneration\IMapGenerator.cs" />
+    <Compile Include="MapGeneration\CellularAutomata.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />
     <Compile Include="MapGeneration\MapAreaFinder.cs" />
-    <Compile Include="MapGeneration\RandomRoomsMapGenerator.cs" />
-    <Compile Include="MapGeneration\RectangleMapGenerator.cs" />
+    <Compile Include="MapGeneration\RandomRooms.cs" />
+    <Compile Include="MapGeneration\RectangleMap.cs" />
     <Compile Include="MathHelpers.cs" />
     <Compile Include="MultiSpatialMap.cs" />
     <Compile Include="Pathing\DijkstraMap.cs" />

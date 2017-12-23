@@ -13,7 +13,7 @@ namespace GoRogue_PerformanceTests
             Stopwatch s = new Stopwatch();
 
             var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
-            new RectangleMapGenerator(map).Generate();
+            RectangleMap.Generate(map);
 
             DijkstraMap dMap = new DijkstraMap(map);
 
