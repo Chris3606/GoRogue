@@ -5,6 +5,7 @@ using Connectors = GoRogue.MapGeneration.Connectors;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace GoRogue_UnitTests
 {
@@ -49,9 +50,8 @@ namespace GoRogue_UnitTests
                 Connectors.ClosestMapArea.Connect(map, random);
 
                 // Ensure it's connected
-                var finder = new MapAreaFinder(map, Distance.MANHATTAN);
-                finder.FindMapAreas();
-                Assert.AreEqual(1, finder.Count);
+                var areas = new List<MapArea>(MapAreaFinder.MapAreas(map, Distance.MANHATTAN));
+                Assert.AreEqual(1, areas.Count);
 
                 // Ensure it's enclosed
                 for (int x = 0; x < map.Width; x++)
