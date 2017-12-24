@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GoRogue.Random;
 
 namespace GoRogue
@@ -44,6 +45,38 @@ namespace GoRogue
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random item from the list, using the rng specified.  Default
+        /// for type T is returned if the list is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
+        /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Item selected.</returns>
+        static public T RandomItem<T>(this List<T> list, IRandom rng)
+        {
+            if (list.Count == 0)
+                return default(T);
+
+            return list[rng.Next(list.Count - 1)];
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random valid index from the list, using the rng specified.
+        /// -1 is returned if the list is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
+        /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Index selected.</returns>
+        static public int RandomIndex<T>(this List<T> list, IRandom rng)
+        {
+            if (list.Count == 0)
+                return -1;
+
+            return rng.Next(list.Count - 1);
         }
     }
 }
