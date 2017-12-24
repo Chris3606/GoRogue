@@ -1,6 +1,7 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
 using Generators = GoRogue.MapGeneration.Generators;
+using Connectors = GoRogue.MapGeneration.Connectors;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -27,6 +28,7 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
+            Connectors.ClosestMapArea.Connect(map, random);
 
             displayMap(map);
 
@@ -39,10 +41,12 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
+            Connectors.ClosestMapArea.Connect(map, random);
 
             for (int i = 0; i < 500; i++)
             {
                 Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
+                Connectors.ClosestMapArea.Connect(map, random);
 
                 // Ensure it's connected
                 var finder = new MapAreaFinder(map, Distance.MANHATTAN);

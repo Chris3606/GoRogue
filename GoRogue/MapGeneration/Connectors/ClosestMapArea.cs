@@ -4,19 +4,15 @@ using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {
-    static public class RandomPointArea
+    static public class ClosestMapArea
     {
-        static public void Connect(ISettableMapOf<bool> map, IRandom rng, bool randomizeAreaOrder = true)
+        static public void Connect(ISettableMapOf<bool> map, IRandom rng)
         {
             var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
             areaFinder.FindMapAreas();
 
             // TODO: Temp, need to refactor MapAreaFinder to a static function
             var areas = areaFinder.MapAreas;
-            if (randomizeAreaOrder)
-            {
-                areas = new List<MapArea>(areas);
-            }
 
             var ds = new DisjointSet(areaFinder.Count);
             while (ds.Count > 1) // Haven't unioned all sets into one

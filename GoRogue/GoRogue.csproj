@@ -70,7 +70,7 @@
     <Compile Include="ISettableMapOf.cs" />
     <Compile Include="ISpatialMap.cs" />
     <Compile Include="LOS.cs" />
-    <Compile Include="MapGeneration\Connectors\RandomPointArea.cs" />
+    <Compile Include="MapGeneration\Connectors\ClosestMapArea.cs" />
     <Compile Include="MapGeneration\Generators\CellularAutomata.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />
     <Compile Include="MapGeneration\MapAreaFinder.cs" />
