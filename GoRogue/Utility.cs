@@ -78,5 +78,15 @@ namespace GoRogue
 
             return rng.Next(list.Count - 1);
         }
+
+        /// <summary>
+        /// Extension method for IEnumerable that converts the IEnumerable into a list.  This may be useful for any of the various methods in
+        /// the GoRogue library that return IEnumerables, where you actually want to store the returned items for repeated use/iteration, etc.
+        /// The function simply provides a shorter syntax to create a new list and pass in the IEnumerable to the constructor.
+        /// </summary>
+        /// <typeparam name="T">The type of elements in the IEnumerable.</typeparam>
+        /// <param name="enumerable">The IEnumerable to convert to List -- never specified manually as this is an extension method.</param>
+        /// <returns>A list containing all the items referenced by the IEnumerable value it is called on.</returns>
+        static public List<T> ToList<T>(this IEnumerable<T> enumerable) => new List<T>(enumerable);
     }
 }
