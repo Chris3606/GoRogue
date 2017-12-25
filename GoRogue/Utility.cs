@@ -52,10 +52,10 @@ namespace GoRogue
         /// for type T is returned if the list is empty.
         /// </summary>
         /// <typeparam name="T">Type of elements in the list.</typeparam>
-        /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
+        /// <param name="list">IList being operated on -- never specified manually as this is an extension method.</param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Item selected.</returns>
-        static public T RandomItem<T>(this List<T> list, IRandom rng)
+        static public T RandomItem<T>(this IList<T> list, IRandom rng)
         {
             if (list.Count == 0)
                 return default(T);
@@ -68,10 +68,10 @@ namespace GoRogue
         /// -1 is returned if the list is empty.
         /// </summary>
         /// <typeparam name="T">Type of elements in the list.</typeparam>
-        /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
+        /// <param name="list">IList being operated on -- never specified manually as this is an extension method.</param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Index selected.</returns>
-        static public int RandomIndex<T>(this List<T> list, IRandom rng)
+        static public int RandomIndex<T>(this IList<T> list, IRandom rng)
         {
             if (list.Count == 0)
                 return -1;
