@@ -72,6 +72,7 @@
     <Compile Include="LOS.cs" />
     <Compile Include="MapGeneration\Connectors\AreaConnectionStrategy.cs" />
     <Compile Include="MapGeneration\Connectors\ClosestMapArea.cs" />
+    <Compile Include="MapGeneration\Connectors\OrderedMapArea.cs" />
     <Compile Include="MapGeneration\Connectors\TunnelGeneration.cs" />
     <Compile Include="MapGeneration\Generators\CellularAutomata.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />

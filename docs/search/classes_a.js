@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['sensemap',['SenseMap',['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html',1,'GoRogue::SenseMapping']]],
-  ['sensesource',['SenseSource',['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html',1,'GoRogue::SenseMapping']]],
-  ['singletonrandom',['SingletonRandom',['../class_go_rogue_1_1_random_1_1_singleton_random.html',1,'GoRogue::Random']]],
-  ['spatialmap',['SpatialMap',['../class_go_rogue_1_1_spatial_map.html',1,'GoRogue']]]
+  ['radius',['Radius',['../class_go_rogue_1_1_radius.html',1,'GoRogue']]],
+  ['radiusareaprovider',['RadiusAreaProvider',['../class_go_rogue_1_1_radius_area_provider.html',1,'GoRogue']]],
+  ['randomrooms',['RandomRooms',['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_random_rooms.html',1,'GoRogue::MapGeneration::Generators']]],
+  ['rectangle',['Rectangle',['../struct_go_rogue_1_1_rectangle.html',1,'GoRogue']]],
+  ['rectanglemap',['RectangleMap',['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map.html',1,'GoRogue::MapGeneration::Generators']]]
 ];

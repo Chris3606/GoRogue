@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['infinite',['INFINITE',['../class_go_rogue_1_1_effect.html#a3c058f3d4d0676a13c657d9cc9271ecb',1,'GoRogue::Effect']]],
-  ['instant',['INSTANT',['../class_go_rogue_1_1_effect.html#ae3b893d3ccdef98561ab5e85f30eb248',1,'GoRogue::Effect']]]
+  ['manhattan',['MANHATTAN',['../class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0',1,'GoRogue::Distance']]],
+  ['map',['Map',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#acdbc25e30074a4e5b4a193f8e7bf780a',1,'GoRogue::MapGeneration::MapAreaFinder']]]
 ];

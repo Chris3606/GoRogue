@@ -19,8 +19,6 @@ namespace GoRogue.MapGeneration.Connectors
     /// </remarks>
     static public class ClosestMapArea
     {
-        private delegate List<Coord> TunnelFinder(Coord start, Coord end);
-
         /// <summary>
         /// Connects the map given using the algorithm described in the class description.  The shape given is used
         /// to determine the proper distance calculation.  The default RNG is used for any random numbers needed.
@@ -64,12 +62,6 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="rng">The rng to use for any random numbers needed.</param>
         static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng)
         {
-            TunnelFinder tunneler;
-            if (distanceCalc == Distance.MANHATTAN)
-                tunneler = Coord.CardinalPositionsOnLine;
-            else
-                tunneler = Coord.PositionsOnLine;
-
             var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 
             var ds = new DisjointSet(areas.Count);
@@ -83,22 +75,8 @@ namespace GoRogue.MapGeneration.Connectors
                                       areas[i].Positions.RandomItem(rng) : areas[i].Bounds.Center;
                     Coord iClosestCoord = (areaConnector == AreaConnectionStrategy.RANDOM_POINT) ?
                                           areas[iClosest].Positions.RandomItem(rng) : areas[iClosest].Bounds.Center;
-                    
-                    List<Coord> tunnelPositions = tunneler(iCoord, iClosestCoord);
 
-                    Coord previous = null;
-                    foreach (var pos in tunnelPositions)
-                    {
-                        map[pos] = true;
-                        // Previous cell, and we're going vertical, go 2 wide so it looks nicer
-                        // Make sure not to break rectangles (less than last index)!
-                        if (previous != null) // TODO: Make double wide vert an option
-                            if (pos.Y != previous.Y)
-                                if (pos.X + 1 < map.Width - 1)
-                                    map[pos.X + 1, pos.Y] = true;
-
-                        previous = pos;
-                    }
+                    TunnelGeneration.DirectLineTunnel(map, distanceCalc, iCoord, iClosestCoord);
                     ds.MakeUnion(i, iClosest);
                 }
             }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Generators
@@ -63,23 +62,6 @@ namespace GoRogue.MapGeneration.Generators
 
             foreach (var room in rooms)
                 createRoom(map, room);
-
-            for (int i = 1; i < rooms.Count; i++)
-            {
-                Coord prevRoomCenter = rooms[i - 1].Center;
-                Coord currRoomCenter = rooms[i].Center;
-
-                if (rng.Next(2) == 0) // Favors vertical tunnels
-                {
-                    createHTunnel(map, prevRoomCenter.X, currRoomCenter.X, prevRoomCenter.Y);
-                    createVTunnel(map, prevRoomCenter.Y, currRoomCenter.Y, currRoomCenter.X);
-                }
-                else
-                {
-                    createVTunnel(map, prevRoomCenter.Y, currRoomCenter.Y, prevRoomCenter.X);
-                    createHTunnel(map, prevRoomCenter.X, currRoomCenter.X, currRoomCenter.Y);
-                }
-            }
         }
 
         // TODO: ConnectRooms function that can connect the rooms properly, in method specific
@@ -98,18 +80,6 @@ namespace GoRogue.MapGeneration.Generators
             for (int x = room.X + 1; x < room.MaxX; x++)
                 for (int y = room.Y + 1; y < room.MaxY; y++)
                     map[x, y] = true;
-        }
-
-        static private void createHTunnel(ISettableMapOf<bool> map, int xStart, int xEnd, int yPos)
-        {
-            for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
-                map[x, yPos] = true;
-        }
-
-        static private void createVTunnel(ISettableMapOf<bool> map, int yStart, int yEnd, int xPos)
-        {
-            for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
-                map[xPos, y] = true;
         }
     }
 }

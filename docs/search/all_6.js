@@ -1,10 +1,12 @@
 var searchData=
 [
+  ['connectors',['Connectors',['../namespace_go_rogue_1_1_map_generation_1_1_connectors.html',1,'GoRogue::MapGeneration']]],
   ['dicenotation',['DiceNotation',['../namespace_go_rogue_1_1_dice_notation.html',1,'GoRogue']]],
   ['exceptions',['Exceptions',['../namespace_go_rogue_1_1_dice_notation_1_1_exceptions.html',1,'GoRogue::DiceNotation']]],
   ['gaussianrandom',['GaussianRandom',['../class_go_rogue_1_1_random_1_1_gaussian_random.html#a29911af7572bbc00712d968522fd3a45',1,'GoRogue.Random.GaussianRandom.GaussianRandom()'],['../class_go_rogue_1_1_random_1_1_gaussian_random.html#a4b6b0ae294d47bd22c93bc55e77905aa',1,'GoRogue.Random.GaussianRandom.GaussianRandom(int seed)']]],
   ['gaussianrandom',['GaussianRandom',['../class_go_rogue_1_1_random_1_1_gaussian_random.html',1,'GoRogue::Random']]],
-  ['generate',['Generate',['../class_go_rogue_1_1_map_generation_1_1_cellular_automata_map_generator.html#a7bb3b9ee8c6b1c657d60c26687380716',1,'GoRogue.MapGeneration.CellularAutomataMapGenerator.Generate()'],['../interface_go_rogue_1_1_map_generation_1_1_i_map_generator.html#a37640c8bcf95205f0acf499bb2e41d9d',1,'GoRogue.MapGeneration.IMapGenerator.Generate()'],['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html#a625a917135a688d0a3ca97e4e6ce85af',1,'GoRogue.MapGeneration.RandomRoomsMapGenerator.Generate()'],['../class_go_rogue_1_1_map_generation_1_1_rectangle_map_generator.html#adb0ee85af1657d81be561e267ed90d94',1,'GoRogue.MapGeneration.RectangleMapGenerator.Generate()']]],
+  ['generate',['Generate',['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_cellular_automata.html#a2deef83e80496fd49268cb2c59dee0ef',1,'GoRogue.MapGeneration.Generators.CellularAutomata.Generate()'],['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_random_rooms.html#a4c19d3e484a95ebd89fc0b60c86ede5d',1,'GoRogue.MapGeneration.Generators.RandomRooms.Generate()'],['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map.html#aaf99e546423bbc3de68754d8b50e46fb',1,'GoRogue.MapGeneration.Generators.RectangleMap.Generate()']]],
+  ['generators',['Generators',['../namespace_go_rogue_1_1_map_generation_1_1_generators.html',1,'GoRogue::MapGeneration']]],
   ['get',['Get',['../class_go_rogue_1_1_coord.html#ae25bcfd7c2943acb6de3431c6c33a423',1,'GoRogue::Coord']]],
   ['getcardinaldirection',['GetCardinalDirection',['../class_go_rogue_1_1_direction.html#ad5e53e475adbe80aeef73f995f461395',1,'GoRogue::Direction']]],
   ['getdirection',['GetDirection',['../class_go_rogue_1_1_direction.html#a6ec7363dc63ac89b1abad4aaa0f7d0a1',1,'GoRogue::Direction']]],

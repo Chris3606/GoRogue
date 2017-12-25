@@ -13,5 +13,6 @@ var searchData=
   ['operator_2d_2d',['operator--',['../class_go_rogue_1_1_direction.html#a02ec750df9dd8b6cb8f1136dfcbb4fce',1,'GoRogue::Direction']]],
   ['operator_2f',['operator/',['../class_go_rogue_1_1_coord.html#a05126e5f483a45c7ace9d19024d5d8c3',1,'GoRogue.Coord.operator/(Coord c, int i)'],['../class_go_rogue_1_1_coord.html#a543f9097b9d72c30371de189b057d65c',1,'GoRogue.Coord.operator/(Coord c, double i)']]],
   ['operator_3d_3d',['operator==',['../class_go_rogue_1_1_coord.html#a0751c6d23fb0544ee4d61fe3e47f20cb',1,'GoRogue.Coord.operator==()'],['../struct_go_rogue_1_1_rectangle.html#a4cde014b79bb582bbdf457e5f7e6ab02',1,'GoRogue.Rectangle.operator==()']]],
+  ['orderedmaparea',['OrderedMapArea',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area.html',1,'GoRogue::MapGeneration::Connectors']]],
   ['outwards',['Outwards',['../class_go_rogue_1_1_direction.html#a916e25125cd66841e71a9c25e18bb493',1,'GoRogue::Direction']]]
 ];

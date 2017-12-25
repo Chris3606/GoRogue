@@ -17,6 +17,7 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(30, 30);
             Generators.RandomRooms.Generate(map, 7, 4, 7, 5, random);
+            Connectors.OrderedMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.CENTER_BOUNDS, random);
 
             displayMap(map);
             // TODO: Some assert here

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['sphere',['SPHERE',['../class_go_rogue_1_1_radius.html#a2281b1e1c473daa50e82f0d2ff3573c2',1,'GoRogue::Radius']]],
-  ['square',['SQUARE',['../class_go_rogue_1_1_radius.html#ab4af6984998acda800053baf92f9dbd6',1,'GoRogue::Radius']]]
+  ['x',['X',['../class_go_rogue_1_1_coord.html#a8b7a017cfef4c432d60bbb609da7d74e',1,'GoRogue::Coord']]]
 ];
