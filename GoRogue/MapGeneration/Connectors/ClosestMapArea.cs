@@ -6,7 +6,7 @@ namespace GoRogue.MapGeneration.Connectors
     /// <summary>
     /// Specifies the method of connecting two areas.
     /// </summary>
-    public enum AreaConnectionType
+    public enum AreaConnectionStrategy
     {
         /// <summary>
         /// Connects two areas by choosing random points from the list of coordinates in each area, and connecting
@@ -14,7 +14,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// </summary>
         RANDOM_POINT,
         /// <summary>
-        /// Connects two areas by connecting the center point of the bounding rectangle for each area.
+        /// Connects two areas by connecting the center points of the bounding rectangle for each area.
         /// On concave shapes, the center point of the bounding rectangle is not guaranteed to have a walkable
         /// connection to the rest of the area, so when concave map areas are present this may not connect areas properly.
         /// </summary>
@@ -23,7 +23,9 @@ namespace GoRogue.MapGeneration.Connectors
 
     static public class ClosestMapArea
     {
-        static public void Connect(ISettableMapOf<bool> map, IRandom rng)
+        static public void Connect(ISettableMapOf<bool> map, AreaConnectionStrategy areaConnector) => Connect(map, areaConnector, SingletonRandom.DefaultRNG);
+
+        static public void Connect(ISettableMapOf<bool> map, AreaConnectionStrategy areaConnector, IRandom rng)
         {
             var areas = new List<MapArea>(MapAreaFinder.MapAreas(map, Distance.MANHATTAN));
 
@@ -34,11 +36,12 @@ namespace GoRogue.MapGeneration.Connectors
                 {
                     int iClosest = findNearestMapArea(areas, i, ds);
 
-                    int iCoordIndex = rng.Next(areas[i].Positions.Count - 1);
-                    int iClosestCoordIndex = rng.Next(areas[iClosest].Positions.Count - 1);
-                    // Choose from MapArea to make sure we actually get an open Coord on both sides
-                    List<Coord> tunnelPositions = Coord.CardinalPositionsOnLine(areas[i].Positions[iCoordIndex],
-                                                                        areas[iClosest].Positions[iClosestCoordIndex]);
+                    Coord iCoord = (areaConnector == AreaConnectionStrategy.RANDOM_POINT) ? 
+                                      areas[i].Positions.RandomItem(rng) : areas[i].Bounds.Center;
+                    Coord iClosestCoord = (areaConnector == AreaConnectionStrategy.CENTER_BOUNDS) ?
+                                          areas[iClosest].Positions.RandomItem(rng) : areas[iClosest].Bounds.Center;
+                    
+                    List<Coord> tunnelPositions = Coord.CardinalPositionsOnLine(iCoord, iClosestCoord);
 
                     Coord previous = null;
                     foreach (var pos in tunnelPositions)
