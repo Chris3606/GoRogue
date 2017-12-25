@@ -5,7 +5,6 @@ using Connectors = GoRogue.MapGeneration.Connectors;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace GoRogue_UnitTests
 {
@@ -29,7 +28,7 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-            Connectors.ClosestMapArea.Connect(map, random);
+            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
 
             displayMap(map);
 
@@ -42,15 +41,15 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-            Connectors.ClosestMapArea.Connect(map, random);
+            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
 
             for (int i = 0; i < 500; i++)
             {
                 Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-                Connectors.ClosestMapArea.Connect(map, random);
+                Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
 
                 // Ensure it's connected
-                var areas = new List<MapArea>(MapAreaFinder.MapAreas(map, Distance.MANHATTAN));
+                var areas = MapAreaFinder.MapAreas(map, Distance.MANHATTAN).ToList();
                 Assert.AreEqual(1, areas.Count);
 
                 // Ensure it's enclosed
