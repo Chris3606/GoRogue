@@ -32,8 +32,8 @@ namespace GoRogue_UnitTests
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.RectangleMap.Generate(map);
 
-            var areas = MapAreaFinder.MapAreas(map, Distance.MANHATTAN).ToList();
-            foreach (var area in MapAreaFinder.MapAreas(map, Distance.MANHATTAN))
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+            foreach (var area in areas)
                 Console.WriteLine(area.Bounds);
 
             Assert.AreEqual(1, areas.Count);
@@ -48,7 +48,7 @@ namespace GoRogue_UnitTests
             for (int y = 0; y < 50; y++)
                 map[40, y] = false;
 
-            var areas = MapAreaFinder.MapAreas(map, Distance.MANHATTAN).ToList();
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
 
             Assert.AreEqual(2, areas.Count);
         }
@@ -64,7 +64,7 @@ namespace GoRogue_UnitTests
 
             map[40, 25] = true;
 
-            var areas = MapAreaFinder.MapAreas(map, Distance.MANHATTAN).ToList();
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
 
             Assert.AreEqual(1, areas.Count);
         }

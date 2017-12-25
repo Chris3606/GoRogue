@@ -49,7 +49,7 @@ namespace GoRogue_UnitTests
                 Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
 
                 // Ensure it's connected
-                var areas = MapAreaFinder.MapAreas(map, Distance.MANHATTAN).ToList();
+                var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
                 Assert.AreEqual(1, areas.Count);
 
                 // Ensure it's enclosed

@@ -70,7 +70,7 @@ namespace GoRogue.MapGeneration.Connectors
             else
                 tunneler = Coord.PositionsOnLine;
 
-            var areas = MapAreaFinder.MapAreas(map, distanceCalc).ToList();
+            var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 
             var ds = new DisjointSet(areas.Count);
             while (ds.Count > 1) // Haven't unioned all sets into one
