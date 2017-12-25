@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Connectors
@@ -10,23 +8,23 @@ namespace GoRogue.MapGeneration.Connectors
     /// </summary>
     static public class OrderedMapArea
     {
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, bool randomizeOrder = true)
-            => Connect(map, distanceCalc, areaConnector, SingletonRandom.DefaultRNG, randomizeOrder);
         // Random order, or same based on map areas if randomizeOrder is false.
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng, bool randomizeOrder = true)
+        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng = null, bool randomizeOrder = true)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
             if (randomizeOrder)
                 areas.FisherYatesShuffle(rng);
 
-            Connect(map, areaConnector, rng, areas);
+            Connect(map, areaConnector, areas, rng);
         }
 
-        static public void Connect(ISettableMapOf<bool> map, AreaConnectionStrategy areaConnector, IList<MapArea> mapAreas)
-            => Connect(map, areaConnector, SingletonRandom.DefaultRNG, mapAreas);
         // Defined order set by list passed in.
-        static public void Connect(ISettableMapOf<bool> map, AreaConnectionStrategy areaConnector, IRandom rng, IList<MapArea> mapAreas)
+        static public void Connect(ISettableMapOf<bool> map, AreaConnectionStrategy areaConnector, IList<MapArea> mapAreas, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             for (int i = 1; i < mapAreas.Count; i++)
             {
                 Coord prevRoomConnection;
@@ -43,7 +41,7 @@ namespace GoRogue.MapGeneration.Connectors
                     curRoomConnection = mapAreas[i].Bounds.Center;
                 }
 
-                TunnelGeneration.HorizontalVerticalTunnel(map, rng, prevRoomConnection, curRoomConnection);
+                TunnelGeneration.HorizontalVerticalTunnel(map, prevRoomConnection, curRoomConnection, rng);
             }
         }
     }

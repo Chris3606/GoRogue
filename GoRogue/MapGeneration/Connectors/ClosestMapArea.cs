@@ -20,48 +20,30 @@ namespace GoRogue.MapGeneration.Connectors
     static public class ClosestMapArea
     {
         /// <summary>
-        /// Connects the map given using the algorithm described in the class description.  The shape given is used
-        /// to determine the proper distance calculation.  The default RNG is used for any random numbers needed.
+        /// Connects the map given using the algorithm described in the class description.  If null is specified
+        /// as the RNG, the default RNG is used.
         /// </summary>
         /// <param name="map">The map to connect.</param>
         /// <param name="shape">The shape of a radius -- used to determine distance calculation.</param>
         /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
         /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        static public void Connect(ISettableMapOf<bool> map, Radius shape, AreaConnectionStrategy areaConnector) => 
-            Connect(map, (Distance)shape, areaConnector, SingletonRandom.DefaultRNG);
-
-        /// <summary>
-        /// Connects the map given using the algorithm described in the class description.  The default RNG is used for
-        /// any random numbers needed.
-        /// </summary>
-        /// <param name="map">The map to connect.</param>
-        /// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
-        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
-        /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector) =>
-            Connect(map, distanceCalc, areaConnector, SingletonRandom.DefaultRNG);
-
-        /// <summary>
-        /// Connects the map given using the algorithm described in the class description.
-        /// </summary>
-        /// <param name="map">The map to connect.</param>
-        /// <param name="shape">The shape of a radius -- used to determine distance calculation.</param>
-        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
-        /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        /// <param name="rng">The rng to use for any random numbers needed.</param>
-        static public void Connect(ISettableMapOf<bool> map, Radius shape, AreaConnectionStrategy areaConnector, IRandom rng) =>
+        /// <param name="rng">The rng to use for any random numbers needed. null will result in the default RNG being used.</param>
+        static public void Connect(ISettableMapOf<bool> map, Radius shape, AreaConnectionStrategy areaConnector, IRandom rng = null) =>
             Connect(map, (Distance)shape, areaConnector, rng);
 
         /// <summary>
-        /// Connects the map given using the algorithm described in the class description.
+        /// Connects the map given using the algorithm described in the class description. If null is specified
+        /// as the RNG, the default RNG is used.
         /// </summary>
         /// <param name="map">The map to connect.</param>
         /// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
         /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
         /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        /// <param name="rng">The rng to use for any random numbers needed.</param>
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng)
+        /// <param name="rng">The rng to use for any random numbers needed.  null will result in the default RNG being used.</param>
+        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 
             var ds = new DisjointSet(areas.Count);

@@ -43,8 +43,10 @@ namespace GoRogue.MapGeneration.Connectors
 
         // TODO: Temp: These will implement and ITunnelGenerator later.  An enum will map to all given classes, seperate
         // one taking function isntead of that enum type will be how to specify arbitrary ones.
-        static public void HorizontalVerticalTunnel(ISettableMapOf<bool> map, IRandom rng, Coord start, Coord end)
+        static public void HorizontalVerticalTunnel(ISettableMapOf<bool> map, Coord start, Coord end, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             if (rng.Next(2) == 0) // Favors vertical tunnels
             {
                 createHTunnel(map, start.X, end.X, start.Y);
