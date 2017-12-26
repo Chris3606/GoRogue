@@ -12,37 +12,29 @@ namespace GoRogue.MapGeneration.Connectors
     /// Then, we iterate through each area, find the closest area that is not already conencted to the current area,
     /// and create a tunnel between the two.  Distance between to areas is measured as the distance between the center
     /// point of the bounding boxes of those areas.
-    /// 
-    /// If the RANDOM_POINT AreaConnectionStrategy is selected, two random points are selected that are actually within
-    /// the given areas -- thus this will connect maps with concave-shaped areas.  If CENTER_BOUNDS is selected,
-    /// maps with concave areas may not be connected properly.
     /// </remarks>
     static public class ClosestMapArea
     {
         /// <summary>
-        /// Connects the map given using the algorithm described in the class description.  If null is specified
-        /// as the RNG, the default RNG is used.
+        /// Connects the map given using the algorithm described in the class description.
         /// </summary>
         /// <param name="map">The map to connect.</param>
         /// <param name="shape">The shape of a radius -- used to determine distance calculation.</param>
-        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
-        /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        /// <param name="rng">The rng to use for any random numbers needed. null will result in the default RNG being used.</param>
-        static public void Connect(ISettableMapOf<bool> map, Radius shape, AreaConnectionStrategy areaConnector, IRandom rng = null) =>
-            Connect(map, (Distance)shape, areaConnector, rng);
+        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with concave areas -- see respective class
+        /// documentation for details.</param>
+        static public void Connect(ISettableMapOf<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null) =>
+            Connect(map, (Distance)shape, areaConnector);
 
         /// <summary>
-        /// Connects the map given using the algorithm described in the class description. If null is specified
-        /// as the RNG, the default RNG is used.
+        /// Connects the map given using the algorithm described in the class description.
         /// </summary>
         /// <param name="map">The map to connect.</param>
         /// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
-        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with
-        /// concave areas -- see AreaConnectionStrategy enum documentation for details.</param>
-        /// <param name="rng">The rng to use for any random numbers needed.  null will result in the default RNG being used.</param>
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, AreaConnectionStrategy areaConnector, IRandom rng = null)
+        /// <param name="areaConnector">The area connection strategy to use.  Not all methods function on maps with concave areas -- see respective class
+        /// documentation for details.</param>
+        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 
             var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 
@@ -53,12 +45,9 @@ namespace GoRogue.MapGeneration.Connectors
                 {
                     int iClosest = findNearestMapArea(areas, distanceCalc, i, ds);
 
-                    Coord iCoord = (areaConnector == AreaConnectionStrategy.RANDOM_POINT) ? 
-                                      areas[i].Positions.RandomItem(rng) : areas[i].Bounds.Center;
-                    Coord iClosestCoord = (areaConnector == AreaConnectionStrategy.RANDOM_POINT) ?
-                                          areas[iClosest].Positions.RandomItem(rng) : areas[iClosest].Bounds.Center;
+                    var connectionPoints = areaConnector.SelectConnectionPoints(areas[i], areas[iClosest]);
 
-                    TunnelGeneration.DirectLineTunnel(map, distanceCalc, iCoord, iClosestCoord);
+                    TunnelGeneration.DirectLineTunnel(map, distanceCalc, connectionPoints.Item1, connectionPoints.Item2);
                     ds.MakeUnion(i, iClosest);
                 }
             }

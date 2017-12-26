@@ -17,7 +17,7 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(30, 30);
             Generators.RandomRooms.Generate(map, 7, 4, 7, 5, random);
-            Connectors.OrderedMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.CENTER_BOUNDS, random);
+            Connectors.OrderedMapArea.Connect(map, Distance.MANHATTAN, new Connectors.CenterBoundsConnectionPointSelector(), random);
 
             displayMap(map);
             // TODO: Some assert here
@@ -29,7 +29,7 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
+            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(random));
 
             displayMap(map);
 
@@ -42,12 +42,12 @@ namespace GoRogue_UnitTests
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
             Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
+            Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(random));
 
             for (int i = 0; i < 500; i++)
             {
                 Generators.CellularAutomata.Generate(map, random, 40, 7, 4);
-                Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, Connectors.AreaConnectionStrategy.RANDOM_POINT, random);
+                Connectors.ClosestMapArea.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(random));
 
                 // Ensure it's connected
                 var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
