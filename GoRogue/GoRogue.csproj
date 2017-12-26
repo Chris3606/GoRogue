@@ -72,7 +72,10 @@
     <Compile Include="LOS.cs" />
     <Compile Include="MapGeneration\Connectors\CenterBoundsConnectionPointSelector.cs" />
     <Compile Include="MapGeneration\Connectors\ClosestMapArea.cs" />
+    <Compile Include="MapGeneration\Connectors\DirectLineTunnelCreator.cs" />
+    <Compile Include="MapGeneration\Connectors\HorizontalVerticalTunnelCreator.cs" />
     <Compile Include="MapGeneration\Connectors\IAreaConnectionPointSelector.cs" />
+    <Compile Include="MapGeneration\Connectors\ITunnelCreator.cs" />
     <Compile Include="MapGeneration\Connectors\OrderedMapArea.cs" />
     <Compile Include="MapGeneration\Connectors\RandomConnectionPointSelector.cs" />
     <Compile Include="MapGeneration\Connectors\TunnelGeneration.cs" />
