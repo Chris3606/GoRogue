@@ -24,13 +24,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="random">Not used for this implementation of IDiceExpressionTerm</param>
         /// <returns>An IEnumerable of TermResult, which will always have a single result with a scalar of 1, and a value of the constant.</returns>
-        public IEnumerable<TermResult> GetResults(IRandom random) => GetResults();
-
-        /// <summary>
-        /// Gets the TermResult for this ConstantTerm, which will always be a single result with a scalar of 1 and a value of the constant.
-        /// </summary>
-        /// <returns>An IEnumerable of TermResult, which will always have a single result with a scalar of 1, and a value of the constant.</returns>
-        public IEnumerable<TermResult> GetResults() => new[] { new TermResult { Scalar = 1, Value = constant, TermType = "constant" } };
+        public IEnumerable<TermResult> GetResults(IRandom random = null) => new[] { new TermResult { Scalar = 1, Value = constant, TermType = "constant" } };
 
         /// <summary>
         /// Returns a string that represents this ConstantTerm.

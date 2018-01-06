@@ -73,12 +73,13 @@ namespace GoRogue.DiceNotation.Terms
         }
 
         /// <summary>
-        /// Gets the TermResult for this DiceTerm which will include the random value rolled
+        /// Gets the TermResult for this DiceTerm which will include the random value rolled.  If null is specified, the default RNG is used.
         /// </summary>
         /// <param name="random">IRandom RNG used to perform the Roll.</param>
         /// <returns>An IEnumerable of TermResult which will have one item per die rolled</returns>
-        public IEnumerable<TermResult> GetResults(IRandom random)
+        public IEnumerable<TermResult> GetResults(IRandom random = null)
         {
+            if (random == null) random = SingletonRandom.DefaultRNG;
             IEnumerable<TermResult> results =
                 from i in Enumerable.Range(0, Multiplicity)
                 select new TermResult
@@ -89,13 +90,6 @@ namespace GoRogue.DiceNotation.Terms
                 };
             return results.OrderByDescending(d => d.Value).Take(Choose);
         }
-
-        /// <summary>
-        /// Gets the TermResult for this DiceTerm which will include the random value rolled
-        /// </summary>
-        /// <returns>An IEnumerable of TermResult which will have one item per die rolled</returns>
-        /// <remarks>Uses DotNetRandom as its RNG</remarks>
-        public IEnumerable<TermResult> GetResults() => GetResults(SingletonRandom.DefaultRNG);
 
         /// <summary>
         /// Returns a string that represents this DiceTerm

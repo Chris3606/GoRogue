@@ -20,25 +20,19 @@ namespace GoRogue.DiceNotation
         public static DiceExpression Parse(string expression) => diceParser.Parse(expression);
 
         /// <summary>
-        /// A convenience method for parsing a dice expression from a string, rolling the dice with a given IRandom instance, and returning the total.  If you need to do a roll only once,
+        /// A convenience method for parsing a dice expression from a string, rolling the dice with a given IRandom instance (or the default RNG if null is specified),
+        /// and returning the total.  If you need to do a roll only once,
         /// this method or its overload would be the one to use.  If you will be repeating the roll, particularly if you are repeating it multiple times and care about speed, it is probably best to
         /// instead use the Parse function, retrieve a DiceExpression, and then use its roll function.  This prevents the regex pattern from being matched against more than once (which is relatively
         /// expensive compared to the other operations).
         /// </summary>
         /// <param name="expression">The string dice expression to parse. Ex. 3d6+4.</param>
-        /// <param name="random">IRandom RNG to use to perform the Roll.</param>
+        /// <param name="random">IRandom RNG to use to perform the Roll.  </param>
         /// <returns>An integer representing the sum of the dice rolled, including constants and scalars in the expression.</returns>
-        public static int Roll(string expression, IRandom random) => Parse(expression).Roll(random).Value;
-
-        /// <summary>
-        /// A convenience method for parsing a dice expression from a string, rolling the dice, and returning the total, using the default random number generator (a DotNetRandom instance).  If you need to
-        /// do a roll only once, this method or its overload would be the one to use.  If you will be repeating the roll, particularly if you are repeating it multiple times and care about speed,
-        /// it is probably best to instead use the Parse function, retrieve a DiceExpression, and then use its roll function.  This prevents the regex pattern from being matched against more than once
-        /// (which is relatively expensive compared to the other operations).
-        /// </summary>
-        /// <param name="expression">The string dice expression to parse. Ex. 3d6+4.</param>
-        /// <returns>An integer representing the sum of the dice rolled, including constants and scalars in the expression.</returns>
-        /// <remarks>Uses DotNetRandom as its RNG</remarks>
-        public static int Roll(string expression) => Roll(expression, SingletonRandom.DefaultRNG);
+        public static int Roll(string expression, IRandom random = null)
+        {
+            if (random == null) random = SingletonRandom.DefaultRNG;
+            return Parse(expression).Roll(random).Value;
+        }
     }
 }

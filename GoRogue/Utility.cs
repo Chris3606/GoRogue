@@ -34,8 +34,10 @@ namespace GoRogue
         /// <typeparam name="T">Type of elements in the list.</typeparam>
         /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
         /// <param name="rng">RNG to use.</param>
-        static public void FisherYatesShuffle<T>(this List<T> list, IRandom rng)
+        static public void FisherYatesShuffle<T>(this List<T> list, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             int n = list.Count;
             while (n > 1)
             {
@@ -55,8 +57,10 @@ namespace GoRogue
         /// <param name="list">IList being operated on -- never specified manually as this is an extension method.</param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Item selected.</returns>
-        static public T RandomItem<T>(this IList<T> list, IRandom rng)
+        static public T RandomItem<T>(this IList<T> list, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             if (list.Count == 0)
                 return default(T);
 
@@ -71,8 +75,10 @@ namespace GoRogue
         /// <param name="list">IList being operated on -- never specified manually as this is an extension method.</param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Index selected.</returns>
-        static public int RandomIndex<T>(this IList<T> list, IRandom rng)
+        static public int RandomIndex<T>(this IList<T> list, IRandom rng = null)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             if (list.Count == 0)
                 return -1;
 

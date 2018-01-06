@@ -7,9 +7,8 @@
     public static class SingletonRandom
     {
         /// <summary>
-        /// Returns a DotNetRandom instance that can be used as a default RNG.
-        /// Settable in case a custom default RNG is desired, however defaults to
-        /// DotNetRandom with TickCount seed.
+        /// Settable field that specifies what IRandom instance should be considered the default RNG.  Defaults to
+        /// DotNetRandom with TickCount used as seed.
         /// </summary>
         public static IRandom DefaultRNG = new DotNetRandom();
     }

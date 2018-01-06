@@ -84,21 +84,16 @@ namespace GoRogue.DiceNotation
         }
 
         /// <summary>
-        /// Roll all of the Dice that are part of this DiceExpression.
+        /// Roll all of the Dice that are part of this DiceExpression using the given RNG, or the default RNG if null is specified.
         /// </summary>
         /// <param name="random">IRandom RNG used to perform the Roll.</param>
         /// <returns>A DiceResult representing the results of this Roll.</returns>
-        public DiceResult Roll(IRandom random)
+        public DiceResult Roll(IRandom random = null)
         {
+            if (random == null) random = SingletonRandom.DefaultRNG;
             IEnumerable<TermResult> termResults = terms.SelectMany(t => t.GetResults(random)).ToList();
             return new DiceResult(termResults, random);
         }
-
-        /// <summary>
-        /// Roll all of the Dice that are part of this DiceExpression.  Uses DotNetRandom as its RNG.
-        /// </summary>
-        /// <returns>A DiceResult representing the results of this Roll.</returns>
-        public DiceResult Roll() => Roll(SingletonRandom.DefaultRNG);
 
         /// <summary>
         /// Roll all of the Dice that are part of this DiceExpression, but force all of the rolls to be the lowest possible result.
