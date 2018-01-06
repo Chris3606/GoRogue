@@ -4,12 +4,16 @@ using System;
 namespace GoRogue.MapGeneration.Connectors
 {
     /// <summary>
-    /// Implements a tunnel creation algorithm that performs all vertical movement before horizontal movement, or vice versa.
+    /// Implements a tunnel creation algorithm that creates a tunnel that performs all needed vertical movement before horizontal movement, or vice versa (depending
+    /// on rng).
     /// </summary>
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
         private IRandom rng;
-
+        /// <summary>
+        /// Constructor.  Takes rng to use -- if null is specified, the default RNG is used.
+        /// </summary>
+        /// <param name="rng">Rng to use -- if null is specified, the default RNG is used.</param>
         public HorizontalVerticalTunnelCreator(IRandom rng = null)
         {
             if (rng == null)
@@ -18,6 +22,12 @@ namespace GoRogue.MapGeneration.Connectors
                 this.rng = rng;
         }
 
+        /// <summary>
+        /// Implmenets the algorithm, creating the tunnel as specified in the class description.
+        /// </summary>
+        /// <param name="map">The map to create the tunnel on.</param>
+        /// <param name="start">Start coordinate of the tunnel.</param>
+        /// <param name="end">End coordinate of the tunnel.</param>
         public void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;

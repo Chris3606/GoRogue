@@ -14,7 +14,7 @@ namespace GoRogue.MapGeneration.Generators
     /// be performed after the ArrayMapOf is set.  Attempting to do any expensive allocation/operations
     /// in the setting functions of a SettableMapOf given to the algorithm may result in performance deterioration.
     /// </remarks>
-    static public class RandomRooms
+    static public class RandomRoomsGenerator
     {
         /// <summary>
         /// Generates the map.  After this function has been completed, non-passable tiles will have a value of false

@@ -133,7 +133,7 @@ namespace GoRogue_UnitTests
             var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
             var resMap = new ArrayMapOf<double>(mapWidth, mapHeight);
 
-            Generators.RectangleMap.Generate(map);
+            Generators.RectangleMapGenerator.Generate(map);
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)

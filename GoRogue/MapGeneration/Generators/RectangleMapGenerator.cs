@@ -7,7 +7,7 @@
     /// Generate takes as parameter a settable map -- after generation, impassable tiles will be set to false, whereas
     /// passable ones will be set to true.
     /// </remarks>
-    static public class RectangleMap
+    static public class RectangleMapGenerator
     {
         /// <summary>
         /// Generates the map, setting the map given as a "walkability map".  Wall tiles

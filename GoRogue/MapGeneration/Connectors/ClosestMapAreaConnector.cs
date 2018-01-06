@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -13,7 +12,7 @@ namespace GoRogue.MapGeneration.Connectors
     /// and create a tunnel between the two.  Distance between to areas is measured as the distance between the center
     /// point of the bounding boxes of those areas.
     /// </remarks>
-    static public class ClosestMapArea
+    static public class ClosestMapAreaConnector
     {
         /// <summary>
         /// Connects the map given using the algorithm described in the class description.

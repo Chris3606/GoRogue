@@ -20,7 +20,7 @@ namespace GoRogue.MapGeneration.Generators
 	/// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below:
 	/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
 	/// </remarks>
-	static public class CellularAutomata
+	static public class CellularAutomataGenerator
 	{
 		/// <summary>
 		/// Generates the map.  Floor tiles will be set to true in the provided map, and wall tiles will be
