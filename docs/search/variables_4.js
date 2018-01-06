@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['fillprobability',['FillProbability',['../class_go_rogue_1_1_map_generation_1_1_cellular_automata_map_generator.html#ab0bfa34eb98bb008baf21e4809bc6444',1,'GoRogue::MapGeneration::CellularAutomataMapGenerator']]]
+  ['infinite',['INFINITE',['../class_go_rogue_1_1_effect.html#a3c058f3d4d0676a13c657d9cc9271ecb',1,'GoRogue::Effect']]],
+  ['instant',['INSTANT',['../class_go_rogue_1_1_effect.html#ae3b893d3ccdef98561ab5e85f30eb248',1,'GoRogue::Effect']]]
 ];

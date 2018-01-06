@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
+using Generators = GoRogue.MapGeneration.Generators;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -14,7 +15,7 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(30, 30);
-            new RandomRoomsMapGenerator(map, 7, 4, 7, 5, random).Generate();
+            Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
 
             displayMap(map);
             // TODO: Some assert here
@@ -25,7 +26,7 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
-            new CellularAutomataMapGenerator(map, random, 40, 7, 4).Generate();
+            Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
             displayMap(map);
 
@@ -37,16 +38,15 @@ namespace GoRogue_UnitTests
         {
             var random = new DotNetRandom();
             var map = new ArrayMapOf<bool>(80, 50);
-            var generator = new CellularAutomataMapGenerator(map, random, 40, 7, 4);
+            Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
             for (int i = 0; i < 500; i++)
             {
-                generator.Generate();
+                Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
                 // Ensure it's connected
-                var finder = new MapAreaFinder(map, Distance.MANHATTAN);
-                finder.FindMapAreas();
-                Assert.AreEqual(1, finder.Count);
+                var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+                Assert.AreEqual(1, areas.Count);
 
                 // Ensure it's enclosed
                 for (int x = 0; x < map.Width; x++)

@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['radius',['Radius',['../class_go_rogue_1_1_radius.html',1,'GoRogue']]],
-  ['radiusareaprovider',['RadiusAreaProvider',['../class_go_rogue_1_1_radius_area_provider.html',1,'GoRogue']]],
-  ['randomroomsmapgenerator',['RandomRoomsMapGenerator',['../class_go_rogue_1_1_map_generation_1_1_random_rooms_map_generator.html',1,'GoRogue::MapGeneration']]],
-  ['rectangle',['Rectangle',['../struct_go_rogue_1_1_rectangle.html',1,'GoRogue']]],
-  ['rectanglemapgenerator',['RectangleMapGenerator',['../class_go_rogue_1_1_map_generation_1_1_rectangle_map_generator.html',1,'GoRogue::MapGeneration']]]
+  ['maparea',['MapArea',['../class_go_rogue_1_1_map_generation_1_1_map_area.html',1,'GoRogue::MapGeneration']]],
+  ['mapareafinder',['MapAreaFinder',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html',1,'GoRogue::MapGeneration']]],
+  ['mathhelpers',['MathHelpers',['../class_go_rogue_1_1_math_helpers.html',1,'GoRogue']]],
+  ['maxrandom',['MaxRandom',['../class_go_rogue_1_1_random_1_1_max_random.html',1,'GoRogue::Random']]],
+  ['minrandom',['MinRandom',['../class_go_rogue_1_1_random_1_1_min_random.html',1,'GoRogue::Random']]],
+  ['multispatialmap',['MultiSpatialMap',['../class_go_rogue_1_1_multi_spatial_map.html',1,'GoRogue']]]
 ];

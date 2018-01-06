@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
+using Generators = GoRogue.MapGeneration.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -29,50 +30,43 @@ namespace GoRogue_UnitTests
         public void TestSingleAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            var generator = new RectangleMapGenerator(map);
-            generator.Generate();
+            Generators.RectangleMapGenerator.Generate(map);
 
-            var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
-            areaFinder.FindMapAreas();
-
-            foreach (var area in areaFinder.MapAreas)
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+            foreach (var area in areas)
                 Console.WriteLine(area.Bounds);
 
-            Assert.AreEqual(1, areaFinder.Count);
+            Assert.AreEqual(1, areas.Count);
         }
 
         [TestMethod]
         public void TestTwoAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            var generator = new RectangleMapGenerator(map);
-            generator.Generate();
+            Generators.RectangleMapGenerator.Generate(map);
 
             for (int y = 0; y < 50; y++)
                 map[40, y] = false;
 
-            var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
-            areaFinder.FindMapAreas();
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
 
-            Assert.AreEqual(2, areaFinder.Count);
+            Assert.AreEqual(2, areas.Count);
         }
 
         [TestMethod]
         public void TestOneRoomAreaRect()
         {
             var map = new ArrayMapOf<bool>(80, 50);
-            var generator = new RectangleMapGenerator(map);
-            generator.Generate();
+            Generators.RectangleMapGenerator.Generate(map);
 
             for (int y = 0; y < 50; y++)
                 map[40, y] = false;
 
             map[40, 25] = true;
 
-            var areaFinder = new MapAreaFinder(map, Distance.MANHATTAN);
-            areaFinder.FindMapAreas();
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
 
-            Assert.AreEqual(1, areaFinder.Count);
+            Assert.AreEqual(1, areas.Count);
         }
     }
 }

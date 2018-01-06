@@ -1,6 +1,6 @@
 ﻿using System;
 using GoRogue;
-using GoRogue.MapGeneration;
+using Generators = GoRogue.MapGeneration.Generators;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -133,7 +133,7 @@ namespace GoRogue_UnitTests
             var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
             var resMap = new ArrayMapOf<double>(mapWidth, mapHeight);
 
-            new RectangleMapGenerator(map).Generate();
+            Generators.RectangleMapGenerator.Generate(map);
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
