@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GoRogue.Random;
 namespace GoRogue.MapGeneration.Generators
 {
@@ -27,7 +26,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// set to false.
 		/// </summary>
 		/// <param name="map">The map to fill with values when generate is called.</param>
-		/// <param name="rng">The RNG to use to initially fill the map.</param>
+		/// <param name="rng">The RNG to use to initially fill the map.  If null is specified, the default RNG is used.</param>
 		/// <param name="fillProbability">Represents the percent chance that a given cell will be a floor cell
 		/// when the map is initially randomly filled.  Recommended to be in range [40, 60] (40 is used in
 		/// the roguebasin article).</param>
@@ -37,8 +36,14 @@ namespace GoRogue.MapGeneration.Generators
 		/// that is more likely to result in "breaking up" large areas will be run before switching to the
 		/// more standard nearest neighbors version.  Recommended to be in range [2, 7] (4 is used in roguebasin
 		/// article).</param>
-		static public void Generate(ISettableMapOf<bool> map, IRandom rng, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
+		/// <param name="connectUsingDefault">Whether or not to ensure all areas generated are connected. If this is true, ClosestMapAreaConnector.Connect
+		/// will be used to connect the areas, with Distance.MANHATTAN distance used, the RNG given, a RandomConnectionPointSelector that uses the RNG
+		/// specified to this function, and default values for all other optional parameters of ClosestMapAreaConnector.Connect.</param>
+		static public void Generate(ISettableMapOf<bool> map, IRandom rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
+			bool connectUsingDefault = true)
 		{
+			if (rng == null) rng = SingletonRandom.DefaultRNG;
+
 			randomlyFillCells(map, rng, fillProbability);
 
 			for (int i = 0; i < totalIterations; i++)
@@ -52,6 +57,9 @@ namespace GoRogue.MapGeneration.Generators
 			// Ensure it's enclosed before we try to connect, so we can't possibly connect a path that ruins the enclosure.
 			// Doing this before connection ensures that filling it can't kill the path to an area.
 			fillToRectangle(map);
+
+			if (connectUsingDefault)
+				Connectors.ClosestMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
 		}
 
 		static private void randomlyFillCells(ISettableMapOf<bool> map, IRandom rng, int fillProbability)

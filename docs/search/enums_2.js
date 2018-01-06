@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['radiustype',['RadiusType',['../namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf',1,'GoRogue']]]
+  ['sourcetype',['SourceType',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42',1,'GoRogue::SenseMapping']]]
 ];

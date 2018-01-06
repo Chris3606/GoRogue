@@ -25,9 +25,15 @@ namespace GoRogue.MapGeneration.Generators
         /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
         /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
         /// <param name="retriesPerRoom">If a room is placed in a way that overlaps with another room, the maximum number of times the position will be regenerated to try to position it properly, before simply discarding the room.</param>
-        /// <param name="rng">The RNG to use to place rooms and determine room size.</param>
-        static public void Generate(ISettableMapOf<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng)
+        /// <param name="rng">The RNG to use to place rooms and determine room size.  If null is specified, the default RNG is used.</param>
+        /// <param name="connectUsingDefault">Whether or not to ensure the rooms generated are connected.  If this is true, OrderedMapAreaConnector.Connect will
+        /// be used to connect the areas in a random order, using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which will connect
+        /// the center of room to each other.</param>
+        static public void Generate(ISettableMapOf<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng = null,
+                                     bool connectUsingDefault = true)
         {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
                     map[x, y] = false;
@@ -62,6 +68,9 @@ namespace GoRogue.MapGeneration.Generators
 
             foreach (var room in rooms)
                 createRoom(map, room);
+
+            if (connectUsingDefault)
+                Connectors.OrderedMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
         }
 
         // TODO: ConnectRooms function that can connect the rooms properly, in method specific

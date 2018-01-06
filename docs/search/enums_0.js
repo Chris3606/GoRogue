@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['areaconnectionstrategy',['AreaConnectionStrategy',['../namespace_go_rogue_1_1_map_generation_1_1_connectors.html#ad6142711e6bdf9e9dd7c532f0cec32ef',1,'GoRogue::MapGeneration::Connectors']]]
+  ['distancetype',['DistanceType',['../namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506',1,'GoRogue']]]
 ];

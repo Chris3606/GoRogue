@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.12"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>GoRogue: GoRogue.MapGeneration.Generators.RectangleMap Class Reference</title>
+<title>GoRogue: GoRogue.MapGeneration.Generators.RectangleMapGenerator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -59,33 +59,33 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="namespace_go_rogue.html">GoRogue</a></li><li class="navelem"><a class="el" href="namespace_go_rogue_1_1_map_generation.html">MapGeneration</a></li><li class="navelem"><a class="el" href="namespace_go_rogue_1_1_map_generation_1_1_generators.html">Generators</a></li><li class="navelem"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map.html">RectangleMap</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespace_go_rogue.html">GoRogue</a></li><li class="navelem"><a class="el" href="namespace_go_rogue_1_1_map_generation.html">MapGeneration</a></li><li class="navelem"><a class="el" href="namespace_go_rogue_1_1_map_generation_1_1_generators.html">Generators</a></li><li class="navelem"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator.html">RectangleMapGenerator</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map-members.html">List of all members</a>  </div>
+<a href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">GoRogue.MapGeneration.Generators.RectangleMap Class Reference</div>  </div>
+<div class="title">GoRogue.MapGeneration.Generators.RectangleMapGenerator Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
 <p>Generates a simple rectangular box &ndash; walls will be impassable, everything else will be passable.  
- <a href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map.html#details">More...</a></p>
+ <a href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aaf99e546423bbc3de68754d8b50e46fb"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map.html#aaf99e546423bbc3de68754d8b50e46fb">Generate</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_of.html">ISettableMapOf</a>&lt; bool &gt; map)</td></tr>
-<tr class="memdesc:aaf99e546423bbc3de68754d8b50e46fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles.  <a href="#aaf99e546423bbc3de68754d8b50e46fb">More...</a><br /></td></tr>
-<tr class="separator:aaf99e546423bbc3de68754d8b50e46fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad660bdb703336928c326e0ca756967d9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator.html#ad660bdb703336928c326e0ca756967d9">Generate</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_of.html">ISettableMapOf</a>&lt; bool &gt; map)</td></tr>
+<tr class="memdesc:ad660bdb703336928c326e0ca756967d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles.  <a href="#ad660bdb703336928c326e0ca756967d9">More...</a><br /></td></tr>
+<tr class="separator:ad660bdb703336928c326e0ca756967d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generates a simple rectangular box &ndash; walls will be impassable, everything else will be passable. </p>
 <p>Generate takes as parameter a settable map &ndash; after generation, impassable tiles will be set to false, whereas passable ones will be set to true. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aaf99e546423bbc3de68754d8b50e46fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf99e546423bbc3de68754d8b50e46fb">&sect;&nbsp;</a></span>Generate()</h2>
+<a id="ad660bdb703336928c326e0ca756967d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad660bdb703336928c326e0ca756967d9">&sect;&nbsp;</a></span>Generate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -94,7 +94,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void GoRogue.MapGeneration.Generators.RectangleMap.Generate </td>
+          <td class="memname">static void GoRogue.MapGeneration.Generators.RectangleMapGenerator.Generate </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_i_settable_map_of.html">ISettableMapOf</a>&lt; bool &gt;&#160;</td>
           <td class="paramname"><em>map</em></td><td>)</td>
@@ -119,7 +119,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>GoRogue/MapGeneration/Generators/RectangleMap.cs</li>
+<li>GoRogue/MapGeneration/Generators/RectangleMapGenerator.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

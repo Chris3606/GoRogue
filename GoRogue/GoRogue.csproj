@@ -78,7 +78,6 @@
     <Compile Include="MapGeneration\Connectors\ITunnelCreator.cs" />
     <Compile Include="MapGeneration\Connectors\OrderedMapAreaConnector.cs" />
     <Compile Include="MapGeneration\Connectors\RandomConnectionPointSelector.cs" />
-    <Compile Include="MapGeneration\Connectors\TunnelGeneration.cs" />
     <Compile Include="MapGeneration\Generators\CellularAutomataGenerator.cs" />
     <Compile Include="MapGeneration\MapArea.cs" />
     <Compile Include="MapGeneration\MapAreaFinder.cs" />
