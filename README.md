@@ -5,25 +5,25 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 
 - [GoRogue](#gorogue)
 	- [Documentation](#documentation)
-	- [Feature List](#)
-		- [.NET Standard 2.0 Compatibility](#)
+	- [Feature List](#feature-list)
+		- [.NET Standard 2.0 Compatibility](#.net-standard-2.0-compatibility)
 		- [Unobtrusive Algorithms](#unobtrusive-algorithms)
-		- [Coordinate/Grid System](#)
-		- [Random Number Generation](#)
-		- [Dice Notation Parser](#)
-		- [Map Generation](#)
-		- [FOV/Lighting/SenseMapping](#)
-		- [Robust Effects System](#)
-		- [Utility](#)
-	- [Roadmap](#)
-	- [Licensing](#)
-		- [GoRogue](#)
-		- [Other Licenses](#)
-	- [Credits](#)
-		- [Dice Notation .NET](#)
-		- [RogueSharp](#)
-		- [Doryen Library (libtcod)](#)
-		- [SquidLib](#)
+		- [Coordinate/Grid System](#coordinate/grid-system)
+		- [Random Number Generation](#random-number-generation)
+		- [Dice Notation Parser](#dice-notation-parser)
+		- [Map Generation](#map-generation)
+		- [FOV/Lighting/Sense Mapping](#fov/lighting/sense-mapping)
+		- [Robust Effects System](#robust-effects-system)
+		- [Utility](#utility)
+	- [Roadmap](#roadmap)
+	- [Licensing](#licensing)
+		- [GoRogue](#gorogue)
+		- [Other Licenses](#other-licenses)
+	- [Credits](#credits)
+		- [Dice Notation .NET](#dice-notation-.net)
+		- [RogueSharp](#roguesharp)
+		- [Doryen Library (libtcod)](#doryen-library-(libtcod))
+		- [SquidLib](#squidlib)
 
 ## Documentation
 A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API documentation is hosted on GitHub pages [here](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.
@@ -96,7 +96,7 @@ A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API
 
 - MapArea and MapAreaFinder provide convenient ways of representing arbitrarily-shaped sections of the map, and locating all such distinct regions.
 
-### FOV/Lighting/SenseMapping
+### FOV/Lighting/Sense Mapping
 - LOS class offers fairly standard 2D FOV using shadowcasting
    - FOV can be calculated in any of several shapes (modeled by Radius class instances)
    - Length of the radius can be specified, or infinite
