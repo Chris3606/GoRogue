@@ -96,6 +96,7 @@ A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API
 - Extension method provided for List that implements a Fisher-Yates shuffle
 - Extension methods for IList are provided to select either a random index or random value from an IList
 - Extension method provided for IEnumerable to convert the IEnumerable to a List
+- Provides basic integer-based DisjointSet data structure, that implements path compression
 
 ## Roadmap
 This library is still in development - there are a number of important features on the horizon! These include:
