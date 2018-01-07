@@ -1,10 +1,13 @@
 # GoRogue
-Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with both .NET Framework and .NET Core projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, a robust effects system, unobtrusive and flexible algorithms for map generation, FOV, lighting/sense mapping, map generation, as well as various math/utility functions, data structures, and more features to come!  See feature list below (coming soon) for details.  Also see the roadmap for planned major features!
+Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with both .NET Framework and .NET Core projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.  Also see the roadmap for planned major features!
 
 ## Documentation
 A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API documentation is hosted on GitHub pages [here](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.
 
 ## Feature List
+### .NET Standard 2.0 Compatibility
+   - Library will function with any framework that supports .NET Standard 2.0, which includes both .NET Framework and .NET Core
+   
 ### Unobtrusive Algorithms
 - FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapOf), thus allowing the features to be used without imposing limitations and how/where data is stored within the game
 
@@ -49,18 +52,61 @@ A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API
       - MinRandom always returns the min parameter specified to the Next function
    
 - SingletonRandom provides a static field that can be used to conveniently set the default RNG that functions needing RNGs will use if a particular one is not specified
-### Dice Parser
+### Dice Notation Parser
+- Provides a system for parsing expressions in Dice notation format, and rolling those dice using the library's provided number generators
+
+- Expression objects are provided to avoid expensive parsing operations every time a roll is completed
+
+### Map Generation
+- Map generation algorithms operate on MapOf<bool> types, to avoid intrusiveness
+
+- Algorithms are modularized, as to provide maximum reuse
+   - Generation and connectivity algorithms are seperated to provide maximum flexibility
+      - Different common components of connectivity algorithms are also separated
+      - In all these cases, reasonable defaults are provided to prevent the addition of unnecessary complexity to simple/prototyping cases
+
+- Various methods of generation are provided
+   - RectangleMapGenerator generates a simple rectangle, with walls along the edges, and floor elsewhere
+   - RandomRoomsGenerator generates a dungeon with multiple rectangular, connected rooms. Number of rooms, as well as size ranges for rooms and maximum number of tries to place a room, is parameterized.
+   - CellularAutomataGenerator generates a dungeon using the cellular automata smoothing process detailed [here](http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels).
+
+- MapArea and MapAreaFinder provide convenient ways of representing arbitrarily-shaped sections of the map, and locating all such distinct regions.
+
+### FOV/Lighting/SenseMapping
+- LOS class offers fairly standard 2D FOV using shadowcasting
+   - FOV can be calculated in any of several shapes (modeled by Radius class instances)
+   - Length of the radius can be specified, or infinite
+   - Resulting FOV is a lightmap -- an array of doubles in range \[0.0, 1.0], such that the value decreases from 1.0 proportionally as distance from the source increases
+   
+- SenseMap/SenseSource pair to offer much more advanced FOV/lighting features
+   - RIPPLE algorithm can be used to model light spreading around corners
+      - Allows locations to only partially block spread of light
+   - Sources may use either the RIPPLE algorithm variations, or shadowcasting, to model their spreading
+   - Tracks and calculates multiple, mobile light sources, in a multi-threaded manner, and consolidates them into a single light map
+   - SenseMap can also be used to model other sensory perceptions
+
+### Robust Effects System
+- Provides a system of representing both instant duration, and over-time "effects", with arbitrary duration units
+- EffectTrigger can be used to trigger effects at certain arbitrary points, automatically reducing their duration
+   - Effects can be canceled and have infinite duration
+   - Effects are automatically removed from an EffectTrigger when their duration expires
+
+### Utility
+- Provides math functions to handle properly wrapping array/menu indices, radian-degree conversions, and wrapping to nearest multiples.
+- Extension method provided for List that implements a Fisher-Yates shuffle
+- Extension methods for IList are provided to select either a random index or random value from an IList
+- Extension method provided for IEnumerable to convert the IEnumerable to a List
 
 ## Roadmap
 This library is still in development - there are a number of important features on the horizon! These include:
 - Pathfinding
    - At least AStar pathing, as well as Dijkstra maps (commonly known as Goal Maps) will be provided soon!
 - Statistics Library
-   - Utility classes to assist in dealing with interdependent character/monster statistics.
+   - Utility classes to assist in dealing with interdependent character/monster statistics
 - Demo Project/writeup
 - Map generation improvements
    - More map generation algorithms (BSP Tree)
-   - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree.
+   - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree
 - RNG improvements
    - Serialization of state
    - Allow GaussianRandom to specify deviations
