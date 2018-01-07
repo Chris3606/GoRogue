@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F8F415C7-F43C-436A-85D5-275FF37A7DE1}</ProjectGuid>
+    <ProjectGuid>{5D1395AA-98BC-43A3-98A9-56D20952CB64}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>GoRogue_PerformanceTests</RootNamespace>
     <AssemblyName>GoRogue-PerformanceTests</AssemblyName>
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>RECS0145</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,7 +30,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <NoWarn>RECS0145</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -54,7 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GoRogue\GoRogue.csproj">
-      <Project>{4fc5d431-112d-4ef6-a52b-2f0587ff5f73}</Project>
+      <Project>{eb951d27-ae60-4991-b63a-2df34f0cb3e0}</Project>
       <Name>GoRogue</Name>
     </ProjectReference>
   </ItemGroup>

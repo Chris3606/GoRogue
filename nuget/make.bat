@@ -1,3 +1,3 @@
-pushd %~dp0
-nuget pack ../GoRogue/GoRogue.csproj -properties Configuration=Release
+pushd %~dp0..\GoRogue
+msbuild /t:pack /p:Configuration=Release
 popd
