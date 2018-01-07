@@ -1,13 +1,13 @@
 # GoRogue
 Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with both .NET Framework and .NET Core projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.  Also see the roadmap for planned major features!
 
-**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+**Table of Contents**
 
-- [GoRogue](#)
-	- [Documentation](#)
+- [GoRogue](#gorogue)
+	- [Documentation](#documentation)
 	- [Feature List](#)
 		- [.NET Standard 2.0 Compatibility](#)
-		- [Unobtrusive Algorithms](#)
+		- [Unobtrusive Algorithms](#unobtrusive-algorithms)
 		- [Coordinate/Grid System](#)
 		- [Random Number Generation](#)
 		- [Dice Notation Parser](#)
