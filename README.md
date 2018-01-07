@@ -1,5 +1,5 @@
 # GoRogue
-Welcome to the homepage for GoRogue, the roguelike/2D game utility library!  This library offers a number of features that may be useful in roguelike development, including features such as FOV, lighting, map generation utilities, and much more!  See feature list below (which will be added soon).
+Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with both .NET Framework and .NET Core projects, and offers a number of features that may be useful in roguelike development, including features such as FOV, lighting, map generation utilities, and much more!  See feature list below (which will be added soon).
 
 ## Documentation
 A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API documentation is hosted on GitHub pages [here](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.
@@ -11,13 +11,9 @@ This library is still in development - there are a number of important features 
 - Statistics Library
   - Utility classes to assist in dealing with interdependent character/monster statistics.
 - Demo Project/writeup
-- Consider switching project to .NET Standard library.
-  - Not sure if this is viable but if so it would allow it to be used with both .NET Framework and .NET Core projects.
 - Map generation improvements (Coming soon)
   - More map generation algorithms (BSP Tree)
-  - Possibly improve RandomRoomsMapGenerator - change room determination?
-  - Map generation algorithms may become functions rather than classes - semantic change
-  - Split area connection algorithms off from actual generation of areas to allow max flexibility/customization of those algorithms.
+  - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree.
 
 ## Licensing
 ### GoRogue
