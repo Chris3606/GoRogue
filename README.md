@@ -17,7 +17,7 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [Utility](#utility)
 	- [Roadmap](#roadmap)
 	- [Licensing](#licensing)
-		- [GoRogue](#licensing-gorogue)
+		- [GoRogue](#gorogue-1)
 		- [Other Licenses](#other-licenses)
 	- [Credits](#credits)
 		- [Dice Notation .NET](#dice-notation-net)
@@ -138,7 +138,7 @@ This library is still in development - there are a number of important features 
    - Possibly integrate more closely with existing C# random utilities
 
 ## Licensing
-### GoRogue {###licensing-gorogue}
+### GoRogue
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 ### Other Licenses
 See links to licenses in the credits for respective libraries.
