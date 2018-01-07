@@ -6,7 +6,7 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 - [GoRogue](#gorogue)
 	- [Documentation](#documentation)
 	- [Feature List](#feature-list)
-		- [.NET Standard 2.0 Compatibility](#.net-standard-2.0-compatibility)
+		- [.NET Standard 2.0 Compatibility](#net-standard-20-compatibility)
 		- [Unobtrusive Algorithms](#unobtrusive-algorithms)
 		- [Coordinate/Grid System](#coordinate/grid-system)
 		- [Random Number Generation](#random-number-generation)
