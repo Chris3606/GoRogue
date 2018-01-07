@@ -8,21 +8,21 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 	- [Feature List](#feature-list)
 		- [.NET Standard 2.0 Compatibility](#net-standard-20-compatibility)
 		- [Unobtrusive Algorithms](#unobtrusive-algorithms)
-		- [Coordinate/Grid System](#coordinate/grid-system)
+		- [Coordinate/Grid System](#coordinategrid-system)
 		- [Random Number Generation](#random-number-generation)
 		- [Dice Notation Parser](#dice-notation-parser)
 		- [Map Generation](#map-generation)
-		- [FOV/Lighting/Sense Mapping](#fov/lighting/sense-mapping)
+		- [FOV/Lighting/Sense Mapping](#fovlightingsense-mapping)
 		- [Robust Effects System](#robust-effects-system)
 		- [Utility](#utility)
 	- [Roadmap](#roadmap)
 	- [Licensing](#licensing)
-		- [GoRogue](#gorogue)
+		- [GoRogue](#licensing-gorogue)
 		- [Other Licenses](#other-licenses)
 	- [Credits](#credits)
-		- [Dice Notation .NET](#dice-notation-.net)
+		- [Dice Notation .NET](#dice-notation-net)
 		- [RogueSharp](#roguesharp)
-		- [Doryen Library (libtcod)](#doryen-library-(libtcod))
+		- [Doryen Library (libtcod)](#doryen-library-libtcod)
 		- [SquidLib](#squidlib)
 
 ## Documentation
@@ -138,7 +138,7 @@ This library is still in development - there are a number of important features 
    - Possibly integrate more closely with existing C# random utilities
 
 ## Licensing
-### GoRogue
+### GoRogue {###licensing-gorogue}
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 ### Other Licenses
 See links to licenses in the credits for respective libraries.
