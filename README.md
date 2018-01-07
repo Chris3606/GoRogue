@@ -6,41 +6,49 @@ A tutorial-style demo of GoRogue features is on the roadmap.  Currently, the API
 
 ## Feature List
 ### Unobtrusive Algorithms
-- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapOf), thus allowing the features to be used without imposing limitations and how/where data is stored within the game.
+- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapOf), thus allowing the features to be used without imposing limitations and how/where data is stored within the game
 
-- A default implementation of the MapOf interface is provided, to allow for ease of use in straightforward cases or during prototyping.
-   - ArrayMapOf implements MapOf and stores data in a 2D array for cases when a simple/straightforward MapOf implementation is needed.
+- A default implementation of the MapOf interface is provided, to allow for ease of use in straightforward cases or during prototyping
+   - ArrayMapOf implements MapOf and stores data in a 2D array for cases when a simple/straightforward MapOf implementation is needed
   
 ### Coordinate/Grid System
 - Coord class provides a way to store 2D grid (integer) coordinates
    - Pooling is used to allow extensive use without significant allocation and memory overhead
-   - Numerous operators are provided to allow for seamless addition, subtraction, multiplication, and division of Coord instances, as well as addition/subtraction/multiplication/division by constants.
-    - Static flag provided for whether Y-values decrease or increase in the downward direction, so that such functions can be used regardless of what coordinate scheme is being used.
-   - Functions are provided to perform utility functions such as determining the bearing of a line, as well as retrieval of all points on a given line (via Brensham's), or cardinal line.
-   - Also provides methods that implement other mathmematical grid functions, including midpoint formula, and translation of 2D coordinates to a 1D array index and back.
-   - Provides hashing function that has a very low collision rate, particularly when considering coordiates between (-3, -3) and (255, 255).
+   - Numerous operators are provided to allow for seamless addition, subtraction, multiplication, and division of Coord instances, as well as addition/subtraction/multiplication/division by constants
+    - Static flag provided for whether Y-values decrease or increase in the downward direction, so that such functions can be used regardless of what coordinate scheme is being used
+   - Functions are provided to perform utility functions such as determining the bearing of a line, as well as retrieval of all points on a given line (via Brensham's), or cardinal line
+   - Also provides methods that implement other mathmematical grid functions, including midpoint formula, and translation of 2D coordinates to a 1D array index and back
+   - Provides hashing function that has a very low collision rate, particularly when considering coordiates between (-3, -3) and (255, 255)
    
-- Direction class pairs with Coord to provide convenient ways to model movement to adjacent grid coordinates, as well as iterations through adjacent "neighbors" of a given location in both 4-way and 8-way movement schemes.
-   - Directions can be added to Coord instances to get teh Coord directly adjacent to the original, in the direction specified.
-   - Methods that generation IEnumerables of neighboring directions in various orders are provided.
-   - Functions are given to determine direction most closely matching a line between two points.
+- Direction class pairs with Coord to provide convenient ways to model movement to adjacent grid coordinates, as well as iterations through adjacent "neighbors" of a given location in both 4-way and 8-way movement schemes
+   - Directions can be added to Coord instances to get teh Coord directly adjacent to the original, in the direction specified
+   - Methods that generation IEnumerables of neighboring directions in various orders are provided
+   - Functions are given to determine direction most closely matching a line between two points
    
 - Distance class models 2D distance calculations in an abstract way, allowing algorithms to function no matter which distance calculation is being used
-   - Manhattan, Chebyshev, and Euclician distance calculations are implemented.
+   - Manhattan, Chebyshev, and Euclician distance calculations are implemented
    
-- Radius type models the radius shapes assumed by above distance calculations.
-   - Explicitly castable to Distance types and back.
-   - RadiusAreaProvider class allows the easy retrieval of all coordinates within a defined radius (and optionally a bounding box).
+- Radius type models the radius shapes assumed by above distance calculations
+   - Explicitly castable to Distance types and back
+   - RadiusAreaProvider class allows the easy retrieval of all coordinates within a defined radius (and optionally a bounding box)
    
-- Rectangle class represents a rectangular area on a 2D grid, and provides useful operations for such areas.
+- Rectangle class represents a rectangular area on a 2D grid, and provides useful operations for such areas
 
-- ISpatialMap implementations provide storing of object(s) at a given location in an efficient way.
-   - Provides average-case constant time lookup of object(s) at a location.
-   - Retrieval of all objects in the SpatialMap in linear time (equivalent efficiency to vector).
-   - Less memory overhead than storing objects in 2D array.
+- ISpatialMap implementations provide storing of object(s) at a given location in an efficient way
+   - Provides average-case constant time lookup of object(s) at a location
+   - Retrieval of all objects in the SpatialMap in linear time (equivalent efficiency to vector)
+   - Less memory overhead than storing objects in 2D array
 
 ### Random Number Generation
-
+- Provides easy to use random number generators, that wrap around the C# default RNGs, as well as create custom distributions
+   - DotNetRandom provides a wrapper around the default C# RNG that implements the IRandom interface
+   - GaussianRandom implements an RNG that returns numbers on a bell curve, with the capability to specify min and max values
+   - IRandom implementations intended for testing are provided, to allow for easier unit testing/debugging of functions that use RNGs
+      - KnownSeriesRandom returns a specified series of numbers (looping through)
+      - MaxRandom always returns the max parameter specified to the Next function
+      - MinRandom always returns the min parameter specified to the Next function
+   
+- SingletonRandom provides a static field that can be used to conveniently set the default RNG that functions needing RNGs will use if a particular one is not specified
 ### Dice Parser
 
 ## Roadmap
@@ -53,6 +61,10 @@ This library is still in development - there are a number of important features 
 - Map generation improvements
    - More map generation algorithms (BSP Tree)
    - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree.
+- RNG improvements
+   - Serialization of state
+   - Allow GaussianRandom to specify deviations
+   - Possibly integrate more closely with existing C# random utilities
 
 ## Licensing
 ### GoRogue
