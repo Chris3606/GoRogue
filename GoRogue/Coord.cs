@@ -156,7 +156,8 @@ namespace GoRogue
         /// <param name="c1">The first point.</param>
         /// <param name="c2">The second point.</param>
         /// <returns>The midpoint between c1 and c2</returns>
-        public static Coord Midpoint(Coord c1, Coord c2) => Get((int)Math.Round((c1.X + c2.X) / 2.0f), (int)Math.Round((c1.Y + c2.Y) / 2.0f));
+        public static Coord Midpoint(Coord c1, Coord c2) =>
+            Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
 
         /// <summary>
         /// Returns the result of the euclidian distance formula, without the square root -- eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y).
@@ -223,7 +224,8 @@ namespace GoRogue
         /// <param name="c">The coordinate to multiply by the scalar.</param>
         /// <param name="i">The scalar to multiply the coordinate by.</param>
         /// <returns>Coordinate (c.X * i, c.Y * i), with the resulting values rounded to nearest integer.</returns>
-        public static Coord operator *(Coord c, double i) => Get((int)Math.Round(c.X * i), (int)Math.Round(c.Y * i));
+        public static Coord operator *(Coord c, double i) =>
+            Get((int)Math.Round(c.X * i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y * i, MidpointRounding.AwayFromZero));
 
         /// <summary>
         /// / operator.  Divides the x-value and y-value of c by i, eg. returns (c.X / i, c.Y / i).  Rounds resulting
@@ -232,7 +234,8 @@ namespace GoRogue
         /// <param name="c">The coordinate to divide by scalar.</param>
         /// <param name="i">The scalar to divide the coordinate by.</param>
         /// <returns>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</returns>
-        public static Coord operator /(Coord c, int i) => Get((int)Math.Round(c.X / (double)i), (int)Math.Round(c.Y / (double)i));
+        public static Coord operator /(Coord c, int i) =>
+            Get((int)Math.Round(c.X / (double)i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / (double)i, MidpointRounding.AwayFromZero));
 
         /// <summary>
         /// / operator.  Similar to int version.
@@ -240,7 +243,8 @@ namespace GoRogue
         /// <param name="c">The coordinate to divide by scalar.</param>
         /// <param name="i">The scalar to divide the coordinate by.</param>
         /// <returns>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</returns>
-        public static Coord operator /(Coord c, double i) => Get((int)Math.Round(c.X / i), (int)Math.Round(c.Y / i));
+        public static Coord operator /(Coord c, double i) =>
+            Get((int)Math.Round(c.X / i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / i, MidpointRounding.AwayFromZero));
 
         /// <summary>
         /// True if c1.X == c2.X and c1.Y == c2.Y.
