@@ -12,9 +12,9 @@ namespace GoRogue
         /// </summary>
         MANHATTAN,
         /// <summary>
-        /// Enum type for Distance.EUCLIDIAN.
+        /// Enum type for Distance.EUCLIDEAN.
         /// </summary>
-        EUCLIDIAN,
+        EUCLIDEAN,
         /// <summary>
         /// Enum type for Distance.CHEBYSHEV.
         /// </summary>
@@ -28,7 +28,7 @@ namespace GoRogue
     /// <remarks>
     /// Provides functions that calculate the distance between two points according to the distance measurement being used. Distance instances
     /// can also be explicitly casted to Radius instances -- the 2D radius shape that corresponds to the shape of a "radius" according to the
-    /// casted distance calculation is retrieved (eg, EUCLIDIAN casts to CIRCLE, MANHATTAN to DIAMOND, etc.)
+    /// casted distance calculation is retrieved (eg, EUCLIDEAN casts to CIRCLE, MANHATTAN to DIAMOND, etc.)
     /// </remarks>
     public class Distance
     {
@@ -42,9 +42,9 @@ namespace GoRogue
         /// </summary>
         public static Distance MANHATTAN = new Distance(DistanceType.MANHATTAN);
         /// <summary>
-        /// EUCLIDIAN distance (equivalent to 8-way movement with extra cost for diagonals).
+        /// EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals).
         /// </summary>
-        public static Distance EUCLIDIAN = new Distance(DistanceType.EUCLIDIAN);
+        public static Distance EUCLIDEAN = new Distance(DistanceType.EUCLIDEAN);
         /// <summary>
         /// CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals).
         /// </summary>
@@ -174,7 +174,7 @@ namespace GoRogue
                     radius = dx + dy + dz; // Simply manhattan distance
                     break;
 
-                case DistanceType.EUCLIDIAN:
+                case DistanceType.EUCLIDEAN:
                     radius = Math.Sqrt(dx * dx + dy * dy + dz * dz); // Spherical radius
                     break;
             }
@@ -193,8 +193,8 @@ namespace GoRogue
                 case DistanceType.MANHATTAN:
                     return MANHATTAN;
 
-                case DistanceType.EUCLIDIAN:
-                    return EUCLIDIAN;
+                case DistanceType.EUCLIDEAN:
+                    return EUCLIDEAN;
 
                 case DistanceType.CHEBYSHEV:
                     return CHEBYSHEV;
@@ -216,7 +216,7 @@ namespace GoRogue
                 case DistanceType.MANHATTAN:
                     return Radius.DIAMOND;
 
-                case DistanceType.EUCLIDIAN:
+                case DistanceType.EUCLIDEAN:
                     return Radius.CIRCLE;
 
                 case DistanceType.CHEBYSHEV:

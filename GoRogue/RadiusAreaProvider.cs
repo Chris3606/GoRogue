@@ -8,7 +8,7 @@ namespace GoRogue
     /// <remarks>
     /// In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE shapes are used,
     /// Coords are guaranteed to be returned in order of distance from the center, from least to greatest.
-    /// This guarantee does NOT hold if EUCLIDIAN distance, or CIRCLE/SPHERE radius shapes are specified.
+    /// This guarantee does NOT hold if EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.
     ///
     /// If no bounds are specified, the IEnumerable returned by positions will contain each coordinate
     /// within the radius.  Otherwise, it will contain each coordinate in the radius that is also within

@@ -124,7 +124,7 @@
             {
                 case RadiusType.CIRCLE:
                 case RadiusType.SPHERE:
-                    return Distance.EUCLIDIAN;
+                    return Distance.EUCLIDEAN;
 
                 case RadiusType.DIAMOND:
                 case RadiusType.OCTAHEDRON:

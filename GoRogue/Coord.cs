@@ -160,14 +160,14 @@ namespace GoRogue
             Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
 
         /// <summary>
-        /// Returns the result of the euclidian distance formula, without the square root -- eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y).
+        /// Returns the result of the euclidean distance formula, without the square root -- eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y).
         /// Use this if you only care about the magnitude of the distance -- eg., if you're trying to compare two distances.  Omitting the square root provides
         /// a speed increase.
         /// </summary>
         /// <param name="c1">The first point.</param>
         /// <param name="c2">The second point.</param>
-        /// <returns>The "magnitude" of the euclidian distance between the two points -- basically the distance formula without the square root.</returns>
-        public static double EuclidianDistanceMagnitude(Coord c1, Coord c2) => (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y);
+        /// <returns>The "magnitude" of the euclidean distance between the two points -- basically the distance formula without the square root.</returns>
+        public static double EuclideanDistanceMagnitude(Coord c1, Coord c2) => (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y);
 
         /// <summary>
         /// + operator.  Returns the coordinate (c1.X + c2.X, c1.Y + c2.Y).
