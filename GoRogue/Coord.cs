@@ -70,21 +70,20 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Gets a list of every position, in order, on the most direct line between the two points specified
+        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
         /// (assuming 8-way connectivity).  This will include the start and end points themselves.  This is simply
         /// an implementation of Brensham's line algorithm, from https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm.
         /// </summary>
         /// <param name="start">Starting point.</param>
         /// <param name="end">Ending point.</param>
-        /// <returns>List of all positions on a line between the two points, including the start and end points.</returns>
-        public static List<Coord> PositionsOnLine(Coord start, Coord end)
+        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
+        public static IEnumerable<Coord> PositionsOnLine(Coord start, Coord end)
         {
             int x0 = start.X;
             int y0 = start.Y;
             int x1 = end.X;
             int y1 = end.Y;
 
-            var positions = new List<Coord>();
 
             bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
             if (steep)
@@ -109,9 +108,9 @@ namespace GoRogue
             for (int x = x0; x <= x1; x++)
             {
                 if (steep)
-                    positions.Add(Coord.Get(y, x));
+                    yield return Coord.Get(y, x);
                 else
-                    positions.Add(Coord.Get(x, y));
+                    yield return Coord.Get(x, y);
 
                 err -= dy;
                 if (err < 0)
@@ -120,34 +119,28 @@ namespace GoRogue
                     err += dx;
                 }
             }
-
-            return positions;
-     
         }
         
 
         /// <summary>
-        /// Gets a list of every position, in order, on the most direct line between the two points specified
+        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
         /// that follow only cardinal directions (4-way connectivity).  This will include the start and end points themselves.
         /// This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions.
         /// </summary>
         /// <param name="start">Starting point.</param>
         /// <param name="end">Ending point.</param>
-        /// <returns>List of all positions on a line between the two points, including the start and end points.</returns>
-        public static List<Coord> CardinalPositionsOnLine(Coord start, Coord end)
+        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
+        public static IEnumerable<Coord> CardinalPositionsOnLine(Coord start, Coord end)
         {
-            var positions = new List<Coord>();
-
             while (true)
             {
-                positions.Add(start);
+                yield return start;
+
                 if (start == end)
                     break;
 
                 start = start + Direction.GetCardinalDirection(end.X - start.X, end.Y - start.Y);
             }
-
-            return positions;
         }
 
         /// <summary>

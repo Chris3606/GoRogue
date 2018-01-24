@@ -34,7 +34,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="end">End coordinate of the tunnel.</param>
         public void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end)
         {
-            List<Coord> tunnelPositions = (distanceCalc == Distance.MANHATTAN) ? Coord.CardinalPositionsOnLine(start, end) : Coord.PositionsOnLine(start, end);
+            List<Coord> tunnelPositions = (distanceCalc == Distance.MANHATTAN) ? Coord.CardinalPositionsOnLine(start, end).ToList() : Coord.PositionsOnLine(start, end).ToList();
 
             Coord previous = null;
             foreach (var pos in tunnelPositions)
