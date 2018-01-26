@@ -84,46 +84,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="memItemLeft" align="right" valign="top">override int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#acc0cb4f91fb9942e4ecb7216a56ed240">GetHashCode</a> ()</td></tr>
 <tr class="memdesc:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a hash code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. The important parts: it should be fairly fast and it does not collide often. The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime number.  <a href="#acc0cb4f91fb9942e4ecb7216a56ed240">More...</a><br /></td></tr>
 <tr class="separator:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cd118940e45c6b28da8765771661096"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096">ToIndex</a> (int rowCount)</td></tr>
+<tr class="memdesc:a8cd118940e45c6b28da8765771661096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons.  <a href="#a8cd118940e45c6b28da8765771661096">More...</a><br /></td></tr>
+<tr class="separator:a8cd118940e45c6b28da8765771661096"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdf9814ccd98c262780beaf4d5774aa5"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#abdf9814ccd98c262780beaf4d5774aa5">ToString</a> ()</td></tr>
 <tr class="memdesc:abdf9814ccd98c262780beaf4d5774aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns representation (X, Y).  <a href="#abdf9814ccd98c262780beaf4d5774aa5">More...</a><br /></td></tr>
 <tr class="separator:abdf9814ccd98c262780beaf4d5774aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad678b722d6d7c673cfd1525ab1aa3adb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ad678b722d6d7c673cfd1525ab1aa3adb">Translate</a> (int dx, int dy)</td></tr>
 <tr class="memdesc:ad678b722d6d7c673cfd1525ab1aa3adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy to the Y-value of the coordinate, eg. (X + dx, Y + dy). Provided for convenience.  <a href="#ad678b722d6d7c673cfd1525ab1aa3adb">More...</a><br /></td></tr>
 <tr class="separator:ad678b722d6d7c673cfd1525ab1aa3adb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd118940e45c6b28da8765771661096"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096">ToIndex</a> (int rowCount)</td></tr>
-<tr class="memdesc:a8cd118940e45c6b28da8765771661096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons.  <a href="#a8cd118940e45c6b28da8765771661096">More...</a><br /></td></tr>
-<tr class="separator:a8cd118940e45c6b28da8765771661096"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a412765d9519bf778283a406a0794ff68"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a412765d9519bf778283a406a0794ff68">CardinalPositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
+<tr class="memdesc:a412765d9519bf778283a406a0794ff68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an IEnumerable of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions.  <a href="#a412765d9519bf778283a406a0794ff68">More...</a><br /></td></tr>
+<tr class="separator:a412765d9519bf778283a406a0794ff68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ecee2b7034831c1d701bf40b7af3764"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1ecee2b7034831c1d701bf40b7af3764">EuclideanDistanceMagnitude</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
+<tr class="memdesc:a1ecee2b7034831c1d701bf40b7af3764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the result of the euclidean distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase.  <a href="#a1ecee2b7034831c1d701bf40b7af3764">More...</a><br /></td></tr>
+<tr class="separator:a1ecee2b7034831c1d701bf40b7af3764"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae25bcfd7c2943acb6de3431c6c33a423"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ae25bcfd7c2943acb6de3431c6c33a423">Get</a> (int x, int y)</td></tr>
 <tr class="memdesc:ae25bcfd7c2943acb6de3431c6c33a423"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the proper <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance for the given x and y values. Will return the one in the array if the values are in the appropriate range, otherwise will create a new one and return that one.  <a href="#ae25bcfd7c2943acb6de3431c6c33a423">More...</a><br /></td></tr>
 <tr class="separator:ae25bcfd7c2943acb6de3431c6c33a423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33dc72791c581e8231a1637ac9262b62"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a33dc72791c581e8231a1637ac9262b62">BearingOfLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> from, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> to)</td></tr>
-<tr class="memdesc:a33dc72791c581e8231a1637ac9262b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates degree bearing of the line (from =&gt; to), where 0 is up (north).  <a href="#a33dc72791c581e8231a1637ac9262b62">More...</a><br /></td></tr>
-<tr class="separator:a33dc72791c581e8231a1637ac9262b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d0511db518f42f1ec5bc2ba8e95eb94"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8d0511db518f42f1ec5bc2ba8e95eb94">PositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
-<tr class="memdesc:a8d0511db518f42f1ec5bc2ba8e95eb94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>.  <a href="#a8d0511db518f42f1ec5bc2ba8e95eb94">More...</a><br /></td></tr>
-<tr class="separator:a8d0511db518f42f1ec5bc2ba8e95eb94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fdb388bb1c21a2b2aae7063f2128bdb"><td class="memItemLeft" align="right" valign="top">static List&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8fdb388bb1c21a2b2aae7063f2128bdb">CardinalPositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
-<tr class="memdesc:a8fdb388bb1c21a2b2aae7063f2128bdb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a list of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions.  <a href="#a8fdb388bb1c21a2b2aae7063f2128bdb">More...</a><br /></td></tr>
-<tr class="separator:a8fdb388bb1c21a2b2aae7063f2128bdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2c2d73d6057f120ecd3628428cdea45"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ae2c2d73d6057f120ecd3628428cdea45">Midpoint</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:ae2c2d73d6057f120ecd3628428cdea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the midpoint between the two points.  <a href="#ae2c2d73d6057f120ecd3628428cdea45">More...</a><br /></td></tr>
 <tr class="separator:ae2c2d73d6057f120ecd3628428cdea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bb7701e823c4ebb732b42033448a544"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8bb7701e823c4ebb732b42033448a544">EuclidianDistanceMagnitude</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
-<tr class="memdesc:a8bb7701e823c4ebb732b42033448a544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the result of the euclidian distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase.  <a href="#a8bb7701e823c4ebb732b42033448a544">More...</a><br /></td></tr>
-<tr class="separator:a8bb7701e823c4ebb732b42033448a544"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a808584caf9c03f57964f3dc6b9b936f6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a808584caf9c03f57964f3dc6b9b936f6">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
-<tr class="separator:a808584caf9c03f57964f3dc6b9b936f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a8bfab12c88feddd3c86207547baad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a90a8bfab12c88feddd3c86207547baad">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, int i)</td></tr>
-<tr class="separator:a90a8bfab12c88feddd3c86207547baad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1aed26fa31d742124cd59a7d3f30b44"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab1aed26fa31d742124cd59a7d3f30b44">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> d)</td></tr>
-<tr class="separator:ab1aed26fa31d742124cd59a7d3f30b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b9654ccdac1e2b628b5aeae8f574455"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a3b9654ccdac1e2b628b5aeae8f574455">operator-</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="separator:a3b9654ccdac1e2b628b5aeae8f574455"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab049f69b3505dc4b1328fcb489cb51c9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab049f69b3505dc4b1328fcb489cb51c9">operator-</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, int i)</td></tr>
 <tr class="separator:ab049f69b3505dc4b1328fcb489cb51c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1965e10afb1c163c932945c8bbfca8c1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1965e10afb1c163c932945c8bbfca8c1">operator!=</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
+<tr class="memdesc:a1965e10afb1c163c932945c8bbfca8c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if either the x-values or y-values are not equal.  <a href="#a1965e10afb1c163c932945c8bbfca8c1">More...</a><br /></td></tr>
+<tr class="separator:a1965e10afb1c163c932945c8bbfca8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4f5605039303c71b3ee33b10223a8173"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a4f5605039303c71b3ee33b10223a8173">operator*</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, int i)</td></tr>
 <tr class="separator:a4f5605039303c71b3ee33b10223a8173"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab96c645fe4ae9e70282e7ebae44db0c0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab96c645fe4ae9e70282e7ebae44db0c0">operator*</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, double i)</td></tr>
@@ -134,18 +125,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a543f9097b9d72c30371de189b057d65c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a543f9097b9d72c30371de189b057d65c">operator/</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, double i)</td></tr>
 <tr class="memdesc:a543f9097b9d72c30371de189b057d65c"><td class="mdescLeft">&#160;</td><td class="mdescRight">/ operator. Similar to int version.  <a href="#a543f9097b9d72c30371de189b057d65c">More...</a><br /></td></tr>
 <tr class="separator:a543f9097b9d72c30371de189b057d65c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a808584caf9c03f57964f3dc6b9b936f6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a808584caf9c03f57964f3dc6b9b936f6">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
+<tr class="separator:a808584caf9c03f57964f3dc6b9b936f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a8bfab12c88feddd3c86207547baad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a90a8bfab12c88feddd3c86207547baad">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, int i)</td></tr>
+<tr class="separator:a90a8bfab12c88feddd3c86207547baad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1aed26fa31d742124cd59a7d3f30b44"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab1aed26fa31d742124cd59a7d3f30b44">operator+</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> d)</td></tr>
+<tr class="separator:ab1aed26fa31d742124cd59a7d3f30b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a0751c6d23fb0544ee4d61fe3e47f20cb">operator==</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if c1.X == c2.X and c1.Y == c2.Y.  <a href="#a0751c6d23fb0544ee4d61fe3e47f20cb">More...</a><br /></td></tr>
 <tr class="separator:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1965e10afb1c163c932945c8bbfca8c1"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1965e10afb1c163c932945c8bbfca8c1">operator!=</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
-<tr class="memdesc:a1965e10afb1c163c932945c8bbfca8c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if either the x-values or y-values are not equal.  <a href="#a1965e10afb1c163c932945c8bbfca8c1">More...</a><br /></td></tr>
-<tr class="separator:a1965e10afb1c163c932945c8bbfca8c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a97e98e50ebb20ccd0f7f2c82b043cd3d">ToIndex</a> (int x, int y, int rowCount)</td></tr>
-<tr class="memdesc:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns y * rowCount + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int rowCount)</a>, just takes x and y instead.  <a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">More...</a><br /></td></tr>
-<tr class="separator:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a7407b599d2198bcf2b9c71c54ba37b9d">PositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
+<tr class="memdesc:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an IEnumerable of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>.  <a href="#a7407b599d2198bcf2b9c71c54ba37b9d">More...</a><br /></td></tr>
+<tr class="separator:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a93702b3ce2d8337cd27ffbe5b1564651">ToCoord</a> (int index, int rowCount)</td></tr>
 <tr class="memdesc:a93702b3ce2d8337cd27ffbe5b1564651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by a given index.  <a href="#a93702b3ce2d8337cd27ffbe5b1564651">More...</a><br /></td></tr>
 <tr class="separator:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a97e98e50ebb20ccd0f7f2c82b043cd3d">ToIndex</a> (int x, int y, int rowCount)</td></tr>
+<tr class="memdesc:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns y * rowCount + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int rowCount)</a>, just takes x and y instead.  <a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">More...</a><br /></td></tr>
+<tr class="separator:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8f6d221fc4eef936d2d066ea320f673"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ad8f6d221fc4eef936d2d066ea320f673">ToXValue</a> (int index, int rowCount)</td></tr>
 <tr class="memdesc:ad8f6d221fc4eef936d2d066ea320f673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning only the X-value for the given index.  <a href="#ad8f6d221fc4eef936d2d066ea320f673">More...</a><br /></td></tr>
 <tr class="separator:ad8f6d221fc4eef936d2d066ea320f673"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,8 +163,8 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances. </p>
 <p>If you want the coordinate (1, 2), use Coord.Get(1, 2), and it returns you a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance. These instances are read-only, however operators such as addition, etc., are provided. This is due to optimizations under the hood. By default, the class keeps a static, internal array that contains an instance of every coordinate between (-3, -3), and (255, 255). If the coordinate x and y values given to Get are within this range, Get returns the appropriate instance from the array. If the coordinates given are outside of the range, it simply returns a new instance. Since most of the coordinates used in roguelike/grid based games will be between (-3, -3) and (255, 255), this can end up drastically reducing the number of memory allocations that need to be done since there will exist one and only one instance of the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> class for each value in that range. Since allocations are expensive due to garbage collections, this can significantly improve on efficiency. Later, support may be added for modifying this range as necessary. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a33dc72791c581e8231a1637ac9262b62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33dc72791c581e8231a1637ac9262b62">&sect;&nbsp;</a></span>BearingOfLine()</h2>
+<a id="a412765d9519bf778283a406a0794ff68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a412765d9519bf778283a406a0794ff68">&sect;&nbsp;</a></span>CardinalPositionsOnLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,53 +173,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static double GoRogue.Coord.BearingOfLine </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>from</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>to</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Calculates degree bearing of the line (from =&gt; to), where 0 is up (north). </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">from</td><td>Coordinate of line starting point.</td></tr>
-    <tr><td class="paramname">to</td><td>Coordinate of line ending point.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The degree bearing of the line specified by the two given points.</dd></dl>
-
-</div>
-</div>
-<a id="a8fdb388bb1c21a2b2aae7063f2128bdb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fdb388bb1c21a2b2aae7063f2128bdb">&sect;&nbsp;</a></span>CardinalPositionsOnLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static List&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalPositionsOnLine </td>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalPositionsOnLine </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -246,7 +197,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets a list of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions. </p>
+<p>Gets an IEnumerable of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">start</td><td>Starting point.</td></tr>
@@ -254,7 +205,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>List of all positions on a line between the two points, including the start and end points.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>IEnumerable of all positions on a line between the two points, including the start and end points.</dd></dl>
 
 </div>
 </div>
@@ -285,8 +236,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8bb7701e823c4ebb732b42033448a544"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bb7701e823c4ebb732b42033448a544">&sect;&nbsp;</a></span>EuclidianDistanceMagnitude()</h2>
+<a id="a1ecee2b7034831c1d701bf40b7af3764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ecee2b7034831c1d701bf40b7af3764">&sect;&nbsp;</a></span>EuclideanDistanceMagnitude()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +246,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static double GoRogue.Coord.EuclidianDistanceMagnitude </td>
+          <td class="memname">static double GoRogue.Coord.EuclideanDistanceMagnitude </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
           <td class="paramname"><em>c1</em>, </td>
@@ -319,7 +270,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the result of the euclidian distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase. </p>
+<p>Returns the result of the euclidean distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">c1</td><td>The first point.</td></tr>
@@ -327,7 +278,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The "magnitude" of the euclidian distance between the two points &ndash; basically the distance formula without the square root.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The "magnitude" of the euclidean distance between the two points &ndash; basically the distance formula without the square root.</dd></dl>
 
 </div>
 </div>
@@ -970,8 +921,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8d0511db518f42f1ec5bc2ba8e95eb94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d0511db518f42f1ec5bc2ba8e95eb94">&sect;&nbsp;</a></span>PositionsOnLine()</h2>
+<a id="a7407b599d2198bcf2b9c71c54ba37b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7407b599d2198bcf2b9c71c54ba37b9d">&sect;&nbsp;</a></span>PositionsOnLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -980,7 +931,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static List&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.PositionsOnLine </td>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.PositionsOnLine </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
           <td class="paramname"><em>start</em>, </td>
@@ -1004,7 +955,7 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets a list of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>. </p>
+<p>Gets an IEnumerable of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">start</td><td>Starting point.</td></tr>
@@ -1012,7 +963,7 @@ Public Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>List of all positions on a line between the two points, including the start and end points.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>IEnumerable of all positions on a line between the two points, including the start and end points.</dd></dl>
 
 </div>
 </div>
@@ -1062,35 +1013,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8cd118940e45c6b28da8765771661096"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cd118940e45c6b28da8765771661096">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int GoRogue.Coord.ToIndex </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. Usually the width of the 2D array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.</dd></dl>
-
-</div>
-</div>
 <a id="a97e98e50ebb20ccd0f7f2c82b043cd3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1135,6 +1059,33 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">x</td><td>X-value of the coordinate.</td></tr>
     <tr><td class="paramname">y</td><td>Y-value of the coordinate.</td></tr>
     <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.</dd></dl>
+
+</div>
+</div>
+<a id="a8cd118940e45c6b28da8765771661096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cd118940e45c6b28da8765771661096">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int GoRogue.Coord.ToIndex </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>rowCount</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. Usually the width of the 2D array.</td></tr>
   </table>
   </dd>
 </dl>

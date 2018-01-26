@@ -38,7 +38,7 @@ namespace GoRogue
         /// be between [0, wrapTo - 1], inclusive.</param>
         /// <returns>The wrapped result, as outlined in function description.  Guaranteed to lie in range [0, wrapTo - 1], inclusive.</returns>
         public static int WrapAround(int num, int wrapTo) => (num % wrapTo + wrapTo) % wrapTo;
-        
+
         /// <summary>
         /// Rounds the given number up (toward highest number), to the nearest multiple of the specified value.
         /// </summary>

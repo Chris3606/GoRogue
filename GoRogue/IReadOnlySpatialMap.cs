@@ -12,6 +12,7 @@ namespace GoRogue
         /// The item associated with this pair.
         /// </summary>
         T Item { get; }
+
         /// <summary>
         /// The position associated with this pair.
         /// </summary>
@@ -31,6 +32,7 @@ namespace GoRogue
         /// The number of items in the data structure.
         /// </summary>
         int Count { get; }
+
         /// <summary>
         /// Enumerable of the items stored in the data structure: for use to iterate over all items, eg:
         /// <example>
@@ -41,36 +43,42 @@ namespace GoRogue
         /// </example>
         /// </summary>
         IEnumerable<T> Items { get; }
+
         /// <summary>
         /// Enumerable of all positions that contain items.  Likely this won't be used as much, since most objects that are
         /// contained in a spatial map implementation will record their position as a member, however in case that is not
         /// the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided.
         /// </summary>
         IEnumerable<Coord> Positions { get; }
+
         /// <summary>
         /// Returns whether or not the data structure contains the given item.
         /// </summary>
         /// <param name="item">The item to check for.</param>
         /// <returns>True if the given item is in the data structure, false if not.</returns>
         bool Contains(T item);
+
         /// <summary>
         /// Returns if there is an item in the data structure at the given position or not.
         /// </summary>
         /// <param name="position">The position to check for.</param>
         /// <returns>True if there is some item at the given position, false if not.</returns>
         bool Contains(Coord position);
+
         /// <summary>
         /// Gets the position associated with the item in the data structure, or null if that item is not found.
         /// </summary>
         /// <param name="item">The item to get the position for.</param>
         /// <returns>The position associated with the given item, if it exists in the data structure, or null if the item does not exist.</returns>
         Coord GetPosition(T item);
+
         /// <summary>
         /// Gets the item(s) associated with the given position if there are any items, or returns nothing if there is nothing at that position.
         /// </summary>
         /// <param name="position">The position to return the item(s) for.</param>
         /// <returns>The item(s) at the given position if there are any items, or nothing if there is nothing at that position.</returns>
         IEnumerable<T> GetItems(Coord position);
+
         /// <summary>
         /// Returns a read-only reference to the data structure.  Convenient for "safely" exposing the structure as a property.
         /// </summary>

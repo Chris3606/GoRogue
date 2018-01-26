@@ -28,25 +28,25 @@
     /// a stat.
     /// </summary>
     /// <remarks>
-    /// Effectively, the class is nothing more than an interface for the concept of something 
+    /// Effectively, the class is nothing more than an interface for the concept of something
     /// that happens, potentially instantaneously or potentially one or more times on a
     /// certain event (beginning of a turn, end of a turn, on taking damage, etc).  The
     /// standard way to use the Effect class is to create a subclass
     /// of Effect, that at the very least implements the OnTrigger function, which should
     /// accomplish whatever the effect should do when it is triggered.
-    /// 
+    ///
     /// The subclass can
     /// specify what parameter(s) it needs to take in via the class's type parameter.
     /// If multiple arguments are needed, one should create a class that subclasses EffectArgs
     /// that contains all the parameters, and the effect subclass should then take an
     /// instance of that EffectArgs subclass as the single parameter.  If no arguments
     /// are needed, then one may pass null as the parameter to Trigger.
-    /// 
+    ///
     /// The concept of a duration is also built in to the interface (see EffectTrigger class
     /// for details on Effect durations.  The duration is to be interpreted as the number of
     /// times the effect's Trigger function will be called before it will be removed
     /// from an EffectTrigger.
-    /// 
+    ///
     /// If the effect is
     /// instantaneous, eg. it happens only when Trigger is called, on no
     /// particular event (such as a simple instant physical damage effect), then the duration
@@ -59,18 +59,21 @@
     abstract public class Effect<TriggerArgs> where TriggerArgs : EffectArgs
     {
 #pragma warning disable RECS0108
+
         /// <summary>
         /// The value one should specify as the effect duration for
         /// an infinite effect, eg. an effect that will never expire
         /// and be automatically removed from an EffectTrigger.
         /// </summary>
         public static readonly int INFINITE = -1;
+
         /// <summary>
         /// The value one should specify as the effect duaration for an
         /// instantaneous effect, eg. an effect that only occurs when Trigger
         /// is manually called, and thus cannot be added to an EffectTrigger.
         /// </summary>
         public static readonly int INSTANT = 0;
+
 #pragma warning restore RECS0108
 
         /// <summary>

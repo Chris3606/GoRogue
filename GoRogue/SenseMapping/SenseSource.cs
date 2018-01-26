@@ -12,19 +12,23 @@ namespace GoRogue.SenseMapping
         /// Performs calculation by pushing values out from the source location.  Source values spread around corners a bit.
         /// </summary>
         RIPPLE,
+
         /// <summary>
         /// Similar to RIPPLE but with different spread mechanics.  Values spread around edges like smoke or water, but maintains
         /// a tendency to curl towards the start position as it goes around edges.
         /// </summary>
         RIPPLE_LOOSE,
+
         /// <summary>
         /// Similar to RIPPLE, but values spread around corners only very slightly.
         /// </summary>
         RIPPLE_TIGHT,
+
         /// <summary>
         /// Similar to RIPPLE, but values spread around corners a lot.
         /// </summary>
         RIPPLE_VERY_LOOSE,
+
         /// <summary>
         /// Uses a Shadowcasting algorithm.  All partially resistant grid locations are treated as being fully
         /// transparent (it's on-off blocking, where 1.0 in the resistance map blocks, and all lower values don't).

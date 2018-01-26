@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration.Connectors
         private Distance distanceCalc;
 
         /// <summary>
-        /// Constructor.  Takes the shape that defines a radius, which is used to determine the proper distnace calculation.
+        /// Constructor.  Takes the shape that defines a radius, which is used to determine the proper distance calculation.
         /// </summary>
         /// <param name="shape">The shape defining a radius, which determines the distance calculation to use.</param>
         public DirectLineTunnelCreator(Radius shape)

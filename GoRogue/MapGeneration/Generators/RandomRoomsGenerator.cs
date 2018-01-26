@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GoRogue.Random;
+﻿using GoRogue.Random;
+using System.Collections.Generic;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -84,6 +84,7 @@ namespace GoRogue.MapGeneration.Generators
 
             return false;
         }
+
         static private void createRoom(ISettableMapOf<bool> map, Rectangle room)
         {
             for (int x = room.X + 1; x < room.MaxX; x++)

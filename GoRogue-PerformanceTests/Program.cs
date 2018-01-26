@@ -1,5 +1,4 @@
 ﻿using GoRogue;
-using GoRogue.MapGeneration;
 using GoRogue.SenseMapping;
 using System;
 
@@ -59,7 +58,6 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths of Jump Point Search, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
             Console.WriteLine($"\t{timeJumpPoint}");
             */
-
         }
     }
 }

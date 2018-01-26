@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GoRogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GoRogue;
+using System;
 
 namespace GoRogue_UnitTests
 {
@@ -23,6 +23,7 @@ namespace GoRogue_UnitTests
             e.CancelTrigger = true;
         }
     }
+
     [TestClass]
     public class EffectTests
     {

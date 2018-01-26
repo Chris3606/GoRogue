@@ -22,6 +22,7 @@ namespace GoRogue.MapGeneration
 
         private bool[,] visited;
         private Distance _distanceCalc;
+
         /// <summary>
         /// The calculation used to determine distance between two points.
         /// </summary>
@@ -117,6 +118,7 @@ namespace GoRogue.MapGeneration
         /// <param name="shape"></param>
         /// <returns>An IEnumerable of each (unique) map area.</returns>
         static public IEnumerable<MapArea> MapAreasFor(IMapOf<bool> map, Radius shape) => MapAreasFor(map, (Distance)shape);
+
         /// <summary>
         /// Convenience function that creates an MapAreaFinder and returns the result of that MapAreaFinder's MapAreas function.
         /// Intended to be used for cases in which the area finder will never be re-used.

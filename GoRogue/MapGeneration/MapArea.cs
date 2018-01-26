@@ -30,6 +30,7 @@ namespace GoRogue.MapGeneration
         }
 
         private List<Coord> _positions;
+
         /// <summary>
         /// List of all (unique) positions in the list.
         /// </summary>

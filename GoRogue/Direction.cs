@@ -407,6 +407,25 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Calculates degree bearing of the line (from => to), where 0 is the direction UP.
+        /// </summary>
+        /// <param name="from">Coordinate of line starting point.</param>
+        /// <param name="to">Coordinate of line ending point.</param>
+        /// <returns>The degree bearing of the line specified by the two given points.</returns>
+        public static double BearingOfLine(Coord from, Coord to)
+        {
+            int x = to.X - from.X;
+            int y = to.Y - from.Y;
+            y *= yMult;
+
+            double angle = Math.Atan2(y, x);
+            double degree = MathHelpers.ToDegree(angle);
+            degree += 450; // Rotate to all positive such that 0 is up
+            degree %= 360; // Normalize
+            return degree;
+        }
+
+        /// <summary>
         /// Returns the direction that most closely matches the angle given by a line from (0, 0) to the input.  Straight up is degree 0, straight down is 180 degrees, etc.
         /// If the angle happens to be right on the border between 2 angles, it rounds "up", eg., we take the closest angle in the clockwise direction.
         /// </summary>

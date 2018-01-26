@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration.Connectors
     /// Then, we iterate through each area, find the closest area that is not already conencted to the current area,
     /// and create a tunnel between the two.  Distance between to areas is measured as the distance between the center
     /// point of the bounding boxes of those areas.
-    /// 
+    ///
     /// Points to connect two areas, as well as method used to create a tunnel between those two points, are selected via specified parameters.
     /// </remarks>
     static public class ClosestMapAreaConnector

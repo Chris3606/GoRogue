@@ -130,16 +130,16 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:ad7eca4d749ac63ddb46b632f9e54b9d0"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0">MANHATTAN</a> = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.MANHATTAN)</td></tr>
 <tr class="memdesc:ad7eca4d749ac63ddb46b632f9e54b9d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">MANHATTAN distance (equivalent to 4-way, cardinal-only movement).  <a href="#ad7eca4d749ac63ddb46b632f9e54b9d0">More...</a><br /></td></tr>
 <tr class="separator:ad7eca4d749ac63ddb46b632f9e54b9d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aae1d785c763c7bb31ab0e1d0aa129d13"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_distance.html#aae1d785c763c7bb31ab0e1d0aa129d13">EUCLIDIAN</a> = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.EUCLIDIAN)</td></tr>
-<tr class="memdesc:aae1d785c763c7bb31ab0e1d0aa129d13"><td class="mdescLeft">&#160;</td><td class="mdescRight">EUCLIDIAN distance (equivalent to 8-way movement with extra cost for diagonals).  <a href="#aae1d785c763c7bb31ab0e1d0aa129d13">More...</a><br /></td></tr>
-<tr class="separator:aae1d785c763c7bb31ab0e1d0aa129d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1345b527b5854a4c11b815049eac13ec"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_distance.html#a1345b527b5854a4c11b815049eac13ec">EUCLIDEAN</a> = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.EUCLIDEAN)</td></tr>
+<tr class="memdesc:a1345b527b5854a4c11b815049eac13ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals).  <a href="#a1345b527b5854a4c11b815049eac13ec">More...</a><br /></td></tr>
+<tr class="separator:a1345b527b5854a4c11b815049eac13ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae662f1349d0df3ba748bff26153d91c1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_distance.html#ae662f1349d0df3ba748bff26153d91c1">CHEBYSHEV</a> = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.CHEBYSHEV)</td></tr>
 <tr class="memdesc:ae662f1349d0df3ba748bff26153d91c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals).  <a href="#ae662f1349d0df3ba748bff26153d91c1">More...</a><br /></td></tr>
 <tr class="separator:ae662f1349d0df3ba748bff26153d91c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing a method of calculating distance. You cannot create instances of this class using a constructor &ndash; instead this class contains static instances representing the applicable types of distance calculations. </p>
-<p>Provides functions that calculate the distance between two points according to the distance measurement being used. <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> instances can also be explicitly casted to <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> instances &ndash; the 2D radius shape that corresponds to the shape of a "radius" according to the casted distance calculation is retrieved (eg, EUCLIDIAN casts to CIRCLE, MANHATTAN to DIAMOND, etc.) </p>
+<p>Provides functions that calculate the distance between two points according to the distance measurement being used. <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> instances can also be explicitly casted to <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> instances &ndash; the 2D radius shape that corresponds to the shape of a "radius" according to the casted distance calculation is retrieved (eg, EUCLIDEAN casts to CIRCLE, MANHATTAN to DIAMOND, etc.) </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aab7eecf1ba4a7431fcfa7da6fca6757c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab7eecf1ba4a7431fcfa7da6fca6757c">&sect;&nbsp;</a></span>DistanceBetween() <span class="overload">[1/5]</span></h2>
@@ -702,8 +702,8 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aae1d785c763c7bb31ab0e1d0aa129d13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aae1d785c763c7bb31ab0e1d0aa129d13">&sect;&nbsp;</a></span>EUCLIDIAN</h2>
+<a id="a1345b527b5854a4c11b815049eac13ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1345b527b5854a4c11b815049eac13ec">&sect;&nbsp;</a></span>EUCLIDEAN</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -712,7 +712,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.Distance.EUCLIDIAN = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.EUCLIDIAN)</td>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.Distance.EUCLIDEAN = new <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>(DistanceType.EUCLIDEAN)</td>
         </tr>
       </table>
   </td>
@@ -722,7 +722,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>EUCLIDIAN distance (equivalent to 8-way movement with extra cost for diagonals). </p>
+<p>EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals). </p>
 
 </div>
 </div>

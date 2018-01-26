@@ -8,7 +8,7 @@ var searchData=
   ['tocoord',['ToCoord',['../class_go_rogue_1_1_coord.html#a93702b3ce2d8337cd27ffbe5b1564651',1,'GoRogue::Coord']]],
   ['todegree',['ToDegree',['../class_go_rogue_1_1_math_helpers.html#a8d29de4468242a71c4b0ac4eea83e57b',1,'GoRogue::MathHelpers']]],
   ['todistance',['ToDistance',['../class_go_rogue_1_1_distance.html#aac46e8a38b5c6dfe61fbe6e5277ade2c',1,'GoRogue::Distance']]],
-  ['toindex',['ToIndex',['../class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096',1,'GoRogue.Coord.ToIndex(int rowCount)'],['../class_go_rogue_1_1_coord.html#a97e98e50ebb20ccd0f7f2c82b043cd3d',1,'GoRogue.Coord.ToIndex(int x, int y, int rowCount)']]],
+  ['toindex',['ToIndex',['../class_go_rogue_1_1_coord.html#a97e98e50ebb20ccd0f7f2c82b043cd3d',1,'GoRogue.Coord.ToIndex(int x, int y, int rowCount)'],['../class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096',1,'GoRogue.Coord.ToIndex(int rowCount)']]],
   ['tolist_3c_20t_20_3e',['ToList&lt; T &gt;',['../class_go_rogue_1_1_utility.html#a2ced4f46e764420957f96330a3e2dab0',1,'GoRogue::Utility']]],
   ['toradian',['ToRadian',['../class_go_rogue_1_1_math_helpers.html#a0dee240dbcbb539d7fe232b28cb663e9',1,'GoRogue::MathHelpers']]],
   ['toradius',['ToRadius',['../class_go_rogue_1_1_radius.html#a8e29e9d2d32650724272ef14dca5eac6',1,'GoRogue::Radius']]],

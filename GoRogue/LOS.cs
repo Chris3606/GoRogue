@@ -18,6 +18,7 @@ namespace GoRogue
         /// Width of LOS map.
         /// </summary>
         public int Width { get => resMap.Width; }
+
         /// <summary>
         /// Height of LOS map.
         /// </summary>
@@ -74,7 +75,6 @@ namespace GoRogue
         /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.  If no radius is specified, it is
         /// effectively infinite.</param>
         public void Calculate(Coord start, int radius = int.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
-
 
         /// <summary>
         /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy.

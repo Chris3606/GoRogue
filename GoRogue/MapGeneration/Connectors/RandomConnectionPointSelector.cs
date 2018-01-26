@@ -1,5 +1,5 @@
-﻿using System;
-using GoRogue.Random;
+﻿using GoRogue.Random;
+using System;
 
 namespace GoRogue.MapGeneration.Connectors
 {

@@ -10,6 +10,7 @@ namespace GoRogue.MapGeneration.Connectors
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
         private IRandom rng;
+
         /// <summary>
         /// Constructor.  Takes rng to use -- if null is specified, the default RNG is used.
         /// </summary>

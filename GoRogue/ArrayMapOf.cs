@@ -12,6 +12,7 @@ namespace GoRogue
         /// The width of the array.
         /// </summary>
         public int Width { get => array.GetLength(0); }
+
         /// <summary>
         /// The height of the array.
         /// </summary>

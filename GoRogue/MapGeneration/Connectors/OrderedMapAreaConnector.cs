@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GoRogue.Random;
+﻿using GoRogue.Random;
+using System.Collections.Generic;
 
 namespace GoRogue.MapGeneration.Connectors
 {

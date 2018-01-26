@@ -72,15 +72,16 @@ namespace GoRogue
         /// See ISpatialMap.ItemAdded.
         /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemAdded;
+
         /// <summary>
         /// See ISpatialMap.ItemRemoved.
         /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemRemoved;
+
         /// <summary>
         /// See ISpatialMap.ItemMoved.
         /// </summary>
         public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
-
 
         /// <summary>
         /// Constructor.  Creates an empty SpatialMap.
@@ -206,10 +207,12 @@ namespace GoRogue
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+
         /// <summary>
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+
         /// <summary>
         /// See IReadOnlySpatialMap.GetPosition.
         /// </summary>
@@ -283,6 +286,7 @@ namespace GoRogue
         /// </summary>
         /// <returns>Enumerator to ISpatialTuple instances.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         /// <summary>
         /// See IReadOnlySpatialMap.AsReadOnly.
         /// </summary>

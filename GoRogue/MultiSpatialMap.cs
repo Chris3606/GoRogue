@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -15,7 +15,7 @@ namespace GoRogue
     /// first place, this implementation may be particularly useful for situations such as inventory items, where multiple
     /// items may be desired at one location.  If one is implementing something akin to "buckets", one may also subclass
     /// this implementation and provide handlers to the various events it exposes to keep track of the object on top, etc.
-    /// 
+    ///
     /// The two implementations could also in many cases be used in combination as necessary, since they both implement
     /// the ISpatialMap interface.
     /// </remarks>
@@ -29,6 +29,7 @@ namespace GoRogue
         /// See IReadOnlySpatialMap.Count.
         /// </summary>
         public int Count { get => itemMapping.Count; }
+
         /// <summary>
         /// See IReadOnlySpatialMap.Items.
         /// </summary>
@@ -40,6 +41,7 @@ namespace GoRogue
                     yield return item.Item;
             }
         }
+
         /// <summary>
         /// See IReadOnlySpatialMap.Positions.
         /// </summary>
@@ -56,10 +58,12 @@ namespace GoRogue
         /// See ISpatialMap.ItemAdded.
         /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemAdded;
+
         /// <summary>
         /// See ISpatialMap.ItemRemoved.
         /// </summary>
         public event EventHandler<ItemEventArgs<T>> ItemRemoved;
+
         /// <summary>
         /// See ISpatialMap.ItemMoved.
         /// </summary>
@@ -207,10 +211,12 @@ namespace GoRogue
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+
         /// <summary>
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+
         /// <summary>
         /// See IReadOnlySpatialMap.GetPosition.
         /// </summary>

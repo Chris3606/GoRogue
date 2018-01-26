@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -13,6 +13,7 @@ namespace GoRogue
         /// Item being represented.
         /// </summary>
         public T Item { get; private set; }
+
         /// <summary>
         /// Current position of that item at time of event.
         /// </summary>
@@ -40,10 +41,12 @@ namespace GoRogue
         /// Item being represented.
         /// </summary>
         public T Item { get; private set; }
+
         /// <summary>
         /// Position of item before it was moved.
         /// </summary>
         public Coord OldPosition { get; private set; }
+
         /// <summary>
         /// Position of item after it has been moved.
         /// </summary>
@@ -78,10 +81,12 @@ namespace GoRogue
         /// Fired directly after an item has been added to the data structure.
         /// </summary>
         event EventHandler<ItemEventArgs<T>> ItemAdded;
+
         /// <summary>
         /// Fired directly after an item has been removed from the data structure.
         /// </summary>
         event EventHandler<ItemEventArgs<T>> ItemRemoved;
+
         /// <summary>
         /// Fired directly after an item in the data structure has been moved.
         /// </summary>
@@ -95,6 +100,7 @@ namespace GoRogue
         /// <param name="position">Position to add item to.</param>
         /// <returns>True if item was successfully added, false otherwise.</returns>
         bool Add(T newItem, Coord position);
+
         /// <summary>
         /// Moves the given item from its current location to the specified one.  Returns true if the item was successfully
         /// moved, false otherwise.
@@ -103,6 +109,7 @@ namespace GoRogue
         /// <param name="target">Location to move item to.</param>
         /// <returns>True if item was successfully moved, false otherwise.</returns>
         bool Move(T item, Coord target);
+
         /// <summary>
         /// Moves any items at the specified location to the target one.  Returns any items that were moved.
         /// </summary>
@@ -110,18 +117,21 @@ namespace GoRogue
         /// <param name="target">Location to move items to.</param>
         /// <returns>Any items that were moved, nothing if no items were moved.</returns>
         IEnumerable<T> Move(Coord current, Coord target);
+
         /// <summary>
         /// Removes the given item from the data structure, returning true if the item was removed or false otherwise.
         /// </summary>
         /// <param name="item">The item to remove.</param>
         /// <returns>True if item was removed, false otherwise.</returns>
         bool Remove(T item);
+
         /// <summary>
         /// Removes any items at the specified location from the data structure.  Returns any items that were removed.
         /// </summary>
         /// <param name="position">Position to remove items from.</param>
         /// <returns>Any items that were removed, or nothing if no items were removed.</returns>
         IEnumerable<T> Remove(Coord position);
+
         /// <summary>
         /// Clears all items out of the data structure.
         /// </summary>

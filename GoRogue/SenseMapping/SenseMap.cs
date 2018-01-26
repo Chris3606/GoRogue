@@ -32,6 +32,7 @@ namespace GoRogue.SenseMapping
         /// Width of sense map.
         /// </summary>
         public int Width { get => resMap.Width; }
+
         /// <summary>
         /// Height of sense map.
         /// </summary>

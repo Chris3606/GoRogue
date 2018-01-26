@@ -16,6 +16,7 @@ namespace GoRogue
         /// Minimum X-coordinate of the rectangle.
         /// </summary>
         public int X { get; set; }
+
         /// <summary>
         /// Minimum Y-coordinate that is included in the rectangle.
         /// </summary>
@@ -34,6 +35,7 @@ namespace GoRogue
         /// The width of the rectangle, in grid squares.
         /// </summary>
         public int Width { get; set; }
+
         /// <summary>
         /// The height of the rectangle, in grid squares.
         /// </summary>
@@ -217,7 +219,7 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// See Equals.  
+        /// See Equals.
         /// </summary>
         /// <param name="r1">First rectangle.</param>
         /// <param name="r2">Second rectangle.</param>

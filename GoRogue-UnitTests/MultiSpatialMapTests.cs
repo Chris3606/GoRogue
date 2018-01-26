@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GoRogue;
+﻿using GoRogue;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
 {

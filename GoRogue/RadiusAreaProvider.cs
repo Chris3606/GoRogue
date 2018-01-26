@@ -64,6 +64,7 @@ namespace GoRogue
         }
 
         private Distance _distanceCalc;
+
         /// <summary>
         /// The distance calculation that defines the concept of radius.
         /// </summary>
@@ -81,6 +82,7 @@ namespace GoRogue
         /// The shape of the radius.
         /// </summary>
         public Radius RadiusShape { get => (Radius)_distanceCalc; set => DistanceCalc = (Distance)value; }
+
         /// <summary>
         /// The bounds to constrain the returned Coords to.  Set to Rectangle.EMPTY
         /// to indicate that there are no bounds.

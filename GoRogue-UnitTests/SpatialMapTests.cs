@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
 {
-    class MyIDImpl : IHasID
+    internal class MyIDImpl : IHasID
     {
         private static IDGenerator idGen = new IDGenerator();
         public uint ID { get; private set; }

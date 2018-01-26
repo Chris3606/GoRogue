@@ -1,6 +1,5 @@
-﻿using System;
+﻿using GoRogue.Random;
 using System.Collections.Generic;
-using GoRogue.Random;
 
 namespace GoRogue
 {

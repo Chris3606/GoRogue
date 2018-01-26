@@ -1,8 +1,8 @@
 ﻿using GoRogue;
-using Generators = GoRogue.MapGeneration.Generators;
 using GoRogue.Pathing;
 using System;
 using System.Diagnostics;
+using Generators = GoRogue.MapGeneration.Generators;
 
 namespace GoRogue_PerformanceTests
 {

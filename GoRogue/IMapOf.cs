@@ -11,13 +11,13 @@
     /// tile is passable with respect to pathing.  This boolean value might be determined by a number of things -
     /// terrain type, monster positions, etc.  Thus, in practice, maintaining an actual 2D array of boolean values
     /// that such an algorithm could take as input can be significant work.
-    /// 
+    ///
     /// IMapOf solves this problem by providing an interface that all such algorithms can take as input -- pathfinding,
     /// for instance, would take an IMapOf&lt;bool&gt; instance, rather than a 2D array of booleans.  A user of that algorithm
     /// might create a class that implements the indexers below to check the terrain type, if there is a monster at the
     /// position, etc., and returns the correct value.  This prevents the need to maintain an actual 2D array in code
     /// that pathfinding can use, if such an array does not fit with your game architecture.
-    /// 
+    ///
     /// If an actual 2D array is desired, a class ArrayMapOf is provided that implements IMapOf, and acts much like
     /// an actual 2D array.
     /// </remarks>
@@ -28,6 +28,7 @@
         /// The width of the map being represented.
         /// </summary>
         int Width { get; }
+
         /// <summary>
         /// The height of the map being represented.
         /// </summary>
@@ -40,6 +41,7 @@
         /// <param name="y">Y-value of location.</param>
         /// <returns>The "value" associated with that location.</returns>
         T this[int x, int y] { get; }
+
         /// <summary>
         /// Given a Coord, should return the "value" associated with that location.
         /// </summary>

@@ -11,10 +11,12 @@ namespace GoRogue
         /// Enum type for Distance.MANHATTAN.
         /// </summary>
         MANHATTAN,
+
         /// <summary>
         /// Enum type for Distance.EUCLIDEAN.
         /// </summary>
         EUCLIDEAN,
+
         /// <summary>
         /// Enum type for Distance.CHEBYSHEV.
         /// </summary>
@@ -41,10 +43,12 @@ namespace GoRogue
         /// MANHATTAN distance (equivalent to 4-way, cardinal-only movement).
         /// </summary>
         public static Distance MANHATTAN = new Distance(DistanceType.MANHATTAN);
+
         /// <summary>
         /// EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals).
         /// </summary>
         public static Distance EUCLIDEAN = new Distance(DistanceType.EUCLIDEAN);
+
         /// <summary>
         /// CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals).
         /// </summary>

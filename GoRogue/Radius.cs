@@ -9,22 +9,27 @@
         /// Type for Radius.SQUARE.
         /// </summary>
         SQUARE,
+
         /// <summary>
         /// Type for Radius.DIAMOND.
         /// </summary>
         DIAMOND,
+
         /// <summary>
         /// Type for Radius.CIRCLE.
         /// </summary>
         CIRCLE,
+
         /// <summary>
         /// Type for Radius.CUBE.
         /// </summary>
         CUBE,
+
         /// <summary>
         /// Type for Radius.OCTAHEDRON.
         /// </summary>
         OCTAHEDRON,
+
         /// <summary>
         /// Type for Radius.SPHERE.
         /// </summary>

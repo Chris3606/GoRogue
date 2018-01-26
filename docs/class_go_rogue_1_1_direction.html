@@ -129,6 +129,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a916e25125cd66841e71a9c25e18bb493"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#a916e25125cd66841e71a9c25e18bb493">Outwards</a> ()</td></tr>
 <tr class="memdesc:a916e25125cd66841e71a9c25e18bb493"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns outward facing directions (everything except NONE). Similar to clockwise just not in clockwise order; checks cardinals first then diagonals.  <a href="#a916e25125cd66841e71a9c25e18bb493">More...</a><br /></td></tr>
 <tr class="separator:a916e25125cd66841e71a9c25e18bb493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac30ece6b3132d8f635deb0e8410ed08e"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#ac30ece6b3132d8f635deb0e8410ed08e">BearingOfLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> from, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> to)</td></tr>
+<tr class="memdesc:ac30ece6b3132d8f635deb0e8410ed08e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates degree bearing of the line (from =&gt; to), where 0 is the direction UP.  <a href="#ac30ece6b3132d8f635deb0e8410ed08e">More...</a><br /></td></tr>
+<tr class="separator:ac30ece6b3132d8f635deb0e8410ed08e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#a6ec7363dc63ac89b1abad4aaa0f7d0a1">GetDirection</a> (int x, int y)</td></tr>
 <tr class="memdesc:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the direction that most closely matches the angle given by a line from (0, 0) to the input. Straight up is degree 0, straight down is 180 degrees, etc. If the angle happens to be right on the border between 2 angles, it rounds "up", eg., we take the closest angle in the clockwise direction.  <a href="#a6ec7363dc63ac89b1abad4aaa0f7d0a1">More...</a><br /></td></tr>
 <tr class="separator:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,6 +195,52 @@ Properties</h2></td></tr>
 <div class="textblock"><p><a class="el" href="class_go_rogue_1_1_utility.html" title="Static class full of miscellaneous helper methods. ">Utility</a> class to handle Directions on a grid map. The built-in variables hold the dx and dy for that direction, at unit scale. </p>
 <p>It also contains functions to provide ways to iterate over the directions in common orders &ndash; for example, it contains a function that returns an Enumerable of all the directions in clockwise order, as well as a similar function for cardinal directions in a clockwise order, among many others. It is also possible to invert the y coordinates (where UP is 0, 1 and DOWN is 0, -1, etc). <a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> instances can also be added to Coords to produce the coordinate directly adjacent in the direction added. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac30ece6b3132d8f635deb0e8410ed08e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac30ece6b3132d8f635deb0e8410ed08e">&sect;&nbsp;</a></span>BearingOfLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double GoRogue.Direction.BearingOfLine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates degree bearing of the line (from =&gt; to), where 0 is the direction UP. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>Coordinate of line starting point.</td></tr>
+    <tr><td class="paramname">to</td><td>Coordinate of line ending point.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The degree bearing of the line specified by the two given points.</dd></dl>
+
+</div>
+</div>
 <a id="a90bbcbf07b087deee7edaeb1bf47f232"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a90bbcbf07b087deee7edaeb1bf47f232">&sect;&nbsp;</a></span>CardinalsClockwise() <span class="overload">[1/2]</span></h2>
 

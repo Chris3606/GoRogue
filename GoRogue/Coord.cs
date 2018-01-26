@@ -38,89 +38,17 @@ namespace GoRogue
                     POOL[i, j] = new Coord(i - 3, j - 3);
         }
 
-        /// <summary>
-        /// Returns the proper Coord instance for the given x and y values.  Will return the one in the array if the values are in the appropriate range,
-        /// otherwise will create a new one and return that one.
-        /// </summary>
-        /// <param name="x">The x-value for the coordinate.</param>
-        /// <param name="y">The y-value for the coordinate.</param>
-        /// <returns>The Coord representing the given x-value and y-value.</returns>
-        public static Coord Get(int x, int y)
+        private Coord()
         {
-            if (x >= -3 && y >= -3 && x < POOL.GetLength(0) - 3 && y < POOL.GetLength(1) - 3)
-                return POOL[x + 3, y + 3];
-            else return new Coord(x, y);
+            X = 0;
+            Y = 0;
         }
 
-        /// <summary>
-        /// Calculates degree bearing of the line (from => to), where 0 is up (north).
-        /// </summary>
-        /// <param name="from">Coordinate of line starting point.</param>
-        /// <param name="to">Coordinate of line ending point.</param>
-        /// <returns>The degree bearing of the line specified by the two given points.</returns>
-        public static double BearingOfLine(Coord from, Coord to)
+        private Coord(int x, int y)
         {
-            int x = to.X - from.X;
-            int y = to.Y - from.Y;
-            double angle = Math.Atan2(y, x);
-            double degree = MathHelpers.ToDegree(angle);
-            degree += 450; // Rotate to all positive such that 0 is up
-            degree %= 360; // Normalize
-            return degree;
+            X = x;
+            Y = y;
         }
-
-        /// <summary>
-        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
-        /// (assuming 8-way connectivity).  This will include the start and end points themselves.  This is simply
-        /// an implementation of Brensham's line algorithm, from https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm.
-        /// </summary>
-        /// <param name="start">Starting point.</param>
-        /// <param name="end">Ending point.</param>
-        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
-        public static IEnumerable<Coord> PositionsOnLine(Coord start, Coord end)
-        {
-            int x0 = start.X;
-            int y0 = start.Y;
-            int x1 = end.X;
-            int y1 = end.Y;
-
-
-            bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
-            if (steep)
-            {
-                Utility.Swap(ref x0, ref y0);
-                Utility.Swap(ref x1, ref y1);
-            }
-
-            if (x0 > x1)
-            {
-                Utility.Swap(ref x0, ref x1);
-                Utility.Swap(ref y0, ref y1);
-            }
-
-            int dx = x1 - x0;
-            int dy = Math.Abs(y1 - y0);
-
-            int err = dx / 2;
-            int yStep = (y0 < y1 ? 1 : -1);
-            int y = y0;
-
-            for (int x = x0; x <= x1; x++)
-            {
-                if (steep)
-                    yield return Coord.Get(y, x);
-                else
-                    yield return Coord.Get(x, y);
-
-                err -= dy;
-                if (err < 0)
-                {
-                    y += yStep;
-                    err += dx;
-                }
-            }
-        }
-        
 
         /// <summary>
         /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
@@ -144,15 +72,6 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns the midpoint between the two points.
-        /// </summary>
-        /// <param name="c1">The first point.</param>
-        /// <param name="c2">The second point.</param>
-        /// <returns>The midpoint between c1 and c2</returns>
-        public static Coord Midpoint(Coord c1, Coord c2) =>
-            Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
-
-        /// <summary>
         /// Returns the result of the euclidean distance formula, without the square root -- eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y).
         /// Use this if you only care about the magnitude of the distance -- eg., if you're trying to compare two distances.  Omitting the square root provides
         /// a speed increase.
@@ -163,28 +82,27 @@ namespace GoRogue
         public static double EuclideanDistanceMagnitude(Coord c1, Coord c2) => (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y);
 
         /// <summary>
-        /// + operator.  Returns the coordinate (c1.X + c2.X, c1.Y + c2.Y).
+        /// Returns the proper Coord instance for the given x and y values.  Will return the one in the array if the values are in the appropriate range,
+        /// otherwise will create a new one and return that one.
         /// </summary>
-        /// <param name="c1">The first coordinate.</param>
-        /// <param name="c2">The coordinate to add to c1.</param>
-        /// <returns>c1 + c2, eg. (c1.X + c2.X, c1.Y + c2.Y)</returns>
-        public static Coord operator +(Coord c1, Coord c2) => Get(c1.X + c2.X, c1.Y + c2.Y);
+        /// <param name="x">The x-value for the coordinate.</param>
+        /// <param name="y">The y-value for the coordinate.</param>
+        /// <returns>The Coord representing the given x-value and y-value.</returns>
+        public static Coord Get(int x, int y)
+        {
+            if (x >= -3 && y >= -3 && x < POOL.GetLength(0) - 3 && y < POOL.GetLength(1) - 3)
+                return POOL[x + 3, y + 3];
+            else return new Coord(x, y);
+        }
 
         /// <summary>
-        /// + operator.  Adds scalar i to the x and y values of c; eg., returns (c.X + i, c.Y + i).
+        /// Returns the midpoint between the two points.
         /// </summary>
-        /// <param name="c">Coordinate to add scalar to.</param>
-        /// <param name="i">Scalar to add to coordinate.</param>
-        /// <returns>Coordinate resulting from adding scalar i to x-value and y-value of c1.</returns>
-        public static Coord operator +(Coord c, int i) => Get(c.X + i, c.Y + i);
-
-        /// <summary>
-        /// + operator.  Translates the given coordinate by the given direction, eg. returns (c.X + d.DeltaX, c.Y + d.DeltaY).
-        /// </summary>
-        /// <param name="c">The coordinate to translate by the given direction.</param>
-        /// <param name="d">The direction to translate the coordinate by.</param>
-        /// <returns>The coordinate translated by the given direction, eg. (c.X + d.DeltaX, c.Y + d.DeltaY</returns>
-        public static Coord operator +(Coord c, Direction d) => Get(c.X + d.DeltaX, c.Y + d.DeltaY);
+        /// <param name="c1">The first point.</param>
+        /// <param name="c2">The second point.</param>
+        /// <returns>The midpoint between c1 and c2</returns>
+        public static Coord Midpoint(Coord c1, Coord c2) =>
+            Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
 
         /// <summary>
         /// - operator.  Returns the coordinate (c1.X - c2.X, c1.Y - c2.Y)
@@ -201,6 +119,14 @@ namespace GoRogue
         /// <param name="i">Scalar to subtract from the coordinate.</param>
         /// <returns></returns>
         public static Coord operator -(Coord c, int i) => Get(c.X - i, c.Y - i);
+
+        /// <summary>
+        /// True if either the x-values or y-values are not equal.
+        /// </summary>
+        /// <param name="c1">First coordinate to compare.</param>
+        /// <param name="c2">Second coordinate to compare.</param>
+        /// <returns>True if either the x-values or y-values are not equal, false if they are both equal.</returns>
+        public static bool operator !=(Coord c1, Coord c2) => !(c1 == c2);
 
         /// <summary>
         /// * operator.  Multiplies the x-value and y-value of c by i, eg. returns (c.X * i, c.Y * i)
@@ -240,6 +166,30 @@ namespace GoRogue
             Get((int)Math.Round(c.X / i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / i, MidpointRounding.AwayFromZero));
 
         /// <summary>
+        /// + operator.  Returns the coordinate (c1.X + c2.X, c1.Y + c2.Y).
+        /// </summary>
+        /// <param name="c1">The first coordinate.</param>
+        /// <param name="c2">The coordinate to add to c1.</param>
+        /// <returns>c1 + c2, eg. (c1.X + c2.X, c1.Y + c2.Y)</returns>
+        public static Coord operator +(Coord c1, Coord c2) => Get(c1.X + c2.X, c1.Y + c2.Y);
+
+        /// <summary>
+        /// + operator.  Adds scalar i to the x and y values of c; eg., returns (c.X + i, c.Y + i).
+        /// </summary>
+        /// <param name="c">Coordinate to add scalar to.</param>
+        /// <param name="i">Scalar to add to coordinate.</param>
+        /// <returns>Coordinate resulting from adding scalar i to x-value and y-value of c1.</returns>
+        public static Coord operator +(Coord c, int i) => Get(c.X + i, c.Y + i);
+
+        /// <summary>
+        /// + operator.  Translates the given coordinate by the given direction, eg. returns (c.X + d.DeltaX, c.Y + d.DeltaY).
+        /// </summary>
+        /// <param name="c">The coordinate to translate by the given direction.</param>
+        /// <param name="d">The direction to translate the coordinate by.</param>
+        /// <returns>The coordinate translated by the given direction, eg. (c.X + d.DeltaX, c.Y + d.DeltaY</returns>
+        public static Coord operator +(Coord c, Direction d) => Get(c.X + d.DeltaX, c.Y + d.DeltaY);
+
+        /// <summary>
         /// True if c1.X == c2.X and c1.Y == c2.Y.
         /// </summary>
         /// <param name="c1">First coodinate to compare.</param>
@@ -257,71 +207,63 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// True if either the x-values or y-values are not equal.
+        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
+        /// (assuming 8-way connectivity).  This will include the start and end points themselves.  This is simply
+        /// an implementation of Brensham's line algorithm, from https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm.
         /// </summary>
-        /// <param name="c1">First coordinate to compare.</param>
-        /// <param name="c2">Second coordinate to compare.</param>
-        /// <returns>True if either the x-values or y-values are not equal, false if they are both equal.</returns>
-        public static bool operator !=(Coord c1, Coord c2) => !(c1 == c2);
-
-        /// <summary>
-        /// Same as operator == in this case; returns false if o is not a Coord.
-        /// </summary>
-        /// <param name="obj">The object to compare the current Coord to.</param>
-        /// <returns>True if o is a Coord instance, and the two coordinates are equal, false otherwise.</returns>
-        public override bool Equals(object obj) => this == (obj as Coord); // If cast is null, operator== will take care of it.
-
-        // TODO: Test consistancy, and what it returns when compared to java squidlib version, to ensure equivalency.
-        /// <summary>
-        /// Returns a hash code for the Coord.  The important parts: it should be fairly fast and it does not collide often.
-        /// The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet
-        /// large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime
-        /// number.
-        /// </summary>
-        /// <returns>The hash-code for the Coord.</returns>
-        public override int GetHashCode()
+        /// <param name="start">Starting point.</param>
+        /// <param name="end">Ending point.</param>
+        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
+        public static IEnumerable<Coord> PositionsOnLine(Coord start, Coord end)
         {
-            // Intentional overflow on both of these, part of hash-code generation
-            int x2 = (int)(0x9E3779B9 * X), y2 = 0x632BE5AB * Y;
-            return (int)(((uint)(x2 ^ y2) >> ((x2 & 7) + (y2 & 7))) * 0x85157AF5);
+            int x0 = start.X;
+            int y0 = start.Y;
+            int x1 = end.X;
+            int y1 = end.Y;
+
+            bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
+            if (steep)
+            {
+                Utility.Swap(ref x0, ref y0);
+                Utility.Swap(ref x1, ref y1);
+            }
+
+            if (x0 > x1)
+            {
+                Utility.Swap(ref x0, ref x1);
+                Utility.Swap(ref y0, ref y1);
+            }
+
+            int dx = x1 - x0;
+            int dy = Math.Abs(y1 - y0);
+
+            int err = dx / 2;
+            int yStep = (y0 < y1 ? 1 : -1);
+            int y = y0;
+
+            for (int x = x0; x <= x1; x++)
+            {
+                if (steep)
+                    yield return Coord.Get(y, x);
+                else
+                    yield return Coord.Get(x, y);
+
+                err -= dy;
+                if (err < 0)
+                {
+                    y += yStep;
+                    err += dx;
+                }
+            }
         }
 
         /// <summary>
-        /// Returns representation (X, Y).
+        /// Reverses the ToIndex function, returning the Coord represented by a given index.
         /// </summary>
-        /// <returns>String (X, Y)</returns>
-        public override string ToString() => $"({X},{Y})";
-
-        private Coord()
-        {
-            X = 0;
-            Y = 0;
-        }
-
-        private Coord(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        /// <summary>
-        /// Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy to the Y-value of
-        /// the coordinate, eg. (X + dx, Y + dy).  Provided for convenience.
-        /// </summary>
-        /// <param name="dx">Delta x to add to coordinate.</param>
-        /// <param name="dy">Delta y to add to coordinate.</param>
-        /// <returns>The coordinate (X + dx, Y + dy)</returns>
-        public Coord Translate(int dx, int dy) => Get(X + dx, Y + dy);
-
-        /// <summary>
-        /// Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array.  Actual value is Y * rowCount + X.
-        /// The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used,
-        /// if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop,
-        /// for cache performance reasons.
-        /// </summary>
-        /// <param name="rowCount">The number of rows, used to do math to calculate index.  Usually the width of the 2D array.</param>
-        /// <returns>The 1D index of this Coord.</returns>
-        public int ToIndex(int rowCount) => Y * rowCount + X;
+        /// <param name="index">The index in 1D form.</param>
+        /// <param name="rowCount">The number of rows.</param>
+        /// <returns>The Coord represented by the 1D index given.</returns>
+        public static Coord ToCoord(int index, int rowCount) => Get(index % rowCount, index / rowCount);
 
         /// <summary>
         /// Returns y * rowCount + x.  Same as Coord.ToIndex(int rowCount), just takes x and y instead.
@@ -331,14 +273,6 @@ namespace GoRogue
         /// <param name="rowCount">The number of rows, used to do math to calculate index.</param>
         /// <returns>The 1D index of this Coord.</returns>
         public static int ToIndex(int x, int y, int rowCount) => y * rowCount + x;
-
-        /// <summary>
-        /// Reverses the ToIndex function, returning the Coord represented by a given index.
-        /// </summary>
-        /// <param name="index">The index in 1D form.</param>
-        /// <param name="rowCount">The number of rows.</param>
-        /// <returns>The Coord represented by the 1D index given.</returns>
-        public static Coord ToCoord(int index, int rowCount) => Get(index % rowCount, index / rowCount);
 
         /// <summary>
         /// Reverses the ToIndex function, returning only the X-value for the given index.
@@ -355,5 +289,51 @@ namespace GoRogue
         /// <param name="rowCount">The number of rows.</param>
         /// <returns>The Y-value for the location represented by the given index.</returns>
         public static int ToYValue(int index, int rowCount) => index / rowCount;
+
+        /// <summary>
+        /// Same as operator == in this case; returns false if o is not a Coord.
+        /// </summary>
+        /// <param name="obj">The object to compare the current Coord to.</param>
+        /// <returns>True if o is a Coord instance, and the two coordinates are equal, false otherwise.</returns>
+        public override bool Equals(object obj) => this == (obj as Coord); // If cast is null, operator== will take care of it.
+
+        /// <summary>
+        /// Returns a hash code for the Coord.  The important parts: it should be fairly fast and it does not collide often.
+        /// The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet
+        /// large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime
+        /// number.
+        /// </summary>
+        /// <returns>The hash-code for the Coord.</returns>
+        public override int GetHashCode()
+        {
+            // Intentional overflow on both of these, part of hash-code generation
+            int x2 = (int)(0x9E3779B9 * X), y2 = 0x632BE5AB * Y;
+            return (int)(((uint)(x2 ^ y2) >> ((x2 & 7) + (y2 & 7))) * 0x85157AF5);
+        }
+
+        /// <summary>
+        /// Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array.  Actual value is Y * rowCount + X.
+        /// The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used,
+        /// if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop,
+        /// for cache performance reasons.
+        /// </summary>
+        /// <param name="rowCount">The number of rows, used to do math to calculate index.  Usually the width of the 2D array.</param>
+        /// <returns>The 1D index of this Coord.</returns>
+        public int ToIndex(int rowCount) => Y * rowCount + X;
+
+        /// <summary>
+        /// Returns representation (X, Y).
+        /// </summary>
+        /// <returns>String (X, Y)</returns>
+        public override string ToString() => $"({X},{Y})";
+
+        /// <summary>
+        /// Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy to the Y-value of
+        /// the coordinate, eg. (X + dx, Y + dy).  Provided for convenience.
+        /// </summary>
+        /// <param name="dx">Delta x to add to coordinate.</param>
+        /// <param name="dy">Delta y to add to coordinate.</param>
+        /// <returns>The coordinate (X + dx, Y + dy)</returns>
+        public Coord Translate(int dx, int dy) => Get(X + dx, Y + dy);
     }
 }

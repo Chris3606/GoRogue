@@ -1,8 +1,8 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
-using Generators = GoRogue.MapGeneration.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Generators = GoRogue.MapGeneration.Generators;
 
 namespace GoRogue_UnitTests
 {
