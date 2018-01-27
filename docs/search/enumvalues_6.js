@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['shadow',['SHADOW',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a8160fba05a5a291372a94bc22b55f62b',1,'GoRogue::SenseMapping']]],
-  ['sphere',['SPHERE',['../namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa6f7cea7381e843e2ee0338b4a92b0d43',1,'GoRogue']]],
-  ['square',['SQUARE',['../namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa12dec4e1f7ec620651b2b95c440ffac0',1,'GoRogue']]]
+  ['ripple',['RIPPLE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a3b68550e169b363f0d4937bba677d76d',1,'GoRogue::SenseMapping']]],
+  ['ripple_5floose',['RIPPLE_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a450e61693b6ddefa09d369fcd289a5bb',1,'GoRogue::SenseMapping']]],
+  ['ripple_5ftight',['RIPPLE_TIGHT',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42addbfc9ad7f292b04c5003106a7268a35',1,'GoRogue::SenseMapping']]],
+  ['ripple_5fvery_5floose',['RIPPLE_VERY_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a507c2c185aefa93e554ecfb94076867c',1,'GoRogue::SenseMapping']]]
 ];

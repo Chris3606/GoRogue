@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['octahedron',['OCTAHEDRON',['../namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfaf90dd475a67e9d29408b539a832510ff',1,'GoRogue']]]
+  ['manhattan',['MANHATTAN',['../namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506a20548c3a17d5b27db0c2995b6646a792',1,'GoRogue']]]
 ];

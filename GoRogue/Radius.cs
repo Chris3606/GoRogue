@@ -36,7 +36,7 @@
         SPHERE
     };
 
-    // TODO: Potentially a crapton more utility stuff to add here.  Probably Get around to it closer to LOS/area of effect libs.
+    // TODO: Potentially a crapton more utility stuff to add here.  Probably Get around to it closer to FOV/area of effect libs.
     /// <summary>
     /// Class representing different radius types.  Similar in architecture to Coord in architecture -- it cannot be instantiated. Instead it simply has pre-allocated static variables
     /// for each type of radius, that should be used whenever a variable of type Radius is required.

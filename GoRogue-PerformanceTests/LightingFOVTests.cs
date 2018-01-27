@@ -24,13 +24,13 @@ namespace GoRogue_PerformanceTests
 
         public static long MemorySingleLightSourceFOV(int mapWidth, int mapHeight, int lightRadius)
         {
-            LOS fov;
+            FOV fov;
             long startingMem, endingMem;
             ArrayMapOf<double> map = rectangleMap(mapWidth, mapHeight);
 
             // Start mem test
             startingMem = GC.GetTotalMemory(true);
-            fov = new LOS(map);
+            fov = new FOV(map);
             fov.Calculate(5, 6, lightRadius, Radius.CIRCLE); // Must calculate to force allocations
             endingMem = GC.GetTotalMemory(true);
 
@@ -62,7 +62,7 @@ namespace GoRogue_PerformanceTests
         {
             Stopwatch s = new Stopwatch();
             var map = rectangleMap(mapWidth, mapHeight);
-            var fov = new LOS(map);
+            var fov = new FOV(map);
             // Warm-up for processor, stabilizes cache performance.  Also makes it a fair test against fov since we have to
             // do this to force the first memory allocation
             fov.Calculate(5, 6, lightRadius, Radius.CIRCLE);

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['horizontalverticaltunnelcreator',['HorizontalVerticalTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html',1,'GoRogue::MapGeneration::Connectors']]]
+  ['gaussianrandom',['GaussianRandom',['../class_go_rogue_1_1_random_1_1_gaussian_random.html',1,'GoRogue::Random']]]
 ];

@@ -3,43 +3,43 @@
 namespace GoRogue
 {
     /// <summary>
-    /// Class responsible for caculating LOS/FOV.  Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only
-    /// shadowcasting.  This is more conducive to the typical use case for line of sight (LOS).  It can calculate the LOS with a finite or infinite max radius, and can use a
-    /// variety of radius types, as specified in Radius class (all the same ones that SenseMap supports).  It also supports both 360 degree LOS and a "field of view" (cone)
-    /// LOS.  One may access this class like a 2D array of doubles (LOS values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map
-    /// grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of LOS entirely (not visible).
+    /// Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).  Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only
+    /// shadowcasting.  This is more conducive to the typical use case for FOV.  It can calculate the FOV with a finite or infinite max radius, and can use a
+    /// variety of radius types, as specified in Radius class (all the same ones that SenseMap supports).  It also supports both 360 degree FOV and a "field of view" (cone)
+    /// FOV.  One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map
+    /// grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible).
     /// </summary>
-    public class LOS : IMapOf<double>
+    public class FOV : IMapOf<double>
     {
         private IMapOf<double> resMap;
         private double[,] light; // Last light cached
 
         /// <summary>
-        /// Width of LOS map.
+        /// Width of FOV map.
         /// </summary>
         public int Width { get => resMap.Width; }
 
         /// <summary>
-        /// Height of LOS map.
+        /// Height of FOV map.
         /// </summary>
         public int Height { get => resMap.Height; }
 
         /// <summary>
-        /// Array-style indexer that takes a Coord as the index, and retrieves the LOS value at the given location.
+        /// Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the given location.
         /// </summary>
-        /// <param name="position">The position to retrieve the LOS value for.</param>
-        /// <returns>The LOS value at the given location.</returns>
+        /// <param name="position">The position to retrieve the FOV value for.</param>
+        /// <returns>The FOV value at the given location.</returns>
         public double this[Coord position]
         {
             get { return light[position.X, position.Y]; }
         }
 
         /// <summary>
-        /// Array-style indexer that takes an x and y value as the index, and retrieves the LOS value at the given location.
+        /// Array-style indexer that takes an x and y value as the index, and retrieves the FOV value at the given location.
         /// </summary>
-        /// <param name="x">The x-coordinate of the position to retrieve the LOS value for.</param>
-        /// <param name="y">The y-coordinate of the position to retrieve the LOS value for.</param>
-        /// <returns>The LOS value at (x, y).</returns>
+        /// <param name="x">The x-coordinate of the position to retrieve the FOV value for.</param>
+        /// <param name="y">The y-coordinate of the position to retrieve the FOV value for.</param>
+        /// <returns>The FOV value at (x, y).</returns>
         public double this[int x, int y]
         {
             get { return light[x, y]; }
@@ -48,9 +48,9 @@ namespace GoRogue
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resMap">The resistance map to use to calculate LOS.  Values of 1.0 are considered blocking to LOS,
+        /// <param name="resMap">The resistance map to use to calculate FOV.  Values of 1.0 are considered blocking to FOV,
         /// while other (lower) values are considered to be not blocking.</param>
-        public LOS(IMapOf<double> resMap)
+        public FOV(IMapOf<double> resMap)
         {
             this.resMap = resMap;
             light = null;
@@ -58,30 +58,30 @@ namespace GoRogue
 
         // Since the values aren't compile-time constants, we have to do it this way (with overloads, vs. default values).
         /// <summary>
-        /// Calculates LOS, given an origin point of (startX, startY), with a given radius.  If no radius is specified, simply calculates with a radius of
+        /// Calculates FOV, given an origin point of (startX, startY), with a given radius.  If no radius is specified, simply calculates with a radius of
         /// maximum integer value, which is effectively infinite.  Radius is computed as a circle around the source (type Radius.CIRCLE).
         /// </summary>
         /// <param name="startX">Coordinate x-value of the origin.</param>
         /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.  If no radius is specified, it is
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.  If no radius is specified, it is
         /// effectively infinite.</param>
         public void Calculate(int startX, int startY, int radius = int.MaxValue) => Calculate(startX, startY, radius, Radius.CIRCLE);
 
         /// <summary>
-        /// Calculates LOS, given an origin point, with a given radius.  If no radius is specified, simply calculates with a radius of
+        /// Calculates FOV, given an origin point, with a given radius.  If no radius is specified, simply calculates with a radius of
         /// maximum integer value, which is effectively infinite.  Radius is computed as a circle around the source (type Radius.CIRCLE).
         /// </summary>
-        /// <param name="start">Position of LOS origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.  If no radius is specified, it is
+        /// <param name="start">Position of FOV origin.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.  If no radius is specified, it is
         /// effectively infinite.</param>
         public void Calculate(Coord start, int radius = int.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
 
         /// <summary>
-        /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy.
         /// </summary>
         /// <param name="startX">Coordinate x-value of the origin.</param>
         /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
         /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
         public void Calculate(int startX, int startY, int radius, Radius radiusTechnique)
         {
@@ -100,23 +100,23 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Calculates LOS, given an origin point, with the given radius and radius calculation strategy.
+        /// Calculates FOV, given an origin point, with the given radius and radius calculation strategy.
         /// </summary>
         /// <param name="start">Coordinate of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
         /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
         public void Calculate(Coord start, int radius, Radius radiusTechnique) => Calculate(start.X, start.Y, radius, radiusTechnique);
 
         /// <summary>
-        /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming LOS is restricted to the area
-        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular LOS radius will be actually in LOS.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming FOV is restricted to the area
+        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular FOV radius will be actually in FOV.
         /// </summary>
         /// <param name="startX">Coordinate x-value of the origin.</param>
         /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
         /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
-        /// <param name="angle">The angle in degrees that specifies the outermost center point of the LOS cone.  0 degrees points right.</param>
-        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the LOS cone -- angle/2 degrees are included on either side of the span line.</param>
+        /// <param name="angle">The angle in degrees that specifies the outermost center point of the FOV cone.  0 degrees points right.</param>
+        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2 degrees are included on either side of the span line.</param>
         public void Calculate(int startX, int startY, int radius, Radius radiusTechnique, double angle, double span)
         {
             var distanceTechnique = (Distance)radiusTechnique;
@@ -151,14 +151,14 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Calculates LOS, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming LOS is restricted to the area
-        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular LOS radius will be actually in LOS.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming FOV is restricted to the area
+        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular FOV radius will be actually in FOV.
         /// </summary>
         /// <param name="start">Coordinate of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of LOS if completely unobstructed.</param>
+        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
         /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
-        /// <param name="angle">The angle in degrees that specifies the outermost center point of the LOS cone.  0 degrees points right.</param>
-        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the LOS cone -- angle/2 degrees are included on either side of the span line.</param>
+        /// <param name="angle">The angle in degrees that specifies the outermost center point of the FOV cone.  0 degrees points right.</param>
+        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2 degrees are included on either side of the span line.</param>
         public void Calculate(Coord start, int radius, Radius radiusTechnique, double angle, double span) => Calculate(start.X, start.Y, radius, radiusTechnique, angle, span);
 
         private void initializeLightMap()

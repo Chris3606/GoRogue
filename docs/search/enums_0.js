@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['distancetype',['DistanceType',['../namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506',1,'GoRogue']]]
+  ['algorithm',['Algorithm',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96',1,'GoRogue::Lines']]]
 ];

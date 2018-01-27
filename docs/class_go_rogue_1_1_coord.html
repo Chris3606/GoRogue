@@ -96,9 +96,6 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a412765d9519bf778283a406a0794ff68"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a412765d9519bf778283a406a0794ff68">CardinalPositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
-<tr class="memdesc:a412765d9519bf778283a406a0794ff68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an IEnumerable of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions.  <a href="#a412765d9519bf778283a406a0794ff68">More...</a><br /></td></tr>
-<tr class="separator:a412765d9519bf778283a406a0794ff68"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ecee2b7034831c1d701bf40b7af3764"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1ecee2b7034831c1d701bf40b7af3764">EuclideanDistanceMagnitude</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:a1ecee2b7034831c1d701bf40b7af3764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the result of the euclidean distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase.  <a href="#a1ecee2b7034831c1d701bf40b7af3764">More...</a><br /></td></tr>
 <tr class="separator:a1ecee2b7034831c1d701bf40b7af3764"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,9 +131,6 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a0751c6d23fb0544ee4d61fe3e47f20cb">operator==</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if c1.X == c2.X and c1.Y == c2.Y.  <a href="#a0751c6d23fb0544ee4d61fe3e47f20cb">More...</a><br /></td></tr>
 <tr class="separator:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a7407b599d2198bcf2b9c71c54ba37b9d">PositionsOnLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
-<tr class="memdesc:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an IEnumerable of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>.  <a href="#a7407b599d2198bcf2b9c71c54ba37b9d">More...</a><br /></td></tr>
-<tr class="separator:a7407b599d2198bcf2b9c71c54ba37b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a93702b3ce2d8337cd27ffbe5b1564651">ToCoord</a> (int index, int rowCount)</td></tr>
 <tr class="memdesc:a93702b3ce2d8337cd27ffbe5b1564651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by a given index.  <a href="#a93702b3ce2d8337cd27ffbe5b1564651">More...</a><br /></td></tr>
 <tr class="separator:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,52 +157,6 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances. </p>
 <p>If you want the coordinate (1, 2), use Coord.Get(1, 2), and it returns you a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance. These instances are read-only, however operators such as addition, etc., are provided. This is due to optimizations under the hood. By default, the class keeps a static, internal array that contains an instance of every coordinate between (-3, -3), and (255, 255). If the coordinate x and y values given to Get are within this range, Get returns the appropriate instance from the array. If the coordinates given are outside of the range, it simply returns a new instance. Since most of the coordinates used in roguelike/grid based games will be between (-3, -3) and (255, 255), this can end up drastically reducing the number of memory allocations that need to be done since there will exist one and only one instance of the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> class for each value in that range. Since allocations are expensive due to garbage collections, this can significantly improve on efficiency. Later, support may be added for modifying this range as necessary. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a412765d9519bf778283a406a0794ff68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a412765d9519bf778283a406a0794ff68">&sect;&nbsp;</a></span>CardinalPositionsOnLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalPositionsOnLine </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets an IEnumerable of every position, in order, on the most direct line between the two points specified that follow only cardinal directions (4-way connectivity). This will include the start and end points themselves. This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">start</td><td>Starting point.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending point.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>IEnumerable of all positions on a line between the two points, including the start and end points.</dd></dl>
-
-</div>
-</div>
 <a id="aee8eebff28c6d73c89629909c0d0aec8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee8eebff28c6d73c89629909c0d0aec8">&sect;&nbsp;</a></span>Equals()</h2>
 
@@ -918,52 +866,6 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the two coordinates are equal, false if not.</dd></dl>
-
-</div>
-</div>
-<a id="a7407b599d2198bcf2b9c71c54ba37b9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7407b599d2198bcf2b9c71c54ba37b9d">&sect;&nbsp;</a></span>PositionsOnLine()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.PositionsOnLine </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>start</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>end</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets an IEnumerable of every position, in order, on the most direct line between the two points specified (assuming 8-way connectivity). This will include the start and end points themselves. This is simply an implementation of Brensham's line algorithm, from <a href="https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm">https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">start</td><td>Starting point.</td></tr>
-    <tr><td class="paramname">end</td><td>Ending point.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>IEnumerable of all positions on a line between the two points, including the start and end points.</dd></dl>
 
 </div>
 </div>

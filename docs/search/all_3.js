@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['dda',['DDA',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96adc907b4fb49bcda4f6360644735c97ec',1,'GoRogue::Lines']]],
   ['defaultrng',['DefaultRNG',['../class_go_rogue_1_1_random_1_1_singleton_random.html#a080ca845f077848325df4a28d00fe7bf',1,'GoRogue::Random::SingletonRandom']]],
   ['deltax',['DeltaX',['../class_go_rogue_1_1_direction.html#a68be74f8378001fc2e0167f0acf8f008',1,'GoRogue::Direction']]],
   ['deltay',['DeltaY',['../class_go_rogue_1_1_direction.html#adaf7c3ef90a767c8677a98663e29e622',1,'GoRogue::Direction']]],
@@ -22,8 +23,8 @@ var searchData=
   ['direction',['Direction',['../class_go_rogue_1_1_direction.html',1,'GoRogue']]],
   ['directionsclockwise',['DirectionsClockwise',['../class_go_rogue_1_1_direction.html#a8510dcaee2cb59f64683b4558c4c5a2f',1,'GoRogue.Direction.DirectionsClockwise()'],['../class_go_rogue_1_1_direction.html#a54739f5d498a6f54c9aa2ae303bd001e',1,'GoRogue.Direction.DirectionsClockwise(Direction startingPoint)']]],
   ['directionscounterclockwise',['DirectionsCounterClockwise',['../class_go_rogue_1_1_direction.html#a4fee025a1e8d9988af7b3c02a7ffe0e2',1,'GoRogue.Direction.DirectionsCounterClockwise()'],['../class_go_rogue_1_1_direction.html#a6917439472b8b35516854605c56daeef',1,'GoRogue.Direction.DirectionsCounterClockwise(Direction startingPoint)']]],
-  ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a63763fb23e44f309484410250816b20a',1,'GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(Radius shape)'],['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#ac63f6416664d4b9d64495a949e7c4576',1,'GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(Distance distanceCalc)']]],
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html',1,'GoRogue::MapGeneration::Connectors']]],
+  ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a63763fb23e44f309484410250816b20a',1,'GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(Radius shape)'],['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#ac63f6416664d4b9d64495a949e7c4576',1,'GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(Distance distanceCalc)']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html',1,'GoRogue']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html#aa2601dd5c7f9a809762aafd0985a5a23',1,'GoRogue::DisjointSet']]],
   ['distance',['Distance',['../class_go_rogue_1_1_distance.html',1,'GoRogue']]],

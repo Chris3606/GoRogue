@@ -227,7 +227,7 @@ namespace GoRogue.SenseMapping
                     }
                     else
                     {
-                        if (map[gCurrentX, gCurrentY] >= 1 && distance < radius) // Wall within LOS
+                        if (map[gCurrentX, gCurrentY] >= 1 && distance < radius) // Wall within FOV
                         {
                             blocked = true;
                             shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);

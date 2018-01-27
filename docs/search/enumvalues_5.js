@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['ripple',['RIPPLE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a3b68550e169b363f0d4937bba677d76d',1,'GoRogue::SenseMapping']]],
-  ['ripple_5floose',['RIPPLE_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a450e61693b6ddefa09d369fcd289a5bb',1,'GoRogue::SenseMapping']]],
-  ['ripple_5ftight',['RIPPLE_TIGHT',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42addbfc9ad7f292b04c5003106a7268a35',1,'GoRogue::SenseMapping']]],
-  ['ripple_5fvery_5floose',['RIPPLE_VERY_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a507c2c185aefa93e554ecfb94076867c',1,'GoRogue::SenseMapping']]]
+  ['octahedron',['OCTAHEDRON',['../namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfaf90dd475a67e9d29408b539a832510ff',1,'GoRogue']]],
+  ['ortho',['ORTHO',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96a9441273d8f694623f0a3cf3e24c29944',1,'GoRogue::Lines']]]
 ];

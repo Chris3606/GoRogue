@@ -13,6 +13,9 @@ namespace GoRogue_PerformanceTests
         private static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;
         private static readonly int ITERATIONS_FOR_TIMING = 100;
 
+        private static readonly Coord LINE_START = Coord.Get(3, 5);
+        private static readonly Coord LINE_END = Coord.Get(29, 23);
+
         private static void TestLightingNSource(int sources)
         {
             var timeMultipleLighting = LightingFOVTests.TimeForNSourcesLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS,
@@ -51,6 +54,16 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} dijkstra map calculates, single source, {MAP_WIDTH}x{MAP_HEIGHT} map, 1 goal at (5, 5):");
             Console.WriteLine($"\t{timeSingleDijkstra}");
+
+            var timeBres = LineTests.TimeForLineGeneration(LINE_START, LINE_END, Lines.Algorithm.BRESENHAM, ITERATIONS_FOR_TIMING);
+            var timeDDA = LineTests.TimeForLineGeneration(LINE_START, LINE_END, Lines.Algorithm.DDA, ITERATIONS_FOR_TIMING);
+            var timeOrtho = LineTests.TimeForLineGeneration(LINE_START, LINE_END, Lines.Algorithm.ORTHO, ITERATIONS_FOR_TIMING);
+
+            Console.WriteLine();
+            Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} generations of line from {LINE_START} to {LINE_END}:");
+            Console.WriteLine($"\tBresenham: {timeBres}");
+            Console.WriteLine($"\tDDA      : {timeDDA}");
+            Console.WriteLine($"\tOrtho    : {timeOrtho}");
 
             /*
             var timeJumpPoint = PathingTests.TimeForJumpPoint(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GoRogue.MapGeneration.Connectors
+﻿namespace GoRogue.MapGeneration.Connectors
 {
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two points.  In the case that MAHNATTAN distance is being used,
@@ -34,10 +32,10 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="end">End coordinate of the tunnel.</param>
         public void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end)
         {
-            List<Coord> tunnelPositions = (distanceCalc == Distance.MANHATTAN) ? Coord.CardinalPositionsOnLine(start, end).ToList() : Coord.PositionsOnLine(start, end).ToList();
+            var lineAlgorithm = (distanceCalc == Distance.MANHATTAN) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;
 
             Coord previous = null;
-            foreach (var pos in tunnelPositions)
+            foreach (var pos in Lines.Get(start, end, lineAlgorithm))
             {
                 map[pos] = true;
                 // Previous cell, and we're going vertical, go 2 wide so it looks nicer

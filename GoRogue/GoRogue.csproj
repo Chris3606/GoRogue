@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>0.9.2</PackageVersion>
+	<PackageVersion>0.9.3</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseUrl>https://github.com/Chris3606/GoRogue/blob/master/LICENSE</PackageLicenseUrl>

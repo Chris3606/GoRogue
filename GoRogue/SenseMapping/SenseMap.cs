@@ -8,7 +8,7 @@ namespace GoRogue.SenseMapping
     /// <summary>
     /// Class responsible for calculating a map for senses (sound, light, etc).  Anything that has a resistance map, where 1.0 is completely impenetrable, and
     /// 0.0 is no resistance at all, can use this system.  Typically used for FOV, however can also be used for sound maps, etc.  Supports a few different types of
-    /// spreading mechanics, including every one in the SourceType enum.  Included in these is FOV/LOS-style shadowcasting.  This will be much faster than ripple
+    /// spreading mechanics, including every one in the SourceType enum.  Included in these is FOV/FOV-style shadowcasting.  This will be much faster than ripple
     /// variations.  Once one calls Calculate, one can use Coords, or x and y values, to access this class like an array.  The double one gets back will be the
     /// "sensory value". This is a number between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the sources being light, for example),
     /// and 0.0 is no intensity at all.

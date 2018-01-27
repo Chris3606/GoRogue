@@ -12,7 +12,7 @@ namespace GoRogue_UnitTests
         public void CircleRadius()
         {
             var testResMap = new EmptyResMap(17, 17);
-            var myFov = new LOS(testResMap);
+            var myFov = new FOV(testResMap);
             var myLighting = new SenseMap(testResMap);
             // Circle at 8, 8; radius 7
 
@@ -62,7 +62,7 @@ namespace GoRogue_UnitTests
         {
             var testResMap = new TestResMap(17, 17);
             testResMap[8, 8] = 0.0; // Make sure start is free
-            var myFov = new LOS(testResMap);
+            var myFov = new FOV(testResMap);
             var myLighting = new SenseMap(testResMap);
             // Circle at 8, 8; radius 7
             myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(8, 8), 7, Radius.CIRCLE));

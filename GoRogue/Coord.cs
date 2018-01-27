@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -48,27 +47,6 @@ namespace GoRogue
         {
             X = x;
             Y = y;
-        }
-
-        /// <summary>
-        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
-        /// that follow only cardinal directions (4-way connectivity).  This will include the start and end points themselves.
-        /// This is effectively just a shorthand way of finding the shortest path between two points, moving only in cardinal directions.
-        /// </summary>
-        /// <param name="start">Starting point.</param>
-        /// <param name="end">Ending point.</param>
-        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
-        public static IEnumerable<Coord> CardinalPositionsOnLine(Coord start, Coord end)
-        {
-            while (true)
-            {
-                yield return start;
-
-                if (start == end)
-                    break;
-
-                start = start + Direction.GetCardinalDirection(end.X - start.X, end.Y - start.Y);
-            }
         }
 
         /// <summary>
@@ -206,56 +184,7 @@ namespace GoRogue
             return c1.X == c2.X && c1.Y == c2.Y;
         }
 
-        /// <summary>
-        /// Gets an IEnumerable of every position, in order, on the most direct line between the two points specified
-        /// (assuming 8-way connectivity).  This will include the start and end points themselves.  This is simply
-        /// an implementation of Brensham's line algorithm, from https://www.roguebasin.com/index.php?title=Brensham%27s_Line_Algorithm.
-        /// </summary>
-        /// <param name="start">Starting point.</param>
-        /// <param name="end">Ending point.</param>
-        /// <returns>IEnumerable of all positions on a line between the two points, including the start and end points.</returns>
-        public static IEnumerable<Coord> PositionsOnLine(Coord start, Coord end)
-        {
-            int x0 = start.X;
-            int y0 = start.Y;
-            int x1 = end.X;
-            int y1 = end.Y;
-
-            bool steep = Math.Abs(y1 - y0) > Math.Abs(x1 - x0);
-            if (steep)
-            {
-                Utility.Swap(ref x0, ref y0);
-                Utility.Swap(ref x1, ref y1);
-            }
-
-            if (x0 > x1)
-            {
-                Utility.Swap(ref x0, ref x1);
-                Utility.Swap(ref y0, ref y1);
-            }
-
-            int dx = x1 - x0;
-            int dy = Math.Abs(y1 - y0);
-
-            int err = dx / 2;
-            int yStep = (y0 < y1 ? 1 : -1);
-            int y = y0;
-
-            for (int x = x0; x <= x1; x++)
-            {
-                if (steep)
-                    yield return Coord.Get(y, x);
-                else
-                    yield return Coord.Get(x, y);
-
-                err -= dy;
-                if (err < 0)
-                {
-                    y += yStep;
-                    err += dx;
-                }
-            }
-        }
+        
 
         /// <summary>
         /// Reverses the ToIndex function, returning the Coord represented by a given index.

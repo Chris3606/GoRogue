@@ -76,7 +76,7 @@ namespace GoRogue_UnitTests
             bool[,] radiusMap = new bool[MAP_WIDTH, MAP_HEIGHT];
             bool[,] losMap = new bool[MAP_WIDTH, MAP_HEIGHT];
 
-            var los = new LOS(map);
+            var los = new FOV(map);
             los.Calculate(CENTER.X, CENTER.Y, RADIUS_LEGNTH, shape);
 
             for (int x = 0; x < MAP_WIDTH; x++)
