@@ -123,6 +123,12 @@ This library is still in development - there are a number of important features 
    - Serialization of state.
    - Allow GaussianRandom to specify deviations.
    - Possibly integrate more closely with existing C# random utilities.
+- Line Drawing
+   - Improved functions for drawing/determining lines on grids.
+   - Will replace current Coord.PositionsOnLine and Coord.CardinalPositionsOnLine functions, and add additional methods.
+- Additional FOV Algorithms
+   - Permissive-style FOV
+   - Others?
 
 ## Licensing
 ### GoRogue
