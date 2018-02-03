@@ -28,4 +28,8 @@
 	<Target Name="CopyPackage" AfterTargets="Pack">
 		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
 	</Target>
+  
+	<ItemGroup>
+	  <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
+	</ItemGroup>
 </Project>

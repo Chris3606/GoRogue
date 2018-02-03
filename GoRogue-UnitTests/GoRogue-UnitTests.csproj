@@ -41,11 +41,20 @@
     <NoWarn>RECS0145;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EMK.Cartography, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AStar.1.0.0\lib\EMK.Cartography.dll</HintPath>
+    </Reference>
+    <Reference Include="EMK.Collections, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AStar.1.0.0\lib\EMK.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Priority Queue, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OptimizedPriorityQueue.4.1.1\lib\net45\Priority Queue.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,10 +69,12 @@
     <Compile Include="MapGenTests.cs" />
     <Compile Include="MathHelperTests.cs" />
     <Compile Include="MultiSpatialMapTests.cs" />
+    <Compile Include="PathingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadiusAreaProviderTests.cs" />
     <Compile Include="RadiusFOVSyncTests.cs" />
     <Compile Include="SpatialMapTests.cs" />
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

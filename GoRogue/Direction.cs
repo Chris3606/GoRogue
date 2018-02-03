@@ -14,6 +14,9 @@ namespace GoRogue
     /// </remarks>
     public class Direction
     {
+        // Used to optimize calcs for a function later on
+        private static Direction[] directionSides = new Direction[2];
+
         private static int yMult;
 
         private static bool initYInc;
@@ -404,6 +407,7 @@ namespace GoRogue
             yield return UP_RIGHT;
             yield return DOWN_LEFT;
             yield return DOWN_RIGHT;
+            
         }
 
         /// <summary>
@@ -468,17 +472,17 @@ namespace GoRogue
         /// Returns the cardinal direction that most closely matches the angle given by a line from (0, 0) to the input.  Rounds clockwise if exactly on a diagonal.
         /// Similar to GetDirection, except gives only cardinal directions.
         /// </summary>
-        /// <param name="x">X-coordinate of line-ending point.</param>
-        /// <param name="y">Y-coordinate of line-ending point.</param>
+        /// <param name="dx">X-coordinate of line-ending point.</param>
+        /// <param name="dy">Y-coordinate of line-ending point.</param>
         /// <returns>The cardinal direction that most closely matches the angle formed by the given input.</returns>
-        public static Direction GetCardinalDirection(int x, int y)
+        public static Direction GetCardinalDirection(int dx, int dy)
         {
-            if (x == 0 && y == 0)
+            if (dx == 0 && dy == 0)
                 return NONE;
 
-            y *= yMult;
+            dy *= yMult;
 
-            double angle = Math.Atan2(y, x);
+            double angle = Math.Atan2(dy, dx);
             double degree = MathHelpers.ToDegree(angle);
             degree += 450; // Rotate angle such that it's all positives, and such that 0 is up.
             degree %= 360; // Normalize angle to 0-360

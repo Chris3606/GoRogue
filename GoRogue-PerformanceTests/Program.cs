@@ -65,12 +65,12 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tDDA      : {timeDDA}");
             Console.WriteLine($"\tOrtho    : {timeOrtho}");
 
-            /*
-            var timeJumpPoint = PathingTests.TimeForJumpPoint(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
+            
+            var timeAStar = PathingTests.TimeForAStar(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
-            Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths of Jump Point Search, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
-            Console.WriteLine($"\t{timeJumpPoint}");
-            */
+            Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
+            Console.WriteLine($"\tAStar: {timeAStar}");
+
         }
     }
 }
