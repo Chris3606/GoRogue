@@ -87,11 +87,16 @@ namespace GoRogue.Pathing
         public int Length { get => _steps.Count - 1; }
         public int LengthWithStart { get => _steps.Count; }
 
-
         internal Path(IList<Coord> steps)
         {
             _steps = steps;
             inOriginalOrder = true;
+        }
+
+        public Path(Path pathToCopy, bool reverse = false)
+        {
+            _steps = pathToCopy._steps;
+            inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
         }
 
         public Coord GetStep(int stepNum)
@@ -109,6 +114,8 @@ namespace GoRogue.Pathing
 
             return _steps[stepNum];
         }
+
+        public void Reverse() => inOriginalOrder = !inOriginalOrder;
     }
 
     public class AStar
@@ -170,7 +177,6 @@ namespace GoRogue.Pathing
                 int length = WalkabilityMap.Width * WalkabilityMap.Height;
                 nodes = new AStarNode[length];
                 openNodes = new FastPriorityQueue<AStarNode>(length);
-                //openNodes = new TestPQ(length);
                 for (int i = 0; i < length; i++)
                     nodes[i] = new AStarNode(Coord.ToCoord(i, WalkabilityMap.Width), null);
 
@@ -268,9 +274,6 @@ namespace GoRogue.Pathing
             // Return last direction
             right += 2;
             yield return right;
-            
-
-            //return Direction.CardinalsClockwise();
         }
 
         private static IEnumerable<Direction> neighbors(int dx, int dy)
@@ -293,9 +296,6 @@ namespace GoRogue.Pathing
             // Return last direction
             right++;
             yield return right;
-            
-
-            //return Direction.Outwards();
         }
     }
 }
