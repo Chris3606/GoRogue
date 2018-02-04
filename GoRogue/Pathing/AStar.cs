@@ -25,15 +25,26 @@ namespace GoRogue.Pathing
 
     public class Path
     {
-        public Coord Start { get; private set; }
+        private bool inOriginalOrder;
+
+        public Coord Start
+        {
+            get
+            {
+                if (inOriginalOrder)
+                    return _steps[_steps.Count - 1];
+
+                return _steps[0];
+            }
+        }
         public Coord End
         {
             get
             {
-                if (_steps.Count == 0)
-                    return Start;
+                if (inOriginalOrder)
+                    return _steps[0];
 
-                return _steps[0];
+                return _steps[_steps.Count - 1];
             }
         }
 
@@ -42,8 +53,16 @@ namespace GoRogue.Pathing
         {
             get
             {
-                for (int i = _steps.Count - 1; i >= 0; i--)
-                    yield return _steps[i];
+                if (inOriginalOrder)
+                {
+                    for (int i = _steps.Count - 2; i >= 0; i--)
+                        yield return _steps[i];
+                }
+                else
+                {
+                    for (int i = 1; i < _steps.Count; i++)
+                        yield return _steps[i];
+                }
             }
         }
 
@@ -51,34 +70,44 @@ namespace GoRogue.Pathing
         {
             get
             {
-                yield return Start;
-
-                for (int i = _steps.Count - 1; i >= 0; i--)
-                    yield return _steps[i];
+                if (inOriginalOrder)
+                {
+                    for (int i = _steps.Count - 1; i >= 0; i--)
+                        yield return _steps[i];
+                }
+                else
+                {
+                    for (int i = 0; i < _steps.Count; i++)
+                        yield return _steps[i];
+                }
+                
             }
         }
 
-        // TODO: create getindex functions (front and reverse?)
-
-        public int Length { get => _steps.Count; }
-        public int LengthWithStart { get => _steps.Count + 1; }
+        public int Length { get => _steps.Count - 1; }
+        public int LengthWithStart { get => _steps.Count; }
 
 
-        internal Path(Coord start, IList<Coord> steps)
+        internal Path(IList<Coord> steps)
         {
-            Start = start;
             _steps = steps;
+            inOriginalOrder = true;
         }
 
-        public Coord GetStep(int stepNum) => _steps[(_steps.Count - 1) - stepNum];
+        public Coord GetStep(int stepNum)
+        {
+            if (inOriginalOrder)
+                return _steps[(_steps.Count - 2) - stepNum];
+
+            return _steps[stepNum + 1];
+        }
 
         public Coord GetStepWithStart(int stepNum)
         {
-            if (stepNum == 0)
-                return Start;
+            if (inOriginalOrder)
+                return _steps[(_steps.Count - 1) - stepNum];
 
-            return _steps[(_steps.Count - 1) - (stepNum - 1)];
-
+            return _steps[stepNum];
         }
     }
 
@@ -103,7 +132,6 @@ namespace GoRogue.Pathing
         private Func<int, int, IEnumerable<Direction>> neighborFunc;
         private AStarNode[] nodes;
         private FastPriorityQueue<AStarNode> openNodes;
-        //private TestPQ openNodes;
         private int nodesWidth;
         private int nodesHeight;
 
@@ -120,7 +148,6 @@ namespace GoRogue.Pathing
             nodesHeight = walkabilityMap.Height;
 
             openNodes = new FastPriorityQueue<AStarNode>(maxSize);
-            //openNodes = new TestPQ(maxSize);
         }
 
         public Path ShortestPath(Coord start, Coord end)
@@ -129,8 +156,13 @@ namespace GoRogue.Pathing
             if (!WalkabilityMap[start] || !WalkabilityMap[end])
                 return null; // There is no path
 
+            // If the path is simply the start, don't bother with graph initialization and such
             if (start == end)
-                return new Path(start, new List<Coord>());
+            {
+                var retVal = new List<Coord>();
+                retVal.Add(start);
+                return new Path(retVal);
+            }
 
             // Clear nodes to beginning state
             if (nodesWidth != WalkabilityMap.Width || nodesHeight != WalkabilityMap.Height)
@@ -173,10 +205,9 @@ namespace GoRogue.Pathing
                     {
                         result.Add(current.Position);
                         current = current.Parent;
-                    } while (current.Position != start);
+                    } while (current != null);
 
-                    //result.Reverse();
-                    return new Path(start, result);
+                    return new Path(result);
                 }
 
                 foreach (var dir in neighborFunc(end.X - current.Position.X, end.Y - current.Position.Y))
