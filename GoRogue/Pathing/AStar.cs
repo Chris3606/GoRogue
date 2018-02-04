@@ -173,7 +173,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The map being used as the source for whether or not each tile is walkable.
         /// </summary>
-        public IMapOf<bool> WalkabilityMap { get; private set; }
+        public IMapView<bool> WalkabilityMap { get; private set; }
 
         private Distance _distanceMeasurement;
         /// <summary>
@@ -206,7 +206,7 @@ namespace GoRogue.Pathing
         /// <param name="walkabilityMap">Map used to determine whether or not a given location can be traversed -- true indicates walkable, false unwalkable.</param>
         /// <param name="distanceMeasurement">Distance measurement used to determine the method of measuring distance between two points, the heuristic AStar uses
         /// when pathfinding, and whether locations are connected in a 4-way or 8-way manner.</param>
-        public AStar(IMapOf<bool> walkabilityMap, Distance distanceMeasurement)
+        public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
         {
             WalkabilityMap = walkabilityMap;
             DistanceMeasurement = distanceMeasurement;

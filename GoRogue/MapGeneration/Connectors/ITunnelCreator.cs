@@ -11,6 +11,6 @@
         /// <param name="map">Map to create the tunnel on.</param>
         /// <param name="start">Start position to connect.</param>
         /// <param name="end">End position to connect.</param>
-        void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end);
+        void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end);
     }
 }

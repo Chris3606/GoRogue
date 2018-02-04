@@ -9,7 +9,7 @@ namespace GoRogue_UnitTests
     // Adds functions commonly used in tests
     public static class Utility
     {
-        public static void PrintHightlightedPoints(IMapOf<bool> map, IEnumerable<Coord> points, char wall = '#', char floor = '.', char path = '*')
+        public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Coord> points, char wall = '#', char floor = '.', char path = '*')
         {
             char[,] array = new char[map.Width, map.Height];
             for (int y = 0; y < map.Height; y++)
@@ -61,7 +61,7 @@ namespace GoRogue_UnitTests
             return new Tuple<Coord, Coord>(start, end);
         }
 
-        public static void ReadMap(string filePath, ISettableMapOf<bool> map, char wallChar = '#')
+        public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
         {
             using (var reader = new StreamReader(filePath))
             {

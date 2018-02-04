@@ -16,7 +16,7 @@ namespace GoRogue_PerformanceTests
         {
             Stopwatch s = new Stopwatch();
 
-            var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
+            var map = new ArrayMap<bool>(mapWidth, mapHeight);
             Generators.RectangleMapGenerator.Generate(map);
 
             DijkstraMap dMap = new DijkstraMap(map);
@@ -38,7 +38,7 @@ namespace GoRogue_PerformanceTests
         {
             var s = new Stopwatch();
 
-            var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
+            var map = new ArrayMap<bool>(mapWidth, mapHeight);
             Generators.RectangleMapGenerator.Generate(map);
 
             var pather = new AStar(map, Distance.CHEBYSHEV);

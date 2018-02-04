@@ -14,7 +14,7 @@ namespace GoRogue_UnitTests
         public void ManualTestRandomRoomsGen()
         {
             var random = new DotNetRandom();
-            var map = new ArrayMapOf<bool>(30, 30);
+            var map = new ArrayMap<bool>(30, 30);
             Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
 
             displayMap(map);
@@ -25,7 +25,7 @@ namespace GoRogue_UnitTests
         public void ManualTestCellAutoGen()
         {
             var random = new DotNetRandom();
-            var map = new ArrayMapOf<bool>(80, 50);
+            var map = new ArrayMap<bool>(80, 50);
             Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
             displayMap(map);
@@ -37,7 +37,7 @@ namespace GoRogue_UnitTests
         public void TestCellAutoConnectivityAndEnclosure()
         {
             var random = new DotNetRandom();
-            var map = new ArrayMapOf<bool>(80, 50);
+            var map = new ArrayMap<bool>(80, 50);
             Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
             for (int i = 0; i < 500; i++)
@@ -62,7 +62,7 @@ namespace GoRogue_UnitTests
             }
         }
 
-        private void displayMap(IMapOf<bool> map)
+        private void displayMap(IMapView<bool> map)
         {
             for (int y = 0; y < map.Height; y++)
             {

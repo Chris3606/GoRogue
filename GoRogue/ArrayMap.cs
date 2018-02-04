@@ -3,10 +3,10 @@
 namespace GoRogue
 {
     /// <summary>
-    /// Default implementation of the ISettableMapOf interface, exposing an interface similar to that of an actual 2D array.
+    /// Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D array to store data.
     /// </summary>
     /// <typeparam name="T">The type of value being stored.</typeparam>
-    public class ArrayMapOf<T> : ISettableMapOf<T>, ICloneable
+    public class ArrayMap<T> : ISettableMapView<T>, ICloneable
     {
         /// <summary>
         /// The width of the array.
@@ -48,7 +48,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="width">Width of array.</param>
         /// <param name="height">Height of array.</param>
-        public ArrayMapOf(int width, int height)
+        public ArrayMap(int width, int height)
         {
             array = new T[width, height];
         }
@@ -56,10 +56,10 @@ namespace GoRogue
         /// <summary>
         /// Performs deep copy of array map.
         /// </summary>
-        /// <returns>The cloned ArrayMapOf.</returns>
+        /// <returns>The cloned ArrayMap.</returns>
         public object Clone()
         {
-            var newObj = new ArrayMapOf<T>(Width, Height);
+            var newObj = new ArrayMap<T>(Width, Height);
 
             for (int x = 0; x < Width; x++)
                 for (int y = 0; y < Height; y++)

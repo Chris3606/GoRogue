@@ -9,9 +9,9 @@ namespace GoRogue
     /// FOV.  One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map
     /// grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible).
     /// </summary>
-    public class FOV : IMapOf<double>
+    public class FOV : IMapView<double>
     {
-        private IMapOf<double> resMap;
+        private IMapView<double> resMap;
         private double[,] light; // Last light cached
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="resMap">The resistance map to use to calculate FOV.  Values of 1.0 are considered blocking to FOV,
         /// while other (lower) values are considered to be not blocking.</param>
-        public FOV(IMapOf<double> resMap)
+        public FOV(IMapView<double> resMap)
         {
             this.resMap = resMap;
             light = null;
@@ -172,7 +172,7 @@ namespace GoRogue
         // Returns value because its recursive
         private static double[,] shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
                                      int radius, int startX, int startY, double decay, double[,] lightMap,
-                                     IMapOf<double> map, Distance distanceStrategy)
+                                     IMapView<double> map, Distance distanceStrategy)
         {
             double newStart = 0;
             if (start < end)
@@ -228,7 +228,7 @@ namespace GoRogue
         }
 
         private static double[,] shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, int radius, int startX, int startY, double decay,
-                                                   double[,] lightMap, IMapOf<double> map, Distance distanceStrategy, double angle, double span)
+                                                   double[,] lightMap, IMapView<double> map, Distance distanceStrategy, double angle, double span)
         {
             double newStart = 0;
             if (start < end)

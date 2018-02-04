@@ -128,10 +128,10 @@ namespace GoRogue_UnitTests
             return equivalentArrays(radiusMap, losMap);
         }
 
-        private ArrayMapOf<double> rectResMap(int mapWidth, int mapHeight)
+        private ArrayMap<double> rectResMap(int mapWidth, int mapHeight)
         {
-            var map = new ArrayMapOf<bool>(mapWidth, mapHeight);
-            var resMap = new ArrayMapOf<double>(mapWidth, mapHeight);
+            var map = new ArrayMap<bool>(mapWidth, mapHeight);
+            var resMap = new ArrayMap<double>(mapWidth, mapHeight);
 
             Generators.RectangleMapGenerator.Generate(map);
 

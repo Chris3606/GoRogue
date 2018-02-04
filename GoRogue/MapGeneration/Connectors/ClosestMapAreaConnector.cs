@@ -25,7 +25,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// documentation for details.  If null is specified, RandomConnectionPointSelector with the default RNG is used.</param>
         /// <param name="tunnelCreator">The tunnel creation strategy to use.  If null is specified, DirectLineTunnelCreator with the distance calculation specified
         /// is used.</param>
-        static public void Connect(ISettableMapOf<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null) =>
+        static public void Connect(ISettableMapView<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null) =>
             Connect(map, (Distance)shape, areaConnector, tunnelCreator);
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// documentation for details.</param>
         /// /// <param name="tunnelCreator">The tunnel creation strategy to use.  If null is specified, DirectLineTunnelCreator with the distance calculation specified
         /// is used.</param>
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
+        static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
         {
             if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
             if (tunnelCreator == null) tunnelCreator = new DirectLineTunnelCreator(distanceCalc);

@@ -15,7 +15,7 @@
         /// to all non-wall tiles.
         /// </summary>
         /// /// <param name="map">The map to set values to.</param>
-        static public void Generate(ISettableMapOf<bool> map)
+        static public void Generate(ISettableMapView<bool> map)
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)

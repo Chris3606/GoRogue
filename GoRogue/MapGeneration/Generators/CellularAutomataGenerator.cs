@@ -12,9 +12,9 @@ namespace GoRogue.MapGeneration.Generators
     ///
     /// After generate is called, the passed in map will have had a value of true set to all floor tiles, and a value of false set to all wall tiles.
     ///
-    /// Like RandomRoomsMapGenerator, it is recommended to use ArrayMapOf as the SettableMapOf instance passed in, as this class must
+    /// Like RandomRoomsMapGenerator, it is recommended to use ArrayMap as the SettableMapOf instance passed in, as this class must
     /// call set for each location very likely more than one time, overwriting any previous values(thus doing significant processing on each
-    /// call to set is inadvisable).  It will likely be faster to take the resulting ArrayMapOf after completion, and process it to do any required
+    /// call to set is inadvisable).  It will likely be faster to take the resulting ArrayMap after completion, and process it to do any required
     /// translation.
     ///
     /// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below:
@@ -40,7 +40,7 @@ namespace GoRogue.MapGeneration.Generators
         /// <param name="connectUsingDefault">Whether or not to ensure all areas generated are connected. If this is true, ClosestMapAreaConnector.Connect
         /// will be used to connect the areas, with Distance.MANHATTAN distance used, the RNG given, a RandomConnectionPointSelector that uses the RNG
         /// specified to this function, and default values for all other optional parameters of ClosestMapAreaConnector.Connect.</param>
-        static public void Generate(ISettableMapOf<bool> map, IRandom rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
+        static public void Generate(ISettableMapView<bool> map, IRandom rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
             bool connectUsingDefault = true)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -63,7 +63,7 @@ namespace GoRogue.MapGeneration.Generators
                 Connectors.ClosestMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
         }
 
-        static private void randomlyFillCells(ISettableMapOf<bool> map, IRandom rng, int fillProbability)
+        static private void randomlyFillCells(ISettableMapView<bool> map, IRandom rng, int fillProbability)
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -77,7 +77,7 @@ namespace GoRogue.MapGeneration.Generators
                 }
         }
 
-        static private void fillToRectangle(ISettableMapOf<bool> map)
+        static private void fillToRectangle(ISettableMapView<bool> map)
         {
             for (int x = 0; x < map.Width; x++)
             {
@@ -92,9 +92,9 @@ namespace GoRogue.MapGeneration.Generators
             }
         }
 
-        static private void cellAutoBigAreaAlgo(ISettableMapOf<bool> map)
+        static private void cellAutoBigAreaAlgo(ISettableMapView<bool> map)
         {
-            var oldMap = new ArrayMapOf<bool>(map.Width, map.Height);
+            var oldMap = new ArrayMap<bool>(map.Width, map.Height);
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -113,9 +113,9 @@ namespace GoRogue.MapGeneration.Generators
                 }
         }
 
-        static private void cellAutoNearestNeighborsAlgo(ISettableMapOf<bool> map)
+        static private void cellAutoNearestNeighborsAlgo(ISettableMapView<bool> map)
         {
-            var oldMap = new ArrayMapOf<bool>(map.Width, map.Height);
+            var oldMap = new ArrayMap<bool>(map.Width, map.Height);
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -134,7 +134,7 @@ namespace GoRogue.MapGeneration.Generators
                 }
         }
 
-        static private int countWallsNear(ISettableMapOf<bool> mapToUse, int posX, int posY, int distance)
+        static private int countWallsNear(ISettableMapView<bool> mapToUse, int posX, int posY, int distance)
         {
             int count = 0;
             int xMin = Math.Max(posX - distance, 0);

@@ -13,7 +13,7 @@ namespace GoRogue.SenseMapping
     /// "sensory value". This is a number between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the sources being light, for example),
     /// and 0.0 is no intensity at all.
     /// </summary>
-    public class SenseMap : IEnumerable<double>, IMapOf<double>
+    public class SenseMap : IEnumerable<double>, IMapView<double>
     {
         private List<SenseSource> _senseSources;
 
@@ -26,7 +26,7 @@ namespace GoRogue.SenseMapping
         // Making these 1D didn't really affect performance that much, though may be worth it on large maps
         private double[,] senseMap;
 
-        private IMapOf<double> resMap;
+        private IMapView<double> resMap;
 
         /// <summary>
         /// Width of sense map.
@@ -64,7 +64,7 @@ namespace GoRogue.SenseMapping
         /// Constructor.  Takes the resistance map to use for calculations.
         /// </summary>
         /// <param name="resMap">The resistance map to use for calculations.</param>
-        public SenseMap(IMapOf<double> resMap)
+        public SenseMap(IMapView<double> resMap)
         {
             this.resMap = resMap;
             senseMap = new double[resMap.Width, resMap.Height];
@@ -135,7 +135,7 @@ namespace GoRogue.SenseMapping
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         // Blits given source's lightMap onto the global lightmap given
-        private static void blitSenseSource(SenseSource source, double[,] destination, IMapOf<double> resMap)
+        private static void blitSenseSource(SenseSource source, double[,] destination, IMapView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
             int minX = Math.Min(source.Radius, source.Position.X);

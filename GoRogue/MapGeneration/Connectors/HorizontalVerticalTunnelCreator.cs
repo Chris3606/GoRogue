@@ -29,7 +29,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="map">The map to create the tunnel on.</param>
         /// <param name="start">Start coordinate of the tunnel.</param>
         /// <param name="end">End coordinate of the tunnel.</param>
-        public void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end)
+        public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -45,13 +45,13 @@ namespace GoRogue.MapGeneration.Connectors
             }
         }
 
-        static private void createHTunnel(ISettableMapOf<bool> map, int xStart, int xEnd, int yPos)
+        static private void createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
         {
             for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
                 map[x, yPos] = true;
         }
 
-        static private void createVTunnel(ISettableMapOf<bool> map, int yStart, int yEnd, int xPos)
+        static private void createVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
         {
             for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
                 map[xPos, y] = true;

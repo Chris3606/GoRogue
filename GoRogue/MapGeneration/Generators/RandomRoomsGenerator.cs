@@ -10,15 +10,15 @@ namespace GoRogue.MapGeneration.Generators
     /// </summary>
     /// <remarks>
     /// This algorithm may set the cell value for each position more than once.  As such, it is highly recommended to use
-    /// and ArrayMapOf as the ISettableMapOf given.  Any translation/interpretation of the result can
-    /// be performed after the ArrayMapOf is set.  Attempting to do any expensive allocation/operations
+    /// and ArrayMap as the ISettableMapView given.  Any translation/interpretation of the result can
+    /// be performed after the ArrayMap is set.  Attempting to do any expensive allocation/operations
     /// in the setting functions of a SettableMapOf given to the algorithm may result in performance deterioration.
     /// </remarks>
     static public class RandomRoomsGenerator
     {
         /// <summary>
         /// Generates the map.  After this function has been completed, non-passable tiles will have a value of false
-        /// in the ISettableMapOf given, and passable ones will have a value of true.
+        /// in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
         /// <param name="map">The map to set values to.</param>
         /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
@@ -29,7 +29,7 @@ namespace GoRogue.MapGeneration.Generators
         /// <param name="connectUsingDefault">Whether or not to ensure the rooms generated are connected.  If this is true, OrderedMapAreaConnector.Connect will
         /// be used to connect the areas in a random order, using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which will connect
         /// the center of room to each other.</param>
-        static public void Generate(ISettableMapOf<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng = null,
+        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng = null,
                                      bool connectUsingDefault = true)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -85,7 +85,7 @@ namespace GoRogue.MapGeneration.Generators
             return false;
         }
 
-        static private void createRoom(ISettableMapOf<bool> map, Rectangle room)
+        static private void createRoom(ISettableMapView<bool> map, Rectangle room)
         {
             for (int x = room.X + 1; x < room.MaxX; x++)
                 for (int y = room.Y + 1; y < room.MaxY; y++)

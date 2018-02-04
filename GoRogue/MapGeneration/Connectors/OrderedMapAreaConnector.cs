@@ -23,7 +23,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="rng">The rng to use.  If null is specified, the default rng is assumed.</param>
         /// <param name="randomizeOrder">Whether or not to randomize which room is connected to which -- if this is set to false, they will be conencted
         /// in the exact order they are returned from the MapAreaFinder.</param>
-        static public void Connect(ISettableMapOf<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null,
+        static public void Connect(ISettableMapView<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null,
                                    ITunnelCreator tunnelCreator = null, IRandom rng = null, bool randomizeOrder = true) =>
             Connect(map, (Distance)shape, areaConnector, tunnelCreator, rng, randomizeOrder);
 
@@ -41,7 +41,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="rng">The rng to use.  If null is specified, the default rng is assumed.</param>
         /// <param name="randomizeOrder">Whether or not to randomize which room is connected to which -- if this is set to false, they will be conencted
         /// in the exact order they are returned from the MapAreaFinder.</param>
-        static public void Connect(ISettableMapOf<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null,
+        static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null,
                                     ITunnelCreator tunnelCreator = null, IRandom rng = null, bool randomizeOrder = true)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -65,7 +65,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// If null is specified, a RandomConnectionPointSelector is used, that uses the default RNG.</param>
         /// <param name="tunnelCreator">The tunnel creation strategy to use.  If null is specified, HorizontalVerticalTunnelCreator that utilizes the default RNG
         /// is used.</param>
-        static public void Connect(ISettableMapOf<bool> map, IList<MapArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
+        static public void Connect(ISettableMapView<bool> map, IList<MapArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
                                     ITunnelCreator tunnelCreator = null)
         {
             if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();

@@ -29,7 +29,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void ManualAStarChebyshevTest()
         {
-            var map = new ArrayMapOf<bool>(MAP_WIDTH, MAP_HEIGHT);
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
             RectangleMapGenerator.Generate(map);
 
             var pather = new AStar(map, Distance.CHEBYSHEV);
@@ -44,7 +44,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void ManualAStarManhattanTest()
         {
-            var map = new ArrayMapOf<bool>(MAP_WIDTH, MAP_HEIGHT);
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
             RectangleMapGenerator.Generate(map);
 
             var pather = new AStar(map, Distance.MANHATTAN);
@@ -59,7 +59,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void ManualAStarEuclidianTest()
         {
-            var map = new ArrayMapOf<bool>(MAP_WIDTH, MAP_HEIGHT);
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
             RectangleMapGenerator.Generate(map);
 
             var pather = new AStar(map, Distance.EUCLIDEAN);
@@ -86,7 +86,7 @@ namespace GoRogue_UnitTests
             Coord start = Coord.Get(1, 1);
             Coord end = Coord.Get(6, 6);
             // Because Path constructor is internal to avoid confusion, we use AStar to return a (simple) known path
-            var map = new ArrayMapOf<bool>(10, 10);
+            var map = new ArrayMap<bool>(10, 10);
             RectangleMapGenerator.Generate(map);
             var pather = new AStar(map, Distance.CHEBYSHEV);
 
@@ -157,7 +157,7 @@ namespace GoRogue_UnitTests
 
         private void aStarMatches(Distance distanceCalc)
         {
-            var map = new ArrayMapOf<bool>(MAP_WIDTH, MAP_HEIGHT);
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
             CellularAutomataGenerator.Generate(map);
             var graphTuple = initGraph(map, distanceCalc);
 
@@ -198,13 +198,13 @@ namespace GoRogue_UnitTests
             }
         }
 
-        private static void checkWalkable(Path path, IMapOf<bool> map)
+        private static void checkWalkable(Path path, IMapView<bool> map)
         {
             foreach (var pos in path.StepsWithStart)
                 Assert.AreEqual(true, map[pos]);
         }
 
-        private static void checkAdjacency(Path path, Distance distanceCalc, IMapOf<bool> map)
+        private static void checkAdjacency(Path path, Distance distanceCalc, IMapView<bool> map)
         {
             if (path.LengthWithStart == 1)
                 return;
@@ -241,8 +241,8 @@ namespace GoRogue_UnitTests
             }
         }
 
-        // Initialize graph for control-case AStar, based on a GoRogue IMapOf
-        private static GraphReturn initGraph(IMapOf<bool> map, Distance connectivity)
+        // Initialize graph for control-case AStar, based on a GoRogue IMapView
+        private static GraphReturn initGraph(IMapView<bool> map, Distance connectivity)
         {
             var neighborsGetter = Direction.GetNeighbors(connectivity);
 

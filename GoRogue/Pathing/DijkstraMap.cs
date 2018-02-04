@@ -3,7 +3,7 @@
     // Test class only - likely to change in the future.
     public class DijkstraMap
     {
-        private IMapOf<bool> walkabilityMap;
+        private IMapView<bool> walkabilityMap;
         private int[,] dijkstraMap;
 
         public int this[int x, int y]
@@ -11,7 +11,7 @@
             get => dijkstraMap[x, y];
         }
 
-        public DijkstraMap(IMapOf<bool> walkabilityMap)
+        public DijkstraMap(IMapView<bool> walkabilityMap)
         {
             this.walkabilityMap = walkabilityMap;
             dijkstraMap = new int[walkabilityMap.Width, walkabilityMap.Height];

@@ -95,7 +95,7 @@ namespace GoRogue_UnitTests
         }
     }
 
-    internal class TestResMap : ArrayMapOf<double>
+    internal class TestResMap : ArrayMap<double>
     {
         public TestResMap(int width, int height)
             : base(width, height)
@@ -109,7 +109,7 @@ namespace GoRogue_UnitTests
         }
     }
 
-    internal class EmptyResMap : IMapOf<double>
+    internal class EmptyResMap : IMapView<double>
     {
         public int Width { get; private set; }
 
@@ -125,7 +125,7 @@ namespace GoRogue_UnitTests
         }
     }
 
-    internal class BoxResMap : ArrayMapOf<double>
+    internal class BoxResMap : ArrayMap<double>
     {
         public BoxResMap(int width, int height)
             : base(width, height)

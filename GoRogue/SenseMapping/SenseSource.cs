@@ -93,7 +93,7 @@ namespace GoRogue.SenseMapping
 
         internal bool[,] nearLight;
 
-        internal IMapOf<double> resMap; // Set from lighting, just so we have a reference.
+        internal IMapView<double> resMap; // Set from lighting, just so we have a reference.
 
         private int size; // 2 * Radius + 1 -- the width/height dimension of the local arrays.
 
@@ -141,7 +141,7 @@ namespace GoRogue.SenseMapping
             }
         }
 
-        private void doRippleFOV(int ripple, IMapOf<double> map)
+        private void doRippleFOV(int ripple, IMapView<double> map)
         {
             Distance distanceStrategy = (Distance)RadiusStrategy;
             double rad = Math.Max(1, Radius);
@@ -179,7 +179,7 @@ namespace GoRogue.SenseMapping
             }
         }
 
-        private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapOf<double> map)
+        private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
         {
             Distance distanceStrategy = (Distance)RadiusStrategy;
             int radius = Math.Max(1, Radius);
@@ -239,7 +239,7 @@ namespace GoRogue.SenseMapping
         }
 
         // TODO: Make these virtual, to allow directional light sources?
-        private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, double decay, IMapOf<double> map)
+        private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, double decay, IMapView<double> map)
         {
             Distance distanceStrategy = (Distance)RadiusStrategy;
             if (x == size / 2 && y == size / 2)

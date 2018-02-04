@@ -12,7 +12,7 @@ namespace GoRogue_PerformanceTests
         {
             SenseMap fov;
             long startingMem, endingMem;
-            ArrayMapOf<double> map = rectangleMap(mapWidth, mapHeight);
+            ArrayMap<double> map = rectangleMap(mapWidth, mapHeight);
 
             // Start mem test
             startingMem = GC.GetTotalMemory(true);
@@ -26,7 +26,7 @@ namespace GoRogue_PerformanceTests
         {
             FOV fov;
             long startingMem, endingMem;
-            ArrayMapOf<double> map = rectangleMap(mapWidth, mapHeight);
+            ArrayMap<double> map = rectangleMap(mapWidth, mapHeight);
 
             // Start mem test
             startingMem = GC.GetTotalMemory(true);
@@ -106,9 +106,9 @@ namespace GoRogue_PerformanceTests
             return s.Elapsed;
         }
 
-        private static ArrayMapOf<double> rectangleMap(int mapWidth, int mapHeight)
+        private static ArrayMap<double> rectangleMap(int mapWidth, int mapHeight)
         {
-            var map = new ArrayMapOf<double>(mapWidth, mapHeight);
+            var map = new ArrayMap<double>(mapWidth, mapHeight);
             for (int i = 0; i < map.Width; i++)
                 for (int j = 0; j < map.Height; j++)
                 {

@@ -12,17 +12,17 @@
     /// terrain type, monster positions, etc.  Thus, in practice, maintaining an actual 2D array of boolean values
     /// that such an algorithm could take as input can be significant work.
     ///
-    /// IMapOf solves this problem by providing an interface that all such algorithms can take as input -- pathfinding,
-    /// for instance, would take an IMapOf&lt;bool&gt; instance, rather than a 2D array of booleans.  A user of that algorithm
+    /// IMapView solves this problem by providing an interface that all such algorithms can take as input -- pathfinding,
+    /// for instance, would take an IMapView&lt;bool&gt; instance, rather than a 2D array of booleans.  A user of that algorithm
     /// might create a class that implements the indexers below to check the terrain type, if there is a monster at the
     /// position, etc., and returns the correct value.  This prevents the need to maintain an actual 2D array in code
     /// that pathfinding can use, if such an array does not fit with your game architecture.
     ///
-    /// If an actual 2D array is desired, a class ArrayMapOf is provided that implements IMapOf, and acts much like
+    /// If an actual 2D array is desired, a class ArrayMap is provided that implements IMapView, and acts much like
     /// an actual 2D array.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
-    public interface IMapOf<T>
+    public interface IMapView<T>
     {
         /// <summary>
         /// The width of the map being represented.

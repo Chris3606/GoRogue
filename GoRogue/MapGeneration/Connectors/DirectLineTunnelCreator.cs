@@ -30,7 +30,7 @@
         /// <param name="map">The map to create the tunnel on.</param>
         /// <param name="start">Start coordinate of the tunnel.</param>
         /// <param name="end">End coordinate of the tunnel.</param>
-        public void CreateTunnel(ISettableMapOf<bool> map, Coord start, Coord end)
+        public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
         {
             var lineAlgorithm = (distanceCalc == Distance.MANHATTAN) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;
 
