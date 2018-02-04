@@ -22,11 +22,19 @@ namespace GoRogue.Pathing
         }
     }
 
-
+    /// <summary>
+    /// Encapsulates a path as returned by pathfinding algorithms like AStar.
+    /// </summary>
+    /// <remarks>
+    /// Provides various functions to iterate through/access steps of the path, as well as constant-time reversing functionality.
+    /// </remarks>
     public class Path
     {
         private bool inOriginalOrder;
 
+        /// <summary>
+        /// Starting point of the path.
+        /// </summary>
         public Coord Start
         {
             get
@@ -37,6 +45,10 @@ namespace GoRogue.Pathing
                 return _steps[0];
             }
         }
+
+        /// <summary>
+        /// Ending point of the path.
+        /// </summary>
         public Coord End
         {
             get
@@ -49,6 +61,10 @@ namespace GoRogue.Pathing
         }
 
         private IList<Coord> _steps;
+        /// <summary>
+        /// The coordinates that constitute the path (in order), NOT including the starting point.  These are the coordinates
+        /// something might walk along to follow a path.
+        /// </summary>
         public IEnumerable<Coord> Steps
         {
             get
@@ -66,6 +82,9 @@ namespace GoRogue.Pathing
             }
         }
 
+        /// <summary>
+        /// The coordinates that constitute the path (in order), INCLUDING the starting point.
+        /// </summary>
         public IEnumerable<Coord> StepsWithStart
         {
             get
@@ -84,21 +103,41 @@ namespace GoRogue.Pathing
             }
         }
 
+        /// <summary>
+        /// The length of the path, NOT including the starting point.
+        /// </summary>
         public int Length { get => _steps.Count - 1; }
+        /// <summary>
+        /// The length of the path, INCLUDING the starting point.
+        /// </summary>
         public int LengthWithStart { get => _steps.Count; }
 
+        // Create based on internal list
         internal Path(IList<Coord> steps)
         {
             _steps = steps;
             inOriginalOrder = true;
         }
 
+        /// <summary>
+        /// Creates a copy of the path, optionally reversing the path as it does so.
+        /// </summary>
+        /// <remarks>
+        /// Reversing is an O(1) operation, since it does not modify the list.
+        /// </remarks>
+        /// <param name="pathToCopy">The path to copy.</param>
+        /// <param name="reverse">Whether or not to reverse the path.  Defaults to false.</param>
         public Path(Path pathToCopy, bool reverse = false)
         {
             _steps = pathToCopy._steps;
             inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
         }
 
+        /// <summary>
+        /// Gets the nth step along the path, where 0 is the step AFTER the starting point.
+        /// </summary>
+        /// <param name="stepNum">The (array-like index) of the step to get.</param>
+        /// <returns>The coordinate consituting the step specified.</returns>
         public Coord GetStep(int stepNum)
         {
             if (inOriginalOrder)
@@ -107,6 +146,11 @@ namespace GoRogue.Pathing
             return _steps[stepNum + 1];
         }
 
+        /// <summary>
+        /// Gets the nth step along the path, where 0 IS the starting point.
+        /// </summary>
+        /// <param name="stepNum">The (array-like index) of the step to get.</param>
+        /// <returns>The coordinate consituting the step specified.</returns>
         public Coord GetStepWithStart(int stepNum)
         {
             if (inOriginalOrder)
@@ -115,37 +159,57 @@ namespace GoRogue.Pathing
             return _steps[stepNum];
         }
 
+        /// <summary>
+        /// Reverses the path, in constant time.
+        /// </summary>
         public void Reverse() => inOriginalOrder = !inOriginalOrder;
     }
 
+    /// <summary>
+    /// Implements basic AStar pathing.  Distance specified determins the heuristic and connectivity (4-way vs. 8-way) assumed.
+    /// </summary>
     public class AStar
     {
+        /// <summary>
+        /// The map being used as the source for whether or not each tile is walkable.
+        /// </summary>
         public IMapOf<bool> WalkabilityMap { get; private set; }
 
-        private Distance _heuristic;
-        public Distance Heuristic
+        private Distance _distanceMeasurement;
+        /// <summary>
+        /// The distance calculation being used to determine distance between points.  MANHATTAN implies 4-way connectivity,
+        /// while CHEBYSHEV or EUCLIDEAN imply 8-way connectivity for the purpose of determining adjacent coordinates.
+        /// </summary>
+        public Distance DistanceMeasurement
         {
-            get => _heuristic;
+            get => _distanceMeasurement;
             set
             {
-                _heuristic = value;
-                if (_heuristic == Distance.MANHATTAN)
+                _distanceMeasurement = value;
+                if (_distanceMeasurement == Distance.MANHATTAN)
                     neighborFunc = cardinalNeighbors;
                 else
                     neighborFunc = neighbors;
             }
         }
 
-        private Func<int, int, IEnumerable<Direction>> neighborFunc;
-        private AStarNode[] nodes;
-        private FastPriorityQueue<AStarNode> openNodes;
-        private int nodesWidth;
+        private Func<int, int, IEnumerable<Direction>> neighborFunc; // Used to calculate neighbors of a given cell
+        private AStarNode[] nodes; // Node objects used under the hood for the priority queue
+        private FastPriorityQueue<AStarNode> openNodes; // Priority queue of the open nodes.
+        // Width and of the walkability map at the last path -- used to determine whether reallocation of nodes array is necessary
+        private int nodesWidth; 
         private int nodesHeight;
 
-        public AStar(IMapOf<bool> walkabilityMap, Distance heuristic)
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="walkabilityMap">Map used to determine whether or not a given location can be traversed -- true indicates walkable, false unwalkable.</param>
+        /// <param name="distanceMeasurement">Distance measurement used to determine the method of measuring distance between two points, the heuristic AStar uses
+        /// when pathfinding, and whether locations are connected in a 4-way or 8-way manner.</param>
+        public AStar(IMapOf<bool> walkabilityMap, Distance distanceMeasurement)
         {
             WalkabilityMap = walkabilityMap;
-            Heuristic = heuristic;
+            DistanceMeasurement = distanceMeasurement;
 
             int maxSize = walkabilityMap.Width * walkabilityMap.Height;
             nodes = new AStarNode[maxSize];
@@ -157,6 +221,16 @@ namespace GoRogue.Pathing
             openNodes = new FastPriorityQueue<AStarNode>(maxSize);
         }
 
+        /// <summary>
+        /// Finds the shortest path between the two specified points.
+        /// </summary>
+        /// <remarks>
+        /// Returns null if there is no path between the specified points.  Will still return an appropriate path object
+        /// if the start point is equal to the end point.
+        /// </remarks>
+        /// <param name="start">The starting point of the path.</param>
+        /// <param name="end">The ending point of the path.</param>
+        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
         public Path ShortestPath(Coord start, Coord end)
         {
             // Don't waste initialization time if there is definately no path
@@ -196,7 +270,7 @@ namespace GoRogue.Pathing
             var result = new List<Coord>();
             int index = start.ToIndex(WalkabilityMap.Width);
             nodes[index].G = 0;
-            nodes[index].F = (float)_heuristic.DistanceBetween(start, end); // Completely heuristic for first node
+            nodes[index].F = (float)_distanceMeasurement.DistanceBetween(start, end); // Completely heuristic for first node
             openNodes.Enqueue(nodes[index], nodes[index].F);
 
             while (openNodes.Count != 0)
@@ -234,14 +308,14 @@ namespace GoRogue.Pathing
                         continue;
 
 
-                    float newDistance = current.G + (float)_heuristic.DistanceBetween(current.Position, neighbor.Position);
+                    float newDistance = current.G + (float)_distanceMeasurement.DistanceBetween(current.Position, neighbor.Position);
                     if (newDistance >= neighbor.G) // Not a better path
                         continue;
 
                     // We found a best path, so record and update
                     neighbor.Parent = current;
                     neighbor.G = newDistance; // (Known) distance to this node via shortest path
-                    neighbor.F = newDistance + (float)_heuristic.DistanceBetween(neighbor.Position, end); // Heuristic distance to end (priority in queue)
+                    neighbor.F = newDistance + (float)_distanceMeasurement.DistanceBetween(neighbor.Position, end); // Heuristic distance to end (priority in queue)
                     // If it's already in the queue, update priority to new F
                     if (openNodes.Contains(neighbor))
                         openNodes.UpdatePriority(neighbor, neighbor.F);
@@ -250,9 +324,22 @@ namespace GoRogue.Pathing
                 }
             }
 
+            openNodes.Clear();
             return null; // No path found
         }
 
+        /// <summary>
+        /// Finds the shortest path between the two specified points.
+        /// </summary>
+        /// <remarks>
+        /// Returns null if there is no path between the specified points.  Will still return an appropriate path object
+        /// if the start point is equal to the end point.
+        /// </remarks>
+        /// <param name="startX">The x-coordinate of the starting point of the path.</param>
+        /// <param name="startY">The y-coordinate of the starting point of the path.</param>
+        /// <param name="endX">The x-coordinate of the ending point of the path.</param>
+        /// <param name="endY">The y-coordinate of the ending point of the path.</param>
+        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
         public Path ShortestPath(int startX, int startY, int endX, int endY) => ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY));
 
         // These neighbor functions are special in that they return (approximately) the closest directions to the end goal first.
@@ -261,8 +348,8 @@ namespace GoRogue.Pathing
         {
             
             Direction left, right;
-            // Intentional inversion of dx and dy sign, because of the order in which our priority queue returns values (we want the one that
-            // we ideally use to be last-in, not first-in)
+            // Intentional inversion of dx and dy sign, because of the order in which our priority queue returns values (we want the direction that
+            // we ideally use, eg. the one closest to the specified line, to be last-in, not first-in)
             left = right = Direction.GetCardinalDirection(-dx, -dy);
             yield return right; // Return first direction
 

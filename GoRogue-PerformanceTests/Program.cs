@@ -64,7 +64,7 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tBresenham: {timeBres}");
             Console.WriteLine($"\tDDA      : {timeDDA}");
             Console.WriteLine($"\tOrtho    : {timeOrtho}");
-
+            
             
             var timeAStar = PathingTests.TimeForAStar(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
