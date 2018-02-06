@@ -26,12 +26,13 @@ namespace GoRogue_PerformanceTests
 
         private static void Main()
         {
+            /*
             long lightingMem = LightingFOVTests.MemorySingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
             long fovMem = LightingFOVTests.MemorySingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
             Console.WriteLine($"Memory for {MAP_WIDTH}x{MAP_HEIGHT}, Radius {LIGHT_RADIUS}:");
             Console.WriteLine($"\tLighting: {lightingMem} bytes");
             Console.WriteLine($"\tFOV     : {fovMem} bytes");
-
+            */
             var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, SOURCE_TYPE,
                                                                          LIGHT_RADIUS, RADIUS_STRATEGY, ITERATIONS_FOR_TIMING);
             var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT,
@@ -41,6 +42,7 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
             Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
 
+            
             Console.WriteLine();
             TestLightingNSource(2);
 
@@ -49,7 +51,7 @@ namespace GoRogue_PerformanceTests
 
             Console.WriteLine();
             TestLightingNSource(4);
-
+            /*
             var timeSingleDijkstra = PathingTests.TimeForSingleSourceDijkstra(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} dijkstra map calculates, single source, {MAP_WIDTH}x{MAP_HEIGHT} map, 1 goal at (5, 5):");
@@ -70,7 +72,7 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
             Console.WriteLine($"\tAStar: {timeAStar}");
-
+            */
         }
     }
 }

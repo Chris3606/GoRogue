@@ -1,13 +1,73 @@
 ﻿using GoRogue;
 using GoRogue.SenseMapping;
+using GoRogue.MapGeneration.Generators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 
 namespace GoRogue_UnitTests
 {
     [TestClass]
     public class LightingTest
     {
+        [TestMethod]
+        public void FOVCurrentHash()
+        {
+            var map = new BoxResMap(50, 50);
+            var fov = new FOV(map);
+
+            fov.Calculate(20, 20, 10);
+
+            // Inefficient copy but fine for testing
+            HashSet<Coord> currentFov = new HashSet<Coord>(fov.CurrentFOV);
+
+            foreach (var item in currentFov)
+                Console.Write(item + ", ");
+
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                {
+                    if (fov[x, y] > 0.0)
+                    {
+                        Console.WriteLine("Checking " + Coord.Get(x, y));
+                        Assert.AreEqual(true, currentFov.Contains(Coord.Get(x, y)));
+                    }
+                    else
+                        Assert.AreEqual(false, currentFov.Contains(Coord.Get(x, y)));
+                }
+        }
+
+        [TestMethod]
+        public void FOVNewlySeenUnseen()
+        {
+            var map = new BoxResMap(50, 50);
+            var fov = new FOV(map);
+
+            fov.Calculate(20, 20, 10, Radius.SQUARE);
+            var prevFov = new HashSet<Coord>(fov.CurrentFOV);
+
+            fov.Calculate(19, 19, 10, Radius.SQUARE);
+            var curFov = new HashSet<Coord>(fov.CurrentFOV);
+            var newlySeen = new HashSet<Coord>(fov.NewlySeen);
+            var newlyUnseen = new HashSet<Coord>(fov.NewlyUnseen);
+
+            foreach (var pos in prevFov)
+            {
+                if (!curFov.Contains(pos))
+                    Assert.AreEqual(true, newlyUnseen.Contains(pos));
+                else
+                    Assert.AreEqual(false, newlyUnseen.Contains(pos));
+            }
+
+            foreach (var pos in curFov)
+            {
+                if (!prevFov.Contains(pos))
+                    Assert.AreEqual(true, newlySeen.Contains(pos));
+                else
+                    Assert.AreEqual(false, newlySeen.Contains(pos));
+            }
+        }
+
         [TestMethod]
         public void CircleRadius()
         {
