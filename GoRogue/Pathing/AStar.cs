@@ -4,6 +4,8 @@ using Priority_Queue;
 
 namespace GoRogue.Pathing
 {
+
+    /// @cond PRIVATE
     // Node for AStar, stores all values and integrates with priority queue implementation
     class AStarNode : FastPriorityQueueNode
     {
@@ -21,6 +23,7 @@ namespace GoRogue.Pathing
             F = G = float.MaxValue;
         }
     }
+    /// @endcond
 
     /// <summary>
     /// Encapsulates a path as returned by pathfinding algorithms like AStar.

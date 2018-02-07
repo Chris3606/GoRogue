@@ -1,5 +1,6 @@
 ﻿namespace GoRogue.Pathing
 {
+    /// @cond PRIVATE
     // Test class only - likely to change in the future.
     public class DijkstraMap
     {
@@ -71,4 +72,6 @@
             }
         }
     }
+    /// @endcond
+    
 }

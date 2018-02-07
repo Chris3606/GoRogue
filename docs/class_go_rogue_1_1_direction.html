@@ -135,9 +135,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#a6ec7363dc63ac89b1abad4aaa0f7d0a1">GetDirection</a> (int x, int y)</td></tr>
 <tr class="memdesc:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the direction that most closely matches the angle given by a line from (0, 0) to the input. Straight up is degree 0, straight down is 180 degrees, etc. If the angle happens to be right on the border between 2 angles, it rounds "up", eg., we take the closest angle in the clockwise direction.  <a href="#a6ec7363dc63ac89b1abad4aaa0f7d0a1">More...</a><br /></td></tr>
 <tr class="separator:a6ec7363dc63ac89b1abad4aaa0f7d0a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad5e53e475adbe80aeef73f995f461395"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#ad5e53e475adbe80aeef73f995f461395">GetCardinalDirection</a> (int x, int y)</td></tr>
-<tr class="memdesc:ad5e53e475adbe80aeef73f995f461395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cardinal direction that most closely matches the angle given by a line from (0, 0) to the input. Rounds clockwise if exactly on a diagonal. Similar to GetDirection, except gives only cardinal directions.  <a href="#ad5e53e475adbe80aeef73f995f461395">More...</a><br /></td></tr>
-<tr class="separator:ad5e53e475adbe80aeef73f995f461395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35bd66b914b34a41a5ca75649cafa0fa"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#a35bd66b914b34a41a5ca75649cafa0fa">GetCardinalDirection</a> (int dx, int dy)</td></tr>
+<tr class="memdesc:a35bd66b914b34a41a5ca75649cafa0fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cardinal direction that most closely matches the angle given by a line from (0, 0) to the input. Rounds clockwise if exactly on a diagonal. Similar to GetDirection, except gives only cardinal directions.  <a href="#a35bd66b914b34a41a5ca75649cafa0fa">More...</a><br /></td></tr>
+<tr class="separator:a35bd66b914b34a41a5ca75649cafa0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae407cfed1eba490c93bc5e2a9b15094d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_direction.html#ae407cfed1eba490c93bc5e2a9b15094d">operator++</a> (<a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> d)</td></tr>
 <tr class="memdesc:ae407cfed1eba490c93bc5e2a9b15094d"><td class="mdescLeft">&#160;</td><td class="mdescRight">++ operator (increment). Returns the direction directly clockwise of the original direction. If NONE is incremented, returns NONE.  <a href="#ae407cfed1eba490c93bc5e2a9b15094d">More...</a><br /></td></tr>
 <tr class="separator:ae407cfed1eba490c93bc5e2a9b15094d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -647,8 +647,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="ad5e53e475adbe80aeef73f995f461395"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad5e53e475adbe80aeef73f995f461395">&sect;&nbsp;</a></span>GetCardinalDirection()</h2>
+<a id="a35bd66b914b34a41a5ca75649cafa0fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35bd66b914b34a41a5ca75649cafa0fa">&sect;&nbsp;</a></span>GetCardinalDirection()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -660,13 +660,13 @@ Properties</h2></td></tr>
           <td class="memname">static <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> GoRogue.Direction.GetCardinalDirection </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
+          <td class="paramname"><em>dx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
+          <td class="paramname"><em>dy</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -684,8 +684,8 @@ Properties</h2></td></tr>
 <p>Returns the cardinal direction that most closely matches the angle given by a line from (0, 0) to the input. Rounds clockwise if exactly on a diagonal. Similar to GetDirection, except gives only cardinal directions. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>X-coordinate of line-ending point.</td></tr>
-    <tr><td class="paramname">y</td><td>Y-coordinate of line-ending point.</td></tr>
+    <tr><td class="paramname">dx</td><td>X-coordinate of line-ending point.</td></tr>
+    <tr><td class="paramname">dy</td><td>Y-coordinate of line-ending point.</td></tr>
   </table>
   </dd>
 </dl>

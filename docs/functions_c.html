@@ -94,11 +94,11 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_spatial_map.html#a65af9055960fcc2f024ac2c59f6d7c9f">GoRogue.SpatialMap&lt; T &gt;</a>
 </li>
 <li>Clone()
-: <a class="el" href="class_go_rogue_1_1_array_map_of.html#afdd464efad57399f544b712270eaece7">GoRogue.ArrayMapOf&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_array_map.html#a234b07fb095d90f96b831b27313a88b7">GoRogue.ArrayMap&lt; T &gt;</a>
 </li>
 <li>Connect()
-: <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html#a9dea0ce5fc8852bdf7f3a8a3fc18a909">GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector</a>
-, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a2549dcf87ed451d53b70706a5bd34c76">GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector</a>
+: <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html#a084a8882af48db604195c0dc47ed7722">GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector</a>
+, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a18d5b2a55c1f35df6378c69d3d765a34">GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector</a>
 </li>
 <li>Constant()
 : <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a1459a05b0afd6ec3f0b098dceb7b8c28">GoRogue.DiceNotation.DiceExpression</a>
@@ -108,10 +108,10 @@ $(function() {
 </li>
 <li>Contains()
 : <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#a31cad5b91e50d8a566ec6974abafb057">GoRogue.MapGeneration.MapArea</a>
+, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#abf878a573bb10094c2501d9d48ec2184">GoRogue.MapGeneration.MapArea</a>
 , <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a4798ac0b608bfe9c5ce53c73536ce5ee">GoRogue.MultiSpatialMap&lt; T &gt;</a>
-, <a class="el" href="struct_go_rogue_1_1_rectangle.html#a3cc76bff08480c046c5e65b17000b5b2">GoRogue.Rectangle</a>
-, <a class="el" href="class_go_rogue_1_1_spatial_map.html#af8629350c62bc584e49dcae54bb40a7b">GoRogue.SpatialMap&lt; T &gt;</a>
+, <a class="el" href="struct_go_rogue_1_1_rectangle.html#a8329449a69f18830a11df56c14f303c2">GoRogue.Rectangle</a>
+, <a class="el" href="class_go_rogue_1_1_spatial_map.html#a77002734f4c92bb7d70bad92804e7f13">GoRogue.SpatialMap&lt; T &gt;</a>
 </li>
 <li>Count
 : <a class="el" href="class_go_rogue_1_1_disjoint_set.html#a2ac0f165a746fd6e3efe78870abd6718">GoRogue.DisjointSet</a>
@@ -121,12 +121,18 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_spatial_map.html#a6279df33fdff4a6fb7829d51012d5f7d">GoRogue.SpatialMap&lt; T &gt;</a>
 </li>
 <li>CreateTunnel()
-: <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#af7e554696d12b65abe47dcbc1b8cbd87">GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator</a>
-, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html#a5a056a2aa4f16061f8ba373186b49aeb">GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator</a>
-, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html#ae248c4b4272df1753c7ce6eedd486c50">GoRogue.MapGeneration.Connectors.ITunnelCreator</a>
+: <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a0775433b61283ce0afc7bb60511400c7">GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator</a>
+, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html#af9ffa6032a5e8b413f6836fdb0c944d6">GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator</a>
+, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html#af57d90cde8ec8a7d58c57336458aa8d5">GoRogue.MapGeneration.Connectors.ITunnelCreator</a>
 </li>
 <li>CUBE
 : <a class="el" href="class_go_rogue_1_1_radius.html#ad063fe20635849b5cabefe8da2a3eb4a">GoRogue.Radius</a>
+</li>
+<li>CurrentFOV
+: <a class="el" href="class_go_rogue_1_1_f_o_v.html#a241493a52c7ab9191595ffa02ef2f67f">GoRogue.FOV</a>
+</li>
+<li>CurrentSenseMap
+: <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1b7886565e7704a20a93e7b067608486">GoRogue.SenseMapping.SenseMap</a>
 </li>
 </ul>
 </div><!-- contents -->

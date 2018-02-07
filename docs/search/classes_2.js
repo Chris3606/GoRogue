@@ -5,7 +5,6 @@ var searchData=
   ['diceparser',['DiceParser',['../class_go_rogue_1_1_dice_notation_1_1_dice_parser.html',1,'GoRogue::DiceNotation']]],
   ['diceresult',['DiceResult',['../class_go_rogue_1_1_dice_notation_1_1_dice_result.html',1,'GoRogue::DiceNotation']]],
   ['diceterm',['DiceTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html',1,'GoRogue::DiceNotation::Terms']]],
-  ['dijkstramap',['DijkstraMap',['../class_go_rogue_1_1_pathing_1_1_dijkstra_map.html',1,'GoRogue::Pathing']]],
   ['direction',['Direction',['../class_go_rogue_1_1_direction.html',1,'GoRogue']]],
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html',1,'GoRogue::MapGeneration::Connectors']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html',1,'GoRogue']]],
