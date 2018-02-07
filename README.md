@@ -13,6 +13,7 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [Map Generation](#map-generation)
 		- [FOV/Lighting/Sense Mapping](#fovlightingsense-mapping)
 		- [Pathfinding](#pathfinding)
+		- [Line Drawing](#line-drawing)
 		- [Robust Effects System](#robust-effects-system)
 		- [Utility](#utility)
 	- [Roadmap](#roadmap)
@@ -101,6 +102,12 @@ Instructions for getting started with GoRogue, as well as demonstrations of its 
 ### Pathfinding
    - AStar pathfinding allows quick and efficient (shortest) paths between two points on a map.
       - Uses same MapView system as other algorithms to provide a convenient interface.
+      
+### Line Drawing
+   - Provides functions implementing common-line drawing algorithms.
+      - Bresenham's implementation
+      - DDA (Digital Differential Analyzer) implementation that produces very similar results to Bresenham's, but often faster.
+      - Orthogonal line-drawing algorithm that creates steps that follow only cardinal directions.
 
 ### Robust Effects System
 - Provides a system of representing both instant duration, and over-time "effects", with arbitrary duration units.
@@ -117,8 +124,9 @@ Instructions for getting started with GoRogue, as well as demonstrations of its 
 
 ## Roadmap
 This library is still in development - there are a number of important features on the horizon! These include:
-- Pathfinding
-   - At least AStar pathing, as well as Dijkstra maps (commonly known as Goal Maps) will be provided soon!
+- Pathfinding Additions
+   - AStar implementation supporting custom heuristics/weights
+   - Dijkstra maps (commonly known as Goal Maps)
 - Statistics Library
    - Utility classes to assist in dealing with interdependent character/monster statistics.
 - Demo Project/writeup
@@ -129,9 +137,6 @@ This library is still in development - there are a number of important features 
    - Serialization of state.
    - Allow GaussianRandom to specify deviations.
    - Possibly integrate more closely with existing C# random utilities.
-- Line Drawing
-   - Improved functions for drawing/determining lines on grids.
-   - Will replace current Coord.PositionsOnLine and Coord.CardinalPositionsOnLine functions, and add additional methods.
 - Additional FOV Algorithms
    - Permissive-style FOV
    - Others?
