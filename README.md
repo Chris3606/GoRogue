@@ -12,6 +12,7 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [Dice Notation Parser](#dice-notation-parser)
 		- [Map Generation](#map-generation)
 		- [FOV/Lighting/Sense Mapping](#fovlightingsense-mapping)
+		- [Pathfinding](#pathfinding)
 		- [Robust Effects System](#robust-effects-system)
 		- [Utility](#utility)
 	- [Roadmap](#roadmap)
@@ -25,16 +26,16 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [SquidLib](#squidlib)
 
 ## Documentation
-Instructions for getting started with GoRogue, as well as demonstrations of its features, can be found on the [wiki](https://github.com/Chris3606/GoRogue/wiki).  In addition, the API documentation is hosted on [GitHub pages](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.
+Instructions for getting started with GoRogue, as well as demonstrations of its features, can be found on the [wiki](https://github.com/Chris3606/GoRogue/wiki).  In addition, the API documentation is hosted on [GitHub pages](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.  GoRogue also has a subreddit [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/).
 
 ## Feature List
 ### .NET Standard 2.0 Compatibility
    - Library will function with any framework that supports .NET Standard 2.0, which includes both .NET Framework and .NET Core.
    
 ### Unobtrusive Algorithms
-- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapOf), thus allowing the features to be used without imposing limitations and how/where data is stored within the game.
-- A default implementation of the MapOf interface is provided, to allow for ease of use in straightforward cases or during prototyping:
-   - ArrayMapOf implements MapOf and stores data in a 2D array for cases when a simple/straightforward MapOf implementation is needed.
+- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapView), thus allowing the features to be used without imposing limitations and how/where data is stored within the game.
+- A default implementation of the MapView interface is provided, to allow for ease of use in straightforward cases or during prototyping:
+   - ArrayMap implements MapView and stores data in a 2D array for cases when a simple/straightforward MapView implementation is needed.
   
 ### Coordinate/Grid System
 - Coord class provides a way to store 2D grid (integer) coordinates:
@@ -74,7 +75,7 @@ Instructions for getting started with GoRogue, as well as demonstrations of its 
 - Expression objects are provided to avoid expensive parsing operations every time a roll is completed.
 
 ### Map Generation
-- Map generation algorithms operate on MapOf<bool> types, to avoid intrusiveness.
+- Map generation algorithms operate on MapView<bool> types, to avoid intrusiveness.
 - Algorithms are modularized, as to provide maximum reuse:
    - Generation and connectivity algorithms are seperated to provide maximum flexibility.
    - Different common components of connectivity algorithms are also separated.
@@ -90,11 +91,16 @@ Instructions for getting started with GoRogue, as well as demonstrations of its 
    - FOV can be calculated in any of several shapes (modeled by Radius class instances).
    - Length of the radius can be specified, or infinite.
    - Resulting FOV is a lightmap -- an array of doubles in range \[0.0, 1.0], such that the value decreases from 1.0 proportionally as distance from the source increases.
+   - Provides convenience fields to access only those (new) cells in/out of FOV.
 - SenseMap/SenseSource pair to offer much more advanced FOV/lighting features:
    - RIPPLE algorithm can be used to model light spreading around corners, which allows locations to only partially block spread of light.
    - Sources may use either the RIPPLE algorithm variations, or shadowcasting, to model their spreading.
    - Tracks and calculates multiple, mobile light sources, in a multi-threaded manner, and consolidates them into a single light map.
    - SenseMap can also be used to model other sensory perceptions.
+   
+### Pathfinding
+   - AStar pathfinding allows quick and efficient (shortest) paths between two points on a map.
+      - Uses same MapView system as other algorithms to provide a convenient interface.
 
 ### Robust Effects System
 - Provides a system of representing both instant duration, and over-time "effects", with arbitrary duration units.
