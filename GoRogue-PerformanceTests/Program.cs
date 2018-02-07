@@ -35,12 +35,12 @@ namespace GoRogue_PerformanceTests
             */
             var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, SOURCE_TYPE,
                                                                          LIGHT_RADIUS, RADIUS_STRATEGY, ITERATIONS_FOR_TIMING);
-            var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT,
-                                                                         LIGHT_RADIUS, ITERATIONS_FOR_TIMING);
+            //var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT,
+            //                                                             LIGHT_RADIUS, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} calculates, single source, {MAP_WIDTH}x{MAP_HEIGHT} map, Radius {LIGHT_RADIUS}:");
             Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
-            Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
+            //Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
 
             
             Console.WriteLine();

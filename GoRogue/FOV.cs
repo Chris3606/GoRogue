@@ -55,11 +55,11 @@ namespace GoRogue
         /// </summary>
         public IEnumerable<Coord> CurrentFOV { get => currentFOV; }
         /// <summary>
-        /// IEnumerable of positions that are in FOV as of the most current Calculate call, but were NOT in FOV the previous time Calculate was called.
+        /// IEnumerable of positions that are in FOV as of the most current Calculate call, but were NOT in FOV afterthe previous time Calculate was called.
         /// </summary>
         public IEnumerable<Coord> NewlySeen { get => currentFOV.Where(pos => !previousFOV.Contains(pos)); }
         /// <summary>
-        /// IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but WERE in FOV the previous time Calculate was called.
+        /// IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but WERE in FOV after the previous time Calculate was called.
         /// </summary>
         public IEnumerable<Coord> NewlyUnseen { get => previousFOV.Where(pos => !currentFOV.Contains(pos)); }
 

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace GoRogue_UnitTests
 {
     [TestClass]
-    public class LightingTest
+    public class FOVLightingTest
     {
         [TestMethod]
         public void FOVCurrentHash()
@@ -21,19 +21,36 @@ namespace GoRogue_UnitTests
             // Inefficient copy but fine for testing
             HashSet<Coord> currentFov = new HashSet<Coord>(fov.CurrentFOV);
 
-            foreach (var item in currentFov)
-                Console.Write(item + ", ");
-
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
                 {
                     if (fov[x, y] > 0.0)
-                    {
-                        Console.WriteLine("Checking " + Coord.Get(x, y));
                         Assert.AreEqual(true, currentFov.Contains(Coord.Get(x, y)));
-                    }
                     else
                         Assert.AreEqual(false, currentFov.Contains(Coord.Get(x, y)));
+                }
+        }
+
+        [TestMethod]
+        public void SenseMapCurrentHash()
+        {
+            var map = new BoxResMap(50, 50);
+            var senseMap = new SenseMap(map);
+            senseMap.AddSenseSource(new SenseSource(SourceType.RIPPLE, Coord.Get(20, 20), 10, Radius.CIRCLE));
+
+            senseMap.Calculate();
+            
+            
+            // Inefficient copy but fine for testing
+            HashSet<Coord> currentSenseMap = new HashSet<Coord>(senseMap.CurrentSenseMap);
+
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                {
+                    if (senseMap[x, y] > 0.0)
+                        Assert.AreEqual(true, currentSenseMap.Contains(Coord.Get(x, y)));
+                    else
+                        Assert.AreEqual(false, currentSenseMap.Contains(Coord.Get(x, y)));
                 }
         }
 

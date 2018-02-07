@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GoRogue.SenseMapping
@@ -26,8 +27,27 @@ namespace GoRogue.SenseMapping
         // Making these 1D didn't really affect performance that much, though may be worth it on large maps
         private double[,] senseMap;
 
-        private IMapView<double> resMap;
+        private HashSet<Coord> previousSenseMap;
+        private HashSet<Coord> currentSenseMap;
 
+        private IMapView<double> resMap;
+        private int lastWidth;
+        private int lastHeight;
+
+        /// <summary>
+        /// IEnumerable of only positions currently "in" the SenseMap, eg. all positions that have a value other than 0.0.
+        /// </summary>
+        public IEnumerable<Coord> CurrentSenseMap { get => currentSenseMap; }
+        /// <summary>
+        /// IEnumerable of positions that DO have a non-zero value in the sense map as of the most current Calculate call, but
+        /// DID NOT have a non-zero value after the previous time Calculate was called.
+        /// </summary>
+        public IEnumerable<Coord> NewlyInSenseMap { get => currentSenseMap.Where(pos => !previousSenseMap.Contains(pos)); }
+        /// <summary>
+        /// IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the most current Calculate call, but
+        /// DID have a non-zero value after the previous time Calculate was called.
+        /// </summary>
+        public IEnumerable<Coord> NewlyOutOfSenseMap { get => previousSenseMap.Where(pos => !currentSenseMap.Contains(pos)); }
         /// <summary>
         /// Width of sense map.
         /// </summary>
@@ -68,7 +88,13 @@ namespace GoRogue.SenseMapping
         {
             this.resMap = resMap;
             senseMap = new double[resMap.Width, resMap.Height];
+            lastWidth = resMap.Width;
+            lastHeight = resMap.Height;
+
             _senseSources = new List<SenseSource>();
+
+            previousSenseMap = new HashSet<Coord>();
+            currentSenseMap = new HashSet<Coord>();
         }
 
         /// <summary>
@@ -99,7 +125,17 @@ namespace GoRogue.SenseMapping
         /// </summary>
         public void Calculate()
         {
-            Array.Clear(senseMap, 0, senseMap.Length);
+            if (lastWidth != resMap.Width || lastHeight != resMap.Height)
+            {
+                senseMap = new double[resMap.Width, resMap.Height];
+                lastWidth = resMap.Width;
+                lastHeight = resMap.Height;
+            }
+            else
+                Array.Clear(senseMap, 0, senseMap.Length);
+
+            previousSenseMap = currentSenseMap;
+            currentSenseMap = new HashSet<Coord>();
 
             if (_senseSources.Count > 1) // Probably not the proper condition, but useful for now.
             {
@@ -114,7 +150,7 @@ namespace GoRogue.SenseMapping
 
             // Flush sources to actual senseMap
             foreach (var senseSource in _senseSources)
-                blitSenseSource(senseSource, senseMap, resMap);
+                blitSenseSource(senseSource, senseMap, currentSenseMap, resMap);
         }
 
         /// <summary>
@@ -135,7 +171,7 @@ namespace GoRogue.SenseMapping
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         // Blits given source's lightMap onto the global lightmap given
-        private static void blitSenseSource(SenseSource source, double[,] destination, IMapView<double> resMap)
+        private static void blitSenseSource(SenseSource source, double[,] destination, HashSet<Coord> sourceMap, IMapView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
             int minX = Math.Min(source.Radius, source.Position.X);
@@ -160,7 +196,10 @@ namespace GoRogue.SenseMapping
                     Coord c = Coord.Get(xOffset, yOffset);
                     Coord gCur = gMin + c;
                     Coord lCur = lMin + c;
+
                     destination[gCur.X, gCur.Y] = Math.Min(destination[gCur.X, gCur.Y] + source.light[lCur.X, lCur.Y], 1); // Add light, cap at 1 for now.  may just uncap this later.
+                    if (destination[gCur.X, gCur.Y] > 0.0)
+                        sourceMap.Add(gCur);
                 }
             } //);
         }

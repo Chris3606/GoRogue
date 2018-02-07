@@ -63,7 +63,7 @@
     <Compile Include="CoordTests.cs" />
     <Compile Include="DirectionTests.cs" />
     <Compile Include="EffectTests.cs" />
-    <Compile Include="LightingTest.cs" />
+    <Compile Include="FOVLightingTest.cs" />
     <Compile Include="LineTests.cs" />
     <Compile Include="MapAreaTests.cs" />
     <Compile Include="MapGenTests.cs" />
