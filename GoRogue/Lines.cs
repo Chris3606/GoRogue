@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace GoRogue
 {
     /// <summary>
-    /// Provides implementations of various (line-drawing) algorithms for generating points closest to a line between two points on a grid.
+    /// Provides implementations of various (line-drawing) algorithms for generating points closest
+    /// to a line between two points on a grid.
     /// </summary>
     public static class Lines
     {
@@ -20,49 +21,81 @@ namespace GoRogue
             /// Bresenham's line algorithm.
             /// </summary>
             BRESENHAM,
+
             /// <summary>
-            /// DDA line algorithm -- effectively an optimized algorithm for producing Brensham-like lines.  There may be slight differences in appearance when compared
-            /// to lines created with Bresenham's, however this algorithm may also be measurably faster.  Based on the algorithm here: https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/,
-            /// as well as the Java library Squidlib's implementation.
+            /// DDA line algorithm -- effectively an optimized algorithm for producing Brensham-like
+            /// lines. There may be slight differences in appearance when compared to lines created
+            /// with Bresenham's, however this algorithm may also be measurably faster. Based on the
+            /// algorithm here:
+            /// https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/, as well as
+            /// the Java library Squidlib's implementation.
             /// </summary>
             DDA,
+
             /// <summary>
-            /// Line algorithm that takes only orthoganal steps (each grid location on the line returned is within one cardinal direction of the previous one).
-            /// Potentially useful for LOS in games that use MANHATTAN distance.  Based on the algorithm here: http://www.redblobgames.com/grids/line-drawing.html#stepping
+            /// Line algorithm that takes only orthoganal steps (each grid location on the line
+            /// returned is within one cardinal direction of the previous one). Potentially useful
+            /// for LOS in games that use MANHATTAN distance. Based on the algorithm here: http://www.redblobgames.com/grids/line-drawing.html#stepping
             /// </summary>
             ORTHO
         }
 
         /// <summary>
-        /// Returns an IEnumerable of every point, in order, closest to a line between the two points specified,
-        /// using the line drawing algorithm given.  The start and end points will be included.
+        /// Returns an IEnumerable of every point, in order, closest to a line between the two points
+        /// specified, using the line drawing algorithm given. The start and end points will be included.
         /// </summary>
-        /// <param name="start">The start point of the line.</param>
-        /// <param name="end">The end point of the line.</param>
-        /// <param name="type">The line-drawing algorithm to use to generate the line.</param>
-        /// <returns>An IEnumerable of every point, in order, closest to a line between the two points specified (according to the algorithm given).</returns>
+        /// <param name="start">
+        /// The start point of the line.
+        /// </param>
+        /// <param name="end">
+        /// The end point of the line.
+        /// </param>
+        /// <param name="type">
+        /// The line-drawing algorithm to use to generate the line.
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of every point, in order, closest to a line between the two points
+        /// specified (according to the algorithm given).
+        /// </returns>
         static public IEnumerable<Coord> Get(Coord start, Coord end, Lines.Algorithm type = Algorithm.BRESENHAM) => Get(start.X, start.Y, end.X, end.Y, type);
 
         /// <summary>
-        /// Returns an IEnumerable of every point, in order, closest to a line between the two points specified,
-        /// using the line drawing algorithm given.  The start and end points will be included.
+        /// Returns an IEnumerable of every point, in order, closest to a line between the two points
+        /// specified, using the line drawing algorithm given. The start and end points will be included.
         /// </summary>
-        /// <param name="startX">X-coordinate of the starting point of the line.</param>
-        /// <param name="startY">Y-coordinate of the starting point of the line.</param>
-        /// <param name="endX">X-coordinate of the ending point of the line.</param>
-        /// /// <param name="endY">Y-coordinate of the ending point of the line.</param>
-        /// <param name="type">The line-drawing algorithm to use to generate the line.</param>
-        /// <returns>An IEnumerable of every point, in order, closest to a line between the two points specified (according to the algorithm given).</returns>
+        /// <param name="startX">
+        /// X-coordinate of the starting point of the line.
+        /// </param>
+        /// <param name="startY">
+        /// Y-coordinate of the starting point of the line.
+        /// </param>
+        /// <param name="endX">
+        /// X-coordinate of the ending point of the line.
+        /// </param>
+        /// ///
+        /// <param name="endY">
+        /// Y-coordinate of the ending point of the line.
+        /// </param>
+        /// <param name="type">
+        /// The line-drawing algorithm to use to generate the line.
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of every point, in order, closest to a line between the two points
+        /// specified (according to the algorithm given).
+        /// </returns>
         static public IEnumerable<Coord> Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Algorithm.BRESENHAM)
         {
             switch (type)
             {
                 case Algorithm.BRESENHAM:
                     return bresenham(startX, startY, endX, endY);
+
                 case Algorithm.DDA:
                     return dda(startX, startY, endX, endY);
+
                 case Algorithm.ORTHO:
                     return ortho(startX, startY, endX, endY);
+
                 default:
                     throw new Exception("Unsupported line-drawing algorithm.");  // Should not occur
             }
@@ -106,7 +139,6 @@ namespace GoRogue
             }
         }
 
-        
         static private IEnumerable<Coord> dda(int startX, int startY, int endX, int endY)
         {
             int dx = endX - startX;
@@ -158,36 +190,43 @@ namespace GoRogue
                     for (int primary = startX; primary <= endX; primary++, frac += move)
                         yield return Coord.Get(primary, startY + ((frac + MODIFIER_Y) >> 16));
                     break;
+
                 case 1:
                     move = (nx << 16) / ny;
                     for (int primary = startY; primary <= endY; primary++, frac += move)
                         yield return Coord.Get(startX + ((frac + MODIFIER_X) >> 16), primary);
                     break;
+
                 case 2: // -x, +y
                     move = (ny << 16) / nx;
                     for (int primary = startX; primary >= endX; primary--, frac += move)
                         yield return Coord.Get(primary, startY + ((frac + MODIFIER_Y) >> 16));
                     break;
+
                 case 3:
                     move = (nx << 16) / ny;
                     for (int primary = startY; primary <= endY; primary++, frac += move)
                         yield return Coord.Get(startX - ((frac + MODIFIER_X) >> 16), primary);
                     break;
+
                 case 6: // -x, -y
                     move = (ny << 16) / nx;
                     for (int primary = startX; primary >= endX; primary--, frac += move)
                         yield return Coord.Get(primary, startY - ((frac + MODIFIER_Y) >> 16));
                     break;
+
                 case 7:
                     move = (nx << 16) / ny;
                     for (int primary = startY; primary >= endY; primary--, frac += move)
                         yield return Coord.Get(startX - ((frac + MODIFIER_X) >> 16), primary);
                     break;
+
                 case 4: // +x, -y
                     move = (ny << 16) / nx;
                     for (int primary = startX; primary <= endX; primary++, frac += move)
                         yield return Coord.Get(primary, startY - ((frac + MODIFIER_Y) >> 16));
                     break;
+
                 case 5:
                     move = (nx << 16) / ny;
                     for (int primary = startY; primary >= endY; primary--, frac += move)
@@ -212,7 +251,7 @@ namespace GoRogue
 
             yield return Coord.Get(startX, startY);
 
-            for (int ix = 0, iy = 0; ix < nx || iy < ny; )
+            for (int ix = 0, iy = 0; ix < nx || iy < ny;)
             {
                 if ((0.5 + ix) / nx < (0.5 + iy) / ny)
                 {

@@ -27,6 +27,22 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void TestOneRoomAreaRect()
+        {
+            var map = new ArrayMap<bool>(80, 50);
+            Generators.RectangleMapGenerator.Generate(map);
+
+            for (int y = 0; y < 50; y++)
+                map[40, y] = false;
+
+            map[40, 25] = true;
+
+            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+
+            Assert.AreEqual(1, areas.Count);
+        }
+
+        [TestMethod]
         public void TestSingleAreaRect()
         {
             var map = new ArrayMap<bool>(80, 50);
@@ -51,22 +67,6 @@ namespace GoRogue_UnitTests
             var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
 
             Assert.AreEqual(2, areas.Count);
-        }
-
-        [TestMethod]
-        public void TestOneRoomAreaRect()
-        {
-            var map = new ArrayMap<bool>(80, 50);
-            Generators.RectangleMapGenerator.Generate(map);
-
-            for (int y = 0; y < 50; y++)
-                map[40, y] = false;
-
-            map[40, 25] = true;
-
-            var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
-
-            Assert.AreEqual(1, areas.Count);
         }
     }
 }

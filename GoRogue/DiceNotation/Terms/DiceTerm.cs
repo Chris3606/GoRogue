@@ -6,36 +6,23 @@ using System.Linq;
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
-    /// The DiceTerm class represents a single "d" term in a DiceExpression.  For example, in the expression "2d6+5", the term "2d6" is a DiceTerm
+    /// The DiceTerm class represents a single "d" term in a DiceExpression. For example, in the
+    /// expression "2d6+5", the term "2d6" is a DiceTerm
     /// </summary>
     public class DiceTerm : IDiceExpressionTerm
     {
         /// <summary>
-        /// The number of dice.
-        /// </summary>
-        public int Multiplicity { get; private set; }
-
-        /// <summary>
-        /// The number of sides per die.
-        /// </summary>
-        public int Sides { get; private set; }
-
-        /// <summary>
-        /// The amount to multiply the final sum of the dice by.
-        /// </summary>
-        public int Scalar { get; private set; }
-
-        /// <summary>
-        /// Used in "choose" operations.  The highest dice, up to this number of dice, will be summed for the final result.  If Choose is 5, the 5 highest dice are taken.
-        /// </summary>
-        protected int Choose { get; private set; }
-
-        /// <summary>
         /// Construct a new instance of the DiceTerm class using the specified values.
         /// </summary>
-        /// <param name="multiplicity">The number of dice.</param>
-        /// <param name="sides">The number of sides per die.</param>
-        /// <param name="scalar">The amount to multiply the final sum of the dice by.</param>
+        /// <param name="multiplicity">
+        /// The number of dice.
+        /// </param>
+        /// <param name="sides">
+        /// The number of sides per die.
+        /// </param>
+        /// <param name="scalar">
+        /// The amount to multiply the final sum of the dice by.
+        /// </param>
         public DiceTerm(int multiplicity, int sides, int scalar)
            : this(multiplicity, sides, multiplicity, scalar)
         { }
@@ -43,10 +30,19 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Construct a new instance of the DiceTerm class using the specified values.
         /// </summary>
-        /// <param name="multiplicity">The number of dice.</param>
-        /// <param name="sides">The number of sides per die.</param>
-        /// <param name="choose">The top valued dice up to this number are kept.  If this is equal to multiplicity, keeps all dice.</param>
-        /// <param name="scalar">The amount to multiply the final sum of the dice by.</param>
+        /// <param name="multiplicity">
+        /// The number of dice.
+        /// </param>
+        /// <param name="sides">
+        /// The number of sides per die.
+        /// </param>
+        /// <param name="choose">
+        /// The top valued dice up to this number are kept. If this is equal to multiplicity, keeps
+        /// all dice.
+        /// </param>
+        /// <param name="scalar">
+        /// The amount to multiply the final sum of the dice by.
+        /// </param>
         public DiceTerm(int multiplicity, int sides, int choose, int scalar)
         {
             if (sides <= 0)
@@ -73,10 +69,36 @@ namespace GoRogue.DiceNotation.Terms
         }
 
         /// <summary>
-        /// Gets the TermResult for this DiceTerm which will include the random value rolled.  If null is specified, the default RNG is used.
+        /// The number of dice.
         /// </summary>
-        /// <param name="random">IRandom RNG used to perform the Roll.</param>
-        /// <returns>An IEnumerable of TermResult which will have one item per die rolled</returns>
+        public int Multiplicity { get; private set; }
+
+        /// <summary>
+        /// The amount to multiply the final sum of the dice by.
+        /// </summary>
+        public int Scalar { get; private set; }
+
+        /// <summary>
+        /// The number of sides per die.
+        /// </summary>
+        public int Sides { get; private set; }
+
+        /// <summary>
+        /// Used in "choose" operations. The highest dice, up to this number of dice, will be summed
+        /// for the final result. If Choose is 5, the 5 highest dice are taken.
+        /// </summary>
+        protected int Choose { get; private set; }
+
+        /// <summary>
+        /// Gets the TermResult for this DiceTerm which will include the random value rolled. If null
+        /// is specified, the default RNG is used.
+        /// </summary>
+        /// <param name="random">
+        /// IRandom RNG used to perform the Roll.
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of TermResult which will have one item per die rolled
+        /// </returns>
         public IEnumerable<TermResult> GetResults(IRandom random = null)
         {
             if (random == null) random = SingletonRandom.DefaultRNG;
@@ -94,7 +116,9 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Returns a string that represents this DiceTerm
         /// </summary>
-        /// <returns>A string representing this DiceTerm</returns>
+        /// <returns>
+        /// A string representing this DiceTerm
+        /// </returns>
         public override string ToString()
         {
             string choose = Choose == Multiplicity ? "" : "k" + Choose;

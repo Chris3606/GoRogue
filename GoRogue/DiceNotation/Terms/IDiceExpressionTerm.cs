@@ -11,8 +11,12 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Gets the TermResults for the implementation.
         /// </summary>
-        /// <param name="random">IRandom RNG used to perform the Roll.  If null is specified, uses the default rng.</param>
-        /// <returns>An IEnumerable of TermResult which will have one item per result.</returns>
+        /// <param name="random">
+        /// IRandom RNG used to perform the Roll. If null is specified, uses the default rng.
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of TermResult which will have one item per result.
+        /// </returns>
         IEnumerable<TermResult> GetResults(IRandom random = null);
     }
 }

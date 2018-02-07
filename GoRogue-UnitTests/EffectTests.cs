@@ -4,14 +4,6 @@ using System;
 
 namespace GoRogue_UnitTests
 {
-    public class IntEffect : Effect<EffectArgs>
-    {
-        public IntEffect(string name, int startingDuration)
-            : base(name, startingDuration) { }
-
-        protected override void OnTrigger(EffectArgs e) => Console.WriteLine($"Effect {Name} triggered.");
-    }
-
     public class CancelingIntEffect : IntEffect
     {
         public CancelingIntEffect(string name, int startingDuration)
@@ -27,15 +19,6 @@ namespace GoRogue_UnitTests
     [TestClass]
     public class EffectTests
     {
-        [TestMethod]
-        public void EffectToString()
-        {
-            string NAME = "Int Effect 1";
-            int DURATION = 5;
-            var intEffect = new IntEffect(NAME, DURATION);
-            Assert.AreEqual(intEffect.ToString(), $"{NAME}: {DURATION} duration remaining");
-        }
-
         [TestMethod]
         public void EffectDurationDecrement()
         {
@@ -59,6 +42,15 @@ namespace GoRogue_UnitTests
 
             effect2.Trigger(null);
             Assert.AreEqual(effect2.Duration, IntEffect.INFINITE);
+        }
+
+        [TestMethod]
+        public void EffectToString()
+        {
+            string NAME = "Int Effect 1";
+            int DURATION = 5;
+            var intEffect = new IntEffect(NAME, DURATION);
+            Assert.AreEqual(intEffect.ToString(), $"{NAME}: {DURATION} duration remaining");
         }
 
         [TestMethod]
@@ -125,5 +117,13 @@ namespace GoRogue_UnitTests
             Assert.AreEqual(1, secEffectTrigger.Effects.Count);
             Assert.AreEqual(1, secEffectTrigger.Effects[0].Duration); // Must have cancelled
         }
+    }
+
+    public class IntEffect : Effect<EffectArgs>
+    {
+        public IntEffect(string name, int startingDuration)
+            : base(name, startingDuration) { }
+
+        protected override void OnTrigger(EffectArgs e) => Console.WriteLine($"Effect {Name} triggered.");
     }
 }

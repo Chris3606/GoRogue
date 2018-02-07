@@ -7,33 +7,6 @@ namespace GoRogue_UnitTests
     public class MultiSpatialMapTests
     {
         [TestMethod]
-        public void MultiSpatialMapCreate()
-        {
-            var mySpatialMap = new MultiSpatialMap<MyIDImpl>();
-            Assert.AreEqual(0, mySpatialMap.Count);
-            bool retVal = mySpatialMap.Remove(new MyIDImpl(0));
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Remove(Coord.Get(1, 2)))
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Items)
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-
-            retVal = mySpatialMap.Move(new MyIDImpl(0), Coord.Get(5, 6));
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Move(Coord.Get(1, 2), Coord.Get(5, 6)))
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-        }
-
-        [TestMethod]
         public void MultiSpatialMapAdd()
         {
             var mySpatialMap = new MultiSpatialMap<MyIDImpl>();
@@ -74,6 +47,33 @@ namespace GoRogue_UnitTests
             foreach (var item in mySpatialMap.GetItems(Coord.Get(1, 2)))
                 count++;
             Assert.AreEqual(2, count);
+        }
+
+        [TestMethod]
+        public void MultiSpatialMapCreate()
+        {
+            var mySpatialMap = new MultiSpatialMap<MyIDImpl>();
+            Assert.AreEqual(0, mySpatialMap.Count);
+            bool retVal = mySpatialMap.Remove(new MyIDImpl(0));
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Remove(Coord.Get(1, 2)))
+                retVal = true;
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Items)
+                retVal = true;
+            Assert.AreEqual(false, retVal);
+
+            retVal = mySpatialMap.Move(new MyIDImpl(0), Coord.Get(5, 6));
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Move(Coord.Get(1, 2), Coord.Get(5, 6)))
+                retVal = true;
+            Assert.AreEqual(false, retVal);
         }
 
         [TestMethod]

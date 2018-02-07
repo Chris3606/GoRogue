@@ -1,19 +1,25 @@
 ﻿using GoRogue;
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using System;
 
 namespace GoRogue_UnitTests
 {
     [TestClass]
     public class LineTests
     {
-        static readonly int MAP_WIDTH = 10;
-        static readonly int MAP_HEIGHT = 10;
+        private static readonly Coord END = Coord.Get(8, 6);
+        private static readonly int MAP_HEIGHT = 10;
+        private static readonly int MAP_WIDTH = 10;
+        private static readonly Coord START = Coord.Get(1, 1);
 
-        static readonly Coord START = Coord.Get(1, 1);
-        static readonly Coord END = Coord.Get(8, 6);
+        [TestMethod]
+        public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);
 
+        [TestMethod]
+        public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);
+
+        [TestMethod]
+        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.ORTHO);
 
         private void DrawLine(Coord start, Coord end, int width, int height, Lines.Algorithm type)
         {
@@ -34,14 +40,5 @@ namespace GoRogue_UnitTests
                 Console.WriteLine();
             }
         }
-
-        [TestMethod]
-        public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);
-
-        [TestMethod]
-        public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);
-
-        [TestMethod]
-        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.ORTHO);
     }
 }

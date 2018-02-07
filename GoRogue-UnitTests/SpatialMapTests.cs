@@ -3,49 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
 {
-    internal class MyIDImpl : IHasID
-    {
-        private static IDGenerator idGen = new IDGenerator();
-        public uint ID { get; private set; }
-        public int MyInt { get; private set; }
-
-        public MyIDImpl(int myInt)
-        {
-            ID = idGen.UseID();
-            MyInt = myInt;
-        }
-    }
-
     [TestClass]
     public class SpatialMapTests
     {
-        [TestMethod]
-        public void SpatialMapCreate()
-        {
-            var mySpatialMap = new SpatialMap<MyIDImpl>();
-            Assert.AreEqual(0, mySpatialMap.Count);
-            bool retVal = mySpatialMap.Remove(new MyIDImpl(0));
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Remove(Coord.Get(1, 2)))
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Items)
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-
-            retVal = mySpatialMap.Move(new MyIDImpl(0), Coord.Get(5, 6));
-            Assert.AreEqual(false, retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Move(Coord.Get(1, 2), Coord.Get(5, 6)))
-                retVal = true;
-            Assert.AreEqual(false, retVal);
-        }
-
         [TestMethod]
         public void SpatialMapAdd()
         {
@@ -85,6 +45,33 @@ namespace GoRogue_UnitTests
             foreach (var item in mySpatialMap.GetItems(Coord.Get(1, 2)))
                 count++;
             Assert.AreEqual(1, count);
+        }
+
+        [TestMethod]
+        public void SpatialMapCreate()
+        {
+            var mySpatialMap = new SpatialMap<MyIDImpl>();
+            Assert.AreEqual(0, mySpatialMap.Count);
+            bool retVal = mySpatialMap.Remove(new MyIDImpl(0));
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Remove(Coord.Get(1, 2)))
+                retVal = true;
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Items)
+                retVal = true;
+            Assert.AreEqual(false, retVal);
+
+            retVal = mySpatialMap.Move(new MyIDImpl(0), Coord.Get(5, 6));
+            Assert.AreEqual(false, retVal);
+
+            retVal = false;
+            foreach (var item in mySpatialMap.Move(Coord.Get(1, 2), Coord.Get(5, 6)))
+                retVal = true;
+            Assert.AreEqual(false, retVal);
         }
 
         [TestMethod]
@@ -155,5 +142,19 @@ namespace GoRogue_UnitTests
                 count++;
             Assert.AreEqual(0, count);
         }
+    }
+
+    internal class MyIDImpl : IHasID
+    {
+        private static IDGenerator idGen = new IDGenerator();
+
+        public MyIDImpl(int myInt)
+        {
+            ID = idGen.UseID();
+            MyInt = myInt;
+        }
+
+        public uint ID { get; private set; }
+        public int MyInt { get; private set; }
     }
 }

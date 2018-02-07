@@ -1,214 +1,44 @@
-﻿using System;
+﻿using Priority_Queue;
+using System;
 using System.Collections.Generic;
-using Priority_Queue;
 
 namespace GoRogue.Pathing
 {
-
-    /// @cond PRIVATE
-    // Node for AStar, stores all values and integrates with priority queue implementation
-    class AStarNode : FastPriorityQueueNode
-    {
-        public AStarNode Parent;
-        public readonly Coord Position;
-        public bool Closed; // Whether or not the node has been closed
-        public float F; // (Partly estimated) distance to end point going thru this node
-        public float G; // (Known) distance from start to this node, by shortest known path
-
-        public AStarNode(Coord position, AStarNode parent = null)
-        {
-            Parent = parent;
-            Position = position;
-            Closed = false;
-            F = G = float.MaxValue;
-        }
-    }
-    /// @endcond
-
     /// <summary>
-    /// Encapsulates a path as returned by pathfinding algorithms like AStar.
-    /// </summary>
-    /// <remarks>
-    /// Provides various functions to iterate through/access steps of the path, as well as constant-time reversing functionality.
-    /// </remarks>
-    public class Path
-    {
-        private bool inOriginalOrder;
-
-        /// <summary>
-        /// Starting point of the path.
-        /// </summary>
-        public Coord Start
-        {
-            get
-            {
-                if (inOriginalOrder)
-                    return _steps[_steps.Count - 1];
-
-                return _steps[0];
-            }
-        }
-
-        /// <summary>
-        /// Ending point of the path.
-        /// </summary>
-        public Coord End
-        {
-            get
-            {
-                if (inOriginalOrder)
-                    return _steps[0];
-
-                return _steps[_steps.Count - 1];
-            }
-        }
-
-        private IList<Coord> _steps;
-        /// <summary>
-        /// The coordinates that constitute the path (in order), NOT including the starting point.  These are the coordinates
-        /// something might walk along to follow a path.
-        /// </summary>
-        public IEnumerable<Coord> Steps
-        {
-            get
-            {
-                if (inOriginalOrder)
-                {
-                    for (int i = _steps.Count - 2; i >= 0; i--)
-                        yield return _steps[i];
-                }
-                else
-                {
-                    for (int i = 1; i < _steps.Count; i++)
-                        yield return _steps[i];
-                }
-            }
-        }
-
-        /// <summary>
-        /// The coordinates that constitute the path (in order), INCLUDING the starting point.
-        /// </summary>
-        public IEnumerable<Coord> StepsWithStart
-        {
-            get
-            {
-                if (inOriginalOrder)
-                {
-                    for (int i = _steps.Count - 1; i >= 0; i--)
-                        yield return _steps[i];
-                }
-                else
-                {
-                    for (int i = 0; i < _steps.Count; i++)
-                        yield return _steps[i];
-                }
-                
-            }
-        }
-
-        /// <summary>
-        /// The length of the path, NOT including the starting point.
-        /// </summary>
-        public int Length { get => _steps.Count - 1; }
-        /// <summary>
-        /// The length of the path, INCLUDING the starting point.
-        /// </summary>
-        public int LengthWithStart { get => _steps.Count; }
-
-        // Create based on internal list
-        internal Path(IList<Coord> steps)
-        {
-            _steps = steps;
-            inOriginalOrder = true;
-        }
-
-        /// <summary>
-        /// Creates a copy of the path, optionally reversing the path as it does so.
-        /// </summary>
-        /// <remarks>
-        /// Reversing is an O(1) operation, since it does not modify the list.
-        /// </remarks>
-        /// <param name="pathToCopy">The path to copy.</param>
-        /// <param name="reverse">Whether or not to reverse the path.  Defaults to false.</param>
-        public Path(Path pathToCopy, bool reverse = false)
-        {
-            _steps = pathToCopy._steps;
-            inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
-        }
-
-        /// <summary>
-        /// Gets the nth step along the path, where 0 is the step AFTER the starting point.
-        /// </summary>
-        /// <param name="stepNum">The (array-like index) of the step to get.</param>
-        /// <returns>The coordinate consituting the step specified.</returns>
-        public Coord GetStep(int stepNum)
-        {
-            if (inOriginalOrder)
-                return _steps[(_steps.Count - 2) - stepNum];
-
-            return _steps[stepNum + 1];
-        }
-
-        /// <summary>
-        /// Gets the nth step along the path, where 0 IS the starting point.
-        /// </summary>
-        /// <param name="stepNum">The (array-like index) of the step to get.</param>
-        /// <returns>The coordinate consituting the step specified.</returns>
-        public Coord GetStepWithStart(int stepNum)
-        {
-            if (inOriginalOrder)
-                return _steps[(_steps.Count - 1) - stepNum];
-
-            return _steps[stepNum];
-        }
-
-        /// <summary>
-        /// Reverses the path, in constant time.
-        /// </summary>
-        public void Reverse() => inOriginalOrder = !inOriginalOrder;
-    }
-
-    /// <summary>
-    /// Implements basic AStar pathing.  Distance specified determins the heuristic and connectivity (4-way vs. 8-way) assumed.
+    /// Implements basic AStar pathing. Distance specified determins the heuristic and connectivity
+    /// (4-way vs. 8-way) assumed.
     /// </summary>
     public class AStar
     {
-        /// <summary>
-        /// The map being used as the source for whether or not each tile is walkable.
-        /// </summary>
-        public IMapView<bool> WalkabilityMap { get; private set; }
-
         private Distance _distanceMeasurement;
-        /// <summary>
-        /// The distance calculation being used to determine distance between points.  MANHATTAN implies 4-way connectivity,
-        /// while CHEBYSHEV or EUCLIDEAN imply 8-way connectivity for the purpose of determining adjacent coordinates.
-        /// </summary>
-        public Distance DistanceMeasurement
-        {
-            get => _distanceMeasurement;
-            set
-            {
-                _distanceMeasurement = value;
-                if (_distanceMeasurement == Distance.MANHATTAN)
-                    neighborFunc = cardinalNeighbors;
-                else
-                    neighborFunc = neighbors;
-            }
-        }
 
-        private Func<int, int, IEnumerable<Direction>> neighborFunc; // Used to calculate neighbors of a given cell
-        private AStarNode[] nodes; // Node objects used under the hood for the priority queue
-        private FastPriorityQueue<AStarNode> openNodes; // Priority queue of the open nodes.
-        // Width and of the walkability map at the last path -- used to determine whether reallocation of nodes array is necessary
-        private int nodesWidth; 
+        private Func<int, int, IEnumerable<Direction>> neighborFunc;
+
+        // Used to calculate neighbors of a given cell
+        private AStarNode[] nodes;
+
         private int nodesHeight;
 
+        // Width and of the walkability map at the last path -- used to determine whether
+        // reallocation of nodes array is necessary
+        private int nodesWidth;
+
+        // Node objects used under the hood for the priority queue
+        private FastPriorityQueue<AStarNode> openNodes;
+
+        // Priority queue of the open nodes.
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">Map used to determine whether or not a given location can be traversed -- true indicates walkable, false unwalkable.</param>
-        /// <param name="distanceMeasurement">Distance measurement used to determine the method of measuring distance between two points, the heuristic AStar uses
-        /// when pathfinding, and whether locations are connected in a 4-way or 8-way manner.</param>
+        /// <param name="walkabilityMap">
+        /// Map used to determine whether or not a given location can be traversed -- true indicates
+        /// walkable, false unwalkable.
+        /// </param>
+        /// <param name="distanceMeasurement">
+        /// Distance measurement used to determine the method of measuring distance between two
+        /// points, the heuristic AStar uses when pathfinding, and whether locations are connected in
+        /// a 4-way or 8-way manner.
+        /// </param>
         public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
         {
             WalkabilityMap = walkabilityMap;
@@ -225,15 +55,44 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
+        /// The distance calculation being used to determine distance between points. MANHATTAN
+        /// implies 4-way connectivity, while CHEBYSHEV or EUCLIDEAN imply 8-way connectivity for the
+        /// purpose of determining adjacent coordinates.
+        /// </summary>
+        public Distance DistanceMeasurement
+        {
+            get => _distanceMeasurement;
+            set
+            {
+                _distanceMeasurement = value;
+                if (_distanceMeasurement == Distance.MANHATTAN)
+                    neighborFunc = cardinalNeighbors;
+                else
+                    neighborFunc = neighbors;
+            }
+        }
+
+        /// <summary>
+        /// The map being used as the source for whether or not each tile is walkable.
+        /// </summary>
+        public IMapView<bool> WalkabilityMap { get; private set; }
+
+        /// <summary>
         /// Finds the shortest path between the two specified points.
         /// </summary>
         /// <remarks>
-        /// Returns null if there is no path between the specified points.  Will still return an appropriate path object
-        /// if the start point is equal to the end point.
+        /// Returns null if there is no path between the specified points. Will still return an
+        /// appropriate path object if the start point is equal to the end point.
         /// </remarks>
-        /// <param name="start">The starting point of the path.</param>
-        /// <param name="end">The ending point of the path.</param>
-        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
+        /// <param name="start">
+        /// The starting point of the path.
+        /// </param>
+        /// <param name="end">
+        /// The ending point of the path.
+        /// </param>
+        /// <returns>
+        /// The shortest path between the two points, or null if no valid path exists.
+        /// </returns>
         public Path ShortestPath(Coord start, Coord end)
         {
             // Don't waste initialization time if there is definately no path
@@ -306,10 +165,9 @@ namespace GoRogue.Pathing
 
                     int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
                     var neighbor = nodes[neighborIndex];
-                    
+
                     if (neighbor.Closed) // This neighbor has already been evaluated at shortest possible path, don't re-add
                         continue;
-
 
                     float newDistance = current.G + (float)_distanceMeasurement.DistanceBetween(current.Position, neighbor.Position);
                     if (newDistance >= neighbor.G) // Not a better path
@@ -335,24 +193,35 @@ namespace GoRogue.Pathing
         /// Finds the shortest path between the two specified points.
         /// </summary>
         /// <remarks>
-        /// Returns null if there is no path between the specified points.  Will still return an appropriate path object
-        /// if the start point is equal to the end point.
+        /// Returns null if there is no path between the specified points. Will still return an
+        /// appropriate path object if the start point is equal to the end point.
         /// </remarks>
-        /// <param name="startX">The x-coordinate of the starting point of the path.</param>
-        /// <param name="startY">The y-coordinate of the starting point of the path.</param>
-        /// <param name="endX">The x-coordinate of the ending point of the path.</param>
-        /// <param name="endY">The y-coordinate of the ending point of the path.</param>
-        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
+        /// <param name="startX">
+        /// The x-coordinate of the starting point of the path.
+        /// </param>
+        /// <param name="startY">
+        /// The y-coordinate of the starting point of the path.
+        /// </param>
+        /// <param name="endX">
+        /// The x-coordinate of the ending point of the path.
+        /// </param>
+        /// <param name="endY">
+        /// The y-coordinate of the ending point of the path.
+        /// </param>
+        /// <returns>
+        /// The shortest path between the two points, or null if no valid path exists.
+        /// </returns>
         public Path ShortestPath(int startX, int startY, int endX, int endY) => ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY));
 
-        // These neighbor functions are special in that they return (approximately) the closest directions to the end goal first.
-        // This is intended to "prioritize" more direct-looking paths, in the case that one or more paths are equally short
+        // These neighbor functions are special in that they return (approximately) the closest
+        // directions to the end goal first. This is intended to "prioritize" more direct-looking
+        // paths, in the case that one or more paths are equally short
         private static IEnumerable<Direction> cardinalNeighbors(int dx, int dy)
         {
-            
             Direction left, right;
-            // Intentional inversion of dx and dy sign, because of the order in which our priority queue returns values (we want the direction that
-            // we ideally use, eg. the one closest to the specified line, to be last-in, not first-in)
+            // Intentional inversion of dx and dy sign, because of the order in which our priority
+            // queue returns values (we want the direction that we ideally use, eg. the one closest
+            // to the specified line, to be last-in, not first-in)
             left = right = Direction.GetCardinalDirection(-dx, -dy);
             yield return right; // Return first direction
 
@@ -368,9 +237,9 @@ namespace GoRogue.Pathing
 
         private static IEnumerable<Direction> neighbors(int dx, int dy)
         {
-            
             Direction left, right;
-            // Intentional inversion of dx and dy sign, because of the order in which our priority queue returns values
+            // Intentional inversion of dx and dy sign, because of the order in which our priority
+            // queue returns values
             left = right = Direction.GetDirection(-dx, -dy);
             yield return right; // Return first direction
 
@@ -386,6 +255,186 @@ namespace GoRogue.Pathing
             // Return last direction
             right++;
             yield return right;
+        }
+    }
+
+    /// <summary>
+    /// Encapsulates a path as returned by pathfinding algorithms like AStar.
+    /// </summary>
+    /// <remarks>
+    /// Provides various functions to iterate through/access steps of the path, as well as
+    /// constant-time reversing functionality.
+    /// </remarks>
+    public class Path
+    {
+        private IList<Coord> _steps;
+        private bool inOriginalOrder;
+
+        /// <summary>
+        /// Creates a copy of the path, optionally reversing the path as it does so.
+        /// </summary>
+        /// <remarks>
+        /// Reversing is an O(1) operation, since it does not modify the list.
+        /// </remarks>
+        /// <param name="pathToCopy">
+        /// The path to copy.
+        /// </param>
+        /// <param name="reverse">
+        /// Whether or not to reverse the path. Defaults to false.
+        /// </param>
+        public Path(Path pathToCopy, bool reverse = false)
+        {
+            _steps = pathToCopy._steps;
+            inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
+        }
+
+        // Create based on internal list
+        internal Path(IList<Coord> steps)
+        {
+            _steps = steps;
+            inOriginalOrder = true;
+        }
+
+        /// <summary>
+        /// Ending point of the path.
+        /// </summary>
+        public Coord End
+        {
+            get
+            {
+                if (inOriginalOrder)
+                    return _steps[0];
+
+                return _steps[_steps.Count - 1];
+            }
+        }
+
+        /// <summary>
+        /// The length of the path, NOT including the starting point.
+        /// </summary>
+        public int Length { get => _steps.Count - 1; }
+
+        /// <summary>
+        /// The length of the path, INCLUDING the starting point.
+        /// </summary>
+        public int LengthWithStart { get => _steps.Count; }
+
+        /// <summary>
+        /// Starting point of the path.
+        /// </summary>
+        public Coord Start
+        {
+            get
+            {
+                if (inOriginalOrder)
+                    return _steps[_steps.Count - 1];
+
+                return _steps[0];
+            }
+        }
+
+        /// <summary>
+        /// The coordinates that constitute the path (in order), NOT including the starting point.
+        /// These are the coordinates something might walk along to follow a path.
+        /// </summary>
+        public IEnumerable<Coord> Steps
+        {
+            get
+            {
+                if (inOriginalOrder)
+                {
+                    for (int i = _steps.Count - 2; i >= 0; i--)
+                        yield return _steps[i];
+                }
+                else
+                {
+                    for (int i = 1; i < _steps.Count; i++)
+                        yield return _steps[i];
+                }
+            }
+        }
+
+        /// <summary>
+        /// The coordinates that constitute the path (in order), INCLUDING the starting point.
+        /// </summary>
+        public IEnumerable<Coord> StepsWithStart
+        {
+            get
+            {
+                if (inOriginalOrder)
+                {
+                    for (int i = _steps.Count - 1; i >= 0; i--)
+                        yield return _steps[i];
+                }
+                else
+                {
+                    for (int i = 0; i < _steps.Count; i++)
+                        yield return _steps[i];
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the nth step along the path, where 0 is the step AFTER the starting point.
+        /// </summary>
+        /// <param name="stepNum">
+        /// The (array-like index) of the step to get.
+        /// </param>
+        /// <returns>
+        /// The coordinate consituting the step specified.
+        /// </returns>
+        public Coord GetStep(int stepNum)
+        {
+            if (inOriginalOrder)
+                return _steps[(_steps.Count - 2) - stepNum];
+
+            return _steps[stepNum + 1];
+        }
+
+        /// <summary>
+        /// Gets the nth step along the path, where 0 IS the starting point.
+        /// </summary>
+        /// <param name="stepNum">
+        /// The (array-like index) of the step to get.
+        /// </param>
+        /// <returns>
+        /// The coordinate consituting the step specified.
+        /// </returns>
+        public Coord GetStepWithStart(int stepNum)
+        {
+            if (inOriginalOrder)
+                return _steps[(_steps.Count - 1) - stepNum];
+
+            return _steps[stepNum];
+        }
+
+        /// <summary>
+        /// Reverses the path, in constant time.
+        /// </summary>
+        public void Reverse() => inOriginalOrder = !inOriginalOrder;
+    }
+
+    // Node for AStar, stores all values and integrates with priority queue implementation
+    internal class AStarNode : FastPriorityQueueNode
+    {
+        public readonly Coord Position;
+        public bool Closed;
+
+        // Whether or not the node has been closed
+        public float F;
+
+        // (Partly estimated) distance to end point going thru this node
+        public float G;
+
+        public AStarNode Parent;
+        // (Known) distance from start to this node, by shortest known path
+
+        public AStarNode(Coord position, AStarNode parent = null)
+        {
+            Parent = parent;
+            Position = position;
+            Closed = false;
+            F = G = float.MaxValue;
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GoRogue;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GoRogue;
 
 namespace GoRogue_PerformanceTests
 {

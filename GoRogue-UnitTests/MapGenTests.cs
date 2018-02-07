@@ -11,17 +11,6 @@ namespace GoRogue_UnitTests
     public class MapGenTests
     {
         [TestMethod]
-        public void ManualTestRandomRoomsGen()
-        {
-            var random = new DotNetRandom();
-            var map = new ArrayMap<bool>(30, 30);
-            Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
-
-            displayMap(map);
-            // TODO: Some assert here
-        }
-
-        [TestMethod]
         public void ManualTestCellAutoGen()
         {
             var random = new DotNetRandom();
@@ -31,6 +20,17 @@ namespace GoRogue_UnitTests
             displayMap(map);
 
             // TODO: Asserts
+        }
+
+        [TestMethod]
+        public void ManualTestRandomRoomsGen()
+        {
+            var random = new DotNetRandom();
+            var map = new ArrayMap<bool>(30, 30);
+            Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
+
+            displayMap(map);
+            // TODO: Some assert here
         }
 
         [TestMethod]

@@ -9,13 +9,15 @@ namespace GoRogue.SenseMapping
     public enum SourceType
     {
         /// <summary>
-        /// Performs calculation by pushing values out from the source location.  Source values spread around corners a bit.
+        /// Performs calculation by pushing values out from the source location. Source values spread
+        /// around corners a bit.
         /// </summary>
         RIPPLE,
 
         /// <summary>
-        /// Similar to RIPPLE but with different spread mechanics.  Values spread around edges like smoke or water, but maintains
-        /// a tendency to curl towards the start position as it goes around edges.
+        /// Similar to RIPPLE but with different spread mechanics. Values spread around edges like
+        /// smoke or water, but maintains a tendency to curl towards the start position as it goes
+        /// around edges.
         /// </summary>
         RIPPLE_LOOSE,
 
@@ -30,32 +32,81 @@ namespace GoRogue.SenseMapping
         RIPPLE_VERY_LOOSE,
 
         /// <summary>
-        /// Uses a Shadowcasting algorithm.  All partially resistant grid locations are treated as being fully
-        /// transparent (it's on-off blocking, where 1.0 in the resistance map blocks, and all lower values don't).
-        /// Returns percentage from 1.0 at center of source to 0.0 outside of range of source.
+        /// Uses a Shadowcasting algorithm. All partially resistant grid locations are treated as
+        /// being fully transparent (it's on-off blocking, where 1.0 in the resistance map blocks,
+        /// and all lower values don't). Returns percentage from 1.0 at center of source to 0.0
+        /// outside of range of source.
         /// </summary>
         SHADOW
     };
 
     /// <summary>
-    /// Represents a source location to be used in a SenseMap.  One would typically create these and call SenseMap.AddSenseSource with them, and perhaps
-    /// retain a reference for the sake of moving it around or toggling it on-off.  The player might have one of these that follows it around if SenseMap is being
-    /// used as a lightig map, for instance.  Note that changing values such as Position and Radius after the source is created is possible, however changes will not
-    /// be reflected in any SenseSources using this source until their next Calculate call.
+    /// Represents a source location to be used in a SenseMap. One would typically create these and
+    /// call SenseMap.AddSenseSource with them, and perhaps retain a reference for the sake of moving
+    /// it around or toggling it on-off. The player might have one of these that follows it around if
+    /// SenseMap is being used as a lightig map, for instance. Note that changing values such as
+    /// Position and Radius after the source is created is possible, however changes will not be
+    /// reflected in any SenseSources using this source until their next Calculate call.
     /// </summary>
     public class SenseSource
     {
+        // Local calculation arrays, internal so SenseMap can easily copy them.
+        internal double[,] light;
+
+        internal bool[,] nearLight;
+
+        internal IMapView<double> resMap;
+
+        private int _radius;
+
+        private int size;
+
+        /// <summary>
+        /// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
+        /// used for calculations.
+        /// </summary>
+        /// <param name="type">
+        /// The spread mechanics to use for source values.
+        /// </param>
+        /// <param name="position">
+        /// The position on a map that the source is located at.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius of the source -- this is the maximum distance the source values will
+        /// emanate, provided the area is completely unobstructed.
+        /// </param>
+        /// <param name="radiusStrategy">
+        /// The radius type/calculation strategy (circle, diamond, square, etc) the source should use.
+        /// </param>
+        public SenseSource(SourceType type, Coord position, int radius, Radius radiusStrategy)
+        {
+            Type = type;
+            Position = position;
+            Radius = radius; // Arrays are initialized by this setter
+            RadiusStrategy = radiusStrategy;
+
+            resMap = null;
+            Enabled = true;
+        }
+
+        /// <summary>
+        /// Whether or not this source is enabled. If a source is disabled when its SenseMap's
+        /// Calculate function is called, the source does not calculate values and is effectively
+        /// assumed to be "off".
+        /// </summary>
+        public bool Enabled { get; set; }
+
         /// <summary>
         /// The position on a map that the source is located at.
         /// </summary>
         public Coord Position { get; set; }
 
-        private int _radius;
-
         /// <summary>
-        /// The maximum radius of the source -- this is the maximum distance the source values will emanate, provided the area is completely unobstructed.
-        /// Changing this will trigger resizing (re-allocation) of the underlying arrays.  However, data is not copied over -- there is no need to since
-        /// Calculate in SenseMap immediately copies values from local array to its "master" array.
+        /// The maximum radius of the source -- this is the maximum distance the source values will
+        /// emanate, provided the area is completely unobstructed. Changing this will trigger
+        /// resizing (re-allocation) of the underlying arrays. However, data is not copied over --
+        /// there is no need to since Calculate in SenseMap immediately copies values from local
+        /// array to its "master" array.
         /// </summary>
         public int Radius
         {
@@ -82,39 +133,9 @@ namespace GoRogue.SenseMapping
         /// </summary>
         public SourceType Type { get; set; }
 
-        /// <summary>
-        /// Whether or not this source is enabled.  If a source is disabled when its SenseMap's Calculate function is called, the source does not calculate
-        /// values and is effectively assumed to be "off".
-        /// </summary>
-        public bool Enabled { get; set; }
+        // Set from lighting, just so we have a reference.
 
-        // Local calculation arrays, internal so SenseMap can easily copy them.
-        internal double[,] light;
-
-        internal bool[,] nearLight;
-
-        internal IMapView<double> resMap; // Set from lighting, just so we have a reference.
-
-        private int size; // 2 * Radius + 1 -- the width/height dimension of the local arrays.
-
-        /// <summary>
-        /// Constructor.  Takes all initial parameters, and allocates the necessary underlying arrays used for calculations.
-        /// </summary>
-        /// <param name="type">The spread mechanics to use for source values.</param>
-        /// <param name="position">The position on a map that the source is located at.</param>
-        /// <param name="radius">The maximum radius of the source -- this is the maximum distance the source values will emanate, provided the area is completely unobstructed.</param>
-        /// <param name="radiusStrategy">The radius type/calculation strategy (circle, diamond, square, etc) the source should use.</param>
-        public SenseSource(SourceType type, Coord position, int radius, Radius radiusStrategy)
-        {
-            Type = type;
-            Position = position;
-            Radius = radius; // Arrays are initialized by this setter
-            RadiusStrategy = radiusStrategy;
-
-            resMap = null;
-            Enabled = true;
-        }
-
+        // 2 * Radius + 1 -- the width/height dimension of the local arrays.
         internal void calculateLight()
         {
             if (Enabled)
@@ -138,6 +159,28 @@ namespace GoRogue.SenseMapping
                         }
                         break;
                 }
+            }
+        }
+
+        private static int rippleValue(SourceType type)
+        {
+            switch (type)
+            {
+                case SourceType.RIPPLE:
+                    return 2;
+
+                case SourceType.RIPPLE_LOOSE:
+                    return 3;
+
+                case SourceType.RIPPLE_TIGHT:
+                    return 1;
+
+                case SourceType.RIPPLE_VERY_LOOSE:
+                    return 6;
+
+                default:
+                    Console.Error.WriteLine("Unrecognized ripple type, defaulting to RIPPLE...");
+                    return rippleValue(SourceType.RIPPLE);
             }
         }
 
@@ -179,63 +222,14 @@ namespace GoRogue.SenseMapping
             }
         }
 
-        private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
+        // Initializes arrays.
+        private void initArrays() // Prep for lighting calculations
         {
-            Distance distanceStrategy = (Distance)RadiusStrategy;
-            int radius = Math.Max(1, Radius);
-            double decay = 1.0 / (radius + 1);
-
-            double newStart = 0;
-            if (start < end)
-                return;
-
-            bool blocked = false;
-            for (int distance = row; distance <= radius && distance < size + size && !blocked; distance++)
-            {
-                int deltaY = -distance;
-                for (int deltaX = -distance; deltaX <= 0; deltaX++)
-                {
-                    int currentX = size / 2 + deltaX * xx + deltaY * xy;
-                    int currentY = size / 2 + deltaX * yx + deltaY * yy;
-                    int gCurrentX = Position.X - Radius + currentX;
-                    int gCurrentY = Position.Y - Radius + currentY;
-                    double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
-                    double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
-
-                    if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < map.Width && gCurrentY < map.Height) || start < rightSlope)
-                        continue;
-
-                    if (end > leftSlope)
-                        break;
-
-                    double deltaRadius = distanceStrategy.DistanceOf(deltaX, deltaY);
-                    if (deltaRadius <= radius)
-                    {
-                        double bright = 1 - decay * deltaRadius;
-                        light[currentX, currentY] = bright;
-                    }
-
-                    if (blocked) // Previous cell was blocked
-                    {
-                        if (map[gCurrentX, gCurrentY] >= 1) // Hit a wall...
-                            newStart = rightSlope;
-                        else
-                        {
-                            blocked = false;
-                            start = newStart;
-                        }
-                    }
-                    else
-                    {
-                        if (map[gCurrentX, gCurrentY] >= 1 && distance < radius) // Wall within FOV
-                        {
-                            blocked = true;
-                            shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);
-                            newStart = rightSlope;
-                        }
-                    }
-                }
-            }
+            Array.Clear(light, 0, light.Length);
+            // Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
+            int center = size / 2;
+            light[center, center] = 1; // source light is center, starts out at 1
+            Array.Clear(nearLight, 0, nearLight.Length);
         }
 
         // TODO: Make these virtual, to allow directional light sources?
@@ -305,35 +299,62 @@ namespace GoRogue.SenseMapping
             return curLight;
         }
 
-        // Initializes arrays.
-        private void initArrays() // Prep for lighting calculations
+        private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
         {
-            Array.Clear(light, 0, light.Length);
-            // Any times 2 is even, plus one is odd.  rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
-            int center = size / 2;
-            light[center, center] = 1; // source light is center, starts out at 1
-            Array.Clear(nearLight, 0, nearLight.Length);
-        }
+            Distance distanceStrategy = (Distance)RadiusStrategy;
+            int radius = Math.Max(1, Radius);
+            double decay = 1.0 / (radius + 1);
 
-        private static int rippleValue(SourceType type)
-        {
-            switch (type)
+            double newStart = 0;
+            if (start < end)
+                return;
+
+            bool blocked = false;
+            for (int distance = row; distance <= radius && distance < size + size && !blocked; distance++)
             {
-                case SourceType.RIPPLE:
-                    return 2;
+                int deltaY = -distance;
+                for (int deltaX = -distance; deltaX <= 0; deltaX++)
+                {
+                    int currentX = size / 2 + deltaX * xx + deltaY * xy;
+                    int currentY = size / 2 + deltaX * yx + deltaY * yy;
+                    int gCurrentX = Position.X - Radius + currentX;
+                    int gCurrentY = Position.Y - Radius + currentY;
+                    double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
+                    double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                case SourceType.RIPPLE_LOOSE:
-                    return 3;
+                    if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < map.Width && gCurrentY < map.Height) || start < rightSlope)
+                        continue;
 
-                case SourceType.RIPPLE_TIGHT:
-                    return 1;
+                    if (end > leftSlope)
+                        break;
 
-                case SourceType.RIPPLE_VERY_LOOSE:
-                    return 6;
+                    double deltaRadius = distanceStrategy.DistanceOf(deltaX, deltaY);
+                    if (deltaRadius <= radius)
+                    {
+                        double bright = 1 - decay * deltaRadius;
+                        light[currentX, currentY] = bright;
+                    }
 
-                default:
-                    Console.Error.WriteLine("Unrecognized ripple type, defaulting to RIPPLE...");
-                    return rippleValue(SourceType.RIPPLE);
+                    if (blocked) // Previous cell was blocked
+                    {
+                        if (map[gCurrentX, gCurrentY] >= 1) // Hit a wall...
+                            newStart = rightSlope;
+                        else
+                        {
+                            blocked = false;
+                            start = newStart;
+                        }
+                    }
+                    else
+                    {
+                        if (map[gCurrentX, gCurrentY] >= 1 && distance < radius) // Wall within FOV
+                        {
+                            blocked = true;
+                            shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);
+                            newStart = rightSlope;
+                        }
+                    }
+                }
             }
         }
     }

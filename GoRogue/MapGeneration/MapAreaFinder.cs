@@ -8,10 +8,10 @@ namespace GoRogue.MapGeneration
     /// area of the map.
     /// </summary>
     /// <remarks>
-    /// The class takes in an IMapView, where a value of true for a given position indicates it should
-    /// be part of a map area, and false indicates it should not be part of any map area.  In a classic
-    /// roguelike dungeon example, this might be a walkability map where floors return a value of true and walls
-    /// a value of false.
+    /// The class takes in an IMapView, where a value of true for a given position indicates it
+    /// should be part of a map area, and false indicates it should not be part of any map area. In a
+    /// classic roguelike dungeon example, this might be a walkability map where floors return a
+    /// value of true and walls a value of false.
     /// </remarks>
     public class MapAreaFinder
     {
@@ -20,8 +20,38 @@ namespace GoRogue.MapGeneration
         /// </summary>
         public IMapView<bool> Map;
 
-        private bool[,] visited;
         private Distance _distanceCalc;
+        private Direction.NeighborsGetter neighbors;
+        private bool[,] visited;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">
+        /// IMapView indicating which cells should be considered part of a map area and which should not.
+        /// </param>
+        /// <param name="shape">
+        /// The shape of a radius - determines calculation used to define distance, and thus what are
+        /// considered neighbors.
+        /// </param>
+        public MapAreaFinder(IMapView<bool> map, Radius shape)
+            : this(map, (Distance)shape) { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">
+        /// IMapView indicating which cells should be considered part of a map area and which should not.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The calculation used to determine distance.
+        /// </param>
+        public MapAreaFinder(IMapView<bool> map, Distance distanceCalc)
+        {
+            Map = map;
+            visited = null;
+            DistanceCalc = distanceCalc;
+        }
 
         /// <summary>
         /// The calculation used to determine distance between two points.
@@ -37,32 +67,47 @@ namespace GoRogue.MapGeneration
             }
         }
 
-        private Direction.NeighborsGetter neighbors;
+        /// <summary>
+        /// Convenience function that creates an MapAreaFinder and returns the result of that
+        /// MapAreaFinder's MapAreas function. Intended to be used for cases in which the area finder
+        /// will never be re-used.
+        /// </summary>
+        /// <param name="map">
+        /// IMapView indicating which cells should be considered part of a map area and which should not.
+        /// </param>
+        /// <param name="shape">
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of each (unique) map area.
+        /// </returns>
+        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Radius shape) => MapAreasFor(map, (Distance)shape);
 
         /// <summary>
-        /// Constructor.
+        /// Convenience function that creates an MapAreaFinder and returns the result of that
+        /// MapAreaFinder's MapAreas function. Intended to be used for cases in which the area finder
+        /// will never be re-used.
         /// </summary>
-        /// <param name="map">IMapView indicating which cells should be considered part of a map area and which should not.</param>
-        /// <param name="shape">The shape of a radius - determines calculation used to define distance, and thus what are considered neighbors.</param>
-        public MapAreaFinder(IMapView<bool> map, Radius shape)
-            : this(map, (Distance)shape) { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="map">IMapView indicating which cells should be considered part of a map area and which should not.</param>
-        /// <param name="distanceCalc">The calculation used to determine distance.</param>
-        public MapAreaFinder(IMapView<bool> map, Distance distanceCalc)
+        /// <param name="map">
+        /// IMapView indicating which cells should be considered part of a map area and which should not.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The calculation used to determine distance.
+        /// </param>
+        /// <returns>
+        /// An IEnumerable of each (unique) map area.
+        /// </returns>
+        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Distance distanceCalc)
         {
-            Map = map;
-            visited = null;
-            DistanceCalc = distanceCalc;
+            var areaFinder = new MapAreaFinder(map, distanceCalc);
+            return areaFinder.MapAreas();
         }
 
         /// <summary>
         /// Calculates the list of map areas, returning each unique map area.
         /// </summary>
-        /// <returns>An IEnumerable of each (unique) map area.</returns>
+        /// <returns>
+        /// An IEnumerable of each (unique) map area.
+        /// </returns>
         public IEnumerable<MapArea> MapAreas()
         {
             if (visited == null || visited.GetLength(1) != Map.Height || visited.GetLength(0) != Map.Width)
@@ -108,28 +153,6 @@ namespace GoRogue.MapGeneration
             }
 
             return area;
-        }
-
-        /// <summary>
-        /// Convenience function that creates an MapAreaFinder and returns the result of that MapAreaFinder's MapAreas function.
-        /// Intended to be used for cases in which the area finder will never be re-used.
-        /// </summary>
-        /// <param name="map">IMapView indicating which cells should be considered part of a map area and which should not.</param>
-        /// <param name="shape"></param>
-        /// <returns>An IEnumerable of each (unique) map area.</returns>
-        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Radius shape) => MapAreasFor(map, (Distance)shape);
-
-        /// <summary>
-        /// Convenience function that creates an MapAreaFinder and returns the result of that MapAreaFinder's MapAreas function.
-        /// Intended to be used for cases in which the area finder will never be re-used.
-        /// </summary>
-        /// <param name="map">IMapView indicating which cells should be considered part of a map area and which should not.</param>
-        /// <param name="distanceCalc">The calculation used to determine distance.</param>
-        /// <returns>An IEnumerable of each (unique) map area.</returns>
-        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Distance distanceCalc)
-        {
-            var areaFinder = new MapAreaFinder(map, distanceCalc);
-            return areaFinder.MapAreas();
         }
     }
 }

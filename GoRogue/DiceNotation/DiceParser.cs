@@ -21,9 +21,15 @@ namespace GoRogue.DiceNotation
         /// <summary>
         /// Create a new DiceExpression by parsing the specified string.
         /// </summary>
-        /// <param name="expression">A dice notation string expression. Ex. 3d6+3.</param>
-        /// <returns>A DiceExpression parsed from the specified string.</returns>
-        /// <exception cref="ArgumentException">Invalid dice notation supplied.</exception>
+        /// <param name="expression">
+        /// A dice notation string expression. Ex. 3d6+3.
+        /// </param>
+        /// <returns>
+        /// A DiceExpression parsed from the specified string.
+        /// </returns>
+        /// <exception cref="ArgumentException">
+        /// Invalid dice notation supplied.
+        /// </exception>
         public DiceExpression Parse(string expression)
         {
             if (string.IsNullOrEmpty(expression))
@@ -106,10 +112,10 @@ namespace GoRogue.DiceNotation
 
         private struct ParseValues
         {
-            public string Constant;
-            public int Scalar;
-            public int Multiplicity;
             public int? Choose;
+            public string Constant;
+            public int Multiplicity;
+            public int Scalar;
 
             public ParseValues Init()
             {

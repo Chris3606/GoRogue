@@ -5,69 +5,32 @@ using System.Linq;
 namespace GoRogue
 {
     /// <summary>
-    /// Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).  Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only
-    /// shadowcasting.  This is more conducive to the typical use case for FOV.  It can calculate the FOV with a finite or infinite max radius, and can use a
-    /// variety of radius types, as specified in Radius class (all the same ones that SenseMap supports).  It also supports both 360 degree FOV and a "field of view" (cone)
-    /// FOV.  One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map
-    /// grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible).
+    /// Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).
+    /// Effectively a simplified, slightly faster interface compared to SenseMap, that supports only
+    /// a single source and only shadowcasting. This is more conducive to the typical use case for
+    /// FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of
+    /// radius types, as specified in Radius class (all the same ones that SenseMap supports). It
+    /// also supports both 360 degree FOV and a "field of view" (cone) FOV. One may access this class
+    /// like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where
+    /// 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the
+    /// cooresponding coordinate is outside of FOV entirely (not visible).
     /// </summary>
     public class FOV : IMapView<double>
     {
         private HashSet<Coord> currentFOV;
+        private double[,] light;
         private HashSet<Coord> previousFOV;
 
         private IMapView<double> resMap;
-        private double[,] light; // Last light cached
-
-        /// <summary>
-        /// Width of FOV map.
-        /// </summary>
-        public int Width { get => resMap.Width; }
-
-        /// <summary>
-        /// Height of FOV map.
-        /// </summary>
-        public int Height { get => resMap.Height; }
-
-        /// <summary>
-        /// Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the given location.
-        /// </summary>
-        /// <param name="position">The position to retrieve the FOV value for.</param>
-        /// <returns>The FOV value at the given location.</returns>
-        public double this[Coord position]
-        {
-            get { return light[position.X, position.Y]; }
-        }
-
-        /// <summary>
-        /// Array-style indexer that takes an x and y value as the index, and retrieves the FOV value at the given location.
-        /// </summary>
-        /// <param name="x">The x-coordinate of the position to retrieve the FOV value for.</param>
-        /// <param name="y">The y-coordinate of the position to retrieve the FOV value for.</param>
-        /// <returns>The FOV value at (x, y).</returns>
-        public double this[int x, int y]
-        {
-            get { return light[x, y]; }
-        }
-
-        /// <summary>
-        /// IEnumerable of only positions currently in FOV.
-        /// </summary>
-        public IEnumerable<Coord> CurrentFOV { get => currentFOV; }
-        /// <summary>
-        /// IEnumerable of positions that are in FOV as of the most current Calculate call, but were NOT in FOV afterthe previous time Calculate was called.
-        /// </summary>
-        public IEnumerable<Coord> NewlySeen { get => currentFOV.Where(pos => !previousFOV.Contains(pos)); }
-        /// <summary>
-        /// IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but WERE in FOV after the previous time Calculate was called.
-        /// </summary>
-        public IEnumerable<Coord> NewlyUnseen { get => previousFOV.Where(pos => !currentFOV.Contains(pos)); }
+        // Last light cached
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resMap">The resistance map to use to calculate FOV.  Values of 1.0 are considered blocking to FOV,
-        /// while other (lower) values are considered to be not blocking.</param>
+        /// <param name="resMap">
+        /// The resistance map to use to calculate FOV. Values of 1.0 are considered blocking to FOV,
+        /// while other (lower) values are considered to be not blocking.
+        /// </param>
         public FOV(IMapView<double> resMap)
         {
             this.resMap = resMap;
@@ -76,33 +39,115 @@ namespace GoRogue
             previousFOV = new HashSet<Coord>();
         }
 
-        // Since the values aren't compile-time constants, we have to do it this way (with overloads, vs. default values).
         /// <summary>
-        /// Calculates FOV, given an origin point of (startX, startY), with a given radius.  If no radius is specified, simply calculates with a radius of
-        /// maximum integer value, which is effectively infinite.  Radius is computed as a circle around the source (type Radius.CIRCLE).
+        /// IEnumerable of only positions currently in FOV.
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.  If no radius is specified, it is
-        /// effectively infinite.</param>
+        public IEnumerable<Coord> CurrentFOV { get => currentFOV; }
+
+        /// <summary>
+        /// Height of FOV map.
+        /// </summary>
+        public int Height { get => resMap.Height; }
+
+        /// <summary>
+        /// IEnumerable of positions that are in FOV as of the most current Calculate call, but were
+        /// NOT in FOV afterthe previous time Calculate was called.
+        /// </summary>
+        public IEnumerable<Coord> NewlySeen { get => currentFOV.Where(pos => !previousFOV.Contains(pos)); }
+
+        /// <summary>
+        /// IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but
+        /// WERE in FOV after the previous time Calculate was called.
+        /// </summary>
+        public IEnumerable<Coord> NewlyUnseen { get => previousFOV.Where(pos => !currentFOV.Contains(pos)); }
+
+        /// <summary>
+        /// Width of FOV map.
+        /// </summary>
+        public int Width { get => resMap.Width; }
+
+        /// <summary>
+        /// Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the
+        /// given location.
+        /// </summary>
+        /// <param name="position">
+        /// The position to retrieve the FOV value for.
+        /// </param>
+        /// <returns>
+        /// The FOV value at the given location.
+        /// </returns>
+        public double this[Coord position]
+        {
+            get { return light[position.X, position.Y]; }
+        }
+
+        /// <summary>
+        /// Array-style indexer that takes an x and y value as the index, and retrieves the FOV value
+        /// at the given location.
+        /// </summary>
+        /// <param name="x">
+        /// The x-coordinate of the position to retrieve the FOV value for.
+        /// </param>
+        /// <param name="y">
+        /// The y-coordinate of the position to retrieve the FOV value for.
+        /// </param>
+        /// <returns>
+        /// The FOV value at (x, y).
+        /// </returns>
+        public double this[int x, int y]
+        {
+            get { return light[x, y]; }
+        }
+
+        // Since the values aren't compile-time constants, we have to do it this way (with overloads,
+        // vs. default values).
+        /// <summary>
+        /// Calculates FOV, given an origin point of (startX, startY), with a given radius. If no
+        /// radius is specified, simply calculates with a radius of maximum integer value, which is
+        /// effectively infinite. Radius is computed as a circle around the source (type Radius.CIRCLE).
+        /// </summary>
+        /// <param name="startX">
+        /// Coordinate x-value of the origin.
+        /// </param>
+        /// <param name="startY">
+        /// Coordinate y-value of the origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// If no radius is specified, it is effectively infinite.
+        /// </param>
         public void Calculate(int startX, int startY, int radius = int.MaxValue) => Calculate(startX, startY, radius, Radius.CIRCLE);
 
         /// <summary>
-        /// Calculates FOV, given an origin point, with a given radius.  If no radius is specified, simply calculates with a radius of
-        /// maximum integer value, which is effectively infinite.  Radius is computed as a circle around the source (type Radius.CIRCLE).
+        /// Calculates FOV, given an origin point, with a given radius. If no radius is specified,
+        /// simply calculates with a radius of maximum integer value, which is effectively infinite.
+        /// Radius is computed as a circle around the source (type Radius.CIRCLE).
         /// </summary>
-        /// <param name="start">Position of FOV origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.  If no radius is specified, it is
-        /// effectively infinite.</param>
+        /// <param name="start">
+        /// Position of FOV origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// If no radius is specified, it is effectively infinite.
+        /// </param>
         public void Calculate(Coord start, int radius = int.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
 
         /// <summary>
-        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and
+        /// radius calculation strategy.
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
-        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
+        /// <param name="startX">
+        /// Coordinate x-value of the origin.
+        /// </param>
+        /// <param name="startY">
+        /// Coordinate y-value of the origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// </param>
+        /// <param name="radiusTechnique">
+        /// The type of the radius (square, circle, diamond, etc.)
+        /// </param>
         public void Calculate(int startX, int startY, int radius, Radius radiusTechnique)
         {
             var distanceTechnique = (Distance)radiusTechnique;
@@ -126,21 +171,43 @@ namespace GoRogue
         /// <summary>
         /// Calculates FOV, given an origin point, with the given radius and radius calculation strategy.
         /// </summary>
-        /// <param name="start">Coordinate of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
-        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
+        /// <param name="start">
+        /// Coordinate of the origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// </param>
+        /// <param name="radiusTechnique">
+        /// The type of the radius (square, circle, diamond, etc.)
+        /// </param>
         public void Calculate(Coord start, int radius, Radius radiusTechnique) => Calculate(start.X, start.Y, radius, radiusTechnique);
 
         /// <summary>
-        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming FOV is restricted to the area
-        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular FOV radius will be actually in FOV.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and
+        /// radius calculation strategy, and assuming FOV is restricted to the area specified by the
+        /// given angle and span, in degrees. Provided that span is greater than 0, a conical section
+        /// of the regular FOV radius will be actually in FOV.
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
-        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
-        /// <param name="angle">The angle in degrees that specifies the outermost center point of the FOV cone.  0 degrees points right.</param>
-        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2 degrees are included on either side of the span line.</param>
+        /// <param name="startX">
+        /// Coordinate x-value of the origin.
+        /// </param>
+        /// <param name="startY">
+        /// Coordinate y-value of the origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// </param>
+        /// <param name="radiusTechnique">
+        /// The type of the radius (square, circle, diamond, etc.)
+        /// </param>
+        /// <param name="angle">
+        /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
+        /// points right.
+        /// </param>
+        /// <param name="span">
+        /// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
+        /// degrees are included on either side of the span line.
+        /// </param>
         public void Calculate(int startX, int startY, int radius, Radius radiusTechnique, double angle, double span)
         {
             var distanceTechnique = (Distance)radiusTechnique;
@@ -157,7 +224,9 @@ namespace GoRogue
             light[startX, startY] = 1; // Starting space full light
             currentFOV.Add(Coord.Get(startX, startY));
 
-            // TODO: There may be a glitch here with too large radius, may have to set to longest possible straight-line Manhattan dist for map intsead.  No falloff issue -- shadow is on/off.
+            // TODO: There may be a glitch here with too large radius, may have to set to longest
+            //       possible straight-line Manhattan dist for map intsead. No falloff issue --
+            //       shadow is on/off.
             int ctr = 0;
             bool started = false;
             foreach (Direction d in Direction.DiagonalsCounterClockwise(Direction.UP_RIGHT))
@@ -179,23 +248,29 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and radius calculation strategy, and assuming FOV is restricted to the area
-        /// specified by the given angle and span, in degrees. Provided that span is greater than 0, a conical section of the regular FOV radius will be actually in FOV.
+        /// Calculates FOV, given an origin point of (startX, startY), with the given radius and
+        /// radius calculation strategy, and assuming FOV is restricted to the area specified by the
+        /// given angle and span, in degrees. Provided that span is greater than 0, a conical section
+        /// of the regular FOV radius will be actually in FOV.
         /// </summary>
-        /// <param name="start">Coordinate of the origin.</param>
-        /// <param name="radius">The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</param>
-        /// <param name="radiusTechnique">The type of the radius (square, circle, diamond, etc.)</param>
-        /// <param name="angle">The angle in degrees that specifies the outermost center point of the FOV cone.  0 degrees points right.</param>
-        /// <param name="span">The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2 degrees are included on either side of the span line.</param>
+        /// <param name="start">
+        /// Coordinate of the origin.
+        /// </param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        /// </param>
+        /// <param name="radiusTechnique">
+        /// The type of the radius (square, circle, diamond, etc.)
+        /// </param>
+        /// <param name="angle">
+        /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
+        /// points right.
+        /// </param>
+        /// <param name="span">
+        /// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
+        /// degrees are included on either side of the span line.
+        /// </param>
         public void Calculate(Coord start, int radius, Radius radiusTechnique, double angle, double span) => Calculate(start.X, start.Y, radius, radiusTechnique, angle, span);
-
-        private void initializeLightMap()
-        {
-            if (light == null || light.GetLength(0) != resMap.Width || light.GetLength(1) != resMap.Height)
-                light = new double[resMap.Width, resMap.Height];
-            else
-                Array.Clear(light, 0, light.Length);
-        }
 
         // Returns value because its recursive
         private static double[,] shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
@@ -231,7 +306,6 @@ namespace GoRogue
                         lightMap[currentX, currentY] = bright;
                         if (bright > 0.0)
                             fovSet.Add(Coord.Get(currentX, currentY));
-
                     }
 
                     if (blocked) // Previous cell was blocked
@@ -315,6 +389,14 @@ namespace GoRogue
                 }
             }
             return lightMap;
+        }
+
+        private void initializeLightMap()
+        {
+            if (light == null || light.GetLength(0) != resMap.Width || light.GetLength(1) != resMap.Height)
+                light = new double[resMap.Width, resMap.Height];
+            else
+                Array.Clear(light, 0, light.Length);
         }
     }
 }

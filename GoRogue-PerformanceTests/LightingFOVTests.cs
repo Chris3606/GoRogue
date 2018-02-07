@@ -8,20 +8,6 @@ namespace GoRogue_PerformanceTests
 {
     public static class LightingFOVTests
     {
-        public static long MemorySingleLightSourceLighting(int mapWidth, int mapHeight, int lightRadius)
-        {
-            SenseMap fov;
-            long startingMem, endingMem;
-            ArrayMap<double> map = rectangleMap(mapWidth, mapHeight);
-
-            // Start mem test
-            startingMem = GC.GetTotalMemory(true);
-            fov = new SenseMap(map);
-            fov.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(5, 6), lightRadius, Radius.CIRCLE));
-            endingMem = GC.GetTotalMemory(true);
-            return endingMem - startingMem;
-        }
-
         public static long MemorySingleLightSourceFOV(int mapWidth, int mapHeight, int lightRadius)
         {
             FOV fov;
@@ -37,14 +23,35 @@ namespace GoRogue_PerformanceTests
             return endingMem - startingMem;
         }
 
-        public static TimeSpan TimeForSingleLightSourceLighting(int mapWidth, int mapHeight, SourceType sourceType, int lightRadius, Radius radiusStrat, int iterations)
+        public static long MemorySingleLightSourceLighting(int mapWidth, int mapHeight, int lightRadius)
+        {
+            SenseMap fov;
+            long startingMem, endingMem;
+            ArrayMap<double> map = rectangleMap(mapWidth, mapHeight);
+
+            // Start mem test
+            startingMem = GC.GetTotalMemory(true);
+            fov = new SenseMap(map);
+            fov.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(5, 6), lightRadius, Radius.CIRCLE));
+            endingMem = GC.GetTotalMemory(true);
+            return endingMem - startingMem;
+        }
+
+        public static TimeSpan TimeForNSourcesLighting(int mapWidth, int mapHeight, int lightRadius, int iterations, int lights)
         {
             Stopwatch s = new Stopwatch();
             var map = rectangleMap(mapWidth, mapHeight);
             var fov = new SenseMap(map);
-            fov.AddSenseSource(new SenseSource(sourceType, Coord.Get(5, 6), lightRadius, radiusStrat));
-            // Warm-up for processor, stabilizes cache performance.  Also makes it a fair test against fov since we have to
-            // do this to force the first memory allocation
+
+            Coord c = Coord.Get(5, 6);
+            for (int i = 0; i < lights; i++)
+            {
+                fov.AddSenseSource(new SenseSource(SourceType.RIPPLE, c, lightRadius, Radius.CIRCLE));
+                c += 5;
+            }
+
+            // Warm-up for processor, stabilizes cache performance. Also makes it a fair test against
+            // fov since we have to do this to force the first memory allocation
             fov.Calculate();
 
             // Calculate and test
@@ -63,8 +70,8 @@ namespace GoRogue_PerformanceTests
             Stopwatch s = new Stopwatch();
             var map = rectangleMap(mapWidth, mapHeight);
             var fov = new FOV(map);
-            // Warm-up for processor, stabilizes cache performance.  Also makes it a fair test against fov since we have to
-            // do this to force the first memory allocation
+            // Warm-up for processor, stabilizes cache performance. Also makes it a fair test against
+            // fov since we have to do this to force the first memory allocation
             fov.Calculate(5, 6, lightRadius, Radius.CIRCLE);
 
             // Calculate and test
@@ -78,21 +85,14 @@ namespace GoRogue_PerformanceTests
             return s.Elapsed;
         }
 
-        public static TimeSpan TimeForNSourcesLighting(int mapWidth, int mapHeight, int lightRadius, int iterations, int lights)
+        public static TimeSpan TimeForSingleLightSourceLighting(int mapWidth, int mapHeight, SourceType sourceType, int lightRadius, Radius radiusStrat, int iterations)
         {
             Stopwatch s = new Stopwatch();
             var map = rectangleMap(mapWidth, mapHeight);
             var fov = new SenseMap(map);
-
-            Coord c = Coord.Get(5, 6);
-            for (int i = 0; i < lights; i++)
-            {
-                fov.AddSenseSource(new SenseSource(SourceType.RIPPLE, c, lightRadius, Radius.CIRCLE));
-                c += 5;
-            }
-
-            // Warm-up for processor, stabilizes cache performance.  Also makes it a fair test against fov since we have to
-            // do this to force the first memory allocation
+            fov.AddSenseSource(new SenseSource(sourceType, Coord.Get(5, 6), lightRadius, radiusStrat));
+            // Warm-up for processor, stabilizes cache performance. Also makes it a fair test against
+            // fov since we have to do this to force the first memory allocation
             fov.Calculate();
 
             // Calculate and test
@@ -104,20 +104,6 @@ namespace GoRogue_PerformanceTests
             s.Stop();
 
             return s.Elapsed;
-        }
-
-        private static ArrayMap<double> rectangleMap(int mapWidth, int mapHeight)
-        {
-            var map = new ArrayMap<double>(mapWidth, mapHeight);
-            for (int i = 0; i < map.Width; i++)
-                for (int j = 0; j < map.Height; j++)
-                {
-                    if (i == 0 || j == 0 || i == map.Width - 1 || j == map.Height - 1)
-                        map[i, j] = 1.0;
-                    else
-                        map[i, j] = 0.0;
-                }
-            return map;
         }
 
         // Simulation of function that should probably actually be in FOV
@@ -134,6 +120,20 @@ namespace GoRogue_PerformanceTests
             });
 
             return map1;
+        }
+
+        private static ArrayMap<double> rectangleMap(int mapWidth, int mapHeight)
+        {
+            var map = new ArrayMap<double>(mapWidth, mapHeight);
+            for (int i = 0; i < map.Width; i++)
+                for (int j = 0; j < map.Height; j++)
+                {
+                    if (i == 0 || j == 0 || i == map.Width - 1 || j == map.Height - 1)
+                        map[i, j] = 1.0;
+                    else
+                        map[i, j] = 0.0;
+                }
+            return map;
         }
     }
 }

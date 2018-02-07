@@ -17,7 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\GoRogue.xml</DocumentationFile>
     <OutputPath>bin\Release\</OutputPath>
-    <NoWarn>1701;1702;1705;RECS0145;</NoWarn>
+    <NoWarn>1701;1702;1705;RECS0145;RECS0129</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

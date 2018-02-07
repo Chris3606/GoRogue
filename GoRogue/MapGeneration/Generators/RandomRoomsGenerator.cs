@@ -4,31 +4,51 @@ using System.Collections.Generic;
 namespace GoRogue.MapGeneration.Generators
 {
     /// <summary>
-    /// Generates a map by attempting to randomly place the specified number of rooms, ranging in size between the specified
-    /// min size and max size, trying the specified number of times to position a room without overlap before discarding the room entirely.
-    /// The given map will have a value of false set to all non-passable tiles, and true set to all passable ones.
+    /// Generates a map by attempting to randomly place the specified number of rooms, ranging in
+    /// size between the specified min size and max size, trying the specified number of times to
+    /// position a room without overlap before discarding the room entirely. The given map will have
+    /// a value of false set to all non-passable tiles, and true set to all passable ones.
     /// </summary>
     /// <remarks>
-    /// This algorithm may set the cell value for each position more than once.  As such, it is highly recommended to use
-    /// and ArrayMap as the ISettableMapView given.  Any translation/interpretation of the result can
-    /// be performed after the ArrayMap is set.  Attempting to do any expensive allocation/operations
-    /// in the setting functions of a SettableMapOf given to the algorithm may result in performance deterioration.
+    /// This algorithm may set the cell value for each position more than once. As such, it is highly
+    /// recommended to use and ArrayMap as the ISettableMapView given. Any translation/interpretation
+    /// of the result can be performed after the ArrayMap is set. Attempting to do any expensive
+    /// allocation/operations in the setting functions of a SettableMapOf given to the algorithm may
+    /// result in performance deterioration.
     /// </remarks>
     static public class RandomRoomsGenerator
     {
         /// <summary>
-        /// Generates the map.  After this function has been completed, non-passable tiles will have a value of false
-        /// in the ISettableMapView given, and passable ones will have a value of true.
+        /// Generates the map. After this function has been completed, non-passable tiles will have a
+        /// value of false in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
-        /// <param name="map">The map to set values to.</param>
-        /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
-        /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
-        /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
-        /// <param name="retriesPerRoom">If a room is placed in a way that overlaps with another room, the maximum number of times the position will be regenerated to try to position it properly, before simply discarding the room.</param>
-        /// <param name="rng">The RNG to use to place rooms and determine room size.  If null is specified, the default RNG is used.</param>
-        /// <param name="connectUsingDefault">Whether or not to ensure the rooms generated are connected.  If this is true, OrderedMapAreaConnector.Connect will
-        /// be used to connect the areas in a random order, using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which will connect
-        /// the center of room to each other.</param>
+        /// <param name="map">
+        /// The map to set values to.
+        /// </param>
+        /// <param name="maxRooms">
+        /// The maximum number of rooms to attempt to place on the map.
+        /// </param>
+        /// <param name="roomMinSize">
+        /// The minimum size in width and height of each room.
+        /// </param>
+        /// <param name="roomMaxSize">
+        /// The maximum size in width and height of each room.
+        /// </param>
+        /// <param name="retriesPerRoom">
+        /// If a room is placed in a way that overlaps with another room, the maximum number of times
+        /// the position will be regenerated to try to position it properly, before simply discarding
+        /// the room.
+        /// </param>
+        /// <param name="rng">
+        /// The RNG to use to place rooms and determine room size. If null is specified, the default
+        /// RNG is used.
+        /// </param>
+        /// <param name="connectUsingDefault">
+        /// Whether or not to ensure the rooms generated are connected. If this is true,
+        /// OrderedMapAreaConnector.Connect will be used to connect the areas in a random order,
+        /// using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which
+        /// will connect the center of room to each other.
+        /// </param>
         static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng = null,
                                      bool connectUsingDefault = true)
         {
@@ -73,8 +93,8 @@ namespace GoRogue.MapGeneration.Generators
                 Connectors.OrderedMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
         }
 
-        // TODO: ConnectRooms function that can connect the rooms properly, in method specific
-        // to this generation type.
+        // TODO: ConnectRooms function that can connect the rooms properly, in method specific to
+        // this generation type.
 
         static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
         {

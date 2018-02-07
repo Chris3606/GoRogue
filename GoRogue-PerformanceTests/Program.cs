@@ -6,23 +6,14 @@ namespace GoRogue_PerformanceTests
 {
     public class Program
     {
-        private static readonly int MAP_WIDTH = 250;
-        private static readonly int MAP_HEIGHT = 250;
-        private static readonly SourceType SOURCE_TYPE = SourceType.RIPPLE;
-        private static readonly int LIGHT_RADIUS = 10;
-        private static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;
         private static readonly int ITERATIONS_FOR_TIMING = 100;
-
-        private static readonly Coord LINE_START = Coord.Get(3, 5);
+        private static readonly int LIGHT_RADIUS = 10;
         private static readonly Coord LINE_END = Coord.Get(29, 23);
-
-        private static void TestLightingNSource(int sources)
-        {
-            var timeMultipleLighting = LightingFOVTests.TimeForNSourcesLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS,
-                                                                                ITERATIONS_FOR_TIMING, sources);
-            Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING}, calc fov's, {sources} sources, {MAP_WIDTH}x{MAP_HEIGHT} map, Radius {LIGHT_RADIUS}:");
-            Console.WriteLine($"\tLighting: {timeMultipleLighting.ToString()}");
-        }
+        private static readonly Coord LINE_START = Coord.Get(3, 5);
+        private static readonly int MAP_HEIGHT = 250;
+        private static readonly int MAP_WIDTH = 250;
+        private static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;
+        private static readonly SourceType SOURCE_TYPE = SourceType.RIPPLE;
 
         private static void Main()
         {
@@ -42,7 +33,6 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
             //Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
 
-            
             Console.WriteLine();
             TestLightingNSource(2);
 
@@ -66,13 +56,20 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tBresenham: {timeBres}");
             Console.WriteLine($"\tDDA      : {timeDDA}");
             Console.WriteLine($"\tOrtho    : {timeOrtho}");
-            
-            
+
             var timeAStar = PathingTests.TimeForAStar(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
             Console.WriteLine($"\tAStar: {timeAStar}");
             */
+        }
+
+        private static void TestLightingNSource(int sources)
+        {
+            var timeMultipleLighting = LightingFOVTests.TimeForNSourcesLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS,
+                                                                                ITERATIONS_FOR_TIMING, sources);
+            Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING}, calc fov's, {sources} sources, {MAP_WIDTH}x{MAP_HEIGHT} map, Radius {LIGHT_RADIUS}:");
+            Console.WriteLine($"\tLighting: {timeMultipleLighting.ToString()}");
         }
     }
 }

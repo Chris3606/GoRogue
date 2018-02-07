@@ -4,13 +4,8 @@
     // Test class only - likely to change in the future.
     public class DijkstraMap
     {
-        private IMapView<bool> walkabilityMap;
         private int[,] dijkstraMap;
-
-        public int this[int x, int y]
-        {
-            get => dijkstraMap[x, y];
-        }
+        private IMapView<bool> walkabilityMap;
 
         public DijkstraMap(IMapView<bool> walkabilityMap)
         {
@@ -22,14 +17,14 @@
                     dijkstraMap[x, y] = int.MaxValue - 1;
         }
 
+        public int this[int x, int y]
+        {
+            get => dijkstraMap[x, y];
+        }
+
         public void AddGoal(int x, int y)
         {
             dijkstraMap[x, y] = 0;
-        }
-
-        public void RemoveGoal(int x, int y)
-        {
-            dijkstraMap[x, y] = int.MaxValue - 1;
         }
 
         public void Calculate()
@@ -71,7 +66,12 @@
                     }
             }
         }
+
+        public void RemoveGoal(int x, int y)
+        {
+            dijkstraMap[x, y] = int.MaxValue - 1;
+        }
     }
+
     /// @endcond
-    
 }

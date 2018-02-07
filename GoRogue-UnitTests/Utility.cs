@@ -1,7 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using GoRogue;
+using System;
 using System.Collections.Generic;
-using GoRogue;
+using System.IO;
 using CA = EMK.Cartography;
 
 namespace GoRogue_UnitTests
@@ -19,7 +19,6 @@ namespace GoRogue_UnitTests
             foreach (var point in points)
                 array[point.X, point.Y] = path;
 
-
             for (int y = 0; y < map.Height; y++)
             {
                 for (int x = 0; x < map.Width; x++)
@@ -28,10 +27,18 @@ namespace GoRogue_UnitTests
             }
         }
 
-        public static IEnumerable<Coord> ToCoords(IEnumerable<CA.Node> points)
+        public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
         {
-            foreach (var p in points)
-                yield return Coord.Get((int)p.X, (int)p.Y);
+            using (var reader = new StreamReader(filePath))
+            {
+                for (int row = 0; row < map.Height; row++)
+                {
+                    string line = reader.ReadLine();
+
+                    for (int col = 0; col < map.Width; col++)
+                        map[col, row] = (line[col] == wallChar) ? false : true;
+                }
+            }
         }
 
         public static Tuple<Coord, Coord> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
@@ -61,20 +68,10 @@ namespace GoRogue_UnitTests
             return new Tuple<Coord, Coord>(start, end);
         }
 
-        public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
+        public static IEnumerable<Coord> ToCoords(IEnumerable<CA.Node> points)
         {
-            using (var reader = new StreamReader(filePath))
-            {
-                for (int row = 0; row < map.Height; row++)
-                {
-                    string line = reader.ReadLine();
-
-                    for (int col = 0; col < map.Width; col++)
-                        map[col, row] = (line[col] == wallChar) ? false : true;
-                }
-            }
-
-
+            foreach (var p in points)
+                yield return Coord.Get((int)p.X, (int)p.Y);
         }
     }
 }
