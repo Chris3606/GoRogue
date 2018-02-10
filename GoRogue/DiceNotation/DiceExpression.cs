@@ -21,7 +21,6 @@ namespace GoRogue.DiceNotation
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
 
-            Console.WriteLine($"Term to evaluate: {termToEvaluate}");
             return termToEvaluate.GetResult(rng);
         }
     }

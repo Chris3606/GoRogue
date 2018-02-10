@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DiceNotationTests.cs" />
     <Compile Include="LightingFOVTests.cs" />
     <Compile Include="LineTests.cs" />
     <Compile Include="PathingTests.cs" />
