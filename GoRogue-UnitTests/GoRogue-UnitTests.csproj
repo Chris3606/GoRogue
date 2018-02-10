@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CoordTests.cs" />
+    <Compile Include="DiceNotationTests.cs" />
     <Compile Include="DirectionTests.cs" />
     <Compile Include="EffectTests.cs" />
     <Compile Include="FOVLightingTest.cs" />
