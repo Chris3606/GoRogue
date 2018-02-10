@@ -57,7 +57,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void SingleDiceAddMultiply()
         {
-            var expr = Dice.Parse("1d6+2*3");
+            var expr = Dice.Parse("3*(1d6+2)");
             assertMinMaxValues(expr, 9, 24);
             assertReturnedInRange(expr, 9, 24);
         }
@@ -65,23 +65,31 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void MultipleDiceAddMultiply()
         {
-            var expr = Dice.Parse("2d6+2*3");
+            var expr = Dice.Parse("(2d6+2)*3");
             assertMinMaxValues(expr, 12, 42);
             assertReturnedInRange(expr, 12, 42);
         }
 
-
-        private void assertMinMaxValues(DiceExpression expr, int min, int max)
+        [TestMethod]
+        public void AdvancedDice()
         {
-            Assert.AreEqual(min, expr.MinRoll().Value);
-            Assert.AreEqual(max, expr.MaxRoll().Value);
+            var expr = Dice.Parse("1d(1d12+4)+3");
+            assertMinMaxValues(expr, 4, 19);
+            assertReturnedInRange(expr, 4, 19);
         }
 
-        private void assertReturnedInRange(DiceExpression expr, int min, int max)
+
+        private void assertMinMaxValues(IDiceExpression expr, int min, int max)
+        {
+            Assert.AreEqual(min, expr.MinRoll());
+            Assert.AreEqual(max, expr.MaxRoll());
+        }
+
+        private void assertReturnedInRange(IDiceExpression expr, int min, int max)
         {
             for (int i = 0; i < 100; i++)
             {
-                int result = expr.Roll().Value;
+                int result = expr.Roll();
 
                 bool inRange = result >= min && result <= max;
                 Assert.AreEqual(true, inRange);

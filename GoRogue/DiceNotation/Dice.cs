@@ -9,7 +9,7 @@ namespace GoRogue.DiceNotation
     /// </summary>
     public static class Dice
     {
-        private static readonly IDiceParser diceParser = new DiceParser();
+        private static readonly IParser diceParser = new Parser();
 
         /// <summary>
         /// Parse the specified string into a DiceExpression. If you intend to roll a given
@@ -24,7 +24,7 @@ namespace GoRogue.DiceNotation
         /// <returns>
         /// A DiceExpression representing the parsed string.
         /// </returns>
-        public static DiceExpression Parse(string expression) => diceParser.Parse(expression);
+        public static IDiceExpression Parse(string expression) => diceParser.Parse(expression);
 
         /// <summary>
         /// A convenience method for parsing a dice expression from a string, rolling the dice with a
@@ -49,7 +49,7 @@ namespace GoRogue.DiceNotation
         public static int Roll(string expression, IRandom random = null)
         {
             if (random == null) random = SingletonRandom.DefaultRNG;
-            return Parse(expression).Roll(random).Value;
+            return Parse(expression).Roll(random);
         }
     }
 }
