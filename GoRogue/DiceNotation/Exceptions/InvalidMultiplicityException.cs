@@ -8,15 +8,14 @@ namespace GoRogue.DiceNotation.Exceptions
     public class InvalidMultiplicityException : Exception
     {
         /// <summary>
-        /// Initializes a new instance of the InvalidMultiplicityException class.
+        /// Constructor
         /// </summary>
         public InvalidMultiplicityException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the InvalidMultiplicityException class with a specified
-        /// error message.
+        /// Constructor, taking a specified error message.
         /// </summary>
         /// <param name="message">
         /// The error message that explains the reason for the exception.
@@ -27,8 +26,7 @@ namespace GoRogue.DiceNotation.Exceptions
         }
 
         /// <summary>
-        /// Initializes a new instance of the InvalidMultiplicityException class with a specified
-        /// error message and a reference to the inner exception that is the cause of this exception.
+        /// Constructor, taking a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">
         /// The error message that explains the reason for the exception.

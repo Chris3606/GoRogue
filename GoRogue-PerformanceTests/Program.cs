@@ -71,15 +71,21 @@ namespace GoRogue_PerformanceTests
             var timeForMediumDiceExpr = DiceNotationTests.TimeForDiceExpression("2d6+3", ITERATIONS_FOR_TIMING * 10);
             var timeForLargeDiceExpr = DiceNotationTests.TimeForDiceExpression("1d(1d12+4)+3", ITERATIONS_FOR_TIMING * 10);
 
+            var timeForKeepRoll = DiceNotationTests.TimeForDiceRoll("5d6k2+3", ITERATIONS_FOR_TIMING * 10);
+            var timeForKeepExpr = DiceNotationTests.TimeForDiceExpression("5d6k2+3", ITERATIONS_FOR_TIMING * 10);
+
             Console.WriteLine();
-            Console.WriteLine($"Time to roll 1d6, 2d6+3, and 1d(1d12+4)+3 dice {ITERATIONS_FOR_TIMING * 10} times: ");
+            Console.WriteLine($"Time to roll 1d6, 2d6+3, and 5d6k2+3, 1d(1d12+4)+3 dice {ITERATIONS_FOR_TIMING * 10} times: ");
             Console.WriteLine("\tRoll Method:");
             Console.WriteLine($"\t\t1d6         : {timeForSmallDiceRoll}");
             Console.WriteLine($"\t\t2d6+3       : {timeForMediumDiceRoll}");
+            Console.WriteLine($"\t\t5d6k2+3      : {timeForKeepRoll}");
             Console.WriteLine($"\t\t1d(1d12+4)+3: {timeForLargeDiceRoll}");
+
             Console.WriteLine("\tParse Method:");
             Console.WriteLine($"\t\t1d6         : {timeForSmallDiceExpr}");
             Console.WriteLine($"\t\t2d6+3       : {timeForMediumDiceExpr}");
+            Console.WriteLine($"\t\t5d6k2+3      : {timeForKeepExpr}");
             Console.WriteLine($"\t\t1d(1d12+4)+3: {timeForLargeDiceExpr}");
             Console.WriteLine();
         }

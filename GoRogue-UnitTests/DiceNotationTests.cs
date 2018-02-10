@@ -71,6 +71,14 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void KeepDiceAdd()
+        {
+            var expr = Dice.Parse("5d6k2+3");
+            assertMinMaxValues(expr, 5, 15);
+            assertReturnedInRange(expr, 5, 15);
+        }
+
+        [TestMethod]
         public void AdvancedDice()
         {
             var expr = Dice.Parse("1d(1d12+4)+3");

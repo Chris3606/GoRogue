@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using GoRogue.DiceNotation.Terms;
 
 namespace GoRogue.DiceNotation
 {
+    /// <summary>
+    /// Default class for parsing a string representing a dice expression into an IDiceExpression instance.
+    /// </summary>
     public class Parser : IParser
     {
+        // Defines operator priorities
         private static Dictionary<char, int> operatorPrecedence = new Dictionary<char, int>()
         {
             ['('] = 1,
@@ -18,9 +20,18 @@ namespace GoRogue.DiceNotation
             ['d'] = 5,
         };
 
-        public IDiceExpression Parse(string diceNotation)
+        /// <summary>
+        /// Parses the dice expression spcified into an IDiceExpression instance.
+        /// </summary>
+        /// <remarks>
+        /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the degree necessary to produce
+        /// the appropriate chain of ITerm instances.
+        /// </remarks>
+        /// <param name="expression">The expression to parse.</param>
+        /// <returns>An IDiceExpression representing the given expression, that can "roll" the expression on command.</returns>
+        public IDiceExpression Parse(string expression)
         {
-            var postfix = toPostfix(diceNotation);
+            var postfix = toPostfix(expression);
             var lastTerm = evaluatePostfix(postfix);
 
             return new DiceExpression(lastTerm);

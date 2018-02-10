@@ -3,53 +3,41 @@
 namespace GoRogue.DiceNotation
 {
     /// <summary>
-    /// This is likely the class you really care about the most. Basically just a static class that
-    /// has methods for tieing all of the DiceNotation classes together. It has functions for parsing
-    /// an expression, rolling based upon a given expression, and others.
+    /// The most important DiceNotation class -- contains functions to roll dice, and to retrieve an IDiceExpression
+    /// instance representing a given expression (useful and more efficient if a dice roll is used multiple times).
     /// </summary>
     public static class Dice
     {
-        private static readonly IParser diceParser = new Parser();
+        /// <summary>
+        /// The parser that will be used to parse dice expressions given to the Parse and Roll functions.
+        /// </summary>
+        public static IParser DiceParser = new Parser();
 
         /// <summary>
-        /// Parse the specified string into a DiceExpression. If you intend to roll a given
-        /// expression multiple times, chances are you want to use this once to get yourself a
-        /// DiceExpression instance representing that particular roll, and store that somewhere.
-        /// Then, use the Roll function in DiceExpression to roll it. This is faster as it means the
-        /// slow part (using regex to take apart the expression) happens only once.
+        /// Uses the IParser specified in the DiceParser variable to produce a IDiceExpression instance representing the given dice expression.
         /// </summary>
-        /// <param name="expression">
-        /// The string dice expression to parse, in dice notation format. Ex. 3d6+4.
-        /// </param>
-        /// <returns>
-        /// A DiceExpression representing the parsed string.
-        /// </returns>
-        public static IDiceExpression Parse(string expression) => diceParser.Parse(expression);
+        /// <remarks>
+        /// Because parsing can add significant time, retrieving an IDiceExpression instance instead of using the Roll function can be useful
+        /// if a given expression will be rolled multiple times.
+        /// </remarks>
+        /// <param name="expression">The string dice expression to parse.</param>
+        /// <returns>An IDiceExpression instance representing the parsed string.</returns>
+        public static IDiceExpression Parse(string expression) => DiceParser.Parse(expression);
 
         /// <summary>
-        /// A convenience method for parsing a dice expression from a string, rolling the dice with a
-        /// given IRandom instance (or the default RNG if null is specified), and returning the
-        /// total. If you need to do a roll only once, this method or its overload would be the one
-        /// to use. If you will be repeating the roll, particularly if you are repeating it multiple
-        /// times and care about speed, it is probably best to instead use the Parse function,
-        /// retrieve a DiceExpression, and then use its roll function. This prevents the regex
-        /// pattern from being matched against more than once (which is relatively expensive compared
-        /// to the other operations).
+        /// Uses the IParser specified in the DiceParser variable to parse the given dice expression, roll it, and return the result.
         /// </summary>
-        /// <param name="expression">
-        /// The string dice expression to parse. Ex. 3d6+4.
-        /// </param>
-        /// <param name="random">
-        /// IRandom RNG to use to perform the Roll.
-        /// </param>
-        /// <returns>
-        /// An integer representing the sum of the dice rolled, including constants and scalars in
-        /// the expression.
-        /// </returns>
+        /// <remarks>
+        /// While more convenient, parsing is computationally more expensive than evaluation.  If a dice expression will be rolled many times, it is more
+        /// efficient to use the Parse method once, and use the resulting IDiceExpression instance to roll the expression each time it is needed. 
+        /// </remarks>
+        /// <param name="expression">The string dice expression to parse.</param>
+        /// <param name="random">RNG to use to perform the roll.  If null is specified, the default RNG is used.</param>
+        /// <returns>The result of evaluating the dice expression given.</returns>
         public static int Roll(string expression, IRandom random = null)
         {
             if (random == null) random = SingletonRandom.DefaultRNG;
-            return Parse(expression).Roll(random);
+            return DiceParser.Parse(expression).Roll(random);
         }
     }
 }
