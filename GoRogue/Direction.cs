@@ -4,6 +4,50 @@ using System.Collections.Generic;
 namespace GoRogue
 {
     /// <summary>
+    /// Enum representing types. Useful for easy mapping of radius types to a primitive type (for
+    /// cases like a switch statement).
+    /// </summary>
+    public enum DirectionType
+    {
+        /// <summary>
+        /// Type for Direction.UP.
+        /// </summary>
+        UP,
+        /// <summary>
+        /// Type for Direction.UP_RIGHT.
+        /// </summary>
+        UP_RIGHT,
+        /// <summary>
+        /// Type for Direction.RIGHT.
+        /// </summary>
+        RIGHT,
+        /// <summary>
+        /// Type for Direction.DOWN_RIGHT.
+        /// </summary>
+        DOWN_RIGHT,
+        /// <summary>
+        /// Type for Direction.DOWN.
+        /// </summary>
+        DOWN,
+        /// <summary>
+        /// Type for Direction.DOWN_LEFT.
+        /// </summary>
+        DOWN_LEFT,
+        /// <summary>
+        /// Type for Direction.LEFT.
+        /// </summary>
+        LEFT,
+        /// <summary>
+        /// Type for Direction.UP_LEFT.
+        /// </summary>
+        UP_LEFT,
+        /// <summary>
+        /// Type for Direction.NONE.
+        /// </summary>
+        NONE
+    };
+
+    /// <summary>
     /// Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy
     /// for that direction, at unit scale.
     /// </summary>
@@ -28,7 +72,10 @@ namespace GoRogue
 
         private static bool initYInc;
         private static int yMult;
-        private DirectionType type;
+        /// <summary>
+        /// Enum type corresponding to Direction being represented.
+        /// </summary>
+        public DirectionType Type { get; private set; }
 
         static Direction()
         {
@@ -44,7 +91,7 @@ namespace GoRogue
         {
             DeltaX = dx;
             DeltaY = dy;
-            this.type = type;
+            this.Type = type;
         }
 
         /// <summary>
@@ -55,9 +102,6 @@ namespace GoRogue
         /// IEnumerable of Directions.
         /// </returns>
         public delegate IEnumerable<Direction> NeighborsGetter();
-
-        private enum DirectionType
-        { UP, UP_RIGHT, RIGHT, DOWN_RIGHT, DOWN, DOWN_LEFT, LEFT, UP_LEFT, NONE };
 
         /// <summary>
         /// Down direction.
@@ -233,7 +277,7 @@ namespace GoRogue
             if (startingPoint == NONE)
                 startingPoint = UP;
 
-            if ((int)startingPoint.type % 2 == 1)
+            if ((int)startingPoint.Type % 2 == 1)
                 startingPoint++; // Make it a cardinal
 
             yield return startingPoint;
@@ -273,7 +317,7 @@ namespace GoRogue
             if (startingPoint == NONE)
                 startingPoint = UP;
 
-            if ((int)startingPoint.type % 2 == 1)
+            if ((int)startingPoint.Type % 2 == 1)
                 startingPoint--; // Make it a cardinal
 
             yield return startingPoint;
@@ -313,7 +357,7 @@ namespace GoRogue
             if (startingPoint == NONE)
                 startingPoint = UP_RIGHT;
 
-            if ((int)startingPoint.type % 2 == 0)
+            if ((int)startingPoint.Type % 2 == 0)
                 startingPoint++; // Make it a diagonal
 
             yield return startingPoint;
@@ -353,7 +397,7 @@ namespace GoRogue
             if (startingPoint == NONE)
                 startingPoint = UP_LEFT;
 
-            if ((int)startingPoint.type % 2 == 0)
+            if ((int)startingPoint.Type % 2 == 0)
                 startingPoint--; // Make it a diagonal
 
             yield return startingPoint;
@@ -578,7 +622,7 @@ namespace GoRogue
         /// The direction i directions counterclockwise of d, if i is positive, or clockwise of d if
         /// i is negative. NONE is returned if NONE was added to.
         /// </returns>
-        public static Direction operator -(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.type - i, 8)];
+        public static Direction operator -(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type - i, 8)];
 
         /// <summary>
         /// -- operator (decrement). Returns the direction directly counterclockwise of the original
@@ -590,7 +634,7 @@ namespace GoRogue
         /// <returns>
         /// The direction directly counterclockwise of d, or NONE if none was decremented.
         /// </returns>
-        public static Direction operator --(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.type - 1, 8)];
+        public static Direction operator --(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type - 1, 8)];
 
         /// <summary>
         /// + operator. Returns the direction i directions clockwise of the given direction if i is
@@ -607,7 +651,7 @@ namespace GoRogue
         /// The direction i directions clockwise of d, if i is positive, or counterclockwise of d if
         /// i is negative. NONE is returned if NONE was added to.
         /// </returns>
-        public static Direction operator +(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.type + i, 8)];
+        public static Direction operator +(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + i, 8)];
 
         /// <summary>
         /// ++ operator (increment). Returns the direction directly clockwise of the original
@@ -619,7 +663,7 @@ namespace GoRogue
         /// <returns>
         /// The direction directly clockwise of d, or NONE if none is incremented.
         /// </returns>
-        public static Direction operator ++(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.type + 1, 8)];
+        public static Direction operator ++(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + 1, 8)];
 
         /// <summary>
         /// Returns outward facing directions (everything except NONE). Similar to clockwise just not
@@ -648,7 +692,7 @@ namespace GoRogue
         /// </returns>
         public override string ToString()
         {
-            return writeVals[(int)type];
+            return writeVals[(int)Type];
         }
     }
 }

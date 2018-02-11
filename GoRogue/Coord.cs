@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
     /// <summary>
     /// 2d coordinate class. You cannot create instances of this class using a constructor --
-    /// instead, use the Get function to create instances.
+    /// instead, use the Get function to create instances.  Also provides numerous static functions
+    /// to deal with grid/Coord-related math, operations, etc.
     /// </summary>
     /// <remarks>
     /// If you want the coordinate (1, 2), use Coord.Get(1, 2), and it returns you a Coord instance.
@@ -336,8 +338,122 @@ namespace GoRogue
         /// </returns>
         public static int ToYValue(int index, int rowCount) => index / rowCount;
 
+        public static IEnumerable<Coord> Neighbors(Coord startingLocation)
+        {
+            yield return startingLocation + Direction.UP;
+            yield return startingLocation + Direction.DOWN;
+            yield return startingLocation + Direction.LEFT;
+            yield return startingLocation + Direction.RIGHT;
+            yield return startingLocation + Direction.UP_LEFT;
+            yield return startingLocation + Direction.UP_RIGHT;
+            yield return startingLocation + Direction.DOWN_LEFT;
+            yield return startingLocation + Direction.DOWN_RIGHT;
+        }
+
+        public static IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == null)
+                startingDirection = Direction.UP;
+
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP;
+
+            for (int i = 1; i <= 8; i++)
+            {
+                yield return startingLocation + startingDirection;
+                startingDirection++;
+            }
+        }
+
+        public static IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == null)
+                startingDirection = Direction.UP;
+
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP;
+
+            for (int i = 1; i <= 8; i++)
+            {
+                yield return startingLocation + startingDirection;
+                startingDirection--;
+            }
+        }
+
+        public static IEnumerable<Coord> CardinalNeighbors(Coord startingLocation)
+        {
+            yield return startingLocation + Direction.UP;
+            yield return startingLocation + Direction.DOWN;
+            yield return startingLocation + Direction.LEFT;
+            yield return startingLocation + Direction.RIGHT;
+        }
+
+        public static IEnumerable<Coord> CardinalNeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP;
+
+            if ((int)startingDirection.Type % 2 == 1)
+                startingDirection++; // Make it a cardinal
+
+            yield return startingLocation + startingDirection;
+            yield return startingLocation + (startingDirection + 2);
+            yield return startingLocation + (startingDirection + 4);
+            yield return startingLocation + (startingDirection + 6);
+        }
+
+        public static IEnumerable<Coord> CardinalNeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP;
+
+            if ((int)startingDirection.Type % 2 == 1)
+                startingDirection--; // Make it a cardinal
+
+            yield return startingLocation + startingDirection;
+            yield return startingLocation + (startingDirection - 2);
+            yield return startingLocation + (startingDirection - 4);
+            yield return startingLocation + (startingDirection - 6);
+        }
+
+        public static IEnumerable<Coord> DiagonalNeighbors(Coord startingLocation)
+        {
+            yield return startingLocation + Direction.UP_LEFT;
+            yield return startingLocation + Direction.UP_RIGHT;
+            yield return startingLocation + Direction.DOWN_LEFT;
+            yield return startingLocation + Direction.DOWN_RIGHT;
+        }
+
+        public static IEnumerable<Coord> DiagonalNeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP_RIGHT;
+
+            if ((int)startingDirection.Type % 2 == 0)
+                startingDirection++; // Make it a diagonal
+
+            yield return startingLocation + startingDirection;
+            yield return startingLocation + (startingDirection + 2);
+            yield return startingLocation + (startingDirection + 4);
+            yield return startingLocation + (startingDirection + 6);
+        }
+
+        public static IEnumerable<Coord> DiagonalNeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
+        {
+            if (startingDirection == Direction.NONE)
+                startingDirection = Direction.UP_LEFT;
+
+            if ((int)startingDirection.Type % 2 == 0)
+                startingDirection--; // Make it a diagonal
+
+            yield return startingLocation + startingDirection;
+            yield return startingLocation + (startingDirection - 2);
+            yield return startingLocation + (startingDirection - 4);
+            yield return startingLocation + (startingDirection - 6);
+        }
+
         /// <summary>
-        /// Same as operator == in this case; returns false if o is not a Coord.
+        /// Same as operator == in this case; returns false if obj is not a Coord.
         /// </summary>
         /// <param name="obj">
         /// The object to compare the current Coord to.
