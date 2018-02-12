@@ -5,5 +5,6 @@ var searchData=
   ['sensesource',['SenseSource',['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a15e1de7d632f9f414c887e214da60da1',1,'GoRogue::SenseMapping::SenseSource']]],
   ['shortestpath',['ShortestPath',['../class_go_rogue_1_1_pathing_1_1_a_star.html#a3c127cd827b1b1d9879a81c8e0fccfac',1,'GoRogue.Pathing.AStar.ShortestPath(Coord start, Coord end)'],['../class_go_rogue_1_1_pathing_1_1_a_star.html#a699964b5af85ddc3e4750e8e71c1f8b9',1,'GoRogue.Pathing.AStar.ShortestPath(int startX, int startY, int endX, int endY)']]],
   ['spatialmap',['SpatialMap',['../class_go_rogue_1_1_spatial_map.html#a7e2e8d656d19129cd674aee4500845e0',1,'GoRogue::SpatialMap']]],
+  ['subtractterm',['SubtractTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_subtract_term.html#afbe59dec044cead4b834366a2e5cc731',1,'GoRogue::DiceNotation::Terms::SubtractTerm']]],
   ['swap_3c_20t_20_3e',['Swap&lt; T &gt;',['../class_go_rogue_1_1_utility.html#a9d29b54a8a9a362222bd92297e32c1c3',1,'GoRogue::Utility']]]
 ];

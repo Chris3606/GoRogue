@@ -106,7 +106,7 @@ Properties</h2></td></tr>
 <p>For some complex game mechanics, it may be desireable to control how effects stack, the order they appear in the Effects list of EffectTriggers, etc. In these cases, subclassing <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a> and overriding add/remove can allow this functionality. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TriggerArgs</td><td>The type of argument that must be accepted by the Trigger function of any <a class="el" href="class_go_rogue_1_1_effect.html" title="Class designed to represent any sort of in-game effect. This could be anything from a simple physical...">Effect</a> added to this <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a>.</td></tr>
+    <tr><td class="paramname">TriggerArgs</td><td>The type of argument that must be accepted by the Trigger function of any <a class="el" href="class_go_rogue_1_1_effect.html" title="Class designed to represent any sort of in-game effect. This could be anything from a simple physical...">Effect</a> added to this <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -166,7 +166,7 @@ Properties</h2></td></tr>
 <p>Adds the given effect to this <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a>, provided the effect's duration is not 0. If the effect's duration is 0, an ArgumentException is thrown. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">effect</td><td>The effect to add to this trigger.</td></tr>
+    <tr><td class="paramname">effect</td><td>The effect to add to this trigger. </td></tr>
   </table>
   </dd>
 </dl>
@@ -200,7 +200,7 @@ Properties</h2></td></tr>
 <p>Removes the given effect from this <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">effect</td><td>The effect to remove</td></tr>
+    <tr><td class="paramname">effect</td><td>The effect to remove </td></tr>
   </table>
   </dd>
 </dl>
@@ -228,7 +228,7 @@ Properties</h2></td></tr>
 <p>It is valid to pass null as the argument to this function, if the effects need no actual parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>Argument to pass to the Trigger function of each effect.</td></tr>
+    <tr><td class="paramname">args</td><td>Argument to pass to the Trigger function of each effect. </td></tr>
   </table>
   </dd>
 </dl>

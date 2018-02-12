@@ -121,7 +121,7 @@ Properties</h2></td></tr>
 <p>If the effect is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant physical damage effect), then the duration specified in the constructor should be the static class constant INSTANT. Otherwise, one may specify the duration as a positive integer, or the INFINITE static class constant. See <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a> class documentation for details on durations. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TriggerArgs</td><td>The type of the parameter that will be specified to the Trigger function when called.</td></tr>
+    <tr><td class="paramname">TriggerArgs</td><td>The type of the parameter that will be specified to the Trigger function when called. </td></tr>
   </table>
   </dd>
 </dl>
@@ -163,8 +163,8 @@ Properties</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>Name for the effect</td></tr>
-    <tr><td class="paramname">startingDuration</td><td>Starting duration for the effect.</td></tr>
+    <tr><td class="paramname">name</td><td>Name for the effect </td></tr>
+    <tr><td class="paramname">startingDuration</td><td>Starting duration for the effect. </td></tr>
   </table>
   </dd>
 </dl>
@@ -199,7 +199,7 @@ Properties</h2></td></tr>
 <p>Should be implemented to take whatever action(s) the effect is supposed to accomplish. This function is called automatically when Trigger is called. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">e</td><td>Class containing all arguments OnTrigger requires to function.</td></tr>
+    <tr><td class="paramname">e</td><td>Class containing all arguments OnTrigger requires to function. </td></tr>
   </table>
   </dd>
 </dl>
@@ -222,7 +222,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Yields a string of the effect's name and duration. </p>
-<dl class="section return"><dt>Returns</dt><dd>String representation of the effect.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>String representation of the effect. </dd></dl>
 
 </div>
 </div>
@@ -243,10 +243,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Should be called on instantaneous effects to Trigger the effect. Can also be called manually (not by an <a class="el" href="class_go_rogue_1_1_effect_trigger.html" title="Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically instnaces of this class can simply be created, however a subclass may be required for custom add/remove actions and ordering. ">EffectTrigger</a>) on non-instantaneous effects, however note that it will still cause the duration to decrease. </p>
-<p>Any effect that has INSTANT duration (eg. duration 0) will still have OnTrigger called when Trigger is called.</p>
+<p>Any effect that has INSTANT duration (eg. duration 0) will still have OnTrigger called when Trigger is called. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>Parameters that are passed to OnTrigger. Can be null.</td></tr>
+    <tr><td class="paramname">args</td><td>Parameters that are passed to OnTrigger. Can be null. </td></tr>
   </table>
   </dd>
 </dl>

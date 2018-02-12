@@ -71,7 +71,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a> class represents a constant value in a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. For example, in the expression "2d6+5", the integer "5" is a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>.  
+<p>Base term &ndash; represents a numerical constant.  
  <a href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for GoRogue.DiceNotation.Terms.ConstantTerm:</div>
@@ -79,27 +79,27 @@ Inheritance diagram for GoRogue.DiceNotation.Terms.ConstantTerm:</div>
  <div class="center">
   <img src="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.png" usemap="#GoRogue.DiceNotation.Terms.ConstantTerm_map" alt=""/>
   <map id="GoRogue.DiceNotation.Terms.ConstantTerm_map" name="GoRogue.DiceNotation.Terms.ConstantTerm_map">
-<area href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_dice_expression_term.html" title="Can be implemented to create a new term type for a dice expression. " alt="GoRogue.DiceNotation.Terms.IDiceExpressionTerm" shape="rect" coords="0,0,301,24"/>
+<area href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html" title="Interface for an evaluatable term of a dice expression. " alt="GoRogue.DiceNotation.Terms.ITerm" shape="rect" coords="0,0,259,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aad1ef2077c434566ecb2d1b687e6634b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#aad1ef2077c434566ecb2d1b687e6634b">ConstantTerm</a> (int constant)</td></tr>
-<tr class="memdesc:aad1ef2077c434566ecb2d1b687e6634b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a> class using the specified integer.  <a href="#aad1ef2077c434566ecb2d1b687e6634b">More...</a><br /></td></tr>
-<tr class="separator:aad1ef2077c434566ecb2d1b687e6634b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f18a6cb644f265a9c8b0264061e973a"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html">TermResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#a1f18a6cb644f265a9c8b0264061e973a">GetResults</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> random=null)</td></tr>
-<tr class="memdesc:a1f18a6cb644f265a9c8b0264061e973a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a> for this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>, which will always be a single result with a scalar of 1, and a value of the constant.  <a href="#a1f18a6cb644f265a9c8b0264061e973a">More...</a><br /></td></tr>
-<tr class="separator:a1f18a6cb644f265a9c8b0264061e973a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa141768339edd804c1e2531463c12dda"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#aa141768339edd804c1e2531463c12dda">ConstantTerm</a> (int value)</td></tr>
+<tr class="memdesc:aa141768339edd804c1e2531463c12dda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the numerical constant it represents.  <a href="#aa141768339edd804c1e2531463c12dda">More...</a><br /></td></tr>
+<tr class="separator:aa141768339edd804c1e2531463c12dda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa824ef05e072aadd3be86041ceda0691"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#aa824ef05e072aadd3be86041ceda0691">GetResult</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng)</td></tr>
+<tr class="memdesc:aa824ef05e072aadd3be86041ceda0691"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the numerical constant it represents. RNG is unused.  <a href="#aa824ef05e072aadd3be86041ceda0691">More...</a><br /></td></tr>
+<tr class="separator:aa824ef05e072aadd3be86041ceda0691"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a16b18975019282b475894c425ee27722"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html#a16b18975019282b475894c425ee27722">ToString</a> ()</td></tr>
-<tr class="memdesc:a16b18975019282b475894c425ee27722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string that represents this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>.  <a href="#a16b18975019282b475894c425ee27722">More...</a><br /></td></tr>
+<tr class="memdesc:a16b18975019282b475894c425ee27722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of this constant.  <a href="#a16b18975019282b475894c425ee27722">More...</a><br /></td></tr>
 <tr class="separator:a16b18975019282b475894c425ee27722"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a> class represents a constant value in a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. For example, in the expression "2d6+5", the integer "5" is a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>. </p>
+<div class="textblock"><p>Base term &ndash; represents a numerical constant. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aad1ef2077c434566ecb2d1b687e6634b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad1ef2077c434566ecb2d1b687e6634b">&sect;&nbsp;</a></span>ConstantTerm()</h2>
+<a id="aa141768339edd804c1e2531463c12dda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa141768339edd804c1e2531463c12dda">&sect;&nbsp;</a></span>ConstantTerm()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -108,16 +108,16 @@ Public Member Functions</h2></td></tr>
           <td class="memname">GoRogue.DiceNotation.Terms.ConstantTerm.ConstantTerm </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>constant</em></td><td>)</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructs a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a> class using the specified integer. </p>
+<p>Constructor. Takes the numerical constant it represents. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">constant</td><td>An integer representing the constant term.</td></tr>
+    <tr><td class="paramname">value</td><td>The numerical value this term represents. </td></tr>
   </table>
   </dd>
 </dl>
@@ -125,32 +125,32 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1f18a6cb644f265a9c8b0264061e973a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f18a6cb644f265a9c8b0264061e973a">&sect;&nbsp;</a></span>GetResults()</h2>
+<a id="aa824ef05e072aadd3be86041ceda0691"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa824ef05e072aadd3be86041ceda0691">&sect;&nbsp;</a></span>GetResult()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html">TermResult</a>&gt; GoRogue.DiceNotation.Terms.ConstantTerm.GetResults </td>
+          <td class="memname">int GoRogue.DiceNotation.Terms.ConstantTerm.GetResult </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
-          <td class="paramname"><em>random</em> = <code>null</code></td><td>)</td>
+          <td class="paramname"><em>rng</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a> for this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>, which will always be a single result with a scalar of 1, and a value of the constant. </p>
+<p>Returns the numerical constant it represents. RNG is unused. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">random</td><td>Not used for this implementation of <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_dice_expression_term.html" title="Can be implemented to create a new term type for a dice expression. ">IDiceExpressionTerm</a></td></tr>
+    <tr><td class="paramname">rng</td><td>(Unused) rng. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a>, which will always have a single result with a scalar of 1, and a value of the constant.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The numerical constant this term represents. </dd></dl>
 
-<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_dice_expression_term.html#a27638fb2939e149a10e4dab62c92585c">GoRogue.DiceNotation.Terms.IDiceExpressionTerm</a>.</p>
+<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a32728c3d1cb148e69f04f95054b38258">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
 
 </div>
 </div>
@@ -169,8 +169,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a string that represents this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>A string representing this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_constant_term.html" title="The ConstantTerm class represents a constant value in a DiceExpression. For example, in the expression &quot;2d6+5&quot;, the integer &quot;5&quot; is a ConstantTerm. ">ConstantTerm</a>.</dd></dl>
+<p>Returns a string representation of this constant. </p>
+<dl class="section return"><dt>Returns</dt><dd>The numerical constant being represented, as a string. </dd></dl>
 
 </div>
 </div>

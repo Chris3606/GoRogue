@@ -72,7 +72,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class represents a single "d" term in a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. For example, in the expression "2d6+5", the term "2d6" is a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a>  
+<p>Represents a dice term, eg 1d4 or 2d6.  
  <a href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for GoRogue.DiceNotation.Terms.DiceTerm:</div>
@@ -80,45 +80,45 @@ Inheritance diagram for GoRogue.DiceNotation.Terms.DiceTerm:</div>
  <div class="center">
   <img src="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.png" usemap="#GoRogue.DiceNotation.Terms.DiceTerm_map" alt=""/>
   <map id="GoRogue.DiceNotation.Terms.DiceTerm_map" name="GoRogue.DiceNotation.Terms.DiceTerm_map">
-<area href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_dice_expression_term.html" title="Can be implemented to create a new term type for a dice expression. " alt="GoRogue.DiceNotation.Terms.IDiceExpressionTerm" shape="rect" coords="0,0,301,24"/>
+<area href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html" title="Interface for an evaluatable term of a dice expression. " alt="GoRogue.DiceNotation.Terms.ITerm" shape="rect" coords="0,0,236,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5282d097e152dbe0862e8d8fd12b2c17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a5282d097e152dbe0862e8d8fd12b2c17">DiceTerm</a> (int multiplicity, int sides, int scalar)</td></tr>
-<tr class="memdesc:a5282d097e152dbe0862e8d8fd12b2c17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class using the specified values.  <a href="#a5282d097e152dbe0862e8d8fd12b2c17">More...</a><br /></td></tr>
-<tr class="separator:a5282d097e152dbe0862e8d8fd12b2c17"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a378284dc6689f2c433e6f48db6718057"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a378284dc6689f2c433e6f48db6718057">DiceTerm</a> (int multiplicity, int sides, int choose, int scalar)</td></tr>
-<tr class="memdesc:a378284dc6689f2c433e6f48db6718057"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class using the specified values.  <a href="#a378284dc6689f2c433e6f48db6718057">More...</a><br /></td></tr>
-<tr class="separator:a378284dc6689f2c433e6f48db6718057"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a2e2530c7332b1a1015d59a3fa11621"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html">TermResult</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a4a2e2530c7332b1a1015d59a3fa11621">GetResults</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> random=null)</td></tr>
-<tr class="memdesc:a4a2e2530c7332b1a1015d59a3fa11621"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a> for this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> which will include the random value rolled. If null is specified, the default RNG is used.  <a href="#a4a2e2530c7332b1a1015d59a3fa11621">More...</a><br /></td></tr>
-<tr class="separator:a4a2e2530c7332b1a1015d59a3fa11621"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9376a7bf76578c2bf00a1d0414018788"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a9376a7bf76578c2bf00a1d0414018788">DiceTerm</a> (<a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> multiplicity, <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> sides)</td></tr>
+<tr class="memdesc:a9376a7bf76578c2bf00a1d0414018788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the terms representing multiplicity and number of sides.  <a href="#a9376a7bf76578c2bf00a1d0414018788">More...</a><br /></td></tr>
+<tr class="separator:a9376a7bf76578c2bf00a1d0414018788"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723058e8188c8f9dbadaafa1665de7ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a723058e8188c8f9dbadaafa1665de7ed">GetResult</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng)</td></tr>
+<tr class="memdesc:a723058e8188c8f9dbadaafa1665de7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls the dice, returning the sum.  <a href="#a723058e8188c8f9dbadaafa1665de7ed">More...</a><br /></td></tr>
+<tr class="separator:a723058e8188c8f9dbadaafa1665de7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a457322037ebba87abb812915f30a2f35"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a457322037ebba87abb812915f30a2f35">ToString</a> ()</td></tr>
-<tr class="memdesc:a457322037ebba87abb812915f30a2f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string that represents this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a>  <a href="#a457322037ebba87abb812915f30a2f35">More...</a><br /></td></tr>
+<tr class="memdesc:a457322037ebba87abb812915f30a2f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a parenthesized string representation of the dice term, eg (2d6).  <a href="#a457322037ebba87abb812915f30a2f35">More...</a><br /></td></tr>
 <tr class="separator:a457322037ebba87abb812915f30a2f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:ae77a0c45a83e7d444d4e86862ccf526b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#ae77a0c45a83e7d444d4e86862ccf526b">Multiplicity</a><code> [get]</code></td></tr>
-<tr class="memdesc:ae77a0c45a83e7d444d4e86862ccf526b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of dice.  <a href="#ae77a0c45a83e7d444d4e86862ccf526b">More...</a><br /></td></tr>
-<tr class="separator:ae77a0c45a83e7d444d4e86862ccf526b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d673cc909c965e8f9db4ff5578573c7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a4d673cc909c965e8f9db4ff5578573c7">Sides</a><code> [get]</code></td></tr>
-<tr class="memdesc:a4d673cc909c965e8f9db4ff5578573c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of sides per die.  <a href="#a4d673cc909c965e8f9db4ff5578573c7">More...</a><br /></td></tr>
-<tr class="separator:a4d673cc909c965e8f9db4ff5578573c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3231eed55075a71460c107cced01861a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a3231eed55075a71460c107cced01861a">Scalar</a><code> [get]</code></td></tr>
-<tr class="memdesc:a3231eed55075a71460c107cced01861a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The amount to multiply the final sum of the dice by.  <a href="#a3231eed55075a71460c107cced01861a">More...</a><br /></td></tr>
-<tr class="separator:a3231eed55075a71460c107cced01861a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6047c87be96b6216669eff5faaf819b3"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a6047c87be96b6216669eff5faaf819b3">Choose</a><code> [get]</code></td></tr>
-<tr class="memdesc:a6047c87be96b6216669eff5faaf819b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used in "choose" operations. The highest dice, up to this number of dice, will be summed for the final result. If Choose is 5, the 5 highest dice are taken.  <a href="#a6047c87be96b6216669eff5faaf819b3">More...</a><br /></td></tr>
-<tr class="separator:a6047c87be96b6216669eff5faaf819b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a04a1b2e8f1642101c4982eef2c7c45"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a0a04a1b2e8f1642101c4982eef2c7c45">DiceResults</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0a04a1b2e8f1642101c4982eef2c7c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">An enumerable of integers representing the result of each dice roll. The expression 2d6 rolls 2 dice, and as such this enumerable would be of length 2 and contain the result of each individual die.  <a href="#a0a04a1b2e8f1642101c4982eef2c7c45">More...</a><br /></td></tr>
+<tr class="separator:a0a04a1b2e8f1642101c4982eef2c7c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a969e5a45c3a8daca776e443eee1be098"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a969e5a45c3a8daca776e443eee1be098">LastMultiplicity</a><code> [get]</code></td></tr>
+<tr class="memdesc:a969e5a45c3a8daca776e443eee1be098"><td class="mdescLeft">&#160;</td><td class="mdescRight">The result of evaluating the Multiplicity term that was used during the last call to GetResult.  <a href="#a969e5a45c3a8daca776e443eee1be098">More...</a><br /></td></tr>
+<tr class="separator:a969e5a45c3a8daca776e443eee1be098"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad4377895ef7262636ef66e57f5b363ac"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#ad4377895ef7262636ef66e57f5b363ac">LastSidedness</a><code> [get]</code></td></tr>
+<tr class="memdesc:ad4377895ef7262636ef66e57f5b363ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">The result of evaluating the Sides term that was used during the last call to GetResult.  <a href="#ad4377895ef7262636ef66e57f5b363ac">More...</a><br /></td></tr>
+<tr class="separator:ad4377895ef7262636ef66e57f5b363ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65e608f4bf633683396e3afea36c00ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a65e608f4bf633683396e3afea36c00ba">Multiplicity</a><code> [get]</code></td></tr>
+<tr class="memdesc:a65e608f4bf633683396e3afea36c00ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Term representing the number of dice being rolled &ndash; 2d6 has multiplicity 2.  <a href="#a65e608f4bf633683396e3afea36c00ba">More...</a><br /></td></tr>
+<tr class="separator:a65e608f4bf633683396e3afea36c00ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88c18862ce6600a3b9143b888ab8d1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#aa88c18862ce6600a3b9143b888ab8d1c">Sides</a><code> [get]</code></td></tr>
+<tr class="memdesc:aa88c18862ce6600a3b9143b888ab8d1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Term representing the number of sides the dice have &ndash; 2d6 has 6 sides.  <a href="#aa88c18862ce6600a3b9143b888ab8d1c">More...</a><br /></td></tr>
+<tr class="separator:aa88c18862ce6600a3b9143b888ab8d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class represents a single "d" term in a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. For example, in the expression "2d6+5", the term "2d6" is a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> </p>
+<div class="textblock"><p>Represents a dice term, eg 1d4 or 2d6. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a5282d097e152dbe0862e8d8fd12b2c17"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5282d097e152dbe0862e8d8fd12b2c17">&sect;&nbsp;</a></span>DiceTerm() <span class="overload">[1/2]</span></h2>
+<a id="a9376a7bf76578c2bf00a1d0414018788"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9376a7bf76578c2bf00a1d0414018788">&sect;&nbsp;</a></span>DiceTerm()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,20 +126,14 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">GoRogue.DiceNotation.Terms.DiceTerm.DiceTerm </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a>&#160;</td>
           <td class="paramname"><em>multiplicity</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>sides</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>scalar</em>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a>&#160;</td>
+          <td class="paramname"><em>sides</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -149,63 +143,11 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Construct a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class using the specified values. </p>
+<p>Constructor. Takes the terms representing multiplicity and number of sides. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">multiplicity</td><td>The number of dice.</td></tr>
-    <tr><td class="paramname">sides</td><td>The number of sides per die.</td></tr>
-    <tr><td class="paramname">scalar</td><td>The amount to multiply the final sum of the dice by.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a378284dc6689f2c433e6f48db6718057"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a378284dc6689f2c433e6f48db6718057">&sect;&nbsp;</a></span>DiceTerm() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">GoRogue.DiceNotation.Terms.DiceTerm.DiceTerm </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>multiplicity</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>sides</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>choose</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>scalar</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Construct a new instance of the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> class using the specified values. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">multiplicity</td><td>The number of dice.</td></tr>
-    <tr><td class="paramname">sides</td><td>The number of sides per die.</td></tr>
-    <tr><td class="paramname">choose</td><td>The top valued dice up to this number are kept. If this is equal to multiplicity, keeps all dice.</td></tr>
-    <tr><td class="paramname">scalar</td><td>The amount to multiply the final sum of the dice by.</td></tr>
+    <tr><td class="paramname">multiplicity</td><td>Term representing the number of dice being rolled &ndash; 2d6 has multiplicity 2. </td></tr>
+    <tr><td class="paramname">sides</td><td>Term representing the number of sides the dice have &ndash; 2d6 has 6 sides. </td></tr>
   </table>
   </dd>
 </dl>
@@ -213,32 +155,32 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4a2e2530c7332b1a1015d59a3fa11621"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a2e2530c7332b1a1015d59a3fa11621">&sect;&nbsp;</a></span>GetResults()</h2>
+<a id="a723058e8188c8f9dbadaafa1665de7ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723058e8188c8f9dbadaafa1665de7ed">&sect;&nbsp;</a></span>GetResult()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html">TermResult</a>&gt; GoRogue.DiceNotation.Terms.DiceTerm.GetResults </td>
+          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.GetResult </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
-          <td class="paramname"><em>random</em> = <code>null</code></td><td>)</td>
+          <td class="paramname"><em>rng</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a> for this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> which will include the random value rolled. If null is specified, the default RNG is used. </p>
+<p>Rolls the dice, returning the sum. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">random</td><td>IRandom RNG used to perform the Roll.</td></tr>
+    <tr><td class="paramname">rng</td><td>The RNG to use for rolling, </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_term_result.html" title="Represents a single result of one of the terms in a DiceExpression. ">TermResult</a> which will have one item per die rolled</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The sum of the roll. </dd></dl>
 
-<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_dice_expression_term.html#a27638fb2939e149a10e4dab62c92585c">GoRogue.DiceNotation.Terms.IDiceExpressionTerm</a>.</p>
+<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a32728c3d1cb148e69f04f95054b38258">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
 
 </div>
 </div>
@@ -257,14 +199,14 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a string that represents this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a> </p>
-<dl class="section return"><dt>Returns</dt><dd>A string representing this <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html" title="The DiceTerm class represents a single &quot;d&quot; term in a DiceExpression. For example, in the expression &quot;...">DiceTerm</a></dd></dl>
+<p>Gets a parenthesized string representation of the dice term, eg (2d6). </p>
+<dl class="section return"><dt>Returns</dt><dd>A parenthesized representation of the term. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
-<a id="a6047c87be96b6216669eff5faaf819b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6047c87be96b6216669eff5faaf819b3">&sect;&nbsp;</a></span>Choose</h2>
+<a id="a0a04a1b2e8f1642101c4982eef2c7c45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a04a1b2e8f1642101c4982eef2c7c45">&sect;&nbsp;</a></span>DiceResults</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,31 +215,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.Choose</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Used in "choose" operations. The highest dice, up to this number of dice, will be summed for the final result. If Choose is 5, the 5 highest dice are taken. </p>
-
-</div>
-</div>
-<a id="ae77a0c45a83e7d444d4e86862ccf526b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae77a0c45a83e7d444d4e86862ccf526b">&sect;&nbsp;</a></span>Multiplicity</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.Multiplicity</td>
+          <td class="memname">IEnumerable&lt;int&gt; GoRogue.DiceNotation.Terms.DiceTerm.DiceResults</td>
         </tr>
       </table>
   </td>
@@ -307,12 +225,12 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The number of dice. </p>
+<p>An enumerable of integers representing the result of each dice roll. The expression 2d6 rolls 2 dice, and as such this enumerable would be of length 2 and contain the result of each individual die. </p>
 
 </div>
 </div>
-<a id="a3231eed55075a71460c107cced01861a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3231eed55075a71460c107cced01861a">&sect;&nbsp;</a></span>Scalar</h2>
+<a id="a969e5a45c3a8daca776e443eee1be098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a969e5a45c3a8daca776e443eee1be098">&sect;&nbsp;</a></span>LastMultiplicity</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -321,7 +239,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.Scalar</td>
+          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.LastMultiplicity</td>
         </tr>
       </table>
   </td>
@@ -331,12 +249,12 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The amount to multiply the final sum of the dice by. </p>
+<p>The result of evaluating the Multiplicity term that was used during the last call to GetResult. </p>
 
 </div>
 </div>
-<a id="a4d673cc909c965e8f9db4ff5578573c7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d673cc909c965e8f9db4ff5578573c7">&sect;&nbsp;</a></span>Sides</h2>
+<a id="ad4377895ef7262636ef66e57f5b363ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4377895ef7262636ef66e57f5b363ac">&sect;&nbsp;</a></span>LastSidedness</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -345,7 +263,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.Sides</td>
+          <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.LastSidedness</td>
         </tr>
       </table>
   </td>
@@ -355,7 +273,55 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The number of sides per die. </p>
+<p>The result of evaluating the Sides term that was used during the last call to GetResult. </p>
+
+</div>
+</div>
+<a id="a65e608f4bf633683396e3afea36c00ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65e608f4bf633683396e3afea36c00ba">&sect;&nbsp;</a></span>Multiplicity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> GoRogue.DiceNotation.Terms.DiceTerm.Multiplicity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Term representing the number of dice being rolled &ndash; 2d6 has multiplicity 2. </p>
+
+</div>
+</div>
+<a id="aa88c18862ce6600a3b9143b888ab8d1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa88c18862ce6600a3b9143b888ab8d1c">&sect;&nbsp;</a></span>Sides</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> GoRogue.DiceNotation.Terms.DiceTerm.Sides</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Term representing the number of sides the dice have &ndash; 2d6 has 6 sides. </p>
 
 </div>
 </div>

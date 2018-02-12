@@ -73,13 +73,13 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances.  
+<p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances. Also provides numerous static functions to deal with grid/Coord-related math, operations, etc.  
  <a href="class_go_rogue_1_1_coord.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aee8eebff28c6d73c89629909c0d0aec8"><td class="memItemLeft" align="right" valign="top">override bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#aee8eebff28c6d73c89629909c0d0aec8">Equals</a> (object obj)</td></tr>
-<tr class="memdesc:aee8eebff28c6d73c89629909c0d0aec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as operator == in this case; returns false if o is not a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.  <a href="#aee8eebff28c6d73c89629909c0d0aec8">More...</a><br /></td></tr>
+<tr class="memdesc:aee8eebff28c6d73c89629909c0d0aec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Same as operator == in this case; returns false if obj is not a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.  <a href="#aee8eebff28c6d73c89629909c0d0aec8">More...</a><br /></td></tr>
 <tr class="separator:aee8eebff28c6d73c89629909c0d0aec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="memItemLeft" align="right" valign="top">override int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#acc0cb4f91fb9942e4ecb7216a56ed240">GetHashCode</a> ()</td></tr>
 <tr class="memdesc:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a hash code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. The important parts: it should be fairly fast and it does not collide often. The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime number.  <a href="#acc0cb4f91fb9942e4ecb7216a56ed240">More...</a><br /></td></tr>
@@ -96,6 +96,63 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:adc18a8b7d151eb1ea243fb815757e1b9"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#adc18a8b7d151eb1ea243fb815757e1b9">AllNeighbors</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation)</td></tr>
+<tr class="memdesc:adc18a8b7d151eb1ea243fb815757e1b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, cardinals before diagonals.  <a href="#adc18a8b7d151eb1ea243fb815757e1b9">More...</a><br /></td></tr>
+<tr class="separator:adc18a8b7d151eb1ea243fb815757e1b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24ea92d10a206078748baf2c99891686"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a24ea92d10a206078748baf2c99891686">AllNeighbors</a> (int startingX, int startingY)</td></tr>
+<tr class="memdesc:a24ea92d10a206078748baf2c99891686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, cardinals before diagonals.  <a href="#a24ea92d10a206078748baf2c99891686">More...</a><br /></td></tr>
+<tr class="separator:a24ea92d10a206078748baf2c99891686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa3008c1315af2d5a8cbdd7949c0370f"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#aaa3008c1315af2d5a8cbdd7949c0370f">AllNeighborsClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:aaa3008c1315af2d5a8cbdd7949c0370f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).  <a href="#aaa3008c1315af2d5a8cbdd7949c0370f">More...</a><br /></td></tr>
+<tr class="separator:aaa3008c1315af2d5a8cbdd7949c0370f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93f0ff8ae8581498e441ca7881a66fb7"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a93f0ff8ae8581498e441ca7881a66fb7">AllNeighborsClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a93f0ff8ae8581498e441ca7881a66fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).  <a href="#a93f0ff8ae8581498e441ca7881a66fb7">More...</a><br /></td></tr>
+<tr class="separator:a93f0ff8ae8581498e441ca7881a66fb7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63ecf35dbd3ed322352e394d13e0315"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#af63ecf35dbd3ed322352e394d13e0315">AllNeighborsCounterClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:af63ecf35dbd3ed322352e394d13e0315"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).  <a href="#af63ecf35dbd3ed322352e394d13e0315">More...</a><br /></td></tr>
+<tr class="separator:af63ecf35dbd3ed322352e394d13e0315"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e878e0d330818ffc327e893f38289a6"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1e878e0d330818ffc327e893f38289a6">AllNeighborsCounterClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a1e878e0d330818ffc327e893f38289a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).  <a href="#a1e878e0d330818ffc327e893f38289a6">More...</a><br /></td></tr>
+<tr class="separator:a1e878e0d330818ffc327e893f38289a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33dc72791c581e8231a1637ac9262b62"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a33dc72791c581e8231a1637ac9262b62">BearingOfLine</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> from, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> to)</td></tr>
+<tr class="memdesc:a33dc72791c581e8231a1637ac9262b62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates degree bearing of the line (from =&gt; to), where 0 is the direction <a class="el" href="class_go_rogue_1_1_direction.html#a86c2b981e6a3a6f2d13a190b4beec0cc" title="Up direction. ">Direction.UP</a>.  <a href="#a33dc72791c581e8231a1637ac9262b62">More...</a><br /></td></tr>
+<tr class="separator:a33dc72791c581e8231a1637ac9262b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acccbce826e899402628d28e73b8f6e56"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#acccbce826e899402628d28e73b8f6e56">CardinalNeighbors</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation)</td></tr>
+<tr class="memdesc:acccbce826e899402628d28e73b8f6e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.  <a href="#acccbce826e899402628d28e73b8f6e56">More...</a><br /></td></tr>
+<tr class="separator:acccbce826e899402628d28e73b8f6e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfcb56f960646057780fbf63cdf997ff"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#abfcb56f960646057780fbf63cdf997ff">CardinalNeighbors</a> (int startingX, int startingY)</td></tr>
+<tr class="memdesc:abfcb56f960646057780fbf63cdf997ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.  <a href="#abfcb56f960646057780fbf63cdf997ff">More...</a><br /></td></tr>
+<tr class="separator:abfcb56f960646057780fbf63cdf997ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebec8f932d00e6bdcc9e06dc6ccbced8"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#aebec8f932d00e6bdcc9e06dc6ccbced8">CardinalNeighborsClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:aebec8f932d00e6bdcc9e06dc6ccbced8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor.  <a href="#aebec8f932d00e6bdcc9e06dc6ccbced8">More...</a><br /></td></tr>
+<tr class="separator:aebec8f932d00e6bdcc9e06dc6ccbced8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36d510d3dfb2d29f760203f01b91be1b"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a36d510d3dfb2d29f760203f01b91be1b">CardinalNeighborsClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a36d510d3dfb2d29f760203f01b91be1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor.  <a href="#a36d510d3dfb2d29f760203f01b91be1b">More...</a><br /></td></tr>
+<tr class="separator:a36d510d3dfb2d29f760203f01b91be1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2087fb4e544a66f6423fbf2ec07e9d98"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a2087fb4e544a66f6423fbf2ec07e9d98">CardinalNeighborsCounterClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a2087fb4e544a66f6423fbf2ec07e9d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor.  <a href="#a2087fb4e544a66f6423fbf2ec07e9d98">More...</a><br /></td></tr>
+<tr class="separator:a2087fb4e544a66f6423fbf2ec07e9d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b1385d15bf6e9337139f16d23ddd6c4"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a9b1385d15bf6e9337139f16d23ddd6c4">CardinalNeighborsCounterClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a9b1385d15bf6e9337139f16d23ddd6c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor.  <a href="#a9b1385d15bf6e9337139f16d23ddd6c4">More...</a><br /></td></tr>
+<tr class="separator:a9b1385d15bf6e9337139f16d23ddd6c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a57da954d429fe425077ea6278abe343f"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a57da954d429fe425077ea6278abe343f">DiagonalNeighbors</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation)</td></tr>
+<tr class="memdesc:a57da954d429fe425077ea6278abe343f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.  <a href="#a57da954d429fe425077ea6278abe343f">More...</a><br /></td></tr>
+<tr class="separator:a57da954d429fe425077ea6278abe343f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0364d75d0b8897f505f87473cb4a1502"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a0364d75d0b8897f505f87473cb4a1502">DiagonalNeighbors</a> (int startingX, int startingY)</td></tr>
+<tr class="memdesc:a0364d75d0b8897f505f87473cb4a1502"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.  <a href="#a0364d75d0b8897f505f87473cb4a1502">More...</a><br /></td></tr>
+<tr class="separator:a0364d75d0b8897f505f87473cb4a1502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a54b350e2059752201b95897c7deb6"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a24a54b350e2059752201b95897c7deb6">DiagonalNeighborsClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a24a54b350e2059752201b95897c7deb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default). If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor.  <a href="#a24a54b350e2059752201b95897c7deb6">More...</a><br /></td></tr>
+<tr class="separator:a24a54b350e2059752201b95897c7deb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a862d1eb729e8c084223e6f985496ca35"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a862d1eb729e8c084223e6f985496ca35">DiagonalNeighborsClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a862d1eb729e8c084223e6f985496ca35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default). If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor.  <a href="#a862d1eb729e8c084223e6f985496ca35">More...</a><br /></td></tr>
+<tr class="separator:a862d1eb729e8c084223e6f985496ca35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e97444616c3e46c0731971e2cd09365"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a6e97444616c3e46c0731971e2cd09365">DiagonalNeighborsCounterClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a6e97444616c3e46c0731971e2cd09365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default). If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor.  <a href="#a6e97444616c3e46c0731971e2cd09365">More...</a><br /></td></tr>
+<tr class="separator:a6e97444616c3e46c0731971e2cd09365"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c0b5c1c7a5097f34ed580202b589736"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a5c0b5c1c7a5097f34ed580202b589736">DiagonalNeighborsCounterClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a5c0b5c1c7a5097f34ed580202b589736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default). If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor.  <a href="#a5c0b5c1c7a5097f34ed580202b589736">More...</a><br /></td></tr>
+<tr class="separator:a5c0b5c1c7a5097f34ed580202b589736"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ecee2b7034831c1d701bf40b7af3764"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1ecee2b7034831c1d701bf40b7af3764">EuclideanDistanceMagnitude</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:a1ecee2b7034831c1d701bf40b7af3764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the result of the euclidean distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase.  <a href="#a1ecee2b7034831c1d701bf40b7af3764">More...</a><br /></td></tr>
 <tr class="separator:a1ecee2b7034831c1d701bf40b7af3764"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -105,6 +162,42 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ae2c2d73d6057f120ecd3628428cdea45"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ae2c2d73d6057f120ecd3628428cdea45">Midpoint</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:ae2c2d73d6057f120ecd3628428cdea45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the midpoint between the two points.  <a href="#ae2c2d73d6057f120ecd3628428cdea45">More...</a><br /></td></tr>
 <tr class="separator:ae2c2d73d6057f120ecd3628428cdea45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad81e63c68df26f28d73fd907a9b58338"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ad81e63c68df26f28d73fd907a9b58338">Neighbors</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc)</td></tr>
+<tr class="memdesc:ad81e63c68df26f28d73fd907a9b58338"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with cardinals returned before diagonals).  <a href="#ad81e63c68df26f28d73fd907a9b58338">More...</a><br /></td></tr>
+<tr class="separator:ad81e63c68df26f28d73fd907a9b58338"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9068eeda71406bfc7bfdd8ae4bed4525"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a9068eeda71406bfc7bfdd8ae4bed4525">Neighbors</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc)</td></tr>
+<tr class="memdesc:a9068eeda71406bfc7bfdd8ae4bed4525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with cardinals returned before diagonals).  <a href="#a9068eeda71406bfc7bfdd8ae4bed4525">More...</a><br /></td></tr>
+<tr class="separator:a9068eeda71406bfc7bfdd8ae4bed4525"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e4d84d3ccbade2c89ec9413d9223b64"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1e4d84d3ccbade2c89ec9413d9223b64">Neighbors</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape)</td></tr>
+<tr class="memdesc:a1e4d84d3ccbade2c89ec9413d9223b64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with cardinals returned before diagonals).  <a href="#a1e4d84d3ccbade2c89ec9413d9223b64">More...</a><br /></td></tr>
+<tr class="separator:a1e4d84d3ccbade2c89ec9413d9223b64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8d2f81643b97d137e517fc424dc5023"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#aa8d2f81643b97d137e517fc424dc5023">Neighbors</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape)</td></tr>
+<tr class="memdesc:aa8d2f81643b97d137e517fc424dc5023"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with cardinals returned before diagonals).  <a href="#aa8d2f81643b97d137e517fc424dc5023">More...</a><br /></td></tr>
+<tr class="separator:aa8d2f81643b97d137e517fc424dc5023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91f47d9c4a3b355a5786c137a5c490ce"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a91f47d9c4a3b355a5786c137a5c490ce">NeighborsClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a91f47d9c4a3b355a5786c137a5c490ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used.  <a href="#a91f47d9c4a3b355a5786c137a5c490ce">More...</a><br /></td></tr>
+<tr class="separator:a91f47d9c4a3b355a5786c137a5c490ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87ce525c63d524f75212884a1e5da8be"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a87ce525c63d524f75212884a1e5da8be">NeighborsClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a87ce525c63d524f75212884a1e5da8be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used.  <a href="#a87ce525c63d524f75212884a1e5da8be">More...</a><br /></td></tr>
+<tr class="separator:a87ce525c63d524f75212884a1e5da8be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b28efc6644df5b8a994726e8000653b"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a1b28efc6644df5b8a994726e8000653b">NeighborsClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a1b28efc6644df5b8a994726e8000653b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.  <a href="#a1b28efc6644df5b8a994726e8000653b">More...</a><br /></td></tr>
+<tr class="separator:a1b28efc6644df5b8a994726e8000653b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0d6bcab1a0e8cdcdcb215a0083b743c"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ac0d6bcab1a0e8cdcdcb215a0083b743c">NeighborsClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:ac0d6bcab1a0e8cdcdcb215a0083b743c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.  <a href="#ac0d6bcab1a0e8cdcdcb215a0083b743c">More...</a><br /></td></tr>
+<tr class="separator:ac0d6bcab1a0e8cdcdcb215a0083b743c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b6383d28729f1e19a300046627f44b0"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a2b6383d28729f1e19a300046627f44b0">NeighborsCounterClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a2b6383d28729f1e19a300046627f44b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used.  <a href="#a2b6383d28729f1e19a300046627f44b0">More...</a><br /></td></tr>
+<tr class="separator:a2b6383d28729f1e19a300046627f44b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55407cf6cb7a3226d076b5ce642afac1"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a55407cf6cb7a3226d076b5ce642afac1">NeighborsCounterClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:a55407cf6cb7a3226d076b5ce642afac1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used.  <a href="#a55407cf6cb7a3226d076b5ce642afac1">More...</a><br /></td></tr>
+<tr class="separator:a55407cf6cb7a3226d076b5ce642afac1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3d5c076db6efebe3f1def8640ce316e"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ae3d5c076db6efebe3f1def8640ce316e">NeighborsCounterClockwise</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> startingLocation, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:ae3d5c076db6efebe3f1def8640ce316e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.  <a href="#ae3d5c076db6efebe3f1def8640ce316e">More...</a><br /></td></tr>
+<tr class="separator:ae3d5c076db6efebe3f1def8640ce316e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0875304dcc50a35dbb4c3d8fe9e01b4"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab0875304dcc50a35dbb4c3d8fe9e01b4">NeighborsCounterClockwise</a> (int startingX, int startingY, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape, <a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> startingDirection=null)</td></tr>
+<tr class="memdesc:ab0875304dcc50a35dbb4c3d8fe9e01b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.  <a href="#ab0875304dcc50a35dbb4c3d8fe9e01b4">More...</a><br /></td></tr>
+<tr class="separator:ab0875304dcc50a35dbb4c3d8fe9e01b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b9654ccdac1e2b628b5aeae8f574455"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a3b9654ccdac1e2b628b5aeae8f574455">operator-</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="separator:a3b9654ccdac1e2b628b5aeae8f574455"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab049f69b3505dc4b1328fcb489cb51c9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ab049f69b3505dc4b1328fcb489cb51c9">operator-</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c, int i)</td></tr>
@@ -154,9 +247,892 @@ Public Attributes</h2></td></tr>
 <tr class="separator:ab4d218eaf1e0fc1079a4609e33f29fef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances. </p>
+<div class="textblock"><p>2d coordinate class. You cannot create instances of this class using a constructor &ndash; instead, use the Get function to create instances. Also provides numerous static functions to deal with grid/Coord-related math, operations, etc. </p>
 <p>If you want the coordinate (1, 2), use Coord.Get(1, 2), and it returns you a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance. These instances are read-only, however operators such as addition, etc., are provided. This is due to optimizations under the hood. By default, the class keeps a static, internal array that contains an instance of every coordinate between (-3, -3), and (255, 255). If the coordinate x and y values given to Get are within this range, Get returns the appropriate instance from the array. If the coordinates given are outside of the range, it simply returns a new instance. Since most of the coordinates used in roguelike/grid based games will be between (-3, -3) and (255, 255), this can end up drastically reducing the number of memory allocations that need to be done since there will exist one and only one instance of the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> class for each value in that range. Since allocations are expensive due to garbage collections, this can significantly improve on efficiency. Later, support may be added for modifying this range as necessary. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="adc18a8b7d151eb1ea243fb815757e1b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc18a8b7d151eb1ea243fb815757e1b9">&sect;&nbsp;</a></span>AllNeighbors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighbors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, cardinals before diagonals. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location. </dd></dl>
+
+</div>
+</div>
+<a id="a24ea92d10a206078748baf2c99891686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24ea92d10a206078748baf2c99891686">&sect;&nbsp;</a></span>AllNeighbors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, cardinals before diagonals. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location. </dd></dl>
+
+</div>
+</div>
+<a id="aaa3008c1315af2d5a8cbdd7949c0370f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa3008c1315af2d5a8cbdd7949c0370f">&sect;&nbsp;</a></span>AllNeighborsClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a93f0ff8ae8581498e441ca7881a66fb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93f0ff8ae8581498e441ca7881a66fb7">&sect;&nbsp;</a></span>AllNeighborsClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="af63ecf35dbd3ed322352e394d13e0315"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63ecf35dbd3ed322352e394d13e0315">&sect;&nbsp;</a></span>AllNeighborsCounterClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a1e878e0d330818ffc327e893f38289a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e878e0d330818ffc327e893f38289a6">&sect;&nbsp;</a></span>AllNeighborsCounterClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.AllNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All 8 neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a33dc72791c581e8231a1637ac9262b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33dc72791c581e8231a1637ac9262b62">&sect;&nbsp;</a></span>BearingOfLine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double GoRogue.Coord.BearingOfLine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>to</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates degree bearing of the line (from =&gt; to), where 0 is the direction <a class="el" href="class_go_rogue_1_1_direction.html#a86c2b981e6a3a6f2d13a190b4beec0cc" title="Up direction. ">Direction.UP</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">from</td><td>Coordinate of line starting point. </td></tr>
+    <tr><td class="paramname">to</td><td>Coordinate of line ending point. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The degree bearing of the line specified by the two given points. </dd></dl>
+
+</div>
+</div>
+<a id="acccbce826e899402628d28e73b8f6e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acccbce826e899402628d28e73b8f6e56">&sect;&nbsp;</a></span>CardinalNeighbors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighbors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT. </dd></dl>
+
+</div>
+</div>
+<a id="abfcb56f960646057780fbf63cdf997ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfcb56f960646057780fbf63cdf997ff">&sect;&nbsp;</a></span>CardinalNeighbors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT. </dd></dl>
+
+</div>
+</div>
+<a id="aebec8f932d00e6bdcc9e06dc6ccbced8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebec8f932d00e6bdcc9e06dc6ccbced8">&sect;&nbsp;</a></span>CardinalNeighborsClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a36d510d3dfb2d29f760203f01b91be1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36d510d3dfb2d29f760203f01b91be1b">&sect;&nbsp;</a></span>CardinalNeighborsClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a2087fb4e544a66f6423fbf2ec07e9d98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2087fb4e544a66f6423fbf2ec07e9d98">&sect;&nbsp;</a></span>CardinalNeighborsCounterClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a9b1385d15bf6e9337139f16d23ddd6c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b1385d15bf6e9337139f16d23ddd6c4">&sect;&nbsp;</a></span>CardinalNeighborsCounterClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.CardinalNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default). If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 cardinal neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a57da954d429fe425077ea6278abe343f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57da954d429fe425077ea6278abe343f">&sect;&nbsp;</a></span>DiagonalNeighbors() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighbors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT. </dd></dl>
+
+</div>
+</div>
+<a id="a0364d75d0b8897f505f87473cb4a1502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0364d75d0b8897f505f87473cb4a1502">&sect;&nbsp;</a></span>DiagonalNeighbors() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT. </dd></dl>
+
+</div>
+</div>
+<a id="a24a54b350e2059752201b95897c7deb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24a54b350e2059752201b95897c7deb6">&sect;&nbsp;</a></span>DiagonalNeighborsClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default). If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP_RIGHT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a862d1eb729e8c084223e6f985496ca35"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a862d1eb729e8c084223e6f985496ca35">&sect;&nbsp;</a></span>DiagonalNeighborsClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default). If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP_RIGHT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a6e97444616c3e46c0731971e2cd09365"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e97444616c3e46c0731971e2cd09365">&sect;&nbsp;</a></span>DiagonalNeighborsCounterClockwise() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default). If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP_LEFT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
+<a id="a5c0b5c1c7a5097f34ed580202b589736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c0b5c1c7a5097f34ed580202b589736">&sect;&nbsp;</a></span>DiagonalNeighborsCounterClockwise() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.DiagonalNeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default). If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td><a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> to start with. Defaults to UP_LEFT. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The 4 diagonal neighbors of the given location, in counter-clockwise order. </dd></dl>
+
+</div>
+</div>
 <a id="aee8eebff28c6d73c89629909c0d0aec8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aee8eebff28c6d73c89629909c0d0aec8">&sect;&nbsp;</a></span>Equals()</h2>
 
@@ -173,14 +1149,14 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Same as operator == in this case; returns false if o is not a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. </p>
+<p>Same as operator == in this case; returns false if obj is not a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">obj</td><td>The object to compare the current <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> to.</td></tr>
+    <tr><td class="paramname">obj</td><td>The object to compare the current <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> to. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if o is a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance, and the two coordinates are equal, false otherwise.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if o is a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance, and the two coordinates are equal, false otherwise. </dd></dl>
 
 </div>
 </div>
@@ -221,12 +1197,12 @@ Public Attributes</h2></td></tr>
 <p>Returns the result of the euclidean distance formula, without the square root &ndash; eg., (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y). Use this if you only care about the magnitude of the distance &ndash; eg., if you're trying to compare two distances. Omitting the square root provides a speed increase. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>The first point.</td></tr>
-    <tr><td class="paramname">c2</td><td>The second point.</td></tr>
+    <tr><td class="paramname">c1</td><td>The first point. </td></tr>
+    <tr><td class="paramname">c2</td><td>The second point. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The "magnitude" of the euclidean distance between the two points &ndash; basically the distance formula without the square root.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The "magnitude" of the euclidean distance between the two points &ndash; basically the distance formula without the square root. </dd></dl>
 
 </div>
 </div>
@@ -267,12 +1243,12 @@ Public Attributes</h2></td></tr>
 <p>Returns the proper <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> instance for the given x and y values. Will return the one in the array if the values are in the appropriate range, otherwise will create a new one and return that one. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>The x-value for the coordinate.</td></tr>
-    <tr><td class="paramname">y</td><td>The y-value for the coordinate.</td></tr>
+    <tr><td class="paramname">x</td><td>The x-value for the coordinate. </td></tr>
+    <tr><td class="paramname">y</td><td>The y-value for the coordinate. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> representing the given x-value and y-value.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> representing the given x-value and y-value. </dd></dl>
 
 </div>
 </div>
@@ -292,7 +1268,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns a hash code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. The important parts: it should be fairly fast and it does not collide often. The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime number. </p>
-<dl class="section return"><dt>Returns</dt><dd>The hash-code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The hash-code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. </dd></dl>
 
 </div>
 </div>
@@ -333,12 +1309,662 @@ Public Attributes</h2></td></tr>
 <p>Returns the midpoint between the two points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>The first point.</td></tr>
-    <tr><td class="paramname">c2</td><td>The second point.</td></tr>
+    <tr><td class="paramname">c1</td><td>The first point. </td></tr>
+    <tr><td class="paramname">c2</td><td>The second point. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The midpoint between c1 and c2</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The midpoint between c1 and c2 </dd></dl>
+
+</div>
+</div>
+<a id="ad81e63c68df26f28d73fd907a9b58338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad81e63c68df26f28d73fd907a9b58338">&sect;&nbsp;</a></span>Neighbors() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.Neighbors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with cardinals returned before diagonals). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a9068eeda71406bfc7bfdd8ae4bed4525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9068eeda71406bfc7bfdd8ae4bed4525">&sect;&nbsp;</a></span>Neighbors() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.Neighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with cardinals returned before diagonals). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a1e4d84d3ccbade2c89ec9413d9223b64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e4d84d3ccbade2c89ec9413d9223b64">&sect;&nbsp;</a></span>Neighbors() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.Neighbors </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with cardinals returned before diagonals). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the radius shape specified. </dd></dl>
+
+</div>
+</div>
+<a id="aa8d2f81643b97d137e517fc424dc5023"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8d2f81643b97d137e517fc424dc5023">&sect;&nbsp;</a></span>Neighbors() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.Neighbors </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with cardinals returned before diagonals). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the radius shape specified. </dd></dl>
+
+</div>
+</div>
+<a id="a91f47d9c4a3b355a5786c137a5c490ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91f47d9c4a3b355a5786c137a5c490ce">&sect;&nbsp;</a></span>NeighborsClockwise() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a87ce525c63d524f75212884a1e5da8be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87ce525c63d524f75212884a1e5da8be">&sect;&nbsp;</a></span>NeighborsClockwise() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a1b28efc6644df5b8a994726e8000653b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b28efc6644df5b8a994726e8000653b">&sect;&nbsp;</a></span>NeighborsClockwise() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="ac0d6bcab1a0e8cdcdcb215a0083b743c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0d6bcab1a0e8cdcdcb215a0083b743c">&sect;&nbsp;</a></span>NeighborsClockwise() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a2b6383d28729f1e19a300046627f44b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b6383d28729f1e19a300046627f44b0">&sect;&nbsp;</a></span>NeighborsCounterClockwise() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="a55407cf6cb7a3226d076b5ce642afac1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55407cf6cb7a3226d076b5ce642afac1">&sect;&nbsp;</a></span>NeighborsCounterClockwise() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> calculation used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="ae3d5c076db6efebe3f1def8640ce316e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3d5c076db6efebe3f1def8640ce316e">&sect;&nbsp;</a></span>NeighborsCounterClockwise() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>startingLocation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingLocation</td><td>Location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
+
+</div>
+</div>
+<a id="ab0875304dcc50a35dbb4c3d8fe9e01b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0875304dcc50a35dbb4c3d8fe9e01b4">&sect;&nbsp;</a></span>NeighborsCounterClockwise() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Coord.NeighborsCounterClockwise </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>startingY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>shape</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td>
+          <td class="paramname"><em>startingDirection</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8). The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">startingX</td><td>X-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">startingY</td><td>Y-coordinate of location to return neighbors for. </td></tr>
+    <tr><td class="paramname">shape</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> shape used to determine which tiles are consdered adjacent. </td></tr>
+    <tr><td class="paramname">startingDirection</td><td>The direction to start with. Defaults to UP. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>All neighbors of the given location, according to the distance calculation specified. </dd></dl>
 
 </div>
 </div>
@@ -379,12 +2005,12 @@ Public Attributes</h2></td></tr>
 <p>True if either the x-values or y-values are not equal. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>First coordinate to compare.</td></tr>
-    <tr><td class="paramname">c2</td><td>Second coordinate to compare.</td></tr>
+    <tr><td class="paramname">c1</td><td>First coordinate to compare. </td></tr>
+    <tr><td class="paramname">c2</td><td>Second coordinate to compare. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if either the x-values or y-values are not equal, false if they are both equal.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if either the x-values or y-values are not equal, false if they are both equal. </dd></dl>
 
 </div>
 </div>
@@ -428,12 +2054,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>Coordinate to multiply by the scalar.</td></tr>
-    <tr><td class="paramname">i</td><td>Scalar to multiply the coordinate by.</td></tr>
+    <tr><td class="paramname">c</td><td>Coordinate to multiply by the scalar. </td></tr>
+    <tr><td class="paramname">i</td><td>Scalar to multiply the coordinate by. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Coordinate (c.X * i, c.Y * i)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Coordinate (c.X * i, c.Y * i) </dd></dl>
 
 </div>
 </div>
@@ -477,12 +2103,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>The coordinate to multiply by the scalar.</td></tr>
-    <tr><td class="paramname">i</td><td>The scalar to multiply the coordinate by.</td></tr>
+    <tr><td class="paramname">c</td><td>The coordinate to multiply by the scalar. </td></tr>
+    <tr><td class="paramname">i</td><td>The scalar to multiply the coordinate by. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Coordinate (c.X * i, c.Y * i), with the resulting values rounded to nearest integer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Coordinate (c.X * i, c.Y * i), with the resulting values rounded to nearest integer. </dd></dl>
 
 </div>
 </div>
@@ -526,12 +2152,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>The first coordinate.</td></tr>
-    <tr><td class="paramname">c2</td><td>The coordinate to add to c1.</td></tr>
+    <tr><td class="paramname">c1</td><td>The first coordinate. </td></tr>
+    <tr><td class="paramname">c2</td><td>The coordinate to add to c1. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>c1 + c2, eg. (c1.X + c2.X, c1.Y + c2.Y)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>c1 + c2, eg. (c1.X + c2.X, c1.Y + c2.Y) </dd></dl>
 
 </div>
 </div>
@@ -575,12 +2201,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>Coordinate to add scalar to.</td></tr>
-    <tr><td class="paramname">i</td><td>Scalar to add to coordinate.</td></tr>
+    <tr><td class="paramname">c</td><td>Coordinate to add scalar to. </td></tr>
+    <tr><td class="paramname">i</td><td>Scalar to add to coordinate. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Coordinate resulting from adding scalar i to x-value and y-value of c1.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Coordinate resulting from adding scalar i to x-value and y-value of c1. </dd></dl>
 
 </div>
 </div>
@@ -624,12 +2250,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>The coordinate to translate by the given direction.</td></tr>
-    <tr><td class="paramname">d</td><td>The direction to translate the coordinate by.</td></tr>
+    <tr><td class="paramname">c</td><td>The coordinate to translate by the given direction. </td></tr>
+    <tr><td class="paramname">d</td><td>The direction to translate the coordinate by. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The coordinate translated by the given direction, eg. (c.X + d.DeltaX, c.Y + d.DeltaY</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The coordinate translated by the given direction, eg. (c.X + d.DeltaX, c.Y + d.DeltaY </dd></dl>
 
 </div>
 </div>
@@ -673,12 +2299,12 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>The first coordinate.</td></tr>
-    <tr><td class="paramname">c2</td><td>The coordinate to subtract from c1.</td></tr>
+    <tr><td class="paramname">c1</td><td>The first coordinate. </td></tr>
+    <tr><td class="paramname">c2</td><td>The coordinate to subtract from c1. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>c1 - c2, eg. (c1.X - c2.X, c1.Y - c2.Y)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>c1 - c2, eg. (c1.X - c2.X, c1.Y - c2.Y) </dd></dl>
 
 </div>
 </div>
@@ -722,8 +2348,8 @@ Public Attributes</h2></td></tr>
 </ul>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>Coordinate to subtract the scalar from.</td></tr>
-    <tr><td class="paramname">i</td><td>Scalar to subtract from the coordinate.</td></tr>
+    <tr><td class="paramname">c</td><td>Coordinate to subtract the scalar from. </td></tr>
+    <tr><td class="paramname">i</td><td>Scalar to subtract from the coordinate. </td></tr>
   </table>
   </dd>
 </dl>
@@ -768,12 +2394,12 @@ Public Attributes</h2></td></tr>
 <p>/ operator. Divides the x-value and y-value of c by i, eg. returns (c.X / i, c.Y / i). Rounds resulting values to the nearest integer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>The coordinate to divide by scalar.</td></tr>
-    <tr><td class="paramname">i</td><td>The scalar to divide the coordinate by.</td></tr>
+    <tr><td class="paramname">c</td><td>The coordinate to divide by scalar. </td></tr>
+    <tr><td class="paramname">i</td><td>The scalar to divide the coordinate by. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer. </dd></dl>
 
 </div>
 </div>
@@ -814,12 +2440,12 @@ Public Attributes</h2></td></tr>
 <p>/ operator. Similar to int version. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c</td><td>The coordinate to divide by scalar.</td></tr>
-    <tr><td class="paramname">i</td><td>The scalar to divide the coordinate by.</td></tr>
+    <tr><td class="paramname">c</td><td>The coordinate to divide by scalar. </td></tr>
+    <tr><td class="paramname">i</td><td>The scalar to divide the coordinate by. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer. </dd></dl>
 
 </div>
 </div>
@@ -860,12 +2486,12 @@ Public Attributes</h2></td></tr>
 <p>True if c1.X == c2.X and c1.Y == c2.Y. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">c1</td><td>First coodinate to compare.</td></tr>
-    <tr><td class="paramname">c2</td><td>Second coordinate to compare.</td></tr>
+    <tr><td class="paramname">c1</td><td>First coodinate to compare. </td></tr>
+    <tr><td class="paramname">c2</td><td>Second coordinate to compare. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the two coordinates are equal, false if not.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the two coordinates are equal, false if not. </dd></dl>
 
 </div>
 </div>
@@ -906,12 +2532,12 @@ Public Attributes</h2></td></tr>
 <p>Reverses the ToIndex function, returning the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by a given index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">index</td><td>The index in 1D form. </td></tr>
+    <tr><td class="paramname">rowCount</td><td>The number of rows. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by the 1D index given.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by the 1D index given. </dd></dl>
 
 </div>
 </div>
@@ -958,13 +2584,13 @@ Public Attributes</h2></td></tr>
 <p>Returns y * rowCount + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int rowCount)</a>, just takes x and y instead. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>X-value of the coordinate.</td></tr>
-    <tr><td class="paramname">y</td><td>Y-value of the coordinate.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index.</td></tr>
+    <tr><td class="paramname">x</td><td>X-value of the coordinate. </td></tr>
+    <tr><td class="paramname">y</td><td>Y-value of the coordinate. </td></tr>
+    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. </dd></dl>
 
 </div>
 </div>
@@ -987,11 +2613,11 @@ Public Attributes</h2></td></tr>
 <p>Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. Usually the width of the 2D array.</td></tr>
+    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. Usually the width of the 2D array. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The 1D index of this <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. </dd></dl>
 
 </div>
 </div>
@@ -1011,7 +2637,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns representation (X, Y). </p>
-<dl class="section return"><dt>Returns</dt><dd>String (X, Y)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>String (X, Y) </dd></dl>
 
 </div>
 </div>
@@ -1052,12 +2678,12 @@ Public Attributes</h2></td></tr>
 <p>Reverses the ToIndex function, returning only the X-value for the given index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">index</td><td>The index in 1D form. </td></tr>
+    <tr><td class="paramname">rowCount</td><td>The number of rows. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The X-value for the location represented by the given index.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The X-value for the location represented by the given index. </dd></dl>
 
 </div>
 </div>
@@ -1098,12 +2724,12 @@ Public Attributes</h2></td></tr>
 <p>Reverses the ToIndex function, returning only the Y-value for the given index. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">index</td><td>The index in 1D form. </td></tr>
+    <tr><td class="paramname">rowCount</td><td>The number of rows. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The Y-value for the location represented by the given index.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The Y-value for the location represented by the given index. </dd></dl>
 
 </div>
 </div>
@@ -1136,12 +2762,12 @@ Public Attributes</h2></td></tr>
 <p>Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy to the Y-value of the coordinate, eg. (X + dx, Y + dy). Provided for convenience. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dx</td><td>Delta x to add to coordinate.</td></tr>
-    <tr><td class="paramname">dy</td><td>Delta y to add to coordinate.</td></tr>
+    <tr><td class="paramname">dx</td><td>Delta x to add to coordinate. </td></tr>
+    <tr><td class="paramname">dy</td><td>Delta y to add to coordinate. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The coordinate (X + dx, Y + dy)</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The coordinate (X + dx, Y + dy) </dd></dl>
 
 </div>
 </div>

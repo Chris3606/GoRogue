@@ -67,7 +67,6 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#properties">Properties</a> &#124;
 <a href="class_go_rogue_1_1_map_generation_1_1_map_area_finder-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue.MapGeneration.MapAreaFinder Class Reference</div>  </div>
@@ -100,15 +99,12 @@ Static Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a31b9073f074053185c70ababcd52015d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a31b9073f074053185c70ababcd52015d">DistanceCalc</a></td></tr>
+<tr class="memdesc:a31b9073f074053185c70ababcd52015d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The calculation used to determine distance between two points.  <a href="#a31b9073f074053185c70ababcd52015d">More...</a><br /></td></tr>
+<tr class="separator:a31b9073f074053185c70ababcd52015d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac96878f5a94467220a4329a6227a52a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_map_view.html">IMapView</a>&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#ac96878f5a94467220a4329a6227a52a9">Map</a></td></tr>
 <tr class="memdesc:ac96878f5a94467220a4329a6227a52a9"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not.  <a href="#ac96878f5a94467220a4329a6227a52a9">More...</a><br /></td></tr>
 <tr class="separator:ac96878f5a94467220a4329a6227a52a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:a31b9073f074053185c70ababcd52015d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a31b9073f074053185c70ababcd52015d">DistanceCalc</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a31b9073f074053185c70ababcd52015d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The calculation used to determine distance between two points.  <a href="#a31b9073f074053185c70ababcd52015d">More...</a><br /></td></tr>
-<tr class="separator:a31b9073f074053185c70ababcd52015d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class designed to calculate and produce a list of MapAreas representing each unique connected area of the map. </p>
@@ -143,8 +139,8 @@ Properties</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not.</td></tr>
-    <tr><td class="paramname">shape</td><td>The shape of a radius - determines calculation used to define distance, and thus what are considered neighbors.</td></tr>
+    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not. </td></tr>
+    <tr><td class="paramname">shape</td><td>The shape of a radius - determines calculation used to define distance, and thus what are considered neighbors. </td></tr>
   </table>
   </dd>
 </dl>
@@ -180,8 +176,8 @@ Properties</h2></td></tr>
 <p>Constructor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not.</td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The calculation used to determine distance.</td></tr>
+    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The calculation used to determine distance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -205,7 +201,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Calculates the list of map areas, returning each unique map area. </p>
-<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area. </dd></dl>
 
 </div>
 </div>
@@ -246,12 +242,12 @@ Properties</h2></td></tr>
 <p>Convenience function that creates an <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a> and returns the result of that <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>'s MapAreas function. Intended to be used for cases in which the area finder will never be re-used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not.</td></tr>
+    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not. </td></tr>
     <tr><td class="paramname">shape</td><td></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area. </dd></dl>
 
 </div>
 </div>
@@ -292,16 +288,32 @@ Properties</h2></td></tr>
 <p>Convenience function that creates an <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a> and returns the result of that <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>'s MapAreas function. Intended to be used for cases in which the area finder will never be re-used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not.</td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The calculation used to determine distance.</td></tr>
+    <tr><td class="paramname">map</td><td><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The calculation used to determine distance. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of each (unique) map area. </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a31b9073f074053185c70ababcd52015d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31b9073f074053185c70ababcd52015d">&sect;&nbsp;</a></span>DistanceCalc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.MapGeneration.MapAreaFinder.DistanceCalc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The calculation used to determine distance between two points. </p>
+
+</div>
+</div>
 <a id="ac96878f5a94467220a4329a6227a52a9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac96878f5a94467220a4329a6227a52a9">&sect;&nbsp;</a></span>Map</h2>
 
@@ -315,31 +327,6 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p><a class="el" href="interface_go_rogue_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> indicating which cells should be considered part of a map area and which should not. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="a31b9073f074053185c70ababcd52015d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31b9073f074053185c70ababcd52015d">&sect;&nbsp;</a></span>DistanceCalc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.MapGeneration.MapAreaFinder.DistanceCalc</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The calculation used to determine distance between two points. </p>
 
 </div>
 </div>

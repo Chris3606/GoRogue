@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['manhattan',['MANHATTAN',['../namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506a20548c3a17d5b27db0c2995b6646a792',1,'GoRogue']]]
+  ['left',['LEFT',['../namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217a684d325a7303f52e64011467ff5c5758',1,'GoRogue']]]
 ];

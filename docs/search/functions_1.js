@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bearingofline',['BearingOfLine',['../class_go_rogue_1_1_direction.html#ac30ece6b3132d8f635deb0e8410ed08e',1,'GoRogue::Direction']]]
+  ['bearingofline',['BearingOfLine',['../class_go_rogue_1_1_coord.html#a33dc72791c581e8231a1637ac9262b62',1,'GoRogue::Coord']]]
 ];

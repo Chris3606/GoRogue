@@ -85,8 +85,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a connection algorithm that connects all unique map areas in the given map by connecting each area with the one closest to it. </p>
-<p>The algorithm functions by first finding all unique areas in the map given by using <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#aaede4f19a725ddeed349d2664310d3e5" title="Calculates the list of map areas, returning each unique map area. ">MapAreaFinder.MapAreas</a>. Then, we iterate through each area, find the closest area that is not already conencted to the current area, and create a tunnel between the two. <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> between to areas is measured as the distance between the center point of the bounding boxes of those areas.</p>
-<p>Points to connect two areas, as well as method used to create a tunnel between those two points, are selected via specified parameters. </p>
+<p>The algorithm functions by first finding all unique areas in the map given by using <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#aaede4f19a725ddeed349d2664310d3e5" title="Calculates the list of map areas, returning each unique map area. ">MapAreaFinder.MapAreas</a>. Then, we iterate through each area, find the closest area that is not already conencted to the current area, and create a tunnel between the two. <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> between to areas is measured as the distance between the center point of the bounding boxes of those areas. /// Points to connect two areas, as well as method used to create a tunnel between those two points, are selected via specified parameters. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a084a8882af48db604195c0dc47ed7722"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a084a8882af48db604195c0dc47ed7722">&sect;&nbsp;</a></span>Connect() <span class="overload">[1/2]</span></h2>
@@ -137,10 +136,10 @@ Static Public Member Functions</h2></td></tr>
 <p>Connects the map given using the algorithm described in the class description. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
-    <tr><td class="paramname">shape</td><td>The shape of a radius &ndash; used to determine distance calculation.</td></tr>
-    <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html" title="Implements a the selection algorithm that simply selects random points from the given MapArea&#39;s posit...">RandomConnectionPointSelector</a> with the default RNG is used.</td></tr>
-    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html" title="Implements a tunnel creation algorithm that sets as walkable a direct line between the two points...">DirectLineTunnelCreator</a> with the distance calculation specified is used.</td></tr>
+    <tr><td class="paramname">map</td><td>The map to connect. </td></tr>
+    <tr><td class="paramname">shape</td><td>The shape of a radius &ndash; used to determine distance calculation. </td></tr>
+    <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html" title="Implements a the selection algorithm that simply selects random points from the given MapArea&#39;s posit...">RandomConnectionPointSelector</a> with the default RNG is used. </td></tr>
+    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html" title="Implements a tunnel creation algorithm that sets as walkable a direct line between the two points...">DirectLineTunnelCreator</a> with the distance calculation specified is used. </td></tr>
   </table>
   </dd>
 </dl>
@@ -196,15 +195,15 @@ Static Public Member Functions</h2></td></tr>
 <p>Connects the map given using the algorithm described in the class description. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines distance/neighbors.</td></tr>
-    <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details.</td></tr>
+    <tr><td class="paramname">map</td><td>The map to connect. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines distance/neighbors. </td></tr>
+    <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details. </td></tr>
   </table>
   </dd>
 </dl>
 <p>/// </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html" title="Implements a tunnel creation algorithm that sets as walkable a direct line between the two points...">DirectLineTunnelCreator</a> with the distance calculation specified is used.</td></tr>
+    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html" title="Implements a tunnel creation algorithm that sets as walkable a direct line between the two points...">DirectLineTunnelCreator</a> with the distance calculation specified is used. </td></tr>
   </table>
   </dd>
 </dl>

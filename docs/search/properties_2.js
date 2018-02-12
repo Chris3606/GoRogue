@@ -2,7 +2,7 @@ var searchData=
 [
   ['deltax',['DeltaX',['../class_go_rogue_1_1_direction.html#a68be74f8378001fc2e0167f0acf8f008',1,'GoRogue::Direction']]],
   ['deltay',['DeltaY',['../class_go_rogue_1_1_direction.html#adaf7c3ef90a767c8677a98663e29e622',1,'GoRogue::Direction']]],
-  ['distancecalc',['DistanceCalc',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a31b9073f074053185c70ababcd52015d',1,'GoRogue.MapGeneration.MapAreaFinder.DistanceCalc()'],['../class_go_rogue_1_1_radius_area_provider.html#a2a150b99b133c965a3960cef54c0f35d',1,'GoRogue.RadiusAreaProvider.DistanceCalc()']]],
+  ['diceresults',['DiceResults',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a0a04a1b2e8f1642101c4982eef2c7c45',1,'GoRogue::DiceNotation::Terms::DiceTerm']]],
   ['distancemeasurement',['DistanceMeasurement',['../class_go_rogue_1_1_pathing_1_1_a_star.html#ae7b6a7c7cb90d4ea89b3eeab88261c4e',1,'GoRogue::Pathing::AStar']]],
   ['down',['DOWN',['../class_go_rogue_1_1_direction.html#a34ca47328bd6de78bdd983aeb342ac12',1,'GoRogue::Direction']]],
   ['down_5fleft',['DOWN_LEFT',['../class_go_rogue_1_1_direction.html#a5fe84f19a75855d7ff7e386b73e284f9',1,'GoRogue::Direction']]],

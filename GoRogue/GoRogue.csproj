@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>1.0.0</PackageVersion>
+	<PackageVersion>1.1.0</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseUrl>https://github.com/Chris3606/GoRogue/blob/master/LICENSE</PackageLicenseUrl>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Updated to .NET Standard library.  Changed Random system to more easily utilize the default RNG.  Modified map generation algorithms extensively to be more modular.</PackageReleaseNotes>
+	<PackageReleaseNotes>The Dice Age: Now with rewritten dice parser supporting much more complex dice expressions.  Added neighbors functions to Coord.</PackageReleaseNotes>
     <Copyright>Copyright ©  2017 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>

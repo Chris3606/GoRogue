@@ -65,29 +65,36 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="class_go_rogue_1_1_dice_notation_1_1_dice-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue.DiceNotation.Dice Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is likely the class you really care about the most. Basically just a static class that has methods for tieing all of the <a class="el" href="namespace_go_rogue_1_1_dice_notation.html">DiceNotation</a> classes together. It has functions for parsing an expression, rolling based upon a given expression, and others.  
+<p>The most important <a class="el" href="namespace_go_rogue_1_1_dice_notation.html">DiceNotation</a> class &ndash; contains functions to roll dice, and to retrieve an <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing a given expression (useful and more efficient if a dice roll is used multiple times).  
  <a href="class_go_rogue_1_1_dice_notation_1_1_dice.html#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1d349f26cd0f42d55a3872281f87823c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html">DiceExpression</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#a1d349f26cd0f42d55a3872281f87823c">Parse</a> (string expression)</td></tr>
-<tr class="memdesc:a1d349f26cd0f42d55a3872281f87823c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse the specified string into a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. If you intend to roll a given expression multiple times, chances are you want to use this once to get yourself a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a> instance representing that particular roll, and store that somewhere. Then, use the Roll function in <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a> to roll it. This is faster as it means the slow part (using regex to take apart the expression) happens only once.  <a href="#a1d349f26cd0f42d55a3872281f87823c">More...</a><br /></td></tr>
-<tr class="separator:a1d349f26cd0f42d55a3872281f87823c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abffc0ba8d86f625727d887623f111f29"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html">IDiceExpression</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#abffc0ba8d86f625727d887623f111f29">Parse</a> (string expression)</td></tr>
+<tr class="memdesc:abffc0ba8d86f625727d887623f111f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to produce a <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the given dice expression.  <a href="#abffc0ba8d86f625727d887623f111f29">More...</a><br /></td></tr>
+<tr class="separator:abffc0ba8d86f625727d887623f111f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab38a1555d3cb8f20b479253ab60728b4"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#ab38a1555d3cb8f20b479253ab60728b4">Roll</a> (string expression, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> random=null)</td></tr>
-<tr class="memdesc:ab38a1555d3cb8f20b479253ab60728b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A convenience method for parsing a dice expression from a string, rolling the dice with a given IRandom instance (or the default RNG if null is specified), and returning the total. If you need to do a roll only once, this method or its overload would be the one to use. If you will be repeating the roll, particularly if you are repeating it multiple times and care about speed, it is probably best to instead use the Parse function, retrieve a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>, and then use its roll function. This prevents the regex pattern from being matched against more than once (which is relatively expensive compared to the other operations).  <a href="#ab38a1555d3cb8f20b479253ab60728b4">More...</a><br /></td></tr>
+<tr class="memdesc:ab38a1555d3cb8f20b479253ab60728b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to parse the given dice expression, roll it, and return the result.  <a href="#ab38a1555d3cb8f20b479253ab60728b4">More...</a><br /></td></tr>
 <tr class="separator:ab38a1555d3cb8f20b479253ab60728b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a26681fc22640899642b5b6473b85f16c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html">IParser</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#a26681fc22640899642b5b6473b85f16c">DiceParser</a> = new <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_parser.html">Parser</a>()</td></tr>
+<tr class="memdesc:a26681fc22640899642b5b6473b85f16c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The parser that will be used to parse dice expressions given to the Parse and Roll functions.  <a href="#a26681fc22640899642b5b6473b85f16c">More...</a><br /></td></tr>
+<tr class="separator:a26681fc22640899642b5b6473b85f16c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is likely the class you really care about the most. Basically just a static class that has methods for tieing all of the <a class="el" href="namespace_go_rogue_1_1_dice_notation.html">DiceNotation</a> classes together. It has functions for parsing an expression, rolling based upon a given expression, and others. </p>
+<div class="textblock"><p>The most important <a class="el" href="namespace_go_rogue_1_1_dice_notation.html">DiceNotation</a> class &ndash; contains functions to roll dice, and to retrieve an <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing a given expression (useful and more efficient if a dice roll is used multiple times). </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a1d349f26cd0f42d55a3872281f87823c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1d349f26cd0f42d55a3872281f87823c">&sect;&nbsp;</a></span>Parse()</h2>
+<a id="abffc0ba8d86f625727d887623f111f29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abffc0ba8d86f625727d887623f111f29">&sect;&nbsp;</a></span>Parse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -96,7 +103,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html">DiceExpression</a> GoRogue.DiceNotation.Dice.Parse </td>
+          <td class="memname">static <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html">IDiceExpression</a> GoRogue.DiceNotation.Dice.Parse </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
           <td class="paramname"><em>expression</em></td><td>)</td>
@@ -110,14 +117,15 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Parse the specified string into a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>. If you intend to roll a given expression multiple times, chances are you want to use this once to get yourself a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a> instance representing that particular roll, and store that somewhere. Then, use the Roll function in <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a> to roll it. This is faster as it means the slow part (using regex to take apart the expression) happens only once. </p>
+<p>Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to produce a <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the given dice expression. </p>
+<p>Because parsing can add significant time, retrieving an <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance instead of using the Roll function can be useful if a given expression will be rolled multiple times. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">expression</td><td>The string dice expression to parse, in dice notation format. Ex. 3d6+4.</td></tr>
+    <tr><td class="paramname">expression</td><td>The string dice expression to parse. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a> representing the parsed string.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the parsed string. </dd></dl>
 
 </div>
 </div>
@@ -155,15 +163,41 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>A convenience method for parsing a dice expression from a string, rolling the dice with a given IRandom instance (or the default RNG if null is specified), and returning the total. If you need to do a roll only once, this method or its overload would be the one to use. If you will be repeating the roll, particularly if you are repeating it multiple times and care about speed, it is probably best to instead use the Parse function, retrieve a <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html" title="A class representing a dice expression that can be rolled. Typically you will not construct these you...">DiceExpression</a>, and then use its roll function. This prevents the regex pattern from being matched against more than once (which is relatively expensive compared to the other operations). </p>
+<p>Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to parse the given dice expression, roll it, and return the result. </p>
+<p>While more convenient, parsing is computationally more expensive than evaluation. If a dice expression will be rolled many times, it is more efficient to use the Parse method once, and use the resulting <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance to roll the expression each time it is needed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">expression</td><td>The string dice expression to parse. Ex. 3d6+4.</td></tr>
-    <tr><td class="paramname">random</td><td>IRandom RNG to use to perform the Roll. </td></tr>
+    <tr><td class="paramname">expression</td><td>The string dice expression to parse. </td></tr>
+    <tr><td class="paramname">random</td><td>RNG to use to perform the roll. If null is specified, the default RNG is used. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An integer representing the sum of the dice rolled, including constants and scalars in the expression.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of evaluating the dice expression given. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a26681fc22640899642b5b6473b85f16c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26681fc22640899642b5b6473b85f16c">&sect;&nbsp;</a></span>DiceParser</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html">IParser</a> GoRogue.DiceNotation.Dice.DiceParser = new <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_parser.html">Parser</a>()</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The parser that will be used to parse dice expressions given to the Parse and Roll functions. </p>
 
 </div>
 </div>

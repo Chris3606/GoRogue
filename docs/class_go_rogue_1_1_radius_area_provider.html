@@ -99,6 +99,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:af88f308d99731dfc82fb26e123b4c6d9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#af88f308d99731dfc82fb26e123b4c6d9">Bounds</a></td></tr>
 <tr class="memdesc:af88f308d99731dfc82fb26e123b4c6d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The bounds to constrain the returned Coords to. Set to <a class="el" href="struct_go_rogue_1_1_rectangle.html#af7c359ebea5a45d6717fc2db08a29346" title="The empty rectangle. Has origin of 0, 0 with 0 width and height. ">Rectangle.EMPTY</a> to indicate that there are no bounds.  <a href="#af88f308d99731dfc82fb26e123b4c6d9">More...</a><br /></td></tr>
 <tr class="separator:af88f308d99731dfc82fb26e123b4c6d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a150b99b133c965a3960cef54c0f35d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a2a150b99b133c965a3960cef54c0f35d">DistanceCalc</a></td></tr>
+<tr class="memdesc:a2a150b99b133c965a3960cef54c0f35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance calculation that defines the concept of radius.  <a href="#a2a150b99b133c965a3960cef54c0f35d">More...</a><br /></td></tr>
+<tr class="separator:a2a150b99b133c965a3960cef54c0f35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -108,19 +111,13 @@ Properties</h2></td></tr>
 <tr class="memitem:ab0db330130d7c47cb7bc8d0ad90e570d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#ab0db330130d7c47cb7bc8d0ad90e570d">Radius</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:ab0db330130d7c47cb7bc8d0ad90e570d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The length of the radius, eg. the number of tiles from the center point (as defined by the distance calculation/radius shape given) to which the radius extends.  <a href="#ab0db330130d7c47cb7bc8d0ad90e570d">More...</a><br /></td></tr>
 <tr class="separator:ab0db330130d7c47cb7bc8d0ad90e570d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a150b99b133c965a3960cef54c0f35d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a2a150b99b133c965a3960cef54c0f35d">DistanceCalc</a><code> [get, set]</code></td></tr>
-<tr class="memdesc:a2a150b99b133c965a3960cef54c0f35d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance calculation that defines the concept of radius.  <a href="#a2a150b99b133c965a3960cef54c0f35d">More...</a><br /></td></tr>
-<tr class="separator:a2a150b99b133c965a3960cef54c0f35d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac0d257ad53e0b23e2577dc22008b50a9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#ac0d257ad53e0b23e2577dc22008b50a9">RadiusShape</a><code> [get, set]</code></td></tr>
 <tr class="memdesc:ac0d257ad53e0b23e2577dc22008b50a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">The shape of the radius.  <a href="#ac0d257ad53e0b23e2577dc22008b50a9">More...</a><br /></td></tr>
 <tr class="separator:ac0d257ad53e0b23e2577dc22008b50a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class capable of getting all unique positions inside of a given radius and (optional) bounds. </p>
-<p>In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE shapes are used, Coords are guaranteed to be returned in order of distance from the center, from least to greatest. This guarantee does NOT hold if EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.</p>
-<p>If no bounds are specified, the IEnumerable returned by positions will contain each coordinate within the radius. Otherwise, it will contain each coordinate in the radius that is also within the bounds of the rectangle.</p>
-<p>If the same radius length is being used multiple times (even from different center points), it is recommended to use only one <a class="el" href="class_go_rogue_1_1_radius_area_provider.html" title="Class capable of getting all unique positions inside of a given radius and (optional) bounds...">RadiusAreaProvider</a>, as the class allocates measurable memory, and using only one instance if the radius is used multiple times prevents reallocation.</p>
-<p>When the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> value is changed, reallocation must be performed, however the overhead should be insignificant on everything but extremely large radiuses. </p>
+<p>In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE shapes are used, Coords are guaranteed to be returned in order of distance from the center, from least to greatest. This guarantee does NOT hold if EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified. /// If no bounds are specified, the IEnumerable returned by positions will contain each coordinate within the radius. Otherwise, it will contain each coordinate in the radius that is also within the bounds of the rectangle. /// If the same radius length is being used multiple times (even from different center points), it is recommended to use only one <a class="el" href="class_go_rogue_1_1_radius_area_provider.html" title="Class capable of getting all unique positions inside of a given radius and (optional) bounds...">RadiusAreaProvider</a>, as the class allocates measurable memory, and using only one instance if the radius is used multiple times prevents reallocation. /// When the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> value is changed, reallocation must be performed, however the overhead should be insignificant on everything but extremely large radiuses. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4aef0dc8e9c4d00c3a599e33f76dfbb0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4aef0dc8e9c4d00c3a599e33f76dfbb0">&sect;&nbsp;</a></span>RadiusAreaProvider() <span class="overload">[1/4]</span></h2>
@@ -163,10 +160,10 @@ Properties</h2></td></tr>
 <p>Constructor. Specifies center, radius, radius shape, and bounds. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>The center point of the radius.</td></tr>
-    <tr><td class="paramname">radius</td><td>The length of the radius.</td></tr>
-    <tr><td class="paramname">shape</td><td>The shape of the radius.</td></tr>
-    <tr><td class="paramname">bounds</td><td>The bounds to constrain the returned Coords to.</td></tr>
+    <tr><td class="paramname">center</td><td>The center point of the radius. </td></tr>
+    <tr><td class="paramname">radius</td><td>The length of the radius. </td></tr>
+    <tr><td class="paramname">shape</td><td>The shape of the radius. </td></tr>
+    <tr><td class="paramname">bounds</td><td>The bounds to constrain the returned Coords to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -208,9 +205,9 @@ Properties</h2></td></tr>
 <p>Constructor. Specifies center, radius, and shape, with no bounds. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>The center point of the radius.</td></tr>
-    <tr><td class="paramname">radius</td><td>The length of the radius.</td></tr>
-    <tr><td class="paramname">shape</td><td>The shape of the radius.</td></tr>
+    <tr><td class="paramname">center</td><td>The center point of the radius. </td></tr>
+    <tr><td class="paramname">radius</td><td>The length of the radius. </td></tr>
+    <tr><td class="paramname">shape</td><td>The shape of the radius. </td></tr>
   </table>
   </dd>
 </dl>
@@ -258,10 +255,10 @@ Properties</h2></td></tr>
 <p>Constructor. Specifies center, radius length, distance calculation that defines the concept of radius, and bounds. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>The center point of the radius.</td></tr>
-    <tr><td class="paramname">radius</td><td>The length of the radius.</td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines the concept of radius.</td></tr>
-    <tr><td class="paramname">bounds</td><td>The bounds to constrain the returned Coords to.</td></tr>
+    <tr><td class="paramname">center</td><td>The center point of the radius. </td></tr>
+    <tr><td class="paramname">radius</td><td>The length of the radius. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines the concept of radius. </td></tr>
+    <tr><td class="paramname">bounds</td><td>The bounds to constrain the returned Coords to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -303,9 +300,9 @@ Properties</h2></td></tr>
 <p>Constructor. Specifies center, radius length, and distance calculation that defines the concept of radius, with no bounds. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">center</td><td>The center point of the radius.</td></tr>
-    <tr><td class="paramname">radius</td><td>The length of the radius.</td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines the concept of radius.</td></tr>
+    <tr><td class="paramname">center</td><td>The center point of the radius. </td></tr>
+    <tr><td class="paramname">radius</td><td>The length of the radius. </td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines the concept of radius. </td></tr>
   </table>
   </dd>
 </dl>
@@ -329,7 +326,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns an IEnumerable of all unique Coords within the radius and bounds specified (as applicable). See class description for details on the ordering. </p>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable of all unique Coords within the radius and bounds specified.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable of all unique Coords within the radius and bounds specified. </dd></dl>
 
 </div>
 </div>
@@ -347,6 +344,22 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The bounds to constrain the returned Coords to. Set to <a class="el" href="struct_go_rogue_1_1_rectangle.html#af7c359ebea5a45d6717fc2db08a29346" title="The empty rectangle. Has origin of 0, 0 with 0 width and height. ">Rectangle.EMPTY</a> to indicate that there are no bounds. </p>
+
+</div>
+</div>
+<a id="a2a150b99b133c965a3960cef54c0f35d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a150b99b133c965a3960cef54c0f35d">&sect;&nbsp;</a></span>DistanceCalc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.RadiusAreaProvider.DistanceCalc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The distance calculation that defines the concept of radius. </p>
 
 </div>
 </div>
@@ -372,30 +385,6 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>The center point of the radius. </p>
-
-</div>
-</div>
-<a id="a2a150b99b133c965a3960cef54c0f35d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a150b99b133c965a3960cef54c0f35d">&sect;&nbsp;</a></span>DistanceCalc</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.RadiusAreaProvider.DistanceCalc</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">set</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The distance calculation that defines the concept of radius. </p>
 
 </div>
 </div>
