@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GoRogue.DiceNotation.Terms;
+﻿using GoRogue.DiceNotation.Terms;
+using System.Collections.Generic;
 
 namespace GoRogue.DiceNotation
 {
@@ -24,17 +24,89 @@ namespace GoRogue.DiceNotation
         /// Parses the dice expression spcified into an IDiceExpression instance.
         /// </summary>
         /// <remarks>
-        /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the degree necessary to produce
-        /// the appropriate chain of ITerm instances.
+        /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
+        /// degree necessary to produce the appropriate chain of ITerm instances.
         /// </remarks>
-        /// <param name="expression">The expression to parse.</param>
-        /// <returns>An IDiceExpression representing the given expression, that can "roll" the expression on command.</returns>
+        /// <param name="expression">
+        /// The expression to parse.
+        /// </param>
+        /// <returns>
+        /// An IDiceExpression representing the given expression, that can "roll" the expression on command.
+        /// </returns>
         public IDiceExpression Parse(string expression)
         {
             var postfix = toPostfix(expression);
             var lastTerm = evaluatePostfix(postfix);
 
             return new DiceExpression(lastTerm);
+        }
+
+        // Evaluates the postfix expression, returning the final term (the one to evaluate to roll
+        // the expression)
+        private static ITerm evaluatePostfix(List<string> postfix)
+        {
+            var operands = new Stack<ITerm>();
+
+            foreach (var str in postfix)
+            {
+                if (char.IsDigit(str[0]))
+                {
+                    operands.Push(new ConstantTerm(int.Parse(str)));
+                }
+                else // Is an operator
+                {
+                    ITerm op1;
+                    ITerm op2;
+
+                    switch (str)
+                    {
+                        case "d":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            operands.Push(new DiceTerm(op1, op2));
+                            break;
+
+                        case "*":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            operands.Push(new MultiplyTerm(op1, op2));
+                            break;
+
+                        case "/":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            operands.Push(new DivideTerm(op1, op2));
+                            break;
+
+                        case "+":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            operands.Push(new AddTerm(op1, op2));
+                            break;
+
+                        case "-":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            operands.Push(new SubtractTerm(op1, op2));
+                            break;
+
+                        case "k":
+                            op2 = operands.Pop();
+                            op1 = operands.Pop();
+                            var diceOp = op1 as DiceTerm; // Must be preceded by a dice term
+                            if (diceOp == null)
+                                throw new Exceptions.InvalidSyntaxException();
+
+                            operands.Push(new KeepTerm(op2, diceOp));
+                            break;
+                    }
+                }
+            }
+
+            if (operands.Count != 1) // Something went awry
+                throw new Exceptions.InvalidSyntaxException();
+
+            return operands.Pop(); // Last thing is the answer!
         }
 
         // Converts dice notation to postfix notation
@@ -88,68 +160,6 @@ namespace GoRogue.DiceNotation
                 output.Add(operators.Pop().ToString());
 
             return output;
-        }
-
-        // Evaluates the postfix expression, returning the final term (the one to evaluate to roll the expression)
-        private static ITerm evaluatePostfix(List<string> postfix)
-        {
-            var operands = new Stack<ITerm>();
-
-            foreach (var str in postfix)
-            {
-                if (char.IsDigit(str[0]))
-                {
-                    operands.Push(new ConstantTerm(int.Parse(str)));
-                }
-                else // Is an operator
-                {
-                    ITerm op1;
-                    ITerm op2;
-
-                    switch (str)
-                    {
-                        case "d":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            operands.Push(new DiceTerm(op1, op2));
-                            break;
-                        case "*":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            operands.Push(new MultiplyTerm(op1, op2));
-                            break;
-                        case "/":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            operands.Push(new DivideTerm(op1, op2));
-                            break;
-                        case "+":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            operands.Push(new AddTerm(op1, op2));
-                            break;
-                        case "-":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            operands.Push(new SubtractTerm(op1, op2));
-                            break;
-                        case "k":
-                            op2 = operands.Pop();
-                            op1 = operands.Pop();
-                            var diceOp = op1 as DiceTerm; // Must be preceded by a dice term
-                            if (diceOp == null)
-                                throw new Exceptions.InvalidSyntaxException();
-
-                            operands.Push(new KeepTerm(op2, diceOp));
-                            break;
-                    }
-                }
-            }
-
-            if (operands.Count != 1) // Something went awry
-                throw new Exceptions.InvalidSyntaxException();
-
-            return operands.Pop(); // Last thing is the answer!
         }
     }
 }

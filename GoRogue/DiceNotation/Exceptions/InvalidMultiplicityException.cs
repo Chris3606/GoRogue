@@ -26,7 +26,8 @@ namespace GoRogue.DiceNotation.Exceptions
         }
 
         /// <summary>
-        /// Constructor, taking a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Constructor, taking a specified error message and a reference to the inner exception that
+        /// is the cause of this exception.
         /// </summary>
         /// <param name="message">
         /// The error message that explains the reason for the exception.

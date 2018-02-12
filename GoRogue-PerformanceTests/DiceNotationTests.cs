@@ -1,24 +1,11 @@
-﻿using System;
+﻿using GoRogue.DiceNotation;
+using System;
 using System.Diagnostics;
-using GoRogue.DiceNotation;
 
 namespace GoRogue_PerformanceTests
 {
-    class DiceNotationTests
+    internal class DiceNotationTests
     {
-        public static TimeSpan TimeForDiceRoll(string expression, int iterations)
-        {
-            var s = new Stopwatch();
-            int val;
-
-            s.Start();
-            for (int i = 0; i < iterations; i++)
-                val = Dice.Roll(expression);
-            s.Stop();
-
-            return s.Elapsed;
-        }
-
         public static TimeSpan TimeForDiceExpression(string expression, int iterations)
         {
             var s = new Stopwatch();
@@ -28,6 +15,19 @@ namespace GoRogue_PerformanceTests
             s.Start();
             for (int i = 0; i < iterations; i++)
                 val = result.Roll();
+            s.Stop();
+
+            return s.Elapsed;
+        }
+
+        public static TimeSpan TimeForDiceRoll(string expression, int iterations)
+        {
+            var s = new Stopwatch();
+            int val;
+
+            s.Start();
+            for (int i = 0; i < iterations; i++)
+                val = Dice.Roll(expression);
             s.Stop();
 
             return s.Elapsed;

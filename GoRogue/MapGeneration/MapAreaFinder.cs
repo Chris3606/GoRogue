@@ -16,6 +16,11 @@ namespace GoRogue.MapGeneration
     public class MapAreaFinder
     {
         /// <summary>
+        /// The calculation used to determine distance between two points.
+        /// </summary>
+        public Distance DistanceCalc;
+
+        /// <summary>
         /// IMapView indicating which cells should be considered part of a map area and which should not.
         /// </summary>
         public IMapView<bool> Map;
@@ -50,11 +55,6 @@ namespace GoRogue.MapGeneration
             visited = null;
             DistanceCalc = distanceCalc;
         }
-
-        /// <summary>
-        /// The calculation used to determine distance between two points.
-        /// </summary>
-        public Distance DistanceCalc;
 
         /// <summary>
         /// Convenience function that creates an MapAreaFinder and returns the result of that

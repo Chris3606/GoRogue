@@ -9,18 +9,14 @@ namespace GoRogue
     /// In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE shapes are
     /// used, Coords are guaranteed to be returned in order of distance from the center, from least
     /// to greatest. This guarantee does NOT hold if EUCLIDEAN distance, or CIRCLE/SPHERE radius
-    /// shapes are specified.
-    ///
-    /// If no bounds are specified, the IEnumerable returned by positions will contain each
-    /// coordinate within the radius. Otherwise, it will contain each coordinate in the radius that
-    /// is also within the bounds of the rectangle.
-    ///
-    /// If the same radius length is being used multiple times (even from different center points),
-    /// it is recommended to use only one RadiusAreaProvider, as the class allocates measurable
-    /// memory, and using only one instance if the radius is used multiple times prevents reallocation.
-    ///
-    /// When the Radius value is changed, reallocation must be performed, however the overhead should
-    /// be insignificant on everything but extremely large radiuses.
+    /// shapes are specified. /// If no bounds are specified, the IEnumerable returned by positions
+    /// will contain each coordinate within the radius. Otherwise, it will contain each coordinate in
+    /// the radius that is also within the bounds of the rectangle. /// If the same radius length is
+    /// being used multiple times (even from different center points), it is recommended to use only
+    /// one RadiusAreaProvider, as the class allocates measurable memory, and using only one instance
+    /// if the radius is used multiple times prevents reallocation. /// When the Radius value is
+    /// changed, reallocation must be performed, however the overhead should be insignificant on
+    /// everything but extremely large radiuses.
     /// </remarks>
     public class RadiusAreaProvider
     {
@@ -29,6 +25,11 @@ namespace GoRogue
         /// there are no bounds.
         /// </summary>
         public Rectangle Bounds;
+
+        /// <summary>
+        /// The distance calculation that defines the concept of radius.
+        /// </summary>
+        public Distance DistanceCalc;
 
         private Coord _center;
 
@@ -127,11 +128,6 @@ namespace GoRogue
                 topLeft = _center - _radius;
             }
         }
-
-        /// <summary>
-        /// The distance calculation that defines the concept of radius.
-        /// </summary>
-        public Distance DistanceCalc;
 
         /// <summary>
         /// The length of the radius, eg. the number of tiles from the center point (as defined by the distance

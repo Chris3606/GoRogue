@@ -13,34 +13,42 @@ namespace GoRogue
         /// Type for Direction.UP.
         /// </summary>
         UP,
+
         /// <summary>
         /// Type for Direction.UP_RIGHT.
         /// </summary>
         UP_RIGHT,
+
         /// <summary>
         /// Type for Direction.RIGHT.
         /// </summary>
         RIGHT,
+
         /// <summary>
         /// Type for Direction.DOWN_RIGHT.
         /// </summary>
         DOWN_RIGHT,
+
         /// <summary>
         /// Type for Direction.DOWN.
         /// </summary>
         DOWN,
+
         /// <summary>
         /// Type for Direction.DOWN_LEFT.
         /// </summary>
         DOWN_LEFT,
+
         /// <summary>
         /// Type for Direction.LEFT.
         /// </summary>
         LEFT,
+
         /// <summary>
         /// Type for Direction.UP_LEFT.
         /// </summary>
         UP_LEFT,
+
         /// <summary>
         /// Type for Direction.NONE.
         /// </summary>
@@ -71,11 +79,6 @@ namespace GoRogue
         private static Direction[] directionSides = new Direction[2];
 
         private static bool initYInc;
-        internal static int yMult { get; private set; }
-        /// <summary>
-        /// Enum type corresponding to Direction being represented.
-        /// </summary>
-        public DirectionType Type { get; private set; }
 
         static Direction()
         {
@@ -213,75 +216,18 @@ namespace GoRogue
         public int DeltaY { get; private set; }
 
         /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
-        /// MANHATTAN yields only cardinal direction, while others yield all directions (cardinals before diagonals).
+        /// Enum type corresponding to Direction being represented.
         /// </summary>
-        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
-        /// <returns>Directions that lead to neighboring locations.</returns>
-        public static IEnumerable<Direction> NeighborDirections(Distance distanceCalc)
-            => (distanceCalc == Distance.MANHATTAN) ? Cardinals() : Outwards();
+        public DirectionType Type { get; private set; }
 
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
-        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions (cardinals before diagonals).
-        /// </summary>
-        /// <param name="shape">Radius shape used to determine adjacency.</param>
-        /// <returns>Directions that lead to neighboring locations.</returns>
-        public static IEnumerable<Direction> NeighborDirections(Radius shape)
-            => NeighborDirections((Distance)shape);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
-        /// MANHATTAN yields only cardinal direction, while others yield all directions.
-        /// Directions are returned in clockwise order, starting with the direction specified, or the nearest clockwise cardinal
-        /// direction if MANHATTAN distance is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
-        /// <param name="startingDirection">The direction to start with.</param>
-        ///  <returns>Directions that lead to neighboring locations, in clockwise order.</returns>
-        public static IEnumerable<Direction> NeighborDirectionsClockwise(Distance distanceCalc, Direction startingDirection = null)
-            => (distanceCalc == Distance.MANHATTAN) ? CardinalsClockwise(startingDirection) : DirectionsClockwise(startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
-        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
-        /// Directions are returned in clockwise order, starting with the direction specified, or the nearest clockwise cardinal
-        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="shape">Radius shape used to determine adjacency.</param>
-        /// <param name="startingDirection">The direction to start with.</param>
-        ///  <returns>Directions that lead to neighboring locations, in clockwise order.</returns>
-        public static IEnumerable<Direction> NeighborDirectionsClockwise(Radius shape, Direction startingDirection = null)
-            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
-        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
-        /// Directions are returned in counter-clockwise order, starting with the direction specified, or the nearest counter-clockwise cardinal
-        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
-        /// <param name="startingDirection">The direction to start with.</param>
-        ///  <returns>Directions that lead to neighboring locations, in counter-clockwise order.</returns>
-        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Distance distanceCalc, Direction startingDirection = null)
-            => (distanceCalc == Distance.MANHATTAN) ? CardinalsCounterClockwise(startingDirection) : DirectionsCounterClockwise(startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
-        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
-        /// Directions are returned in counter-clockwise order, starting with the direction specified, or the nearest counter-clockwise cardinal
-        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="shape">Radius shape used to determine adjacency.</param>
-        /// <param name="startingDirection">The direction to start with.</param>
-        ///  <returns>Directions that lead to neighboring locations, in counter-clockwise order.</returns>
-        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Radius shape, Direction startingDirection = null)
-            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
+        internal static int yMult { get; private set; }
 
         /// <summary>
         /// Returns only cardinal directions, in order UP, DOWN, LEFT, RIGHT.
         /// </summary>
-        /// <returns>Cardinal directions in specified order.</returns>
+        /// <returns>
+        /// Cardinal directions in specified order.
+        /// </returns>
         public static IEnumerable<Direction> Cardinals()
         {
             yield return UP;
@@ -292,10 +238,12 @@ namespace GoRogue
 
         /// <summary>
         /// Returns only cardinal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP). If NONE is given, starts at UP. If any other non-cardinal direction is given, it
-        /// starts at the closest clockwise cardinal direction.
+        /// given (defaulting to UP). If NONE is given, starts at UP. If any other non-cardinal
+        /// direction is given, it starts at the closest clockwise cardinal direction.
         /// </summary>
-        /// <param name="startingPoint">The direction to "start" at -- returns this direction first.</param>
+        /// <param name="startingPoint">
+        /// The direction to "start" at -- returns this direction first.
+        /// </param>
         /// <returns>
         /// All cardinal directions, in clockwise order, starting with the starting point given, as
         /// outlined in the function description.
@@ -341,9 +289,24 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Returns only diagonal directions, top to bottom, left to right: UP_LEFT, UP_RIGHT,
+        /// DOWN_LEFT, DOWN_RIGHT.
+        /// </summary>
+        /// <returns>
+        /// Only diagonal directions.
+        /// </returns>
+        public static IEnumerable<Direction> Diagonals()
+        {
+            yield return UP_LEFT;
+            yield return UP_RIGHT;
+            yield return DOWN_LEFT;
+            yield return DOWN_RIGHT;
+        }
+
+        /// <summary>
         /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP_RIGHT). If NONE is given, starts at UP_RIGHT. If any cardinal direction is given, it
-        /// starts at the closest clockwise diagonal direction.
+        /// given (defaulting to UP_RIGHT). If NONE is given, starts at UP_RIGHT. If any cardinal
+        /// direction is given, it starts at the closest clockwise diagonal direction.
         /// </summary>
         /// <param name="startingPoint">
         /// The direction to "start" at; returns this direction first.
@@ -368,8 +331,8 @@ namespace GoRogue
 
         /// <summary>
         /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP_LEFT). If NONE is given, starts at UP_LEFT. If any cardinal direction is given, it starts
-        /// at the closest counterclockwise diagonal direction.
+        /// given (defaulting to UP_LEFT). If NONE is given, starts at UP_LEFT. If any cardinal
+        /// direction is given, it starts at the closest counterclockwise diagonal direction.
         /// </summary>
         /// <param name="startingPoint">
         /// The direction to "start" at; returns this direction first.
@@ -390,21 +353,6 @@ namespace GoRogue
             yield return startingPoint - 2;
             yield return startingPoint - 4;
             yield return startingPoint - 6;
-        }
-
-        /// <summary>
-        /// Returns only diagonal directions, top to bottom, left to right: UP_LEFT, UP_RIGHT,
-        /// DOWN_LEFT, DOWN_RIGHT.
-        /// </summary>
-        /// <returns>
-        /// Only diagonal directions.
-        /// </returns>
-        public static IEnumerable<Direction> Diagonals()
-        {
-            yield return UP_LEFT;
-            yield return UP_RIGHT;
-            yield return DOWN_LEFT;
-            yield return DOWN_RIGHT;
         }
 
         /// <summary>
@@ -537,6 +485,110 @@ namespace GoRogue
 
             return UP;
         }
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the
+        /// distance calculation given. MANHATTAN yields only cardinal direction, while others yield
+        /// all directions (cardinals before diagonals).
+        /// </summary>
+        /// <param name="distanceCalc">
+        /// Distance calculation used to determine adjacency.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirections(Distance distanceCalc)
+            => (distanceCalc == Distance.MANHATTAN) ? Cardinals() : Outwards();
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
+        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
+        /// directions (cardinals before diagonals).
+        /// </summary>
+        /// <param name="shape">
+        /// Radius shape used to determine adjacency.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirections(Radius shape)
+            => NeighborDirections((Distance)shape);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the
+        /// distance calculation given. MANHATTAN yields only cardinal direction, while others yield
+        /// all directions. Directions are returned in clockwise order, starting with the direction
+        /// specified, or the nearest clockwise cardinal direction if MANHATTAN distance is specified
+        /// and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="distanceCalc">
+        /// Distance calculation used to determine adjacency.
+        /// </param>
+        /// <param name="startingDirection">
+        /// The direction to start with.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations, in clockwise order.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirectionsClockwise(Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalsClockwise(startingDirection) : DirectionsClockwise(startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
+        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
+        /// directions. Directions are returned in clockwise order, starting with the direction
+        /// specified, or the nearest clockwise cardinal direction if DIAMOND/OCTAHEDRON radius shape
+        /// is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="shape">
+        /// Radius shape used to determine adjacency.
+        /// </param>
+        /// <param name="startingDirection">
+        /// The direction to start with.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations, in clockwise order.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirectionsClockwise(Radius shape, Direction startingDirection = null)
+            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the
+        /// distance calculation given. DIAMOND/OCTAHEDRON yields only cardinal direction, while
+        /// others yield all directions. Directions are returned in counter-clockwise order, starting
+        /// with the direction specified, or the nearest counter-clockwise cardinal direction if
+        /// DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="distanceCalc">
+        /// Distance calculation used to determine adjacency.
+        /// </param>
+        /// <param name="startingDirection">
+        /// The direction to start with.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations, in counter-clockwise order.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalsCounterClockwise(startingDirection) : DirectionsCounterClockwise(startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
+        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
+        /// directions. Directions are returned in counter-clockwise order, starting with the
+        /// direction specified, or the nearest counter-clockwise cardinal direction if
+        /// DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="shape">
+        /// Radius shape used to determine adjacency.
+        /// </param>
+        /// <param name="startingDirection">
+        /// The direction to start with.
+        /// </param>
+        /// <returns>
+        /// Directions that lead to neighboring locations, in counter-clockwise order.
+        /// </returns>
+        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Radius shape, Direction startingDirection = null)
+            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
 
         /// <summary>
         /// - operator. Returns the direction i directions counterclockwise of the given direction if
