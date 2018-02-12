@@ -161,7 +161,7 @@ namespace GoRogue
             light[startX, startY] = 1; // Full power to starting space
             currentFOV.Add(Coord.Get(startX, startY));
 
-            foreach (Direction d in Direction.DiagonalsTopBottom())
+            foreach (Direction d in Direction.Diagonals())
             {
                 shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceTechnique);
                 shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceTechnique);

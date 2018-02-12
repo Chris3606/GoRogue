@@ -112,9 +112,9 @@ namespace GoRogue_UnitTests
             {
                 bool isAdjacent = false;
 
-                foreach (var dir in Direction.GetNeighbors(distanceCalc)())
+                foreach (var neighbor in Coord.Neighbors(path.GetStepWithStart(i), distanceCalc))
                 {
-                    if (path.GetStepWithStart(i) + dir == path.GetStepWithStart(i + 1))
+                    if (neighbor == path.GetStepWithStart(i + 1))
                     {
                         isAdjacent = true;
                         break;
@@ -152,8 +152,6 @@ namespace GoRogue_UnitTests
         // Initialize graph for control-case AStar, based on a GoRogue IMapView
         private static GraphReturn initGraph(IMapView<bool> map, Distance connectivity)
         {
-            var neighborsGetter = Direction.GetNeighbors(connectivity);
-
             var returnVal = new GraphReturn();
             returnVal.Graph = new CA.Graph();
 
@@ -172,10 +170,8 @@ namespace GoRogue_UnitTests
                 {
                     if (map[x, y])
                     {
-                        foreach (var dir in neighborsGetter())
+                        foreach (var neighbor in Coord.Neighbors(Coord.Get(x, y), connectivity))
                         {
-                            var neighbor = Coord.Get(x, y) + dir;
-
                             // Out of bounds of map
                             if (neighbor.X < 0 || neighbor.Y < 0 || neighbor.X >= map.Width || neighbor.Y >= map.Height)
                                 continue;

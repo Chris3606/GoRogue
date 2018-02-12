@@ -338,119 +338,336 @@ namespace GoRogue
         /// </returns>
         public static int ToYValue(int index, int rowCount) => index / rowCount;
 
-        public static IEnumerable<Coord> Neighbors(Coord startingLocation)
+        /// <summary>
+        /// Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with 
+        /// cardinals returned before diagonals).
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> Neighbors(Coord startingLocation, Distance distanceCalc)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalNeighbors(startingLocation) : AllNeighbors(startingLocation);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8, with 
+        /// cardinals returned before diagonals).
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> Neighbors(int startingX, int startingY, Distance distanceCalc)
+            => Neighbors(Coord.Get(startingX, startingY), distanceCalc);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with 
+        /// cardinals returned before diagonals).
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <returns>All neighbors of the given location, according to the radius shape specified.</returns>
+        public static IEnumerable<Coord> Neighbors(Coord startingLocation, Radius shape)
+            =>  Neighbors(startingLocation, (Distance)shape);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8, with 
+        /// cardinals returned before diagonals).
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <returns>All neighbors of the given location, according to the radius shape specified.</returns>
+        public static IEnumerable<Coord> Neighbors(int startingX, int startingY, Radius shape)
+            => Neighbors(Coord.Get(startingX, startingY), (Distance)shape);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalNeighborsClockwise(startingLocation, startingDirection) : AllNeighborsClockwise(startingLocation, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and MANHATTAN is used.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsClockwise(int startingX, int startingY, Distance distanceCalc, Direction startingDirection = null)
+            => NeighborsClockwise(Coord.Get(startingX, startingY), distanceCalc, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Radius shape, Direction startingDirection = null)
+            => NeighborsClockwise(startingLocation, (Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsClockwise(int startingX, int startingY, Radius shape, Direction startingDirection = null)
+            => NeighborsClockwise(Coord.Get(startingX, startingY), (Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalNeighborsCounterClockwise(startingLocation, startingDirection) : AllNeighborsCounterClockwise(startingLocation, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in counter-clockwise order, based on the distance calculation specified (MANHATTAN yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and MANHATTAN is used.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="distanceCalc">Distance calculation used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsCounterClockwise(int startingX, int startingY, Distance distanceCalc, Direction startingDirection = null)
+            => NeighborsCounterClockwise(Coord.Get(startingX, startingY), distanceCalc, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Radius shape, Direction startingDirection = null)
+            => NeighborsCounterClockwise(startingLocation, (Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets all neighbors of the specified location, in counter-clockwise order, based on the radius shape specified (DIAMOND/OCTAHEDRON yields 4 neighbors, others yield 8).
+        /// The first direction returned is the one specified as startingDirection, or the closest counter-clockwise cardinal if it is a diagonal and DIAMOND/OCTAHEDRON is used.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="shape">Radius shape used to determine which tiles are consdered adjacent.</param>
+        /// <param name="startingDirection">The direction to start with.  Defaults to UP.</param>
+        /// <returns>All neighbors of the given location, according to the distance calculation specified.</returns>
+        public static IEnumerable<Coord> NeighborsCounterClockwise(int startingX, int startingY, Radius shape, Direction startingDirection = null)
+            => NeighborsCounterClockwise(Coord.Get(startingX, startingY), (Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, cardinals before diagonals.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <returns>All 8 neighbors of the given location.</returns>
+        public static IEnumerable<Coord> AllNeighbors(Coord startingLocation)
         {
-            yield return startingLocation + Direction.UP;
-            yield return startingLocation + Direction.DOWN;
-            yield return startingLocation + Direction.LEFT;
-            yield return startingLocation + Direction.RIGHT;
-            yield return startingLocation + Direction.UP_LEFT;
-            yield return startingLocation + Direction.UP_RIGHT;
-            yield return startingLocation + Direction.DOWN_LEFT;
-            yield return startingLocation + Direction.DOWN_RIGHT;
+            foreach (var dir in Direction.Outwards())
+                yield return startingLocation + dir;
         }
 
-        public static IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, cardinals before diagonals.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <returns>All 8 neighbors of the given location.</returns>
+        public static IEnumerable<Coord> AllNeighbors(int startingX, int startingY) => AllNeighbors(Coord.Get(startingX, startingY));
+
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>All 8 neighbors of the given location, in clockwise order.</returns>
+        public static IEnumerable<Coord> AllNeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == null)
-                startingDirection = Direction.UP;
-
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP;
-
-            for (int i = 1; i <= 8; i++)
-            {
-                yield return startingLocation + startingDirection;
-                startingDirection++;
-            }
+            foreach (var dir in Direction.DirectionsClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
-        public static IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>All 8 neighbors of the given location, in clockwise order.</returns>
+        public static IEnumerable<Coord> AllNeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => AllNeighborsClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>All 8 neighbors of the given location, in counter-clockwise order.</returns>
+        public static IEnumerable<Coord> AllNeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == null)
-                startingDirection = Direction.UP;
-
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP;
-
-            for (int i = 1; i <= 8; i++)
-            {
-                yield return startingLocation + startingDirection;
-                startingDirection--;
-            }
+            foreach (var dir in Direction.DirectionsCounterClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets all 8 neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>All 8 neighbors of the given location, in counter-clockwise order.</returns>
+        public static IEnumerable<Coord> AllNeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => AllNeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.</returns>
         public static IEnumerable<Coord> CardinalNeighbors(Coord startingLocation)
         {
-            yield return startingLocation + Direction.UP;
-            yield return startingLocation + Direction.DOWN;
-            yield return startingLocation + Direction.LEFT;
-            yield return startingLocation + Direction.RIGHT;
+            foreach (var dir in Direction.Cardinals())
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.</returns>
+        public static IEnumerable<Coord> CardinalNeighbors(int startingX, int startingY) => CardinalNeighbors(Coord.Get(startingX, startingY));
+
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in clockwise order.</returns>
         public static IEnumerable<Coord> CardinalNeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP;
-
-            if ((int)startingDirection.Type % 2 == 1)
-                startingDirection++; // Make it a cardinal
-
-            yield return startingLocation + startingDirection;
-            yield return startingLocation + (startingDirection + 2);
-            yield return startingLocation + (startingDirection + 4);
-            yield return startingLocation + (startingDirection + 6);
+            foreach (var dir in Direction.CardinalsClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// If the direction given is a diagonal, it starts with the closest clockwise cardinal neighbor.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in clockwise order.</returns>
+        public static IEnumerable<Coord> CardinalNeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => CardinalNeighborsClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in counter-clockwise order.</returns>
         public static IEnumerable<Coord> CardinalNeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP;
-
-            if ((int)startingDirection.Type % 2 == 1)
-                startingDirection--; // Make it a cardinal
-
-            yield return startingLocation + startingDirection;
-            yield return startingLocation + (startingDirection - 2);
-            yield return startingLocation + (startingDirection - 4);
-            yield return startingLocation + (startingDirection - 6);
+            foreach (var dir in Direction.CardinalsCounterClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets the 4 cardinal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP by default).
+        /// If the direction given is a diagonal, it starts with the closest counter-clockwise cardinal neighbor.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP.</param>
+        /// <returns>The 4 cardinal neighbors of the given location, in counter-clockwise order.</returns>
+        public static IEnumerable<Coord> CardinalNeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => CardinalNeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.</returns>
         public static IEnumerable<Coord> DiagonalNeighbors(Coord startingLocation)
         {
-            yield return startingLocation + Direction.UP_LEFT;
-            yield return startingLocation + Direction.UP_RIGHT;
-            yield return startingLocation + Direction.DOWN_LEFT;
-            yield return startingLocation + Direction.DOWN_RIGHT;
+            foreach (var dir in Direction.Diagonals())
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in order UP_LEFT, UP_RIGHT, DOWN_LEFT, DOWN_RIGHT.</returns>
+        public static IEnumerable<Coord> DiagonalNeighbors(int startingX, int startingY) => DiagonalNeighbors(Coord.Get(startingX, startingY));
+
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default).
+        /// If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP_RIGHT.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in clockwise order.</returns>
         public static IEnumerable<Coord> DiagonalNeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP_RIGHT;
-
-            if ((int)startingDirection.Type % 2 == 0)
-                startingDirection++; // Make it a diagonal
-
-            yield return startingLocation + startingDirection;
-            yield return startingLocation + (startingDirection + 2);
-            yield return startingLocation + (startingDirection + 4);
-            yield return startingLocation + (startingDirection + 6);
+            foreach (var dir in Direction.DiagonalsClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in clockwise order, starting with the neighbor in the direction given (or UP_RIGHT by default).
+        /// If the direction given is a cardinal, it starts with the closest clockwise diagonal neighbor.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP_RIGHT.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in clockwise order.</returns>
+        public static IEnumerable<Coord> DiagonalNeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => DiagonalNeighborsClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default).
+        /// If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor.
+        /// </summary>
+        /// <param name="startingLocation">Location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP_LEFT.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in counter-clockwise order.</returns>
         public static IEnumerable<Coord> DiagonalNeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            if (startingDirection == Direction.NONE)
-                startingDirection = Direction.UP_LEFT;
-
-            if ((int)startingDirection.Type % 2 == 0)
-                startingDirection--; // Make it a diagonal
-
-            yield return startingLocation + startingDirection;
-            yield return startingLocation + (startingDirection - 2);
-            yield return startingLocation + (startingDirection - 4);
-            yield return startingLocation + (startingDirection - 6);
+            foreach (var dir in Direction.DiagonalsCounterClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
+
+        /// <summary>
+        /// Gets the 4 diagonal neighbors of the given location, in counter-clockwise order, starting with the neighbor in the direction given (or UP_LEFT by default).
+        /// If the direction given is a cardinal, it starts with the closest counter-clockwise diagonal neighbor.
+        /// </summary>
+        /// <param name="startingX">X-coordinate of location to return neighbors for.</param>
+        /// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
+        /// <param name="startingDirection">Direction to start with.  Defaults to UP_LEFT.</param>
+        /// <returns>The 4 diagonal neighbors of the given location, in counter-clockwise order.</returns>
+        public static IEnumerable<Coord> DiagonalNeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
+            => DiagonalNeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
 
         /// <summary>
         /// Same as operator == in this case; returns false if obj is not a Coord.

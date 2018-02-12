@@ -152,7 +152,7 @@ namespace GoRogue.SenseMapping
 
                     case SourceType.SHADOW:
                         initArrays();
-                        foreach (Direction d in Direction.DiagonalsTopBottom())
+                        foreach (Direction d in Direction.Diagonals())
                         {
                             shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
                             shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);

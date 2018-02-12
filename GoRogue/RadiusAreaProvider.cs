@@ -32,13 +32,9 @@ namespace GoRogue
 
         private Coord _center;
 
-        private Distance _distanceCalc;
-
         private int _radius;
 
         private bool[,] inQueue;
-
-        private Direction.NeighborsGetter neighbors;
 
         private Coord topLeft;
 
@@ -135,15 +131,7 @@ namespace GoRogue
         /// <summary>
         /// The distance calculation that defines the concept of radius.
         /// </summary>
-        public Distance DistanceCalc
-        {
-            get => _distanceCalc;
-            set
-            {
-                _distanceCalc = value;
-                neighbors = Direction.GetNeighbors(value);
-            }
-        }
+        public Distance DistanceCalc;
 
         /// <summary>
         /// The length of the radius, eg. the number of tiles from the center point (as defined by the distance
@@ -171,7 +159,7 @@ namespace GoRogue
         /// <summary>
         /// The shape of the radius.
         /// </summary>
-        public Radius RadiusShape { get => (Radius)_distanceCalc; set => DistanceCalc = (Distance)value; }
+        public Radius RadiusShape { get => (Radius)DistanceCalc; set => DistanceCalc = (Distance)value; }
 
         /// <summary>
         /// Returns an IEnumerable of all unique Coords within the radius and bounds specified (as
@@ -191,7 +179,6 @@ namespace GoRogue
             inQueue[inQueue.GetLength(0) / 2, inQueue.GetLength(0) / 2] = true;
 
             Coord cur;
-            Coord neighbor;
 
             Coord localNeighbor;
 
@@ -200,12 +187,11 @@ namespace GoRogue
                 cur = q.Dequeue();
                 yield return cur;
 
-                foreach (var dir in neighbors())
+                foreach (var neighbor in Coord.Neighbors(cur, DistanceCalc))
                 {
-                    neighbor = cur + dir;
                     localNeighbor = neighbor - topLeft;
 
-                    if (_distanceCalc.DistanceBetween(_center, neighbor) > _radius || inQueue[localNeighbor.X, localNeighbor.Y] ||
+                    if (DistanceCalc.DistanceBetween(_center, neighbor) > _radius || inQueue[localNeighbor.X, localNeighbor.Y] ||
                         Bounds != Rectangle.EMPTY && !Bounds.Contains(neighbor))
                         continue;
 

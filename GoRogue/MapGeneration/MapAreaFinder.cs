@@ -20,8 +20,6 @@ namespace GoRogue.MapGeneration
         /// </summary>
         public IMapView<bool> Map;
 
-        private Distance _distanceCalc;
-        private Direction.NeighborsGetter neighbors;
         private bool[,] visited;
 
         /// <summary>
@@ -56,16 +54,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The calculation used to determine distance between two points.
         /// </summary>
-        public Distance DistanceCalc
-        {
-            get => _distanceCalc;
-
-            set
-            {
-                _distanceCalc = value;
-                neighbors = Direction.GetNeighbors(value);
-            }
-        }
+        public Distance DistanceCalc;
 
         /// <summary>
         /// Convenience function that creates an MapAreaFinder and returns the result of that
@@ -140,10 +129,8 @@ namespace GoRogue.MapGeneration
                 area.Add(position);
                 visited[position.X, position.Y] = true;
 
-                foreach (Direction d in neighbors())
+                foreach (var c in Coord.Neighbors(position, DistanceCalc))
                 {
-                    Coord c = position + d;
-
                     if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height) // Out of bounds, thus not actually a neighbor
                         continue;
 

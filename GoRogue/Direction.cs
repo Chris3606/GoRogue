@@ -95,15 +95,6 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Function that returns an IEnumerable of Directions. Commonly used internally by
-        /// algorithms that iterate over neighbors and support multiple different distance calculations.
-        /// </summary>
-        /// <returns>
-        /// IEnumerable of Directions.
-        /// </returns>
-        public delegate IEnumerable<Direction> NeighborsGetter();
-
-        /// <summary>
         /// Down direction.
         /// </summary>
         public static Direction DOWN
@@ -247,34 +238,96 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns only cardinal directions, in clockwise order, starting with UP.
+        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
+        /// MANHATTAN yields only cardinal direction, while others yield all directions (cardinals before diagonals).
         /// </summary>
-        /// <returns>
-        /// All cardinal directions, in clockwise order, starting with UP.
-        /// </returns>
-        public static IEnumerable<Direction> CardinalsClockwise()
+        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
+        /// <returns>Directions that lead to neighboring locations.</returns>
+        public static IEnumerable<Direction> NeighborDirections(Distance distanceCalc)
+            => (distanceCalc == Distance.MANHATTAN) ? Cardinals() : Outwards();
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
+        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions (cardinals before diagonals).
+        /// </summary>
+        /// <param name="shape">Radius shape used to determine adjacency.</param>
+        /// <returns>Directions that lead to neighboring locations.</returns>
+        public static IEnumerable<Direction> NeighborDirections(Radius shape)
+            => NeighborDirections((Distance)shape);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
+        /// MANHATTAN yields only cardinal direction, while others yield all directions.
+        /// Directions are returned in clockwise order, starting with the direction specified, or the nearest clockwise cardinal
+        /// direction if MANHATTAN distance is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
+        /// <param name="startingDirection">The direction to start with.</param>
+        ///  <returns>Directions that lead to neighboring locations, in clockwise order.</returns>
+        public static IEnumerable<Direction> NeighborDirectionsClockwise(Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalsClockwise(startingDirection) : DirectionsClockwise(startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
+        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
+        /// Directions are returned in clockwise order, starting with the direction specified, or the nearest clockwise cardinal
+        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="shape">Radius shape used to determine adjacency.</param>
+        /// <param name="startingDirection">The direction to start with.</param>
+        ///  <returns>Directions that lead to neighboring locations, in clockwise order.</returns>
+        public static IEnumerable<Direction> NeighborDirectionsClockwise(Radius shape, Direction startingDirection = null)
+            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
+        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
+        /// Directions are returned in counter-clockwise order, starting with the direction specified, or the nearest counter-clockwise cardinal
+        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="distanceCalc">Distance calculation used to determine adjacency.</param>
+        /// <param name="startingDirection">The direction to start with.</param>
+        ///  <returns>Directions that lead to neighboring locations, in counter-clockwise order.</returns>
+        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Distance distanceCalc, Direction startingDirection = null)
+            => (distanceCalc == Distance.MANHATTAN) ? CardinalsCounterClockwise(startingDirection) : DirectionsCounterClockwise(startingDirection);
+
+        /// <summary>
+        /// Gets directions leading to neighboring locations, with adjacency determined by the radius shape given.
+        /// DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all directions.
+        /// Directions are returned in counter-clockwise order, starting with the direction specified, or the nearest counter-clockwise cardinal
+        /// direction if DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
+        /// </summary>
+        /// <param name="shape">Radius shape used to determine adjacency.</param>
+        /// <param name="startingDirection">The direction to start with.</param>
+        ///  <returns>Directions that lead to neighboring locations, in counter-clockwise order.</returns>
+        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Radius shape, Direction startingDirection = null)
+            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
+
+        /// <summary>
+        /// Returns only cardinal directions, in order UP, DOWN, LEFT, RIGHT.
+        /// </summary>
+        /// <returns>Cardinal directions in specified order.</returns>
+        public static IEnumerable<Direction> Cardinals()
         {
             yield return UP;
-            yield return RIGHT;
             yield return DOWN;
             yield return LEFT;
+            yield return RIGHT;
         }
 
         /// <summary>
         /// Returns only cardinal directions, in clockwise order, starting with the startingPoint
-        /// given. If NONE is given, starts at UP. If any other non-cardinal direction is given, it
+        /// given (defaulting to UP). If NONE is given, starts at UP. If any other non-cardinal direction is given, it
         /// starts at the closest clockwise cardinal direction.
         /// </summary>
-        /// <param name="startingPoint">
-        /// The direction to "start" at -- returns this direction first.
-        /// </param>
+        /// <param name="startingPoint">The direction to "start" at -- returns this direction first.</param>
         /// <returns>
         /// All cardinal directions, in clockwise order, starting with the starting point given, as
         /// outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> CardinalsClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> CardinalsClockwise(Direction startingPoint = null)
         {
-            if (startingPoint == NONE)
+            if (startingPoint == null || startingPoint == NONE)
                 startingPoint = UP;
 
             if ((int)startingPoint.Type % 2 == 1)
@@ -284,20 +337,6 @@ namespace GoRogue
             yield return startingPoint + 2;
             yield return startingPoint + 4;
             yield return startingPoint + 6;
-        }
-
-        /// <summary>
-        /// Returns only cardinal directions, in counterclockwise order, starting with UP.
-        /// </summary>
-        /// <returns>
-        /// All cardinal directions, in counterclockwise order, starting with UP.
-        /// </returns>
-        public static IEnumerable<Direction> CardinalsCounterClockwise()
-        {
-            yield return UP;
-            yield return LEFT;
-            yield return DOWN;
-            yield return RIGHT;
         }
 
         /// <summary>
@@ -327,22 +366,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns only diagonal directions in clockwise order, starting with UP_RIGHT.
-        /// </summary>
-        /// <returns>
-        /// Only diagonal directions.
-        /// </returns>
-        public static IEnumerable<Direction> DiagonalsClockwise()
-        {
-            yield return UP_RIGHT;
-            yield return DOWN_RIGHT;
-            yield return DOWN_LEFT;
-            yield return UP_LEFT;
-        }
-
-        /// <summary>
         /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given. If NONE is given, starts at UP_RIGHT. If any cardinal direction is given, it
+        /// given (defaulting to UP_RIGHT). If NONE is given, starts at UP_RIGHT. If any cardinal direction is given, it
         /// starts at the closest clockwise diagonal direction.
         /// </summary>
         /// <param name="startingPoint">
@@ -352,9 +377,9 @@ namespace GoRogue
         /// All diagonal directions, in clockwise order, starting with the starting point given, as
         /// outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> DiagonalsClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> DiagonalsClockwise(Direction startingPoint = null)
         {
-            if (startingPoint == NONE)
+            if (startingPoint == null || startingPoint == NONE)
                 startingPoint = UP_RIGHT;
 
             if ((int)startingPoint.Type % 2 == 0)
@@ -367,22 +392,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns only diagonal directions in counterclockwise order, starting with UP_LEFT.
-        /// </summary>
-        /// <returns>
-        /// Only diagonal directions.
-        /// </returns>
-        public static IEnumerable<Direction> DiagonalsCounterClockwise()
-        {
-            yield return UP_LEFT;
-            yield return DOWN_LEFT;
-            yield return DOWN_RIGHT;
-            yield return UP_RIGHT;
-        }
-
-        /// <summary>
         /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given. If NONE is given, starts at UP_LEFT. If any cardinal direction is given, it starts
+        /// given (defaulting to UP_LEFT). If NONE is given, starts at UP_LEFT. If any cardinal direction is given, it starts
         /// at the closest counterclockwise diagonal direction.
         /// </summary>
         /// <param name="startingPoint">
@@ -392,9 +403,9 @@ namespace GoRogue
         /// All diagonal directions, in counterclockwise order, starting with the starting point
         /// given, as outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> DiagonalsCounterClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> DiagonalsCounterClockwise(Direction startingPoint = null)
         {
-            if (startingPoint == NONE)
+            if (startingPoint == null || startingPoint == NONE)
                 startingPoint = UP_LEFT;
 
             if ((int)startingPoint.Type % 2 == 0)
@@ -413,35 +424,17 @@ namespace GoRogue
         /// <returns>
         /// Only diagonal directions.
         /// </returns>
-        public static IEnumerable<Direction> DiagonalsTopBottom()
+        public static IEnumerable<Direction> Diagonals()
         {
             yield return UP_LEFT;
             yield return UP_RIGHT;
             yield return DOWN_LEFT;
             yield return DOWN_RIGHT;
-        }
-
-        /// <summary>
-        /// Returns all directions except for NONE, in clockwise order, starting with UP.
-        /// </summary>
-        /// <returns>
-        /// All directions except for NONE, in clockwise order, starting with UP.
-        /// </returns>
-        public static IEnumerable<Direction> DirectionsClockwise()
-        {
-            yield return UP;
-            yield return UP_RIGHT;
-            yield return RIGHT;
-            yield return DOWN_RIGHT;
-            yield return DOWN;
-            yield return DOWN_LEFT;
-            yield return LEFT;
-            yield return UP_LEFT;
         }
 
         /// <summary>
         /// Returns all directions except for NONE, in clockwise order, starting with the direction
-        /// given. If NONE is given at the starting point, starts with UP.
+        /// given (defaulting to UP). If NONE is given at the starting point, starts with UP.
         /// </summary>
         /// <param name="startingPoint">
         /// The direction to "start" at -- returns this direction first.
@@ -450,9 +443,9 @@ namespace GoRogue
         /// All directions except for NONE, in clockwise order, starting with the starting point
         /// given, or UP if NONE is given as the starting point.
         /// </returns>
-        public static IEnumerable<Direction> DirectionsClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> DirectionsClockwise(Direction startingPoint = null)
         {
-            if (startingPoint == NONE)
+            if (startingPoint == null || startingPoint == NONE)
                 startingPoint = UP;
 
             for (int i = 1; i <= 8; i++)
@@ -463,26 +456,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns all directions except for NONE, in counterclockwise order, starting with UP.
-        /// </summary>
-        /// <returns>
-        /// All directions except for NONE, in counterclockwise order, starting with UP.
-        /// </returns>
-        public static IEnumerable<Direction> DirectionsCounterClockwise()
-        {
-            yield return UP;
-            yield return UP_LEFT;
-            yield return LEFT;
-            yield return DOWN_LEFT;
-            yield return DOWN;
-            yield return DOWN_RIGHT;
-            yield return RIGHT;
-            yield return UP_RIGHT;
-        }
-
-        /// <summary>
         /// Returns all directions except for NONE, in counterclockwise order, starting with the
-        /// direction given. If NONE is given at the starting point, starts with UP.
+        /// direction given (defaulting to UP). If NONE is given at the starting point, starts with UP.
         /// </summary>
         /// <param name="startingPoint">
         /// The direction to "start" at -- returns this direction first.
@@ -491,9 +466,9 @@ namespace GoRogue
         /// All directions except for NONE, in counterclockwise order, starting with the starting
         /// point given, or UP if NONE is given as the starting point.
         /// </returns>
-        public static IEnumerable<Direction> DirectionsCounterClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> DirectionsCounterClockwise(Direction startingPoint = null)
         {
-            if (startingPoint == NONE)
+            if (startingPoint == null || startingPoint == NONE)
                 startingPoint = UP;
 
             for (int i = 1; i <= 8; i++)
@@ -586,25 +561,6 @@ namespace GoRogue
                 return UP_LEFT;
 
             return UP;
-        }
-
-        /// <summary>
-        /// Returns a function that gets the Directions enumerable that represents the potential
-        /// neighbors of a given cell, according to the given distance calculation.
-        /// </summary>
-        /// <param name="distanceType">
-        /// The distance type defining neighbors.
-        /// </param>
-        /// <returns>
-        /// A function that returns the IEnumerable&lt;Direction&gt; representing potential neighbor
-        /// directions, given the specified distance calculation.
-        /// </returns>
-        public static NeighborsGetter GetNeighbors(Distance distanceType)
-        {
-            if (distanceType == Distance.MANHATTAN)
-                return CardinalsClockwise;
-            else
-                return Outwards;
         }
 
         /// <summary>
