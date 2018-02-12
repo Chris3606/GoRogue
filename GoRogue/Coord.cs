@@ -536,6 +536,31 @@ namespace GoRogue
             => AllNeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
 
         /// <summary>
+        /// Calculates degree bearing of the line (from =&gt; to), where 0 is the direction Direction.UP.
+        /// </summary>
+        /// <param name="from">
+        /// Coordinate of line starting point.
+        /// </param>
+        /// <param name="to">
+        /// Coordinate of line ending point.
+        /// </param>
+        /// <returns>
+        /// The degree bearing of the line specified by the two given points.
+        /// </returns>
+        public static double BearingOfLine(Coord from, Coord to)
+        {
+            int x = to.X - from.X;
+            int y = to.Y - from.Y;
+            y *= Direction.yMult;
+
+            double angle = Math.Atan2(y, x);
+            double degree = MathHelpers.ToDegree(angle);
+            degree += 450; // Rotate to all positive such that 0 is up
+            degree %= 360; // Normalize
+            return degree;
+        }
+
+        /// <summary>
         /// Gets the 4 cardinal neighbors of the given location, in order UP, DOWN, LEFT, RIGHT.
         /// </summary>
         /// <param name="startingLocation">Location to return neighbors for.</param>

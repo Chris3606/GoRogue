@@ -71,7 +71,7 @@ namespace GoRogue
         private static Direction[] directionSides = new Direction[2];
 
         private static bool initYInc;
-        private static int yMult;
+        internal static int yMult { get; private set; }
         /// <summary>
         /// Enum type corresponding to Direction being represented.
         /// </summary>
@@ -211,31 +211,6 @@ namespace GoRogue
         /// coordinates typically work.
         /// </summary>
         public int DeltaY { get; private set; }
-
-        /// <summary>
-        /// Calculates degree bearing of the line (from =&gt; to), where 0 is the direction UP.
-        /// </summary>
-        /// <param name="from">
-        /// Coordinate of line starting point.
-        /// </param>
-        /// <param name="to">
-        /// Coordinate of line ending point.
-        /// </param>
-        /// <returns>
-        /// The degree bearing of the line specified by the two given points.
-        /// </returns>
-        public static double BearingOfLine(Coord from, Coord to)
-        {
-            int x = to.X - from.X;
-            int y = to.Y - from.Y;
-            y *= yMult;
-
-            double angle = Math.Atan2(y, x);
-            double degree = MathHelpers.ToDegree(angle);
-            degree += 450; // Rotate to all positive such that 0 is up
-            degree %= 360; // Normalize
-            return degree;
-        }
 
         /// <summary>
         /// Gets directions leading to neighboring locations, with adjacency determined by the distance calculation given.
