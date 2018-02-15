@@ -1,7 +1,7 @@
 ﻿namespace GoRogue
 {
     /// <summary>
-    /// Enum representing types. Useful for easy mapping of radius types to a primitive type (for
+    /// Enum representing Radius types. Useful for easy mapping of radius types to a primitive type (for
     /// cases like a switch statement).
     /// </summary>
     public enum RadiusType

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace GoRogue
 {
     /// <summary>
-    /// Enum representing types. Useful for easy mapping of radius types to a primitive type (for
+    /// Enum representing Direction types. Useful for easy mapping of Direction types to a primitive type (for
     /// cases like a switch statement).
     /// </summary>
     public enum DirectionType
@@ -267,25 +267,25 @@ namespace GoRogue
         /// startingPoint given. If NONE is given, starts at UP. If any other non-cardinal direction
         /// is given, it starts at the closest counterclockwise cardinal direction.
         /// </summary>
-        /// <param name="startingPoint">
+        /// <param name="startingDirection">
         /// The direction to "start" at -- returns this direction first.
         /// </param>
         /// <returns>
         /// All cardinal directions, in counterclockwise order, starting with the starting point
         /// given, as outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> CardinalsCounterClockwise(Direction startingPoint)
+        public static IEnumerable<Direction> CardinalsCounterClockwise(Direction startingDirection)
         {
-            if (startingPoint == NONE)
-                startingPoint = UP;
+            if (startingDirection == NONE)
+                startingDirection = UP;
 
-            if ((int)startingPoint.Type % 2 == 1)
-                startingPoint--; // Make it a cardinal
+            if ((int)startingDirection.Type % 2 == 1)
+                startingDirection--; // Make it a cardinal
 
-            yield return startingPoint;
-            yield return startingPoint - 2;
-            yield return startingPoint - 4;
-            yield return startingPoint - 6;
+            yield return startingDirection;
+            yield return startingDirection - 2;
+            yield return startingDirection - 4;
+            yield return startingDirection - 6;
         }
 
         /// <summary>
@@ -308,25 +308,25 @@ namespace GoRogue
         /// given (defaulting to UP_RIGHT). If NONE is given, starts at UP_RIGHT. If any cardinal
         /// direction is given, it starts at the closest clockwise diagonal direction.
         /// </summary>
-        /// <param name="startingPoint">
+        /// <param name="startingDirection">
         /// The direction to "start" at; returns this direction first.
         /// </param>
         /// <returns>
         /// All diagonal directions, in clockwise order, starting with the starting point given, as
         /// outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> DiagonalsClockwise(Direction startingPoint = null)
+        public static IEnumerable<Direction> DiagonalsClockwise(Direction startingDirection = null)
         {
-            if (startingPoint == null || startingPoint == NONE)
-                startingPoint = UP_RIGHT;
+            if (startingDirection == null || startingDirection == NONE)
+                startingDirection = UP_RIGHT;
 
-            if ((int)startingPoint.Type % 2 == 0)
-                startingPoint++; // Make it a diagonal
+            if ((int)startingDirection.Type % 2 == 0)
+                startingDirection++; // Make it a diagonal
 
-            yield return startingPoint;
-            yield return startingPoint + 2;
-            yield return startingPoint + 4;
-            yield return startingPoint + 6;
+            yield return startingDirection;
+            yield return startingDirection + 2;
+            yield return startingDirection + 4;
+            yield return startingDirection + 6;
         }
 
         /// <summary>
@@ -334,47 +334,47 @@ namespace GoRogue
         /// given (defaulting to UP_LEFT). If NONE is given, starts at UP_LEFT. If any cardinal
         /// direction is given, it starts at the closest counterclockwise diagonal direction.
         /// </summary>
-        /// <param name="startingPoint">
+        /// <param name="startingDirection">
         /// The direction to "start" at; returns this direction first.
         /// </param>
         /// <returns>
         /// All diagonal directions, in counterclockwise order, starting with the starting point
         /// given, as outlined in the function description.
         /// </returns>
-        public static IEnumerable<Direction> DiagonalsCounterClockwise(Direction startingPoint = null)
+        public static IEnumerable<Direction> DiagonalsCounterClockwise(Direction startingDirection = null)
         {
-            if (startingPoint == null || startingPoint == NONE)
-                startingPoint = UP_LEFT;
+            if (startingDirection == null || startingDirection == NONE)
+                startingDirection = UP_LEFT;
 
-            if ((int)startingPoint.Type % 2 == 0)
-                startingPoint--; // Make it a diagonal
+            if ((int)startingDirection.Type % 2 == 0)
+                startingDirection--; // Make it a diagonal
 
-            yield return startingPoint;
-            yield return startingPoint - 2;
-            yield return startingPoint - 4;
-            yield return startingPoint - 6;
+            yield return startingDirection;
+            yield return startingDirection - 2;
+            yield return startingDirection - 4;
+            yield return startingDirection - 6;
         }
 
         /// <summary>
         /// Returns all directions except for NONE, in clockwise order, starting with the direction
         /// given (defaulting to UP). If NONE is given at the starting point, starts with UP.
         /// </summary>
-        /// <param name="startingPoint">
+        /// <param name="startingDirection">
         /// The direction to "start" at -- returns this direction first.
         /// </param>
         /// <returns>
         /// All directions except for NONE, in clockwise order, starting with the starting point
         /// given, or UP if NONE is given as the starting point.
         /// </returns>
-        public static IEnumerable<Direction> DirectionsClockwise(Direction startingPoint = null)
+        public static IEnumerable<Direction> DirectionsClockwise(Direction startingDirection = null)
         {
-            if (startingPoint == null || startingPoint == NONE)
-                startingPoint = UP;
+            if (startingDirection == null || startingDirection == NONE)
+                startingDirection = UP;
 
             for (int i = 1; i <= 8; i++)
             {
-                yield return startingPoint;
-                startingPoint++;
+                yield return startingDirection;
+                startingDirection++;
             }
         }
 
@@ -382,22 +382,22 @@ namespace GoRogue
         /// Returns all directions except for NONE, in counterclockwise order, starting with the
         /// direction given (defaulting to UP). If NONE is given at the starting point, starts with UP.
         /// </summary>
-        /// <param name="startingPoint">
+        /// <param name="startingDirection">
         /// The direction to "start" at -- returns this direction first.
         /// </param>
         /// <returns>
         /// All directions except for NONE, in counterclockwise order, starting with the starting
         /// point given, or UP if NONE is given as the starting point.
         /// </returns>
-        public static IEnumerable<Direction> DirectionsCounterClockwise(Direction startingPoint = null)
+        public static IEnumerable<Direction> DirectionsCounterClockwise(Direction startingDirection = null)
         {
-            if (startingPoint == null || startingPoint == NONE)
-                startingPoint = UP;
+            if (startingDirection == null || startingDirection == NONE)
+                startingDirection = UP;
 
             for (int i = 1; i <= 8; i++)
             {
-                yield return startingPoint;
-                startingPoint--;
+                yield return startingDirection;
+                startingDirection--;
             }
         }
 
