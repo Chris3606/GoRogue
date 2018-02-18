@@ -22,27 +22,6 @@ namespace GoRogue.MapGeneration.Connectors
         /// <param name="map">
         /// The map to connect.
         /// </param>
-        /// <param name="shape">
-        /// The shape of a radius -- used to determine distance calculation.
-        /// </param>
-        /// <param name="areaConnector">
-        /// The area connection strategy to use. Not all methods function on maps with concave areas
-        /// -- see respective class documentation for details. If null is specified,
-        /// RandomConnectionPointSelector with the default RNG is used.
-        /// </param>
-        /// <param name="tunnelCreator">
-        /// The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
-        /// the distance calculation specified is used.
-        /// </param>
-        static public void Connect(ISettableMapView<bool> map, Radius shape, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null) =>
-            Connect(map, (Distance)shape, areaConnector, tunnelCreator);
-
-        /// <summary>
-        /// Connects the map given using the algorithm described in the class description.
-        /// </summary>
-        /// <param name="map">
-        /// The map to connect.
-        /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation that defines distance/neighbors.
         /// </param>

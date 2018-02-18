@@ -90,7 +90,7 @@ namespace GoRogue.MapGeneration.Generators
                 createRoom(map, room);
 
             if (connectUsingDefault)
-                Connectors.OrderedMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
+                Connectors.OrderedMapAreaConnector.Connect(map, AdjacencyRule.CARDINALS, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
         }
 
         // TODO: ConnectRooms function that can connect the rooms properly, in method specific to

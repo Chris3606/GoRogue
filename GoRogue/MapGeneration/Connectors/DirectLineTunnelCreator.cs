@@ -8,28 +8,19 @@
     /// </summary>
     public class DirectLineTunnelCreator : ITunnelCreator
     {
-        private Distance distanceCalc;
-
-        /// <summary>
-        /// Constructor. Takes the shape that defines a radius, which is used to determine the proper
-        /// distance calculation.
-        /// </summary>
-        /// <param name="shape">
-        /// The shape defining a radius, which determines the distance calculation to use.
-        /// </param>
-        public DirectLineTunnelCreator(Radius shape)
-            : this((Distance)shape) { }
+        private AdjacencyRule adjacencyRule;
 
         /// <summary>
         /// Constructor. Takes the distance calculation to use, which determines whether brensham's
         /// or CardinalPositionOnLine is used to create the tunnel.
         /// </summary>
-        /// <param name="distanceCalc">
-        /// The distance calculation to use.
+        /// <param name="adjacencyRule">
+        /// Method of adjacency to respect when creating tunnels.  Cannot be diagonal.
         /// </param>
-        public DirectLineTunnelCreator(Distance distanceCalc)
+        public DirectLineTunnelCreator(AdjacencyRule adjacencyRule)
         {
-            this.distanceCalc = distanceCalc;
+            if (adjacencyRule == AdjacencyRule.DIAGONALS) throw new System.ArgumentException("Cannot use diagonal adjacency to create tunnels", nameof(adjacencyRule));
+            this.adjacencyRule = adjacencyRule;
         }
 
         /// <summary>
@@ -46,7 +37,7 @@
         /// </param>
         public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
         {
-            var lineAlgorithm = (distanceCalc == Distance.MANHATTAN) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;
+            var lineAlgorithm = (adjacencyRule == AdjacencyRule.CARDINALS) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;
 
             Coord previous = null;
             foreach (var pos in Lines.Get(start, end, lineAlgorithm))

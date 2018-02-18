@@ -75,15 +75,15 @@ namespace GoRogue.SenseMapping
         /// The maximum radius of the source -- this is the maximum distance the source values will
         /// emanate, provided the area is completely unobstructed.
         /// </param>
-        /// <param name="radiusStrategy">
-        /// The radius type/calculation strategy (circle, diamond, square, etc) the source should use.
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
-        public SenseSource(SourceType type, Coord position, int radius, Radius radiusStrategy)
+        public SenseSource(SourceType type, Coord position, int radius, Distance distanceCalc)
         {
             Type = type;
             Position = position;
             Radius = radius; // Arrays are initialized by this setter
-            RadiusStrategy = radiusStrategy;
+            DistanceCalc = distanceCalc;
 
             resMap = null;
             Enabled = true;
@@ -124,9 +124,9 @@ namespace GoRogue.SenseMapping
         }
 
         /// <summary>
-        /// The radius type/calculation strategy (circle, diamond, square, etc.) the source should use.
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius)
         /// </summary>
-        public Radius RadiusStrategy { get; set; }
+        public Distance DistanceCalc { get; set; }
 
         /// <summary>
         /// The spread mechanics to use for source values.
@@ -152,7 +152,7 @@ namespace GoRogue.SenseMapping
 
                     case SourceType.SHADOW:
                         initArrays();
-                        foreach (Direction d in Direction.Diagonals())
+                        foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
                         {
                             shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
                             shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);
@@ -186,7 +186,6 @@ namespace GoRogue.SenseMapping
 
         private void doRippleFOV(int ripple, IMapView<double> map)
         {
-            Distance distanceStrategy = (Distance)RadiusStrategy;
             double rad = Math.Max(1, Radius);
             double decay = 1.0 / (rad + 1);
 
@@ -200,7 +199,7 @@ namespace GoRogue.SenseMapping
                 if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
                     continue; // Nothing left to spread!
 
-                foreach (Direction dir in Direction.Outwards())
+                foreach (Direction dir in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighbors())
                 {
                     int x2 = p.X + dir.DeltaX;
                     int y2 = p.Y + dir.DeltaY;
@@ -208,7 +207,7 @@ namespace GoRogue.SenseMapping
                     int globalY2 = Position.Y - Radius + y2;
 
                     if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-                        distanceStrategy.DistanceBetween(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
+                        DistanceCalc.DistanceBetween(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
                         continue;
 
                     double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, decay, map);
@@ -235,7 +234,6 @@ namespace GoRogue.SenseMapping
         // TODO: Make these virtual, to allow directional light sources?
         private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, double decay, IMapView<double> map)
         {
-            Distance distanceStrategy = (Distance)RadiusStrategy;
             if (x == size / 2 && y == size / 2)
                 return 1;
 
@@ -243,7 +241,7 @@ namespace GoRogue.SenseMapping
             double tmpDistance = 0, testDistance;
             Coord c;
 
-            foreach (Direction di in Direction.Outwards())
+            foreach (Direction di in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighbors())
             {
                 int x2 = x + di.DeltaX;
                 int y2 = y + di.DeltaY;
@@ -252,13 +250,13 @@ namespace GoRogue.SenseMapping
 
                 if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
                 {
-                    tmpDistance = distanceStrategy.DistanceBetween(size / 2, size / 2, x2, y2);
+                    tmpDistance = DistanceCalc.DistanceBetween(size / 2, size / 2, x2, y2);
                     int idx = 0;
 
                     for (int i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
                     {
                         c = neighbors[i];
-                        testDistance = distanceStrategy.DistanceBetween(size / 2, size / 2, c.X, c.Y);
+                        testDistance = DistanceCalc.DistanceBetween(size / 2, size / 2, c.X, c.Y);
                         if (tmpDistance < testDistance)
                             break;
 
@@ -284,7 +282,7 @@ namespace GoRogue.SenseMapping
                     if (nearLight[p.X, p.Y])
                         indirects++;
 
-                    double dist = distanceStrategy.DistanceBetween(x, y, p.X, p.Y);
+                    double dist = DistanceCalc.DistanceBetween(x, y, p.X, p.Y);
                     double resistance = map[gpx, gpy];
                     if (gpx == Position.X && gpy == Position.Y)
                         resistance = 0.0;
@@ -301,7 +299,6 @@ namespace GoRogue.SenseMapping
 
         private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
         {
-            Distance distanceStrategy = (Distance)RadiusStrategy;
             int radius = Math.Max(1, Radius);
             double decay = 1.0 / (radius + 1);
 
@@ -328,7 +325,7 @@ namespace GoRogue.SenseMapping
                     if (end > leftSlope)
                         break;
 
-                    double deltaRadius = distanceStrategy.DistanceOf(deltaX, deltaY);
+                    double deltaRadius = DistanceCalc.DistanceOf(deltaX, deltaY);
                     if (deltaRadius <= radius)
                     {
                         double bright = 1 - decay * deltaRadius;

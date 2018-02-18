@@ -46,7 +46,7 @@
 
                         int lVal = int.MaxValue;
 
-                        foreach (var dir in Direction.CardinalsClockwise())
+                        foreach (var dir in AdjacencyRule.CARDINALS.DirectionsOfNeighborsClockwise())
                         {
                             int nX = x + dir.DeltaX;
                             int nY = y + dir.DeltaY;

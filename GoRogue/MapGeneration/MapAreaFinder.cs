@@ -16,9 +16,9 @@ namespace GoRogue.MapGeneration
     public class MapAreaFinder
     {
         /// <summary>
-        /// The calculation used to determine distance between two points.
+        /// The method used for determining connectivity of the grid.
         /// </summary>
-        public Distance DistanceCalc;
+        public AdjacencyRule AdjacencyMethod;
 
         /// <summary>
         /// IMapView indicating which cells should be considered part of a map area and which should not.
@@ -33,27 +33,14 @@ namespace GoRogue.MapGeneration
         /// <param name="map">
         /// IMapView indicating which cells should be considered part of a map area and which should not.
         /// </param>
-        /// <param name="shape">
-        /// The shape of a radius - determines calculation used to define distance, and thus what are
-        /// considered neighbors.
+        /// <param name="adjacencyMethod">
+        /// The method used for determining connectivity of the grid.
         /// </param>
-        public MapAreaFinder(IMapView<bool> map, Radius shape)
-            : this(map, (Distance)shape) { }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="map">
-        /// IMapView indicating which cells should be considered part of a map area and which should not.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The calculation used to determine distance.
-        /// </param>
-        public MapAreaFinder(IMapView<bool> map, Distance distanceCalc)
+        public MapAreaFinder(IMapView<bool> map, AdjacencyRule adjacencyMethod)
         {
             Map = map;
             visited = null;
-            DistanceCalc = distanceCalc;
+            AdjacencyMethod = adjacencyMethod;
         }
 
         /// <summary>
@@ -64,30 +51,15 @@ namespace GoRogue.MapGeneration
         /// <param name="map">
         /// IMapView indicating which cells should be considered part of a map area and which should not.
         /// </param>
-        /// <param name="shape">
+        /// <param name="adjacencyMethod">
+        /// The method used for determining connectivity of the grid.
         /// </param>
         /// <returns>
         /// An IEnumerable of each (unique) map area.
         /// </returns>
-        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Radius shape) => MapAreasFor(map, (Distance)shape);
-
-        /// <summary>
-        /// Convenience function that creates an MapAreaFinder and returns the result of that
-        /// MapAreaFinder's MapAreas function. Intended to be used for cases in which the area finder
-        /// will never be re-used.
-        /// </summary>
-        /// <param name="map">
-        /// IMapView indicating which cells should be considered part of a map area and which should not.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The calculation used to determine distance.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of each (unique) map area.
-        /// </returns>
-        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, Distance distanceCalc)
+        static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
         {
-            var areaFinder = new MapAreaFinder(map, distanceCalc);
+            var areaFinder = new MapAreaFinder(map, adjacencyMethod);
             return areaFinder.MapAreas();
         }
 
@@ -129,7 +101,7 @@ namespace GoRogue.MapGeneration
                 area.Add(position);
                 visited[position.X, position.Y] = true;
 
-                foreach (var c in Coord.Neighbors(position, DistanceCalc))
+                foreach (var c in AdjacencyMethod.Neighbors(position))
                 {
                     if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height) // Out of bounds, thus not actually a neighbor
                         continue;

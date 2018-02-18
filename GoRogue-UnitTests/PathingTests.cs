@@ -103,7 +103,7 @@ namespace GoRogue_UnitTests
             checkAgainstPath(expectedPath, actualPath, end, start);
         }
 
-        private static void checkAdjacency(Path path, Distance distanceCalc, IMapView<bool> map)
+        private static void checkAdjacency(Path path, Distance distanceCalc)
         {
             if (path.LengthWithStart == 1)
                 return;
@@ -111,8 +111,7 @@ namespace GoRogue_UnitTests
             for (int i = 0; i < path.LengthWithStart - 2; i++)
             {
                 bool isAdjacent = false;
-
-                foreach (var neighbor in Coord.Neighbors(path.GetStepWithStart(i), distanceCalc))
+                foreach (var neighbor in ((AdjacencyRule)distanceCalc).Neighbors(path.GetStepWithStart(i)))
                 {
                     if (neighbor == path.GetStepWithStart(i + 1))
                     {
@@ -135,13 +134,13 @@ namespace GoRogue_UnitTests
         {
             switch (distanceCalc.Type)
             {
-                case DistanceType.CHEBYSHEV:
+                case Distance.Types.CHEBYSHEV:
                     return CA.AStar.MaxAlongAxisHeuristic;
 
-                case DistanceType.EUCLIDEAN:
+                case Distance.Types.EUCLIDEAN:
                     return CA.AStar.EuclidianHeuristic;
 
-                case DistanceType.MANHATTAN:
+                case Distance.Types.MANHATTAN:
                     return CA.AStar.ManhattanHeuristic;
 
                 default:
@@ -170,7 +169,7 @@ namespace GoRogue_UnitTests
                 {
                     if (map[x, y])
                     {
-                        foreach (var neighbor in Coord.Neighbors(Coord.Get(x, y), connectivity))
+                        foreach (var neighbor in ((AdjacencyRule)connectivity).Neighbors(x, y))
                         {
                             // Out of bounds of map
                             if (neighbor.X < 0 || neighbor.Y < 0 || neighbor.X >= map.Width || neighbor.Y >= map.Height)
@@ -225,7 +224,7 @@ namespace GoRogue_UnitTests
                 Assert.AreEqual(path1.Start, start);
                 Assert.AreEqual(path1.End, end);
                 checkWalkable(path1, map);
-                checkAdjacency(path1, distanceCalc, map);
+                checkAdjacency(path1, distanceCalc);
             }
         }
 

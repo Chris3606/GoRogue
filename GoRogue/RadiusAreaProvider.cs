@@ -27,7 +27,7 @@ namespace GoRogue
         public Rectangle Bounds;
 
         /// <summary>
-        /// The distance calculation that defines the concept of radius.
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </summary>
         public Distance DistanceCalc;
 
@@ -40,39 +40,6 @@ namespace GoRogue
         private Coord topLeft;
 
         /// <summary>
-        /// Constructor. Specifies center, radius, radius shape, and bounds.
-        /// </summary>
-        /// <param name="center">
-        /// The center point of the radius.
-        /// </param>
-        /// <param name="radius">
-        /// The length of the radius.
-        /// </param>
-        /// <param name="shape">
-        /// The shape of the radius.
-        /// </param>
-        /// <param name="bounds">
-        /// The bounds to constrain the returned Coords to.
-        /// </param>
-        public RadiusAreaProvider(Coord center, int radius, Radius shape, Rectangle bounds)
-            : this(center, radius, (Distance)shape, bounds) { }
-
-        /// <summary>
-        /// Constructor. Specifies center, radius, and shape, with no bounds.
-        /// </summary>
-        /// <param name="center">
-        /// The center point of the radius.
-        /// </param>
-        /// <param name="radius">
-        /// The length of the radius.
-        /// </param>
-        /// <param name="shape">
-        /// The shape of the radius.
-        /// </param>
-        public RadiusAreaProvider(Coord center, int radius, Radius shape)
-            : this(center, radius, (Distance)shape, Rectangle.EMPTY) { }
-
-        /// <summary>
         /// Constructor. Specifies center, radius length, distance calculation that defines the
         /// concept of radius, and bounds.
         /// </summary>
@@ -83,7 +50,7 @@ namespace GoRogue
         /// The length of the radius.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation that defines the concept of radius.
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius)..
         /// </param>
         /// <param name="bounds">
         /// The bounds to constrain the returned Coords to.
@@ -111,7 +78,7 @@ namespace GoRogue
         /// The length of the radius.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation that defines the concept of radius.
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
         public RadiusAreaProvider(Coord center, int radius, Distance distanceCalc)
             : this(center, radius, distanceCalc, Rectangle.EMPTY) { }
@@ -153,11 +120,6 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// The shape of the radius.
-        /// </summary>
-        public Radius RadiusShape { get => (Radius)DistanceCalc; set => DistanceCalc = (Distance)value; }
-
-        /// <summary>
         /// Returns an IEnumerable of all unique Coords within the radius and bounds specified (as
         /// applicable). See class description for details on the ordering.
         /// </summary>
@@ -183,7 +145,7 @@ namespace GoRogue
                 cur = q.Dequeue();
                 yield return cur;
 
-                foreach (var neighbor in Coord.Neighbors(cur, DistanceCalc))
+                foreach (var neighbor in ((AdjacencyRule)DistanceCalc).Neighbors(cur))
                 {
                     localNeighbor = neighbor - topLeft;
 

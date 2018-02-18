@@ -145,12 +145,11 @@ namespace GoRogue
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
-        /// <param name="radiusTechnique">
-        /// The type of the radius (square, circle, diamond, etc.)
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
-        public void Calculate(int startX, int startY, int radius, Radius radiusTechnique)
+        public void Calculate(int startX, int startY, int radius, Distance distanceCalc)
         {
-            var distanceTechnique = (Distance)radiusTechnique;
             double rad = Math.Max(1, radius);
             double decay = 1.0 / (rad + 1);
 
@@ -161,10 +160,10 @@ namespace GoRogue
             light[startX, startY] = 1; // Full power to starting space
             currentFOV.Add(Coord.Get(startX, startY));
 
-            foreach (Direction d in Direction.Diagonals())
+            foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
             {
-                shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceTechnique);
-                shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceTechnique);
+                shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
+                shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
             }
         }
 
@@ -177,10 +176,10 @@ namespace GoRogue
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
-        /// <param name="radiusTechnique">
-        /// The type of the radius (square, circle, diamond, etc.)
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
-        public void Calculate(Coord start, int radius, Radius radiusTechnique) => Calculate(start.X, start.Y, radius, radiusTechnique);
+        public void Calculate(Coord start, int radius, Distance distanceCalc) => Calculate(start.X, start.Y, radius, distanceCalc);
 
         /// <summary>
         /// Calculates FOV, given an origin point of (startX, startY), with the given radius and
@@ -197,8 +196,8 @@ namespace GoRogue
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
-        /// <param name="radiusTechnique">
-        /// The type of the radius (square, circle, diamond, etc.)
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
@@ -208,9 +207,8 @@ namespace GoRogue
         /// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
         /// degrees are included on either side of the span line.
         /// </param>
-        public void Calculate(int startX, int startY, int radius, Radius radiusTechnique, double angle, double span)
+        public void Calculate(int startX, int startY, int radius, Distance distanceCalc, double angle, double span)
         {
-            var distanceTechnique = (Distance)radiusTechnique;
             double rad = Math.Max(1, radius);
             double decay = 1.0 / (rad + 1);
 
@@ -229,7 +227,7 @@ namespace GoRogue
             //       shadow is on/off.
             int ctr = 0;
             bool started = false;
-            foreach (Direction d in Direction.DiagonalsCounterClockwise(Direction.UP_RIGHT))
+            foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighborsCounterClockwise(Direction.UP_RIGHT))
             {
                 ctr %= 4;
                 ctr++;
@@ -241,8 +239,8 @@ namespace GoRogue
                     if (ctr < 4 && angle < Math.PI / 2.0 * (ctr - 1) - span / 2.0)
                         break;
 
-                    light = shadowCastLimited(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, resMap, distanceTechnique, angle2, span2);
-                    light = shadowCastLimited(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, resMap, distanceTechnique, angle2, span2);
+                    light = shadowCastLimited(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, resMap, distanceCalc, angle2, span2);
+                    light = shadowCastLimited(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, resMap, distanceCalc, angle2, span2);
                 }
             }
         }
@@ -259,8 +257,8 @@ namespace GoRogue
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
-        /// <param name="radiusTechnique">
-        /// The type of the radius (square, circle, diamond, etc.)
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
@@ -270,7 +268,7 @@ namespace GoRogue
         /// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
         /// degrees are included on either side of the span line.
         /// </param>
-        public void Calculate(Coord start, int radius, Radius radiusTechnique, double angle, double span) => Calculate(start.X, start.Y, radius, radiusTechnique, angle, span);
+        public void Calculate(Coord start, int radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
 
         // Returns value because its recursive
         private static double[,] shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,

@@ -1,60 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace GoRogue
 {
-    /// <summary>
-    /// Enum representing Direction types. Useful for easy mapping of Direction types to a primitive type (for
-    /// cases like a switch statement).
-    /// </summary>
-    public enum DirectionType
-    {
-        /// <summary>
-        /// Type for Direction.UP.
-        /// </summary>
-        UP,
-
-        /// <summary>
-        /// Type for Direction.UP_RIGHT.
-        /// </summary>
-        UP_RIGHT,
-
-        /// <summary>
-        /// Type for Direction.RIGHT.
-        /// </summary>
-        RIGHT,
-
-        /// <summary>
-        /// Type for Direction.DOWN_RIGHT.
-        /// </summary>
-        DOWN_RIGHT,
-
-        /// <summary>
-        /// Type for Direction.DOWN.
-        /// </summary>
-        DOWN,
-
-        /// <summary>
-        /// Type for Direction.DOWN_LEFT.
-        /// </summary>
-        DOWN_LEFT,
-
-        /// <summary>
-        /// Type for Direction.LEFT.
-        /// </summary>
-        LEFT,
-
-        /// <summary>
-        /// Type for Direction.UP_LEFT.
-        /// </summary>
-        UP_LEFT,
-
-        /// <summary>
-        /// Type for Direction.NONE.
-        /// </summary>
-        NONE
-    };
-
     /// <summary>
     /// Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy
     /// for that direction, at unit scale.
@@ -69,6 +16,58 @@ namespace GoRogue
     /// </remarks>
     public class Direction
     {
+        /// <summary>
+        /// Enum representing Direction types. Useful for easy mapping of Direction types to a primitive type (for
+        /// cases like a switch statement).
+        /// </summary>
+        public enum Types
+        {
+            /// <summary>
+            /// Type for Direction.UP.
+            /// </summary>
+            UP,
+
+            /// <summary>
+            /// Type for Direction.UP_RIGHT.
+            /// </summary>
+            UP_RIGHT,
+
+            /// <summary>
+            /// Type for Direction.RIGHT.
+            /// </summary>
+            RIGHT,
+
+            /// <summary>
+            /// Type for Direction.DOWN_RIGHT.
+            /// </summary>
+            DOWN_RIGHT,
+
+            /// <summary>
+            /// Type for Direction.DOWN.
+            /// </summary>
+            DOWN,
+
+            /// <summary>
+            /// Type for Direction.DOWN_LEFT.
+            /// </summary>
+            DOWN_LEFT,
+
+            /// <summary>
+            /// Type for Direction.LEFT.
+            /// </summary>
+            LEFT,
+
+            /// <summary>
+            /// Type for Direction.UP_LEFT.
+            /// </summary>
+            UP_LEFT,
+
+            /// <summary>
+            /// Type for Direction.NONE.
+            /// </summary>
+            NONE
+        };
+
         private static readonly Direction[] directions;
 
         private static readonly string[] writeVals = { "UP", "UP_RIGHT", "RIGHT", "DOWN_RIGHT", "DOWN", "DOWN_LEFT", "LEFT", "UP_LEFT", "NONE" };
@@ -83,14 +82,14 @@ namespace GoRogue
         static Direction()
         {
             directions = new Direction[9];
-            LEFT = new Direction(-1, 0, DirectionType.LEFT);
-            RIGHT = new Direction(1, 0, DirectionType.RIGHT);
-            NONE = new Direction(0, 0, DirectionType.NONE);
+            LEFT = new Direction(-1, 0, Types.LEFT);
+            RIGHT = new Direction(1, 0, Types.RIGHT);
+            NONE = new Direction(0, 0, Types.NONE);
             initYInc = false;
             YIncreasesUpward = false; // Initializes rest of distance values
         }
 
-        private Direction(int dx, int dy, DirectionType type)
+        private Direction(int dx, int dy, Types type)
         {
             DeltaX = dx;
             DeltaY = dy;
@@ -102,8 +101,8 @@ namespace GoRogue
         /// </summary>
         public static Direction DOWN
         {
-            get => directions[(int)DirectionType.DOWN];
-            private set => directions[(int)DirectionType.DOWN] = value;
+            get => directions[(int)Types.DOWN];
+            private set => directions[(int)Types.DOWN] = value;
         }
 
         /// <summary>
@@ -111,8 +110,8 @@ namespace GoRogue
         /// </summary>
         public static Direction DOWN_LEFT
         {
-            get => directions[(int)DirectionType.DOWN_LEFT];
-            private set => directions[(int)DirectionType.DOWN_LEFT] = value;
+            get => directions[(int)Types.DOWN_LEFT];
+            private set => directions[(int)Types.DOWN_LEFT] = value;
         }
 
         /// <summary>
@@ -120,8 +119,8 @@ namespace GoRogue
         /// </summary>
         public static Direction DOWN_RIGHT
         {
-            get => directions[(int)DirectionType.DOWN_RIGHT];
-            private set => directions[(int)DirectionType.DOWN_RIGHT] = value;
+            get => directions[(int)Types.DOWN_RIGHT];
+            private set => directions[(int)Types.DOWN_RIGHT] = value;
         }
 
         /// <summary>
@@ -129,8 +128,8 @@ namespace GoRogue
         /// </summary>
         public static Direction LEFT
         {
-            get => directions[(int)DirectionType.LEFT];
-            private set => directions[(int)DirectionType.LEFT] = value;
+            get => directions[(int)Types.LEFT];
+            private set => directions[(int)Types.LEFT] = value;
         }
 
         /// <summary>
@@ -138,8 +137,8 @@ namespace GoRogue
         /// </summary>
         public static Direction NONE
         {
-            get => directions[(int)DirectionType.NONE];
-            private set => directions[(int)DirectionType.NONE] = value;
+            get => directions[(int)Types.NONE];
+            private set => directions[(int)Types.NONE] = value;
         }
 
         /// <summary>
@@ -147,8 +146,8 @@ namespace GoRogue
         /// </summary>
         public static Direction RIGHT
         {
-            get => directions[(int)DirectionType.RIGHT];
-            private set => directions[(int)DirectionType.RIGHT] = value;
+            get => directions[(int)Types.RIGHT];
+            private set => directions[(int)Types.RIGHT] = value;
         }
 
         /// <summary>
@@ -156,8 +155,8 @@ namespace GoRogue
         /// </summary>
         public static Direction UP
         {
-            get => directions[(int)DirectionType.UP];
-            private set => directions[(int)DirectionType.UP] = value;
+            get => directions[(int)Types.UP];
+            private set => directions[(int)Types.UP] = value;
         }
 
         /// <summary>
@@ -165,8 +164,8 @@ namespace GoRogue
         /// </summary>
         public static Direction UP_LEFT
         {
-            get => directions[(int)DirectionType.UP_LEFT];
-            private set => directions[(int)DirectionType.UP_LEFT] = value;
+            get => directions[(int)Types.UP_LEFT];
+            private set => directions[(int)Types.UP_LEFT] = value;
         }
 
         /// <summary>
@@ -174,8 +173,8 @@ namespace GoRogue
         /// </summary>
         public static Direction UP_RIGHT
         {
-            get => directions[(int)DirectionType.UP_RIGHT];
-            private set => directions[(int)DirectionType.UP_RIGHT] = value;
+            get => directions[(int)Types.UP_RIGHT];
+            private set => directions[(int)Types.UP_RIGHT] = value;
         }
 
         /// <summary>
@@ -194,12 +193,12 @@ namespace GoRogue
                     _yIncreasesUpward = value;
                     yMult = (_yIncreasesUpward) ? -1 : 1;
 
-                    UP = new Direction(0, -1 * yMult, DirectionType.UP);
-                    DOWN = new Direction(0, 1 * yMult, DirectionType.DOWN);
-                    UP_LEFT = new Direction(-1, -1 * yMult, DirectionType.UP_LEFT);
-                    UP_RIGHT = new Direction(1, -1 * yMult, DirectionType.UP_RIGHT);
-                    DOWN_LEFT = new Direction(-1, 1 * yMult, DirectionType.DOWN_LEFT);
-                    DOWN_RIGHT = new Direction(1, 1 * yMult, DirectionType.DOWN_RIGHT);
+                    UP = new Direction(0, -1 * yMult, Types.UP);
+                    DOWN = new Direction(0, 1 * yMult, Types.DOWN);
+                    UP_LEFT = new Direction(-1, -1 * yMult, Types.UP_LEFT);
+                    UP_RIGHT = new Direction(1, -1 * yMult, Types.UP_RIGHT);
+                    DOWN_LEFT = new Direction(-1, 1 * yMult, Types.DOWN_LEFT);
+                    DOWN_RIGHT = new Direction(1, 1 * yMult, Types.DOWN_RIGHT);
                 }
             }
         }
@@ -218,188 +217,9 @@ namespace GoRogue
         /// <summary>
         /// Enum type corresponding to Direction being represented.
         /// </summary>
-        public DirectionType Type { get; private set; }
+        public Types Type { get; private set; }
 
         internal static int yMult { get; private set; }
-
-        /// <summary>
-        /// Returns only cardinal directions, in order UP, DOWN, LEFT, RIGHT.
-        /// </summary>
-        /// <returns>
-        /// Cardinal directions in specified order.
-        /// </returns>
-        public static IEnumerable<Direction> Cardinals()
-        {
-            yield return UP;
-            yield return DOWN;
-            yield return LEFT;
-            yield return RIGHT;
-        }
-
-        /// <summary>
-        /// Returns only cardinal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP). If NONE is given, starts at UP. If any other non-cardinal
-        /// direction is given, it starts at the closest clockwise cardinal direction.
-        /// </summary>
-        /// <param name="startingPoint">
-        /// The direction to "start" at -- returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All cardinal directions, in clockwise order, starting with the starting point given, as
-        /// outlined in the function description.
-        /// </returns>
-        public static IEnumerable<Direction> CardinalsClockwise(Direction startingPoint = null)
-        {
-            if (startingPoint == null || startingPoint == NONE)
-                startingPoint = UP;
-
-            if ((int)startingPoint.Type % 2 == 1)
-                startingPoint++; // Make it a cardinal
-
-            yield return startingPoint;
-            yield return startingPoint + 2;
-            yield return startingPoint + 4;
-            yield return startingPoint + 6;
-        }
-
-        /// <summary>
-        /// Returns only cardinal directions, in counterclockwise order, starting with the
-        /// startingPoint given. If NONE is given, starts at UP. If any other non-cardinal direction
-        /// is given, it starts at the closest counterclockwise cardinal direction.
-        /// </summary>
-        /// <param name="startingDirection">
-        /// The direction to "start" at -- returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All cardinal directions, in counterclockwise order, starting with the starting point
-        /// given, as outlined in the function description.
-        /// </returns>
-        public static IEnumerable<Direction> CardinalsCounterClockwise(Direction startingDirection)
-        {
-            if (startingDirection == NONE)
-                startingDirection = UP;
-
-            if ((int)startingDirection.Type % 2 == 1)
-                startingDirection--; // Make it a cardinal
-
-            yield return startingDirection;
-            yield return startingDirection - 2;
-            yield return startingDirection - 4;
-            yield return startingDirection - 6;
-        }
-
-        /// <summary>
-        /// Returns only diagonal directions, top to bottom, left to right: UP_LEFT, UP_RIGHT,
-        /// DOWN_LEFT, DOWN_RIGHT.
-        /// </summary>
-        /// <returns>
-        /// Only diagonal directions.
-        /// </returns>
-        public static IEnumerable<Direction> Diagonals()
-        {
-            yield return UP_LEFT;
-            yield return UP_RIGHT;
-            yield return DOWN_LEFT;
-            yield return DOWN_RIGHT;
-        }
-
-        /// <summary>
-        /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP_RIGHT). If NONE is given, starts at UP_RIGHT. If any cardinal
-        /// direction is given, it starts at the closest clockwise diagonal direction.
-        /// </summary>
-        /// <param name="startingDirection">
-        /// The direction to "start" at; returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All diagonal directions, in clockwise order, starting with the starting point given, as
-        /// outlined in the function description.
-        /// </returns>
-        public static IEnumerable<Direction> DiagonalsClockwise(Direction startingDirection = null)
-        {
-            if (startingDirection == null || startingDirection == NONE)
-                startingDirection = UP_RIGHT;
-
-            if ((int)startingDirection.Type % 2 == 0)
-                startingDirection++; // Make it a diagonal
-
-            yield return startingDirection;
-            yield return startingDirection + 2;
-            yield return startingDirection + 4;
-            yield return startingDirection + 6;
-        }
-
-        /// <summary>
-        /// Returns only diagonal directions, in clockwise order, starting with the startingPoint
-        /// given (defaulting to UP_LEFT). If NONE is given, starts at UP_LEFT. If any cardinal
-        /// direction is given, it starts at the closest counterclockwise diagonal direction.
-        /// </summary>
-        /// <param name="startingDirection">
-        /// The direction to "start" at; returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All diagonal directions, in counterclockwise order, starting with the starting point
-        /// given, as outlined in the function description.
-        /// </returns>
-        public static IEnumerable<Direction> DiagonalsCounterClockwise(Direction startingDirection = null)
-        {
-            if (startingDirection == null || startingDirection == NONE)
-                startingDirection = UP_LEFT;
-
-            if ((int)startingDirection.Type % 2 == 0)
-                startingDirection--; // Make it a diagonal
-
-            yield return startingDirection;
-            yield return startingDirection - 2;
-            yield return startingDirection - 4;
-            yield return startingDirection - 6;
-        }
-
-        /// <summary>
-        /// Returns all directions except for NONE, in clockwise order, starting with the direction
-        /// given (defaulting to UP). If NONE is given at the starting point, starts with UP.
-        /// </summary>
-        /// <param name="startingDirection">
-        /// The direction to "start" at -- returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All directions except for NONE, in clockwise order, starting with the starting point
-        /// given, or UP if NONE is given as the starting point.
-        /// </returns>
-        public static IEnumerable<Direction> DirectionsClockwise(Direction startingDirection = null)
-        {
-            if (startingDirection == null || startingDirection == NONE)
-                startingDirection = UP;
-
-            for (int i = 1; i <= 8; i++)
-            {
-                yield return startingDirection;
-                startingDirection++;
-            }
-        }
-
-        /// <summary>
-        /// Returns all directions except for NONE, in counterclockwise order, starting with the
-        /// direction given (defaulting to UP). If NONE is given at the starting point, starts with UP.
-        /// </summary>
-        /// <param name="startingDirection">
-        /// The direction to "start" at -- returns this direction first.
-        /// </param>
-        /// <returns>
-        /// All directions except for NONE, in counterclockwise order, starting with the starting
-        /// point given, or UP if NONE is given as the starting point.
-        /// </returns>
-        public static IEnumerable<Direction> DirectionsCounterClockwise(Direction startingDirection = null)
-        {
-            if (startingDirection == null || startingDirection == NONE)
-                startingDirection = UP;
-
-            for (int i = 1; i <= 8; i++)
-            {
-                yield return startingDirection;
-                startingDirection--;
-            }
-        }
 
         /// <summary>
         /// Returns the cardinal direction that most closely matches the angle given by a line from
@@ -487,110 +307,6 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the
-        /// distance calculation given. MANHATTAN yields only cardinal direction, while others yield
-        /// all directions (cardinals before diagonals).
-        /// </summary>
-        /// <param name="distanceCalc">
-        /// Distance calculation used to determine adjacency.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirections(Distance distanceCalc)
-            => (distanceCalc == Distance.MANHATTAN) ? Cardinals() : Outwards();
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
-        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
-        /// directions (cardinals before diagonals).
-        /// </summary>
-        /// <param name="shape">
-        /// Radius shape used to determine adjacency.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirections(Radius shape)
-            => NeighborDirections((Distance)shape);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the
-        /// distance calculation given. MANHATTAN yields only cardinal direction, while others yield
-        /// all directions. Directions are returned in clockwise order, starting with the direction
-        /// specified, or the nearest clockwise cardinal direction if MANHATTAN distance is specified
-        /// and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="distanceCalc">
-        /// Distance calculation used to determine adjacency.
-        /// </param>
-        /// <param name="startingDirection">
-        /// The direction to start with.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations, in clockwise order.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirectionsClockwise(Distance distanceCalc, Direction startingDirection = null)
-            => (distanceCalc == Distance.MANHATTAN) ? CardinalsClockwise(startingDirection) : DirectionsClockwise(startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
-        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
-        /// directions. Directions are returned in clockwise order, starting with the direction
-        /// specified, or the nearest clockwise cardinal direction if DIAMOND/OCTAHEDRON radius shape
-        /// is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="shape">
-        /// Radius shape used to determine adjacency.
-        /// </param>
-        /// <param name="startingDirection">
-        /// The direction to start with.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations, in clockwise order.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirectionsClockwise(Radius shape, Direction startingDirection = null)
-            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the
-        /// distance calculation given. DIAMOND/OCTAHEDRON yields only cardinal direction, while
-        /// others yield all directions. Directions are returned in counter-clockwise order, starting
-        /// with the direction specified, or the nearest counter-clockwise cardinal direction if
-        /// DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="distanceCalc">
-        /// Distance calculation used to determine adjacency.
-        /// </param>
-        /// <param name="startingDirection">
-        /// The direction to start with.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations, in counter-clockwise order.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Distance distanceCalc, Direction startingDirection = null)
-            => (distanceCalc == Distance.MANHATTAN) ? CardinalsCounterClockwise(startingDirection) : DirectionsCounterClockwise(startingDirection);
-
-        /// <summary>
-        /// Gets directions leading to neighboring locations, with adjacency determined by the radius
-        /// shape given. DIAMOND/OCTAHEDRON yields only cardinal direction, while others yield all
-        /// directions. Directions are returned in counter-clockwise order, starting with the
-        /// direction specified, or the nearest counter-clockwise cardinal direction if
-        /// DIAMOND/OCTAHEDRON radius shape is specified and the given direction is a diagonal.
-        /// </summary>
-        /// <param name="shape">
-        /// Radius shape used to determine adjacency.
-        /// </param>
-        /// <param name="startingDirection">
-        /// The direction to start with.
-        /// </param>
-        /// <returns>
-        /// Directions that lead to neighboring locations, in counter-clockwise order.
-        /// </returns>
-        public static IEnumerable<Direction> NeighborDirectionsCounterClockwise(Radius shape, Direction startingDirection = null)
-            => NeighborDirectionsClockwise((Distance)shape, startingDirection);
-
-        /// <summary>
         /// - operator. Returns the direction i directions counterclockwise of the given direction if
         ///   i is positive. If is negative, the direction is moved clockwise. If any amount is added
         /// to NONE, it returns NONE.
@@ -649,22 +365,39 @@ namespace GoRogue
         public static Direction operator ++(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + 1, 8)];
 
         /// <summary>
-        /// Returns outward facing directions (everything except NONE). Similar to clockwise just not
-        /// in clockwise order; checks cardinals first then diagonals.
+        /// Gets the Direction class instance representing the direction type specified.
         /// </summary>
+        /// <param name="directionType">
+        /// The enum value for the direction.
+        /// </param>
         /// <returns>
-        /// Outward facing directions (everything except NONE).
+        /// The direction class representing the given direction.
         /// </returns>
-        public static IEnumerable<Direction> Outwards()
+        public static Direction ToDirection(Types directionType)
         {
-            yield return UP;
-            yield return DOWN;
-            yield return LEFT;
-            yield return RIGHT;
-            yield return UP_LEFT;
-            yield return UP_RIGHT;
-            yield return DOWN_LEFT;
-            yield return DOWN_RIGHT;
+            switch (directionType)
+            {
+                case Types.UP:
+                    return UP;
+                case Types.UP_RIGHT:
+                    return UP_RIGHT;
+                case Types.RIGHT:
+                    return RIGHT;
+                case Types.DOWN_RIGHT:
+                    return DOWN_RIGHT;
+                case Types.DOWN:
+                    return DOWN;
+                case Types.DOWN_LEFT:
+                    return DOWN_LEFT;
+                case Types.LEFT:
+                    return LEFT;
+                case Types.UP_LEFT:
+                    return UP_LEFT;
+                case Types.NONE:
+                    return NONE;
+                default:
+                    return null; // Will not occur
+            }
         }
 
         /// <summary>

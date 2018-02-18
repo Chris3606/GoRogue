@@ -3,26 +3,6 @@
 namespace GoRogue
 {
     /// <summary>
-    /// Enum representing AdjacencyRule types. Useful for easy mapping of AdjacencyRule types to a primitive type (for
-    /// cases like a switch statement).
-    /// </summary>
-    public enum AdjacencyRuleType
-    {
-        /// <summary>
-        /// Type for AdjacencyRule.CARDINALS.
-        /// </summary>
-        CARDINALS,
-        /// <summary>
-        /// Type for AdjacencyRule.DIAGONALS.
-        /// </summary>
-        DIAGONALS,
-        /// <summary>
-        /// Type for AdjacencyRule.EIGHT_WAY.
-        /// </summary>
-        EIGHT_WAY
-    }
-
-    /// <summary>
     /// Class representing a method for determining which coordinates are adjacent to a given coordinate,
     /// and in which directions those neighbors are.  Cannot be instantiated -- premade static instances
     /// are provided.
@@ -30,31 +10,74 @@ namespace GoRogue
     public class AdjacencyRule
     {
         /// <summary>
+        /// Enum representing AdjacencyRule types. Useful for easy mapping of AdjacencyRule types to a primitive type (for
+        /// cases like a switch statement).
+        /// </summary>
+        public enum Types
+        {
+            /// <summary>
+            /// Type for AdjacencyRule.CARDINALS.
+            /// </summary>
+            CARDINALS,
+            /// <summary>
+            /// Type for AdjacencyRule.DIAGONALS.
+            /// </summary>
+            DIAGONALS,
+            /// <summary>
+            /// Type for AdjacencyRule.EIGHT_WAY.
+            /// </summary>
+            EIGHT_WAY
+        }
+        /// <summary>
         /// Represents method of determining adjacency where neighbors are considered adjacent if they are
         /// in a cardinal direction, eg. 4-way (manhattan-based) connectivity.
         /// </summary>
-        public static readonly AdjacencyRule CARDINALS = new AdjacencyRule(AdjacencyRuleType.CARDINALS);
+        public static readonly AdjacencyRule CARDINALS = new AdjacencyRule(Types.CARDINALS);
         /// <summary>
         /// Represents method of determining adjacency where neighbors are considered adjacent if they are
         /// in a diagonal direction.
         /// </summary>
-        public static readonly AdjacencyRule DIAGONALS = new AdjacencyRule(AdjacencyRuleType.DIAGONALS);
+        public static readonly AdjacencyRule DIAGONALS = new AdjacencyRule(Types.DIAGONALS);
         /// <summary>
         /// Represents method of determining adjacency where all 8 possible neighbors are considered adjacent
         /// (eg. 8-way connectivity).
         /// </summary>
-        public static readonly AdjacencyRule EIGHT_WAY = new AdjacencyRule(AdjacencyRuleType.EIGHT_WAY);
+        public static readonly AdjacencyRule EIGHT_WAY = new AdjacencyRule(Types.EIGHT_WAY);
         
         /// <summary>
         /// Enum value representing the method of determining adjacency -- useful for using AdjacencyRule types
         /// in switch statements.
         /// </summary>
-        public AdjacencyRuleType Type { get; private set; }
+        public Types Type { get; private set; }
 
         // Constructor, takes type.
-        private AdjacencyRule(AdjacencyRuleType type)
+        private AdjacencyRule(Types type)
         {
             Type = type;
+        }
+
+        /// <summary>
+        /// Gets the AdjacencyRule class instance representing the adjacency type specified.
+        /// </summary>
+        /// <param name="adjacencyRuleType">
+        /// The enum value for the adjacency method.
+        /// </param>
+        /// <returns>
+        /// The AdjacencyRule class representing the given adjacency method type.
+        /// </returns>
+        public static AdjacencyRule ToAdjacencyRule(Types adjacencyRuleType)
+        {
+            switch (adjacencyRuleType)
+            {
+                case Types.CARDINALS:
+                    return CARDINALS;
+                case Types.DIAGONALS:
+                    return DIAGONALS;
+                case Types.EIGHT_WAY:
+                    return EIGHT_WAY;
+                default:
+                    return null; // Will not occur
+            }
         }
 
         /// <summary>
@@ -66,19 +89,19 @@ namespace GoRogue
         {
             switch (Type)
             {
-                case AdjacencyRuleType.CARDINALS:
+                case Types.CARDINALS:
                     yield return Direction.UP;
                     yield return Direction.DOWN;
                     yield return Direction.LEFT;
                     yield return Direction.RIGHT;
                     break;
-                case AdjacencyRuleType.DIAGONALS:
+                case Types.DIAGONALS:
                     yield return Direction.UP_LEFT;
                     yield return Direction.UP_RIGHT;
                     yield return Direction.DOWN_LEFT;
                     yield return Direction.DOWN_RIGHT;
                     break;
-                case AdjacencyRuleType.EIGHT_WAY:
+                case Types.EIGHT_WAY:
                     yield return Direction.UP;
                     yield return Direction.DOWN;
                     yield return Direction.LEFT;
@@ -102,7 +125,7 @@ namespace GoRogue
         {
             switch (Type)
             {
-                case AdjacencyRuleType.CARDINALS:
+                case Types.CARDINALS:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP;
 
@@ -114,7 +137,7 @@ namespace GoRogue
                     yield return startingDirection + 4;
                     yield return startingDirection + 6;
                     break;
-                case AdjacencyRuleType.DIAGONALS:
+                case Types.DIAGONALS:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP_RIGHT;
 
@@ -126,7 +149,7 @@ namespace GoRogue
                     yield return startingDirection + 4;
                     yield return startingDirection + 6;
                     break;
-                case AdjacencyRuleType.EIGHT_WAY:
+                case Types.EIGHT_WAY:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP;
 
@@ -151,7 +174,7 @@ namespace GoRogue
         {
             switch (Type)
             {
-                case AdjacencyRuleType.CARDINALS:
+                case Types.CARDINALS:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP;
 
@@ -163,7 +186,7 @@ namespace GoRogue
                     yield return startingDirection - 4;
                     yield return startingDirection - 6;
                     break;
-                case AdjacencyRuleType.DIAGONALS:
+                case Types.DIAGONALS:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP_LEFT;
 
@@ -175,7 +198,7 @@ namespace GoRogue
                     yield return startingDirection - 4;
                     yield return startingDirection - 6;
                     break;
-                case AdjacencyRuleType.EIGHT_WAY:
+                case Types.EIGHT_WAY:
                     if (startingDirection == null || startingDirection == Direction.NONE)
                         startingDirection = Direction.UP;
 
@@ -196,21 +219,8 @@ namespace GoRogue
         /// <returns>All neighbors of the given location.</returns>
         public IEnumerable<Coord> Neighbors(Coord startingLocation)
         {
-            switch (Type)
-            {
-                case AdjacencyRuleType.CARDINALS:
-                    foreach (var dir in Direction.Cardinals())
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.DIAGONALS:
-                    foreach (var dir in Direction.Diagonals())
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.EIGHT_WAY:
-                    foreach (var dir in Direction.Outwards())
-                        yield return startingLocation + dir;
-                    break;
-            }
+            foreach (var dir in DirectionsOfNeighbors())
+                yield return startingLocation + dir;
         }
 
         /// <summary>
@@ -233,21 +243,8 @@ namespace GoRogue
         /// <returns>All neighbors of the given location.</returns>
         public IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            switch (Type)
-            {
-                case AdjacencyRuleType.CARDINALS:
-                    foreach (var dir in Direction.CardinalsClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.DIAGONALS:
-                    foreach (var dir in Direction.DiagonalsClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.EIGHT_WAY:
-                    foreach (var dir in Direction.DirectionsClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-            }
+            foreach (var dir in DirectionsOfNeighborsClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
         /// <summary>
@@ -274,21 +271,8 @@ namespace GoRogue
         /// <returns>All neighbors of the given location.</returns>
         public IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
         {
-            switch (Type)
-            {
-                case AdjacencyRuleType.CARDINALS:
-                    foreach (var dir in Direction.CardinalsCounterClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.DIAGONALS:
-                    foreach (var dir in Direction.DiagonalsCounterClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-                case AdjacencyRuleType.EIGHT_WAY:
-                    foreach (var dir in Direction.DirectionsCounterClockwise(startingDirection))
-                        yield return startingLocation + dir;
-                    break;
-            }
+            foreach (var dir in DirectionsOfNeighborsCounterClockwise(startingDirection))
+                yield return startingLocation + dir;
         }
 
         /// <summary>

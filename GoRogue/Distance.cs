@@ -3,28 +3,6 @@
 namespace GoRogue
 {
     /// <summary>
-    /// Enum for types used under the hood in Direction classes -- allows for convenient switch
-    /// statements to be used with respect to directions.
-    /// </summary>
-    public enum DistanceType
-    {
-        /// <summary>
-        /// Enum type for Distance.MANHATTAN.
-        /// </summary>
-        MANHATTAN,
-
-        /// <summary>
-        /// Enum type for Distance.EUCLIDEAN.
-        /// </summary>
-        EUCLIDEAN,
-
-        /// <summary>
-        /// Enum type for Distance.CHEBYSHEV.
-        /// </summary>
-        CHEBYSHEV
-    };
-
-    /// <summary>
     /// Class representing a method of calculating distance. You cannot create instances of this
     /// class using a constructor -- instead this class contains static instances representing the
     /// applicable types of distance calculations.
@@ -38,27 +16,49 @@ namespace GoRogue
     public class Distance
     {
         /// <summary>
+        /// Enum for types used under the hood in Direction classes -- allows for convenient switch
+        /// statements to be used with respect to directions.
+        /// </summary>
+        public enum Types
+        {
+            /// <summary>
+            /// Enum type for Distance.MANHATTAN.
+            /// </summary>
+            MANHATTAN,
+
+            /// <summary>
+            /// Enum type for Distance.EUCLIDEAN.
+            /// </summary>
+            EUCLIDEAN,
+
+            /// <summary>
+            /// Enum type for Distance.CHEBYSHEV.
+            /// </summary>
+            CHEBYSHEV
+        };
+
+        /// <summary>
         /// CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals).
         /// </summary>
-        public static Distance CHEBYSHEV = new Distance(DistanceType.CHEBYSHEV);
+        public static Distance CHEBYSHEV = new Distance(Types.CHEBYSHEV);
 
         /// <summary>
         /// EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals).
         /// </summary>
-        public static Distance EUCLIDEAN = new Distance(DistanceType.EUCLIDEAN);
+        public static Distance EUCLIDEAN = new Distance(Types.EUCLIDEAN);
 
         /// <summary>
         /// MANHATTAN distance (equivalent to 4-way, cardinal-only movement).
         /// </summary>
-        public static Distance MANHATTAN = new Distance(DistanceType.MANHATTAN);
+        public static Distance MANHATTAN = new Distance(Types.MANHATTAN);
 
         /// <summary>
         /// Enum type for the distance calculation. Useful for conducting a switch statement on
         /// distance instances.
         /// </summary>
-        public readonly DistanceType Type;
+        public readonly Types Type;
 
-        private Distance(DistanceType type)
+        private Distance(Types type)
         {
             Type = type;
         }
@@ -74,15 +74,36 @@ namespace GoRogue
         {
             switch (distance.Type)
             {
-                case DistanceType.MANHATTAN:
+                case Types.MANHATTAN:
                     return Radius.DIAMOND;
 
-                case DistanceType.EUCLIDEAN:
+                case Types.EUCLIDEAN:
                     return Radius.CIRCLE;
 
-                case DistanceType.CHEBYSHEV:
+                case Types.CHEBYSHEV:
                     return Radius.SQUARE;
 
+                default:
+                    return null; // Will not occur
+            }
+        }
+
+        /// <summary>
+        /// Allows implicit casting to the AdjacencyRule type. The adjacency rule corresponding to the
+        /// definition of a radius according to the distance calculation casted will be retrieved.
+        /// </summary>
+        /// <param name="distance">
+        /// Distance type being casted.
+        /// </param>
+        public static implicit operator AdjacencyRule(Distance distance)
+        {
+            switch(distance.Type)
+            {
+                case Types.MANHATTAN:
+                    return AdjacencyRule.CARDINALS;
+                case Types.CHEBYSHEV:
+                case Types.EUCLIDEAN:
+                    return AdjacencyRule.EIGHT_WAY;
                 default:
                     return null; // Will not occur
             }
@@ -97,17 +118,17 @@ namespace GoRogue
         /// <returns>
         /// The distance class representing the given distance calculation.
         /// </returns>
-        public static Distance ToDistance(DistanceType distanceType)
+        public static Distance ToDistance(Types distanceType)
         {
             switch (distanceType)
             {
-                case DistanceType.MANHATTAN:
+                case Types.MANHATTAN:
                     return MANHATTAN;
 
-                case DistanceType.EUCLIDEAN:
+                case Types.EUCLIDEAN:
                     return EUCLIDEAN;
 
-                case DistanceType.CHEBYSHEV:
+                case Types.CHEBYSHEV:
                     return CHEBYSHEV;
 
                 default:
@@ -321,15 +342,15 @@ namespace GoRogue
             double radius = 0;
             switch (Type)
             {
-                case DistanceType.CHEBYSHEV:
+                case Types.CHEBYSHEV:
                     radius = Math.Max(dx, Math.Max(dy, dz)); // Radius is the longest axial distance
                     break;
 
-                case DistanceType.MANHATTAN:
+                case Types.MANHATTAN:
                     radius = dx + dy + dz; // Simply manhattan distance
                     break;
 
-                case DistanceType.EUCLIDEAN:
+                case Types.EUCLIDEAN:
                     radius = Math.Sqrt(dx * dx + dy * dy + dz * dz); // Spherical radius
                     break;
             }
