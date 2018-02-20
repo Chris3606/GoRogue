@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.MapGeneration;
 
 namespace GoRogue
 {
@@ -76,7 +77,7 @@ namespace GoRogue
         /// </summary>
         public Coord Center
         {
-            get { return Coord.Get(X + (Width / 2), Y + (Height / 2)); }
+            get => Coord.Get(X + (Width / 2), Y + (Height / 2));
             set
             {
                 X = value.X - (Width / 2);
@@ -90,16 +91,16 @@ namespace GoRogue
         public int Height { get; set; }
 
         /// <summary>
-        /// Whether or not this rectangle is the empty rectangle.
+        /// Whether or not this rectangle is empty (has width and height of 0).
         /// </summary>
-        public bool IsEmpty { get { return (X == 0 && Y == 0 && Width == 0 && Height == 0); } }
+        public bool IsEmpty { get => (Width == 0 && Height == 0); }
 
         /// <summary>
         /// The maximum X and Y coordinates that are included in the rectangle.
         /// </summary>
         public Coord MaxCorner
         {
-            get { return Coord.Get(MaxX, MaxY); }
+            get => Coord.Get(MaxX, MaxY); 
             set { MaxX = value.X; MaxY = value.Y; }
         }
 
@@ -108,8 +109,8 @@ namespace GoRogue
         /// </summary>
         public int MaxX
         {
-            get { return X + Width - 1; }
-            set { Width = value - X + 1; }
+            get => X + Width - 1;
+            set => Width = value - X + 1;
         }
 
         /// <summary>
@@ -117,8 +118,8 @@ namespace GoRogue
         /// </summary>
         public int MaxY
         {
-            get { return Y + Height - 1; }
-            set { Height = value - Y + 1; }
+            get => Y + Height - 1;
+            set => Height = value - Y + 1;
         }
 
         /// <summary>
@@ -126,7 +127,7 @@ namespace GoRogue
         /// </summary>
         public Coord MinCorner
         {
-            get { return Coord.Get(X, Y); }
+            get => Coord.Get(X, Y);
             set { X = value.X; Y = value.Y; }
         }
 
@@ -159,9 +160,9 @@ namespace GoRogue
         /// Rectangle representing the intersection of r1 and r2, or the empty rectangle if the two
         /// rectangles do not intersect.
         /// </returns>
-        public static Rectangle GetIntsersection(Rectangle r1, Rectangle r2)
+        public static Rectangle GetIntersection(Rectangle r1, Rectangle r2)
         {
-            if (r1.Intsersects(r2))
+            if (r1.Intersects(r2))
             {
                 int minX = Math.Max(r1.X, r2.X);
                 int minY = Math.Max(r1.Y, r2.Y);
@@ -173,6 +174,27 @@ namespace GoRogue
             }
 
             return EMPTY;
+        }
+
+        /// <summary>
+        /// Gets a MapArea representing the exact union of the specified rectangles.
+        /// </summary>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
+        /// <returns>A MapArea containing exactly those positions in one (or both) rectangles.</returns>
+        public static MapArea GetExactUnion(Rectangle r1, Rectangle r2)
+        {
+            var retVal = new MapArea();
+
+            for (int x = r1.X; x <= r1.MaxX; x++)
+                for (int y = r1.Y; y <= r1.MaxY; y++)
+                    retVal.Add(x, y);
+
+            for (int x = r2.X; x <= r2.MaxX; x++)
+                for (int y = r2.Y; y <= r2.MaxY; y++)
+                    retVal.Add(x, y);
+
+            return retVal;
         }
 
         /// <summary>
@@ -326,7 +348,7 @@ namespace GoRogue
         /// <returns>
         /// True if the given rectangle intersects with the current one, false otherwise.
         /// </returns>
-        public bool Intsersects(Rectangle other)
+        public bool Intersects(Rectangle other)
         {
             return (other.X < X + Width && X < other.X + other.Width && other.Y < Y + Height && Y < other.Y + other.Height);
         }

@@ -86,9 +86,16 @@ namespace GoRogue.MapGeneration
         /// <param name="y">
         /// Y-coordinate of the position to add.
         /// </param>
-        public void Add(int x, int y)
+        public void Add(int x, int y) => Add(Coord.Get(x, y));
+
+        /// <summary>
+        /// Adds all coordinates in the given map area to this one.
+        /// </summary>
+        /// <param name="area">Area containing positions to add.</param>
+        public void Add(MapArea area)
         {
-            Add(Coord.Get(x, y));
+            foreach (var pos in area.Positions)
+                Add(pos);
         }
 
         /// <summary>
@@ -120,6 +127,90 @@ namespace GoRogue.MapGeneration
         public bool Contains(int x, int y)
         {
             return positionsSet.Contains(Coord.Get(x, y));
+        }
+
+        /// <summary>
+        /// Returns whether or not the given MapArea is completely contained within the current one.
+        /// </summary>
+        /// <param name="area">MapArea to check.</param>
+        /// <returns>True if the given MapArea is completely contained within the current one, false otherwise.</returns>
+        public bool Contains(MapArea area)
+        {
+            if (!Bounds.Contains(area.Bounds))
+                return false;
+
+            foreach (var pos in area.Positions)
+                if (!Contains(pos))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns whether or not the given map area intersects the current one.  If you intend to determine/use
+        /// the exact intersection based on this return value, it is best to instead call the MapArea.GetIntersection,
+        /// and check the number of positions in the result (0 if no intersection).
+        /// </summary>
+        /// <param name="area">The MapArea to check.</param>
+        /// <returns>True if the given MapArea intersects the current one, false otherwise.</returns>
+        public bool Intersects(MapArea area)
+        {
+            if (!area.Bounds.Intersects(Bounds))
+                return false;
+
+            if (Count <= area.Count)
+            {
+                foreach (var pos in Positions)
+                    if (area.Contains(pos))
+                        return true;
+
+                return false;
+            }
+
+            foreach (var pos in area.Positions)
+                if (Contains(pos))
+                    return true;
+
+            return false;
+        }
+
+        /// <summary>
+        /// Gets a new MapArea containing exactly every position in one or both given map areas.
+        /// </summary>
+        /// <param name="area1">First MapArea.</param>
+        /// <param name="area2">Second MapArea.</param>
+        /// <returns>A MapArea containing only those positions in one or both of the given MapAreas.</returns>
+        public static MapArea GetUnion(MapArea area1, MapArea area2)
+        {
+            var retVal = new MapArea();
+
+            retVal.Add(area1);
+            retVal.Add(area2);
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Gets a MapArea containing exactly those positions in both of the given MapAreas.
+        /// </summary>
+        /// <param name="area1">First MapArea.</param>
+        /// <param name="area2">Second MapArea.</param>
+        /// <returns>A MapArea containing exactly those positions in both of the given MapAreas.</returns>
+        public static MapArea GetIntersection(MapArea area1, MapArea area2)
+        {
+            var retVal = new MapArea();
+
+            if (!area1.Bounds.Intersects(area2.Bounds))
+                return retVal;
+
+            if (area1.Count > area2.Count)
+                Utility.Swap(ref area1, ref area2);
+
+            foreach (var pos in area1.Positions)
+                if (area2.Contains(pos))
+                    retVal.Add(pos);
+
+            return retVal;
         }
     }
 }

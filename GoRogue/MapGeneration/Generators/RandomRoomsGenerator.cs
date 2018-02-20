@@ -99,7 +99,7 @@ namespace GoRogue.MapGeneration.Generators
         static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
         {
             foreach (var existingRoom in existingRooms)
-                if (room.Intsersects(existingRoom))
+                if (room.Intersects(existingRoom))
                     return true;
 
             return false;
