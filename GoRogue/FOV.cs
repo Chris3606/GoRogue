@@ -70,12 +70,8 @@ namespace GoRogue
         /// Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the
         /// given location.
         /// </summary>
-        /// <param name="position">
-        /// The position to retrieve the FOV value for.
-        /// </param>
-        /// <returns>
-        /// The FOV value at the given location.
-        /// </returns>
+        /// <param name="position">The position to retrieve the FOV value for.</param>
+        /// <returns>The FOV value at the given location.</returns>
         public double this[Coord position]
         {
             get { return light[position.X, position.Y]; }
@@ -85,15 +81,9 @@ namespace GoRogue
         /// Array-style indexer that takes an x and y value as the index, and retrieves the FOV value
         /// at the given location.
         /// </summary>
-        /// <param name="x">
-        /// The x-coordinate of the position to retrieve the FOV value for.
-        /// </param>
-        /// <param name="y">
-        /// The y-coordinate of the position to retrieve the FOV value for.
-        /// </param>
-        /// <returns>
-        /// The FOV value at (x, y).
-        /// </returns>
+        /// <param name="x">The x-coordinate of the position to retrieve the FOV value for.</param>
+        /// <param name="y">The y-coordinate of the position to retrieve the FOV value for.</param>
+        /// <returns>The FOV value at (x, y).</returns>
         public double this[int x, int y]
         {
             get { return light[x, y]; }
@@ -106,12 +96,8 @@ namespace GoRogue
         /// radius is specified, simply calculates with a radius of maximum integer value, which is
         /// effectively infinite. Radius is computed as a circle around the source (type Radius.CIRCLE).
         /// </summary>
-        /// <param name="startX">
-        /// Coordinate x-value of the origin.
-        /// </param>
-        /// <param name="startY">
-        /// Coordinate y-value of the origin.
-        /// </param>
+        /// <param name="startX">Coordinate x-value of the origin.</param>
+        /// <param name="startY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
@@ -123,9 +109,7 @@ namespace GoRogue
         /// simply calculates with a radius of maximum integer value, which is effectively infinite.
         /// Radius is computed as a circle around the source (type Radius.CIRCLE).
         /// </summary>
-        /// <param name="start">
-        /// Position of FOV origin.
-        /// </param>
+        /// <param name="start">Position of FOV origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
@@ -136,17 +120,14 @@ namespace GoRogue
         /// Calculates FOV, given an origin point of (startX, startY), with the given radius and
         /// radius calculation strategy.
         /// </summary>
-        /// <param name="startX">
-        /// Coordinate x-value of the origin.
-        /// </param>
-        /// <param name="startY">
-        /// Coordinate y-value of the origin.
-        /// </param>
+        /// <param name="startX">Coordinate x-value of the origin.</param>
+        /// <param name="startY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
         /// </param>
         public void Calculate(int startX, int startY, int radius, Distance distanceCalc)
         {
@@ -170,14 +151,13 @@ namespace GoRogue
         /// <summary>
         /// Calculates FOV, given an origin point, with the given radius and radius calculation strategy.
         /// </summary>
-        /// <param name="start">
-        /// Coordinate of the origin.
-        /// </param>
+        /// <param name="start">Coordinate of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
         /// </param>
         public void Calculate(Coord start, int radius, Distance distanceCalc) => Calculate(start.X, start.Y, radius, distanceCalc);
 
@@ -187,17 +167,14 @@ namespace GoRogue
         /// given angle and span, in degrees. Provided that span is greater than 0, a conical section
         /// of the regular FOV radius will be actually in FOV.
         /// </summary>
-        /// <param name="startX">
-        /// Coordinate x-value of the origin.
-        /// </param>
-        /// <param name="startY">
-        /// Coordinate y-value of the origin.
-        /// </param>
+        /// <param name="startX">Coordinate x-value of the origin.</param>
+        /// <param name="startY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
@@ -251,14 +228,13 @@ namespace GoRogue
         /// given angle and span, in degrees. Provided that span is greater than 0, a conical section
         /// of the regular FOV radius will be actually in FOV.
         /// </summary>
-        /// <param name="start">
-        /// Coordinate of the origin.
-        /// </param>
+        /// <param name="start">Coordinate of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees

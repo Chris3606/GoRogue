@@ -27,9 +27,7 @@ namespace GoRogue.DiceNotation
         /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
         /// degree necessary to produce the appropriate chain of ITerm instances.
         /// </remarks>
-        /// <param name="expression">
-        /// The expression to parse.
-        /// </param>
+        /// <param name="expression">The expression to parse.</param>
         /// <returns>
         /// An IDiceExpression representing the given expression, that can "roll" the expression on command.
         /// </returns>

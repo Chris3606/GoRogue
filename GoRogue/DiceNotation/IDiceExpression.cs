@@ -13,9 +13,7 @@ namespace GoRogue.DiceNotation
         /// <remarks>
         /// Typically this can be implemented by calling Roll and passing in a MaxRandom instance.
         /// </remarks>
-        /// <returns>
-        /// The maxiumum possible value that could be returned by this dice expression.
-        /// </returns>
+        /// <returns>The maxiumum possible value that could be returned by this dice expression.</returns>
         int MaxRoll();
 
         /// <summary>
@@ -24,20 +22,14 @@ namespace GoRogue.DiceNotation
         /// <remarks>
         /// Typically this can be implemented by calling Roll and passing in a MinRandom instance.
         /// </remarks>
-        /// <returns>
-        /// The miniumum possible value that could be returned by this dice expression.
-        /// </returns>
+        /// <returns>The miniumum possible value that could be returned by this dice expression.</returns>
         int MinRoll();
 
         /// <summary>
         /// Rolls the expression using the RNG given, returning the result.
         /// </summary>
-        /// <param name="rng">
-        /// The RNG to use. If null is specified, the default RNG is used.
-        /// </param>
-        /// <returns>
-        /// The result obtained by rolling the dice expression.
-        /// </returns>
+        /// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
+        /// <returns>The result obtained by rolling the dice expression.</returns>
         int Roll(IRandom rng = null);
     }
 }

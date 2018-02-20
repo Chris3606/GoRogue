@@ -19,9 +19,7 @@ namespace GoRogue.Random
         /// Creates a new known series generator, with params indicating what the integers will be
         /// that it should use as the series.
         /// </summary>
-        /// <param name="series">
-        /// The sequence of numbers to return, in order, when next is called.
-        /// </param>
+        /// <param name="series">The sequence of numbers to return, in order, when next is called.</param>
         public KnownSeriesRandom(params int[] series)
         {
             if (series == null)
@@ -40,27 +38,17 @@ namespace GoRogue.Random
         /// Gets the next number in the underlying series. If the value is less than 0 or over
         /// maxValue, throws an exception.
         /// </summary>
-        /// <param name="maxValue">
-        /// Maximum allowable number that can be returned.
-        /// </param>
-        /// <returns>
-        /// The appropriate number from the series.
-        /// </returns>
+        /// <param name="maxValue">Maximum allowable number that can be returned.</param>
+        /// <returns>The appropriate number from the series.</returns>
         public int Next(int maxValue) => Next(0, maxValue);
 
         /// <summary>
         /// Gets the next number in the underlying series. If the value is less than minValue or over
         /// maxValue, throws an exception.
         /// </summary>
-        /// <param name="minValue">
-        /// Minimum allowable number that can be returned.
-        /// </param>
-        /// <param name="maxValue">
-        /// Maximum allowable number that can be returned.
-        /// </param>
-        /// <returns>
-        /// The appropriate number from the series.
-        /// </returns>
+        /// <param name="minValue">Minimum allowable number that can be returned.</param>
+        /// <param name="maxValue">Maximum allowable number that can be returned.</param>
+        /// <returns>The appropriate number from the series.</returns>
         public int Next(int minValue, int maxValue)
         {
             int value = series.Dequeue();

@@ -4,9 +4,7 @@
     /// Default argument for any effect. Any class that is used as the template argument for an
     /// effect must either be this or a class that inherits from this.
     /// </summary>
-    /// <remarks>
-    /// This allows cancellation of EffectTriggers, as detailed in that class's documentation.
-    /// </remarks>
+    /// <remarks>This allows cancellation of EffectTriggers, as detailed in that class's documentation.</remarks>
     public class EffectArgs
     {
         /// <summary>
@@ -86,12 +84,8 @@
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="name">
-        /// Name for the effect
-        /// </param>
-        /// <param name="startingDuration">
-        /// Starting duration for the effect.
-        /// </param>
+        /// <param name="name">Name for the effect</param>
+        /// <param name="startingDuration">Starting duration for the effect.</param>
         public Effect(string name, int startingDuration)
         {
             Name = name;
@@ -107,9 +101,7 @@
         /// Any effect that has INSTANT duration (eg. duration 0) will still have OnTrigger called
         /// when Trigger is called.
         /// </remarks>
-        /// <param name="args">
-        /// Parameters that are passed to OnTrigger. Can be null.
-        /// </param>
+        /// <param name="args">Parameters that are passed to OnTrigger. Can be null.</param>
         public void Trigger(TriggerArgs args)
         {
             OnTrigger(args);
@@ -122,17 +114,13 @@
         /// Should be implemented to take whatever action(s) the effect is supposed to accomplish.
         /// This function is called automatically when Trigger is called.
         /// </summary>
-        /// <param name="e">
-        /// Class containing all arguments OnTrigger requires to function.
-        /// </param>
+        /// <param name="e">Class containing all arguments OnTrigger requires to function.</param>
         abstract protected void OnTrigger(TriggerArgs e);
 
         /// <summary>
         /// Yields a string of the effect's name and duration.
         /// </summary>
-        /// <returns>
-        /// String representation of the effect.
-        /// </returns>
+        /// <returns>String representation of the effect.</returns>
         public override string ToString()
         {
             string durationStr = (Duration == INFINITE) ? "Infinite" : Duration.ToString();

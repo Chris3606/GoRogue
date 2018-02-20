@@ -28,9 +28,7 @@
         /// Call every time you wish to "assign" an ID. The integer returned will never be returned
         /// again (each integer will be unique, per instance of this class).
         /// </summary>
-        /// <returns>
-        /// The ID that has been assigned.
-        /// </returns>
+        /// <returns>The ID that has been assigned.</returns>
         public uint UseID() => currentInteger++;
     }
 }

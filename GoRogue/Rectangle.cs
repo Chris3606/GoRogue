@@ -1,5 +1,5 @@
-﻿using System;
-using GoRogue.MapGeneration;
+﻿using GoRogue.MapGeneration;
+using System;
 
 namespace GoRogue
 {
@@ -16,18 +16,10 @@ namespace GoRogue
         /// <summary>
         /// Constructor. Takes the minimum x and y values of the rectangle, along with the width and height.
         /// </summary>
-        /// <param name="x">
-        /// Minimum x coordinate that is inside the rectangle.
-        /// </param>
-        /// <param name="y">
-        /// Minimum y coordinate that is inside the rectangle.
-        /// </param>
-        /// <param name="width">
-        /// Width of the rectangle.
-        /// </param>
-        /// <param name="height">
-        /// Height of the rectangle.
-        /// </param>
+        /// <param name="x">Minimum x coordinate that is inside the rectangle.</param>
+        /// <param name="y">Minimum y coordinate that is inside the rectangle.</param>
+        /// <param name="width">Width of the rectangle.</param>
+        /// <param name="height">Height of the rectangle.</param>
         public Rectangle(int x, int y, int width, int height)
         {
             X = x;
@@ -39,12 +31,8 @@ namespace GoRogue
         /// <summary>
         /// Constructor. Takes the minimum and maximum Points taht are considered within the rectangle.
         /// </summary>
-        /// <param name="minCorner">
-        /// Minimum x and y values that are considered inside the rectangle.
-        /// </param>
-        /// <param name="maxCorner">
-        /// Maximum x and y values that are considered inside the rectangle.
-        /// </param>
+        /// <param name="minCorner">Minimum x and y values that are considered inside the rectangle.</param>
+        /// <param name="maxCorner">Maximum x and y values that are considered inside the rectangle.</param>
         public Rectangle(Coord minCorner, Coord maxCorner)
         {
             X = Y = Width = Height = 0; // To allow assignment
@@ -55,9 +43,7 @@ namespace GoRogue
         /// <summary>
         /// Constructor. Takes a center point, and horizontal/vertical radius defining the bounds.
         /// </summary>
-        /// <param name="center">
-        /// The center point of the rectangle.
-        /// </param>
+        /// <param name="center">The center point of the rectangle.</param>
         /// <param name="horizontalRadius">
         /// Number of tiles to the left and right of the center point that are included within the rectangle.
         /// </param>
@@ -100,7 +86,7 @@ namespace GoRogue
         /// </summary>
         public Coord MaxCorner
         {
-            get => Coord.Get(MaxX, MaxY); 
+            get => Coord.Get(MaxX, MaxY);
             set { MaxX = value.X; MaxY = value.Y; }
         }
 
@@ -147,36 +133,6 @@ namespace GoRogue
         public int Y { get; set; }
 
         /// <summary>
-        /// Returns the rectangle that represents the intersection of the two rectangles specified,
-        /// or the empty rectangle if the specified rectangles do not intersect.
-        /// </summary>
-        /// <param name="r1">
-        /// First rectangle.
-        /// </param>
-        /// <param name="r2">
-        /// Second rectangle.
-        /// </param>
-        /// <returns>
-        /// Rectangle representing the intersection of r1 and r2, or the empty rectangle if the two
-        /// rectangles do not intersect.
-        /// </returns>
-        public static Rectangle GetIntersection(Rectangle r1, Rectangle r2)
-        {
-            if (r1.Intersects(r2))
-            {
-                int minX = Math.Max(r1.X, r2.X);
-                int minY = Math.Max(r1.Y, r2.Y);
-
-                int exclusiveMaxX = Math.Min(r1.X + r1.Width, r2.X + r2.Width);
-                int exclusiveMaxY = Math.Min(r1.Y + r1.Height, r2.Y + r2.Height);
-
-                return new Rectangle(minX, minY, exclusiveMaxX - minX, exclusiveMaxY - minY);
-            }
-
-            return EMPTY;
-        }
-
-        /// <summary>
         /// Gets a MapArea representing the exact union of the specified rectangles.
         /// </summary>
         /// <param name="r1">First rectangle.</param>
@@ -198,14 +154,36 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Returns the rectangle that represents the intersection of the two rectangles specified,
+        /// or the empty rectangle if the specified rectangles do not intersect.
+        /// </summary>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
+        /// <returns>
+        /// Rectangle representing the intersection of r1 and r2, or the empty rectangle if the two
+        /// rectangles do not intersect.
+        /// </returns>
+        public static Rectangle GetIntersection(Rectangle r1, Rectangle r2)
+        {
+            if (r1.Intersects(r2))
+            {
+                int minX = Math.Max(r1.X, r2.X);
+                int minY = Math.Max(r1.Y, r2.Y);
+
+                int exclusiveMaxX = Math.Min(r1.X + r1.Width, r2.X + r2.Width);
+                int exclusiveMaxY = Math.Min(r1.Y + r1.Height, r2.Y + r2.Height);
+
+                return new Rectangle(minX, minY, exclusiveMaxX - minX, exclusiveMaxY - minY);
+            }
+
+            return EMPTY;
+        }
+
+        /// <summary>
         /// Gets the smallest possible rectangle that includes the entire area of both r1 and r2.
         /// </summary>
-        /// <param name="r1">
-        /// First rectangle.
-        /// </param>
-        /// <param name="r2">
-        /// Second rectangle.
-        /// </param>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
         /// <returns>
         /// The smallest possible rectangle that includes the entire area of both r1 and r2.
         /// </returns>
@@ -220,15 +198,9 @@ namespace GoRogue
         /// <summary>
         /// Opposite of !=.
         /// </summary>
-        /// <param name="r1">
-        /// First rectangle.
-        /// </param>
-        /// <param name="r2">
-        /// Second rectangle.
-        /// </param>
-        /// <returns>
-        /// true if the rectangles do NOT encompass the same area, false otherwise.
-        /// </returns>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
+        /// <returns>true if the rectangles do NOT encompass the same area, false otherwise.</returns>
         public static bool operator !=(Rectangle r1, Rectangle r2)
         {
             return !(r1 == r2);
@@ -237,12 +209,8 @@ namespace GoRogue
         /// <summary>
         /// See Equals.
         /// </summary>
-        /// <param name="r1">
-        /// First rectangle.
-        /// </param>
-        /// <param name="r2">
-        /// Second rectangle.
-        /// </param>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
         /// <returns>
         /// true if the area of the two rectangles encompass the exact same area, false otherwise.
         /// </returns>
@@ -254,12 +222,8 @@ namespace GoRogue
         /// <summary>
         /// Returns whether or not the specified point is considered within the rectangle.
         /// </summary>
-        /// <param name="position">
-        /// The position to check.
-        /// </param>
-        /// <returns>
-        /// Whether or not the specified point is considered within the rectangle.
-        /// </returns>
+        /// <param name="position">The position to check.</param>
+        /// <returns>Whether or not the specified point is considered within the rectangle.</returns>
         public bool Contains(Coord position)
         {
             return (position.X >= X && position.X < (X + Width) && position.Y >= Y && position.Y < (Y + Height));
@@ -269,9 +233,7 @@ namespace GoRogue
         /// Returns whether or not the specified rectangle is considered completely contained within
         /// the current one.
         /// </summary>
-        /// <param name="other">
-        /// The rectangle to check.
-        /// </param>
+        /// <param name="other">The rectangle to check.</param>
         /// <returns>
         /// True if the given rectangle is completely contained within the current one, false otherwise.
         /// </returns>
@@ -284,9 +246,7 @@ namespace GoRogue
         /// Compares based upon whether or not the areas contained within the rectangle are identical
         /// in both position and size.
         /// </summary>
-        /// <param name="other">
-        /// Rectangle to compare the current one to.
-        /// </param>
+        /// <param name="other">Rectangle to compare the current one to.</param>
         /// <returns>
         /// true if the area of the two rectangles encompass the exact same area, false otherwise.
         /// </returns>
@@ -298,9 +258,7 @@ namespace GoRogue
         /// <summary>
         /// Compares to arbitray object.
         /// </summary>
-        /// <param name="obj">
-        /// Object to compare to.
-        /// </param>
+        /// <param name="obj">Object to compare to.</param>
         /// <returns>
         /// true if the object is a Rectangle instance and encompasses the same area, false otherwise.
         /// </returns>
@@ -331,9 +289,7 @@ namespace GoRogue
         /// <summary>
         /// Simple hashing.
         /// </summary>
-        /// <returns>
-        /// Hash code for rectangle.
-        /// </returns>
+        /// <returns>Hash code for rectangle.</returns>
         public override int GetHashCode()
         {
             return X.GetHashCode() ^ Y.GetHashCode() ^ Width.GetHashCode() ^ Height.GetHashCode();
@@ -342,12 +298,8 @@ namespace GoRogue
         /// <summary>
         /// Returns whether or not the given rectangle intersects the current one.
         /// </summary>
-        /// <param name="other">
-        /// The rectangle to check.
-        /// </param>
-        /// <returns>
-        /// True if the given rectangle intersects with the current one, false otherwise.
-        /// </returns>
+        /// <param name="other">The rectangle to check.</param>
+        /// <returns>True if the given rectangle intersects with the current one, false otherwise.</returns>
         public bool Intersects(Rectangle other)
         {
             return (other.X < X + Width && X < other.X + other.Width && other.Y < Y + Height && Y < other.Y + other.Height);
@@ -356,9 +308,7 @@ namespace GoRogue
         /// <summary>
         /// Formats as (X, Y) -&gt; (MaxX, MaxY)
         /// </summary>
-        /// <returns>
-        /// String formatted as above.
-        /// </returns>
+        /// <returns>String formatted as above.</returns>
         public override string ToString()
         {
             return MinCorner + " -> " + MaxCorner;

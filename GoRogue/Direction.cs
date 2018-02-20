@@ -16,9 +16,37 @@ namespace GoRogue
     /// </remarks>
     public class Direction
     {
+        private static readonly Direction[] directions;
+
+        private static readonly string[] writeVals = { "UP", "UP_RIGHT", "RIGHT", "DOWN_RIGHT", "DOWN", "DOWN_LEFT", "LEFT", "UP_LEFT", "NONE" };
+
+        private static bool _yIncreasesUpward;
+
+        // Used to optimize calcs for a function later on
+        private static Direction[] directionSides = new Direction[2];
+
+        private static bool initYInc;
+
+        static Direction()
+        {
+            directions = new Direction[9];
+            LEFT = new Direction(-1, 0, Types.LEFT);
+            RIGHT = new Direction(1, 0, Types.RIGHT);
+            NONE = new Direction(0, 0, Types.NONE);
+            initYInc = false;
+            YIncreasesUpward = false; // Initializes rest of distance values
+        }
+
+        private Direction(int dx, int dy, Types type)
+        {
+            DeltaX = dx;
+            DeltaY = dy;
+            this.Type = type;
+        }
+
         /// <summary>
-        /// Enum representing Direction types. Useful for easy mapping of Direction types to a primitive type (for
-        /// cases like a switch statement).
+        /// Enum representing Direction types. Useful for easy mapping of Direction types to a
+        /// primitive type (for cases like a switch statement).
         /// </summary>
         public enum Types
         {
@@ -67,34 +95,6 @@ namespace GoRogue
             /// </summary>
             NONE
         };
-
-        private static readonly Direction[] directions;
-
-        private static readonly string[] writeVals = { "UP", "UP_RIGHT", "RIGHT", "DOWN_RIGHT", "DOWN", "DOWN_LEFT", "LEFT", "UP_LEFT", "NONE" };
-
-        private static bool _yIncreasesUpward;
-
-        // Used to optimize calcs for a function later on
-        private static Direction[] directionSides = new Direction[2];
-
-        private static bool initYInc;
-
-        static Direction()
-        {
-            directions = new Direction[9];
-            LEFT = new Direction(-1, 0, Types.LEFT);
-            RIGHT = new Direction(1, 0, Types.RIGHT);
-            NONE = new Direction(0, 0, Types.NONE);
-            initYInc = false;
-            YIncreasesUpward = false; // Initializes rest of distance values
-        }
-
-        private Direction(int dx, int dy, Types type)
-        {
-            DeltaX = dx;
-            DeltaY = dy;
-            this.Type = type;
-        }
 
         /// <summary>
         /// Down direction.
@@ -226,12 +226,8 @@ namespace GoRogue
         /// (0, 0) to the input. Rounds clockwise if exactly on a diagonal. Similar to GetDirection,
         /// except gives only cardinal directions.
         /// </summary>
-        /// <param name="dx">
-        /// X-coordinate of line-ending point.
-        /// </param>
-        /// <param name="dy">
-        /// Y-coordinate of line-ending point.
-        /// </param>
+        /// <param name="dx">X-coordinate of line-ending point.</param>
+        /// <param name="dy">Y-coordinate of line-ending point.</param>
         /// <returns>
         /// The cardinal direction that most closely matches the angle formed by the given input.
         /// </returns>
@@ -265,15 +261,9 @@ namespace GoRogue
         /// happens to be right on the border between 2 angles, it rounds "up", eg., we take the
         /// closest angle in the clockwise direction.
         /// </summary>
-        /// <param name="x">
-        /// X-coordinate of line-ending point.
-        /// </param>
-        /// <param name="y">
-        /// Y-coordinate of line-ending point.
-        /// </param>
-        /// <returns>
-        /// The direction that most closely matches the angle formed by the given input.
-        /// </returns>
+        /// <param name="x">X-coordinate of line-ending point.</param>
+        /// <param name="y">Y-coordinate of line-ending point.</param>
+        /// <returns>The direction that most closely matches the angle formed by the given input.</returns>
         public static Direction GetDirection(int x, int y)
         {
             if (x == 0 && y == 0)
@@ -311,12 +301,8 @@ namespace GoRogue
         ///   i is positive. If is negative, the direction is moved clockwise. If any amount is added
         /// to NONE, it returns NONE.
         /// </summary>
-        /// <param name="d">
-        /// Direction to "subtract" from.
-        /// </param>
-        /// <param name="i">
-        /// Number of directions to "subtract".
-        /// </param>
+        /// <param name="d">Direction to "subtract" from.</param>
+        /// <param name="i">Number of directions to "subtract".</param>
         /// <returns>
         /// The direction i directions counterclockwise of d, if i is positive, or clockwise of d if
         /// i is negative. NONE is returned if NONE was added to.
@@ -327,12 +313,8 @@ namespace GoRogue
         /// -- operator (decrement). Returns the direction directly counterclockwise of the original
         ///    direction. If NONE is decremented, returns NONE.
         /// </summary>
-        /// <param name="d">
-        /// Direction to decrement.
-        /// </param>
-        /// <returns>
-        /// The direction directly counterclockwise of d, or NONE if none was decremented.
-        /// </returns>
+        /// <param name="d">Direction to decrement.</param>
+        /// <returns>The direction directly counterclockwise of d, or NONE if none was decremented.</returns>
         public static Direction operator --(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type - 1, 8)];
 
         /// <summary>
@@ -340,12 +322,8 @@ namespace GoRogue
         ///   positive. If is negative, the direction is moved counterclockwise. If any amount is
         /// added to NONE, it returns NONE.
         /// </summary>
-        /// <param name="d">
-        /// Direction to "add" to.
-        /// </param>
-        /// <param name="i">
-        /// Number of directions to "add".
-        /// </param>
+        /// <param name="d">Direction to "add" to.</param>
+        /// <param name="i">Number of directions to "add".</param>
         /// <returns>
         /// The direction i directions clockwise of d, if i is positive, or counterclockwise of d if
         /// i is negative. NONE is returned if NONE was added to.
@@ -356,45 +334,46 @@ namespace GoRogue
         /// ++ operator (increment). Returns the direction directly clockwise of the original
         ///    direction. If NONE is incremented, returns NONE.
         /// </summary>
-        /// <param name="d">
-        /// Direction to increment.
-        /// </param>
-        /// <returns>
-        /// The direction directly clockwise of d, or NONE if none is incremented.
-        /// </returns>
+        /// <param name="d">Direction to increment.</param>
+        /// <returns>The direction directly clockwise of d, or NONE if none is incremented.</returns>
         public static Direction operator ++(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + 1, 8)];
 
         /// <summary>
         /// Gets the Direction class instance representing the direction type specified.
         /// </summary>
-        /// <param name="directionType">
-        /// The enum value for the direction.
-        /// </param>
-        /// <returns>
-        /// The direction class representing the given direction.
-        /// </returns>
+        /// <param name="directionType">The enum value for the direction.</param>
+        /// <returns>The direction class representing the given direction.</returns>
         public static Direction ToDirection(Types directionType)
         {
             switch (directionType)
             {
                 case Types.UP:
                     return UP;
+
                 case Types.UP_RIGHT:
                     return UP_RIGHT;
+
                 case Types.RIGHT:
                     return RIGHT;
+
                 case Types.DOWN_RIGHT:
                     return DOWN_RIGHT;
+
                 case Types.DOWN:
                     return DOWN;
+
                 case Types.DOWN_LEFT:
                     return DOWN_LEFT;
+
                 case Types.LEFT:
                     return LEFT;
+
                 case Types.UP_LEFT:
                     return UP_LEFT;
+
                 case Types.NONE:
                     return NONE;
+
                 default:
                     return null; // Will not occur
             }
@@ -403,9 +382,7 @@ namespace GoRogue
         /// <summary>
         /// Writes the string ("UP", "UP_RIGHT", etc.) for the direction.
         /// </summary>
-        /// <returns>
-        /// String representation of the direction.
-        /// </returns>
+        /// <returns>String representation of the direction.</returns>
         public override string ToString()
         {
             return writeVals[(int)Type];

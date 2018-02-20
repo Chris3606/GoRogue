@@ -33,9 +33,7 @@ namespace GoRogue.MapGeneration
         /// <param name="map">
         /// IMapView indicating which cells should be considered part of a map area and which should not.
         /// </param>
-        /// <param name="adjacencyMethod">
-        /// The method used for determining connectivity of the grid.
-        /// </param>
+        /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
         public MapAreaFinder(IMapView<bool> map, AdjacencyRule adjacencyMethod)
         {
             Map = map;
@@ -51,12 +49,8 @@ namespace GoRogue.MapGeneration
         /// <param name="map">
         /// IMapView indicating which cells should be considered part of a map area and which should not.
         /// </param>
-        /// <param name="adjacencyMethod">
-        /// The method used for determining connectivity of the grid.
-        /// </param>
-        /// <returns>
-        /// An IEnumerable of each (unique) map area.
-        /// </returns>
+        /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
+        /// <returns>An IEnumerable of each (unique) map area.</returns>
         static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
         {
             var areaFinder = new MapAreaFinder(map, adjacencyMethod);
@@ -66,9 +60,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Calculates the list of map areas, returning each unique map area.
         /// </summary>
-        /// <returns>
-        /// An IEnumerable of each (unique) map area.
-        /// </returns>
+        /// <returns>An IEnumerable of each (unique) map area.</returns>
         public IEnumerable<MapArea> MapAreas()
         {
             if (visited == null || visited.GetLength(1) != Map.Height || visited.GetLength(0) != Map.Width)

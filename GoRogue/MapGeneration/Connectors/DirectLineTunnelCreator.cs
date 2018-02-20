@@ -15,7 +15,7 @@
         /// or CardinalPositionOnLine is used to create the tunnel.
         /// </summary>
         /// <param name="adjacencyRule">
-        /// Method of adjacency to respect when creating tunnels.  Cannot be diagonal.
+        /// Method of adjacency to respect when creating tunnels. Cannot be diagonal.
         /// </param>
         public DirectLineTunnelCreator(AdjacencyRule adjacencyRule)
         {
@@ -26,15 +26,9 @@
         /// <summary>
         /// Implmenets the algorithm, creating the tunnel as specified in the class description.
         /// </summary>
-        /// <param name="map">
-        /// The map to create the tunnel on.
-        /// </param>
-        /// <param name="start">
-        /// Start coordinate of the tunnel.
-        /// </param>
-        /// <param name="end">
-        /// End coordinate of the tunnel.
-        /// </param>
+        /// <param name="map">The map to create the tunnel on.</param>
+        /// <param name="start">Start coordinate of the tunnel.</param>
+        /// <param name="end">End coordinate of the tunnel.</param>
         public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
         {
             var lineAlgorithm = (adjacencyRule == AdjacencyRule.CARDINALS) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;

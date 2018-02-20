@@ -10,12 +10,8 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Evaluates the term and returns the result.
         /// </summary>
-        /// <param name="rng">
-        /// The rng to use.
-        /// </param>
-        /// <returns>
-        /// The result of evaluating the term.
-        /// </returns>
+        /// <param name="rng">The rng to use.</param>
+        /// <returns>The result of evaluating the term.</returns>
         int GetResult(IRandom rng);
     }
 }

@@ -24,9 +24,7 @@ namespace GoRogue.MapGeneration.Generators
         /// Generates the map. Floor tiles will be set to true in the provided map, and wall tiles
         /// will be set to false.
         /// </summary>
-        /// <param name="map">
-        /// The map to fill with values when generate is called.
-        /// </param>
+        /// <param name="map">The map to fill with values when generate is called.</param>
         /// <param name="rng">
         /// The RNG to use to initially fill the map. If null is specified, the default RNG is used.
         /// </param>

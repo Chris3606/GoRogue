@@ -19,12 +19,8 @@ namespace GoRogue.MapGeneration.Connectors
         /// <summary>
         /// Connects the map given using the algorithm described in the class description.
         /// </summary>
-        /// <param name="map">
-        /// The map to connect.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The distance calculation that defines distance/neighbors.
-        /// </param>
+        /// <param name="map">The map to connect.</param>
+        /// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
         /// <param name="areaConnector">
         /// The area connection strategy to use. Not all methods function on maps with concave areas
         /// -- see respective class documentation for details.

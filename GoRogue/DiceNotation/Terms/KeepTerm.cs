@@ -15,12 +15,8 @@ namespace GoRogue.DiceNotation.Terms
         /// Constructor. Takes a term representing the number of dice to keep, and the dice term to
         /// operate on.
         /// </summary>
-        /// <param name="keep">
-        /// Term representing the number of dice to keep.
-        /// </param>
-        /// <param name="diceTerm">
-        /// The dice term to operate on.
-        /// </param>
+        /// <param name="keep">Term representing the number of dice to keep.</param>
+        /// <param name="diceTerm">The dice term to operate on.</param>
         public KeepTerm(ITerm keep, DiceTerm diceTerm)
         {
             this.diceTerm = diceTerm;
@@ -31,9 +27,7 @@ namespace GoRogue.DiceNotation.Terms
         /// Evaluates the term (as well as the dice expression), returning the sum of the highest n
         /// rolls in the dice term.
         /// </summary>
-        /// <param name="rng">
-        /// The rng to use -- passed to the dice term being operated on.
-        /// </param>
+        /// <param name="rng">The rng to use -- passed to the dice term being operated on.</param>
         /// <returns>
         /// The sum of the highest n rolls of the dice term being operated on, where n is equal to
         /// the value of the keep variable taken in the constructor.
@@ -56,9 +50,7 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Returns a parenthesized string representing the term -- eg (4d6k3) or (2d6k2)
         /// </summary>
-        /// <returns>
-        /// A parenthesized string representing the term
-        /// </returns>
+        /// <returns>A parenthesized string representing the term</returns>
         public override string ToString()
         {
             return "(" + diceTerm + "k" + keep + ")";

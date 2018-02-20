@@ -16,11 +16,9 @@ namespace GoRogue.MapGeneration.Connectors
         /// using the methods specified to determine points within two areas to connect, and how to
         /// create the tunnel between the two points.
         /// </summary>
-        /// <param name="map">
-        /// The map to connect.
-        /// </param>
+        /// <param name="map">The map to connect.</param>
         /// <param name="adjacencyRule">
-        /// Method of adjacency to respect when determining map areas.  Cannot be diagonal.
+        /// Method of adjacency to respect when determining map areas. Cannot be diagonal.
         /// </param>
         /// <param name="areaConnector">
         /// The method to use to determine the points from two areas to make a tunnel between, in
@@ -31,9 +29,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// The tunnel creation strategy to use. If null is specified,
         /// HorizontalVerticalTunnelCreator that utilizes the RNG passed into this function is used.
         /// </param>
-        /// <param name="rng">
-        /// The rng to use. If null is specified, the default rng is assumed.
-        /// </param>
+        /// <param name="rng">The rng to use. If null is specified, the default rng is assumed.</param>
         /// <param name="randomizeOrder">
         /// Whether or not to randomize which room is connected to which -- if this is set to false,
         /// they will be conencted in the exact order they are returned from the MapAreaFinder.
@@ -58,9 +54,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// list of areas, using the methods specified to determine points within two areas to
         /// connect, and how to create the tunnel between the two points.
         /// </summary>
-        /// <param name="map">
-        /// The map to connect.
-        /// </param>
+        /// <param name="map">The map to connect.</param>
         /// <param name="mapAreas">
         /// The list of map areas to connect, in the order they should be connected.
         /// </param>

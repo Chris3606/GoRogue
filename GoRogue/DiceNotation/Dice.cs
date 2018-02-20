@@ -22,12 +22,8 @@ namespace GoRogue.DiceNotation
         /// Because parsing can add significant time, retrieving an IDiceExpression instance instead
         /// of using the Roll function can be useful if a given expression will be rolled multiple times.
         /// </remarks>
-        /// <param name="expression">
-        /// The string dice expression to parse.
-        /// </param>
-        /// <returns>
-        /// An IDiceExpression instance representing the parsed string.
-        /// </returns>
+        /// <param name="expression">The string dice expression to parse.</param>
+        /// <returns>An IDiceExpression instance representing the parsed string.</returns>
         public static IDiceExpression Parse(string expression) => DiceParser.Parse(expression);
 
         /// <summary>
@@ -40,15 +36,11 @@ namespace GoRogue.DiceNotation
         /// once, and use the resulting IDiceExpression instance to roll the expression each time it
         /// is needed.
         /// </remarks>
-        /// <param name="expression">
-        /// The string dice expression to parse.
-        /// </param>
+        /// <param name="expression">The string dice expression to parse.</param>
         /// <param name="random">
         /// RNG to use to perform the roll. If null is specified, the default RNG is used.
         /// </param>
-        /// <returns>
-        /// The result of evaluating the dice expression given.
-        /// </returns>
+        /// <returns>The result of evaluating the dice expression given.</returns>
         public static int Roll(string expression, IRandom random = null)
         {
             if (random == null) random = SingletonRandom.DefaultRNG;

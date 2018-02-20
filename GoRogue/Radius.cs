@@ -14,43 +14,6 @@
     public class Radius
     {
         /// <summary>
-        /// Enum representing Radius types. Useful for easy mapping of radius types to a primitive type (for
-        /// cases like a switch statement).
-        /// </summary>
-        public enum Types
-        {
-            /// <summary>
-            /// Type for Radius.SQUARE.
-            /// </summary>
-            SQUARE,
-
-            /// <summary>
-            /// Type for Radius.DIAMOND.
-            /// </summary>
-            DIAMOND,
-
-            /// <summary>
-            /// Type for Radius.CIRCLE.
-            /// </summary>
-            CIRCLE,
-
-            /// <summary>
-            /// Type for Radius.CUBE.
-            /// </summary>
-            CUBE,
-
-            /// <summary>
-            /// Type for Radius.OCTAHEDRON.
-            /// </summary>
-            OCTAHEDRON,
-
-            /// <summary>
-            /// Type for Radius.SPHERE.
-            /// </summary>
-            SPHERE
-        };
-
-        /// <summary>
         /// Radius is a circle around the center point. Shape that would represent movement radius in
         /// an 8-way movement scheme, with all movement cost the same based upon distance from the source.
         /// </summary>
@@ -94,12 +57,71 @@
         }
 
         /// <summary>
+        /// Enum representing Radius types. Useful for easy mapping of radius types to a primitive
+        /// type (for cases like a switch statement).
+        /// </summary>
+        public enum Types
+        {
+            /// <summary>
+            /// Type for Radius.SQUARE.
+            /// </summary>
+            SQUARE,
+
+            /// <summary>
+            /// Type for Radius.DIAMOND.
+            /// </summary>
+            DIAMOND,
+
+            /// <summary>
+            /// Type for Radius.CIRCLE.
+            /// </summary>
+            CIRCLE,
+
+            /// <summary>
+            /// Type for Radius.CUBE.
+            /// </summary>
+            CUBE,
+
+            /// <summary>
+            /// Type for Radius.OCTAHEDRON.
+            /// </summary>
+            OCTAHEDRON,
+
+            /// <summary>
+            /// Type for Radius.SPHERE.
+            /// </summary>
+            SPHERE
+        };
+
+        /// <summary>
+        /// Allows implicit casting to AdjacencyRule type. The rule corresponding to the proper
+        /// definition of distance to create the Radius casted will be retrieved.
+        /// </summary>
+        /// <param name="radius">Radius type being casted.</param>
+        public static implicit operator AdjacencyRule(Radius radius)
+        {
+            switch (radius.Type)
+            {
+                case Types.CIRCLE:
+                case Types.SPHERE:
+                case Types.SQUARE:
+                case Types.CUBE:
+                    return AdjacencyRule.EIGHT_WAY;
+
+                case Types.DIAMOND:
+                case Types.OCTAHEDRON:
+                    return AdjacencyRule.CARDINALS;
+
+                default:
+                    return null; // Will not occur
+            }
+        }
+
+        /// <summary>
         /// Allows implicit casting to Distance type. The distance corresponding to the proper
         /// definition of distance to create the Radius casted will be retrieved.
         /// </summary>
-        /// <param name="radius">
-        /// Radius type being casted.
-        /// </param>
+        /// <param name="radius">Radius type being casted.</param>
         public static implicit operator Distance(Radius radius)
         {
             switch (radius.Type)
@@ -122,38 +144,10 @@
         }
 
         /// <summary>
-        /// Allows implicit casting to AdjacencyRule type. The rule corresponding to the proper
-        /// definition of distance to create the Radius casted will be retrieved.
-        /// </summary>
-        /// <param name="radius">
-        /// Radius type being casted.
-        /// </param>
-        public static implicit operator AdjacencyRule(Radius radius)
-        {
-            switch (radius.Type)
-            {
-                case Types.CIRCLE:
-                case Types.SPHERE:
-                case Types.SQUARE:
-                case Types.CUBE:
-                    return AdjacencyRule.EIGHT_WAY;
-                case Types.DIAMOND:
-                case Types.OCTAHEDRON:
-                    return AdjacencyRule.CARDINALS;
-                default:
-                    return null; // Will not occur
-            }
-        }
-
-        /// <summary>
         /// Gets the Radius class instance representing the distance type specified.
         /// </summary>
-        /// <param name="radiusType">
-        /// The enum value for the distance method.
-        /// </param>
-        /// <returns>
-        /// The radius class representing the given distance calculation.
-        /// </returns>
+        /// <param name="radiusType">The enum value for the distance method.</param>
+        /// <returns>The radius class representing the given distance calculation.</returns>
         public static Radius ToRadius(Types radiusType)
         {
             switch (radiusType)

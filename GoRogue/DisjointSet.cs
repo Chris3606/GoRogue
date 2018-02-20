@@ -13,9 +13,7 @@
         /// <summary>
         /// Constructor. Size of disjoint set is specified -- it holds values between 0 and size - 1.
         /// </summary>
-        /// <param name="size">
-        /// (Max) size of the disjoint set.
-        /// </param>
+        /// <param name="size">(Max) size of the disjoint set.</param>
         public DisjointSet(int size)
         {
             Count = size;
@@ -37,12 +35,8 @@
         /// <summary>
         /// Returns the parent of the set containing obj, performing path compression as search is completed.
         /// </summary>
-        /// <param name="obj">
-        /// Object to search for.
-        /// </param>
-        /// <returns>
-        /// The parent of the obj given.
-        /// </returns>
+        /// <param name="obj">Object to search for.</param>
+        /// <returns>The parent of the obj given.</returns>
         public int Find(int obj)
         {
             // Find base parent, and path compress
@@ -55,15 +49,9 @@
         /// <summary>
         /// Returns true if the two objects specified are in the same set.
         /// </summary>
-        /// <param name="obj1">
-        /// First object.
-        /// </param>
-        /// <param name="obj2">
-        /// Second object.
-        /// </param>
-        /// <returns>
-        /// True if the two objects are in the same set, false otherwise.
-        /// </returns>
+        /// <param name="obj1">First object.</param>
+        /// <param name="obj2">Second object.</param>
+        /// <returns>True if the two objects are in the same set, false otherwise.</returns>
         public bool InSameSet(int obj1, int obj2)
         {
             return Find(obj1) == Find(obj2); // In same set; same parent
@@ -73,15 +61,9 @@
         /// Performs a union of the sets containing the two objects specified. After this operation,
         /// every element in the sets containing the two objects specified will be part of one larger set.
         /// </summary>
-        /// <remarks>
-        /// If the two elements are already in the same set, nothing is done.
-        /// </remarks>
-        /// <param name="obj1">
-        /// First object.
-        /// </param>
-        /// <param name="obj2">
-        /// Second object.
-        /// </param>
+        /// <remarks>If the two elements are already in the same set, nothing is done.</remarks>
+        /// <param name="obj1">First object.</param>
+        /// <param name="obj2">Second object.</param>
         public void MakeUnion(int obj1, int obj2)
         {
             int i = Find(obj1);

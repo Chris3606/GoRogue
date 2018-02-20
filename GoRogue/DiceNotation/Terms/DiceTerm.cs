@@ -57,12 +57,8 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Rolls the dice, returning the sum.
         /// </summary>
-        /// <param name="rng">
-        /// The RNG to use for rolling,
-        /// </param>
-        /// <returns>
-        /// The sum of the roll.
-        /// </returns>
+        /// <param name="rng">The RNG to use for rolling,</param>
+        /// <returns>The sum of the roll.</returns>
         public int GetResult(IRandom rng)
         {
             _diceResults.Clear();
@@ -89,9 +85,7 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Gets a parenthesized string representation of the dice term, eg (2d6).
         /// </summary>
-        /// <returns>
-        /// A parenthesized representation of the term.
-        /// </returns>
+        /// <returns>A parenthesized representation of the term.</returns>
         public override string ToString()
         {
             return "(" + Multiplicity + "d" + Sides + ")";

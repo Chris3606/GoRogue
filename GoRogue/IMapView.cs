@@ -23,9 +23,7 @@
     /// If an actual 2D array is desired, a class ArrayMap is provided that implements IMapView, and
     /// acts much like an actual 2D array.
     /// </remarks>
-    /// <typeparam name="T">
-    /// The type of value being returned by the indexer functions.
-    /// </typeparam>
+    /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
     public interface IMapView<T>
     {
         /// <summary>
@@ -41,26 +39,16 @@
         /// <summary>
         /// Given an X and Y value, should return the "value" associated with that location.
         /// </summary>
-        /// <param name="x">
-        /// X-value of location.
-        /// </param>
-        /// <param name="y">
-        /// Y-value of location.
-        /// </param>
-        /// <returns>
-        /// The "value" associated with that location.
-        /// </returns>
+        /// <param name="x">X-value of location.</param>
+        /// <param name="y">Y-value of location.</param>
+        /// <returns>The "value" associated with that location.</returns>
         T this[int x, int y] { get; }
 
         /// <summary>
         /// Given a Coord, should return the "value" associated with that location.
         /// </summary>
-        /// <param name="pos">
-        /// Location to retrieve the value for.
-        /// </param>
-        /// <returns>
-        /// THe "value" associated with the provided location.
-        /// </returns>
+        /// <param name="pos">Location to retrieve the value for.</param>
+        /// <returns>THe "value" associated with the provided location.</returns>
         T this[Coord pos] { get; }
     }
 }

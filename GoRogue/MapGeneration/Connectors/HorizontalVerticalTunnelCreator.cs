@@ -14,9 +14,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// <summary>
         /// Constructor. Takes rng to use -- if null is specified, the default RNG is used.
         /// </summary>
-        /// <param name="rng">
-        /// Rng to use -- if null is specified, the default RNG is used.
-        /// </param>
+        /// <param name="rng">Rng to use -- if null is specified, the default RNG is used.</param>
         public HorizontalVerticalTunnelCreator(IRandom rng = null)
         {
             if (rng == null)
@@ -28,15 +26,9 @@ namespace GoRogue.MapGeneration.Connectors
         /// <summary>
         /// Implmenets the algorithm, creating the tunnel as specified in the class description.
         /// </summary>
-        /// <param name="map">
-        /// The map to create the tunnel on.
-        /// </param>
-        /// <param name="start">
-        /// Start coordinate of the tunnel.
-        /// </param>
-        /// <param name="end">
-        /// End coordinate of the tunnel.
-        /// </param>
+        /// <param name="map">The map to create the tunnel on.</param>
+        /// <param name="start">Start coordinate of the tunnel.</param>
+        /// <param name="end">End coordinate of the tunnel.</param>
         public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;

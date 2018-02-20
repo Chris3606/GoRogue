@@ -22,18 +22,10 @@ namespace GoRogue.MapGeneration.Generators
         /// Generates the map. After this function has been completed, non-passable tiles will have a
         /// value of false in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
-        /// <param name="map">
-        /// The map to set values to.
-        /// </param>
-        /// <param name="maxRooms">
-        /// The maximum number of rooms to attempt to place on the map.
-        /// </param>
-        /// <param name="roomMinSize">
-        /// The minimum size in width and height of each room.
-        /// </param>
-        /// <param name="roomMaxSize">
-        /// The maximum size in width and height of each room.
-        /// </param>
+        /// <param name="map">The map to set values to.</param>
+        /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
+        /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
+        /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
         /// <param name="retriesPerRoom">
         /// If a room is placed in a way that overlaps with another room, the maximum number of times
         /// the position will be regenerated to try to position it properly, before simply discarding

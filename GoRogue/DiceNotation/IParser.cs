@@ -9,9 +9,7 @@
         /// <summary>
         /// Parses the dice expression spcified into an IDiceExpression instance.
         /// </summary>
-        /// <param name="expression">
-        /// The expression to parse.
-        /// </param>
+        /// <param name="expression">The expression to parse.</param>
         /// <returns>
         /// An IDiceExpression representing the given expression, that can "roll" the expression on command.
         /// </returns>

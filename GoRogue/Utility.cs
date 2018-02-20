@@ -18,15 +18,11 @@ namespace GoRogue
         /// properly, the namespace GoRogue (the namespace the Utility class is in) must be in a
         /// using statement.
         /// </remarks>
-        /// <typeparam name="T">
-        /// Type of elements in the list.
-        /// </typeparam>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
         /// <param name="list">
         /// List being operated on -- never specified manually as this is an extension method.
         /// </param>
-        /// <param name="rng">
-        /// RNG to use.
-        /// </param>
+        /// <param name="rng">RNG to use.</param>
         static public void FisherYatesShuffle<T>(this List<T> list, IRandom rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -47,18 +43,12 @@ namespace GoRogue
         /// rng specified.
         /// -1 is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T">
-        /// Type of elements in the list.
-        /// </typeparam>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
         /// <param name="list">
         /// IList being operated on -- never specified manually as this is an extension method.
         /// </param>
-        /// <param name="rng">
-        /// RNG to use.
-        /// </param>
-        /// <returns>
-        /// Index selected.
-        /// </returns>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Index selected.</returns>
         static public int RandomIndex<T>(this IList<T> list, IRandom rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -73,18 +63,12 @@ namespace GoRogue
         /// Extension method that selects and returns a random item from the list, using the rng
         /// specified. Default for type T is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T">
-        /// Type of elements in the list.
-        /// </typeparam>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
         /// <param name="list">
         /// IList being operated on -- never specified manually as this is an extension method.
         /// </param>
-        /// <param name="rng">
-        /// RNG to use.
-        /// </param>
-        /// <returns>
-        /// Item selected.
-        /// </returns>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Item selected.</returns>
         static public T RandomItem<T>(this IList<T> list, IRandom rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -101,12 +85,8 @@ namespace GoRogue
         /// <typeparam name="T">
         /// Type of values being swapped -- generally determinable implicitly by the compiler.
         /// </typeparam>
-        /// <param name="lhs">
-        /// Left-hand value.
-        /// </param>
-        /// <param name="rhs">
-        /// Right-hand value.
-        /// </param>
+        /// <param name="lhs">Left-hand value.</param>
+        /// <param name="rhs">Right-hand value.</param>
         public static void Swap<T>(ref T lhs, ref T rhs)
         {
             T temp = lhs;
@@ -121,9 +101,7 @@ namespace GoRogue
         /// function simply provides a shorter syntax to create a new list and pass in the
         /// IEnumerable to the constructor.
         /// </summary>
-        /// <typeparam name="T">
-        /// The type of elements in the IEnumerable.
-        /// </typeparam>
+        /// <typeparam name="T">The type of elements in the IEnumerable.</typeparam>
         /// <param name="enumerable">
         /// The IEnumerable to convert to List -- never specified manually as this is an extension method.
         /// </param>

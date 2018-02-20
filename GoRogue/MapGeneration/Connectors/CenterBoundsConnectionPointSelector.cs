@@ -14,14 +14,9 @@ namespace GoRogue.MapGeneration.Connectors
         /// Selects and returns a the center point of the bounding rectangle for each MapArea's
         /// positions list.
         /// </summary>
-        /// <param name="area1">
-        /// First MapArea to connect.
-        /// </param>
-        /// <param name="area2">
-        /// First MapArea to connect.
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="area1">First MapArea to connect.</param>
+        /// <param name="area2">First MapArea to connect.</param>
+        /// <returns></returns>
         public Tuple<Coord, Coord> SelectConnectionPoints(MapArea area1, MapArea area2) => new Tuple<Coord, Coord>(area1.Bounds.Center, area2.Bounds.Center);
     }
 }

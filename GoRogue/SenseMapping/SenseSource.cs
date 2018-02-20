@@ -65,18 +65,15 @@ namespace GoRogue.SenseMapping
         /// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
         /// used for calculations.
         /// </summary>
-        /// <param name="type">
-        /// The spread mechanics to use for source values.
-        /// </param>
-        /// <param name="position">
-        /// The position on a map that the source is located at.
-        /// </param>
+        /// <param name="type">The spread mechanics to use for source values.</param>
+        /// <param name="position">The position on a map that the source is located at.</param>
         /// <param name="radius">
         /// The maximum radius of the source -- this is the maximum distance the source values will
         /// emanate, provided the area is completely unobstructed.
         /// </param>
         /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius).
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
         /// </param>
         public SenseSource(SourceType type, Coord position, int radius, Distance distanceCalc)
         {
@@ -88,6 +85,12 @@ namespace GoRogue.SenseMapping
             resMap = null;
             Enabled = true;
         }
+
+        /// <summary>
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius)
+        /// </summary>
+        public Distance DistanceCalc { get; set; }
 
         /// <summary>
         /// Whether or not this source is enabled. If a source is disabled when its SenseMap's
@@ -122,11 +125,6 @@ namespace GoRogue.SenseMapping
                 }
             }
         }
-
-        /// <summary>
-        /// The distance calculation used to determine what shape the radius has (or a type implicitly convertible to Distance, eg. Radius)
-        /// </summary>
-        public Distance DistanceCalc { get; set; }
 
         /// <summary>
         /// The spread mechanics to use for source values.

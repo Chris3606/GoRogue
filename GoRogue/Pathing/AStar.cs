@@ -84,15 +84,9 @@ namespace GoRogue.Pathing
         /// Returns null if there is no path between the specified points. Will still return an
         /// appropriate path object if the start point is equal to the end point.
         /// </remarks>
-        /// <param name="start">
-        /// The starting point of the path.
-        /// </param>
-        /// <param name="end">
-        /// The ending point of the path.
-        /// </param>
-        /// <returns>
-        /// The shortest path between the two points, or null if no valid path exists.
-        /// </returns>
+        /// <param name="start">The starting point of the path.</param>
+        /// <param name="end">The ending point of the path.</param>
+        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
         public Path ShortestPath(Coord start, Coord end)
         {
             // Don't waste initialization time if there is definately no path
@@ -196,21 +190,11 @@ namespace GoRogue.Pathing
         /// Returns null if there is no path between the specified points. Will still return an
         /// appropriate path object if the start point is equal to the end point.
         /// </remarks>
-        /// <param name="startX">
-        /// The x-coordinate of the starting point of the path.
-        /// </param>
-        /// <param name="startY">
-        /// The y-coordinate of the starting point of the path.
-        /// </param>
-        /// <param name="endX">
-        /// The x-coordinate of the ending point of the path.
-        /// </param>
-        /// <param name="endY">
-        /// The y-coordinate of the ending point of the path.
-        /// </param>
-        /// <returns>
-        /// The shortest path between the two points, or null if no valid path exists.
-        /// </returns>
+        /// <param name="startX">The x-coordinate of the starting point of the path.</param>
+        /// <param name="startY">The y-coordinate of the starting point of the path.</param>
+        /// <param name="endX">The x-coordinate of the ending point of the path.</param>
+        /// <param name="endY">The y-coordinate of the ending point of the path.</param>
+        /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
         public Path ShortestPath(int startX, int startY, int endX, int endY) => ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY));
 
         // These neighbor functions are special in that they return (approximately) the closest
@@ -273,15 +257,9 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Creates a copy of the path, optionally reversing the path as it does so.
         /// </summary>
-        /// <remarks>
-        /// Reversing is an O(1) operation, since it does not modify the list.
-        /// </remarks>
-        /// <param name="pathToCopy">
-        /// The path to copy.
-        /// </param>
-        /// <param name="reverse">
-        /// Whether or not to reverse the path. Defaults to false.
-        /// </param>
+        /// <remarks>Reversing is an O(1) operation, since it does not modify the list.</remarks>
+        /// <param name="pathToCopy">The path to copy.</param>
+        /// <param name="reverse">Whether or not to reverse the path. Defaults to false.</param>
         public Path(Path pathToCopy, bool reverse = false)
         {
             _steps = pathToCopy._steps;
@@ -377,12 +355,8 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Gets the nth step along the path, where 0 is the step AFTER the starting point.
         /// </summary>
-        /// <param name="stepNum">
-        /// The (array-like index) of the step to get.
-        /// </param>
-        /// <returns>
-        /// The coordinate consituting the step specified.
-        /// </returns>
+        /// <param name="stepNum">The (array-like index) of the step to get.</param>
+        /// <returns>The coordinate consituting the step specified.</returns>
         public Coord GetStep(int stepNum)
         {
             if (inOriginalOrder)
@@ -394,12 +368,8 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Gets the nth step along the path, where 0 IS the starting point.
         /// </summary>
-        /// <param name="stepNum">
-        /// The (array-like index) of the step to get.
-        /// </param>
-        /// <returns>
-        /// The coordinate consituting the step specified.
-        /// </returns>
+        /// <param name="stepNum">The (array-like index) of the step to get.</param>
+        /// <returns>The coordinate consituting the step specified.</returns>
         public Coord GetStepWithStart(int stepNum)
         {
             if (inOriginalOrder)

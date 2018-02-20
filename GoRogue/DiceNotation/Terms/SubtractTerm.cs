@@ -10,12 +10,8 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Constructor. Takes the two terms to subtract.
         /// </summary>
-        /// <param name="term1">
-        /// The first term (left-hand side).
-        /// </param>
-        /// <param name="term2">
-        /// The second term (right-hand side).
-        /// </param>
+        /// <param name="term1">The first term (left-hand side).</param>
+        /// <param name="term2">The second term (right-hand side).</param>
         public SubtractTerm(ITerm term1, ITerm term2)
         {
             Term1 = term1;
@@ -35,12 +31,8 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Subtracts the second term from the first, evaluating those two terms as necessary.
         /// </summary>
-        /// <param name="rng">
-        /// The rng to used -- passed to other terms.
-        /// </param>
-        /// <returns>
-        /// The result of evaluating Term1 - Term2.
-        /// </returns>
+        /// <param name="rng">The rng to used -- passed to other terms.</param>
+        /// <returns>The result of evaluating Term1 - Term2.</returns>
         public int GetResult(IRandom rng)
         {
             return Term1.GetResult(rng) - Term2.GetResult(rng);
@@ -49,9 +41,7 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Returns a parenthesized string representing the operation.
         /// </summary>
-        /// <returns>
-        /// A parenthesized string representing the operation.
-        /// </returns>
+        /// <returns>A parenthesized string representing the operation.</returns>
         public override string ToString()
         {
             return "(" + Term1 + "-" + Term2 + ")";

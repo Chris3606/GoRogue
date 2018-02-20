@@ -42,12 +42,8 @@ namespace GoRogue.Random
         /// specified max value, inclusive, so that min and max are at 3.5 deviations from the mean
         /// (half-way of min and max).
         /// </summary>
-        /// <param name="maxValue">
-        /// Inclusive maximum result.
-        /// </param>
-        /// <returns>
-        /// A Gaussian pseudo-random integer between 0 and the specified maxValue, inclusive.
-        /// </returns>
+        /// <param name="maxValue">Inclusive maximum result.</param>
+        /// <returns>A Gaussian pseudo-random integer between 0 and the specified maxValue, inclusive.</returns>
         public int Next(int maxValue) => Next(0, maxValue);
 
         /// <summary>
@@ -55,12 +51,8 @@ namespace GoRogue.Random
         /// max values, inclusive, so that min and max are at 3.5 deviations from the mean (half-way
         /// of min and max).
         /// </summary>
-        /// <param name="minValue">
-        /// Inclusive minimum result.
-        /// </param>
-        /// <param name="maxValue">
-        /// Inclusive maximum result.
-        /// </param>
+        /// <param name="minValue">Inclusive minimum result.</param>
+        /// <param name="maxValue">Inclusive maximum result.</param>
         /// <returns>
         /// Returns a pseudo-random integer between the specified minValue and maxValue, inclusive.
         /// </returns>

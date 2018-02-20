@@ -12,15 +12,9 @@ namespace GoRogue
         /// Rounds the given number up (toward highest number), to the nearest multiple of the
         /// specified value.
         /// </summary>
-        /// <param name="number">
-        /// Number to round.
-        /// </param>
-        /// <param name="toMultipleOf">
-        /// Number given is rounded up to nearest multiple of this number.
-        /// </param>
-        /// <returns>
-        /// The number parameter, rouded up to the nearest multiple of toMultipleOf.
-        /// </returns>
+        /// <param name="number">Number to round.</param>
+        /// <param name="toMultipleOf">Number given is rounded up to nearest multiple of this number.</param>
+        /// <returns>The number parameter, rouded up to the nearest multiple of toMultipleOf.</returns>
         public static int RoundToMultiple(int number, int toMultipleOf)
         {
             int isPositive = (number >= 0) ? 1 : 0;
@@ -30,23 +24,15 @@ namespace GoRogue
         /// <summary>
         /// Converts given angle from radians to degrees.
         /// </summary>
-        /// <param name="radAngle">
-        /// Angle in radians.
-        /// </param>
-        /// <returns>
-        /// The given angle in degrees.
-        /// </returns>
+        /// <param name="radAngle">Angle in radians.</param>
+        /// <returns>The given angle in degrees.</returns>
         public static double ToDegree(double radAngle) => radAngle * (180.0 / Math.PI);
 
         /// <summary>
         /// Converts given angle from degrees to radians.
         /// </summary>
-        /// <param name="degAngle">
-        /// Angle in degrees.
-        /// </param>
-        /// <returns>
-        /// The given angle in radians.
-        /// </returns>
+        /// <param name="degAngle">Angle in degrees.</param>
+        /// <returns>The given angle in radians.</returns>
         public static double ToRadian(double degAngle) => Math.PI * degAngle / 180.0;
 
         // Basically modulo for array indices, solves - num issues. (-1, 3) is 2.
@@ -64,9 +50,7 @@ namespace GoRogue
         /// numbers (under 0) wrap around to the end of the array (Length - 1). In that example to
         /// wrap a number i you would call WrapTo(i, array.Length).
         /// </summary>
-        /// <param name="num">
-        /// The number to wrap.
-        /// </param>
+        /// <param name="num">The number to wrap.</param>
         /// <param name="wrapTo">
         /// The number to wrap to -- the result of the function is as outlined in function
         /// description, and guaranteed to be between [0, wrapTo - 1], inclusive.

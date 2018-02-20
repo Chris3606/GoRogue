@@ -40,40 +40,28 @@ namespace GoRogue
         /// Returns a read-only reference to the data structure. Convenient for "safely" exposing the
         /// structure as a property.
         /// </summary>
-        /// <returns>
-        /// The current data structure, as a "read-only" reference.
-        /// </returns>
+        /// <returns>The current data structure, as a "read-only" reference.</returns>
         IReadOnlySpatialMap<T> AsReadOnly();
 
         /// <summary>
         /// Returns whether or not the data structure contains the given item.
         /// </summary>
-        /// <param name="item">
-        /// The item to check for.
-        /// </param>
-        /// <returns>
-        /// True if the given item is in the data structure, false if not.
-        /// </returns>
+        /// <param name="item">The item to check for.</param>
+        /// <returns>True if the given item is in the data structure, false if not.</returns>
         bool Contains(T item);
 
         /// <summary>
         /// Returns if there is an item in the data structure at the given position or not.
         /// </summary>
-        /// <param name="position">
-        /// The position to check for.
-        /// </param>
-        /// <returns>
-        /// True if there is some item at the given position, false if not.
-        /// </returns>
+        /// <param name="position">The position to check for.</param>
+        /// <returns>True if there is some item at the given position, false if not.</returns>
         bool Contains(Coord position);
 
         /// <summary>
         /// Gets the item(s) associated with the given position if there are any items, or returns
         /// nothing if there is nothing at that position.
         /// </summary>
-        /// <param name="position">
-        /// The position to return the item(s) for.
-        /// </param>
+        /// <param name="position">The position to return the item(s) for.</param>
         /// <returns>
         /// The item(s) at the given position if there are any items, or nothing if there is nothing
         /// at that position.
@@ -84,9 +72,7 @@ namespace GoRogue
         /// Gets the position associated with the item in the data structure, or null if that item is
         /// not found.
         /// </summary>
-        /// <param name="item">
-        /// The item to get the position for.
-        /// </param>
+        /// <param name="item">The item to get the position for.</param>
         /// <returns>
         /// The position associated with the given item, if it exists in the data structure, or null
         /// if the item does not exist.
@@ -97,9 +83,7 @@ namespace GoRogue
     /// <summary>
     /// Interface specifying return type for item-location pairs in a spatial map implementation.
     /// </summary>
-    /// <typeparam name="T">
-    /// Type of the item associated with locations.
-    /// </typeparam>
+    /// <typeparam name="T">Type of the item associated with locations.</typeparam>
     public interface ISpatialTuple<T>
     {
         /// <summary>

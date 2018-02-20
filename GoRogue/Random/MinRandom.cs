@@ -10,26 +10,16 @@
         /// <summary>
         /// Gets the next integer from the "generator" (it will always be 0).
         /// </summary>
-        /// <param name="maxValue">
-        /// Irrelevant parameter.
-        /// </param>
-        /// <returns>
-        /// The integer 0.
-        /// </returns>
+        /// <param name="maxValue">Irrelevant parameter.</param>
+        /// <returns>The integer 0.</returns>
         public int Next(int maxValue) => 0;
 
         /// <summary>
         /// Gets the next integer from the "generator" (it will always be minValue).
         /// </summary>
-        /// <param name="minValue">
-        /// Value always returned when this function is called.
-        /// </param>
-        /// <param name="maxValue">
-        /// Irrelevant parameter.
-        /// </param>
-        /// <returns>
-        /// Value given for minValue.
-        /// </returns>
+        /// <param name="minValue">Value always returned when this function is called.</param>
+        /// <param name="maxValue">Irrelevant parameter.</param>
+        /// <returns>Value given for minValue.</returns>
         public int Next(int minValue, int maxValue) => minValue;
     }
 }

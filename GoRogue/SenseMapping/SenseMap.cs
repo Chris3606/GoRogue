@@ -38,9 +38,7 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Constructor. Takes the resistance map to use for calculations.
         /// </summary>
-        /// <param name="resMap">
-        /// The resistance map to use for calculations.
-        /// </param>
+        /// <param name="resMap">The resistance map to use for calculations.</param>
         public SenseMap(IMapView<double> resMap)
         {
             this.resMap = resMap;
@@ -95,12 +93,8 @@ namespace GoRogue.SenseMapping
         /// SenseMap called mySenseMap, you may call mySenseMap[Coord.Get(1, 3)] to access the
         /// "sensory value" at (1, 3).
         /// </summary>
-        /// <param name="pos">
-        /// Position to get the sensory value for.
-        /// </param>
-        /// <returns>
-        /// The "sensory value" at the given location.
-        /// </returns>
+        /// <param name="pos">Position to get the sensory value for.</param>
+        /// <returns>The "sensory value" at the given location.</returns>
         public double this[Coord pos]
         {
             get { return senseMap[pos.X, pos.Y]; }
@@ -110,15 +104,9 @@ namespace GoRogue.SenseMapping
         /// Array-style indexer that takes an (x, y) value as the index. Similarly to the Coord
         /// indexer, you may call mySenseMap[1, 3] to get the "sensory value" at 1, 3.
         /// </summary>
-        /// <param name="x">
-        /// X-coordinate to retrieve the sensory value for.
-        /// </param>
-        /// <param name="y">
-        /// Y-Coordinate to retrieve the sensory value for.
-        /// </param>
-        /// <returns>
-        /// The sensory value at (x, y)
-        /// </returns>
+        /// <param name="x">X-coordinate to retrieve the sensory value for.</param>
+        /// <param name="y">Y-Coordinate to retrieve the sensory value for.</param>
+        /// <returns>The sensory value at (x, y)</returns>
         public double this[int x, int y]
         {
             get { return senseMap[x, y]; }
@@ -128,9 +116,7 @@ namespace GoRogue.SenseMapping
         /// Adds the given SenseSource to the list of sources. If the source has its
         /// SenseSource.Enabled flag set when Calculate is next called, then this will be used as a source.
         /// </summary>
-        /// <param name="senseSource">
-        /// The "source" to add.
-        /// </param>
+        /// <param name="senseSource">The "source" to add.</param>
         public void AddSenseSource(SenseSource senseSource)
         {
             _senseSources.Add(senseSource);
@@ -175,9 +161,7 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Enumerator, in case you want to use this as a list of doubles.
         /// </summary>
-        /// <returns>
-        /// Enumerable of doubles (the sensory values).
-        /// </returns>
+        /// <returns>Enumerable of doubles (the sensory values).</returns>
         public IEnumerator<double> GetEnumerator()
         {
             for (int y = 0; y < resMap.Height; y++)
@@ -188,9 +172,7 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Generic enumerator.
         /// </summary>
-        /// <returns>
-        /// Enumerator for looping.
-        /// </returns>
+        /// <returns>Enumerator for looping.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
@@ -198,9 +180,7 @@ namespace GoRogue.SenseMapping
         /// source is destroyed, expired, or otherwise removed from the map. For temporary disabling,
         /// it is better to use the SenseSource.Enabled flag.
         /// </summary>
-        /// <param name="senseSource">
-        /// The SenseSource to remove.
-        /// </param>
+        /// <param name="senseSource">The SenseSource to remove.</param>
         public void RemoveSenseSource(SenseSource senseSource)
         {
             _senseSources.Remove(senseSource);

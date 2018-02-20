@@ -12,9 +12,7 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Constructor. Takes the numerical constant it represents.
         /// </summary>
-        /// <param name="value">
-        /// The numerical value this term represents.
-        /// </param>
+        /// <param name="value">The numerical value this term represents.</param>
         public ConstantTerm(int value)
         {
             this.value = value;
@@ -23,20 +21,14 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Returns the numerical constant it represents. RNG is unused.
         /// </summary>
-        /// <param name="rng">
-        /// (Unused) rng.
-        /// </param>
-        /// <returns>
-        /// The numerical constant this term represents.
-        /// </returns>
+        /// <param name="rng">(Unused) rng.</param>
+        /// <returns>The numerical constant this term represents.</returns>
         public int GetResult(IRandom rng) => value;
 
         /// <summary>
         /// Returns a string representation of this constant.
         /// </summary>
-        /// <returns>
-        /// The numerical constant being represented, as a string.
-        /// </returns>
+        /// <returns>The numerical constant being represented, as a string.</returns>
         public override string ToString()
         {
             return value.ToString();

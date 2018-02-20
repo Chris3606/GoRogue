@@ -64,9 +64,7 @@ namespace GoRogue
         /// Adds the given effect to this EffectTrigger, provided the effect's duration is not 0. If
         /// the effect's duration is 0, an ArgumentException is thrown.
         /// </summary>
-        /// <param name="effect">
-        /// The effect to add to this trigger.
-        /// </param>
+        /// <param name="effect">The effect to add to this trigger.</param>
         public virtual void Add(Effect<TriggerArgs> effect)
         {
             if (effect.Duration == 0)
@@ -78,9 +76,7 @@ namespace GoRogue
         /// <summary>
         /// Removes the given effect from this EffectTrigger.
         /// </summary>
-        /// <param name="effect">
-        /// The effect to remove
-        /// </param>
+        /// <param name="effect">The effect to remove</param>
         public virtual void Remove(Effect<TriggerArgs> effect) => _effects.Remove(effect);
 
         /// <summary>
@@ -96,9 +92,7 @@ namespace GoRogue
         ///
         /// It is valid to pass null as the argument to this function, if the effects need no actual parameters.
         /// </remarks>
-        /// <param name="args">
-        /// Argument to pass to the Trigger function of each effect.
-        /// </param>
+        /// <param name="args">Argument to pass to the Trigger function of each effect.</param>
         public void TriggerEffects(TriggerArgs args)
         {
             foreach (var effect in _effects)

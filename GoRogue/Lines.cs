@@ -44,15 +44,9 @@ namespace GoRogue
         /// Returns an IEnumerable of every point, in order, closest to a line between the two points
         /// specified, using the line drawing algorithm given. The start and end points will be included.
         /// </summary>
-        /// <param name="start">
-        /// The start point of the line.
-        /// </param>
-        /// <param name="end">
-        /// The end point of the line.
-        /// </param>
-        /// <param name="type">
-        /// The line-drawing algorithm to use to generate the line.
-        /// </param>
+        /// <param name="start">The start point of the line.</param>
+        /// <param name="end">The end point of the line.</param>
+        /// <param name="type">The line-drawing algorithm to use to generate the line.</param>
         /// <returns>
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).
@@ -63,22 +57,12 @@ namespace GoRogue
         /// Returns an IEnumerable of every point, in order, closest to a line between the two points
         /// specified, using the line drawing algorithm given. The start and end points will be included.
         /// </summary>
-        /// <param name="startX">
-        /// X-coordinate of the starting point of the line.
-        /// </param>
-        /// <param name="startY">
-        /// Y-coordinate of the starting point of the line.
-        /// </param>
-        /// <param name="endX">
-        /// X-coordinate of the ending point of the line.
-        /// </param>
+        /// <param name="startX">X-coordinate of the starting point of the line.</param>
+        /// <param name="startY">Y-coordinate of the starting point of the line.</param>
+        /// <param name="endX">X-coordinate of the ending point of the line.</param>
         /// ///
-        /// <param name="endY">
-        /// Y-coordinate of the ending point of the line.
-        /// </param>
-        /// <param name="type">
-        /// The line-drawing algorithm to use to generate the line.
-        /// </param>
+        /// <param name="endY">Y-coordinate of the ending point of the line.</param>
+        /// <param name="type">The line-drawing algorithm to use to generate the line.</param>
         /// <returns>
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).

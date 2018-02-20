@@ -30,9 +30,7 @@ namespace GoRogue
     /// documentation for an easy implementation example). This is used internally to keep track of
     /// the objects, since uints are easily hashable.
     /// </summary>
-    /// <typeparam name="T">
-    /// The type of object that will be contained by this SpatialMap.
-    /// </typeparam>
+    /// <typeparam name="T">The type of object that will be contained by this SpatialMap.</typeparam>
     public class SpatialMap<T> : ISpatialMap<T> where T : IHasID
     {
         private Dictionary<uint, SpatialTuple<T>> itemMapping;
@@ -100,15 +98,9 @@ namespace GoRogue
         /// SpatialMap and the position is not already filled. If either of those are the case,
         /// returns false. Otherwise (if item was successfully added), returns true.
         /// </summary>
-        /// <param name="newItem">
-        /// The item to add.
-        /// </param>
-        /// <param name="position">
-        /// The position at which to add the new item.
-        /// </param>
-        /// <returns>
-        /// True if the item was added, false if not.
-        /// </returns>
+        /// <param name="newItem">The item to add.</param>
+        /// <param name="position">The position at which to add the new item.</param>
+        /// <returns>True if the item was added, false if not.</returns>
         public bool Add(T newItem, Coord position)
         {
             if (itemMapping.ContainsKey(newItem.ID))
@@ -152,9 +144,7 @@ namespace GoRogue
         /// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
         /// foreach loop. Generally should never be called explicitly.
         /// </summary>
-        /// <returns>
-        /// An enumerator for the SpatialMap
-        /// </returns>
+        /// <returns>An enumerator for the SpatialMap</returns>
         public IEnumerator<ISpatialTuple<T>> GetEnumerator()
         {
             foreach (var tuple in itemMapping.Values)
@@ -164,9 +154,7 @@ namespace GoRogue
         /// <summary>
         /// Generic iterator used internally by foreach loops.
         /// </summary>
-        /// <returns>
-        /// Enumerator to ISpatialTuple instances.
-        /// </returns>
+        /// <returns>Enumerator to ISpatialTuple instances.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
@@ -176,9 +164,7 @@ namespace GoRogue
         /// Intended to be a more convenient function as compared to GetItems, for times when you are
         /// dealing exclusively with SpatialMap instances.
         /// </remarks>
-        /// <param name="position">
-        /// The postiion to return the item for.
-        /// </param>
+        /// <param name="position">The postiion to return the item for.</param>
         /// <returns>
         /// The item at the given position, or null/equivalent if no item exists at that location.
         /// </returns>
@@ -203,9 +189,7 @@ namespace GoRogue
         /// class also provides a GetItem function that returns a more intuitive null if no item was
         /// found, or the item at the location as applicable.
         /// </remarks>
-        /// <param name="position">
-        /// The position to return the item for.
-        /// </param>
+        /// <param name="position">The position to return the item for.</param>
         /// <returns>
         /// The item at the given position as a 1-element enumerable, if there is an item there, or
         /// nothing if there is no item there.
@@ -234,15 +218,9 @@ namespace GoRogue
         /// item does not exist in the SpatialMap, or the position is already filled by something,
         /// does nothing and returns false. Otherwise, returns true.
         /// </summary>
-        /// <param name="item">
-        /// The item to move.
-        /// </param>
-        /// <param name="target">
-        /// The position to move it to.
-        /// </param>
-        /// <returns>
-        /// True if the item was moved, false if not.
-        /// </returns>
+        /// <param name="item">The item to move.</param>
+        /// <param name="target">The position to move it to.</param>
+        /// <returns>True if the item was moved, false if not.</returns>
         public bool Move(T item, Coord target)
         {
             if (!itemMapping.ContainsKey(item.ID))
@@ -269,12 +247,8 @@ namespace GoRogue
         /// Since this implementation of ISpatialMap guarantees that only one item may be at any
         /// given location at a time, the returned values will either be none, or a single value.
         /// </remarks>
-        /// <param name="current">
-        /// The position of the item to move.
-        /// </param>
-        /// <param name="target">
-        /// The position to move the item to.
-        /// </param>
+        /// <param name="current">The position of the item to move.</param>
+        /// <param name="target">The position to move the item to.</param>
         /// <returns>
         /// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
         /// was moved.
@@ -297,12 +271,8 @@ namespace GoRogue
         /// Removes the item specified, if it exists, and returns true. Returns false if the item was
         /// not in the SpatialMap.
         /// </summary>
-        /// <param name="item">
-        /// The item to remove.
-        /// </param>
-        /// <returns>
-        /// True if the item was removed, false if the item was not found.
-        /// </returns>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>True if the item was removed, false if the item was not found.</returns>
         public bool Remove(T item)
         {
             if (!itemMapping.ContainsKey(item.ID))
@@ -323,9 +293,7 @@ namespace GoRogue
         /// Again, since this implementation guarantees that only one item can be at any given
         /// location at a time, the returned value is guaranteed to be either nothing or a single element.
         /// </remarks>
-        /// <param name="position">
-        /// The position of the item to remove.
-        /// </param>
+        /// <param name="position">The position of the item to remove.</param>
         /// <returns>
         /// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
         /// was found at that position.

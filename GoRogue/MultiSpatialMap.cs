@@ -21,9 +21,7 @@ namespace GoRogue
     /// The two implementations could also in many cases be used in combination as necessary, since
     /// they both implement the ISpatialMap interface.
     /// </remarks>
-    /// <typeparam name="T">
-    /// The type of items being stored.
-    /// </typeparam>
+    /// <typeparam name="T">The type of items being stored.</typeparam>
     public class MultiSpatialMap<T> : ISpatialMap<T> where T : IHasID
     {
         private Dictionary<uint, SpatialTuple<T>> itemMapping;
@@ -91,15 +89,9 @@ namespace GoRogue
         /// MultiSpatialMap. If the item is already contained in it, does nothing and returns false.
         /// Otherwise (if item was successfully added), returns true.
         /// </summary>
-        /// <param name="newItem">
-        /// The item to add.
-        /// </param>
-        /// <param name="position">
-        /// The position at which to add the new item.
-        /// </param>
-        /// <returns>
-        /// True if the item was added, false if not.
-        /// </returns>
+        /// <param name="newItem">The item to add.</param>
+        /// <param name="position">The position at which to add the new item.</param>
+        /// <returns>True if the item was added, false if not.</returns>
         public bool Add(T newItem, Coord position)
         {
             if (itemMapping.ContainsKey(newItem.ID))
@@ -120,9 +112,7 @@ namespace GoRogue
         /// Returns a ReadOnly reference to the SpatialMap. Convenient for "safely" exposing a
         /// SpatialMap as a property
         /// </summary>
-        /// <returns>
-        /// The current SpatialMap, as a "read-only" reference.
-        /// </returns>
+        /// <returns>The current SpatialMap, as a "read-only" reference.</returns>
         public IReadOnlySpatialMap<T> AsReadOnly() => (IReadOnlySpatialMap<T>)this;
 
         /// <summary>
@@ -148,9 +138,7 @@ namespace GoRogue
         /// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
         /// foreach loop. Generally should never be called explicitly.
         /// </summary>
-        /// <returns>
-        /// An enumerator for the SpatialMap
-        /// </returns>
+        /// <returns>An enumerator for the SpatialMap</returns>
         public IEnumerator<ISpatialTuple<T>> GetEnumerator()
         {
             foreach (var tuple in itemMapping.Values)
@@ -160,9 +148,7 @@ namespace GoRogue
         /// <summary>
         /// Non-generic verion of enumerable used by foreach loop internally.
         /// </summary>
-        /// <returns>
-        /// Enumerator of ISpatialTuples.
-        /// </returns>
+        /// <returns>Enumerator of ISpatialTuples.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
@@ -191,15 +177,9 @@ namespace GoRogue
         /// item does not exist in the MultiSpatialMap, does nothing and returns false. Otherwise,
         /// returns true.
         /// </summary>
-        /// <param name="item">
-        /// The item to move.
-        /// </param>
-        /// <param name="target">
-        /// The position to move it to.
-        /// </param>
-        /// <returns>
-        /// True if the item was moved, false if not.
-        /// </returns>
+        /// <param name="item">The item to move.</param>
+        /// <param name="target">The position to move it to.</param>
+        /// <returns>True if the item was moved, false if not.</returns>
         public bool Move(T item, Coord target)
         {
             if (!itemMapping.ContainsKey(item.ID))
@@ -225,15 +205,9 @@ namespace GoRogue
         /// moved, returns everything that was moved. If nothing was moved, eg. there was nothing at
         /// position current, returns nothing.
         /// </summary>
-        /// <param name="current">
-        /// The position of the items to move.
-        /// </param>
-        /// <param name="target">
-        /// The position to move the item to.
-        /// </param>
-        /// <returns>
-        /// The items moved if something was moved, or nothing if no item was moved.
-        /// </returns>
+        /// <param name="current">The position of the items to move.</param>
+        /// <param name="target">The position to move the item to.</param>
+        /// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
         public IEnumerable<T> Move(Coord current, Coord target)
         {
             if (positionMapping.ContainsKey(current))
@@ -264,12 +238,8 @@ namespace GoRogue
         /// Removes the item specified, if it exists, and returns true. Returns false if the item was
         /// not in the MultiSpatialMap.
         /// </summary>
-        /// <param name="item">
-        /// The item to remove.
-        /// </param>
-        /// <returns>
-        /// True if the item was removed, false if the item was not found.
-        /// </returns>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>True if the item was removed, false if the item was not found.</returns>
         public bool Remove(T item)
         {
             if (!itemMapping.ContainsKey(item.ID))
@@ -290,9 +260,7 @@ namespace GoRogue
         /// Removes everything at the given position, if anything, and returns the items removed.
         /// Returns nothing if no item was at the position specified.
         /// </summary>
-        /// <param name="position">
-        /// The position of the item to remove.
-        /// </param>
+        /// <param name="position">The position of the item to remove.</param>
         /// <returns>
         /// The items removed, if any were removed; nothing if no item was found at that position.
         /// </returns>
