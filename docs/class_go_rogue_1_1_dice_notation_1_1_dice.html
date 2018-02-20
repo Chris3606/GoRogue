@@ -121,11 +121,11 @@ Static Public Attributes</h2></td></tr>
 <p>Because parsing can add significant time, retrieving an <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance instead of using the Roll function can be useful if a given expression will be rolled multiple times. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">expression</td><td>The string dice expression to parse. </td></tr>
+    <tr><td class="paramname">expression</td><td>The string dice expression to parse.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the parsed string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the parsed string.</dd></dl>
 
 </div>
 </div>
@@ -167,12 +167,12 @@ Static Public Attributes</h2></td></tr>
 <p>While more convenient, parsing is computationally more expensive than evaluation. If a dice expression will be rolled many times, it is more efficient to use the Parse method once, and use the resulting <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance to roll the expression each time it is needed. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">expression</td><td>The string dice expression to parse. </td></tr>
+    <tr><td class="paramname">expression</td><td>The string dice expression to parse.</td></tr>
     <tr><td class="paramname">random</td><td>RNG to use to perform the roll. If null is specified, the default RNG is used. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The result of evaluating the dice expression given. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of evaluating the dice expression given.</dd></dl>
 
 </div>
 </div>

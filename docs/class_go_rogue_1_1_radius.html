@@ -64,6 +64,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
@@ -76,48 +77,66 @@ $(function() {
 <p>Class representing different radius types. Similar in architecture to <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> in architecture &ndash; it cannot be instantiated. Instead it simply has pre-allocated static variables for each type of radius, that should be used whenever a variable of type <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is required.  
  <a href="class_go_rogue_1_1_radius.html#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ad5fa7074059bbb86e9dd6469ec5bb7b1"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">Types</a> { <br />
+&#160;&#160;<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a12dec4e1f7ec620651b2b95c440ffac0">Types.SQUARE</a>, 
+<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a337f43db5edddda90ef2156a9baaed09">Types.DIAMOND</a>, 
+<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a0af50777920c1401ab975cab64c4d491">Types.CIRCLE</a>, 
+<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1afbfd6568f88d940b586c9ddf8f68236d">Types.CUBE</a>, 
+<br />
+&#160;&#160;<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1af90dd475a67e9d29408b539a832510ff">Types.OCTAHEDRON</a>, 
+<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a6f7cea7381e843e2ee0338b4a92b0d43">Types.SPHERE</a>
+<br />
+ }<tr class="memdesc:ad5fa7074059bbb86e9dd6469ec5bb7b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement).  <a href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:ad5fa7074059bbb86e9dd6469ec5bb7b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a02a625b4441e875c7a1e43704e98953f"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#a02a625b4441e875c7a1e43704e98953f">operator Distance</a> (<a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> radius)</td></tr>
-<tr class="memdesc:a02a625b4441e875c7a1e43704e98953f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows explicit casting to <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> type. The distance corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved.  <a href="#a02a625b4441e875c7a1e43704e98953f">More...</a><br /></td></tr>
-<tr class="separator:a02a625b4441e875c7a1e43704e98953f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e29e9d2d32650724272ef14dca5eac6"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#a8e29e9d2d32650724272ef14dca5eac6">ToRadius</a> (<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">RadiusType</a> radiusType)</td></tr>
-<tr class="memdesc:a8e29e9d2d32650724272ef14dca5eac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> class instance representing the distance type specified.  <a href="#a8e29e9d2d32650724272ef14dca5eac6">More...</a><br /></td></tr>
-<tr class="separator:a8e29e9d2d32650724272ef14dca5eac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7ed9889aaec96a8add92a40040cdfae"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ac7ed9889aaec96a8add92a40040cdfae">operator AdjacencyRule</a> (<a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> radius)</td></tr>
+<tr class="memdesc:ac7ed9889aaec96a8add92a40040cdfae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows implicit casting to <a class="el" href="class_go_rogue_1_1_adjacency_rule.html" title="Class representing a method for determining which coordinates are adjacent to a given coordinate...">AdjacencyRule</a> type. The rule corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved.  <a href="#ac7ed9889aaec96a8add92a40040cdfae">More...</a><br /></td></tr>
+<tr class="separator:ac7ed9889aaec96a8add92a40040cdfae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8620136cf1c0d7f1a324276cf9c7c59c"><td class="memItemLeft" align="right" valign="top">static implicit&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#a8620136cf1c0d7f1a324276cf9c7c59c">operator Distance</a> (<a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> radius)</td></tr>
+<tr class="memdesc:a8620136cf1c0d7f1a324276cf9c7c59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allows implicit casting to <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> type. The distance corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved.  <a href="#a8620136cf1c0d7f1a324276cf9c7c59c">More...</a><br /></td></tr>
+<tr class="separator:a8620136cf1c0d7f1a324276cf9c7c59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae93b22e30748c7df0fd1e971bdf8eae2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ae93b22e30748c7df0fd1e971bdf8eae2">ToRadius</a> (<a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">Types</a> radiusType)</td></tr>
+<tr class="memdesc:ae93b22e30748c7df0fd1e971bdf8eae2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> class instance representing the distance type specified.  <a href="#ae93b22e30748c7df0fd1e971bdf8eae2">More...</a><br /></td></tr>
+<tr class="separator:ae93b22e30748c7df0fd1e971bdf8eae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aa7bd049106f0e42b338134dcbf5e148c"><td class="memItemLeft" align="right" valign="top">readonly <a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">RadiusType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#aa7bd049106f0e42b338134dcbf5e148c">Type</a></td></tr>
-<tr class="memdesc:aa7bd049106f0e42b338134dcbf5e148c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum type corresponding to radius type being represented.  <a href="#aa7bd049106f0e42b338134dcbf5e148c">More...</a><br /></td></tr>
-<tr class="separator:aa7bd049106f0e42b338134dcbf5e148c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2f06ddc011ad2b43a949ae0491f79b7"><td class="memItemLeft" align="right" valign="top">readonly <a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">Types</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ad2f06ddc011ad2b43a949ae0491f79b7">Type</a></td></tr>
+<tr class="memdesc:ad2f06ddc011ad2b43a949ae0491f79b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum type corresponding to radius type being represented.  <a href="#ad2f06ddc011ad2b43a949ae0491f79b7">More...</a><br /></td></tr>
+<tr class="separator:ad2f06ddc011ad2b43a949ae0491f79b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:adad86ec2db9c190ca223ac922b924170"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#adad86ec2db9c190ca223ac922b924170">CIRCLE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.CIRCLE)</td></tr>
+<tr class="memitem:adad86ec2db9c190ca223ac922b924170"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#adad86ec2db9c190ca223ac922b924170">CIRCLE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.CIRCLE)</td></tr>
 <tr class="memdesc:adad86ec2db9c190ca223ac922b924170"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is a circle around the center point. Shape that would represent movement radius in an 8-way movement scheme, with all movement cost the same based upon distance from the source.  <a href="#adad86ec2db9c190ca223ac922b924170">More...</a><br /></td></tr>
 <tr class="separator:adad86ec2db9c190ca223ac922b924170"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad063fe20635849b5cabefe8da2a3eb4a"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ad063fe20635849b5cabefe8da2a3eb4a">CUBE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.CUBE)</td></tr>
+<tr class="memitem:ad063fe20635849b5cabefe8da2a3eb4a"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ad063fe20635849b5cabefe8da2a3eb4a">CUBE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.CUBE)</td></tr>
 <tr class="memdesc:ad063fe20635849b5cabefe8da2a3eb4a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is a cube around the center point. Similar to SQUARE in 2d shape.  <a href="#ad063fe20635849b5cabefe8da2a3eb4a">More...</a><br /></td></tr>
 <tr class="separator:ad063fe20635849b5cabefe8da2a3eb4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed7b2df86455dc077f4a9fdb8b395f7b"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#aed7b2df86455dc077f4a9fdb8b395f7b">DIAMOND</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.DIAMOND)</td></tr>
+<tr class="memitem:aed7b2df86455dc077f4a9fdb8b395f7b"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#aed7b2df86455dc077f4a9fdb8b395f7b">DIAMOND</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.DIAMOND)</td></tr>
 <tr class="memdesc:aed7b2df86455dc077f4a9fdb8b395f7b"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is a diamond around the center point. Shape that would represent movement radius in a 4-way movement scheme.  <a href="#aed7b2df86455dc077f4a9fdb8b395f7b">More...</a><br /></td></tr>
 <tr class="separator:aed7b2df86455dc077f4a9fdb8b395f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0c1a66bf12434df42ef9ff125e45f7e"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e">OCTAHEDRON</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.OCTAHEDRON)</td></tr>
+<tr class="memitem:af0c1a66bf12434df42ef9ff125e45f7e"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e">OCTAHEDRON</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.OCTAHEDRON)</td></tr>
 <tr class="memdesc:af0c1a66bf12434df42ef9ff125e45f7e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is an octahedron around the center point. Similar to DIAMOND in 2d shape.  <a href="#af0c1a66bf12434df42ef9ff125e45f7e">More...</a><br /></td></tr>
 <tr class="separator:af0c1a66bf12434df42ef9ff125e45f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2281b1e1c473daa50e82f0d2ff3573c2"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#a2281b1e1c473daa50e82f0d2ff3573c2">SPHERE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.SPHERE)</td></tr>
+<tr class="memitem:a2281b1e1c473daa50e82f0d2ff3573c2"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#a2281b1e1c473daa50e82f0d2ff3573c2">SPHERE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.SPHERE)</td></tr>
 <tr class="memdesc:a2281b1e1c473daa50e82f0d2ff3573c2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is a sphere around the center point. Similar to CIRCLE in 2d shape.  <a href="#a2281b1e1c473daa50e82f0d2ff3573c2">More...</a><br /></td></tr>
 <tr class="separator:a2281b1e1c473daa50e82f0d2ff3573c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4af6984998acda800053baf92f9dbd6"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ab4af6984998acda800053baf92f9dbd6">SQUARE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.SQUARE)</td></tr>
+<tr class="memitem:ab4af6984998acda800053baf92f9dbd6"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius.html#ab4af6984998acda800053baf92f9dbd6">SQUARE</a> = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.SQUARE)</td></tr>
 <tr class="memdesc:ab4af6984998acda800053baf92f9dbd6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is a square around the center point. Shape that would represent movement radius in an 8-way movement scheme, with no additional cost on diagonal movement.  <a href="#ab4af6984998acda800053baf92f9dbd6">More...</a><br /></td></tr>
 <tr class="separator:ab4af6984998acda800053baf92f9dbd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Class representing different radius types. Similar in architecture to <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> in architecture &ndash; it cannot be instantiated. Instead it simply has pre-allocated static variables for each type of radius, that should be used whenever a variable of type <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> is required. </p>
 <p>Also contains utility functions to work with radius types, and is also implicitly convertible to the <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> class. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a02a625b4441e875c7a1e43704e98953f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02a625b4441e875c7a1e43704e98953f">&sect;&nbsp;</a></span>operator Distance()</h2>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ad5fa7074059bbb86e9dd6469ec5bb7b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5fa7074059bbb86e9dd6469ec5bb7b1">&sect;&nbsp;</a></span>Types</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -126,7 +145,46 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static GoRogue.Radius.operator <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> </td>
+          <td class="memname">enum <a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">GoRogue.Radius.Types</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enum representing <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement). </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1a12dec4e1f7ec620651b2b95c440ffac0"></a>SQUARE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#ab4af6984998acda800053baf92f9dbd6" title="Radius is a square around the center point. Shape that would represent movement radius in an 8-way mo...">Radius.SQUARE</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1a337f43db5edddda90ef2156a9baaed09"></a>DIAMOND&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#aed7b2df86455dc077f4a9fdb8b395f7b" title="Radius is a diamond around the center point. Shape that would represent movement radius in a 4-way mo...">Radius.DIAMOND</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1a0af50777920c1401ab975cab64c4d491"></a>CIRCLE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#adad86ec2db9c190ca223ac922b924170" title="Radius is a circle around the center point. Shape that would represent movement radius in an 8-way mo...">Radius.CIRCLE</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1afbfd6568f88d940b586c9ddf8f68236d"></a>CUBE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#ad063fe20635849b5cabefe8da2a3eb4a" title="Radius is a cube around the center point. Similar to SQUARE in 2d shape. ">Radius.CUBE</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1af90dd475a67e9d29408b539a832510ff"></a>OCTAHEDRON&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e" title="Radius is an octahedron around the center point. Similar to DIAMOND in 2d shape. ">Radius.OCTAHEDRON</a>. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ad5fa7074059bbb86e9dd6469ec5bb7b1a6f7cea7381e843e2ee0338b4a92b0d43"></a>SPHERE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#a2281b1e1c473daa50e82f0d2ff3573c2" title="Radius is a sphere around the center point. Similar to CIRCLE in 2d shape. ">Radius.SPHERE</a>. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac7ed9889aaec96a8add92a40040cdfae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7ed9889aaec96a8add92a40040cdfae">&sect;&nbsp;</a></span>operator AdjacencyRule()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit GoRogue.Radius.operator <a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
           <td class="paramname"><em>radius</em></td><td>)</td>
@@ -135,23 +193,57 @@ Static Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">explicit</span><span class="mlabel">static</span></span>  </td>
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Allows explicit casting to <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> type. The distance corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved. </p>
+<p>Allows implicit casting to <a class="el" href="class_go_rogue_1_1_adjacency_rule.html" title="Class representing a method for determining which coordinates are adjacent to a given coordinate...">AdjacencyRule</a> type. The rule corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">radius</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> type being casted. </td></tr>
+    <tr><td class="paramname">radius</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> type being casted.</td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8e29e9d2d32650724272ef14dca5eac6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e29e9d2d32650724272ef14dca5eac6">&sect;&nbsp;</a></span>ToRadius()</h2>
+<a id="a8620136cf1c0d7f1a324276cf9c7c59c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8620136cf1c0d7f1a324276cf9c7c59c">&sect;&nbsp;</a></span>operator Distance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static implicit GoRogue.Radius.operator <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
+          <td class="paramname"><em>radius</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allows implicit casting to <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> type. The distance corresponding to the proper definition of distance to create the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> casted will be retrieved. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">radius</td><td><a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> type being casted.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae93b22e30748c7df0fd1e971bdf8eae2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae93b22e30748c7df0fd1e971bdf8eae2">&sect;&nbsp;</a></span>ToRadius()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,7 +254,7 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="memname">static <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.ToRadius </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">RadiusType</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">Types</a>&#160;</td>
           <td class="paramname"><em>radiusType</em></td><td>)</td>
           <td></td>
         </tr>
@@ -177,11 +269,11 @@ Static Public Attributes</h2></td></tr>
 <p>Gets the <a class="el" href="class_go_rogue_1_1_radius.html" title="Class representing different radius types. Similar in architecture to Coord in architecture – it can...">Radius</a> class instance representing the distance type specified. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">radiusType</td><td>The enum value for the distance method. </td></tr>
+    <tr><td class="paramname">radiusType</td><td>The enum value for the distance method.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The radius class representing the given distance calculation. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The radius class representing the given distance calculation.</dd></dl>
 
 </div>
 </div>
@@ -196,7 +288,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.CIRCLE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.CIRCLE)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.CIRCLE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.CIRCLE)</td>
         </tr>
       </table>
   </td>
@@ -220,7 +312,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.CUBE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.CUBE)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.CUBE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.CUBE)</td>
         </tr>
       </table>
   </td>
@@ -244,7 +336,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.DIAMOND = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.DIAMOND)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.DIAMOND = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.DIAMOND)</td>
         </tr>
       </table>
   </td>
@@ -268,7 +360,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.OCTAHEDRON = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.OCTAHEDRON)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.OCTAHEDRON = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.OCTAHEDRON)</td>
         </tr>
       </table>
   </td>
@@ -292,7 +384,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.SPHERE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.SPHERE)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.SPHERE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.SPHERE)</td>
         </tr>
       </table>
   </td>
@@ -316,7 +408,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.SQUARE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(RadiusType.SQUARE)</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> GoRogue.Radius.SQUARE = new <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>(Types.SQUARE)</td>
         </tr>
       </table>
   </td>
@@ -330,14 +422,14 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7bd049106f0e42b338134dcbf5e148c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7bd049106f0e42b338134dcbf5e148c">&sect;&nbsp;</a></span>Type</h2>
+<a id="ad2f06ddc011ad2b43a949ae0491f79b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2f06ddc011ad2b43a949ae0491f79b7">&sect;&nbsp;</a></span>Type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">readonly <a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">RadiusType</a> GoRogue.Radius.Type</td>
+          <td class="memname">readonly <a class="el" href="class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1">Types</a> GoRogue.Radius.Type</td>
         </tr>
       </table>
 </div><div class="memdoc">

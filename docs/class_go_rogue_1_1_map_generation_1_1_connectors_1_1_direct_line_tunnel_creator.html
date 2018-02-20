@@ -85,12 +85,9 @@ Inheritance diagram for GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a63763fb23e44f309484410250816b20a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a63763fb23e44f309484410250816b20a">DirectLineTunnelCreator</a> (<a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape)</td></tr>
-<tr class="memdesc:a63763fb23e44f309484410250816b20a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the shape that defines a radius, which is used to determine the proper distance calculation.  <a href="#a63763fb23e44f309484410250816b20a">More...</a><br /></td></tr>
-<tr class="separator:a63763fb23e44f309484410250816b20a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac63f6416664d4b9d64495a949e7c4576"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#ac63f6416664d4b9d64495a949e7c4576">DirectLineTunnelCreator</a> (<a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc)</td></tr>
-<tr class="memdesc:ac63f6416664d4b9d64495a949e7c4576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the distance calculation to use, which determines whether brensham's or CardinalPositionOnLine is used to create the tunnel.  <a href="#ac63f6416664d4b9d64495a949e7c4576">More...</a><br /></td></tr>
-<tr class="separator:ac63f6416664d4b9d64495a949e7c4576"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4acb0f42cb78042011b778103ef108ff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a4acb0f42cb78042011b778103ef108ff">DirectLineTunnelCreator</a> (<a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a> adjacencyRule)</td></tr>
+<tr class="memdesc:a4acb0f42cb78042011b778103ef108ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the distance calculation to use, which determines whether brensham's or CardinalPositionOnLine is used to create the tunnel.  <a href="#a4acb0f42cb78042011b778103ef108ff">More...</a><br /></td></tr>
+<tr class="separator:a4acb0f42cb78042011b778103ef108ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0775433b61283ce0afc7bb60511400c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a0775433b61283ce0afc7bb60511400c7">CreateTunnel</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> start, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> end)</td></tr>
 <tr class="memdesc:a0775433b61283ce0afc7bb60511400c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implmenets the algorithm, creating the tunnel as specified in the class description.  <a href="#a0775433b61283ce0afc7bb60511400c7">More...</a><br /></td></tr>
 <tr class="separator:a0775433b61283ce0afc7bb60511400c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -98,8 +95,8 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a tunnel creation algorithm that sets as walkable a direct line between the two points. In the case that MAHNATTAN distance is being used, the line is calculated via the Coord.CardinalPositionOnLine function. Otherwise, the line is calculated using Coord.PositionsOnLine (brensham's). </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a63763fb23e44f309484410250816b20a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63763fb23e44f309484410250816b20a">&sect;&nbsp;</a></span>DirectLineTunnelCreator() <span class="overload">[1/2]</span></h2>
+<a id="a4acb0f42cb78042011b778103ef108ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4acb0f42cb78042011b778103ef108ff">&sect;&nbsp;</a></span>DirectLineTunnelCreator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -107,34 +104,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
-          <td class="paramname"><em>shape</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Constructor. Takes the shape that defines a radius, which is used to determine the proper distance calculation. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">shape</td><td>The shape defining a radius, which determines the distance calculation to use. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ac63f6416664d4b9d64495a949e7c4576"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac63f6416664d4b9d64495a949e7c4576">&sect;&nbsp;</a></span>DirectLineTunnelCreator() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
-          <td class="paramname"><em>distanceCalc</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a>&#160;</td>
+          <td class="paramname"><em>adjacencyRule</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -143,7 +114,7 @@ Public Member Functions</h2></td></tr>
 <p>Constructor. Takes the distance calculation to use, which determines whether brensham's or CardinalPositionOnLine is used to create the tunnel. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">distanceCalc</td><td>The distance calculation to use. </td></tr>
+    <tr><td class="paramname">adjacencyRule</td><td>Method of adjacency to respect when creating tunnels. Cannot be diagonal. </td></tr>
   </table>
   </dd>
 </dl>
@@ -186,9 +157,9 @@ Public Member Functions</h2></td></tr>
 <p>Implmenets the algorithm, creating the tunnel as specified in the class description. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to create the tunnel on. </td></tr>
-    <tr><td class="paramname">start</td><td>Start coordinate of the tunnel. </td></tr>
-    <tr><td class="paramname">end</td><td>End coordinate of the tunnel. </td></tr>
+    <tr><td class="paramname">map</td><td>The map to create the tunnel on.</td></tr>
+    <tr><td class="paramname">start</td><td>Start coordinate of the tunnel.</td></tr>
+    <tr><td class="paramname">end</td><td>End coordinate of the tunnel.</td></tr>
   </table>
   </dd>
 </dl>

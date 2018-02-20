@@ -61,8 +61,7 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue Namespace Reference</div>  </div>
 </div><!--header-->
@@ -73,6 +72,9 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class representing a method for determining which coordinates are adjacent to a given coordinate, and in which directions those neighbors are. Cannot be instantiated &ndash; premade static instances are provided.  <a href="class_go_rogue_1_1_adjacency_rule.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_array_map.html">ArrayMap</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default implementation of the <a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> interface, exposing the interface using an actual 2D array to store data.  <a href="class_go_rogue_1_1_array_map.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -153,159 +155,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html">Utility</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static class full of miscellaneous helper methods.  <a href="class_go_rogue_1_1_utility.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a9e094ea945e94e6a536a748b4e017217"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217">DirectionType</a> { <br />
-&#160;&#160;<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217afbaedde498cdead4f2780217646e9ba1">DirectionType.UP</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217aec3f5819018217397fc7f587a3b4ae78">DirectionType.UP_RIGHT</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217a21507b40c80068eda19865706fdc2403">DirectionType.RIGHT</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217adf0f3ca01992a950b7906128467ae934">DirectionType.DOWN_RIGHT</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217ac4e0e4e3118472beeb2ae75827450f1f">DirectionType.DOWN</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217aa6145f009f6f653615f0c197b6154028">DirectionType.DOWN_LEFT</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217a684d325a7303f52e64011467ff5c5758">DirectionType.LEFT</a>, 
-<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217a5af977eba745c40e537dc0418e7f3206">DirectionType.UP_LEFT</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217ab50339a10e1de285ac99d4c3990b8693">DirectionType.NONE</a>
-<br />
- }<tr class="memdesc:a9e094ea945e94e6a536a748b4e017217"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement).  <a href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a9e094ea945e94e6a536a748b4e017217"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8682e4c344126240dadbc01d7ea73506"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506">DistanceType</a> { <a class="el" href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506a20548c3a17d5b27db0c2995b6646a792">DistanceType.MANHATTAN</a>, 
-<a class="el" href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506ab142d642e537e694b9314e1a56835f8d">DistanceType.EUCLIDEAN</a>, 
-<a class="el" href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506af862c3f17de00b25a43dd3077db839c3">DistanceType.CHEBYSHEV</a>
- }<tr class="memdesc:a8682e4c344126240dadbc01d7ea73506"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum for types used under the hood in Direction classes &ndash; allows for convenient switch statements to be used with respect to directions.  <a href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:a8682e4c344126240dadbc01d7ea73506"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0ccb05c065fd50b9623186fa60cfdcf"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">RadiusType</a> { <br />
-&#160;&#160;<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa12dec4e1f7ec620651b2b95c440ffac0">RadiusType.SQUARE</a>, 
-<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa337f43db5edddda90ef2156a9baaed09">RadiusType.DIAMOND</a>, 
-<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa0af50777920c1401ab975cab64c4d491">RadiusType.CIRCLE</a>, 
-<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfafbfd6568f88d940b586c9ddf8f68236d">RadiusType.CUBE</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfaf90dd475a67e9d29408b539a832510ff">RadiusType.OCTAHEDRON</a>, 
-<a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcfa6f7cea7381e843e2ee0338b4a92b0d43">RadiusType.SPHERE</a>
-<br />
- }<tr class="memdesc:aa0ccb05c065fd50b9623186fa60cfdcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum representing types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement).  <a href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">More...</a><br /></td></tr>
-</td></tr>
-<tr class="separator:aa0ccb05c065fd50b9623186fa60cfdcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a9e094ea945e94e6a536a748b4e017217"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e094ea945e94e6a536a748b4e017217">&sect;&nbsp;</a></span>DirectionType</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217">GoRogue.DirectionType</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Enum representing types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement). </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217afbaedde498cdead4f2780217646e9ba1"></a>UP&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a86c2b981e6a3a6f2d13a190b4beec0cc" title="Up direction. ">Direction.UP</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217aec3f5819018217397fc7f587a3b4ae78"></a>UP_RIGHT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a39961cc3ef5068d4e390853e3432064b" title="Up-right direction. ">Direction.UP_RIGHT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217a21507b40c80068eda19865706fdc2403"></a>RIGHT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a987bc8450d0b0e38df58353d4bdc5934" title="Right direction. ">Direction.RIGHT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217adf0f3ca01992a950b7906128467ae934"></a>DOWN_RIGHT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#af67f229e890e82374df75d5d9a68de1e" title="Down-right direction. ">Direction.DOWN_RIGHT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217ac4e0e4e3118472beeb2ae75827450f1f"></a>DOWN&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a34ca47328bd6de78bdd983aeb342ac12" title="Down direction. ">Direction.DOWN</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217aa6145f009f6f653615f0c197b6154028"></a>DOWN_LEFT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a5fe84f19a75855d7ff7e386b73e284f9" title="Down-left direction. ">Direction.DOWN_LEFT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217a684d325a7303f52e64011467ff5c5758"></a>LEFT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a4d2fd11417b037ba53989468f21ce9bf" title="Left direction. ">Direction.LEFT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217a5af977eba745c40e537dc0418e7f3206"></a>UP_LEFT&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a7d3baec7ccdc55b03a4746c5b395ca96" title="Up-left direction. ">Direction.UP_LEFT</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a9e094ea945e94e6a536a748b4e017217ab50339a10e1de285ac99d4c3990b8693"></a>NONE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_direction.html#a3c65e46328e691121571b9b339cab3cc" title="No direction. ">Direction.NONE</a>. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="a8682e4c344126240dadbc01d7ea73506"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8682e4c344126240dadbc01d7ea73506">&sect;&nbsp;</a></span>DistanceType</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespace_go_rogue.html#a8682e4c344126240dadbc01d7ea73506">GoRogue.DistanceType</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Enum for types used under the hood in <a class="el" href="class_go_rogue_1_1_direction.html" title="Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy for that ...">Direction</a> classes &ndash; allows for convenient switch statements to be used with respect to directions. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8682e4c344126240dadbc01d7ea73506a20548c3a17d5b27db0c2995b6646a792"></a>MANHATTAN&#160;</td><td class="fielddoc"><p>Enum type for <a class="el" href="class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0" title="MANHATTAN distance (equivalent to 4-way, cardinal-only movement). ">Distance.MANHATTAN</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a8682e4c344126240dadbc01d7ea73506ab142d642e537e694b9314e1a56835f8d"></a>EUCLIDEAN&#160;</td><td class="fielddoc"><p>Enum type for <a class="el" href="class_go_rogue_1_1_distance.html#a1345b527b5854a4c11b815049eac13ec" title="EUCLIDEAN distance (equivalent to 8-way movement with extra cost for diagonals). ">Distance.EUCLIDEAN</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a8682e4c344126240dadbc01d7ea73506af862c3f17de00b25a43dd3077db839c3"></a>CHEBYSHEV&#160;</td><td class="fielddoc"><p>Enum type for <a class="el" href="class_go_rogue_1_1_distance.html#ae662f1349d0df3ba748bff26153d91c1" title="CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals). ">Distance.CHEBYSHEV</a>. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="aa0ccb05c065fd50b9623186fa60cfdcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0ccb05c065fd50b9623186fa60cfdcf">&sect;&nbsp;</a></span>RadiusType</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespace_go_rogue.html#aa0ccb05c065fd50b9623186fa60cfdcf">GoRogue.RadiusType</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Enum representing types. Useful for easy mapping of radius types to a primitive type (for cases like a switch statement). </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfa12dec4e1f7ec620651b2b95c440ffac0"></a>SQUARE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#ab4af6984998acda800053baf92f9dbd6" title="Radius is a square around the center point. Shape that would represent movement radius in an 8-way mo...">Radius.SQUARE</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfa337f43db5edddda90ef2156a9baaed09"></a>DIAMOND&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#aed7b2df86455dc077f4a9fdb8b395f7b" title="Radius is a diamond around the center point. Shape that would represent movement radius in a 4-way mo...">Radius.DIAMOND</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfa0af50777920c1401ab975cab64c4d491"></a>CIRCLE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#adad86ec2db9c190ca223ac922b924170" title="Radius is a circle around the center point. Shape that would represent movement radius in an 8-way mo...">Radius.CIRCLE</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfafbfd6568f88d940b586c9ddf8f68236d"></a>CUBE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#ad063fe20635849b5cabefe8da2a3eb4a" title="Radius is a cube around the center point. Similar to SQUARE in 2d shape. ">Radius.CUBE</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfaf90dd475a67e9d29408b539a832510ff"></a>OCTAHEDRON&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e" title="Radius is an octahedron around the center point. Similar to DIAMOND in 2d shape. ">Radius.OCTAHEDRON</a>. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="aa0ccb05c065fd50b9623186fa60cfdcfa6f7cea7381e843e2ee0338b4a92b0d43"></a>SPHERE&#160;</td><td class="fielddoc"><p>Type for <a class="el" href="class_go_rogue_1_1_radius.html#a2281b1e1c473daa50e82f0d2ff3573c2" title="Radius is a sphere around the center point. Similar to CIRCLE in 2d shape. ">Radius.SPHERE</a>. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

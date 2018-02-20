@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['left',['LEFT',['../namespace_go_rogue.html#a9e094ea945e94e6a536a748b4e017217a684d325a7303f52e64011467ff5c5758',1,'GoRogue']]]
+  ['left',['LEFT',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8a684d325a7303f52e64011467ff5c5758',1,'GoRogue::Direction']]]
 ];

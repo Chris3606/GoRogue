@@ -151,10 +151,10 @@ Static Public Member Functions</h2></td></tr>
 <p>Generates the map. After this function has been completed, non-passable tiles will have a value of false in the <a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> given, and passable ones will have a value of true. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to set values to. </td></tr>
-    <tr><td class="paramname">maxRooms</td><td>The maximum number of rooms to attempt to place on the map. </td></tr>
-    <tr><td class="paramname">roomMinSize</td><td>The minimum size in width and height of each room. </td></tr>
-    <tr><td class="paramname">roomMaxSize</td><td>The maximum size in width and height of each room. </td></tr>
+    <tr><td class="paramname">map</td><td>The map to set values to.</td></tr>
+    <tr><td class="paramname">maxRooms</td><td>The maximum number of rooms to attempt to place on the map.</td></tr>
+    <tr><td class="paramname">roomMinSize</td><td>The minimum size in width and height of each room.</td></tr>
+    <tr><td class="paramname">roomMaxSize</td><td>The maximum size in width and height of each room.</td></tr>
     <tr><td class="paramname">retriesPerRoom</td><td>If a room is placed in a way that overlaps with another room, the maximum number of times the position will be regenerated to try to position it properly, before simply discarding the room. </td></tr>
     <tr><td class="paramname">rng</td><td>The RNG to use to place rooms and determine room size. If null is specified, the default RNG is used. </td></tr>
     <tr><td class="paramname">connectUsingDefault</td><td>Whether or not to ensure the rooms generated are connected. If this is true, OrderedMapAreaConnector.Connect will be used to connect the areas in a random order, using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which will connect the center of room to each other. </td></tr>

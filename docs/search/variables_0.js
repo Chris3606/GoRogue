@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bounds',['Bounds',['../class_go_rogue_1_1_radius_area_provider.html#af88f308d99731dfc82fb26e123b4c6d9',1,'GoRogue::RadiusAreaProvider']]]
+  ['adjacencymethod',['AdjacencyMethod',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a70843aa6f6d61c191103109dbc22b97e',1,'GoRogue::MapGeneration::MapAreaFinder']]]
 ];

@@ -164,7 +164,7 @@ Properties</h2></td></tr>
 <p>Constructor. Takes the resistance map to use for calculations. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">resMap</td><td>The resistance map to use for calculations. </td></tr>
+    <tr><td class="paramname">resMap</td><td>The resistance map to use for calculations.</td></tr>
   </table>
   </dd>
 </dl>
@@ -191,7 +191,7 @@ Properties</h2></td></tr>
 <p>Adds the given <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html" title="Represents a source location to be used in a SenseMap. One would typically create these and call Sens...">SenseSource</a> to the list of sources. If the source has its <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a86aa00aa626eded78fa22c9c6f449cd6" title="Whether or not this source is enabled. If a source is disabled when its SenseMap&#39;s Calculate function...">SenseSource.Enabled</a> flag set when Calculate is next called, then this will be used as a source. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">senseSource</td><td>The "source" to add. </td></tr>
+    <tr><td class="paramname">senseSource</td><td>The "source" to add.</td></tr>
   </table>
   </dd>
 </dl>
@@ -233,7 +233,7 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Enumerator, in case you want to use this as a list of doubles. </p>
-<dl class="section return"><dt>Returns</dt><dd>Enumerable of doubles (the sensory values). </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Enumerable of doubles (the sensory values).</dd></dl>
 
 </div>
 </div>
@@ -256,7 +256,7 @@ Properties</h2></td></tr>
 <p>Removes the given source from the list of sources. This would typically be used when the source is destroyed, expired, or otherwise removed from the map. For temporary disabling, it is better to use the <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a86aa00aa626eded78fa22c9c6f449cd6" title="Whether or not this source is enabled. If a source is disabled when its SenseMap&#39;s Calculate function...">SenseSource.Enabled</a> flag. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">senseSource</td><td>The <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html" title="Represents a source location to be used in a SenseMap. One would typically create these and call Sens...">SenseSource</a> to remove. </td></tr>
+    <tr><td class="paramname">senseSource</td><td>The <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html" title="Represents a source location to be used in a SenseMap. One would typically create these and call Sens...">SenseSource</a> to remove.</td></tr>
   </table>
   </dd>
 </dl>
@@ -407,11 +407,11 @@ Properties</h2></td></tr>
 <p>Array-style indexer that takes a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> as the index. Because of this function, given a <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html" title="Class responsible for calculating a map for senses (sound, light, etc). Anything that has a resistanc...">SenseMap</a> called mySenseMap, you may call mySenseMap[Coord.Get(1, 3)] to access the "sensory value" at (1, 3). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">pos</td><td>Position to get the sensory value for. </td></tr>
+    <tr><td class="paramname">pos</td><td>Position to get the sensory value for.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The "sensory value" at the given location. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The "sensory value" at the given location.</dd></dl>
 
 </div>
 </div>
@@ -438,12 +438,12 @@ Properties</h2></td></tr>
 <p>Array-style indexer that takes an (x, y) value as the index. Similarly to the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> indexer, you may call mySenseMap[1, 3] to get the "sensory value" at 1, 3. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">x</td><td>X-coordinate to retrieve the sensory value for. </td></tr>
-    <tr><td class="paramname">y</td><td>Y-Coordinate to retrieve the sensory value for. </td></tr>
+    <tr><td class="paramname">x</td><td>X-coordinate to retrieve the sensory value for.</td></tr>
+    <tr><td class="paramname">y</td><td>Y-Coordinate to retrieve the sensory value for.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The sensory value at (x, y) </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The sensory value at (x, y)</dd></dl>
 
 </div>
 </div>

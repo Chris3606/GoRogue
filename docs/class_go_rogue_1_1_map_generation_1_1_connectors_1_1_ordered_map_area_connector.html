@@ -76,12 +76,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a18d5b2a55c1f35df6378c69d3d765a34"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a18d5b2a55c1f35df6378c69d3d765a34">Connect</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_radius.html">Radius</a> shape, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng=null, bool randomizeOrder=true)</td></tr>
-<tr class="memdesc:a18d5b2a55c1f35df6378c69d3d765a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#a18d5b2a55c1f35df6378c69d3d765a34">More...</a><br /></td></tr>
-<tr class="separator:a18d5b2a55c1f35df6378c69d3d765a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affa418831d34b773d33af66d2beb4f63"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#affa418831d34b773d33af66d2beb4f63">Connect</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng=null, bool randomizeOrder=true)</td></tr>
-<tr class="memdesc:affa418831d34b773d33af66d2beb4f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#affa418831d34b773d33af66d2beb4f63">More...</a><br /></td></tr>
-<tr class="separator:affa418831d34b773d33af66d2beb4f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb586e64ab94e61072fe30215b15bf3b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#aeb586e64ab94e61072fe30215b15bf3b">Connect</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a> adjacencyRule, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng=null, bool randomizeOrder=true)</td></tr>
+<tr class="memdesc:aeb586e64ab94e61072fe30215b15bf3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#aeb586e64ab94e61072fe30215b15bf3b">More...</a><br /></td></tr>
+<tr class="separator:aeb586e64ab94e61072fe30215b15bf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4455d66d36fb535ae3ca6226e10d5d1a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a4455d66d36fb535ae3ca6226e10d5d1a">Connect</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IList&lt; <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> &gt; mapAreas, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null)</td></tr>
 <tr class="memdesc:a4455d66d36fb535ae3ca6226e10d5d1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by simply connecting areas adjacent to each other in the passed in list of areas, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#a4455d66d36fb535ae3ca6226e10d5d1a">More...</a><br /></td></tr>
 <tr class="separator:a4455d66d36fb535ae3ca6226e10d5d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -89,8 +86,8 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Same as <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html" title="Implements a connection algorithm that connects all unique map areas in the given map by connecting e...">ClosestMapAreaConnector</a>, but connects random rooms instead of determining the closest one, or connects rooms in the order specified if you give it a list of MapAreas. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a18d5b2a55c1f35df6378c69d3d765a34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18d5b2a55c1f35df6378c69d3d765a34">&sect;&nbsp;</a></span>Connect() <span class="overload">[1/3]</span></h2>
+<a id="aeb586e64ab94e61072fe30215b15bf3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb586e64ab94e61072fe30215b15bf3b">&sect;&nbsp;</a></span>Connect() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -107,8 +104,8 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_radius.html">Radius</a>&#160;</td>
-          <td class="paramname"><em>shape</em>, </td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a>&#160;</td>
+          <td class="paramname"><em>adjacencyRule</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -150,84 +147,11 @@ Static Public Member Functions</h2></td></tr>
 <p>Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to connect. </td></tr>
-    <tr><td class="paramname">shape</td><td>The shape of a radius, that defines how distance is calculated. </td></tr>
+    <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
+    <tr><td class="paramname">adjacencyRule</td><td>Method of adjacency to respect when determining map areas. Cannot be diagonal. </td></tr>
     <tr><td class="paramname">areaConnector</td><td>The method to use to determine the points from two areas to make a tunnel between, in order to connect those two areas. If null is specified, a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html" title="Implements a the selection algorithm that simply selects random points from the given MapArea&#39;s posit...">RandomConnectionPointSelector</a> is used, that uses the RNG passed into this function. </td></tr>
     <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html" title="Implements a tunnel creation algorithm that creates a tunnel that performs all needed vertical moveme...">HorizontalVerticalTunnelCreator</a> that utilizes the RNG passed into this function is used. </td></tr>
-    <tr><td class="paramname">rng</td><td>The rng to use. If null is specified, the default rng is assumed. </td></tr>
-    <tr><td class="paramname">randomizeOrder</td><td>Whether or not to randomize which room is connected to which &ndash; if this is set to false, they will be conencted in the exact order they are returned from the <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="affa418831d34b773d33af66d2beb4f63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affa418831d34b773d33af66d2beb4f63">&sect;&nbsp;</a></span>Connect() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.Connect </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
-          <td class="paramname"><em>map</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
-          <td class="paramname"><em>distanceCalc</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a>&#160;</td>
-          <td class="paramname"><em>areaConnector</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a>&#160;</td>
-          <td class="paramname"><em>tunnelCreator</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
-          <td class="paramname"><em>rng</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>randomizeOrder</em> = <code>true</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">map</td><td>The map to connect. </td></tr>
-    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines distance/neighbors. </td></tr>
-    <tr><td class="paramname">areaConnector</td><td>The method to use to determine the points from two areas to make a tunnel between, in order to connect those two areas. If null is specified, a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html" title="Implements a the selection algorithm that simply selects random points from the given MapArea&#39;s posit...">RandomConnectionPointSelector</a> is used, that uses the RNG passed into this function. </td></tr>
-    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html" title="Implements a tunnel creation algorithm that creates a tunnel that performs all needed vertical moveme...">HorizontalVerticalTunnelCreator</a> that utilizes the RNG passed into this function is used. </td></tr>
-    <tr><td class="paramname">rng</td><td>The rng to use. If null is specified, the default rng is assumed. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. If null is specified, the default rng is assumed.</td></tr>
     <tr><td class="paramname">randomizeOrder</td><td>Whether or not to randomize which room is connected to which &ndash; if this is set to false, they will be conencted in the exact order they are returned from the <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>. </td></tr>
   </table>
   </dd>
@@ -236,7 +160,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4455d66d36fb535ae3ca6226e10d5d1a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4455d66d36fb535ae3ca6226e10d5d1a">&sect;&nbsp;</a></span>Connect() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4455d66d36fb535ae3ca6226e10d5d1a">&sect;&nbsp;</a></span>Connect() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +208,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Connects the areas by simply connecting areas adjacent to each other in the passed in list of areas, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">map</td><td>The map to connect. </td></tr>
+    <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
     <tr><td class="paramname">mapAreas</td><td>The list of map areas to connect, in the order they should be connected. </td></tr>
     <tr><td class="paramname">areaConnector</td><td>The method to use to determine the points from two areas to make a tunnel between, in order to connect those two areas. If null is specified, a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html" title="Implements a the selection algorithm that simply selects random points from the given MapArea&#39;s posit...">RandomConnectionPointSelector</a> is used, that uses the default RNG. </td></tr>
     <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html" title="Implements a tunnel creation algorithm that creates a tunnel that performs all needed vertical moveme...">HorizontalVerticalTunnelCreator</a> that utilizes the default RNG is used. </td></tr>

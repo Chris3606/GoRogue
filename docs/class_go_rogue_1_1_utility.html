@@ -133,14 +133,14 @@ Static Public Member Functions</h2></td></tr>
 <p>Since this is an extension method, if we have a List&lt;T&gt; myList, we can simply call myList.FisherYatesShuffle(rng). However, do note that for the method to be detected properly, the namespace <a class="el" href="namespace_go_rogue.html">GoRogue</a> (the namespace the <a class="el" href="class_go_rogue_1_1_utility.html" title="Static class full of miscellaneous helper methods. ">Utility</a> class is in) must be in a using statement. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of elements in the list. </td></tr>
+    <tr><td class="paramname">T</td><td>Type of elements in the list.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>List being operated on &ndash; never specified manually as this is an extension method. </td></tr>
-    <tr><td class="paramname">rng</td><td>RNG to use. </td></tr>
+    <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
   </table>
   </dd>
 </dl>
@@ -184,18 +184,18 @@ Static Public Member Functions</h2></td></tr>
 <p>Extension method that selects and returns a random valid index from the list, using the rng specified. -1 is returned if the list is empty. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of elements in the list. </td></tr>
+    <tr><td class="paramname">T</td><td>Type of elements in the list.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>IList being operated on &ndash; never specified manually as this is an extension method. </td></tr>
-    <tr><td class="paramname">rng</td><td>RNG to use. </td></tr>
+    <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Index selected. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Index selected.</dd></dl>
 
 </div>
 </div>
@@ -236,18 +236,18 @@ Static Public Member Functions</h2></td></tr>
 <p>Extension method that selects and returns a random item from the list, using the rng specified. Default for type T is returned if the list is empty. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of elements in the list. </td></tr>
+    <tr><td class="paramname">T</td><td>Type of elements in the list.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>IList being operated on &ndash; never specified manually as this is an extension method. </td></tr>
-    <tr><td class="paramname">rng</td><td>RNG to use. </td></tr>
+    <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Item selected. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Item selected.</dd></dl>
 
 </div>
 </div>
@@ -294,8 +294,8 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lhs</td><td>Left-hand value. </td></tr>
-    <tr><td class="paramname">rhs</td><td>Right-hand value. </td></tr>
+    <tr><td class="paramname">lhs</td><td>Left-hand value.</td></tr>
+    <tr><td class="paramname">rhs</td><td>Right-hand value.</td></tr>
   </table>
   </dd>
 </dl>
@@ -329,7 +329,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Extension method for IEnumerable that converts the IEnumerable into a list. This may be useful for any of the various methods in the <a class="el" href="namespace_go_rogue.html">GoRogue</a> library that return IEnumerables, where you actually want to store the returned items for repeated use/iteration, etc. The function simply provides a shorter syntax to create a new list and pass in the IEnumerable to the constructor. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of elements in the IEnumerable. </td></tr>
+    <tr><td class="paramname">T</td><td>The type of elements in the IEnumerable.</td></tr>
   </table>
   </dd>
 </dl>

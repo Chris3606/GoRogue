@@ -186,7 +186,7 @@ Events</h2></td></tr>
 <p>The objects stored in a <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> must implement the <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html" title="Interface for a class that has an ID unique to all other instnaces of that class. Typical implementat...">IHasID</a> (see that interface's documentation for an easy implementation example). This is used internally to keep track of the objects, since uints are easily hashable. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of object that will be contained by this <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. </td></tr>
+    <tr><td class="paramname">T</td><td>The type of object that will be contained by this <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.</td></tr>
   </table>
   </dd>
 </dl>
@@ -255,12 +255,12 @@ Events</h2></td></tr>
 <p>Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newItem</td><td>The item to add. </td></tr>
-    <tr><td class="paramname">position</td><td>The position at which to add the new item. </td></tr>
+    <tr><td class="paramname">newItem</td><td>The item to add.</td></tr>
+    <tr><td class="paramname">position</td><td>The position at which to add the new item.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a427f33ca5566188485ba1816f608202c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -368,7 +368,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly. </p>
-<dl class="section return"><dt>Returns</dt><dd>An enumerator for the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An enumerator for the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a></dd></dl>
 
 </div>
 </div>
@@ -392,7 +392,7 @@ Events</h2></td></tr>
 <p>Intended to be a more convenient function as compared to GetItems, for times when you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>The postiion to return the item for. </td></tr>
+    <tr><td class="paramname">position</td><td>The postiion to return the item for.</td></tr>
   </table>
   </dd>
 </dl>
@@ -420,7 +420,7 @@ Events</h2></td></tr>
 <p>Again, since this implementation guarantees that only one item can be at any given location at once, the return value is guaranteed to be at most one element. For times when you are know you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances, this specific class also provides a GetItem function that returns a more intuitive null if no item was found, or the item at the location as applicable. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>The position to return the item for. </td></tr>
+    <tr><td class="paramname">position</td><td>The position to return the item for.</td></tr>
   </table>
   </dd>
 </dl>
@@ -481,12 +481,12 @@ Events</h2></td></tr>
 <p>Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td>The item to move. </td></tr>
-    <tr><td class="paramname">target</td><td>The position to move it to. </td></tr>
+    <tr><td class="paramname">item</td><td>The item to move.</td></tr>
+    <tr><td class="paramname">target</td><td>The position to move it to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a6f484eff09aea0c74c514a6236b9526c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -522,8 +522,8 @@ Events</h2></td></tr>
 <p>Since this implementation of <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. ">ISpatialMap</a> guarantees that only one item may be at any given location at a time, the returned values will either be none, or a single value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">current</td><td>The position of the item to move. </td></tr>
-    <tr><td class="paramname">target</td><td>The position to move the item to. </td></tr>
+    <tr><td class="paramname">current</td><td>The position of the item to move.</td></tr>
+    <tr><td class="paramname">target</td><td>The position to move the item to.</td></tr>
   </table>
   </dd>
 </dl>
@@ -552,11 +552,11 @@ Events</h2></td></tr>
 <p>Removes the item specified, if it exists, and returns true. Returns false if the item was not in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td>The item to remove. </td></tr>
+    <tr><td class="paramname">item</td><td>The item to remove.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was removed, false if the item was not found. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was removed, false if the item was not found.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a9b513e282b60abef61f762191a1b7619">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -582,7 +582,7 @@ Events</h2></td></tr>
 <p>Again, since this implementation guarantees that only one item can be at any given location at a time, the returned value is guaranteed to be either nothing or a single element. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>The position of the item to remove. </td></tr>
+    <tr><td class="paramname">position</td><td>The position of the item to remove.</td></tr>
   </table>
   </dd>
 </dl>

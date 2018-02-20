@@ -3,6 +3,7 @@ var searchData=
   ['deltax',['DeltaX',['../class_go_rogue_1_1_direction.html#a68be74f8378001fc2e0167f0acf8f008',1,'GoRogue::Direction']]],
   ['deltay',['DeltaY',['../class_go_rogue_1_1_direction.html#adaf7c3ef90a767c8677a98663e29e622',1,'GoRogue::Direction']]],
   ['diceresults',['DiceResults',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a0a04a1b2e8f1642101c4982eef2c7c45',1,'GoRogue::DiceNotation::Terms::DiceTerm']]],
+  ['distancecalc',['DistanceCalc',['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#ab14539e4507e9ee1c3355bbf47258d41',1,'GoRogue::SenseMapping::SenseSource']]],
   ['distancemeasurement',['DistanceMeasurement',['../class_go_rogue_1_1_pathing_1_1_a_star.html#ae7b6a7c7cb90d4ea89b3eeab88261c4e',1,'GoRogue::Pathing::AStar']]],
   ['down',['DOWN',['../class_go_rogue_1_1_direction.html#a34ca47328bd6de78bdd983aeb342ac12',1,'GoRogue::Direction']]],
   ['down_5fleft',['DOWN_LEFT',['../class_go_rogue_1_1_direction.html#a5fe84f19a75855d7ff7e386b73e284f9',1,'GoRogue::Direction']]],

@@ -178,7 +178,7 @@ Events</h2></td></tr>
 <p>The two implementations could also in many cases be used in combination as necessary, since they both implement the <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. ">ISpatialMap</a> interface. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of items being stored. </td></tr>
+    <tr><td class="paramname">T</td><td>The type of items being stored.</td></tr>
   </table>
   </dd>
 </dl>
@@ -247,12 +247,12 @@ Events</h2></td></tr>
 <p>Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>. If the item is already contained in it, does nothing and returns false. Otherwise (if item was successfully added), returns true. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newItem</td><td>The item to add. </td></tr>
-    <tr><td class="paramname">position</td><td>The position at which to add the new item. </td></tr>
+    <tr><td class="paramname">newItem</td><td>The item to add.</td></tr>
+    <tr><td class="paramname">position</td><td>The position at which to add the new item.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a427f33ca5566188485ba1816f608202c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -274,7 +274,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns a ReadOnly reference to the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. Convenient for "safely" exposing a <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> as a property </p>
-<dl class="section return"><dt>Returns</dt><dd>The current <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, as a "read-only" reference. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The current <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, as a "read-only" reference.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
 
@@ -361,7 +361,7 @@ Events</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly. </p>
-<dl class="section return"><dt>Returns</dt><dd>An enumerator for the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>An enumerator for the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a></dd></dl>
 
 </div>
 </div>
@@ -438,12 +438,12 @@ Events</h2></td></tr>
 <p>Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>, does nothing and returns false. Otherwise, returns true. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td>The item to move. </td></tr>
-    <tr><td class="paramname">target</td><td>The position to move it to. </td></tr>
+    <tr><td class="paramname">item</td><td>The item to move.</td></tr>
+    <tr><td class="paramname">target</td><td>The position to move it to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a6f484eff09aea0c74c514a6236b9526c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -478,12 +478,12 @@ Events</h2></td></tr>
 <p>Moves everything at position current, if anything, to postion target. If something was moved, returns everything that was moved. If nothing was moved, eg. there was nothing at position current, returns nothing. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">current</td><td>The position of the items to move. </td></tr>
-    <tr><td class="paramname">target</td><td>The position to move the item to. </td></tr>
+    <tr><td class="paramname">current</td><td>The position of the items to move.</td></tr>
+    <tr><td class="paramname">target</td><td>The position to move the item to.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The items moved if something was moved, or nothing if no item was moved. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The items moved if something was moved, or nothing if no item was moved.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#abe1c116e481e071914c12f098715fd94">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -508,11 +508,11 @@ Events</h2></td></tr>
 <p>Removes the item specified, if it exists, and returns true. Returns false if the item was not in the <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">item</td><td>The item to remove. </td></tr>
+    <tr><td class="paramname">item</td><td>The item to remove.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was removed, false if the item was not found. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the item was removed, false if the item was not found.</dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a9b513e282b60abef61f762191a1b7619">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
 
@@ -537,7 +537,7 @@ Events</h2></td></tr>
 <p>Removes everything at the given position, if anything, and returns the items removed. Returns nothing if no item was at the position specified. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">position</td><td>The position of the item to remove. </td></tr>
+    <tr><td class="paramname">position</td><td>The position of the item to remove.</td></tr>
   </table>
   </dd>
 </dl>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['y',['Y',['../class_go_rogue_1_1_coord.html#ab4d218eaf1e0fc1079a4609e33f29fef',1,'GoRogue::Coord']]]
+  ['x',['X',['../class_go_rogue_1_1_coord.html#a8b7a017cfef4c432d60bbb609da7d74e',1,'GoRogue::Coord']]]
 ];
