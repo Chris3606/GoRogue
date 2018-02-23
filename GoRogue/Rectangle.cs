@@ -230,6 +230,14 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Returns whether or not the specified point is considered within the rectangle.
+        /// </summary>
+        /// <param name="x">The x-value position to check.</param>
+        /// <param name="y">The y-value position to check.</param>
+        /// <returns>Whether or not the specified point is considered within the rectangle.</returns>
+        public bool Contains(int x, int y) => Contains(Coord.Get(x, y));
+
+        /// <summary>
         /// Returns whether or not the specified rectangle is considered completely contained within
         /// the current one.
         /// </summary>

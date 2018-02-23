@@ -44,7 +44,7 @@ namespace GoRogue.SenseMapping
     /// Represents a source location to be used in a SenseMap. One would typically create these and
     /// call SenseMap.AddSenseSource with them, and perhaps retain a reference for the sake of moving
     /// it around or toggling it on-off. The player might have one of these that follows it around if
-    /// SenseMap is being used as a lightig map, for instance. Note that changing values such as
+    /// SenseMap is being used as a lighting map, for instance. Note that changing values such as
     /// Position and Radius after the source is created is possible, however changes will not be
     /// reflected in any SenseSources using this source until their next Calculate call.
     /// </summary>
@@ -85,6 +85,24 @@ namespace GoRogue.SenseMapping
             resMap = null;
             Enabled = true;
         }
+
+        /// <summary>
+        /// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
+        /// used for calculations.
+        /// </summary>
+        /// <param name="type">The spread mechanics to use for source values.</param>
+        /// <param name="positionX">The X-value of the position on a map that the source is located at.</param>
+        /// <param name="positionY">The Y-value of the position on a map that the source is located at.</param>
+        /// <param name="radius">
+        /// The maximum radius of the source -- this is the maximum distance the source values will
+        /// emanate, provided the area is completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
+        /// </param>
+        public SenseSource(SourceType type, int positionX, int positionY, int radius, Distance distanceCalc)
+            : this(type, Coord.Get(positionX, positionY), radius, distanceCalc) { }
 
         /// <summary>
         /// The distance calculation used to determine what shape the radius has (or a type

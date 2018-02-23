@@ -58,6 +58,14 @@ namespace GoRogue
         bool Contains(Coord position);
 
         /// <summary>
+        /// Returns if there is an item in the data structure at the given position or not.
+        /// </summary>
+        /// <param name="x">The x-value of the position to check for.</param>
+        /// <param name="y">The y-value of the position to check for.</param>
+        /// <returns>True if there is some item at the given position, false if not.</returns>
+        bool Contains(int x, int y);
+
+        /// <summary>
         /// Gets the item(s) associated with the given position if there are any items, or returns
         /// nothing if there is nothing at that position.
         /// </summary>
@@ -67,6 +75,18 @@ namespace GoRogue
         /// at that position.
         /// </returns>
         IEnumerable<T> GetItems(Coord position);
+
+        /// <summary>
+        /// Gets the item(s) associated with the given position if there are any items, or returns
+        /// nothing if there is nothing at that position.
+        /// </summary>
+        /// <param name="x">The x-value of the position to return the item(s) for.</param>
+        /// <param name="y">The y-value of the position to return the item(s) for.</param>
+        /// <returns>
+        /// The item(s) at the given position if there are any items, or nothing if there is nothing
+        /// at that position.
+        /// </returns>
+        IEnumerable<T> GetItems(int x, int y);
 
         /// <summary>
         /// Gets the position associated with the item in the data structure, or null if that item is

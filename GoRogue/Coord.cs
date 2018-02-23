@@ -57,23 +57,49 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Calculates degree bearing of the line (from =&gt; to), where 0 is the direction Direction.UP.
+        /// Calculates degree bearing of the line (start =&gt; end), where 0 is in the direction Direction.UP.
         /// </summary>
-        /// <param name="from">Coordinate of line starting point.</param>
-        /// <param name="to">Coordinate of line ending point.</param>
+        /// <param name="start">Coordinate of line starting point.</param>
+        /// <param name="end">Coordinate of line ending point.</param>
         /// <returns>The degree bearing of the line specified by the two given points.</returns>
-        public static double BearingOfLine(Coord from, Coord to)
-        {
-            int x = to.X - from.X;
-            int y = to.Y - from.Y;
-            y *= Direction.yMult;
+        public static double BearingOfLine(Coord start, Coord end) => BearingOfLine(end.X - start.X, end.Y - start.Y);
+        /// <summary>
+        /// Calculates degree bearing of the line ((startX, startY) =&gt; (endX, endY)), where 0 is in the direction Direction.UP.
+        /// </summary>
+        /// <param name="startX">X-value of the coordinate of line starting point.</param>
+        /// <param name="startY">Y-value of the coordinate of line starting point.</param>
+        /// <param name="endX">X-value of the coordinate of line ending point.</param>
+        /// /// <param name="endY">Y-value of the coordinate of line ending point.</param>
+        /// <returns>The degree bearing of the line specified by the two given points.</returns>
+        public static double BearingOfLine(int startX, int startY, int endX, int endY) => BearingOfLine(endX - startX, endY - startY);
 
-            double angle = Math.Atan2(y, x);
+        /// <summary>
+        /// Calculates the degree bearing of a line with the given delta-x and delta-y values, where 0 degreees is in
+        /// the direction Direction.UP.
+        /// </summary>
+        /// <param name="deltaChange">Vector, where deltaChange.X is the change in x-values across the line, and deltaChange.Y
+        /// is the change in y-values across the line.</param>
+        /// <returns>The degree bearing of the line with the given dx and dy values.</returns>
+        public static double BearingOfLine(Coord deltaChange) => BearingOfLine(deltaChange.X, deltaChange.Y);
+
+        /// <summary>
+        /// Calculates the degree bearing of a line with the given delta-x and delta-y values, where 0 degreees is in
+        /// the direction Direction.UP.
+        /// </summary>
+        /// <param name="dx">The change in x-values across the line.</param>
+        /// <param name="dy">the change in y-values across the line</param>
+        /// <returns>The degree bearing of the line with the given dx and dy values.</returns>
+        public static double BearingOfLine(int dx, int dy)
+        {
+            dy *= Direction.yMult;
+            double angle = Math.Atan2(dy, dx);
             double degree = MathHelpers.ToDegree(angle);
             degree += 450; // Rotate to all positive such that 0 is up
             degree %= 360; // Normalize
             return degree;
         }
+
+
 
         /// <summary>
         /// Returns the result of the euclidean distance formula, without the square root -- eg.,
@@ -87,7 +113,51 @@ namespace GoRogue
         /// The "magnitude" of the euclidean distance between the two points -- basically the
         /// distance formula without the square root.
         /// </returns>
-        public static double EuclideanDistanceMagnitude(Coord c1, Coord c2) => (c2.X - c1.X) * (c2.X - c1.X) + (c2.Y - c1.Y) * (c2.Y - c1.Y);
+        public static double EuclideanDistanceMagnitude(Coord c1, Coord c2) => EuclideanDistanceMagnitude(c2.X - c1.X, c2.Y - c1.Y);
+
+        /// <summary>
+        /// Returns the result of the euclidean distance formula, without the square root -- eg.,
+        /// (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1). Use this if you only care
+        /// about the magnitude of the distance -- eg., if you're trying to compare two distances.
+        /// Omitting the square root provides a speed increase.
+        /// </summary>
+        /// <param name="x1">The x-value of the first location.</param>
+        /// <param name="y1">The y-value of the first location.</param>
+        /// <param name="x2">The x-value of the second location.</param>
+        /// <param name="y2">The y-value of the second location.</param>
+        /// <returns>
+        /// The "magnitude" of the euclidean distance between the two points -- basically the
+        /// distance formula without the square root.
+        /// </returns>
+        public static double EuclideanDistanceMagnitude(int x1, int y1, int x2, int y2) => EuclideanDistanceMagnitude(x2 - x1, y2 - y1);
+
+        /// <summary>
+        /// Returns the result of the euclidean distance formula, without the square root, given the
+        /// dx and dy values between two points -- eg., deltaChange.X * deltaChange.X + deltaChange.Y * deltaChange.Y.
+        /// Use this if you only care about the magnitude of the distance -- eg., if you're trying to compare two distances.
+        /// Omitting the square root provides a speed increase.
+        /// </summary>
+        /// <param name = "deltaChange" > Vector, where deltaChange.X is the change in x-values between the two points, and
+        /// deltaChange.Y is the change in y-values between the two points.</param>
+        /// <returns>
+        /// The "magnitude" of the euclidean distance of two locations with the given dx and dy values -- basically the
+        /// distance formula without the square root.
+        /// </returns>
+        public static double EuclideanDistanceMagnitude(Coord deltaChange) => EuclideanDistanceMagnitude(deltaChange.X, deltaChange.Y);
+
+        /// <summary>
+        /// Returns the result of the euclidean distance formula, without the square root, given the
+        /// dx and dy values between two points -- eg., deltaChange.X * deltaChange.X + deltaChange.Y * deltaChange.Y.
+        /// Use this if you only care about the magnitude of the distance -- eg., if you're trying to compare two distances.
+        /// Omitting the square root provides a speed increase.
+        /// </summary>
+        /// <param name = "dx" > The change in x-values between the two points.</param>
+        /// <param name = "dy" > The change in y-values between the two points.</param>
+        /// <returns>
+        /// The "magnitude" of the euclidean distance of two locations with the given dx and dy values -- basically the
+        /// distance formula without the square root.
+        /// </returns>
+        public static double EuclideanDistanceMagnitude(int dx, int dy) => dx * dx + dy * dy;
 
         /// <summary>
         /// Returns the proper Coord instance for the given x and y values. Will return the one in
@@ -109,9 +179,19 @@ namespace GoRogue
         /// </summary>
         /// <param name="c1">The first point.</param>
         /// <param name="c2">The second point.</param>
-        /// <returns>The midpoint between c1 and c2</returns>
+        /// <returns>The midpoint between c1 and c2.</returns>
         public static Coord Midpoint(Coord c1, Coord c2) =>
             Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
+
+        /// <summary>
+        /// Returns the midpoint between the two points.
+        /// </summary>
+        /// <param name="x1">The x-value of the first location.</param>
+        /// <param name="y1">The y-value of the first location.</param>
+        /// <param name="x2">The x-value of the second location.</param>
+        /// <param name="y2">The y-value of the second location.</param>
+        /// <returns>The midpoint between the two points.</returns>
+        public static Coord Midpoint(int x1, int y1, int x2, int y2) => Midpoint(Coord.Get(x1, y1), Coord.Get(x2, y2));
 
         /// <summary>
         /// - operator. Returns the coordinate (c1.X - c2.X, c1.Y - c2.Y)
@@ -306,5 +386,14 @@ namespace GoRogue
         /// <param name="dy">Delta y to add to coordinate.</param>
         /// <returns>The coordinate (X + dx, Y + dy)</returns>
         public Coord Translate(int dx, int dy) => Get(X + dx, Y + dy);
+
+        /// <summary>
+        /// Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy
+        /// to the Y-value of the coordinate, eg. (X + dx, Y + dy). Provided for convenience.
+        /// </summary>
+        /// <param name="deltaChange">Vector where deltaChange.X represents the delta-x value and
+        /// deltaChange.Y represents the delta-y value.</param>
+        /// <returns>The coordinate (X + deltaChange.X, Y + deltaChange.Y)</returns>
+        public Coord Translate(Coord deltaChange) => Get(X + deltaChange.X, Y + deltaChange.Y);
     }
 }

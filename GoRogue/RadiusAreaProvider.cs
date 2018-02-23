@@ -64,6 +64,21 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Constructor. Specifies center, radius length, distance calculation that defines the
+        /// concept of radius, and bounds.
+        /// </summary>
+        /// <param name="centerX">The x-value of the center point of the radius.</param>
+        /// <param name="centerY">The y-value of the center point of the radius.</param>
+        /// <param name="radius">The length of the radius.</param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius)..
+        /// </param>
+        /// <param name="bounds">The bounds to constrain the returned Coords to.</param>
+        public RadiusAreaProvider(int centerX, int centerY, int radius, Distance distanceCalc, Rectangle bounds)
+            : this(Coord.Get(centerX, centerY), radius, distanceCalc, bounds) { }
+
+        /// <summary>
         /// Constructor. Specifies center, radius length, and distance calculation that defines the
         /// concept of radius, with no bounds.
         /// </summary>
@@ -75,6 +90,20 @@ namespace GoRogue
         /// </param>
         public RadiusAreaProvider(Coord center, int radius, Distance distanceCalc)
             : this(center, radius, distanceCalc, Rectangle.EMPTY) { }
+
+        /// <summary>
+        /// Constructor. Specifies center, radius length, and distance calculation that defines the
+        /// concept of radius, with no bounds.
+        /// </summary>
+        /// <param name="centerX">The x-value of the center point of the radius.</param>
+        /// <param name="centerY">The y-value of the center point of the radius.</param>
+        /// <param name="radius">The length of the radius.</param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
+        /// </param>
+        public RadiusAreaProvider(int centerX, int centerY, int radius, Distance distanceCalc)
+            : this(Coord.Get(centerX, centerY), radius, distanceCalc, Rectangle.EMPTY) { }
 
         /// <summary>
         /// The center point of the radius.

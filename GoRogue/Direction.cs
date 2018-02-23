@@ -222,14 +222,48 @@ namespace GoRogue
         internal static int yMult { get; private set; }
 
         /// <summary>
-        /// Returns the cardinal direction that most closely matches the angle given by a line from
-        /// (0, 0) to the input. Rounds clockwise if exactly on a diagonal. Similar to GetDirection,
+        /// Returns the cardinal direction that most closely matches the degree heading of the given line.
+        /// Rounds clockwise if the heading is exactly on a diagonal direction.  Similar to GetDirection,
         /// except gives only cardinal directions.
         /// </summary>
-        /// <param name="dx">X-coordinate of line-ending point.</param>
-        /// <param name="dy">Y-coordinate of line-ending point.</param>
+        /// <param name="start">Starting coordinate of the line.</param>
+        /// <param name="end">Ending coordinate of the line.</param>
+        /// <returns>The cardinal direction that most closely matches the heading formed by the given line.</returns>
+        public static Direction GetCardinalDirection(Coord start, Coord end) => GetCardinalDirection(end.X - start.X, end.Y - start.Y);
+
+        /// <summary>
+        /// Returns the cardinal direction that most closely matches the degree heading of the given line.
+        /// Rounds clockwise if the heading is exactly on a diagonal direction.  Similar to GetDirection,
+        /// except gives only cardinal directions.
+        /// </summary>
+        /// <param name="startX">X-coordinate of the starting position of the line.</param>
+        /// <param name="startY">Y-coordinate of the starting position of the line.</param>
+        /// <param name="endX">X-coordinate of the ending position of the line.</param>
+        /// <param name="endY">Y-coordinate of the ending position of the line.</param>
+        /// <returns>The cardinal direction that most closely matches the heading formed by the given line.</returns>
+        public static Direction GetCardinalDirection(int startX, int startY, int endX, int endY) => GetCardinalDirection(endX - startX, endY - startY);
+
+        /// <summary>
+        /// Returns the cardinal direction that most closely matches the degree heading of a line
+        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal. Similar to GetDirection,
+        /// except gives only cardinal directions.
+        /// </summary>
+        /// <param name="deltaChange">Vector representing the change in x and change in y across
+        /// the line (deltaChange.X is the change in x, deltaChange.Y is the change in y).</param>
         /// <returns>
-        /// The cardinal direction that most closely matches the angle formed by the given input.
+        /// The cardinal direction that most closely matches the degree heading of the given line.
+        /// </returns>
+        public static Direction GetCardinalDirection(Coord deltaChange) => GetCardinalDirection(deltaChange.X, deltaChange.Y);
+
+        /// <summary>
+        /// Returns the cardinal direction that most closely matches the degree heading of a line
+        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal direction. Similar to GetDirection,
+        /// except gives only cardinal directions.
+        /// </summary>
+        /// <param name="dx">The change in x-values across the line.</param>
+        /// <param name="dy">The change in x-values across the line.</param>
+        /// <returns>
+        /// The cardinal direction that most closely matches the degree heading of the given line.
         /// </returns>
         public static Direction GetCardinalDirection(int dx, int dy)
         {
@@ -256,22 +290,49 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns the direction that most closely matches the angle given by a line from (0, 0) to
-        /// the input. Straight up is degree 0, straight down is 180 degrees, etc. If the angle
-        /// happens to be right on the border between 2 angles, it rounds "up", eg., we take the
-        /// closest angle in the clockwise direction.
+        /// Returns the direction that most closely matches the degree heading of the given line.
+        /// Rounds clockwise if the heading is exactly between two directions.
         /// </summary>
-        /// <param name="x">X-coordinate of line-ending point.</param>
-        /// <param name="y">Y-coordinate of line-ending point.</param>
-        /// <returns>The direction that most closely matches the angle formed by the given input.</returns>
-        public static Direction GetDirection(int x, int y)
+        /// <param name="start">Starting coordinate of the line.</param>
+        /// <param name="end">Ending coordinate of the line.</param>
+        /// <returns>The direction that most closely matches the heading formed by the given line.</returns>
+        public static Direction GetDirection(Coord start, Coord end) => GetDirection(end.X - start.X, end.Y - start.Y);
+
+        /// <summary>
+        /// Returns the direction that most closely matches the degree heading of the given line.
+        /// Rounds clockwise if the heading is exactly between two directions.
+        /// </summary>
+        /// <param name="startX">X-coordinate of the starting position of the line.</param>
+        /// <param name="startY">Y-coordinate of the starting position of the line.</param>
+        /// <param name="endX">X-coordinate of the ending position of the line.</param>
+        /// <param name="endY">Y-coordinate of the ending position of the line.</param>
+        /// <returns>The direction that most closely matches the heading formed by the given line.</returns>
+        public static Direction GetDirection(int startX, int startY, int endX, int endY) => GetDirection(endX - startX, endY - startY);
+
+        /// <summary>
+        /// Returns the direction that most closely matches the degree heading of a line with the
+        /// given delta-x and delta-y values. Rounds clockwise if the heading is exactly between two directions.
+        /// </summary>
+        /// <param name="deltaChange">Vector representing the change in x and change in y across
+        /// the line (deltaChange.X is the change in x, deltaChange.Y is the change in y).</param>
+        /// <returns>The direction that most closely matches the heading formed by the given input.</returns>
+        public static Direction GetDirection(Coord deltaChange) => GetDirection(deltaChange.X, deltaChange.Y);
+
+        /// <summary>
+        /// Returns the direction that most closely matches the degree heading of a line with the
+        /// given delta-x and delta-y values. Rounds clockwise if the heading is exactly between two directions.
+        /// </summary>
+        /// <param name="dx">The change in x-values across the line.</param>
+        /// <param name="dy">The change in y-values across the line.</param>
+        /// <returns>The direction that most closely matches the heading formed by the given input.</returns>
+        public static Direction GetDirection(int dx, int dy)
         {
-            if (x == 0 && y == 0)
+            if (dx == 0 && dy == 0)
                 return NONE;
 
-            y *= yMult;
+            dy *= yMult;
 
-            double angle = Math.Atan2(y, x);
+            double angle = Math.Atan2(dy, dx);
             double degree = MathHelpers.ToDegree(angle);
             degree += 450; // Rotate angle such that it's all positives, and such that 0 is up.
             degree %= 360; // Normalize angle to 0-360

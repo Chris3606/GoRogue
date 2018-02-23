@@ -109,6 +109,17 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Adds the given item at the given position, provided the item is not already in the
+        /// MultiSpatialMap. If the item is already contained in it, does nothing and returns false.
+        /// Otherwise (if item was successfully added), returns true.
+        /// </summary>
+        /// <param name="newItem">The item to add.</param>
+        /// <param name="x">x-value of the position to add item to.</param>
+        /// <param name="y">y-value of the position to add item to.</param>
+        /// <returns>True if the item was added, false if not.</returns>
+        public bool Add(T newItem, int x, int y) => Add(newItem, Coord.Get(x, y));
+
+        /// <summary>
         /// Returns a ReadOnly reference to the SpatialMap. Convenient for "safely" exposing a
         /// SpatialMap as a property
         /// </summary>
@@ -133,6 +144,11 @@ namespace GoRogue
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
+        public bool Contains(int x, int y) => Contains(Coord.Get(x, y));
 
         /// <summary>
         /// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -160,6 +176,11 @@ namespace GoRogue
                 foreach (var tuple in positionMapping[position])
                     yield return tuple.Item;
         }
+
+        /// <summary>
+        /// See IReadOnlySpatialMap.GetItems.
+        /// </summary>
+        public IEnumerable<T> GetItems(int x, int y) => GetItems(Coord.Get(x, y));
 
         /// <summary>
         /// See IReadOnlySpatialMap.GetPosition.
@@ -201,6 +222,17 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Move the item specified to the position specified. Returns true if successful. If the
+        /// item does not exist in the MultiSpatialMap, does nothing and returns false. Otherwise,
+        /// returns true.
+        /// </summary>
+        /// <param name="item">The item to move.</param>
+        /// <param name="targetX">X-value of the location to move it to.</param>
+        /// <param name="targetY">Y-value of the location to move it to.</param>
+        /// <returns>True if the item was moved, false if not.</returns>
+        public bool Move(T item, int targetX, int targetY) => Move(item, Coord.Get(targetX, targetY));
+
+        /// <summary>
         /// Moves everything at position current, if anything, to postion target. If something was
         /// moved, returns everything that was moved. If nothing was moved, eg. there was nothing at
         /// position current, returns nothing.
@@ -233,6 +265,18 @@ namespace GoRogue
                 }
             }
         }
+
+        /// <summary>
+        /// Moves everything at position current, if anything, to postion target. If something was
+        /// moved, returns everything that was moved. If nothing was moved, eg. there was nothing at
+        /// position current, returns nothing.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
+        public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(Coord.Get(currentX, currentY), Coord.Get(targetX, targetY));
 
         /// <summary>
         /// Removes the item specified, if it exists, and returns true. Returns false if the item was
@@ -281,5 +325,16 @@ namespace GoRogue
                         ItemRemoved(this, new ItemEventArgs<T>(tuple.Item, position));
             }
         }
+
+        /// <summary>
+        /// Removes everything at the given position, if anything, and returns the items removed.
+        /// Returns nothing if no item was at the position specified.
+        /// </summary>
+        /// <param name="x">X-value of the position to remove items from.</param>
+        /// <param name="y">Y-value of the position to remove items from.</param>
+        /// <returns>
+        /// The items removed, if any were removed; nothing if no item was found at that position.
+        /// </returns>
+        public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
     }
 }

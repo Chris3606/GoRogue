@@ -24,7 +24,7 @@
         }
 
         /// <summary>
-        /// Implmenets the algorithm, creating the tunnel as specified in the class description.
+        /// Implements the algorithm, creating the tunnel as specified in the class description.
         /// </summary>
         /// <param name="map">The map to create the tunnel on.</param>
         /// <param name="start">Start coordinate of the tunnel.</param>
@@ -47,5 +47,15 @@
                 previous = pos;
             }
         }
+
+        /// <summary>
+        /// Implements the algorithm, creating the tunnel as specified in the class description.
+        /// </summary>
+        /// <param name="map">The map to create the tunnel on.</param>
+        /// <param name="startX">X-value of the start position of the tunnel.</param>
+        /// <param name="startY">Y-value of the start position of the tunnel.</param>
+        /// <param name="endX">X-value of the end position of the tunnel.</param>
+        /// <param name="endY">Y-value of the end position of the tunnel.</param>
+        public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, Coord.Get(startX, startY), Coord.Get(endX, endY));
     }
 }

@@ -117,6 +117,17 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Adds the given item at the given position, provided the item is not already in the
+        /// SpatialMap and the position is not already filled. If either of those are the case,
+        /// returns false. Otherwise (if item was successfully added), returns true.
+        /// </summary>
+        /// <param name="newItem">The item to add.</param>
+        /// <param name="x">X-value of the position to add item to.</param>
+        /// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item was added, false if not.</returns>
+        public bool Add(T newItem, int x, int y) => Add(newItem, Coord.Get(x, y));
+
+        /// <summary>
         /// See IReadOnlySpatialMap.AsReadOnly.
         /// </summary>
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
@@ -139,6 +150,11 @@ namespace GoRogue
         /// See IReadOnlySpatialMap.Contains.
         /// </summary>
         public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+
+        /// <summary>
+        /// See IReadOnlySpatialMap.Contains.
+        /// </summary>
+        public bool Contains(int x, int y) => positionMapping.ContainsKey(Coord.Get(x, y));
 
         /// <summary>
         /// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -179,6 +195,20 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Gets the item at the given position, or null/equivalent if no item exists.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be a more convenient function as compared to GetItems, for times when you are
+        /// dealing exclusively with SpatialMap instances.
+        /// </remarks>
+        /// <param name="x">The x-value of the position to return the item for.</param>
+        /// <param name="y">The y-value of the position to return the item for.</param>
+        /// <returns>
+        /// The item at the given position, or null/equivalent if no item exists at that location.
+        /// </returns>
+        public T GetItem(int x, int y) => GetItem(Coord.Get(x, y));
+
+        /// <summary>
         /// Gets the item at the given position as a 1-element enumerable if there is any item there,
         /// or nothing if there is nothing at that position.
         /// </summary>
@@ -201,6 +231,25 @@ namespace GoRogue
             if (tuple != null)
                 yield return tuple.Item;
         }
+
+        /// <summary>
+        /// Gets the item at the given position as a 1-element enumerable if there is any item there,
+        /// or nothing if there is nothing at that position.
+        /// </summary>
+        /// <remarks>
+        /// Again, since this implementation guarantees that only one item can be at any given
+        /// location at once, the return value is guaranteed to be at most one element. For times
+        /// when you are know you are dealing exclusively with SpatialMap instances, this specific
+        /// class also provides a GetItem function that returns a more intuitive null if no item was
+        /// found, or the item at the location as applicable.
+        /// </remarks>
+        /// <param name="x">The x-value of the position to return the item(s) for.</param>
+        /// <param name="y">The y-value of the position to return the item(s) for.</param>
+        /// <returns>
+        /// The item at the given position as a 1-element enumerable, if there is an item there, or
+        /// nothing if there is no item there.
+        /// </returns>
+        public IEnumerable<T> GetItems(int x, int y) => GetItems(Coord.Get(x, y));
 
         /// <summary>
         /// See IReadOnlySpatialMap.GetPosition.
@@ -239,6 +288,17 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Move the item specified to the position specified. Returns true if successful. If the
+        /// item does not exist in the SpatialMap, or the position is already filled by something,
+        /// does nothing and returns false. Otherwise, returns true.
+        /// </summary>
+        /// <param name="item">The item to move.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+        /// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>True if the item was moved, false if not.</returns>
+        public bool Move(T item, int targetX, int targetY) => Move(item, Coord.Get(targetX, targetY));
+
+        /// <summary>
         /// Moves whatever is at position current, if anything, to postion target. If something was
         /// moved, returns what was moved. If nothing was moved, eg. either there was nothing at
         /// position current or already something at position target, returns nothing.
@@ -266,6 +326,25 @@ namespace GoRogue
                 ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(movingTuple.Item, current, target));
             }
         }
+
+        /// <summary>
+        /// Moves whatever is at position current, if anything, to postion target. If something was
+        /// moved, returns what was moved. If nothing was moved, eg. either there was nothing at
+        /// position current or already something at position target, returns nothing.
+        /// </summary>
+        /// <remarks>
+        /// Since this implementation of ISpatialMap guarantees that only one item may be at any
+        /// given location at a time, the returned values will either be none, or a single value.
+        /// </remarks>
+        /// <param name="currentX">X-value of the location to move item from.</param>
+        /// <param name="currentY">Y-value of the location to move item from.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+        /// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>
+        /// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
+        /// was moved.
+        /// </returns>
+        public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(Coord.Get(currentX, currentY), Coord.Get(targetX, targetY));
 
         /// <summary>
         /// Removes the item specified, if it exists, and returns true. Returns false if the item was
@@ -310,6 +389,22 @@ namespace GoRogue
                 yield return tuple.Item;
             }
         }
+
+        /// <summary>
+        /// Removes whatever is at the given position, if anything, and returns the item removed as a
+        /// 1-element IEnumerable. Returns nothing if no item was at the position specified.
+        /// </summary>
+        /// <remarks>
+        /// Again, since this implementation guarantees that only one item can be at any given
+        /// location at a time, the returned value is guaranteed to be either nothing or a single element.
+        /// </remarks>
+        /// <param name="x">X-value of the position to remove item from.</param>
+        /// <param name="y">Y-value of the position to remove item from.</param>
+        /// <returns>
+        /// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
+        /// was found at that position.
+        /// </returns>
+        public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
     }
 
     internal class SpatialTuple<T> : ISpatialTuple<T> where T : IHasID
