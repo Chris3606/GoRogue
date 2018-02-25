@@ -1,4 +1,6 @@
-﻿namespace GoRogue
+﻿using System;
+
+namespace GoRogue
 {
     // TODO: Potentially a crapton more utility stuff to add here. Probably Get around to it closer
     //       to FOV/area of effect libs.
@@ -13,6 +15,7 @@
     /// </remarks>
     public class Radius
     {
+        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
         /// <summary>
         /// Radius is a circle around the center point. Shape that would represent movement radius in
         /// an 8-way movement scheme, with all movement cost the same based upon distance from the source.
@@ -174,5 +177,11 @@
                     return null; // Will never occur
             }
         }
+
+        /// <summary>
+        /// Returns a string representation of the Radius.
+        /// </summary>
+        /// <returns>A string representation of the Radius.</returns>
+        public override string ToString() => writeVals[(int)Type];
     }
 }

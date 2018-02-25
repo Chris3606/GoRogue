@@ -178,5 +178,15 @@ namespace GoRogue
                 }
             }
         }
+
+        /// <summary>
+        /// Returns a string representation of the parameters of the RadiusAreaProvider.
+        /// </summary>
+        /// <returns>A string representation of the RadiusAreaProvider.</returns>
+        public override string ToString()
+        {
+            string bounds = (Bounds.IsEmpty) ? "None" : Bounds.ToString();
+            return $"Center: {Center}, Radius: {Radius}, Distance Measurement: {DistanceCalc}, Bounds: {bounds}";
+        }
     }
 }

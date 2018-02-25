@@ -228,7 +228,7 @@ namespace GoRogue_UnitTests
             }
         }
 
-        private void checkAgainstPath(IList<Coord> expectedPath, Path actual, Coord start, Coord end)
+        private void checkAgainstPath(IReadOnlyList<Coord> expectedPath, Path actual, Coord start, Coord end)
         {
             var actualList = actual.StepsWithStart.ToList();
 
@@ -247,7 +247,7 @@ namespace GoRogue_UnitTests
             Assert.AreEqual(actual.LengthWithStart, expectedPath.Count);
         }
 
-        private void checkListsMatch(IList<Coord> expected, IList<Coord> actual)
+        private void checkListsMatch(IReadOnlyList<Coord> expected, IReadOnlyList<Coord> actual)
         {
             Assert.AreEqual(expected.Count, actual.Count);
 
@@ -255,7 +255,7 @@ namespace GoRogue_UnitTests
                 Assert.AreEqual(expected[i], actual[i]);
         }
 
-        private void printExpectedAndActual(IList<Coord> expected, Path actual)
+        private void printExpectedAndActual(IReadOnlyList<Coord> expected, Path actual)
         {
             Console.WriteLine("Expected:");
             foreach (var i in expected)

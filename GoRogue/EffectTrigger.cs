@@ -58,7 +58,7 @@ namespace GoRogue
         /// <summary>
         /// List of all effects that are part of this EffectTrigger.
         /// </summary>
-        public IList<Effect<TriggerArgs>> Effects { get => _effects.AsReadOnly(); }
+        public IReadOnlyList<Effect<TriggerArgs>> Effects { get => _effects.AsReadOnly(); }
 
         /// <summary>
         /// Adds the given effect to this EffectTrigger, provided the effect's duration is not 0. If
@@ -114,5 +114,11 @@ namespace GoRogue
 
             indicesForRemoval.Clear();
         }
+
+        /// <summary>
+        /// Yields a string representation of each effect that has been added to the effect trigger.
+        /// </summary>
+        /// <returns>A string representation of each effect that has been added to the effect trigger.</returns>
+        public override string ToString() => _effects.ExtendToString();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace GoRogue
 {
@@ -9,6 +10,7 @@ namespace GoRogue
     /// </summary>
     public class AdjacencyRule
     {
+        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
         /// <summary>
         /// Represents method of determining adjacency where neighbors are considered adjacent if
         /// they are in a cardinal direction, eg. 4-way (manhattan-based) connectivity.
@@ -306,5 +308,11 @@ namespace GoRogue
         /// <returns>All neighbors of the given location.</returns>
         public IEnumerable<Coord> NeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
             => NeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
+
+        /// <summary>
+        /// Returns a string representation of the AdjacencyRule.
+        /// </summary>
+        /// <returns>A string representation of the AdjacencyRule.</returns>
+        public override string ToString() => writeVals[(int)Type];
     }
 }

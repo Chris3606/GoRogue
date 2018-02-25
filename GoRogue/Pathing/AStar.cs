@@ -251,7 +251,7 @@ namespace GoRogue.Pathing
     /// </remarks>
     public class Path
     {
-        private IList<Coord> _steps;
+        private IReadOnlyList<Coord> _steps;
         private bool inOriginalOrder;
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace GoRogue.Pathing
         }
 
         // Create based on internal list
-        internal Path(IList<Coord> steps)
+        internal Path(IReadOnlyList<Coord> steps)
         {
             _steps = steps;
             inOriginalOrder = true;
@@ -382,6 +382,13 @@ namespace GoRogue.Pathing
         /// Reverses the path, in constant time.
         /// </summary>
         public void Reverse() => inOriginalOrder = !inOriginalOrder;
+
+        /// <summary>
+        /// Returns a string representation of all the steps in the path, including the start point, eg.
+        /// [(1, 2), (3, 4), (5, 6)].
+        /// </summary>
+        /// <returns>A string representation of all steps in the path, including the start.</returns>
+        public override string ToString() => StepsWithStart.ExtendToString();
     }
 
     // Node for AStar, stores all values and integrates with priority queue implementation

@@ -81,7 +81,7 @@ namespace GoRogue.SenseMapping
         /// Read-only list of all sources currently taken into account. Some may have their enabled
         /// flag set to false, so all of these may or may not be counted when Calculate is called.
         /// </summary>
-        public IList<SenseSource> SenseSources { get => _senseSources.AsReadOnly(); }
+        public IReadOnlyList<SenseSource> SenseSources { get => _senseSources.AsReadOnly(); }
 
         /// <summary>
         /// Width of sense map.
@@ -169,6 +169,50 @@ namespace GoRogue.SenseMapping
                     yield return senseMap[x, y];
         }
 
+        // Warning about hidden overload intentionally disabled -- the two methods are equivalent but the ToString method that takes 0, as opposed
+        // to all optional, parameters is necessary to override the one from base class object.  That one calls this one so the "hidden" overload
+        // is of no harm.
+#pragma warning disable RECS0137
+        /// <summary>
+        /// ToString that customizes the characters used to represent the map.
+        /// </summary>
+        /// <param name="normal">The character used for any location not in the SenseMap.</param>
+        /// <param name="center">The character used for any location that is the center-point of a source.</param>
+        /// <param name="sourceValue">The character used for any location that is in range of a SenseSource, but not a center point.</param>
+        /// <returns>The string representation of the SenseMap, using the specified characters.</returns>
+        public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')
+#pragma warning restore RECS0137
+
+        {
+            string result = "";
+
+            for (int y = 0; y < resMap.Height; y++)
+            {
+                for (int x = 0; x < resMap.Width; x++)
+                {
+                    if (senseMap[x, y] > 0.0)
+                        result += (isACenter(x, y)) ? center : sourceValue;
+                    else
+                        result += normal;
+
+                    result += " ";
+                }
+
+                result += '\n';
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a string representation of the map, where any location not in the SenseMap is represented by a
+        /// '' character, any position that is the center of some source is represented by a 'C' character, and
+        /// any position that has a non-zero value but is not a center is represented by an 'S'.
+        /// </summary>
+        /// <returns>A (multi-line) string representation of the SenseMap.</returns>
+        public override string ToString() => ToString();
+
+
         /// <summary>
         /// Generic enumerator.
         /// </summary>
@@ -185,6 +229,15 @@ namespace GoRogue.SenseMapping
         {
             _senseSources.Remove(senseSource);
             senseSource.resMap = null;
+        }
+
+        private bool isACenter(int x, int y)
+        {
+            foreach (var source in _senseSources)
+                if (source.Position.X == x && source.Position.Y == y)
+                    return true;
+
+            return false;
         }
 
         // Blits given source's lightMap onto the global lightmap given

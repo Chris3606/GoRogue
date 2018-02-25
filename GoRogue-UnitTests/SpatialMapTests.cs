@@ -142,19 +142,5 @@ namespace GoRogue_UnitTests
                 count++;
             Assert.AreEqual(0, count);
         }
-    }
-
-    internal class MyIDImpl : IHasID
-    {
-        private static IDGenerator idGen = new IDGenerator();
-
-        public MyIDImpl(int myInt)
-        {
-            ID = idGen.UseID();
-            MyInt = myInt;
-        }
-
-        public uint ID { get; private set; }
-        public int MyInt { get; private set; }
-    }
+    } 
 }

@@ -68,5 +68,36 @@ namespace GoRogue
 
             return newObj;
         }
+
+        /// <summary>
+        /// Returns a string representation of the 2D array.
+        /// </summary>
+        /// <returns>A string representation of the 2D array.</returns>
+        public override string ToString() => ToString((T elem) => elem.ToString());
+
+        /// <summary>
+        /// Returns a string representation of the 2D array, using the elementMap
+        /// function given to determine what string represents which value.
+        /// </summary>
+        /// <remarks>
+        /// This could be used, for example, on an ArrayMap of boolean values, to output '#' for
+        /// false values, and '.' for true values.
+        /// </remarks>
+        /// <param name="elementMap">Function determining the string representation of each element.</param>
+        /// <returns>A string representation of the 2D array.</returns>
+        public string ToString(Func<T, string> elementMap)
+        {
+            string result = "";
+
+            for (int y = 0; y < Height; y++)
+            {
+                for (int x = 0; x < Width; x++)
+                    result += elementMap(array[x, y]) + " ";
+
+                result += '\n';
+            }
+
+            return result;
+        }
     }
 }

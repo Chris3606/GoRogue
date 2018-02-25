@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace GoRogue.MapGeneration
 {
@@ -12,7 +13,7 @@ namespace GoRogue.MapGeneration
 
         private int left, top, bottom, right;
 
-        private HashSet<Coord> positionsSet;
+        private readonly HashSet<Coord> positionsSet;
 
         /// <summary>
         /// Constructor.
@@ -51,7 +52,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// List of all (unique) positions in the list.
         /// </summary>
-        public IList<Coord> Positions { get { return _positions.AsReadOnly(); } }
+        public IReadOnlyList<Coord> Positions { get { return _positions.AsReadOnly(); } }
 
         /// <summary>
         /// Gets a MapArea containing exactly those positions in both of the given MapAreas.
@@ -199,5 +200,61 @@ namespace GoRogue.MapGeneration
 
             return false;
         }
+
+        /// <summary>
+        /// Same as operator==.  Returns false of obj is not a MapArea.
+        /// </summary>
+        /// <param name="obj">Object to compare</param>
+        /// <returns>True if the object given is a MapArea and is equal (contains the same points), false otherwise.</returns>
+        public override bool Equals(object obj)
+        {
+            var area = obj as MapArea;
+            if (area == null) return false;
+
+            return this == area;
+        }
+
+        /// <summary>
+        /// Compares for equality.  Returns true if the two MapAreas are the same reference, or
+        /// if they contain exactly the same points.
+        /// </summary>
+        /// <param name="lhs">First MapArea to compare.</param>
+        /// <param name="rhs">Second MapArea to compare.</param>
+        /// <returns>True if the MapAreas contain exactly the same points, false otherwise.</returns>
+        public static bool operator==(MapArea lhs, MapArea rhs)
+        {
+            if (ReferenceEquals(lhs, rhs))
+                return true;
+
+            if (lhs.Count != rhs.Count)
+                return false;
+
+            foreach (var pos in lhs.Positions)
+                if (!rhs.Contains(pos))
+                    return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Inequality comparison -- true if the two areas do NOT contain exactly the same points.
+        /// </summary>
+        /// <param name="lhs">First MapArea to compare.</param>
+        /// <param name="rhs">Second MapArea to compare.</param>
+        /// <returns>True if the MapAreas do NOT contain exactly the same points, false otherwise.</returns>
+        public static bool operator !=(MapArea lhs, MapArea rhs) => !(lhs == rhs);
+
+        /// <summary>
+        /// Returns hash of the underlying set.
+        /// </summary>
+        /// <returns>Hash code for the underlying set.</returns>
+        public override int GetHashCode() => positionsSet.GetHashCode();
+
+        /// <summary>
+        /// Returns the string of each position in the MapArea, in a square-bracket enclosed list, eg.
+        /// [(1, 2), (3, 4), (5, 6)].
+        /// </summary>
+        /// <returns>A string representation of those coordinates in the MapArea.</returns>
+        public override string ToString() => _positions.ExtendToString();
     }
 }

@@ -67,7 +67,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// The tunnel creation strategy to use. If null is specified,
         /// HorizontalVerticalTunnelCreator that utilizes the default RNG is used.
         /// </param>
-        static public void Connect(ISettableMapView<bool> map, IList<MapArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
+        static public void Connect(ISettableMapView<bool> map, IReadOnlyList<MapArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
                                     ITunnelCreator tunnelCreator = null)
         {
             if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();

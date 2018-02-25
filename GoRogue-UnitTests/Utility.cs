@@ -6,6 +6,23 @@ using CA = EMK.Cartography;
 
 namespace GoRogue_UnitTests
 {
+    class ResMap : IMapView<double>
+    {
+        private IMapView<bool> view;
+
+        public ResMap(IMapView<bool> view)
+        {
+            this.view = view;
+        }
+
+        public double this[Coord pos] => (view[pos]) ? 0.0 : 1.0;
+
+        public double this[int x, int y] => (view[x, y]) ? 0.0 : 1.0;
+
+        public int Height => view.Height;
+
+        public int Width => view.Width;
+    }
     // Adds functions commonly used in tests
     public static class Utility
     {
@@ -73,5 +90,22 @@ namespace GoRogue_UnitTests
             foreach (var p in points)
                 yield return Coord.Get((int)p.X, (int)p.Y);
         }
+
+    }
+
+    class MyIDImpl : IHasID
+    {
+        private static IDGenerator idGen = new IDGenerator();
+
+        public MyIDImpl(int myInt)
+        {
+            ID = idGen.UseID();
+            MyInt = myInt;
+        }
+
+        public uint ID { get; private set; }
+        public int MyInt { get; private set; }
+
+        public override string ToString() => "Thing " + MyInt;
     }
 }

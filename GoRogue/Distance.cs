@@ -15,6 +15,8 @@ namespace GoRogue
     /// </remarks>
     public class Distance
     {
+        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
+        
         /// <summary>
         /// CHEBYSHEV distance (equivalent to 8-way movement with no extra cost for diagonals).
         /// </summary>
@@ -264,5 +266,11 @@ namespace GoRogue
             }
             return radius;
         }
+
+        /// <summary>
+        /// Returns a string representation of the Distance.
+        /// </summary>
+        /// <returns>A string representation of the Distance.</returns>
+        public override string ToString() => writeVals[(int)Type];
     }
 }

@@ -50,6 +50,8 @@ namespace GoRogue.SenseMapping
     /// </summary>
     public class SenseSource
     {
+        private static readonly string[] typeWriteVals = { "RIPPLE", "RIPPLE_LOOSE", "RIPPLE_TIGHT", "RIPPLE_VERY_LOOSE", "SHADOW" };
+
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] light;
 
@@ -148,6 +150,12 @@ namespace GoRogue.SenseMapping
         /// The spread mechanics to use for source values.
         /// </summary>
         public SourceType Type { get; set; }
+
+        /// <summary>
+        /// Returns a string representation of the configuration of this SenseSource.
+        /// </summary>
+        /// <returns>A string representation of the configuration of this SenseSource.</returns>
+        public override string ToString() => $"Enabled: {Enabled}, Type: {typeWriteVals[(int)Type]}, Radius Mode: {(Radius)DistanceCalc}, Position: {Position}, Radius: {Radius}";
 
         // Set from lighting, just so we have a reference.
 

@@ -18,7 +18,7 @@ namespace GoRogue
     {
         private static readonly Direction[] directions;
 
-        private static readonly string[] writeVals = { "UP", "UP_RIGHT", "RIGHT", "DOWN_RIGHT", "DOWN", "DOWN_LEFT", "LEFT", "UP_LEFT", "NONE" };
+        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
 
         private static bool _yIncreasesUpward;
 
@@ -444,9 +444,6 @@ namespace GoRogue
         /// Writes the string ("UP", "UP_RIGHT", etc.) for the direction.
         /// </summary>
         /// <returns>String representation of the direction.</returns>
-        public override string ToString()
-        {
-            return writeVals[(int)Type];
-        }
+        public override string ToString() => writeVals[(int)Type];
     }
 }

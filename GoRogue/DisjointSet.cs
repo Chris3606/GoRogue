@@ -1,4 +1,6 @@
-﻿namespace GoRogue
+﻿using System.Collections.Generic;
+
+namespace GoRogue
 {
     /// <summary>
     /// Basic representation of a Disjoint set data structure. Assumes it is holding integers between
@@ -83,6 +85,40 @@
                 sizes[i] += sizes[j];
             }
             Count--;
+        }
+
+        /// <summary>
+        /// Returns a string representation of the DisjointSet, showing parents and all elements in their set.
+        /// </summary>
+        /// <returns>A string representation of the DisjointSet.</returns>
+        public override string ToString()
+        {
+            var values = new Dictionary<int, List<int>>();
+
+            for (int i = 0; i < parents.Length; i++)
+            {
+                int parentOf = findNoCompression(i);
+                if (!values.ContainsKey(parentOf))
+                {
+                    values[parentOf] = new List<int>();
+                    values[parentOf].Add(parentOf); // Parent is the first element in each child list
+                }
+
+                if (parentOf != i) // We already added the parent, so don't double add
+                    values[parentOf].Add(i);
+            }
+
+            return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
+        }
+
+
+        // Used to ensure ToString doesn't affect the performance of future operations
+        private int findNoCompression(int obj)
+        {
+            while (parents[obj] != obj)
+                obj = parents[obj];
+
+            return obj;
         }
     }
 }

@@ -336,5 +336,22 @@ namespace GoRogue
         /// The items removed, if any were removed; nothing if no item was found at that position.
         /// </returns>
         public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
+
+        /// <summary>
+        /// Returns a string representation of the MultiSpatialMap, allowing display of the MultiSpatialMap's items in a specified way.
+        /// </summary>
+        /// <param name="itemStringifier">Function that turns an item into a string.</param>
+        /// <returns>A string representation of the MultiSpatialMap.</returns>
+        public string ToString(Func<T, string> itemStringifier)
+            => positionMapping.ExtendToString("", valueStringifier: (List<SpatialTuple<T>> obj) =>
+                                                                     obj.ExtendToString(elementStringifier: (SpatialTuple<T> item) => itemStringifier(item.Item)),
+                                              kvSeparator: ": ", pairSeparator: ",\n", end: "");
+
+        /// <summary>
+        /// Returns a string representation of the MultiSpatialMap.
+        /// </summary>
+        /// <returns>A string representation of the MultiSpatialMap.</returns>
+        public override string ToString()
+            => ToString((T obj) => obj.ToString());
     }
 }

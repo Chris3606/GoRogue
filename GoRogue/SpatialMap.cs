@@ -405,6 +405,20 @@ namespace GoRogue
         /// was found at that position.
         /// </returns>
         public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
+
+        /// <summary>
+        /// Returns a string representation of the SpatialMap.
+        /// </summary>
+        /// <returns>A string representation of the SpatialMap.</returns>
+        public override string ToString() => ToString((T obj) => obj.ToString());
+
+        /// <summary>
+        /// Returns a string representation of the SpatialMap, allowing display of the SpatialMap's items in a specified way.
+        /// </summary>
+        /// <param name="itemStringifier">Function that turns an item into a string.</param>
+        /// <returns>A string representation of the SpatialMap.</returns>
+        public string ToString(Func<T, string> itemStringifier)
+            => positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item));
     }
 
     internal class SpatialTuple<T> : ISpatialTuple<T> where T : IHasID
@@ -417,5 +431,8 @@ namespace GoRogue
 
         public T Item { get; set; }
         public Coord Position { get; set; }
+
+        public string ToString(Func<T, string> itemStringifier) => Position + " : " + itemStringifier(Item);
+        public override string ToString() => Position + " : " + Item;
     }
 }

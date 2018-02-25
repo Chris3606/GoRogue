@@ -45,5 +45,11 @@ namespace GoRogue.DiceNotation
 
             return termToEvaluate.GetResult(rng);
         }
+
+        /// <summary>
+        /// Returns a parenthesized string representing the dice expression in dice notation
+        /// </summary>
+        /// <returns>A paranethesized string representing the expression.</returns>
+        public override string ToString() => termToEvaluate.ToString();
     }
 }

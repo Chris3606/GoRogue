@@ -246,6 +246,40 @@ namespace GoRogue
         /// </param>
         public void Calculate(Coord start, int radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
 
+// Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
+#pragma warning disable RECS0137
+        /// <summary>
+        /// ToString overload that customizes the characters used to represent the map.
+        /// </summary>
+        /// <param name="normal">The character used for any location not in FOV.</param>
+        /// <param name="sourceValue">The character used for any location that is in FOV.</param>
+        /// <returns>The string representation of FOV, using the specified characters.</returns>
+        public string ToString(char normal = '-', char sourceValue = '+')
+#pragma warning restore RECS0137
+        {
+            string result = "";
+
+            for (int y = 0; y < resMap.Height; y++)
+            {
+                for (int x = 0; x < resMap.Width; x++)
+                {
+                    result += (light[x, y] > 0.0) ? sourceValue : normal;
+                    result += " ";
+                }
+
+                result += '\n';
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a string representation of the map, where any location not in FOV is represented by a
+        /// '-' character, and any position in FOV is represented  by a '+'.
+        /// </summary>
+        /// <returns>A (multi-line) string representation of the FOV.</returns>
+        public override string ToString() => ToString();
+
         // Returns value because its recursive
         private static double[,] shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
                                      int radius, int startX, int startY, double decay, double[,] lightMap, HashSet<Coord> fovSet,
