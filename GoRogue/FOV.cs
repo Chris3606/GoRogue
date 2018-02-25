@@ -274,6 +274,14 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Returns a string representation of the map, with the actual values in the FOV, rounded to the given number
+        /// of decimal places.
+        /// </summary>
+        /// <param name="decimalPlaces">The number of decimal places to round to.</param>
+        /// <returns>A string representation of FOV, rounded to the given number of decimal places.</returns>
+        public string ToString(int decimalPlaces) => light.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+
+        /// <summary>
         /// Returns a string representation of the map, where any location not in FOV is represented by a
         /// '-' character, and any position in FOV is represented  by a '+'.
         /// </summary>

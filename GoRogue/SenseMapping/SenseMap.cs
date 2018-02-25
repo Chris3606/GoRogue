@@ -206,12 +206,19 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Returns a string representation of the map, where any location not in the SenseMap is represented by a
-        /// '' character, any position that is the center of some source is represented by a 'C' character, and
+        /// '-' character, any position that is the center of some source is represented by a 'C' character, and
         /// any position that has a non-zero value but is not a center is represented by an 'S'.
         /// </summary>
         /// <returns>A (multi-line) string representation of the SenseMap.</returns>
         public override string ToString() => ToString();
 
+        /// <summary>
+        /// Returns a string representation of the map, with the actual values in the senseMap, rounded to the given number
+        /// of decimal places.
+        /// </summary>
+        /// <param name="decimalPlaces">The number of decimal places to round to.</param>
+        /// <returns>A string representation of the map, rounded to the given number of decimal places.</returns>
+        public string ToString(int decimalPlaces) => senseMap.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
         /// Generic enumerator.

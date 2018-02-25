@@ -418,7 +418,7 @@ namespace GoRogue
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the SpatialMap.</returns>
         public string ToString(Func<T, string> itemStringifier)
-            => positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item));
+            => positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
     }
 
     internal class SpatialTuple<T> : ISpatialTuple<T> where T : IHasID

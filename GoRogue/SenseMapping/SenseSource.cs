@@ -50,7 +50,7 @@ namespace GoRogue.SenseMapping
     /// </summary>
     public class SenseSource
     {
-        private static readonly string[] typeWriteVals = { "RIPPLE", "RIPPLE_LOOSE", "RIPPLE_TIGHT", "RIPPLE_VERY_LOOSE", "SHADOW" };
+        private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
 
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] light;
