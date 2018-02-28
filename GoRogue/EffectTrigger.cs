@@ -44,15 +44,12 @@ namespace GoRogue
     {
         private List<Effect<TriggerArgs>> _effects;
 
-        private List<int> indicesForRemoval;
-
         /// <summary>
         /// Constructor.
         /// </summary>
         public EffectTrigger()
         {
             _effects = new List<Effect<TriggerArgs>>();
-            indicesForRemoval = new List<int>();
         }
 
         /// <summary>
@@ -105,14 +102,7 @@ namespace GoRogue
                 }
             }
 
-            for (int i = 0; i < _effects.Count; i++)
-                if (_effects[i].Duration == 0)
-                    indicesForRemoval.Add(i);
-
-            for (int i = indicesForRemoval.Count - 1; i >= 0; i--)
-                _effects.RemoveAt(indicesForRemoval[i]);
-
-            indicesForRemoval.Clear();
+            _effects.RemoveAll(eff => eff.Duration == 0);
         }
 
         /// <summary>
