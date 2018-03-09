@@ -13,7 +13,7 @@ namespace GoRogue
 	/// </remarks>
 	/// <typeparam name="T1">The type of your underlying data.</typeparam>
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
-	class LambdaTranslationMap<T1, T2> : TranslationMap<T1, T2>
+	public class LambdaTranslationMap<T1, T2> : TranslationMap<T1, T2>
 	{
 		private Func<T1, T2> _getter;
 		private Func<T2, T1> _setter;

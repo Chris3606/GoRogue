@@ -18,7 +18,7 @@ namespace GoRogue
 	/// </remarks>
 	/// <typeparam name="T1">The type of your underlying data.</typeparam>
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
-	abstract class TranslationMap<T1, T2> : ISettableMapView<T2>
+	public abstract class TranslationMap<T1, T2> : ISettableMapView<T2>
 	{
 		private ISettableMapView<T1> _baseMap;
 
