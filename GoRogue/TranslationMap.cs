@@ -14,7 +14,7 @@ namespace GoRogue
 	/// This class allows you to build descendant classes that override the TranslateGet and TranslateSet
 	/// methods for simple mapping, or the this properties if you need full access to the underlying data
 	/// for context, in order to present a simplified view of your data to an algorithm without having to
-	/// create multiple arrays and keep them in sync.
+	/// create the large amount of duplicate code associated with multiple ISettableMapView instances.
 	/// </remarks>
 	/// <typeparam name="T1">The type of your underlying data.</typeparam>
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
@@ -26,18 +26,22 @@ namespace GoRogue
 		/// Constructor. Takes an existing map view to create a view from.
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
-		public TranslationMap(ISettableMapView<T1> baseMap)
+		protected TranslationMap(ISettableMapView<T1> baseMap)
 		{
 			_baseMap = baseMap;
 		}
 
 		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from and applies view data to it.
+		/// Constructor. Takes an existing map view to create a view from and applies view data to it.  
 		/// </summary>
+		/// <remarks>
+		/// Since this constructor must call TranslateSet to do so, do NOT call this constructor if the TranslateSet implementation
+		/// depends on the derived class's constructor being completed to function properly.
+		/// </remarks>
 		/// <param name="baseMap">Your underlying map data.</param>
-		/// <param name="overlay">The view data to apply to the map.  Must have identical dimensions
+		/// <param name="overlay">The view data to apply to the map.  Must have identical dimensions.
 		/// to baseMap.</param>
-		public TranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay) : this(baseMap)
+		protected TranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay) : this(baseMap)
 		{
 			ApplyOverlay(overlay);
 		}
@@ -58,7 +62,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Translates your map data into the view type
+		/// Translates your map data into the view type.
 		/// </summary>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type</returns>

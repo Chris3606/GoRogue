@@ -15,6 +15,8 @@ var searchData=
   ['irandom',['IRandom',['../interface_go_rogue_1_1_random_1_1_i_random.html',1,'GoRogue::Random']]],
   ['ireadonlyspatialmap',['IReadOnlySpatialMap',['../interface_go_rogue_1_1_i_read_only_spatial_map.html',1,'GoRogue']]],
   ['isettablemapview',['ISettableMapView',['../interface_go_rogue_1_1_i_settable_map_view.html',1,'GoRogue']]],
+  ['isettablemapview_3c_20t1_20_3e',['ISettableMapView&lt; T1 &gt;',['../interface_go_rogue_1_1_i_settable_map_view.html',1,'GoRogue']]],
+  ['isettablemapview_3c_20t2_20_3e',['ISettableMapView&lt; T2 &gt;',['../interface_go_rogue_1_1_i_settable_map_view.html',1,'GoRogue']]],
   ['ispatialmap',['ISpatialMap',['../interface_go_rogue_1_1_i_spatial_map.html',1,'GoRogue']]],
   ['ispatialtuple',['ISpatialTuple',['../interface_go_rogue_1_1_i_spatial_tuple.html',1,'GoRogue']]],
   ['itemeventargs',['ItemEventArgs',['../class_go_rogue_1_1_item_event_args.html',1,'GoRogue']]],

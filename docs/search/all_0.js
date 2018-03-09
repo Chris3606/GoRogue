@@ -7,10 +7,11 @@ var searchData=
   ['adjacencymethod',['AdjacencyMethod',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a70843aa6f6d61c191103109dbc22b97e',1,'GoRogue::MapGeneration::MapAreaFinder']]],
   ['adjacencyrule',['AdjacencyRule',['../class_go_rogue_1_1_adjacency_rule.html',1,'GoRogue']]],
   ['algorithm',['Algorithm',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96',1,'GoRogue::Lines']]],
+  ['applyoverlay',['ApplyOverlay',['../class_go_rogue_1_1_translation_map.html#aed1949d241d972143752536396ec656d',1,'GoRogue::TranslationMap']]],
   ['arraymap',['ArrayMap',['../class_go_rogue_1_1_array_map.html#af34584d0ffd0d9a632391a7e24acd84e',1,'GoRogue::ArrayMap']]],
   ['arraymap',['ArrayMap',['../class_go_rogue_1_1_array_map.html',1,'GoRogue']]],
   ['asreadonly',['AsReadOnly',['../interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08',1,'GoRogue.IReadOnlySpatialMap.AsReadOnly()'],['../class_go_rogue_1_1_multi_spatial_map.html#a00e56d30e6d55542c2d592f5696b542e',1,'GoRogue.MultiSpatialMap.AsReadOnly()'],['../class_go_rogue_1_1_spatial_map.html#a817692b1d08c2c19e48dbb8aa36617f8',1,'GoRogue.SpatialMap.AsReadOnly()']]],
   ['asreadonly_3c_20k_2c_20v_20_3e',['AsReadOnly&lt; K, V &gt;',['../class_go_rogue_1_1_utility.html#a9dc7718fb3ddce17a7974748d5ba23bb',1,'GoRogue::Utility']]],
-  ['astar',['AStar',['../class_go_rogue_1_1_pathing_1_1_a_star.html',1,'GoRogue::Pathing']]],
-  ['astar',['AStar',['../class_go_rogue_1_1_pathing_1_1_a_star.html#a91af448fd86037aa619cfdf917044531',1,'GoRogue::Pathing::AStar']]]
+  ['astar',['AStar',['../class_go_rogue_1_1_pathing_1_1_a_star.html#a91af448fd86037aa619cfdf917044531',1,'GoRogue::Pathing::AStar']]],
+  ['astar',['AStar',['../class_go_rogue_1_1_pathing_1_1_a_star.html',1,'GoRogue::Pathing']]]
 ];
