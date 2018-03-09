@@ -1,5 +1,6 @@
 ﻿using GoRogue.Random;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GoRogue.MapGeneration.Connectors
 {

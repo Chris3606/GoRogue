@@ -5,6 +5,7 @@ using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CA = EMK.Cartography;
 
 namespace GoRogue_UnitTests

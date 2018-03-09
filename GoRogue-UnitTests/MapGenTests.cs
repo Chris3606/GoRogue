@@ -3,6 +3,7 @@ using GoRogue.MapGeneration;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using Generators = GoRogue.MapGeneration.Generators;
 
 namespace GoRogue_UnitTests
