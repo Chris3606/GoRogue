@@ -34,6 +34,15 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void TestRandomRoomsGenSize()
+        {
+            var map = new ArrayMap<bool>(40, 40);
+            Generators.RandomRoomsGenerator.Generate(map, 30, 4, 6, 10);
+
+            Console.WriteLine(map.ToString(b => b ? "." : "#"));
+        }
+
+        [TestMethod]
         public void TestCellAutoConnectivityAndEnclosure()
         {
             var random = new DotNetRandom();

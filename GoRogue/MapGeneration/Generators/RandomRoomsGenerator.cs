@@ -26,9 +26,9 @@ namespace GoRogue.MapGeneration.Generators
         /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
         /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
         /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
-        /// <param name="retriesPerRoom">
-        /// If a room is placed in a way that overlaps with another room, the maximum number of times
-        /// the position will be regenerated to try to position it properly, before simply discarding
+        /// <param name="attemptsPerRoom">
+        /// The maximum number of times the position of a room will be generated to try to position it
+        /// properly (eg. without overlapping with other rooms), before simply discarding
         /// the room.
         /// </param>
         /// <param name="rng">
@@ -41,10 +41,30 @@ namespace GoRogue.MapGeneration.Generators
         /// using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which
         /// will connect the center of room to each other.
         /// </param>
-        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int retriesPerRoom, IRandom rng = null,
+        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, IRandom rng = null,
                                      bool connectUsingDefault = true)
         {
+            if (maxRooms <= 0)
+                throw new System.ArgumentOutOfRangeException(nameof(maxRooms), "maxRooms must be greater than 0.");
+
+            if (roomMinSize <= 0)
+                throw new System.ArgumentOutOfRangeException(nameof(roomMinSize), "roomMinSize must be greater than 0.");
+
+            if (roomMaxSize < roomMinSize)
+                throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be greater than or equal to roomMinSize.");
+
+           if (attemptsPerRoom <= 0) 
+                throw new System.ArgumentOutOfRangeException(nameof(attemptsPerRoom), "attemptsPerRoom must be greater than 0.");
+
+            if (map.Width - roomMaxSize < 0)
+                throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be smaller than map.");
+
+
             if (rng == null) rng = SingletonRandom.DefaultRNG;
+
+            // To account for walls, dimensions specified were inner dimensions
+            roomMinSize += 2;
+            roomMaxSize += 2;
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -56,17 +76,17 @@ namespace GoRogue.MapGeneration.Generators
                 int roomWidth = rng.Next(roomMinSize, roomMaxSize);
                 int roomHeight = rng.Next(roomMinSize, roomMaxSize);
 
-                int roomXPos = rng.Next(map.Width - roomWidth - 1);
-                int roomYPos = rng.Next(map.Height - roomHeight - 1);
+                int roomXPos = rng.Next(map.Width - roomWidth);
+                int roomYPos = rng.Next(map.Height - roomHeight);
 
                 var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                 bool newRoomIntersects = checkOverlap(newRoom, rooms);
 
                 int positionAttempts = 1;
-                while (newRoomIntersects && positionAttempts < retriesPerRoom)
+                while (newRoomIntersects && positionAttempts < attemptsPerRoom)
                 {
-                    roomXPos = rng.Next(map.Width - roomWidth - 1);
-                    roomYPos = rng.Next(map.Height - roomHeight - 1);
+                    roomXPos = rng.Next(map.Width - roomWidth);
+                    roomYPos = rng.Next(map.Height - roomHeight);
 
                     newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                     newRoomIntersects = checkOverlap(newRoom, rooms);
