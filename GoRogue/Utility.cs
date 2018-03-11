@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
+using System.Text;
 
 namespace GoRogue
 {
@@ -127,20 +128,20 @@ namespace GoRogue
             if (elementStringifier == null)
                 elementStringifier = (T obj) => obj.ToString();
 
-            string result = begin;
+            var result = new StringBuilder(begin);
             bool first = true;
             foreach (var item in enumerable)
             {
                 if (first)
                     first = false;
                 else
-                    result += separator;
+                    result.Append(separator);
 
-                result += elementStringifier(item);
+                result.Append(elementStringifier(item));
             }
-            result += end;
+            result.Append(end);
 
-            return result;
+            return result.ToString();
         }
 
         /// <summary>
@@ -184,21 +185,21 @@ namespace GoRogue
             if (valueStringifier == null)
                 valueStringifier = (V obj) => obj.ToString();
 
-            string result = begin;
+            var result = new StringBuilder(begin);
             bool first = true;
             foreach (var kvPair in dictionary)
             {
                 if (first)
                     first = false;
                 else
-                    result += pairSeparator;
+                    result.Append(pairSeparator);
 
-                result += keyStringifier(kvPair.Key) + kvSeparator + valueStringifier(kvPair.Value);
+                result.Append(keyStringifier(kvPair.Key) + kvSeparator + valueStringifier(kvPair.Value));
             }
 
-            result += end;
+            result.Append(end);
 
-            return result;
+            return result.ToString();
         }
 
         /// <summary>
@@ -221,22 +222,22 @@ namespace GoRogue
             if (elementStringifier == null)
                 elementStringifier = (T obj) => obj.ToString();
 
-            string result = begin;
+            var result = new StringBuilder(begin);
             for (int x = 0; x < array.GetLength(0); x++)
             {
-                result += beginRow;
+                result.Append(beginRow);
                 for (int y = 0; y < array.GetLength(1); y++)
                 {
-                    result += elementStringifier(array[x, y]);
-                    if (y != array.GetLength(1) - 1) result += elementSeparator;
+                    result.Append(elementStringifier(array[x, y]));
+                    if (y != array.GetLength(1) - 1) result.Append(elementSeparator);
                 }
 
-                result += endRow;
-                if (x != array.GetLength(0) - 1) result += rowSeparator;
+                result.Append(endRow);
+                if (x != array.GetLength(0) - 1) result.Append(rowSeparator);
             }
 
-            result += end;
-            return result;
+            result.Append(end);
+            return result.ToString();
         }
 
         /// <summary>
@@ -262,23 +263,23 @@ namespace GoRogue
             if (elementStringifier == null)
                 elementStringifier = (T obj) => obj.ToString();
 
-            string result = begin;
+			var result = new StringBuilder(begin);
             for (int y = 0; y < array.GetLength(1); y++)
             {
-                result += beginRow;
+                result.Append(beginRow);
                 for (int x = 0; x < array.GetLength(0); x++)
                 {
-                    result += elementStringifier(array[x, y]);
-                    if (x != array.GetLength(0) - 1) result += elementSeparator;
+                    result.Append(elementStringifier(array[x, y]));
+                    if (x != array.GetLength(0) - 1) result.Append(elementSeparator);
                 }
 
-                result += endRow;
-                if (y != array.GetLength(1) - 1) result += rowSeparator;
+                result.Append(endRow);
+                if (y != array.GetLength(1) - 1) result.Append(rowSeparator);
             }
 
-            result += end;
+            result.Append(end);
 
-            return result;
+            return result.ToString();
         }
 
         /// <summary>
@@ -307,23 +308,23 @@ namespace GoRogue
             if (elementStringifier == null)
                 elementStringifier = (T obj) => obj.ToString();
 
-            string result = begin;
-            for (int y = 0; y < array.GetLength(1); y++)
+			var result = new StringBuilder(begin);
+			for (int y = 0; y < array.GetLength(1); y++)
             {
-                result += beginRow;
+                result.Append(beginRow);
                 for (int x = 0; x < array.GetLength(0); x++)
                 {
-                    result += string.Format($"{{0, {fieldSize}}} ", elementStringifier(array[x, y]));
-                    if (x != array.GetLength(0) - 1) result += elementSeparator;
+                    result.Append(string.Format($"{{0, {fieldSize}}} ", elementStringifier(array[x, y])));
+                    if (x != array.GetLength(0) - 1) result.Append(elementSeparator);
                 }
 
-                result += endRow;
-                if (y != array.GetLength(1) - 1) result += rowSeparator;
+                result.Append(endRow);
+                if (y != array.GetLength(1) - 1) result.Append(rowSeparator);
             }
 
-            result += end;
+            result.Append(end);
 
-            return result;
+            return result.ToString();
         }
 
         /// <summary>
