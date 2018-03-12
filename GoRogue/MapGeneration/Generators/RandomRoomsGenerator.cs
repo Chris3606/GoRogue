@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using Troschuetz.Random;
 using System.Collections.Generic;
 
 namespace GoRogue.MapGeneration.Generators
@@ -41,7 +42,7 @@ namespace GoRogue.MapGeneration.Generators
         /// using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which
         /// will connect the center of room to each other.
         /// </param>
-        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, IRandom rng = null,
+        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, IGenerator rng = null,
                                      bool connectUsingDefault = true)
         {
             if (maxRooms <= 0)
@@ -73,11 +74,11 @@ namespace GoRogue.MapGeneration.Generators
             var rooms = new List<Rectangle>();
             for (int r = 0; r < maxRooms; r++)
             {
-                int roomWidth = rng.Next(roomMinSize, roomMaxSize);
-                int roomHeight = rng.Next(roomMinSize, roomMaxSize);
+                int roomWidth = rng.Next(roomMinSize, roomMaxSize + 1);
+                int roomHeight = rng.Next(roomMinSize, roomMaxSize + 1);
 
-                int roomXPos = rng.Next(map.Width - roomWidth);
-                int roomYPos = rng.Next(map.Height - roomHeight);
+                int roomXPos = rng.Next(map.Width - roomWidth + 1);
+                int roomYPos = rng.Next(map.Height - roomHeight + 1);
 
                 var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                 bool newRoomIntersects = checkOverlap(newRoom, rooms);
@@ -85,8 +86,8 @@ namespace GoRogue.MapGeneration.Generators
                 int positionAttempts = 1;
                 while (newRoomIntersects && positionAttempts < attemptsPerRoom)
                 {
-                    roomXPos = rng.Next(map.Width - roomWidth);
-                    roomYPos = rng.Next(map.Height - roomHeight);
+                    roomXPos = rng.Next(map.Width - roomWidth + 1);
+                    roomYPos = rng.Next(map.Height - roomHeight + 1);
 
                     newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                     newRoomIntersects = checkOverlap(newRoom, rooms);

@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using Troschuetz.Random;
 using System;
 
 namespace GoRogue.MapGeneration.Connectors
@@ -9,13 +10,13 @@ namespace GoRogue.MapGeneration.Connectors
     /// </summary>
     public class RandomConnectionPointSelector : IAreaConnectionPointSelector
     {
-        private IRandom rng;
+        private IGenerator rng;
 
         /// <summary>
         /// Constructor. Specifies the RNG to use, or null if the default RNG should be used.
         /// </summary>
         /// <param name="rng">The RNG to use, or null if the default RNG should be used.</param>
-        public RandomConnectionPointSelector(IRandom rng = null)
+        public RandomConnectionPointSelector(IGenerator rng = null)
         {
             if (rng == null)
                 this.rng = SingletonRandom.DefaultRNG;

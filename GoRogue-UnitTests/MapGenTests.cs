@@ -1,10 +1,10 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
-using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using Generators = GoRogue.MapGeneration.Generators;
+using Troschuetz.Random.Generators;
 
 namespace GoRogue_UnitTests
 {
@@ -14,7 +14,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void ManualTestCellAutoGen()
         {
-            var random = new DotNetRandom();
+            var random = new StandardGenerator();
             var map = new ArrayMap<bool>(80, 50);
             Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 
@@ -26,7 +26,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void ManualTestRandomRoomsGen()
         {
-            var random = new DotNetRandom();
+            var random = new StandardGenerator();
             var map = new ArrayMap<bool>(30, 30);
             Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
 
@@ -46,7 +46,7 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void TestCellAutoConnectivityAndEnclosure()
         {
-            var random = new DotNetRandom();
+            var random = new StandardGenerator();
             var map = new ArrayMap<bool>(80, 50);
             Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
 

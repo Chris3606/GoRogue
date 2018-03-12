@@ -1,4 +1,4 @@
-﻿using GoRogue.Random;
+﻿using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -33,7 +33,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The rng to use, passed to other terms.</param>
         /// <returns>The result of adding Term1 and Term2.</returns>
-        public int GetResult(IRandom rng)
+        public int GetResult(IGenerator rng)
         {
             return Term1.GetResult(rng) + Term2.GetResult(rng);
         }

@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using Troschuetz.Random;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
@@ -26,7 +27,7 @@ namespace GoRogue
         /// List being operated on -- never specified manually as this is an extension method.
         /// </param>
         /// <param name="rng">RNG to use.</param>
-        static public void FisherYatesShuffle<T>(this List<T> list, IRandom rng = null)
+        static public void FisherYatesShuffle<T>(this List<T> list, IGenerator rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -34,7 +35,7 @@ namespace GoRogue
             while (n > 1)
             {
                 n--;
-                int k = rng.Next(n);
+                int k = rng.Next(n + 1);
                 T value = list[k];
                 list[k] = list[n];
                 list[n] = value;
@@ -52,14 +53,14 @@ namespace GoRogue
         /// </param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Index selected.</returns>
-        static public int RandomIndex<T>(this IReadOnlyList<T> list, IRandom rng = null)
+        static public int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
             if (list.Count == 0)
                 return -1;
 
-            return rng.Next(list.Count - 1);
+            return rng.Next(list.Count);
         }
 
         
@@ -73,14 +74,14 @@ namespace GoRogue
         /// </param>
         /// <param name="rng">RNG to use.</param>
         /// <returns>Item selected.</returns> 
-        static public T RandomItem<T>(this IReadOnlyList<T> list, IRandom rng = null)
+        static public T RandomItem<T>(this IReadOnlyList<T> list, IGenerator rng = null)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
             if (list.Count == 0)
                 return default(T);
 
-            return list[rng.Next(list.Count - 1)];
+            return list[rng.Next(list.Count)];
         }
 
         /// <summary>

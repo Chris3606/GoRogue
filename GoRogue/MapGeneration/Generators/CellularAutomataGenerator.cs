@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using Troschuetz.Random;
 using System;
 
 namespace GoRogue.MapGeneration.Generators
@@ -49,7 +50,7 @@ namespace GoRogue.MapGeneration.Generators
         /// uses the RNG specified to this function, and default values for all other optional
         /// parameters of ClosestMapAreaConnector.Connect.
         /// </param>
-        static public void Generate(ISettableMapView<bool> map, IRandom rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
+        static public void Generate(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
             bool connectUsingDefault = true)
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -151,14 +152,14 @@ namespace GoRogue.MapGeneration.Generators
             }
         }
 
-        static private void randomlyFillCells(ISettableMapView<bool> map, IRandom rng, int fillProbability)
+        static private void randomlyFillCells(ISettableMapView<bool> map, IGenerator rng, int fillProbability)
         {
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
                 {
                     if (x == 0 || y == 0 || x == map.Width - 1 || y == map.Height - 1) // Borders are always walls
                         map[x, y] = false;
-                    else if (rng.Next(99) < fillProbability)
+                    else if (rng.Next(100) < fillProbability)
                         map[x, y] = true;
                     else
                         map[x, y] = false;
