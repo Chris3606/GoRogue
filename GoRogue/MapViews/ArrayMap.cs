@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoRogue
+namespace GoRogue.MapViews
 {
     /// <summary>
     /// Default implementation of the ISettableMapView interface, exposing the interface using an

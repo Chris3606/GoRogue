@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapGeneration.Generators
+﻿using GoRogue.MapViews;
+
+namespace GoRogue.MapGeneration.Generators
 {
     /// <summary>
     /// Generates a simple rectangular box -- walls will be impassable, everything else will be passable.

@@ -3,6 +3,7 @@ using GoRogue;
 using GoRogue.DiceNotation;
 using GoRogue.MapGeneration.Generators;
 using GoRogue.MapGeneration;
+using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
 using System;

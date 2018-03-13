@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using GoRogue.MapViews;
 using GoRogue.MapGeneration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

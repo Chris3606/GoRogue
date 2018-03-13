@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoRogue
+namespace GoRogue.MapViews
 {
     /// <summary>
     /// Settable map view class capable of taking complex data and providing a simpler view of it.  For a version that provides

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GoRogue
+namespace GoRogue.MapViews
 {
     /// <summary>
     /// A simple TranslationMap implementation that allows you to provide lambdas for the translation functions.  For a version

@@ -1,4 +1,4 @@
-﻿namespace GoRogue
+﻿namespace GoRogue.MapViews
 {
     /// <summary>
     /// Map view class capable of taking complex data and providing a simpler view of it.  For a version that provides

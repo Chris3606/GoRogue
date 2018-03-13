@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GoRogue
+namespace GoRogue.MapViews
 {
     /// <summary>
     /// A simple TranslationMap implementation that allows you to provide a lambda for the translation function.  For a version

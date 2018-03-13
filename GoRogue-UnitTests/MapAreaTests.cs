@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
+using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Generators = GoRogue.MapGeneration.Generators;

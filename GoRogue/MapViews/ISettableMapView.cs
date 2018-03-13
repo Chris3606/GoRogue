@@ -1,4 +1,4 @@
-﻿namespace GoRogue
+﻿namespace GoRogue.MapViews
 {
     /// <summary>
     /// Interface designed to act as a standardized input/output for algorithms that need to make

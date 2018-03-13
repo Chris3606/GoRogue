@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapGeneration.Connectors
+﻿using GoRogue.MapViews;
+
+namespace GoRogue.MapGeneration.Connectors
 {
     /// <summary>
     /// Interface for implementing an algorithm for creating a tunnel between two positions on a

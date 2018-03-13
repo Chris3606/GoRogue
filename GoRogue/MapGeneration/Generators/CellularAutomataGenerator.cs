@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using GoRogue.MapViews;
 using Troschuetz.Random;
 using System;
 

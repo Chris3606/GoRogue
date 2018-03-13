@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using GoRogue.MapViews;
 using GoRogue.MapGeneration.Generators;
 using GoRogue.Pathing;
 using GoRogue.Random;
