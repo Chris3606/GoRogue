@@ -14,7 +14,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
-    public sealed class SettableLambdaTranslationMap<T1, T2> : SettableTranslationMap<T1, T2>
+    public sealed class LambdaSettableTranslationMap<T1, T2> : SettableTranslationMap<T1, T2>
     {
         private Func<T1, T2> _getter;
         private Func<T2, T1> _setter;
@@ -25,7 +25,7 @@ namespace GoRogue.MapViews
         /// <param name="baseMap">Your underlying map data.</param>
         /// <param name="getter">The TranslateGet implementation.</param>
         /// <param name="setter">The TranslateSet implementation.</param>
-        public SettableLambdaTranslationMap(ISettableMapView<T1> baseMap, Func<T1, T2> getter, Func<T2, T1> setter)
+        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, Func<T1, T2> getter, Func<T2, T1> setter)
             : base(baseMap)
         {
             _getter = getter ?? throw new ArgumentNullException(nameof(getter));
@@ -40,7 +40,7 @@ namespace GoRogue.MapViews
         /// to baseMap.</param>
         /// <param name="getter">The TranslateGet implementation.</param>
         /// <param name="setter">The TranslateSet implementation.</param>
-        public SettableLambdaTranslationMap(ISettableMapView<T1> baseMap,
+        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap,
             ISettableMapView<T2> overlay,
             Func<T1, T2> getter,
             Func<T2, T1> setter)
