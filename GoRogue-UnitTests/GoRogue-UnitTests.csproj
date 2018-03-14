@@ -71,6 +71,7 @@
     <Compile Include="LineTests.cs" />
     <Compile Include="MapAreaTests.cs" />
     <Compile Include="MapGenTests.cs" />
+    <Compile Include="MapViewTests.cs" />
     <Compile Include="MathHelperTests.cs" />
     <Compile Include="MultiSpatialMapTests.cs" />
     <Compile Include="PathingTests.cs" />
