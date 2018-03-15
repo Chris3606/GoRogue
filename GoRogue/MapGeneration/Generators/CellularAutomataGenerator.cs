@@ -13,12 +13,11 @@ namespace GoRogue.MapGeneration.Generators
     /// respectively) based on a probability given, then iteratively smoothing it via the process
     /// outlined in the cited roguebasin article. /// After generate is called, the passed in map
     /// will have had a value of true set to all floor tiles, and a value of false set to all wall
-    /// tiles. /// Like RandomRoomsMapGenerator, it is recommended to use ArrayMap as the
-    /// SettableMapOf instance passed in, as this class must call set for each location very likely
-    /// more than one time, overwriting any previous values(thus doing significant processing on each
-    /// call to set is inadvisable). It will likely be faster to take the resulting ArrayMap after
-    /// completion, and process it to do any required translation. /// Based on the C# roguelike
-    /// library RogueSharp's implementation, and the roguebasin article below: http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
+    /// tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below: http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
+    ///
+    /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be called
+    /// once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive 
+    /// and calling it multiples times costs little extra, and saves an internal allocation.
     /// </remarks>
     static public class CellularAutomataGenerator
     {
@@ -56,23 +55,33 @@ namespace GoRogue.MapGeneration.Generators
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-            randomlyFillCells(map, rng, fillProbability);
+            var tempMap = map as ArrayMap<bool>;
+            bool wasArrayMap = tempMap != null;
+
+            randomlyFillCells(tempMap, rng, fillProbability);
 
             for (int i = 0; i < totalIterations; i++)
             {
                 if (i < cutoffBigAreaFill)
-                    cellAutoBigAreaAlgo(map);
+                    cellAutoBigAreaAlgo(tempMap);
                 else
-                    cellAutoNearestNeighborsAlgo(map);
+                    cellAutoNearestNeighborsAlgo(tempMap);
             }
 
             // Ensure it's enclosed before we try to connect, so we can't possibly connect a path
             // that ruins the enclosure. Doing this before connection ensures that filling it can't
             // kill the path to an area.
-            fillToRectangle(map);
+            fillToRectangle(tempMap);
 
             if (connectUsingDefault)
-                Connectors.ClosestMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
+                Connectors.ClosestMapAreaConnector.Connect(tempMap, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
+
+            if (!wasArrayMap)
+            {
+                for (int x = 0; x < tempMap.Width; x++)
+                    for (int y = 0; y < tempMap.Height; y++)
+                        map[x, y] = tempMap[x, y];
+            }
         }
 
         static private void cellAutoBigAreaAlgo(ISettableMapView<bool> map)

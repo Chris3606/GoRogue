@@ -11,19 +11,17 @@ namespace GoRogue.MapGeneration.Generators
     /// position a room without overlap before discarding the room entirely. The given map will have
     /// a value of false set to all non-passable tiles, and true set to all passable ones.
     /// </summary>
-    /// <remarks>
-    /// This algorithm may set the cell value for each position more than once. As such, it is highly
-    /// recommended to use and ArrayMap as the ISettableMapView given. Any translation/interpretation
-    /// of the result can be performed after the ArrayMap is set. Attempting to do any expensive
-    /// allocation/operations in the setting functions of a SettableMapOf given to the algorithm may
-    /// result in performance deterioration.
-    /// </remarks>
     static public class RandomRoomsGenerator
     {
         /// <summary>
         /// Generates the map. After this function has been completed, non-passable tiles will have a
         /// value of false in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
+        /// <remarks>
+        /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be called
+        /// once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive 
+        /// and calling it multiples times costs little extra, and saves an internal allocation.
+        /// </remarks>
         /// <param name="map">The map to set values to.</param>
         /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
         /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
@@ -64,13 +62,18 @@ namespace GoRogue.MapGeneration.Generators
 
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
+            ArrayMap<bool> tempMap = map as ArrayMap<bool>;
+            bool wasArrayMap = tempMap != null;
+
+            if (!wasArrayMap) tempMap = new ArrayMap<bool>(map.Width, map.Height);
+
             // To account for walls, dimensions specified were inner dimensions
             roomMinSize += 2;
             roomMaxSize += 2;
 
-            for (int x = 0; x < map.Width; x++)
-                for (int y = 0; y < map.Height; y++)
-                    map[x, y] = false;
+            for (int x = 0; x < tempMap.Width; x++)
+                for (int y = 0; y < tempMap.Height; y++)
+                    tempMap[x, y] = false;
 
             var rooms = new List<Rectangle>();
             for (int r = 0; r < maxRooms; r++)
@@ -78,8 +81,8 @@ namespace GoRogue.MapGeneration.Generators
                 int roomWidth = rng.Next(roomMinSize, roomMaxSize + 1);
                 int roomHeight = rng.Next(roomMinSize, roomMaxSize + 1);
 
-                int roomXPos = rng.Next(map.Width - roomWidth + 1);
-                int roomYPos = rng.Next(map.Height - roomHeight + 1);
+                int roomXPos = rng.Next(tempMap.Width - roomWidth + 1);
+                int roomYPos = rng.Next(tempMap.Height - roomHeight + 1);
 
                 var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                 bool newRoomIntersects = checkOverlap(newRoom, rooms);
@@ -87,8 +90,8 @@ namespace GoRogue.MapGeneration.Generators
                 int positionAttempts = 1;
                 while (newRoomIntersects && positionAttempts < attemptsPerRoom)
                 {
-                    roomXPos = rng.Next(map.Width - roomWidth + 1);
-                    roomYPos = rng.Next(map.Height - roomHeight + 1);
+                    roomXPos = rng.Next(tempMap.Width - roomWidth + 1);
+                    roomYPos = rng.Next(tempMap.Height - roomHeight + 1);
 
                     newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
                     newRoomIntersects = checkOverlap(newRoom, rooms);
@@ -101,14 +104,18 @@ namespace GoRogue.MapGeneration.Generators
             }
 
             foreach (var room in rooms)
-                createRoom(map, room);
+                createRoom(tempMap, room);
 
             if (connectUsingDefault)
-                Connectors.OrderedMapAreaConnector.Connect(map, AdjacencyRule.CARDINALS, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
-        }
+                Connectors.OrderedMapAreaConnector.Connect(tempMap, AdjacencyRule.CARDINALS, new Connectors.CenterBoundsConnectionPointSelector(), rng: rng);
 
-        // TODO: ConnectRooms function that can connect the rooms properly, in method specific to
-        // this generation type.
+            if (!wasArrayMap)
+            {
+                for (int x = 0; x < tempMap.Width; x++)
+                    for (int y = 0; y < tempMap.Height; y++)
+                        map[x, y] = tempMap[x, y];
+            }
+        }
 
         static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
         {
