@@ -133,10 +133,6 @@ This library is still in development - there are a number of important features 
 - Map generation improvements
    - More map generation algorithms (BSP Tree).
    - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree.
-- RNG improvements
-   - Serialization of state.
-   - Allow GaussianRandom to specify deviations.
-   - Possibly integrate more closely with existing C# random utilities.
 - Additional FOV Algorithms
    - Permissive-style FOV
    - Others?
@@ -149,11 +145,11 @@ See links to licenses in the credits for respective libraries.
 
 ## Credits
 ### Dice Notation .NET
-Significant portions of the GoRogue.DiceNotation namespace are taken directly from the Dice Notatation .NET library.  This project is also licensed under MIT:
+General inspiration for the architecture of the GoRogue.DiceNotation namespace was taken from the Dice Notatation .NET library.  This project is also licensed under MIT:
 - [Dice Notation .NET](https://dicenotation.codeplex.com/SourceControl/latest)
 - [Dice Notation .NET License](https://dicenotation.codeplex.com/license)
 ### RogueSharp
-Significant portions of code in the GoRogue.Random namespace, as well as some implementatation details in the GoRogue.MapGeneration and GoRogue.DiceNotation namespaces were taken directly from the C# Library RogueSharp.  This project is also licensed under MIT:
+General inspiration for some algorithms available in the GoRogue.MapGeneration namespace were taken from the C# library RogueSharp.  This project is also licensed under MIT:
 - [RogueSharp](https://bitbucket.org/FaronBracy/roguesharp)
 - [RogueSharp License](https://bitbucket.org/FaronBracy/roguesharp/src/master/LICENSE.txt?at=master)
 ### Doryen Library (libtcod)
