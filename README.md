@@ -34,9 +34,10 @@ Instructions for getting started with GoRogue, as well as demonstrations of its 
    - Library will function with any framework that supports .NET Standard 2.0, which includes both .NET Framework and .NET Core.
    
 ### Unobtrusive Algorithms
-- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (MapView), thus allowing the features to be used without imposing limitations and how/where data is stored within the game.
-- A default implementation of the MapView interface is provided, to allow for ease of use in straightforward cases or during prototyping:
-   - ArrayMap implements MapView and stores data in a 2D array for cases when a simple/straightforward MapView implementation is needed.
+- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (IMapView), thus allowing the features to be used without imposing limitations and how/where data is actually stored within the game.
+- Convenient default implementations of the IMapView interface is provided, to allow for ease of use in straightforward cases or during prototyping:
+   - ArrayMap implements IMapView and stores data in a 2D array for cases when a simple/straightforward IMapView implementation is needed.
+   - Classes that allow supplying "translation" functions as lambdas or delegates for simple cases are also provided.
   
 ### Coordinate/Grid System
 - Coord class provides a way to store 2D grid (integer) coordinates:
