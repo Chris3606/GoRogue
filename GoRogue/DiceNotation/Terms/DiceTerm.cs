@@ -1,5 +1,5 @@
-﻿using GoRogue.Random;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -59,7 +59,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The RNG to use for rolling,</param>
         /// <returns>The sum of the roll.</returns>
-        public int GetResult(IRandom rng)
+        public int GetResult(IGenerator rng)
         {
             _diceResults.Clear();
             int sum = 0;
@@ -74,7 +74,7 @@ namespace GoRogue.DiceNotation.Terms
 
             for (int i = 0; i < LastMultiplicity; i++)
             {
-                int diceVal = rng.Next(1, LastSidedness);
+                int diceVal = rng.Next(1, LastSidedness + 1);
                 sum += diceVal;
                 _diceResults.Add(diceVal);
             }

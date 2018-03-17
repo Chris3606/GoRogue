@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoRogue.MapViews;
 
 namespace GoRogue
 {
@@ -314,7 +315,7 @@ namespace GoRogue
                     if (end > leftSlope)
                         break;
 
-                    double deltaRadius = distanceStrategy.DistanceOf(deltaX, deltaY);
+                    double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
                     // If within lightable area, light if needed
                     if (deltaRadius <= radius)
                     {
@@ -376,7 +377,7 @@ namespace GoRogue
                     if (Math.Abs(Math.IEEERemainder(angle - newAngle + Math.PI * 8, Math.PI * 2)) > span / 2.0)
                         continue;
 
-                    double deltaRadius = distanceStrategy.DistanceOf(deltaX, deltaY);
+                    double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
                     if (deltaRadius <= radius) // Check if within lightable area, light if needed
                     {
                         double bright = 1 - decay * deltaRadius;

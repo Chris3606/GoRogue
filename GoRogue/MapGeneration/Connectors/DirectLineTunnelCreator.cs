@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapGeneration.Connectors
+﻿using GoRogue.MapViews;
+
+namespace GoRogue.MapGeneration.Connectors
 {
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two

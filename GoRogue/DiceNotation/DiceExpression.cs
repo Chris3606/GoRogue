@@ -1,5 +1,6 @@
 ﻿using GoRogue.DiceNotation.Terms;
 using GoRogue.Random;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation
 {
@@ -38,7 +39,7 @@ namespace GoRogue.DiceNotation
         /// </summary>
         /// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
         /// <returns>The result obtained by rolling the dice expression.</returns>
-        public int Roll(IRandom rng = null)
+        public int Roll(IGenerator rng = null)
         {
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;

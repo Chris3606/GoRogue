@@ -1,4 +1,4 @@
-﻿namespace GoRogue
+﻿namespace GoRogue.MapViews
 {
     /// <summary>
     /// Interface designed to act as a standardized input/output for algorithms.
@@ -48,7 +48,7 @@
         /// Given a Coord, should return the "value" associated with that location.
         /// </summary>
         /// <param name="pos">Location to retrieve the value for.</param>
-        /// <returns>THe "value" associated with the provided location.</returns>
+        /// <returns>The "value" associated with the provided location.</returns>
         T this[Coord pos] { get; }
     }
 }

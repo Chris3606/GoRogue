@@ -1,5 +1,7 @@
-﻿using GoRogue.Random;
-using System;
+﻿using System;
+using Troschuetz.Random;
+using GoRogue.Random;
+using GoRogue.MapViews;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -9,13 +11,13 @@ namespace GoRogue.MapGeneration.Connectors
     /// </summary>
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
-        private IRandom rng;
+        private IGenerator rng;
 
         /// <summary>
         /// Constructor. Takes rng to use -- if null is specified, the default RNG is used.
         /// </summary>
         /// <param name="rng">Rng to use -- if null is specified, the default RNG is used.</param>
-        public HorizontalVerticalTunnelCreator(IRandom rng = null)
+        public HorizontalVerticalTunnelCreator(IGenerator rng = null)
         {
             if (rng == null)
                 this.rng = SingletonRandom.DefaultRNG;
@@ -33,7 +35,7 @@ namespace GoRogue.MapGeneration.Connectors
         {
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-            if (rng.Next(2) == 0) // Favors vertical tunnels
+            if (rng.NextBoolean())
             {
                 createHTunnel(map, start.X, end.X, start.Y);
                 createVTunnel(map, start.Y, end.Y, end.X);

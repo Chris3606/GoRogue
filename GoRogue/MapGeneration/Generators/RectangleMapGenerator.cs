@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapGeneration.Generators
+﻿using GoRogue.MapViews;
+
+namespace GoRogue.MapGeneration.Generators
 {
     /// <summary>
     /// Generates a simple rectangular box -- walls will be impassable, everything else will be passable.
@@ -12,9 +14,10 @@
         /// <summary>
         /// Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of
         /// the map) will have a value of false set in the given map, whereas true will be set to all
-        /// non-wall tiles.
+        /// non-wall tiles.  It is guaranteed that the "set" function of the ISettableMapView passed in
+        /// will only be called once per location.
         /// </summary>
-        /// ///
+        ///
         /// <param name="map">The map to set values to.</param>
         static public void Generate(ISettableMapView<bool> map)
         {

@@ -31,5 +31,6 @@
   
 	<ItemGroup>
 	  <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
+	  <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
 	</ItemGroup>
 </Project>

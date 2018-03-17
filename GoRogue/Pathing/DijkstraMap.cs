@@ -1,4 +1,6 @@
-﻿namespace GoRogue.Pathing
+﻿using GoRogue.MapViews;
+
+namespace GoRogue.Pathing
 {
     /// @cond PRIVATE
     // Test class only - likely to change in the future.

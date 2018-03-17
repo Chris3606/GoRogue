@@ -1,5 +1,8 @@
 ﻿using GoRogue.Random;
+using GoRogue.MapViews;
 using System.Collections.Generic;
+using System.Linq;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -35,7 +38,7 @@ namespace GoRogue.MapGeneration.Connectors
         /// they will be conencted in the exact order they are returned from the MapAreaFinder.
         /// </param>
         static public void Connect(ISettableMapView<bool> map, AdjacencyRule adjacencyRule, IAreaConnectionPointSelector areaConnector = null,
-                                    ITunnelCreator tunnelCreator = null, IRandom rng = null, bool randomizeOrder = true)
+                                    ITunnelCreator tunnelCreator = null, IGenerator rng = null, bool randomizeOrder = true)
         {
             if (adjacencyRule == AdjacencyRule.DIAGONALS) throw new System.ArgumentException("Cannot specify diagonal adjacency for map connections.", nameof(adjacencyRule));
             if (rng == null) rng = SingletonRandom.DefaultRNG;
