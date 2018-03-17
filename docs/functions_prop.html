@@ -63,7 +63,8 @@ $(function() {
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>BaseMap
-: <a class="el" href="class_go_rogue_1_1_translation_map.html#a7ce0b410da0e70f80343588a27c2f6c9">GoRogue.TranslationMap&lt; T1, T2 &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a085f51a15eb7a117194eb3553f03a92c">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#ac57d28f13ba43776ca51843f84cd1f83">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 </li>
 <li>Bounds
 : <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#a966772940c4271c3d42803262cbcd8eb">GoRogue.MapGeneration.MapArea</a>
@@ -75,6 +76,9 @@ $(function() {
 <li>Center
 : <a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a81b2109de25c8cb2a9172f109465b81c">GoRogue.RadiusAreaProvider</a>
 , <a class="el" href="struct_go_rogue_1_1_rectangle.html#aa8eb5ca86014d5edbf892392af3de208">GoRogue.Rectangle</a>
+</li>
+<li>ContinuousDistribution
+: <a class="el" href="class_go_rogue_1_1_random_1_1_discrete_converter.html#ae462eb3d62731bbb6dfaa1029b7778f8">GoRogue.Random.DiscreteConverter&lt; T &gt;</a>
 </li>
 <li>Count
 : <a class="el" href="class_go_rogue_1_1_disjoint_set.html#a2ac0f165a746fd6e3efe78870abd6718">GoRogue.DisjointSet</a>
@@ -137,12 +141,15 @@ $(function() {
 
 <h3><a id="index_h"></a>- h -</h3><ul>
 <li>Height
-: <a class="el" href="class_go_rogue_1_1_array_map.html#ad72572b42f84f26cb18fde4db2ffd4ba">GoRogue.ArrayMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_f_o_v.html#afad64afcb503c696ba440bcd53bbd2e6">GoRogue.FOV</a>
-, <a class="el" href="interface_go_rogue_1_1_i_map_view.html#af172e42db625a24e1665f1beb18fc1cf">GoRogue.IMapView&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_f_o_v.html#afad64afcb503c696ba440bcd53bbd2e6">GoRogue.FOV</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html#acf90f19b0de8a43f652c054f01587104">GoRogue.MapViews.ArrayMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#ac955696915edd3d046f3aab06c3fd08e">GoRogue.MapViews.IMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#aff93a2d6433fbb9c9b06167e61ba290c">GoRogue.MapViews.LambdaMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a66d2349af3bf894f452205e7d70285a9">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a0cf5ebb253c90af0b36de9cff6c6ce28">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a6b70fcd9f371b376b573fc2b36e20bbc">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="struct_go_rogue_1_1_rectangle.html#a4463f1f8b65a72c1e4187275c2950497">GoRogue.Rectangle</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#afaf2d745cb974f338a51b84a50118366">GoRogue.SenseMapping.SenseMap</a>
-, <a class="el" href="class_go_rogue_1_1_translation_map.html#a930a8b114eda58fd1ffed33e75f109e8">GoRogue.TranslationMap&lt; T1, T2 &gt;</a>
 </li>
 </ul>
 
@@ -296,22 +303,28 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_subtract_term.html#a6a26a70f63f33df086606624c9db4dee">GoRogue.DiceNotation.Terms.SubtractTerm</a>
 </li>
 <li>this[Coord pos]
-: <a class="el" href="class_go_rogue_1_1_array_map.html#a9f1b2002d49115960f2cc799032420e5">GoRogue.ArrayMap&lt; T &gt;</a>
-, <a class="el" href="interface_go_rogue_1_1_i_map_view.html#ada397b2c22f05c9ee512bcbf25cf2908">GoRogue.IMapView&lt; T &gt;</a>
-, <a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html#aa996cd6f433c2698af3f4a89369e12d1">GoRogue.ISettableMapView&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html#a8a2edc5b7af725d7261f1613a66f19ad">GoRogue.MapViews.ArrayMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#a76d7b4ef01e03488fc0f96bb41ff7648">GoRogue.MapViews.IMapView&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html#a94662ab8ef87e184cc97772f716c0f88">GoRogue.MapViews.ISettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#ad01723dbf70e1b9aa526267210da1338">GoRogue.MapViews.LambdaMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a00eccce1fc594d2d3b6d6dc7ed39b711">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a373b3278bf80926a40ee01888380a74d">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a2caa7b1771f4800a0a352f23e3ce5550">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#abd68c6d8bf8ee664c7d05ebdf74513fe">GoRogue.SenseMapping.SenseMap</a>
-, <a class="el" href="class_go_rogue_1_1_translation_map.html#a31efd8610ef1fd0e59e1ee3f3ecf04e2">GoRogue.TranslationMap&lt; T1, T2 &gt;</a>
 </li>
 <li>this[Coord position]
 : <a class="el" href="class_go_rogue_1_1_f_o_v.html#ae6045effd113cd9973b7303a06a218d5">GoRogue.FOV</a>
 </li>
 <li>this[int x, int y]
-: <a class="el" href="class_go_rogue_1_1_array_map.html#ad9e8c5fda727483f4996182a8efa0093">GoRogue.ArrayMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_f_o_v.html#a57d27b28539ed1b82e1f2ad5edffafa1">GoRogue.FOV</a>
-, <a class="el" href="interface_go_rogue_1_1_i_map_view.html#ae05a76a897f065d513800bd9e6187c10">GoRogue.IMapView&lt; T &gt;</a>
-, <a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html#ab8c187f512690dad04c6b43e028a9bf7">GoRogue.ISettableMapView&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_f_o_v.html#a57d27b28539ed1b82e1f2ad5edffafa1">GoRogue.FOV</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html#ac7e5a1f15470c025edde167080166cf8">GoRogue.MapViews.ArrayMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#abfb06e33b74a29418d81e09ca272fd6a">GoRogue.MapViews.IMapView&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html#a59917d7b22c0ae1eb566e992dd66482d">GoRogue.MapViews.ISettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a33aeba2dbaea99445ee8bd348f1393f7">GoRogue.MapViews.LambdaMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a8b22935e8b1750ebc921b49eb81c38bf">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#ab4dd868c7b212acb9887719dc271eae5">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a3cbd53d4c55588b39119c5bc9100e6ee">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1aae889fdb2f5b98e44332d6ef30e7be">GoRogue.SenseMapping.SenseMap</a>
-, <a class="el" href="class_go_rogue_1_1_translation_map.html#ac78b46bc053d9c01700dd31ae5266e6a">GoRogue.TranslationMap&lt; T1, T2 &gt;</a>
 </li>
 <li>Type
 : <a class="el" href="class_go_rogue_1_1_adjacency_rule.html#ac118627b700a8911540360ae029c0ad2">GoRogue.AdjacencyRule</a>
@@ -339,12 +352,15 @@ $(function() {
 : <a class="el" href="class_go_rogue_1_1_pathing_1_1_a_star.html#ad6410c02b589401551bea0c632f598fe">GoRogue.Pathing.AStar</a>
 </li>
 <li>Width
-: <a class="el" href="class_go_rogue_1_1_array_map.html#ae8ff492fce5f5e5baf3a4b71cf93b1ba">GoRogue.ArrayMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_f_o_v.html#ad6d59714fb2ad68af500703cc33328e1">GoRogue.FOV</a>
-, <a class="el" href="interface_go_rogue_1_1_i_map_view.html#a5ea8e6c824bd84018415d09211b6e635">GoRogue.IMapView&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_f_o_v.html#ad6d59714fb2ad68af500703cc33328e1">GoRogue.FOV</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html#a76b1de2f3301ddb60163af6b27eebed4">GoRogue.MapViews.ArrayMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#a0303a71a429f5a877daecb3bd86371e7">GoRogue.MapViews.IMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a0db47fd4ee39932e98414df744ebca49">GoRogue.MapViews.LambdaMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a2e8aede517ec6fdb7736a9903cf6fb2a">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a8d026832c339fd7eda6d6e6051277b83">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#aa818f5a13d14cad45599d4668d29038c">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="struct_go_rogue_1_1_rectangle.html#aec63fc2a22ff1056a93248c1deeb66ea">GoRogue.Rectangle</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a315598d06b65cf04835c88e440de6fa4">GoRogue.SenseMapping.SenseMap</a>
-, <a class="el" href="class_go_rogue_1_1_translation_map.html#a1caa9fa367ace7bc88b23305ccec5d37">GoRogue.TranslationMap&lt; T1, T2 &gt;</a>
 </li>
 </ul>
 

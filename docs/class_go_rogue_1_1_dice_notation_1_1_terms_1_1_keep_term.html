@@ -88,9 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6d40cafcf882ecfc22cd199f96e3e9d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_keep_term.html#a6d40cafcf882ecfc22cd199f96e3e9d8">KeepTerm</a> (<a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> keep, <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html">DiceTerm</a> diceTerm)</td></tr>
 <tr class="memdesc:a6d40cafcf882ecfc22cd199f96e3e9d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes a term representing the number of dice to keep, and the dice term to operate on.  <a href="#a6d40cafcf882ecfc22cd199f96e3e9d8">More...</a><br /></td></tr>
 <tr class="separator:a6d40cafcf882ecfc22cd199f96e3e9d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7444ffb5bc1ecf855da2743fa6c811e1"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_keep_term.html#a7444ffb5bc1ecf855da2743fa6c811e1">GetResult</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng)</td></tr>
-<tr class="memdesc:a7444ffb5bc1ecf855da2743fa6c811e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the term (as well as the dice expression), returning the sum of the highest n rolls in the dice term.  <a href="#a7444ffb5bc1ecf855da2743fa6c811e1">More...</a><br /></td></tr>
-<tr class="separator:a7444ffb5bc1ecf855da2743fa6c811e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca5064fb24e234e34042eb3bb72d84a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_keep_term.html#acca5064fb24e234e34042eb3bb72d84a">GetResult</a> (IGenerator rng)</td></tr>
+<tr class="memdesc:acca5064fb24e234e34042eb3bb72d84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates the term (as well as the dice expression), returning the sum of the highest n rolls in the dice term.  <a href="#acca5064fb24e234e34042eb3bb72d84a">More...</a><br /></td></tr>
+<tr class="separator:acca5064fb24e234e34042eb3bb72d84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebed9a09cb07272311d2b37c22ec28a5"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_keep_term.html#aebed9a09cb07272311d2b37c22ec28a5">ToString</a> ()</td></tr>
 <tr class="memdesc:aebed9a09cb07272311d2b37c22ec28a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a parenthesized string representing the term &ndash; eg (4d6k3) or (2d6k2)  <a href="#aebed9a09cb07272311d2b37c22ec28a5">More...</a><br /></td></tr>
 <tr class="separator:aebed9a09cb07272311d2b37c22ec28a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,8 +136,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7444ffb5bc1ecf855da2743fa6c811e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7444ffb5bc1ecf855da2743fa6c811e1">&sect;&nbsp;</a></span>GetResult()</h2>
+<a id="acca5064fb24e234e34042eb3bb72d84a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acca5064fb24e234e34042eb3bb72d84a">&sect;&nbsp;</a></span>GetResult()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,7 +145,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">int GoRogue.DiceNotation.Terms.KeepTerm.GetResult </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
+          <td class="paramtype">IGenerator&#160;</td>
           <td class="paramname"><em>rng</em></td><td>)</td>
           <td></td>
         </tr>
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The sum of the highest n rolls of the dice term being operated on, where n is equal to the value of the keep variable taken in the constructor. </dd></dl>
 
-<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a32728c3d1cb148e69f04f95054b38258">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
+<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a831d8165da0e04b5d9fbd5a5ecef360d">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
 
 </div>
 </div>

@@ -80,9 +80,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:abffc0ba8d86f625727d887623f111f29"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html">IDiceExpression</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#abffc0ba8d86f625727d887623f111f29">Parse</a> (string expression)</td></tr>
 <tr class="memdesc:abffc0ba8d86f625727d887623f111f29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to produce a <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html" title="Interface for class representing a parsed dice expression. Returned by IParser implementations. ">IDiceExpression</a> instance representing the given dice expression.  <a href="#abffc0ba8d86f625727d887623f111f29">More...</a><br /></td></tr>
 <tr class="separator:abffc0ba8d86f625727d887623f111f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab38a1555d3cb8f20b479253ab60728b4"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#ab38a1555d3cb8f20b479253ab60728b4">Roll</a> (string expression, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> random=null)</td></tr>
-<tr class="memdesc:ab38a1555d3cb8f20b479253ab60728b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to parse the given dice expression, roll it, and return the result.  <a href="#ab38a1555d3cb8f20b479253ab60728b4">More...</a><br /></td></tr>
-<tr class="separator:ab38a1555d3cb8f20b479253ab60728b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace32cc49fd7e982d398c9f877d9f26a6"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice.html#ace32cc49fd7e982d398c9f877d9f26a6">Roll</a> (string expression, IGenerator random=null)</td></tr>
+<tr class="memdesc:ace32cc49fd7e982d398c9f877d9f26a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uses the <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> specified in the DiceParser variable to parse the given dice expression, roll it, and return the result.  <a href="#ace32cc49fd7e982d398c9f877d9f26a6">More...</a><br /></td></tr>
+<tr class="separator:ace32cc49fd7e982d398c9f877d9f26a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -129,8 +129,8 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab38a1555d3cb8f20b479253ab60728b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab38a1555d3cb8f20b479253ab60728b4">&sect;&nbsp;</a></span>Roll()</h2>
+<a id="ace32cc49fd7e982d398c9f877d9f26a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace32cc49fd7e982d398c9f877d9f26a6">&sect;&nbsp;</a></span>Roll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,7 +147,7 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
+          <td class="paramtype">IGenerator&#160;</td>
           <td class="paramname"><em>random</em> = <code>null</code>&#160;</td>
         </tr>
         <tr>

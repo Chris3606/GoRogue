@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['translationmap',['TranslationMap',['../class_go_rogue_1_1_translation_map.html',1,'GoRogue']]]
+  ['utility',['Utility',['../class_go_rogue_1_1_utility.html',1,'GoRogue']]]
 ];

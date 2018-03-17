@@ -76,8 +76,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aa2e91c60f83b2567d3bdc4eb8ee58b41"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator.html#aa2e91c60f83b2567d3bdc4eb8ee58b41">Generate</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map)</td></tr>
-<tr class="memdesc:aa2e91c60f83b2567d3bdc4eb8ee58b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles.  <a href="#aa2e91c60f83b2567d3bdc4eb8ee58b41">More...</a><br /></td></tr>
+<tr class="memitem:aa2e91c60f83b2567d3bdc4eb8ee58b41"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rectangle_map_generator.html#aa2e91c60f83b2567d3bdc4eb8ee58b41">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map)</td></tr>
+<tr class="memdesc:aa2e91c60f83b2567d3bdc4eb8ee58b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles. It is guaranteed that the "set" function of the ISettableMapView passed in will only be called once per location.  <a href="#aa2e91c60f83b2567d3bdc4eb8ee58b41">More...</a><br /></td></tr>
 <tr class="separator:aa2e91c60f83b2567d3bdc4eb8ee58b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -96,7 +96,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static void GoRogue.MapGeneration.Generators.RectangleMapGenerator.Generate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
           <td class="paramname"><em>map</em></td><td>)</td>
           <td></td>
         </tr>
@@ -108,8 +108,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles. </p>
-<p>/// </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Generates the map, setting the map given as a "walkability map". Wall tiles (the edges of the map) will have a value of false set in the given map, whereas true will be set to all non-wall tiles. It is guaranteed that the "set" function of the ISettableMapView passed in will only be called once per location. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>The map to set values to.</td></tr>
   </table>
