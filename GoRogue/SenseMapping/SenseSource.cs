@@ -232,7 +232,7 @@ namespace GoRogue.SenseMapping
                     int globalY2 = Position.Y - Radius + y2;
 
                     if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-                        DistanceCalc.DistanceBetween(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
+                        DistanceCalc.Calculate(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
                         continue;
 
                     double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, decay, map);
@@ -275,13 +275,13 @@ namespace GoRogue.SenseMapping
 
                 if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
                 {
-                    tmpDistance = DistanceCalc.DistanceBetween(size / 2, size / 2, x2, y2);
+                    tmpDistance = DistanceCalc.Calculate(size / 2, size / 2, x2, y2);
                     int idx = 0;
 
                     for (int i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
                     {
                         c = neighbors[i];
-                        testDistance = DistanceCalc.DistanceBetween(size / 2, size / 2, c.X, c.Y);
+                        testDistance = DistanceCalc.Calculate(size / 2, size / 2, c.X, c.Y);
                         if (tmpDistance < testDistance)
                             break;
 
@@ -307,7 +307,7 @@ namespace GoRogue.SenseMapping
                     if (nearLight[p.X, p.Y])
                         indirects++;
 
-                    double dist = DistanceCalc.DistanceBetween(x, y, p.X, p.Y);
+                    double dist = DistanceCalc.Calculate(x, y, p.X, p.Y);
                     double resistance = map[gpx, gpy];
                     if (gpx == Position.X && gpy == Position.Y)
                         resistance = 0.0;
@@ -350,7 +350,7 @@ namespace GoRogue.SenseMapping
                     if (end > leftSlope)
                         break;
 
-                    double deltaRadius = DistanceCalc.DistanceOf(deltaX, deltaY);
+                    double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
                     if (deltaRadius <= radius)
                     {
                         double bright = 1 - decay * deltaRadius;

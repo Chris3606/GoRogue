@@ -142,9 +142,9 @@ namespace GoRogue
         /// <param name="endY">Y-Coordinate of the ending point.</param>
         /// <param name="endZ">Z-Coordinate of the ending point.</param>
         /// <returns>The distance between the two points.</returns>
-        public double DistanceBetween(int startX, int startY, int startZ, int endX, int endY, int endZ)
+        public double Calculate(int startX, int startY, int startZ, int endX, int endY, int endZ)
         {
-            return DistanceBetween((double)startX, (double)startY, (double)startZ, (double)endX, (double)endY, (double)endZ);
+            return Calculate((double)startX, (double)startY, (double)startZ, (double)endX, (double)endY, (double)endZ);
         }
 
         /// <summary>
@@ -158,12 +158,12 @@ namespace GoRogue
         /// <param name="endY">Y-Coordinate of the ending point.</param>
         /// <param name="endZ">Z-Coordinate of the ending point.</param>
         /// <returns>The distance between the two points.</returns>
-        public double DistanceBetween(double startX, double startY, double startZ, double endX, double endY, double endZ)
+        public double Calculate(double startX, double startY, double startZ, double endX, double endY, double endZ)
         {
             double dx = Math.Abs(startX - endX);
             double dy = Math.Abs(startY - endY);
             double dz = Math.Abs(startZ - endZ);
-            return DistanceOf(dx, dy, dz);
+            return Calculate(dx, dy, dz);
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace GoRogue
         /// <param name="endX">X-Coordinate of the ending point.</param>
         /// <param name="endY">Y-Coordinate of the ending point.</param>
         /// <returns>The distance between the two points.</returns>
-        public double DistanceBetween(int startX, int startY, int endX, int endY) => DistanceBetween((double)startX, (double)startY, (double)endX, (double)endY);
+        public double Calculate(int startX, int startY, int endX, int endY) => Calculate((double)startX, (double)startY, (double)endX, (double)endY);
 
         /// <summary>
         /// Returns the distance between the two (2D) points specified.
@@ -182,7 +182,7 @@ namespace GoRogue
         /// <param name="start">Starting point.</param>
         /// <param name="end">Ending point.</param>
         /// <returns>The distance between the two points.</returns>
-        public double DistanceBetween(Coord start, Coord end) => DistanceBetween((double)start.X, (double)start.Y, (double)end.X, (double)end.Y);
+        public double Calculate(Coord start, Coord end) => Calculate((double)start.X, (double)start.Y, (double)end.X, (double)end.Y);
 
         /// <summary>
         /// Returns the distance between the two (2D) points specified. Points are floating point
@@ -193,11 +193,11 @@ namespace GoRogue
         /// <param name="endX">X-Coordinate of the ending point.</param>
         /// <param name="endY">Y-Coordinate of the ending point.</param>
         /// <returns>The distance between the two points.</returns>
-        public double DistanceBetween(double startX, double startY, double endX, double endY)
+        public double Calculate(double startX, double startY, double endX, double endY)
         {
             double dx = startX - endX;
             double dy = startY - endY;
-            return DistanceOf(dx, dy);
+            return Calculate(dx, dy);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace GoRogue
         /// <param name="end">The delta-x and delta-y between the two locations.</param>
         /// ///
         /// <returns>The distance between the two locations.</returns>
-        public double DistanceOf(Coord end) => DistanceOf((double)end.X, (double)end.Y);
+        public double Calculate(Coord end) => Calculate((double)end.X, (double)end.Y);
 
         /// <summary>
         /// Returns the distance between two locations, given the change in X and change in Y value.
@@ -215,7 +215,7 @@ namespace GoRogue
         /// <param name="dx">The delta-x between the two locations.</param>
         /// <param name="dy">The delta-y between the two locations.</param>
         /// <returns>The distance between the two locations.</returns>
-        public double DistanceOf(int dx, int dy) => DistanceOf((double)dx, (double)dy);
+        public double Calculate(int dx, int dy) => Calculate((double)dx, (double)dy);
 
         /// <summary>
         /// Returns the distance between two locations, given the change in X and change in Y value.
@@ -224,7 +224,7 @@ namespace GoRogue
         /// <param name="dx">The delta-x between the two locations.</param>
         /// <param name="dy">The delta-y between the two locations.</param>
         /// <returns>The distance between the two locations.</returns>
-        public double DistanceOf(double dx, double dy) => DistanceOf(dx, dy, 0);
+        public double Calculate(double dx, double dy) => Calculate(dx, dy, 0);
 
         /// <summary>
         /// Returns the distance between two locations, given the change in X, Y, and Z value.
@@ -233,7 +233,7 @@ namespace GoRogue
         /// <param name="dy">The delta-y between the two locations.</param>
         /// <param name="dz">The delta-z between the two locations.</param>
         /// <returns>The distance between the two locations.</returns>
-        public double DistanceOf(int dx, int dy, int dz) => DistanceOf((float)dx, (float)dy, (float)dz);
+        public double Calculate(int dx, int dy, int dz) => Calculate((float)dx, (float)dy, (float)dz);
 
         /// <summary>
         /// Returns the distance between two locations, given the change in X, Y, and Z value. The
@@ -243,7 +243,7 @@ namespace GoRogue
         /// <param name="dy">The delta-y between the two locations.</param>
         /// <param name="dz">The delta-z between the two locations.</param>
         /// <returns>The distance between the two locations.</returns>
-        public double DistanceOf(double dx, double dy, double dz)
+        public double Calculate(double dx, double dy, double dz)
         {
             dx = Math.Abs(dx);
             dy = Math.Abs(dy);
