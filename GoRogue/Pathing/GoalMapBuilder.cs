@@ -109,12 +109,12 @@ namespace GoRogue.Pathing
 				foreach (var coord in _edgeSet.ToArray())
 				{
 					var current = GoalMap[coord].Value;
-					foreach (var openPoint in AdjacencyRule.EIGHT_WAY.Neighbors(coord).Except(_closedSet))
+					foreach (var openPoint in AdjacencyRule.EIGHT_WAY.Neighbors(coord))
 					{
-						if (!_walkable.Contains(openPoint))
+						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
 						var neighborValue = GoalMap[openPoint].Value;
-						var newValue = current + Coord.EuclideanDistanceMagnitude(coord, openPoint);
+						var newValue = current + Distance.EUCLIDEAN.DistanceBetween(coord, openPoint);
 						if (newValue < neighborValue)
 						{
 							GoalMap[openPoint] = newValue;
