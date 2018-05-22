@@ -151,11 +151,11 @@ namespace GoRogue.Pathing
                 {
                     Coord neighborPos = current.Position + dir;
 
-                    if (!WalkabilityMap[neighborPos]) // Not part of walkable node "graph", ignore
-                        continue;
-
                     // Not a valid map position, ignore
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width || neighborPos.Y >= WalkabilityMap.Height)
+                        continue;
+
+                    if (!WalkabilityMap[neighborPos]) // Not part of walkable node "graph", ignore
                         continue;
 
                     int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
