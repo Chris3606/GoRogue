@@ -84,9 +84,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="memItemLeft" align="right" valign="top">override int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#acc0cb4f91fb9942e4ecb7216a56ed240">GetHashCode</a> ()</td></tr>
 <tr class="memdesc:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a hash code for the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>. The important parts: it should be fairly fast and it does not collide often. The details: it uses a seperate bit-mixing algorithm for X and Y, with X and Y each multiplied by a differet large integer, then xors the mixed values, and does a right shift, then multiplies by an overflowing prime number.  <a href="#acc0cb4f91fb9942e4ecb7216a56ed240">More...</a><br /></td></tr>
 <tr class="separator:acc0cb4f91fb9942e4ecb7216a56ed240"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8cd118940e45c6b28da8765771661096"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096">ToIndex</a> (int rowCount)</td></tr>
-<tr class="memdesc:a8cd118940e45c6b28da8765771661096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons.  <a href="#a8cd118940e45c6b28da8765771661096">More...</a><br /></td></tr>
-<tr class="separator:a8cd118940e45c6b28da8765771661096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9326d6038edc10eb55d7c3ed9c7c06e0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a9326d6038edc10eb55d7c3ed9c7c06e0">ToIndex</a> (int width)</td></tr>
+<tr class="memdesc:a9326d6038edc10eb55d7c3ed9c7c06e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * width + X. The 2D array being represented should have [width, height] of [width, anyValue] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons.  <a href="#a9326d6038edc10eb55d7c3ed9c7c06e0">More...</a><br /></td></tr>
+<tr class="separator:a9326d6038edc10eb55d7c3ed9c7c06e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abdf9814ccd98c262780beaf4d5774aa5"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#abdf9814ccd98c262780beaf4d5774aa5">ToString</a> ()</td></tr>
 <tr class="memdesc:abdf9814ccd98c262780beaf4d5774aa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns representation (X, Y).  <a href="#abdf9814ccd98c262780beaf4d5774aa5">More...</a><br /></td></tr>
 <tr class="separator:abdf9814ccd98c262780beaf4d5774aa5"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -158,18 +158,18 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a0751c6d23fb0544ee4d61fe3e47f20cb">operator==</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c1, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> c2)</td></tr>
 <tr class="memdesc:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">True if c1.X == c2.X and c1.Y == c2.Y.  <a href="#a0751c6d23fb0544ee4d61fe3e47f20cb">More...</a><br /></td></tr>
 <tr class="separator:a0751c6d23fb0544ee4d61fe3e47f20cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a93702b3ce2d8337cd27ffbe5b1564651">ToCoord</a> (int index, int rowCount)</td></tr>
-<tr class="memdesc:a93702b3ce2d8337cd27ffbe5b1564651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by a given index.  <a href="#a93702b3ce2d8337cd27ffbe5b1564651">More...</a><br /></td></tr>
-<tr class="separator:a93702b3ce2d8337cd27ffbe5b1564651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a97e98e50ebb20ccd0f7f2c82b043cd3d">ToIndex</a> (int x, int y, int rowCount)</td></tr>
-<tr class="memdesc:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns y * rowCount + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int rowCount)</a>, just takes x and y instead.  <a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">More...</a><br /></td></tr>
-<tr class="separator:a97e98e50ebb20ccd0f7f2c82b043cd3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad8f6d221fc4eef936d2d066ea320f673"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ad8f6d221fc4eef936d2d066ea320f673">ToXValue</a> (int index, int rowCount)</td></tr>
-<tr class="memdesc:ad8f6d221fc4eef936d2d066ea320f673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning only the X-value for the given index.  <a href="#ad8f6d221fc4eef936d2d066ea320f673">More...</a><br /></td></tr>
-<tr class="separator:ad8f6d221fc4eef936d2d066ea320f673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad317b24acf1245ced9d2bc1e1afef8f"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#aad317b24acf1245ced9d2bc1e1afef8f">ToYValue</a> (int index, int rowCount)</td></tr>
-<tr class="memdesc:aad317b24acf1245ced9d2bc1e1afef8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning only the Y-value for the given index.  <a href="#aad317b24acf1245ced9d2bc1e1afef8f">More...</a><br /></td></tr>
-<tr class="separator:aad317b24acf1245ced9d2bc1e1afef8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abdd6eb3fbadb1467e30d25b5e758c77e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#abdd6eb3fbadb1467e30d25b5e758c77e">ToCoord</a> (int index, int width)</td></tr>
+<tr class="memdesc:abdd6eb3fbadb1467e30d25b5e758c77e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> represented by a given index.  <a href="#abdd6eb3fbadb1467e30d25b5e758c77e">More...</a><br /></td></tr>
+<tr class="separator:abdd6eb3fbadb1467e30d25b5e758c77e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bcc2ae3363800cd23c9e2e7d73b79be"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a0bcc2ae3363800cd23c9e2e7d73b79be">ToIndex</a> (int x, int y, int width)</td></tr>
+<tr class="memdesc:a0bcc2ae3363800cd23c9e2e7d73b79be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns y * width + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a9326d6038edc10eb55d7c3ed9c7c06e0" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int width)</a>, just takes x and y instead.  <a href="#a0bcc2ae3363800cd23c9e2e7d73b79be">More...</a><br /></td></tr>
+<tr class="separator:a0bcc2ae3363800cd23c9e2e7d73b79be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1dacd33a222e131c5a832f20432ff60"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#ac1dacd33a222e131c5a832f20432ff60">ToXValue</a> (int index, int width)</td></tr>
+<tr class="memdesc:ac1dacd33a222e131c5a832f20432ff60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning only the X-value for the given index.  <a href="#ac1dacd33a222e131c5a832f20432ff60">More...</a><br /></td></tr>
+<tr class="separator:ac1dacd33a222e131c5a832f20432ff60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a16f088c5eefa1ea657980e075d2dfa24"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_coord.html#a16f088c5eefa1ea657980e075d2dfa24">ToYValue</a> (int index, int width)</td></tr>
+<tr class="memdesc:a16f088c5eefa1ea657980e075d2dfa24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reverses the ToIndex function, returning only the Y-value for the given index.  <a href="#a16f088c5eefa1ea657980e075d2dfa24">More...</a><br /></td></tr>
+<tr class="separator:a16f088c5eefa1ea657980e075d2dfa24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -1289,8 +1289,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a93702b3ce2d8337cd27ffbe5b1564651"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93702b3ce2d8337cd27ffbe5b1564651">&sect;&nbsp;</a></span>ToCoord()</h2>
+<a id="abdd6eb3fbadb1467e30d25b5e758c77e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd6eb3fbadb1467e30d25b5e758c77e">&sect;&nbsp;</a></span>ToCoord()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1308,7 +1308,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em>&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1327,7 +1327,7 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">width</td><td>The width of the 2D array.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1335,8 +1335,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a97e98e50ebb20ccd0f7f2c82b043cd3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97e98e50ebb20ccd0f7f2c82b043cd3d">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[1/2]</span></h2>
+<a id="a0bcc2ae3363800cd23c9e2e7d73b79be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bcc2ae3363800cd23c9e2e7d73b79be">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1360,7 +1360,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em>&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1375,12 +1375,12 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Returns y * rowCount + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a8cd118940e45c6b28da8765771661096" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int rowCount)</a>, just takes x and y instead. </p>
+<p>Returns y * width + x. Same as <a class="el" href="class_go_rogue_1_1_coord.html#a9326d6038edc10eb55d7c3ed9c7c06e0" title="Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1...">Coord.ToIndex(int width)</a>, just takes x and y instead. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>X-value of the coordinate.</td></tr>
     <tr><td class="paramname">y</td><td>Y-value of the coordinate.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index.</td></tr>
+    <tr><td class="paramname">width</td><td>The width of the 2D array, used to do math to calculate index.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1388,8 +1388,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8cd118940e45c6b28da8765771661096"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8cd118940e45c6b28da8765771661096">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[2/2]</span></h2>
+<a id="a9326d6038edc10eb55d7c3ed9c7c06e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9326d6038edc10eb55d7c3ed9c7c06e0">&sect;&nbsp;</a></span>ToIndex() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1398,16 +1398,16 @@ Public Attributes</h2></td></tr>
           <td class="memname">int GoRogue.Coord.ToIndex </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em></td><td>)</td>
+          <td class="paramname"><em>width</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented should have [width, height] of [rowCount, dontCare] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons. </p>
+<p>Returns a value that can be used to index this location in a 2D array that is actually encoded in a 1D array. Actual value is Y * width + X. The 2D array being represented should have [width, height] of [width, anyValue] for this index to be valid. Note that, when this method is used, if one needs to use a nested for loop to iterate over this array, it is best to do for y... as the outer loop and for x..., as the inner loop, for cache performance reasons. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rowCount</td><td>The number of rows, used to do math to calculate index. Usually the width of the 2D array. </td></tr>
+    <tr><td class="paramname">width</td><td>The width of the 2D array, used to do math to calculate index. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1435,8 +1435,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad8f6d221fc4eef936d2d066ea320f673"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8f6d221fc4eef936d2d066ea320f673">&sect;&nbsp;</a></span>ToXValue()</h2>
+<a id="ac1dacd33a222e131c5a832f20432ff60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1dacd33a222e131c5a832f20432ff60">&sect;&nbsp;</a></span>ToXValue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1454,7 +1454,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em>&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1473,7 +1473,7 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">width</td><td>The width of the 2D array.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1481,8 +1481,8 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aad317b24acf1245ced9d2bc1e1afef8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad317b24acf1245ced9d2bc1e1afef8f">&sect;&nbsp;</a></span>ToYValue()</h2>
+<a id="a16f088c5eefa1ea657980e075d2dfa24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16f088c5eefa1ea657980e075d2dfa24">&sect;&nbsp;</a></span>ToYValue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1500,7 +1500,7 @@ Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>rowCount</em>&#160;</td>
+          <td class="paramname"><em>width</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1519,7 +1519,7 @@ Public Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>The index in 1D form.</td></tr>
-    <tr><td class="paramname">rowCount</td><td>The number of rows.</td></tr>
+    <tr><td class="paramname">width</td><td>The width of the 2D array.</td></tr>
   </table>
   </dd>
 </dl>
