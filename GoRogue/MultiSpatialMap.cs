@@ -173,8 +173,12 @@ namespace GoRogue
         public IEnumerable<T> GetItems(Coord position)
         {
             if (positionMapping.ContainsKey(position))
-                foreach (var tuple in positionMapping[position])
-                    yield return tuple.Item;
+            {
+                var positionList = positionMapping[position];
+
+                for (int i = positionList.Count - 1; i >= 0; i--)
+                    yield return positionList[i].Item;
+            }
         }
 
         /// <summary>
