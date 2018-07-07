@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoRogue.MapViews;
 
 namespace GoRogue.Pathing
 {
@@ -114,7 +115,7 @@ namespace GoRogue.Pathing
 						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
 						var neighborValue = GoalMap[openPoint].Value;
-						var newValue = current + Distance.EUCLIDEAN.DistanceBetween(coord, openPoint);
+						var newValue = current + Distance.EUCLIDEAN.Calculate(coord, openPoint);
 						if (newValue < neighborValue)
 						{
 							GoalMap[openPoint] = newValue;
