@@ -1,10 +1,12 @@
 ﻿using GoRogue;
+using GoRogue.MapViews;
 using GoRogue.MapGeneration.Generators;
 using GoRogue.Pathing;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CA = EMK.Cartography;
 
 namespace GoRogue_UnitTests
@@ -101,6 +103,28 @@ namespace GoRogue_UnitTests
             printExpectedAndActual(expectedPath, actualPath);
 
             checkAgainstPath(expectedPath, actualPath, end, start);
+        }
+
+        [TestMethod]
+        public void OpenMapPathing()
+        {
+            var map = new ArrayMap<bool>(10, 10);
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                    map[x, y] = true;
+
+            Coord start = Coord.Get(1, 6);
+            Coord end = Coord.Get(0, 1);
+            var pather = new AStar(map, Distance.CHEBYSHEV);
+
+            try
+            {
+                pather.ShortestPath(start, end);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
         }
 
         private static void checkAdjacency(Path path, Distance distanceCalc)

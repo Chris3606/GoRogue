@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using GoRogue.MapViews;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -65,7 +67,7 @@ namespace GoRogue.MapGeneration.Connectors
                 if (ds.InSameSet(i, mapAreaIndex))
                     continue;
 
-                double distanceBetween = distanceCalc.DistanceBetween(mapAreas[mapAreaIndex].Bounds.Center, mapAreas[i].Bounds.Center);
+                double distanceBetween = distanceCalc.Calculate(mapAreas[mapAreaIndex].Bounds.Center, mapAreas[i].Bounds.Center);
                 if (distanceBetween < distance)
                 {
                     distance = distanceBetween;

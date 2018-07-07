@@ -306,34 +306,34 @@ namespace GoRogue
         /// Reverses the ToIndex function, returning the Coord represented by a given index.
         /// </summary>
         /// <param name="index">The index in 1D form.</param>
-        /// <param name="rowCount">The number of rows.</param>
+        /// <param name="width">The width of the 2D array.</param>
         /// <returns>The Coord represented by the 1D index given.</returns>
-        public static Coord ToCoord(int index, int rowCount) => Get(index % rowCount, index / rowCount);
+        public static Coord ToCoord(int index, int width) => Get(index % width, index / width);
 
         /// <summary>
-        /// Returns y * rowCount + x. Same as Coord.ToIndex(int rowCount), just takes x and y instead.
+        /// Returns y * width + x. Same as Coord.ToIndex(int width), just takes x and y instead.
         /// </summary>
         /// <param name="x">X-value of the coordinate.</param>
         /// <param name="y">Y-value of the coordinate.</param>
-        /// <param name="rowCount">The number of rows, used to do math to calculate index.</param>
+        /// <param name="width">The width of the 2D array, used to do math to calculate index.</param>
         /// <returns>The 1D index of this Coord.</returns>
-        public static int ToIndex(int x, int y, int rowCount) => y * rowCount + x;
+        public static int ToIndex(int x, int y, int width) => y * width + x;
 
         /// <summary>
         /// Reverses the ToIndex function, returning only the X-value for the given index.
         /// </summary>
         /// <param name="index">The index in 1D form.</param>
-        /// <param name="rowCount">The number of rows.</param>
+        /// <param name="width">The width of the 2D array.</param>
         /// <returns>The X-value for the location represented by the given index.</returns>
-        public static int ToXValue(int index, int rowCount) => index % rowCount;
+        public static int ToXValue(int index, int width) => index % width;
 
         /// <summary>
         /// Reverses the ToIndex function, returning only the Y-value for the given index.
         /// </summary>
         /// <param name="index">The index in 1D form.</param>
-        /// <param name="rowCount">The number of rows.</param>
+        /// <param name="width">The width of the 2D array.</param>
         /// <returns>The Y-value for the location represented by the given index.</returns>
-        public static int ToYValue(int index, int rowCount) => index / rowCount;
+        public static int ToYValue(int index, int width) => index / width;
 
         /// <summary>
         /// Same as operator == in this case; returns false if obj is not a Coord.
@@ -360,17 +360,17 @@ namespace GoRogue
 
         /// <summary>
         /// Returns a value that can be used to index this location in a 2D array that is actually
-        /// encoded in a 1D array. Actual value is Y * rowCount + X. The 2D array being represented
-        /// should have [width, height] of [rowCount, dontCare] for this index to be valid. Note
+        /// encoded in a 1D array. Actual value is Y * width + X. The 2D array being represented
+        /// should have [width, height] of [width, anyValue] for this index to be valid. Note
         /// that, when this method is used, if one needs to use a nested for loop to iterate over
         /// this array, it is best to do for y... as the outer loop and for x..., as the inner loop,
         /// for cache performance reasons.
         /// </summary>
-        /// <param name="rowCount">
-        /// The number of rows, used to do math to calculate index. Usually the width of the 2D array.
+        /// <param name="width">
+        /// The width of the 2D array, used to do math to calculate index.
         /// </param>
         /// <returns>The 1D index of this Coord.</returns>
-        public int ToIndex(int rowCount) => Y * rowCount + X;
+        public int ToIndex(int width) => Y * width + X;
 
         /// <summary>
         /// Returns representation (X, Y).

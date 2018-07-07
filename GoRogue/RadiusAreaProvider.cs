@@ -169,7 +169,7 @@ namespace GoRogue
                 {
                     localNeighbor = neighbor - topLeft;
 
-                    if (DistanceCalc.DistanceBetween(_center, neighbor) > _radius || inQueue[localNeighbor.X, localNeighbor.Y] ||
+                    if (DistanceCalc.Calculate(_center, neighbor) > _radius || inQueue[localNeighbor.X, localNeighbor.Y] ||
                         Bounds != Rectangle.EMPTY && !Bounds.Contains(neighbor))
                         continue;
 

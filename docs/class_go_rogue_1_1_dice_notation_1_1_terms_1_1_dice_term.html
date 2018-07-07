@@ -89,9 +89,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9376a7bf76578c2bf00a1d0414018788"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a9376a7bf76578c2bf00a1d0414018788">DiceTerm</a> (<a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> multiplicity, <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html">ITerm</a> sides)</td></tr>
 <tr class="memdesc:a9376a7bf76578c2bf00a1d0414018788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the terms representing multiplicity and number of sides.  <a href="#a9376a7bf76578c2bf00a1d0414018788">More...</a><br /></td></tr>
 <tr class="separator:a9376a7bf76578c2bf00a1d0414018788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a723058e8188c8f9dbadaafa1665de7ed"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a723058e8188c8f9dbadaafa1665de7ed">GetResult</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng)</td></tr>
-<tr class="memdesc:a723058e8188c8f9dbadaafa1665de7ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls the dice, returning the sum.  <a href="#a723058e8188c8f9dbadaafa1665de7ed">More...</a><br /></td></tr>
-<tr class="separator:a723058e8188c8f9dbadaafa1665de7ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d94068601f83866f0d6aa422fe6535"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a75d94068601f83866f0d6aa422fe6535">GetResult</a> (IGenerator rng)</td></tr>
+<tr class="memdesc:a75d94068601f83866f0d6aa422fe6535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls the dice, returning the sum.  <a href="#a75d94068601f83866f0d6aa422fe6535">More...</a><br /></td></tr>
+<tr class="separator:a75d94068601f83866f0d6aa422fe6535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a457322037ebba87abb812915f30a2f35"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a457322037ebba87abb812915f30a2f35">ToString</a> ()</td></tr>
 <tr class="memdesc:a457322037ebba87abb812915f30a2f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a parenthesized string representation of the dice term, eg (2d6).  <a href="#a457322037ebba87abb812915f30a2f35">More...</a><br /></td></tr>
 <tr class="separator:a457322037ebba87abb812915f30a2f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -155,8 +155,8 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a723058e8188c8f9dbadaafa1665de7ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a723058e8188c8f9dbadaafa1665de7ed">&sect;&nbsp;</a></span>GetResult()</h2>
+<a id="a75d94068601f83866f0d6aa422fe6535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75d94068601f83866f0d6aa422fe6535">&sect;&nbsp;</a></span>GetResult()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,7 +164,7 @@ Properties</h2></td></tr>
         <tr>
           <td class="memname">int GoRogue.DiceNotation.Terms.DiceTerm.GetResult </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
+          <td class="paramtype">IGenerator&#160;</td>
           <td class="paramname"><em>rng</em></td><td>)</td>
           <td></td>
         </tr>
@@ -180,7 +180,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The sum of the roll.</dd></dl>
 
-<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a32728c3d1cb148e69f04f95054b38258">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
+<p>Implements <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_terms_1_1_i_term.html#a831d8165da0e04b5d9fbd5a5ecef360d">GoRogue.DiceNotation.Terms.ITerm</a>.</p>
 
 </div>
 </div>

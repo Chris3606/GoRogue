@@ -91,9 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af8bf84c3860e7fc5d2f6276d4386e039"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html#af8bf84c3860e7fc5d2f6276d4386e039">MinRoll</a> ()</td></tr>
 <tr class="memdesc:af8bf84c3860e7fc5d2f6276d4386e039"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the minimum possible result of the dice expression (the lowest it could be).  <a href="#af8bf84c3860e7fc5d2f6276d4386e039">More...</a><br /></td></tr>
 <tr class="separator:af8bf84c3860e7fc5d2f6276d4386e039"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea7ea737f1f6343002a0ab08ed41c076"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html#aea7ea737f1f6343002a0ab08ed41c076">Roll</a> (<a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng=null)</td></tr>
-<tr class="memdesc:aea7ea737f1f6343002a0ab08ed41c076"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls the expression using the RNG given, returning the result.  <a href="#aea7ea737f1f6343002a0ab08ed41c076">More...</a><br /></td></tr>
-<tr class="separator:aea7ea737f1f6343002a0ab08ed41c076"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14fc5acaf2aff973e0203751362e18a5"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html#a14fc5acaf2aff973e0203751362e18a5">Roll</a> (IGenerator rng=null)</td></tr>
+<tr class="memdesc:a14fc5acaf2aff973e0203751362e18a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rolls the expression using the RNG given, returning the result.  <a href="#a14fc5acaf2aff973e0203751362e18a5">More...</a><br /></td></tr>
+<tr class="separator:a14fc5acaf2aff973e0203751362e18a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for class representing a parsed dice expression. Returned by <a class="el" href="interface_go_rogue_1_1_dice_notation_1_1_i_parser.html" title="Interface for a class that parses a string representing a dice expression into a IDiceExpression inst...">IParser</a> implementations. </p>
@@ -144,8 +144,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aea7ea737f1f6343002a0ab08ed41c076"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea7ea737f1f6343002a0ab08ed41c076">&sect;&nbsp;</a></span>Roll()</h2>
+<a id="a14fc5acaf2aff973e0203751362e18a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14fc5acaf2aff973e0203751362e18a5">&sect;&nbsp;</a></span>Roll()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,7 +153,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">int GoRogue.DiceNotation.IDiceExpression.Roll </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
+          <td class="paramtype">IGenerator&#160;</td>
           <td class="paramname"><em>rng</em> = <code>null</code></td><td>)</td>
           <td></td>
         </tr>
@@ -169,7 +169,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The result obtained by rolling the dice expression.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a9ee10a7042ef392ffe9ba5522c451628">GoRogue.DiceNotation.DiceExpression</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_dice_expression.html#a02909a8daa7bfafba4565946f62a3eec">GoRogue.DiceNotation.DiceExpression</a>.</p>
 
 </div>
 </div>

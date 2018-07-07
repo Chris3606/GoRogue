@@ -53,7 +53,7 @@ namespace GoRogue_UnitTests
             double maxDistance = 0;
             foreach (var pos in radAProv.Positions())
             {
-                double distFromCenter = Distance.MANHATTAN.DistanceBetween(Coord.Get(15, 15), pos);
+                double distFromCenter = Distance.MANHATTAN.Calculate(Coord.Get(15, 15), pos);
                 if (distFromCenter < maxDistance)
                     Assert.Fail("Square radius area provider isn't returning in distance order, failed on " + pos + "!");
 
@@ -84,7 +84,7 @@ namespace GoRogue_UnitTests
             double maxDistance = 0;
             foreach (var pos in radAProv.Positions())
             {
-                double distFromCenter = Distance.CHEBYSHEV.DistanceBetween(Coord.Get(15, 15), pos);
+                double distFromCenter = Distance.CHEBYSHEV.Calculate(Coord.Get(15, 15), pos);
                 if (distFromCenter < maxDistance)
                     Assert.Fail("Square radius area provider isn't returning in distance order!");
 

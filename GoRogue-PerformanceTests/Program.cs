@@ -24,6 +24,7 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tLighting: {lightingMem} bytes");
             Console.WriteLine($"\tFOV     : {fovMem} bytes");
             */
+            
             var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, SOURCE_TYPE,
                                                                          LIGHT_RADIUS, RADIUS_STRATEGY, ITERATIONS_FOR_TIMING);
             //var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT,
@@ -39,9 +40,9 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine();
             TestLightingNSource(3);
 
+            /*
             Console.WriteLine();
             TestLightingNSource(4);
-            /*
             var timeSingleDijkstra = PathingTests.TimeForSingleSourceDijkstra(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} dijkstra map calculates, single source, {MAP_WIDTH}x{MAP_HEIGHT} map, 1 goal at (5, 5):");
@@ -56,12 +57,13 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tBresenham: {timeBres}");
             Console.WriteLine($"\tDDA      : {timeDDA}");
             Console.WriteLine($"\tOrtho    : {timeOrtho}");
+            */
 
+            
             var timeAStar = PathingTests.TimeForAStar(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
             Console.WriteLine($"\tAStar: {timeAStar}");
-            */
 
             var timeForSmallDiceRoll = DiceNotationTests.TimeForDiceRoll("1d6", ITERATIONS_FOR_TIMING * 10);
             var timeForMediumDiceRoll = DiceNotationTests.TimeForDiceRoll("2d6+3", ITERATIONS_FOR_TIMING * 10);

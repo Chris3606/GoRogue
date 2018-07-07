@@ -1,4 +1,4 @@
-﻿using GoRogue.Random;
+﻿using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -23,7 +23,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">(Unused) rng.</param>
         /// <returns>The numerical constant this term represents.</returns>
-        public int GetResult(IRandom rng) => value;
+        public int GetResult(IGenerator rng) => value;
 
         /// <summary>
         /// Returns a string representation of this constant.

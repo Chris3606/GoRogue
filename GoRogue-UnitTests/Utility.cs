@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using GoRogue.MapViews;
 using System;
 using System.Collections.Generic;
 using System.IO;

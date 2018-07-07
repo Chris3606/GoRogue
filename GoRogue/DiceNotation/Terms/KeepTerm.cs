@@ -1,4 +1,4 @@
-﻿using GoRogue.Random;
+﻿using Troschuetz.Random;
 using System.Linq;
 
 namespace GoRogue.DiceNotation.Terms
@@ -32,7 +32,7 @@ namespace GoRogue.DiceNotation.Terms
         /// The sum of the highest n rolls of the dice term being operated on, where n is equal to
         /// the value of the keep variable taken in the constructor.
         /// </returns>
-        public int GetResult(IRandom rng)
+        public int GetResult(IGenerator rng)
         {
             int keepVal = keep.GetResult(rng);
 

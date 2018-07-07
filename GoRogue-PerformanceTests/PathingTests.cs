@@ -1,4 +1,5 @@
 ﻿using GoRogue;
+using GoRogue.MapViews;
 using GoRogue.Pathing;
 using System;
 using System.Diagnostics;

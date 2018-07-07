@@ -76,16 +76,17 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4571d131112108764766c8aa8d7aba54"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_cellular_automata_generator.html#a4571d131112108764766c8aa8d7aba54">Generate</a> (<a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a> rng=null, int fillProbability=40, int totalIterations=7, int cutoffBigAreaFill=4, bool connectUsingDefault=true)</td></tr>
-<tr class="memdesc:a4571d131112108764766c8aa8d7aba54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map. Floor tiles will be set to true in the provided map, and wall tiles will be set to false.  <a href="#a4571d131112108764766c8aa8d7aba54">More...</a><br /></td></tr>
-<tr class="separator:a4571d131112108764766c8aa8d7aba54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33e4477302edc8db3e30656fbe6dba0b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_cellular_automata_generator.html#a33e4477302edc8db3e30656fbe6dba0b">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IGenerator rng=null, int fillProbability=40, int totalIterations=7, int cutoffBigAreaFill=4, bool connectUsingDefault=true)</td></tr>
+<tr class="memdesc:a33e4477302edc8db3e30656fbe6dba0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map. Floor tiles will be set to true in the provided map, and wall tiles will be set to false.  <a href="#a33e4477302edc8db3e30656fbe6dba0b">More...</a><br /></td></tr>
+<tr class="separator:a33e4477302edc8db3e30656fbe6dba0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a cellular automata genereation algorithm to generate a cave-like map. </p>
-<p>Generates a map by randomly filling the map surface with floor or wall values (true and false respectively) based on a probability given, then iteratively smoothing it via the process outlined in the cited roguebasin article. /// After generate is called, the passed in map will have had a value of true set to all floor tiles, and a value of false set to all wall tiles. /// Like RandomRoomsMapGenerator, it is recommended to use <a class="el" href="class_go_rogue_1_1_array_map.html" title="Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D a...">ArrayMap</a> as the SettableMapOf instance passed in, as this class must call set for each location very likely more than one time, overwriting any previous values(thus doing significant processing on each call to set is inadvisable). It will likely be faster to take the resulting <a class="el" href="class_go_rogue_1_1_array_map.html" title="Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D a...">ArrayMap</a> after completion, and process it to do any required translation. /// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below: <a href="http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels">http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels</a>. </p>
+<p>Generates a map by randomly filling the map surface with floor or wall values (true and false respectively) based on a probability given, then iteratively smoothing it via the process outlined in the cited roguebasin article. /// After generate is called, the passed in map will have had a value of true set to all floor tiles, and a value of false set to all wall tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below: <a href="http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels">http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels</a>.</p>
+<p>It is guaranteed that the "set" function of the ISettableMapView passed in will only be called once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive and calling it multiples times costs little extra, and saves an internal allocation. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4571d131112108764766c8aa8d7aba54"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4571d131112108764766c8aa8d7aba54">&sect;&nbsp;</a></span>Generate()</h2>
+<a id="a33e4477302edc8db3e30656fbe6dba0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33e4477302edc8db3e30656fbe6dba0b">&sect;&nbsp;</a></span>Generate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -96,13 +97,13 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">static void GoRogue.MapGeneration.Generators.CellularAutomataGenerator.Generate </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
           <td class="paramname"><em>map</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_random_1_1_i_random.html">IRandom</a>&#160;</td>
+          <td class="paramtype">IGenerator&#160;</td>
           <td class="paramname"><em>rng</em> = <code>null</code>, </td>
         </tr>
         <tr>

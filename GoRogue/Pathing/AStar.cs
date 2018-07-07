@@ -1,6 +1,7 @@
 ﻿using Priority_Queue;
 using System;
 using System.Collections.Generic;
+using GoRogue.MapViews;
 
 namespace GoRogue.Pathing
 {
@@ -126,7 +127,7 @@ namespace GoRogue.Pathing
             var result = new List<Coord>();
             int index = start.ToIndex(WalkabilityMap.Width);
             nodes[index].G = 0;
-            nodes[index].F = (float)_distanceMeasurement.DistanceBetween(start, end); // Completely heuristic for first node
+            nodes[index].F = (float)_distanceMeasurement.Calculate(start, end); // Completely heuristic for first node
             openNodes.Enqueue(nodes[index], nodes[index].F);
 
             while (openNodes.Count != 0)
@@ -150,11 +151,11 @@ namespace GoRogue.Pathing
                 {
                     Coord neighborPos = current.Position + dir;
 
-                    if (!WalkabilityMap[neighborPos]) // Not part of walkable node "graph", ignore
-                        continue;
-
                     // Not a valid map position, ignore
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width || neighborPos.Y >= WalkabilityMap.Height)
+                        continue;
+
+                    if (!WalkabilityMap[neighborPos]) // Not part of walkable node "graph", ignore
                         continue;
 
                     int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
@@ -163,14 +164,14 @@ namespace GoRogue.Pathing
                     if (neighbor.Closed) // This neighbor has already been evaluated at shortest possible path, don't re-add
                         continue;
 
-                    float newDistance = current.G + (float)_distanceMeasurement.DistanceBetween(current.Position, neighbor.Position);
+                    float newDistance = current.G + (float)_distanceMeasurement.Calculate(current.Position, neighbor.Position);
                     if (newDistance >= neighbor.G) // Not a better path
                         continue;
 
                     // We found a best path, so record and update
                     neighbor.Parent = current;
                     neighbor.G = newDistance; // (Known) distance to this node via shortest path
-                    neighbor.F = newDistance + (float)_distanceMeasurement.DistanceBetween(neighbor.Position, end); // Heuristic distance to end (priority in queue)
+                    neighbor.F = newDistance + (float)_distanceMeasurement.Calculate(neighbor.Position, end); // Heuristic distance to end (priority in queue)
                     // If it's already in the queue, update priority to new F
                     if (openNodes.Contains(neighbor))
                         openNodes.UpdatePriority(neighbor, neighbor.F);
