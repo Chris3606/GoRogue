@@ -162,7 +162,7 @@ namespace GoRogue_UnitTests
             dijkstraMap.AddGoal(goal2.X, goal2.Y);
             dijkstraMap.Calculate();
 
-            var goalMap = new GoalMap<GoalState>(map, (s, c) => s);
+            var goalMap = new GoalMap(map);
             goalMap.Update();
 
             for (int x = 0; x < genMap.Width; x++)

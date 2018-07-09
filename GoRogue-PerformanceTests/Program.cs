@@ -10,7 +10,7 @@ namespace GoRogue_PerformanceTests
 {
     public class Program
     {
-        private static readonly int ITERATIONS_FOR_TIMING = 1;
+        private static readonly int ITERATIONS_FOR_TIMING = 100;
         private static readonly int LIGHT_RADIUS = 10;
         private static readonly Coord LINE_END = Coord.Get(29, 23);
         private static readonly Coord LINE_START = Coord.Get(3, 5);

@@ -62,8 +62,6 @@ namespace GoRogue.Pathing
                 }
                 numTimes++;
             }
-
-            System.Console.WriteLine(numTimes);
         }
 
         public void RemoveGoal(int x, int y)

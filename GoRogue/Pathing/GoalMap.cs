@@ -11,31 +11,25 @@ namespace GoRogue.Pathing
 	/// </summary>
 	/// <remarks>
 	/// This class encapsulates the work of building a goal map from your map level.  You provide
-	/// the constructor with a map level and an evaluation function containing the logic to determine
-	/// whether a given tile is an obstacle, a goal, or an open space, and GoalMapBuilder will compute
-	/// the goal map for the level.
+	/// the constructor with a map level exposed as GoalStates (obstacle, a goal, or an open space),
+	/// and GoalMap will compute the goal map for the level.
 	/// 
-	/// When the underlying circumstances of the level change, the GoalMapBuilder instance will need to
+	/// When the underlying circumstances of the level change, the GoalMap instance will need to
 	/// be updated.  Call Update() if obstacles have changed, such as digging through walls or opening
 	/// or closing a door, or UpdatePathsOnly() if the goals have changed but not the obstacles.
 	/// 
 	/// Each cell is a Nullable&lt;double&gt;, where a null is an obstacle, and a value indicates
 	/// a distance from a goal, with 0 being a goal tile.
 	/// </remarks>
-	/// <typeparam name="T">The type of value in the underlying map.</typeparam>
-	public class GoalMap<T> : IMapView<double?>
+	public class GoalMap : IMapView<double?>
 	{
 		/// <summary>
 		/// The underlying map.
 		/// </summary>
-		public IMapView<T> BaseMap { get; }
-
-		private Func<T, Coord, GoalState> _evaluator;
+		public IMapView<GoalState> BaseMap { get; }
 
 		private HashSet<Coord> _walkable = new HashSet<Coord>();
-
 		private HashSet<Coord> _edgeSet = new HashSet<Coord>();
-
 		private HashSet<Coord> _closedSet = new HashSet<Coord>();
 
 		private ArrayMap<double?> _goalMap;
@@ -68,12 +62,10 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// Constructor. Takes a base map and a function to evaluate a tile's goal state.
 		/// </summary>
-		/// <param name="baseMap">The underlying map.</param>
-		/// <param name="evaluator">Lambda that determines whether a tile is an obstacle, a goal, or open space</param>
-		public GoalMap(IMapView<T> baseMap, Func<T, Coord, GoalState> evaluator)
+		/// <param name="baseMap">The underlying map as GoalStates.</param>
+		public GoalMap(IMapView<GoalState> baseMap)
 		{
 			BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
-			_evaluator = evaluator ?? throw new ArgumentNullException(nameof(evaluator));
 
 			_goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
 			Update();
@@ -92,7 +84,7 @@ namespace GoRogue.Pathing
 			{
 				for (int x = 0; x < BaseMap.Width; ++x)
 				{
-					var state = _evaluator(BaseMap[x, y], Coord.Get(x, y));
+					var state = BaseMap[x, y];
 					if (state == GoalState.Obstacle)
 					{
 						_goalMap[x, y] = null;
@@ -116,7 +108,7 @@ namespace GoRogue.Pathing
 			_closedSet.Clear();
 			foreach (var coord in _walkable)
 			{
-				var state = _evaluator(BaseMap[coord], coord);
+				var state = BaseMap[coord];
 				if (state == GoalState.Clear)
 				{
 					_goalMap[coord] = highVal;
