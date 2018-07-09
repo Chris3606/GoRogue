@@ -15,8 +15,7 @@ namespace GoRogue.Pathing
 	/// the more strongly an AI will attempt to pursue this goal.  A negative weight inverts the map, turning
 	/// its goal into something to avoid.
 	/// </remarks>
-	/// <typeparam name="T">The type of value in the underlying map.</typeparam>
-	class GoalMapCombiner : IMapView<double?>
+	class WeightedGoalMap : IMapView<double?>
 	{
 		private Dictionary<IMapView<double?>, double> _weights = new Dictionary<IMapView<double?>, double>();
 
@@ -24,7 +23,7 @@ namespace GoRogue.Pathing
 		/// Constructor. Takes a single goal map and assigns it a weight of 1.
 		/// </summary>
 		/// <param name="map">The goal map.</param>
-		public GoalMapCombiner(IMapView<double?> map)
+		public WeightedGoalMap(IMapView<double?> map)
 		{
 			_weights.Add(map, 1);
 			Width = map.Width;
@@ -35,7 +34,7 @@ namespace GoRogue.Pathing
 		/// Constructor. Takes a sequence of goal maps and assigns each one a weight of 1.
 		/// </summary>
 		/// <param name="maps">The goal maps.  Each one should be of the same size.</param>
-		public GoalMapCombiner(IEnumerable<IMapView<double?>> maps)
+		public WeightedGoalMap(IEnumerable<IMapView<double?>> maps)
 		{
 			foreach (var map in maps)
 			{
@@ -55,7 +54,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <param name="maps">The goal maps.  Each one should be of the same size, and all
 		/// weights should have a nonzero value.</param>
-		public GoalMapCombiner(IDictionary<IMapView<double?>, double> maps)
+		public WeightedGoalMap(IDictionary<IMapView<double?>, double> maps)
 		{
 			foreach (var pair in maps)
 			{

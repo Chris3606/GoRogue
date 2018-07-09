@@ -18,20 +18,17 @@ namespace GoRogue.Pathing
 	/// When the underlying circumstances of the level change, the GoalMapBuilder instance will need to
 	/// be updated.  Call Update() if obstacles have changed, such as digging through walls or opening
 	/// or closing a door, or UpdatePathsOnly() if the goals have changed but not the obstacles.
+	/// 
+	/// Each cell is a Nullable&lt;double&gt;, where a null is an obstacle, and a value indicates
+	/// a distance from a goal, with 0 being a goal tile.
 	/// </remarks>
 	/// <typeparam name="T">The type of value in the underlying map.</typeparam>
-	public class GoalMapBuilder<T>
+	public class GoalMap<T> : IMapView<double?>
 	{
 		/// <summary>
-		/// The underlying map
+		/// The underlying map.
 		/// </summary>
 		public IMapView<T> BaseMap { get; }
-
-		/// <summary>
-		/// The goal map.  Each cell is a Nullable&lt;double&gt;, where a null is an obstacle, and a value
-		/// indicates a distance from a goal, with 0 being a goal tile.
-		/// </summary>
-		public ArrayMap<double?> GoalMap { get; }
 
 		private Func<T, Coord, GoalState> _evaluator;
 
@@ -41,21 +38,44 @@ namespace GoRogue.Pathing
 
 		private HashSet<Coord> _closedSet = new HashSet<Coord>();
 
+		private ArrayMap<double?> _goalMap;
+
+		/// <summary>
+		/// Width of the goal map.
+		/// </summary>
+		public int Width { get => BaseMap.Width; }
+
+		/// <summary>
+		/// Height of the goal map.
+		/// </summary>
+		public int Height { get => BaseMap.Height; }
+
+		/// <summary>
+		/// Returns the goal-map value for the given position.
+		/// </summary>
+		/// <param name="x">X-coordinate of the position to return the goal-map value for.</param>
+		/// <param name="y">Y-coordinate of the position to return the goal-map value for.</param>
+		/// <returns>The goal-map value for the given position.</returns>
+		public double? this[int x, int y] => _goalMap[x, y];
+
+		/// <summary>
+		/// Returns the goal-map value for the given position.
+		/// </summary>
+		/// <param name="pos">The position to return the goal-map value for.</param>
+		/// <returns>The goal-map value for the given position.</returns>
+		public double? this[Coord pos] => _goalMap[pos];
+
 		/// <summary>
 		/// Constructor. Takes a base map and a function to evaluate a tile's goal state.
 		/// </summary>
 		/// <param name="baseMap">The underlying map.</param>
 		/// <param name="evaluator">Lambda that determines whether a tile is an obstacle, a goal, or open space</param>
-		public GoalMapBuilder(IMapView<T> baseMap, Func<T, Coord, GoalState> evaluator)
+		public GoalMap(IMapView<T> baseMap, Func<T, Coord, GoalState> evaluator)
 		{
-			if (baseMap == null)
-				throw new ArgumentNullException(nameof(baseMap));
-			if (evaluator == null)
-				throw new ArgumentNullException(nameof(evaluator));
+			BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
+			_evaluator = evaluator ?? throw new ArgumentNullException(nameof(evaluator));
 
-			BaseMap = baseMap;
-			_evaluator = evaluator;
-			GoalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
+			_goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
 			Update();
 		}
 
@@ -75,7 +95,7 @@ namespace GoRogue.Pathing
 					var state = _evaluator(BaseMap[x, y], Coord.Get(x, y));
 					if (state == GoalState.Obstacle)
 					{
-						GoalMap[x, y] = null;
+						_goalMap[x, y] = null;
 					} else {
 						_walkable.Add(Coord.Get(x, y));
 					}
@@ -99,9 +119,9 @@ namespace GoRogue.Pathing
 				var state = _evaluator(BaseMap[coord], coord);
 				if (state == GoalState.Clear)
 				{
-					GoalMap[coord] = highVal;
+					_goalMap[coord] = highVal;
 				} else {
-					GoalMap[coord] = 0.0;
+					_goalMap[coord] = 0.0;
 					_edgeSet.Add(coord);
 				}
 			}
@@ -109,16 +129,16 @@ namespace GoRogue.Pathing
 			{
 				foreach (var coord in _edgeSet.ToArray())
 				{
-					var current = GoalMap[coord].Value;
+					var current = _goalMap[coord].Value;
 					foreach (var openPoint in AdjacencyRule.EIGHT_WAY.Neighbors(coord))
 					{
 						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
-						var neighborValue = GoalMap[openPoint].Value;
+						var neighborValue = _goalMap[openPoint].Value;
 						var newValue = current + Distance.CHEBYSHEV.Calculate(coord, openPoint);
 						if (newValue < neighborValue)
 						{
-							GoalMap[openPoint] = newValue;
+							_goalMap[openPoint] = newValue;
 							_edgeSet.Add(openPoint);
 						}
 					}

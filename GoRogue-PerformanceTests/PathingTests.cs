@@ -62,7 +62,7 @@ namespace GoRogue_PerformanceTests
 
                 mapGoals[goal] = GoalState.Goal;
 
-            var mapBuilder = new GoalMapBuilder<GoalState>(mapGoals, (c, e) => c); ;
+            var mapBuilder = new GoalMap<GoalState>(mapGoals, (c, e) => c); ;
             mapBuilder.Update();
 
             s.Start();
@@ -104,7 +104,7 @@ namespace GoRogue_PerformanceTests
             foreach (var goal in goals)
                 mapGoals[goal] = GoalState.Goal;
 
-            var mapBuilder = new GoalMapBuilder<GoalState>(mapGoals, (c, e) => c);
+            var mapBuilder = new GoalMap<GoalState>(mapGoals, (c, e) => c);
             
             mapBuilder.Update();
 

@@ -162,13 +162,13 @@ namespace GoRogue_UnitTests
             dijkstraMap.AddGoal(goal2.X, goal2.Y);
             dijkstraMap.Calculate();
 
-            var goalMap = new GoalMapBuilder<GoalState>(map, (s, c) => s);
+            var goalMap = new GoalMap<GoalState>(map, (s, c) => s);
             goalMap.Update();
 
             for (int x = 0; x < genMap.Width; x++)
                 for (int y = 0; y < genMap.Height; y++)
                 {
-                    double translatedValue = !goalMap.GoalMap[x, y].HasValue ? double.MaxValue - 1 : goalMap.GoalMap[x, y].Value;
+                    double translatedValue = !goalMap[x, y].HasValue ? double.MaxValue - 1 : goalMap[x, y].Value;
                     Assert.AreEqual(translatedValue, dijkstraMap[x, y]);
                 }
 
