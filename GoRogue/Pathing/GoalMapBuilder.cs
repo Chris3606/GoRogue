@@ -115,7 +115,7 @@ namespace GoRogue.Pathing
 						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
 						var neighborValue = GoalMap[openPoint].Value;
-						var newValue = current + Distance.EUCLIDEAN.Calculate(coord, openPoint);
+						var newValue = current + Distance.CHEBYSHEV.Calculate(coord, openPoint);
 						if (newValue < neighborValue)
 						{
 							GoalMap[openPoint] = newValue;

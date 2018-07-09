@@ -6,20 +6,23 @@ namespace GoRogue.Pathing
     // Test class only - likely to change in the future.
     public class DijkstraMap
     {
-        private int[,] dijkstraMap;
+        private double[,] dijkstraMap;
         private IMapView<bool> walkabilityMap;
+
+        private static readonly double MAX_VAL = 2000;
+
 
         public DijkstraMap(IMapView<bool> walkabilityMap)
         {
             this.walkabilityMap = walkabilityMap;
-            dijkstraMap = new int[walkabilityMap.Width, walkabilityMap.Height];
+            dijkstraMap = new double[walkabilityMap.Width, walkabilityMap.Height];
 
             for (int x = 0; x < walkabilityMap.Width; x++)
                 for (int y = 0; y < walkabilityMap.Height; y++)
-                    dijkstraMap[x, y] = int.MaxValue - 1;
+                    dijkstraMap[x, y] = double.MaxValue - 1;
         }
 
-        public int this[int x, int y]
+        public double this[int x, int y]
         {
             get => dijkstraMap[x, y];
         }
@@ -34,44 +37,71 @@ namespace GoRogue.Pathing
             for (int x = 0; x < walkabilityMap.Width; x++)
                 for (int y = 0; y < walkabilityMap.Height; y++)
                     if (dijkstraMap[x, y] != 0)
-                        dijkstraMap[x, y] = int.MaxValue - 1;
+                        dijkstraMap[x, y] = double.MaxValue - 1;
 
             int changes = 1;
+
+            int numTimes = 0;
             while (changes > 0)
             {
                 changes = 0;
-                for (int x = 0; x < walkabilityMap.Width; x++)
-                    for (int y = 0; y < walkabilityMap.Height; y++)
-                    {
-                        if (!walkabilityMap[x, y])
-                            continue;
 
-                        int lVal = int.MaxValue;
-
-                        foreach (var dir in AdjacencyRule.CARDINALS.DirectionsOfNeighborsClockwise())
-                        {
-                            int nX = x + dir.DeltaX;
-                            int nY = y + dir.DeltaY;
-
-                            if (nX < 0 || nY < 0 || nX >= walkabilityMap.Width || nY >= walkabilityMap.Height)
-                                continue;
-
-                            if (dijkstraMap[nX, nY] < lVal)
-                                lVal = dijkstraMap[nX, nY];
-                        }
-
-                        if (dijkstraMap[x, y] > lVal + 1)
-                        {
-                            dijkstraMap[x, y] = lVal + 1;
-                            changes++;
-                        }
-                    }
+                if (numTimes % 2 == 0)
+                {
+                    for (int x = 0; x < walkabilityMap.Width; x++)
+                        for (int y = 0; y < walkabilityMap.Height; y++)
+                            if (mapChecks(x, y))
+                                changes++;
+                }
+                else
+                {
+                    for (int x = walkabilityMap.Width - 1; x >= 0; x--)
+                        for (int y = walkabilityMap.Height - 1; y >= 0; y--)
+                            if (mapChecks(x, y))
+                                changes++;
+                }
+                numTimes++;
             }
+
+            System.Console.WriteLine(numTimes);
         }
 
         public void RemoveGoal(int x, int y)
         {
-            dijkstraMap[x, y] = int.MaxValue - 1;
+            dijkstraMap[x, y] = double.MaxValue - 1;
+        }
+
+        public override string ToString()
+        {
+            return dijkstraMap.ExtendToStringGrid(4, elementStringifier: num => (num == double.MaxValue - 1) ? MAX_VAL.ToString() : num.ToString());
+        }
+
+        private bool mapChecks(int x, int y)
+        {
+            if (!walkabilityMap[x, y])
+                return false;
+
+            double lVal = double.MaxValue;
+
+            foreach (var dir in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsClockwise())
+            {
+                int nX = x + dir.DeltaX;
+                int nY = y + dir.DeltaY;
+
+                if (nX < 0 || nY < 0 || nX >= walkabilityMap.Width || nY >= walkabilityMap.Height)
+                    continue;
+
+                if (dijkstraMap[nX, nY] < lVal)
+                    lVal = dijkstraMap[nX, nY];
+            }
+
+            if (dijkstraMap[x, y] > lVal + 1)
+            {
+                dijkstraMap[x, y] = lVal + 1;
+                return true;
+            }
+
+            return false;
         }
     }
 

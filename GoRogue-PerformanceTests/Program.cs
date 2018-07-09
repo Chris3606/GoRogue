@@ -1,19 +1,34 @@
 ﻿using GoRogue;
 using GoRogue.SenseMapping;
+using GoRogue.Random;
+using GoRogue.MapViews;
+using GoRogue.MapGeneration.Generators;
 using System;
+using System.Collections.Generic;
 
 namespace GoRogue_PerformanceTests
 {
     public class Program
     {
-        private static readonly int ITERATIONS_FOR_TIMING = 100;
+        private static readonly int ITERATIONS_FOR_TIMING = 1;
         private static readonly int LIGHT_RADIUS = 10;
         private static readonly Coord LINE_END = Coord.Get(29, 23);
         private static readonly Coord LINE_START = Coord.Get(3, 5);
-        private static readonly int MAP_HEIGHT = 250;
-        private static readonly int MAP_WIDTH = 250;
+        private static readonly int MAP_HEIGHT = 100;
+        private static readonly int MAP_WIDTH = 100;
         private static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;
         private static readonly SourceType SOURCE_TYPE = SourceType.RIPPLE;
+        private static readonly int NUM_GOALS = 5;
+
+        private static Coord getWalkableCoord(IMapView<bool> mapView)
+        {
+            var c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            while (!mapView[c])
+                c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            return c;
+        }
 
         private static void Main()
         {
@@ -24,7 +39,8 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tLighting: {lightingMem} bytes");
             Console.WriteLine($"\tFOV     : {fovMem} bytes");
             */
-            
+
+            /*
             var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, SOURCE_TYPE,
                                                                          LIGHT_RADIUS, RADIUS_STRATEGY, ITERATIONS_FOR_TIMING);
             //var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT,
@@ -39,6 +55,7 @@ namespace GoRogue_PerformanceTests
 
             Console.WriteLine();
             TestLightingNSource(3);
+            */
 
             /*
             Console.WriteLine();
@@ -59,7 +76,7 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\tOrtho    : {timeOrtho}");
             */
 
-            
+            /*
             var timeAStar = PathingTests.TimeForAStar(MAP_WIDTH, MAP_HEIGHT, ITERATIONS_FOR_TIMING);
             Console.WriteLine();
             Console.WriteLine($"Time for {ITERATIONS_FOR_TIMING} paths, on {MAP_WIDTH}x{MAP_HEIGHT} map:");
@@ -90,6 +107,32 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\t\t5d6k2+3      : {timeForKeepExpr}");
             Console.WriteLine($"\t\t1d(1d12+4)+3: {timeForLargeDiceExpr}");
             Console.WriteLine();
+            */
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            CellularAutomataGenerator.Generate(map);
+            Coord GOAL = getWalkableCoord(map);
+
+            var timeDijkstra = PathingTests.TimeForSingleSourceDijkstra(map, GOAL, ITERATIONS_FOR_TIMING);
+            var timeGoalMap = PathingTests.TimeForSingleSourceGoalMap(map, GOAL, ITERATIONS_FOR_TIMING);
+
+            Console.WriteLine();
+            Console.WriteLine($"Time to calculate single-source goal map on {MAP_WIDTH}x{MAP_HEIGHT} map {ITERATIONS_FOR_TIMING} times:");
+            Console.WriteLine($"\tDijkstra-Map: {timeDijkstra}");
+            Console.WriteLine($"\tGoal-Map    : {timeGoalMap}");
+
+
+            var GOALS = new List<Coord>();
+
+            for (int i = 0; i < NUM_GOALS; i++)
+                GOALS.Add(getWalkableCoord(map));
+
+            var timeMDijkstra = PathingTests.TimeForMultiSourceDijkstra(map, GOALS, ITERATIONS_FOR_TIMING);
+            var timeMGoalMap = PathingTests.TimeForMultiSourceGoalMap(map, GOALS, ITERATIONS_FOR_TIMING);
+
+            Console.WriteLine();
+            Console.WriteLine($"Time to calculate multi-source goal map on {MAP_WIDTH}x{MAP_HEIGHT} map {ITERATIONS_FOR_TIMING} times:");
+            Console.WriteLine($"\tDijkstra-Map: {timeMDijkstra}");
+            Console.WriteLine($"\tGoal-Map    : {timeMGoalMap}");
         }
 
         private static void TestLightingNSource(int sources)

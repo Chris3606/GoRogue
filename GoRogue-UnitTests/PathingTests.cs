@@ -75,6 +75,106 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void ManualDijkstraMapTest()
+        {
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(map);
+
+            var dijkstraMap = new DijkstraMap(map);
+            dijkstraMap.AddGoal(MAP_WIDTH / 2, MAP_HEIGHT / 2);
+            dijkstraMap.AddGoal(MAP_WIDTH / 2 + 5, MAP_HEIGHT / 2 + 5);
+
+            dijkstraMap.Calculate();
+
+            Console.Write(dijkstraMap);
+        }
+
+        [TestMethod]
+        public void ManualDijkstraMapTimes()
+        {
+            var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(map);
+
+            var dijkstraMap = new DijkstraMap(map);
+            var c = Coord.Get(2, 2);
+
+            while (c.X < MAP_WIDTH && c.Y < MAP_HEIGHT)
+            {
+                dijkstraMap.AddGoal(c.X, c.Y);
+                c += 2;
+            }
+            dijkstraMap.Calculate(); // For the moment, displays number of iterations.
+
+            dijkstraMap = new DijkstraMap(map);
+            c = Coord.Get(map.Width - 3, 2);
+
+            while(c.X > 0 && c.Y < MAP_HEIGHT)
+            {
+                dijkstraMap.AddGoal(c.X, c.Y);
+                c += Coord.Get(-1, 1);
+            }
+            dijkstraMap.Calculate();
+
+            dijkstraMap = new DijkstraMap(map);
+            c = Coord.Get(map.Width - 3, map.Height - 3);
+
+            while (c.X > 0 && c.Y > 0)
+            {
+                dijkstraMap.AddGoal(c.X, c.Y);
+                c -= 1;
+            }
+            dijkstraMap.Calculate();
+
+            dijkstraMap = new DijkstraMap(map);
+            c = Coord.Get(2, map.Height - 3);
+
+            while (c.X < MAP_WIDTH && c.Y > 0)
+            {
+                dijkstraMap.AddGoal(c.X, c.Y);
+                c  += Coord.Get(1, -1);
+            }
+            dijkstraMap.Calculate();
+        }
+
+        [TestMethod]
+        public void DijkstraAreEqual()
+        {
+            var genMap = new ArrayMap<bool>(100, 100);
+            CellularAutomataGenerator.Generate(genMap);
+
+            var goal1 = getWalkableCoord(genMap);
+
+            var goal2 = getWalkableCoord(genMap);
+            while (goal1 == goal2)
+                goal2 = getWalkableCoord(genMap);
+
+            var map = new ArrayMap<GoalState>(genMap.Width, genMap.Height);
+
+            for (int x = 0; x < genMap.Width; x++)
+                for (int y = 0; y < genMap.Height; y++)
+                    map[x, y] = genMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
+
+            map[goal1] = GoalState.Goal;
+            map[goal2] = GoalState.Goal;
+
+            var dijkstraMap = new DijkstraMap(genMap);
+            dijkstraMap.AddGoal(goal1.X, goal1.Y);
+            dijkstraMap.AddGoal(goal2.X, goal2.Y);
+            dijkstraMap.Calculate();
+
+            var goalMap = new GoalMapBuilder<GoalState>(map, (s, c) => s);
+            goalMap.Update();
+
+            for (int x = 0; x < genMap.Width; x++)
+                for (int y = 0; y < genMap.Height; y++)
+                {
+                    double translatedValue = !goalMap.GoalMap[x, y].HasValue ? double.MaxValue - 1 : goalMap.GoalMap[x, y].Value;
+                    Assert.AreEqual(translatedValue, dijkstraMap[x, y]);
+                }
+
+        }
+
+        [TestMethod]
         public void PathInitReversing()
         {
             Coord start = Coord.Get(1, 1);
@@ -170,6 +270,16 @@ namespace GoRogue_UnitTests
                 default:
                     throw new Exception("Should not occur");
             }
+        }
+
+        public Coord getWalkableCoord(IMapView<bool> mapView)
+        {
+            var c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            while (!mapView[c])
+                c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            return c;
         }
 
         // Initialize graph for control-case AStar, based on a GoRogue IMapView
