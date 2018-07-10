@@ -1,5 +1,6 @@
 ﻿using GoRogue.MapGeneration;
 using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -312,6 +313,18 @@ namespace GoRogue
         {
             return (other.X < X + Width && X < other.X + other.Width && other.Y < Y + Height && Y < other.Y + other.Height);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Coord> Positions()
+        {
+            for (int y = 0; y < Height; y++)
+                for (int x = 0; x < Width; x++)
+                    yield return Coord.Get(x, y);
+        }
+
 
         /// <summary>
         /// Formats as (X, Y) -&gt; (MaxX, MaxY)

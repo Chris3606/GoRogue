@@ -75,18 +75,24 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
-        public void ManualDijkstraMapTest()
+        public void ManualGoalMapTest()
         {
             var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
             RectangleMapGenerator.Generate(map);
 
-            var dijkstraMap = new DijkstraMap(map);
-            dijkstraMap.AddGoal(MAP_WIDTH / 2, MAP_HEIGHT / 2);
-            dijkstraMap.AddGoal(MAP_WIDTH / 2 + 5, MAP_HEIGHT / 2 + 5);
+            var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
+            foreach (var pos in stateMap.Positions())
+                stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
 
-            dijkstraMap.Calculate();
+            stateMap[MAP_WIDTH / 2, MAP_WIDTH / 2] = GoalState.Goal;
+            stateMap[MAP_WIDTH / 2 + 5, MAP_HEIGHT / 2 + 5] = GoalState.Goal;
 
-            Console.Write(dijkstraMap);
+            var goalMap = new GoalMap(stateMap, Distance.EUCLIDEAN);
+            goalMap.Update();
+
+            Assert.AreEqual(null, goalMap[0, 0]);
+
+            Console.Write(goalMap.ToString(5, "0.00"));
         }
 
         [TestMethod]
@@ -162,7 +168,7 @@ namespace GoRogue_UnitTests
             dijkstraMap.AddGoal(goal2.X, goal2.Y);
             dijkstraMap.Calculate();
 
-            var goalMap = new GoalMap(map);
+            var goalMap = new GoalMap(map, Distance.CHEBYSHEV);
             goalMap.Update();
 
             for (int x = 0; x < genMap.Width; x++)

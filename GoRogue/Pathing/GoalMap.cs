@@ -26,13 +26,14 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// The underlying map.
 		/// </summary>
-		public IMapView<GoalState> BaseMap { get; }
+		public IMapView<GoalState> BaseMap { get; private set; }
 
 		private HashSet<Coord> _walkable = new HashSet<Coord>();
 		private HashSet<Coord> _edgeSet = new HashSet<Coord>();
 		private HashSet<Coord> _closedSet = new HashSet<Coord>();
 
 		private ArrayMap<double?> _goalMap;
+		private Distance _distanceMeasurement;
 
 		/// <summary>
 		/// Width of the goal map.
@@ -60,12 +61,15 @@ namespace GoRogue.Pathing
 		public double? this[Coord pos] => _goalMap[pos];
 
 		/// <summary>
-		/// Constructor. Takes a base map and a function to evaluate a tile's goal state.
+		/// Constructor. Takes a base map and a distance measurement to use for calculation.
 		/// </summary>
 		/// <param name="baseMap">The underlying map as GoalStates.</param>
-		public GoalMap(IMapView<GoalState> baseMap)
+		/// <param name="distanceMeasurement">The distance measurement (and implicitly the AdjacencyRule)
+		/// to use for calculation.</param>
+		public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
 		{
 			BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
+			_distanceMeasurement = distanceMeasurement ?? throw new ArgumentNullException(nameof(baseMap));
 
 			_goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
 			Update();
@@ -122,12 +126,12 @@ namespace GoRogue.Pathing
 				foreach (var coord in _edgeSet.ToArray())
 				{
 					var current = _goalMap[coord].Value;
-					foreach (var openPoint in AdjacencyRule.EIGHT_WAY.Neighbors(coord))
+					foreach (var openPoint in ((AdjacencyRule)_distanceMeasurement).Neighbors(coord))
 					{
 						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
 						var neighborValue = _goalMap[openPoint].Value;
-						var newValue = current + Distance.CHEBYSHEV.Calculate(coord, openPoint);
+						var newValue = current + _distanceMeasurement.Calculate(coord, openPoint);
 						if (newValue < neighborValue)
 						{
 							_goalMap[openPoint] = newValue;
@@ -140,5 +144,18 @@ namespace GoRogue.Pathing
 			}
 			return _closedSet.Count > 0;
 		}
+
+		public override string ToString() =>
+			_goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
+
+        public string ToString(string formatString) =>
+            _goalMap.ToString(val => val.HasValue ? val.Value.ToString(formatString) : "null");
+
+
+        public string ToString(int fieldSize)
+            => _goalMap.ToString(fieldSize);
+
+        public string ToString(int fieldSize, string formatString)
+            => _goalMap.ToString(fieldSize, val => val.HasValue ? val.Value.ToString(formatString) : "null");
 	}
 }

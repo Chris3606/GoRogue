@@ -9,6 +9,8 @@ namespace GoRogue.Pathing
         private double[,] dijkstraMap;
         private IMapView<bool> walkabilityMap;
 
+
+
         private static readonly double MAX_VAL = 2000;
 
 
