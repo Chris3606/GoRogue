@@ -30,26 +30,7 @@ namespace GoRogue_PerformanceTests
             s.Stop();
 
             return s.Elapsed;
-        }
-
-        public static TimeSpan TimeForSingleSourceDijkstra(IMapView<bool> map, Coord goal, int iterations)
-        {
-            Stopwatch s = new Stopwatch();
-
-            DijkstraMap dMap = new DijkstraMap(map);
-
-            dMap.AddGoal(goal.X, goal.Y);
-
-            dMap.Calculate(); // warm-up value
-
-            s.Start();
-            for (int i = 0; i < iterations; i++)
-                dMap.Calculate();
-
-            s.Stop();
-
-            return s.Elapsed;
-        }
+        } 
 
         public static TimeSpan TimeForSingleSourceGoalMap(IMapView<bool> map, Coord goal, int iterations)
         {
@@ -68,25 +49,6 @@ namespace GoRogue_PerformanceTests
             s.Start();
             for (int i = 0; i < iterations; i++)
                 mapBuilder.Update();
-            s.Stop();
-
-            return s.Elapsed;
-        }
-
-        public static TimeSpan TimeForMultiSourceDijkstra(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
-        {
-            Stopwatch s = new Stopwatch();
-
-            DijkstraMap dMap = new DijkstraMap(map);
-
-            foreach (var goal in goals)
-                dMap.AddGoal(goal.X, goal.Y);
-
-            dMap.Calculate(); // warm-up value
-
-            s.Start();
-            for (int i = 0; i < iterations; i++)
-                dMap.Calculate();
             s.Stop();
 
             return s.Elapsed;

@@ -35,6 +35,9 @@
     <NoWarn>RECS0145;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyConsole, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyConsole.1.1.0\lib\net452\EasyConsole.dll</HintPath>
+    </Reference>
     <Reference Include="Priority Queue, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OptimizedPriorityQueue.4.1.1\lib\net45\Priority Queue.dll</HintPath>
     </Reference>
@@ -53,8 +56,10 @@
     <Compile Include="DiceNotationTests.cs" />
     <Compile Include="LightingFOVTests.cs" />
     <Compile Include="LineTests.cs" />
+    <Compile Include="MainPage.cs" />
     <Compile Include="PathingTests.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="PerfTests.cs" />
+    <Compile Include="Runner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

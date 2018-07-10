@@ -145,16 +145,38 @@ namespace GoRogue.Pathing
 			return _closedSet.Count > 0;
 		}
 
+        /// <summary>
+        /// Returns the goal-map values represented as a 2D grid-style string.
+        /// </summary>
+        /// <returns>A string representing the goal map values.</returns>
 		public override string ToString() =>
 			_goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
 
+        /// <summary>
+        /// Returns the goal-map values represented as a 2D-grid-style string, where any value that isn't
+        /// null is formatted as per the specified format string.
+        /// </summary>
+        /// <param name="formatString">Format string to use for non-null values.</param>
+        /// <returns>A string representing the goal-map values.</returns>
         public string ToString(string formatString) =>
             _goalMap.ToString(val => val.HasValue ? val.Value.ToString(formatString) : "null");
 
-
+        /// <summary>
+        /// Returns the goal-map values represented as a 2D-grid-style string, with the given field 
+        /// size.
+        /// </summary>
+        /// <param name="fieldSize">Number of characters allocated to each value in the string.</param>
+        /// <returns>A string representing the goal-map values.</returns>
         public string ToString(int fieldSize)
             => _goalMap.ToString(fieldSize);
 
+        /// <summary>
+        /// Returns the goal-map values represented as a 2D-grid-style string, with the given field size,
+        /// and any non-null values formatted using the given format string.
+        /// </summary>
+        /// <param name="fieldSize">Number of characters allocated to each value in the string.</param>
+        /// <param name="formatString">Format string to use for non-null values.</param>
+        /// <returns>A string representing the goal-map values.</returns>
         public string ToString(int fieldSize, string formatString)
             => _goalMap.ToString(fieldSize, val => val.HasValue ? val.Value.ToString(formatString) : "null");
 	}
