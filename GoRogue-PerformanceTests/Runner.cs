@@ -15,9 +15,12 @@ namespace GoRogue_PerformanceTests
         public static readonly SourceType SOURCE_TYPE = SourceType.RIPPLE;
         public static readonly int NUM_GOALS = 5;
 
+        public static bool Quit = false;
+
         private static void Main()
         {
-            new PerfTests().Run();
+            while (!Quit)
+                new PerfTests().Run();
         }
     }
 }

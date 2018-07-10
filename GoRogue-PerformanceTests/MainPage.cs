@@ -14,7 +14,8 @@ namespace GoRogue_PerformanceTests
                   new Option("Lighting/FOV Tests", LightingFOV),
                   new Option("Dice Notation Tests", DiceNotation),
                   new Option("Line Tests", Line),
-                  new Option("Pathing Tests", Pathing))
+                  new Option("Pathing Tests", Pathing),
+                  new Option("Quit", Quit))
         { }
 
         private static void LightingFOV()
@@ -121,6 +122,11 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine();
             Console.WriteLine($"Time to calculate multi-source goal map on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times:");
             Console.WriteLine($"\tGoal-Map    : {timeMGoalMap}");
+        }
+
+        private static void Quit()
+        {
+            Runner.Quit = true;
         }
 
         private static void TestLightingNSource(int sources)

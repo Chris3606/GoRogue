@@ -1,6 +1,8 @@
 ﻿using GoRogue.MapGeneration;
 using System;
 using System.Collections.Generic;
+using Troschuetz.Random;
+using GoRogue.Random;
 
 namespace GoRogue
 {
@@ -315,14 +317,47 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// 
+        /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested for loop.
         /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Coord> Positions()
+        /// <returns>All positions in the rectangle.</returns>
+        public IEnumerable<Coord> GetPositions()
         {
             for (int y = 0; y < Height; y++)
                 for (int x = 0; x < Width; x++)
                     yield return Coord.Get(x, y);
+        }
+
+        /// <summary>
+        /// Returns a random position from within this rectangle.
+        /// </summary>
+        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>A random position from within the rectangle.</returns>
+        public Coord GetRandomPosition(IGenerator rng = null)
+        {
+            if (rng == null)
+                rng = SingletonRandom.DefaultRNG;
+
+            return Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+        }
+
+        /// <summary>
+        /// Returns a random position from within this rectangle, for which the selector function specified returns true
+        /// Random positions will continuously be generated until one that qualifies is found.
+        /// </summary>
+        /// <param name="selector">Selector function that takes a Coord, and returns true if it is an acceptable selection, and false otherwise.</param>
+        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>A random position from within the rectangle for which the given selector function returned true.</returns>
+        public Coord GetRandomPosition(Func<Coord, bool> selector, IGenerator rng = null)
+        {
+            if (rng == null)
+                rng = SingletonRandom.DefaultRNG;
+
+            var c = Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+
+            while (!selector(c))
+                c = Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+
+            return c;
         }
 
 
