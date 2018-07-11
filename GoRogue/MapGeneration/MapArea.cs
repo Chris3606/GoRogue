@@ -366,7 +366,7 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Creates a new MapArea with the Coords all shifted by the given vector (Coord)
+        /// Creates a new MapArea with the Coords all shifted by the given vector (Coord).
         /// </summary>
         /// <param name="lhs">MapArea.</param>
         /// <param name="rhs">Coord (vector) to add.</param>
