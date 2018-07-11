@@ -96,6 +96,27 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
+        /// Gets a MapArea containing all positions in area1, minus those that are in area2.
+        /// </summary>
+        /// <param name="area1">The first MapArea.</param>
+        /// <param name="area2">The second MapArea.</param>
+        /// <returns>A MapArea with exactly those positions in area1 that are NOT in area2.</returns>
+        public static MapArea GetDifference(MapArea area1, MapArea area2)
+        {
+            var retVal = new MapArea();
+
+            foreach (var pos in area1.Positions)
+            {
+                if (area2.Contains(pos))
+                    continue;
+
+                retVal.Add(pos);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
         /// Adds the given position to the list of points within the area if it is not already in the
         /// list, or does nothing otherwise. Because the class uses a hash set internally to
         /// determine what points have already been added, this is an average case O(1) operation.
