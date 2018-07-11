@@ -151,6 +151,29 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Convenience function that yields the given item as a single-item IEnumerable.
+        /// </summary>
+        /// <typeparam name="T">Type of the item. Generally the compiler determines this since it is an extension method.</typeparam>
+        /// <param name="item">The item to yield.  Never specified manually as this is an extension method.</param>
+        /// <returns>An IEnumerable containing only the item the function is called on.</returns>
+        public static IEnumerable<T> Yield<T>(this T item)
+        {
+            yield return item;
+        }
+
+        /// <summary>
+        /// Convenience function that takes multiple parameters and converts them to an IEnumerable.
+        /// </summary>
+        /// <typeparam name="T">Type of the parameters.</typeparam>
+        /// <param name="values">Parameters (specified as multiple parameters to the function)</param>
+        /// <returns>An IEnumerable of all of the given items, in the order they were given to the function.</returns>
+        public static IEnumerable<T> Yield<T>(params T[] values)
+        {
+            foreach (var value in values)
+                yield return value;
+        }
+
+        /// <summary>
         /// Adds an AsReadOnly method to IDictionary, similar to the AsReadOnly method of IList, that returns a read-only reference
         /// to the dictionary.
         /// </summary>

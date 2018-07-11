@@ -136,6 +136,64 @@ namespace GoRogue.MapGeneration
             }
         }
 
+        public void Add(IEnumerable<Coord> positions)
+        {
+            foreach (var pos in positions)
+                Add(pos);
+        }
+
+        public void Add(Rectangle rectangle)
+        {
+            foreach (var pos in rectangle.Positions())
+                Add(pos);
+        }
+
+
+
+        public void Remove(Coord position) => Remove(position.Yield());
+
+        public void Remove(IEnumerable<Coord> positions)
+        {
+            bool recalculateBounds = false;
+
+            foreach (var pos in positions)
+            {
+                if (positionsSet.Remove(pos))
+                {
+                    _positions.Remove(pos);
+                    // This coordinate was a bound so we'll need to recalculate when we're done.
+                    if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
+                        recalculateBounds = true;
+                }
+            }
+
+            if (recalculateBounds)
+            {
+                int leftLocal = int.MaxValue, topLocal = int.MaxValue;
+                int rightLocal = int.MinValue, bottomLocal = int.MinValue;
+
+                // Find new bounds
+                foreach (var pos in _positions)
+                {
+                    if (pos.X > rightLocal) rightLocal = pos.X;
+                    if (pos.X < leftLocal) leftLocal = pos.X;
+                    if (pos.Y > bottomLocal) bottomLocal = pos.Y;
+                    if (pos.Y < topLocal) topLocal = pos.Y;
+                }
+
+                left = leftLocal;
+                right = rightLocal;
+                top = topLocal;
+                bottom = bottomLocal;
+            }
+        }
+
+        public void Remove(int x, int y) => Remove(Coord.Get(x, y));
+
+        public void Remove(MapArea area) => Remove(area.Positions);
+
+        public void Remove(Rectangle rectangle) => Remove(rectangle.Positions());
+
         /// <summary>
         /// Adds the given position to the list of points within the area if it is not already in the
         /// list, or does nothing otherwise. Because the class uses a hash set internally to
