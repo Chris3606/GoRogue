@@ -95,12 +95,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a0db47fd4ee39932e98414df744ebca49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a0db47fd4ee39932e98414df744ebca49">Width</a><code> [get]</code></td></tr>
-<tr class="memdesc:a0db47fd4ee39932e98414df744ebca49"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width of the map being represented.  <a href="#a0db47fd4ee39932e98414df744ebca49">More...</a><br /></td></tr>
-<tr class="separator:a0db47fd4ee39932e98414df744ebca49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff93a2d6433fbb9c9b06167e61ba290c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#aff93a2d6433fbb9c9b06167e61ba290c">Height</a><code> [get]</code></td></tr>
 <tr class="memdesc:aff93a2d6433fbb9c9b06167e61ba290c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The height of the map being represented.  <a href="#aff93a2d6433fbb9c9b06167e61ba290c">More...</a><br /></td></tr>
 <tr class="separator:aff93a2d6433fbb9c9b06167e61ba290c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0db47fd4ee39932e98414df744ebca49"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a0db47fd4ee39932e98414df744ebca49">Width</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0db47fd4ee39932e98414df744ebca49"><td class="mdescLeft">&#160;</td><td class="mdescRight">The width of the map being represented.  <a href="#a0db47fd4ee39932e98414df744ebca49">More...</a><br /></td></tr>
+<tr class="separator:a0db47fd4ee39932e98414df744ebca49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33aeba2dbaea99445ee8bd348f1393f7"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a33aeba2dbaea99445ee8bd348f1393f7">this[int x, int y]</a><code> [get]</code></td></tr>
 <tr class="memdesc:a33aeba2dbaea99445ee8bd348f1393f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given an X and Y value, returns the "value" associated with that location, by calling the valueGetter lambda provided at construction.  <a href="#a33aeba2dbaea99445ee8bd348f1393f7">More...</a><br /></td></tr>
 <tr class="separator:a33aeba2dbaea99445ee8bd348f1393f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,7 +169,7 @@ Properties</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">width</td><td>The (constant) width of the map.</td></tr>
     <tr><td class="paramname">height</td><td>The (constant) height of the map.</td></tr>
-    <tr><td class="paramname">valueGetter</td><td>A delegate/lambda that returns the value of type T associated with the location it is given.</td></tr>
+    <tr><td class="paramname">valueGetter</td><td>A delegate/lambda that returns the value of type T associated with the location it is given. </td></tr>
   </table>
   </dd>
 </dl>
@@ -212,9 +212,9 @@ Properties</h2></td></tr>
 <p>This constructor is useful if the width and height of the map being represented may change &ndash; one can provide lambdas that retrieve the width and height of the map being represented, and these lambdas will be called any time the Width and Height properties of this class are retrieved. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">widthGetter</td><td>A delegate/lambda that retrieves the width of the map being represented.</td></tr>
-    <tr><td class="paramname">heightGetter</td><td>A delegate/lambda that retrieves the height of the map being represented.</td></tr>
-    <tr><td class="paramname">valueGetter</td><td>A delegate/lambda that returns the value of type T associated with the location it is given.</td></tr>
+    <tr><td class="paramname">widthGetter</td><td>A delegate/lambda that retrieves the width of the map being represented. </td></tr>
+    <tr><td class="paramname">heightGetter</td><td>A delegate/lambda that retrieves the height of the map being represented. </td></tr>
+    <tr><td class="paramname">valueGetter</td><td>A delegate/lambda that returns the value of type T associated with the location it is given. </td></tr>
   </table>
   </dd>
 </dl>
@@ -273,7 +273,7 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The "value" associated with the provided location, according to the valueGetter lambda provided at construction.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The "value" associated with the provided location, according to the valueGetter lambda provided at construction. </dd></dl>
 
 </div>
 </div>
@@ -305,7 +305,7 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The "value" associated with that location, according to the valueGetter lambda provided at construction.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The "value" associated with that location, according to the valueGetter lambda provided at construction. </dd></dl>
 
 </div>
 </div>

@@ -15,7 +15,7 @@ namespace GoRogue.Pathing
     /// weight value, the more strongly an AI will attempt to pursue this goal. A negative weight
     /// inverts the map, turning its goal into something to avoid.
     /// </remarks>
-    internal class WeightedGoalMap : IMapView<double?>
+    public class WeightedGoalMap : IMapView<double?>
     {
         private Dictionary<IMapView<double?>, double> _weights = new Dictionary<IMapView<double?>, double>();
 

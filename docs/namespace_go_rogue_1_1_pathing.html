@@ -64,7 +64,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue.Pathing Namespace Reference</div>  </div>
 </div><!--header-->
@@ -77,10 +78,58 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><b>AStarNode</b></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html">GoalMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of a goal map system, also known as Dijkstra maps ( <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps</a> )  <a href="class_go_rogue_1_1_pathing_1_1_goal_map.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_path.html">Path</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encapsulates a path as returned by pathfinding algorithms like <a class="el" href="class_go_rogue_1_1_pathing_1_1_a_star.html" title="Implements basic AStar pathing. Distance specified determins the heuristic and connectivity (4-way vs...">AStar</a>.  <a href="class_go_rogue_1_1_pathing_1_1_path.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html">WeightedGoalMap</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the second half of the goal map system described in <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps</a> , the ability to combine multiple goal maps with different weights.  <a href="class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a7996d969a41dbe06b05e9291c16aa498"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498">GoalState</a> { <a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498afe29c1262b319e6d200d32384ae636c7">GoalState.Obstacle</a>, 
+<a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498adc30bc0c7914db5918da4263fce93ad2">GoalState.Clear</a>, 
+<a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498a12c74214cb4c18cf36d885303d6aa2e1">GoalState.Goal</a>
+ }<tr class="memdesc:a7996d969a41dbe06b05e9291c16aa498"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to determine the status of a tile for goal-mapping purposes.  <a href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498">More...</a><br /></td></tr>
+</td></tr>
+<tr class="separator:a7996d969a41dbe06b05e9291c16aa498"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a7996d969a41dbe06b05e9291c16aa498"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7996d969a41dbe06b05e9291c16aa498">&sect;&nbsp;</a></span>GoalState</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498">GoRogue.Pathing.GoalState</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Used to determine the status of a tile for goal-mapping purposes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7996d969a41dbe06b05e9291c16aa498afe29c1262b319e6d200d32384ae636c7"></a>Obstacle&#160;</td><td class="fielddoc"><p>A tile that can't be entered and has to be routed around </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7996d969a41dbe06b05e9291c16aa498adc30bc0c7914db5918da4263fce93ad2"></a>Clear&#160;</td><td class="fielddoc"><p>A tile that can be entered </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7996d969a41dbe06b05e9291c16aa498a12c74214cb4c18cf36d885303d6aa2e1"></a>Goal&#160;</td><td class="fielddoc"><p>A destination on the goal map. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

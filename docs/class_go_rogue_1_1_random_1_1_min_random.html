@@ -136,13 +136,13 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a1e26324d2390039a56f03452c69943b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_random_1_1_min_random.html#a1e26324d2390039a56f03452c69943b2">CanReset</a> =&gt; true</td></tr>
+<tr class="memdesc:a1e26324d2390039a56f03452c69943b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not the RNG is capable of resetting, such that it will return the same series of values again.  <a href="#a1e26324d2390039a56f03452c69943b2">More...</a><br /></td></tr>
+<tr class="separator:a1e26324d2390039a56f03452c69943b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1789dababcf55ce3826d132b5730fc9c"><td class="memItemLeft" align="right" valign="top"><a id="a1789dababcf55ce3826d132b5730fc9c"></a>
 uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_random_1_1_min_random.html#a1789dababcf55ce3826d132b5730fc9c">Seed</a> =&gt; 0</td></tr>
 <tr class="memdesc:a1789dababcf55ce3826d132b5730fc9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Since this RNG returns the maximum possible value, this field will always return 0. /summary&gt; <br /></td></tr>
 <tr class="separator:a1789dababcf55ce3826d132b5730fc9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e26324d2390039a56f03452c69943b2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_random_1_1_min_random.html#a1e26324d2390039a56f03452c69943b2">CanReset</a> =&gt; true</td></tr>
-<tr class="memdesc:a1e26324d2390039a56f03452c69943b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether or not the RNG is capable of resetting, such that it will return the same series of values again.  <a href="#a1e26324d2390039a56f03452c69943b2">More...</a><br /></td></tr>
-<tr class="separator:a1e26324d2390039a56f03452c69943b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A "random" number generator that always returns the minValue parameter given, or 0 on the Next overload that only takes maxValue. Again, may be useful for testing. Also used in DiceExpression for certain minimum roll functions. </p>
@@ -217,8 +217,8 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns minValue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (which is always returned by this generator)</td></tr>
-    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number (which is unused since this generator always returns the minimum.</td></tr>
+    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (which is always returned by this generator) </td></tr>
+    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number (which is unused since this generator always returns the minimum. </td></tr>
   </table>
   </dd>
 </dl>
@@ -311,7 +311,7 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns 0.0. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number, exclusive. Unused since this function always returns the minimum.</td></tr>
+    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number, exclusive. Unused since this function always returns the minimum. </td></tr>
   </table>
   </dd>
 </dl>
@@ -348,7 +348,7 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns minValue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (always returned since this function always returns the minimum).</td></tr>
+    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (always returned since this function always returns the minimum). </td></tr>
     <tr><td class="paramname">maxValue</td><td>The maximum vlaue for the returned number (unused).</td></tr>
   </table>
   </dd>
@@ -416,7 +416,7 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns 0. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number (unused since this generator always returns the minimum).</td></tr>
+    <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number (unused since this generator always returns the minimum). </td></tr>
   </table>
   </dd>
 </dl>
@@ -453,7 +453,7 @@ uint&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Returns minValue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (this generator always returns the minimum value).</td></tr>
+    <tr><td class="paramname">minValue</td><td>The minimum value for the returned number (this generator always returns the minimum value). </td></tr>
     <tr><td class="paramname">maxValue</td><td>The maximum value for the returned number (unused).</td></tr>
   </table>
   </dd>

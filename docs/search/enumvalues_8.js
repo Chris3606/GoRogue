@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['right',['RIGHT',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8a21507b40c80068eda19865706fdc2403',1,'GoRogue::Direction']]],
-  ['ripple',['RIPPLE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a3b68550e169b363f0d4937bba677d76d',1,'GoRogue::SenseMapping']]],
-  ['ripple_5floose',['RIPPLE_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a450e61693b6ddefa09d369fcd289a5bb',1,'GoRogue::SenseMapping']]],
-  ['ripple_5ftight',['RIPPLE_TIGHT',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42addbfc9ad7f292b04c5003106a7268a35',1,'GoRogue::SenseMapping']]],
-  ['ripple_5fvery_5floose',['RIPPLE_VERY_LOOSE',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a507c2c185aefa93e554ecfb94076867c',1,'GoRogue::SenseMapping']]]
+  ['obstacle',['Obstacle',['../namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498afe29c1262b319e6d200d32384ae636c7',1,'GoRogue::Pathing']]],
+  ['octahedron',['OCTAHEDRON',['../class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1af90dd475a67e9d29408b539a832510ff',1,'GoRogue::Radius']]],
+  ['ortho',['ORTHO',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96a9441273d8f694623f0a3cf3e24c29944',1,'GoRogue::Lines']]]
 ];

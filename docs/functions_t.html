@@ -74,6 +74,9 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_multiply_term.html#aefdabdd97939023591c1f53a6e807963">GoRogue.DiceNotation.Terms.MultiplyTerm</a>
 , <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_subtract_term.html#a6a26a70f63f33df086606624c9db4dee">GoRogue.DiceNotation.Terms.SubtractTerm</a>
 </li>
+<li>this[Coord point]
+: <a class="el" href="class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html#a70583c951b871caa6f01443fb16b8c71">GoRogue.Pathing.WeightedGoalMap</a>
+</li>
 <li>this[Coord pos]
 : <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html#a8a2edc5b7af725d7261f1613a66f19ad">GoRogue.MapViews.ArrayMap&lt; T &gt;</a>
 , <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#a76d7b4ef01e03488fc0f96bb41ff7648">GoRogue.MapViews.IMapView&lt; T &gt;</a>
@@ -82,6 +85,7 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a00eccce1fc594d2d3b6d6dc7ed39b711">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a373b3278bf80926a40ee01888380a74d">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a2caa7b1771f4800a0a352f23e3ce5550">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#ac15112519d70473270dcd0663ca209cb">GoRogue.Pathing.GoalMap</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#abd68c6d8bf8ee664c7d05ebdf74513fe">GoRogue.SenseMapping.SenseMap</a>
 </li>
 <li>this[Coord position]
@@ -96,6 +100,8 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html#a8b22935e8b1750ebc921b49eb81c38bf">GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#ab4dd868c7b212acb9887719dc271eae5">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a3cbd53d4c55588b39119c5bc9100e6ee">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a9343433536e93f344b4f899ee8e2d0d6">GoRogue.Pathing.GoalMap</a>
+, <a class="el" href="class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html#a8d4ac9a64d924774e2693e79f3906393">GoRogue.Pathing.WeightedGoalMap</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1aae889fdb2f5b98e44332d6ef30e7be">GoRogue.SenseMapping.SenseMap</a>
 </li>
 <li>ToAdjacencyRule()
@@ -144,6 +150,7 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a5708ff23a78a1cba34d96b6b6cc494cc">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html#a2aad946a6a3ef20cee702e6b526114c7">GoRogue.MapViews.TranslationMap&lt; T1, T2 &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a0255cb1508bd8da3b24d6fc98ea1ac7a">GoRogue.MultiSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a62f7643ded72dafe1f9ea23db2bc4c2d">GoRogue.Pathing.GoalMap</a>
 , <a class="el" href="class_go_rogue_1_1_pathing_1_1_path.html#aea154ac3eaca55acb74fff52c8f850c2">GoRogue.Pathing.Path</a>
 , <a class="el" href="class_go_rogue_1_1_radius.html#ac8472bb946799fa15e88302ef97035cf">GoRogue.Radius</a>
 , <a class="el" href="class_go_rogue_1_1_radius_area_provider.html#aa4c82b00bbe7dde9b1806cd2263c5345">GoRogue.RadiusAreaProvider</a>
@@ -159,7 +166,7 @@ $(function() {
 : <a class="el" href="class_go_rogue_1_1_coord.html#a16f088c5eefa1ea657980e075d2dfa24">GoRogue.Coord</a>
 </li>
 <li>Translate()
-: <a class="el" href="class_go_rogue_1_1_coord.html#ad678b722d6d7c673cfd1525ab1aa3adb">GoRogue.Coord</a>
+: <a class="el" href="class_go_rogue_1_1_coord.html#a0b1889ab37d7a447b2e4875027175b5d">GoRogue.Coord</a>
 </li>
 <li>TranslateGet()
 : <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_translation_map.html#a7d23647095ac1b5eef338b1537432e06">GoRogue.MapViews.LambdaSettableTranslationMap&lt; T1, T2 &gt;</a>

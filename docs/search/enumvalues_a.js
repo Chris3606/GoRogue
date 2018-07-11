@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['up',['UP',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8afbaedde498cdead4f2780217646e9ba1',1,'GoRogue::Direction']]],
-  ['up_5fleft',['UP_LEFT',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8a5af977eba745c40e537dc0418e7f3206',1,'GoRogue::Direction']]],
-  ['up_5fright',['UP_RIGHT',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8aec3f5819018217397fc7f587a3b4ae78',1,'GoRogue::Direction']]]
+  ['shadow',['SHADOW',['../namespace_go_rogue_1_1_sense_mapping.html#a4349debafc84367bb76a6cd54cf0ef42a8160fba05a5a291372a94bc22b55f62b',1,'GoRogue::SenseMapping']]],
+  ['sphere',['SPHERE',['../class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a6f7cea7381e843e2ee0338b4a92b0d43',1,'GoRogue::Radius']]],
+  ['square',['SQUARE',['../class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1a12dec4e1f7ec620651b2b95c440ffac0',1,'GoRogue::Radius']]]
 ];

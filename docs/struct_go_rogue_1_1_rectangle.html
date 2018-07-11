@@ -120,12 +120,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a02ad05add215d3d996851bce48136bd1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a02ad05add215d3d996851bce48136bd1">Intersects</a> (<a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> other)</td></tr>
 <tr class="memdesc:a02ad05add215d3d996851bce48136bd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not the given rectangle intersects the current one.  <a href="#a02ad05add215d3d996851bce48136bd1">More...</a><br /></td></tr>
 <tr class="separator:a02ad05add215d3d996851bce48136bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a118c4a04eae32e02071966256dbae52f"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a118c4a04eae32e02071966256dbae52f">Positions</a> ()</td></tr>
+<tr class="memdesc:a118c4a04eae32e02071966256dbae52f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested for loop.  <a href="#a118c4a04eae32e02071966256dbae52f">More...</a><br /></td></tr>
+<tr class="separator:a118c4a04eae32e02071966256dbae52f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab91ac80f575e2177fa84a28256137e9a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#ab91ac80f575e2177fa84a28256137e9a">RandomPosition</a> (IGenerator rng=null)</td></tr>
+<tr class="memdesc:ab91ac80f575e2177fa84a28256137e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random position from within this rectangle.  <a href="#ab91ac80f575e2177fa84a28256137e9a">More...</a><br /></td></tr>
+<tr class="separator:ab91ac80f575e2177fa84a28256137e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64e8eb6c96a7c538abf37bf21131ce8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a64e8eb6c96a7c538abf37bf21131ce8f">RandomPosition</a> (Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, bool &gt; selector, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a64e8eb6c96a7c538abf37bf21131ce8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random position from within this rectangle, for which the selector function specified returns true <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continuously be generated until one that qualifies is found.  <a href="#a64e8eb6c96a7c538abf37bf21131ce8f">More...</a><br /></td></tr>
+<tr class="separator:a64e8eb6c96a7c538abf37bf21131ce8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4cb6e4fc24df3f9d0eff6cfbcb83915"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#ad4cb6e4fc24df3f9d0eff6cfbcb83915">ToString</a> ()</td></tr>
 <tr class="memdesc:ad4cb6e4fc24df3f9d0eff6cfbcb83915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formats as (X, Y) -&gt; (MaxX, MaxY)  <a href="#ad4cb6e4fc24df3f9d0eff6cfbcb83915">More...</a><br /></td></tr>
 <tr class="separator:ad4cb6e4fc24df3f9d0eff6cfbcb83915"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a664ecdc9dbd03ab90f9dd0f8e59a1240">GetDifference</a> (<a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> rect1, <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> rect2)</td></tr>
+<tr class="memdesc:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a MapArea representing every cell in rect1 that is NOT in rect2.  <a href="#a664ecdc9dbd03ab90f9dd0f8e59a1240">More...</a><br /></td></tr>
+<tr class="separator:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a629203e2f2f66870467f34851af54b32"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a629203e2f2f66870467f34851af54b32">GetExactUnion</a> (<a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> r1, <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> r2)</td></tr>
 <tr class="memdesc:a629203e2f2f66870467f34851af54b32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a MapArea representing the exact union of the specified rectangles.  <a href="#a629203e2f2f66870467f34851af54b32">More...</a><br /></td></tr>
 <tr class="separator:a629203e2f2f66870467f34851af54b32"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -500,6 +512,52 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a664ecdc9dbd03ab90f9dd0f8e59a1240"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a664ecdc9dbd03ab90f9dd0f8e59a1240">&sect;&nbsp;</a></span>GetDifference()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> GoRogue.Rectangle.GetDifference </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td>
+          <td class="paramname"><em>rect1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td>
+          <td class="paramname"><em>rect2</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a MapArea representing every cell in rect1 that is NOT in rect2. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rect1</td><td>First operand.</td></tr>
+    <tr><td class="paramname">rect2</td><td>Second operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="a629203e2f2f66870467f34851af54b32"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a629203e2f2f66870467f34851af54b32">&sect;&nbsp;</a></span>GetExactUnion()</h2>
 
@@ -774,6 +832,91 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the area of the two rectangles encompass the exact same area, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a118c4a04eae32e02071966256dbae52f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a118c4a04eae32e02071966256dbae52f">&sect;&nbsp;</a></span>Positions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.Rectangle.Positions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested for loop. </p>
+<dl class="section return"><dt>Returns</dt><dd>All positions in the rectangle.</dd></dl>
+
+</div>
+</div>
+<a id="ab91ac80f575e2177fa84a28256137e9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab91ac80f575e2177fa84a28256137e9a">&sect;&nbsp;</a></span>RandomPosition() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> GoRogue.Rectangle.RandomPosition </td>
+          <td>(</td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a random position from within this rectangle. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A random position from within the rectangle.</dd></dl>
+
+</div>
+</div>
+<a id="a64e8eb6c96a7c538abf37bf21131ce8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e8eb6c96a7c538abf37bf21131ce8f">&sect;&nbsp;</a></span>RandomPosition() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> GoRogue.Rectangle.RandomPosition </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, bool &gt;&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a random position from within this rectangle, for which the selector function specified returns true <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continuously be generated until one that qualifies is found. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">selector</td><td>Selector function that takes a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>, and returns true if it is an acceptable selection, and false otherwise. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A random position from within the rectangle for which the given selector function returned true. </dd></dl>
 
 </div>
 </div>
