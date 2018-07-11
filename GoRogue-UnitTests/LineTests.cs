@@ -1,6 +1,7 @@
 ﻿using GoRogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace GoRogue_UnitTests
 {
@@ -14,6 +15,21 @@ namespace GoRogue_UnitTests
 
         [TestMethod]
         public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);
+
+        [TestMethod]
+        public void OrderedBresenhamTest()
+        {
+            var rectangle = new Rectangle(0, 0, 60, 50);
+
+            for (int i = 0; i < 100; i++)
+            {
+                Coord start = rectangle.RandomPosition();
+                Coord end = rectangle.RandomPosition();
+
+                var line = Lines.Get(start, end, Lines.Algorithm.BRESENHAM_ORDERED).ToList();
+                Assert.AreEqual(start, line[0]);
+            }
+        }
 
         [TestMethod]
         public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);

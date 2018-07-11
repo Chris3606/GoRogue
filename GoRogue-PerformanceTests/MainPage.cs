@@ -81,14 +81,16 @@ namespace GoRogue_PerformanceTests
         private static void Line()
         {
             var timeBres = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.BRESENHAM, Runner.ITERATIONS_FOR_TIMING);
+            var timeBresOrdered = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.BRESENHAM_ORDERED, Runner.ITERATIONS_FOR_TIMING);
             var timeDDA = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.DDA, Runner.ITERATIONS_FOR_TIMING);
             var timeOrtho = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.ORTHO, Runner.ITERATIONS_FOR_TIMING);
 
             Console.WriteLine();
             Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} generations of line from {Runner.LINE_START} to {Runner.LINE_END}:");
-            Console.WriteLine($"\tBresenham: {timeBres}");
-            Console.WriteLine($"\tDDA      : {timeDDA}");
-            Console.WriteLine($"\tOrtho    : {timeOrtho}");
+            Console.WriteLine($"\tBresenham        : {timeBres}");
+            Console.WriteLine($"\tBresenham Ordered: {timeBresOrdered}");
+            Console.WriteLine($"\tDDA              : {timeDDA}");
+            Console.WriteLine($"\tOrtho            : {timeOrtho}");
         }
 
         private static void Pathing()
