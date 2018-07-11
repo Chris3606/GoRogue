@@ -1,13 +1,13 @@
-﻿using System;
-using EasyConsole;
+﻿using EasyConsole;
 using GoRogue;
-using GoRogue.MapViews;
 using GoRogue.MapGeneration.Generators;
+using GoRogue.MapViews;
+using System;
 using System.Collections.Generic;
 
 namespace GoRogue_PerformanceTests
 {
-    class MainPage : MenuPage
+    internal class MainPage : MenuPage
     {
         public MainPage(Program program)
             : base("Main Menu", program,
@@ -17,37 +17,6 @@ namespace GoRogue_PerformanceTests
                   new Option("Pathing Tests", Pathing),
                   new Option("Quit", Quit))
         { }
-
-        private static void LightingFOV()
-        {
-            // Doesn't work properly in release mode, only in debug mode.
-            /*
-            long lightingMem = LightingFOVTests.MemorySingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
-            long fovMem = LightingFOVTests.MemorySingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
-            Console.WriteLine($"Memory for {MAP_WIDTH}x{MAP_HEIGHT}, Radius {LIGHT_RADIUS}:");
-            Console.WriteLine($"\tLighting: {lightingMem} bytes");
-            Console.WriteLine($"\tFOV     : {fovMem} bytes");
-            */
-
-            var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.SOURCE_TYPE,
-                                                                                       Runner.LIGHT_RADIUS, Runner.RADIUS_STRATEGY, Runner.ITERATIONS_FOR_TIMING);
-            var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(Runner.MAP_WIDTH, Runner.MAP_HEIGHT,
-                                                                             Runner.LIGHT_RADIUS, Runner.ITERATIONS_FOR_TIMING);
-            Console.WriteLine();
-            Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} calculates, single source, {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map, Radius {Runner.LIGHT_RADIUS}:");
-            Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
-            Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
-
-            Console.WriteLine();
-            TestLightingNSource(2);
-
-            Console.WriteLine();
-            TestLightingNSource(3);
-
-
-            Console.WriteLine();
-            TestLightingNSource(4);
-        }
 
         private static void DiceNotation()
         {
@@ -76,6 +45,36 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine($"\t\t5d6k2+3      : {timeForKeepExpr}");
             Console.WriteLine($"\t\t1d(1d12+4)+3: {timeForLargeDiceExpr}");
             Console.WriteLine();
+        }
+
+        private static void LightingFOV()
+        {
+            // Doesn't work properly in release mode, only in debug mode.
+            /*
+            long lightingMem = LightingFOVTests.MemorySingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
+            long fovMem = LightingFOVTests.MemorySingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
+            Console.WriteLine($"Memory for {MAP_WIDTH}x{MAP_HEIGHT}, Radius {LIGHT_RADIUS}:");
+            Console.WriteLine($"\tLighting: {lightingMem} bytes");
+            Console.WriteLine($"\tFOV     : {fovMem} bytes");
+            */
+
+            var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.SOURCE_TYPE,
+                                                                                       Runner.LIGHT_RADIUS, Runner.RADIUS_STRATEGY, Runner.ITERATIONS_FOR_TIMING);
+            var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(Runner.MAP_WIDTH, Runner.MAP_HEIGHT,
+                                                                             Runner.LIGHT_RADIUS, Runner.ITERATIONS_FOR_TIMING);
+            Console.WriteLine();
+            Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} calculates, single source, {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map, Radius {Runner.LIGHT_RADIUS}:");
+            Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
+            Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
+
+            Console.WriteLine();
+            TestLightingNSource(2);
+
+            Console.WriteLine();
+            TestLightingNSource(3);
+
+            Console.WriteLine();
+            TestLightingNSource(4);
         }
 
         private static void Line()
@@ -111,7 +110,6 @@ namespace GoRogue_PerformanceTests
             Console.WriteLine();
             Console.WriteLine($"Time to calculate single-source goal map on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times:");
             Console.WriteLine($"\tGoal-Map    : {timeGoalMap}");
-
 
             /* Multi-Goal GoalMap */
             var goals = new List<Coord>();

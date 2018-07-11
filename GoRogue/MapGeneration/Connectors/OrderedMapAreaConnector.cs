@@ -1,5 +1,5 @@
-﻿using GoRogue.Random;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
+using GoRogue.Random;
 using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random;

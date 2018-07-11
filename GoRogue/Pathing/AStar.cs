@@ -1,7 +1,7 @@
-﻿using Priority_Queue;
+﻿using GoRogue.MapViews;
+using Priority_Queue;
 using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 
 namespace GoRogue.Pathing
 {
@@ -385,8 +385,8 @@ namespace GoRogue.Pathing
         public void Reverse() => inOriginalOrder = !inOriginalOrder;
 
         /// <summary>
-        /// Returns a string representation of all the steps in the path, including the start point, eg.
-        /// [(1, 2), (3, 4), (5, 6)].
+        /// Returns a string representation of all the steps in the path, including the start point,
+        /// eg. [(1, 2), (3, 4), (5, 6)].
         /// </summary>
         /// <returns>A string representation of all steps in the path, including the start.</returns>
         public override string ToString() => StepsWithStart.ExtendToString();

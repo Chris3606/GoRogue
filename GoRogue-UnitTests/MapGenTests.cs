@@ -1,11 +1,11 @@
 ﻿using GoRogue;
-using GoRogue.MapViews;
 using GoRogue.MapGeneration;
+using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
-using Generators = GoRogue.MapGeneration.Generators;
 using Troschuetz.Random.Generators;
+using Generators = GoRogue.MapGeneration.Generators;
 
 namespace GoRogue_UnitTests
 {
@@ -36,15 +36,6 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
-        public void TestRandomRoomsGenSize()
-        {
-            var map = new ArrayMap<bool>(40, 40);
-            Generators.RandomRoomsGenerator.Generate(map, 30, 4, 6, 10);
-
-            Console.WriteLine(map.ToString(b => b ? "." : "#"));
-        }
-
-        [TestMethod]
         public void TestCellAutoConnectivityAndEnclosure()
         {
             var random = new StandardGenerator();
@@ -71,6 +62,15 @@ namespace GoRogue_UnitTests
                     Assert.AreEqual(false, map[map.Width - 1, y]);
                 }
             }
+        }
+
+        [TestMethod]
+        public void TestRandomRoomsGenSize()
+        {
+            var map = new ArrayMap<bool>(40, 40);
+            Generators.RandomRoomsGenerator.Generate(map, 30, 4, 6, 10);
+
+            Console.WriteLine(map.ToString(b => b ? "." : "#"));
         }
 
         private void displayMap(IMapView<bool> map)

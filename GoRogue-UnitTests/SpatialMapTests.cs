@@ -142,5 +142,5 @@ namespace GoRogue_UnitTests
                 count++;
             Assert.AreEqual(0, count);
         }
-    } 
+    }
 }

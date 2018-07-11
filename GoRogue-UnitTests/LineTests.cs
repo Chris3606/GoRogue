@@ -17,6 +17,12 @@ namespace GoRogue_UnitTests
         public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);
 
         [TestMethod]
+        public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);
+
+        [TestMethod]
+        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.ORTHO);
+
+        [TestMethod]
         public void OrderedBresenhamTest()
         {
             var rectangle = new Rectangle(0, 0, 60, 50);
@@ -30,12 +36,6 @@ namespace GoRogue_UnitTests
                 Assert.AreEqual(start, line[0]);
             }
         }
-
-        [TestMethod]
-        public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);
-
-        [TestMethod]
-        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.ORTHO);
 
         private void DrawLine(Coord start, Coord end, int width, int height, Lines.Algorithm type)
         {

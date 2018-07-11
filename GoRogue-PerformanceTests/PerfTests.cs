@@ -2,7 +2,7 @@
 
 namespace GoRogue_PerformanceTests
 {
-    class PerfTests : Program
+    internal class PerfTests : Program
     {
         public PerfTests()
             : base("GoRogue Performance Tests", true)

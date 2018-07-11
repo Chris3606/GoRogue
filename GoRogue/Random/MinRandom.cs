@@ -10,14 +10,15 @@ namespace GoRogue.Random
     public class MinRandom : IGenerator
     {
         /// <summary>
+        /// Whether or not the RNG is capable of resetting, such that it will return the same series
+        /// of values again.
+        /// </summary>
+        public bool CanReset => true;
+
+        /// <summary>
         /// Since this RNG returns the maximum possible value, this field will always return 0.
         ///</summary>
         public uint Seed => 0;
-
-        /// <summary>
-        /// Whether or not the RNG is capable of resetting, such that it will return the same series of values again.
-        /// </summary>
-        public bool CanReset => true;
 
         /// <summary>
         /// Returns 0.0
@@ -34,8 +35,13 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns minValue.
         /// </summary>
-        /// <param name="minValue">The minimum value for the returned number (which is always returned by this generator)</param>
-        /// <param name="maxValue">The maximum value for the returned number (which is unused since this generator always returns the minimum.</param>
+        /// <param name="minValue">
+        /// The minimum value for the returned number (which is always returned by this generator)
+        /// </param>
+        /// <param name="maxValue">
+        /// The maximum value for the returned number (which is unused since this generator always
+        /// returns the minimum.
+        /// </param>
         /// <returns>minValue</returns>
         public int Next(int minValue, int maxValue) => minValue;
 
@@ -64,14 +70,20 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns 0.0.
         /// </summary>
-        /// <param name="maxValue">The maximum value for the returned number, exclusive.  Unused since this function always returns the minimum.</param>
+        /// <param name="maxValue">
+        /// The maximum value for the returned number, exclusive. Unused since this function always
+        /// returns the minimum.
+        /// </param>
         /// <returns>0.0</returns>
         public double NextDouble(double maxValue) => 0.0;
 
         /// <summary>
         /// Returns minValue.
         /// </summary>
-        /// <param name="minValue">The minimum value for the returned number (always returned since this function always returns the minimum).</param>
+        /// <param name="minValue">
+        /// The minimum value for the returned number (always returned since this function always
+        /// returns the minimum).
+        /// </param>
         /// <param name="maxValue">The maximum vlaue for the returned number (unused).</param>
         /// <returns>minValue</returns>
         public double NextDouble(double minValue, double maxValue) => minValue;
@@ -91,14 +103,18 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns 0.
         /// </summary>
-        /// <param name="maxValue">The maximum value for the returned number (unused since this generator always returns the minimum).</param>
+        /// <param name="maxValue">
+        /// The maximum value for the returned number (unused since this generator always returns the minimum).
+        /// </param>
         /// <returns>0</returns>
         public uint NextUInt(uint maxValue) => 0;
 
         /// <summary>
         /// Returns minValue.
         /// </summary>
-        /// <param name="minValue">The minimum value for the returned number (this generator always returns the minimum value).</param>
+        /// <param name="minValue">
+        /// The minimum value for the returned number (this generator always returns the minimum value).
+        /// </param>
         /// <param name="maxValue">The maximum value for the returned number (unused).</param>
         /// <returns>minValue</returns>
         public uint NextUInt(uint minValue, uint maxValue) => minValue;

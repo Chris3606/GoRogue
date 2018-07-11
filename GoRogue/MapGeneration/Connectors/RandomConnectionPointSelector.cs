@@ -1,6 +1,6 @@
 ﻿using GoRogue.Random;
-using Troschuetz.Random;
 using System;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {

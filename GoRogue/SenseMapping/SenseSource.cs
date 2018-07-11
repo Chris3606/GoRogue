@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 
 namespace GoRogue.SenseMapping
 {
@@ -51,15 +51,12 @@ namespace GoRogue.SenseMapping
     /// </summary>
     public class SenseSource
     {
-        private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
-
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] light;
 
         internal bool[,] nearLight;
-
         internal IMapView<double> resMap;
-
+        private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
         private int _radius;
 
         private int size;
@@ -94,8 +91,12 @@ namespace GoRogue.SenseMapping
         /// used for calculations.
         /// </summary>
         /// <param name="type">The spread mechanics to use for source values.</param>
-        /// <param name="positionX">The X-value of the position on a map that the source is located at.</param>
-        /// <param name="positionY">The Y-value of the position on a map that the source is located at.</param>
+        /// <param name="positionX">
+        /// The X-value of the position on a map that the source is located at.
+        /// </param>
+        /// <param name="positionY">
+        /// The Y-value of the position on a map that the source is located at.
+        /// </param>
         /// <param name="radius">
         /// The maximum radius of the source -- this is the maximum distance the source values will
         /// emanate, provided the area is completely unobstructed.

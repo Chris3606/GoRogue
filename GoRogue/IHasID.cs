@@ -6,13 +6,13 @@
     /// <code>
     /// class SomeClass : IHasID
     /// {
-    ///     private static IDGenerator generator = new IDGenerator();
-    ///     public int ID { get; private set; }
+    /// private static IDGenerator generator = new IDGenerator();
+    /// public int ID { get; private set; }
     ///
-    ///     public SomeClass(...)
-    ///     {
-    ///         ID = generator.UseID();
-    ///     }
+    /// public SomeClass(...)
+    /// {
+    /// ID = generator.UseID();
+    /// }
     /// }
     /// </code>
     /// </example> A class that wishes to be able to have these IDs serialized and the state resumed

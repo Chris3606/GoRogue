@@ -1,6 +1,6 @@
 ﻿using GoRogue;
-using GoRogue.MapViews;
 using GoRogue.MapGeneration.Generators;
+using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.Random;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,6 +28,16 @@ namespace GoRogue_UnitTests
 
         [TestMethod]
         public void AStarMatchesCorrectManhattan() => aStarMatches(Distance.MANHATTAN);
+
+        public Coord getWalkableCoord(IMapView<bool> mapView)
+        {
+            var c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            while (!mapView[c])
+                c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+
+            return c;
+        }
 
         [TestMethod]
         public void ManualAStarChebyshevTest()
@@ -96,6 +106,28 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void OpenMapPathing()
+        {
+            var map = new ArrayMap<bool>(10, 10);
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                    map[x, y] = true;
+
+            Coord start = Coord.Get(1, 6);
+            Coord end = Coord.Get(0, 1);
+            var pather = new AStar(map, Distance.CHEBYSHEV);
+
+            try
+            {
+                pather.ShortestPath(start, end);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+        }
+
+        [TestMethod]
         public void PathInitReversing()
         {
             Coord start = Coord.Get(1, 1);
@@ -124,28 +156,6 @@ namespace GoRogue_UnitTests
             printExpectedAndActual(expectedPath, actualPath);
 
             checkAgainstPath(expectedPath, actualPath, end, start);
-        }
-
-        [TestMethod]
-        public void OpenMapPathing()
-        {
-            var map = new ArrayMap<bool>(10, 10);
-            for (int x = 0; x < map.Width; x++)
-                for (int y = 0; y < map.Height; y++)
-                    map[x, y] = true;
-
-            Coord start = Coord.Get(1, 6);
-            Coord end = Coord.Get(0, 1);
-            var pather = new AStar(map, Distance.CHEBYSHEV);
-
-            try
-            {
-                pather.ShortestPath(start, end);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(ex.Message);
-            }
         }
 
         private static void checkAdjacency(Path path, Distance distanceCalc)
@@ -191,16 +201,6 @@ namespace GoRogue_UnitTests
                 default:
                     throw new Exception("Should not occur");
             }
-        }
-
-        public Coord getWalkableCoord(IMapView<bool> mapView)
-        {
-            var c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
-
-            while (!mapView[c])
-                c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
-
-            return c;
         }
 
         // Initialize graph for control-case AStar, based on a GoRogue IMapView

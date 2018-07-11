@@ -9,32 +9,25 @@ namespace GoRogue
     /// </summary>
     /// <remarks>
     /// EffectTrigger's primary purpose is to represent an event that can trigger one or more effects
-    /// automatically, and manage the automatic removal of those effects when their duration reaches 0.
-    ///
-    /// Each EffectTrigger instance can have one or more non-instantaneous effects added to it. All
-    /// Effects must take the same type of argument to their Trigger function, as specified by this
-    /// class's TriggerArgs type parameter.
-    ///
-    /// Each time the EffectTrigger's TriggerEffects function is called, every added Effect has its
-    /// Trigger function called (provided its duration is not 0). Each Effect may, via the
-    /// TriggerArgs CancelTrigger member, stop the effect from being sent to subsequent Effects in
-    /// the EffectTrigger's list.
-    ///
-    /// Once all effects have had Trigger called as applicable, or some effect has cancelled the
-    /// trigger, any effect whose duration has reached 0 is removed from the EffectTrigger automatically.
-    ///
-    /// Typically, one instance of this class is created per "event" that can trigger effects, and
-    /// then the instance's TriggerEffects function is called whenever that event happens. For
-    /// example, in a typical roguelike, all damageable creatures might have an instance of this
-    /// class called OnDamageTaken. Any effect that should trigger when that creature takes damage
-    /// would then be added to that creature's OnDamageTaken EffectTrigger. The TakeDamage function
-    /// of that creature would then need to call OnDamageTaken.TriggerEffects(...). In this way, all
-    /// effects added to the OnDamageTaken EffectTrigger would be triggered automatically whenever
-    /// the creature takes damage.
-    ///
-    /// For some complex game mechanics, it may be desireable to control how effects stack, the order
-    /// they appear in the Effects list of EffectTriggers, etc. In these cases, subclassing
-    /// EffectTrigger and overriding add/remove can allow this functionality.
+    /// automatically, and manage the automatic removal of those effects when their duration reaches
+    /// 0. /// Each EffectTrigger instance can have one or more non-instantaneous effects added to
+    /// it. All Effects must take the same type of argument to their Trigger function, as specified
+    /// by this class's TriggerArgs type parameter. /// Each time the EffectTrigger's TriggerEffects
+    /// function is called, every added Effect has its Trigger function called (provided its duration
+    /// is not 0). Each Effect may, via the TriggerArgs CancelTrigger member, stop the effect from
+    /// being sent to subsequent Effects in the EffectTrigger's list. /// Once all effects have had
+    /// Trigger called as applicable, or some effect has cancelled the trigger, any effect whose
+    /// duration has reached 0 is removed from the EffectTrigger automatically. /// Typically, one
+    /// instance of this class is created per "event" that can trigger effects, and then the
+    /// instance's TriggerEffects function is called whenever that event happens. For example, in a
+    /// typical roguelike, all damageable creatures might have an instance of this class called
+    /// OnDamageTaken. Any effect that should trigger when that creature takes damage would then be
+    /// added to that creature's OnDamageTaken EffectTrigger. The TakeDamage function of that
+    /// creature would then need to call OnDamageTaken.TriggerEffects(...). In this way, all effects
+    /// added to the OnDamageTaken EffectTrigger would be triggered automatically whenever the
+    /// creature takes damage. /// For some complex game mechanics, it may be desireable to control
+    /// how effects stack, the order they appear in the Effects list of EffectTriggers, etc. In these
+    /// cases, subclassing EffectTrigger and overriding add/remove can allow this functionality.
     /// </remarks>
     /// <typeparam name="TriggerArgs">
     /// The type of argument that must be accepted by the Trigger function of any Effect added to
@@ -77,6 +70,14 @@ namespace GoRogue
         public virtual void Remove(Effect<TriggerArgs> effect) => _effects.Remove(effect);
 
         /// <summary>
+        /// Yields a string representation of each effect that has been added to the effect trigger.
+        /// </summary>
+        /// <returns>
+        /// A string representation of each effect that has been added to the effect trigger.
+        /// </returns>
+        public override string ToString() => _effects.ExtendToString();
+
+        /// <summary>
         /// For each effect in the list, calls its Trigger function if its duration is not 0, then
         /// remvoes any effect that has duration 0.
         /// </summary>
@@ -85,9 +86,8 @@ namespace GoRogue
         /// Trigger called. If some effect sets the CancelTrigger flag in the argument to true, the
         /// loop will be broken and no subsequent effects in the list will have Trigger called. After
         /// either this occurs or all effects have had Trigger called, any effect in the list that
-        /// has a duration of 0 is automatically removed from the list.
-        ///
-        /// It is valid to pass null as the argument to this function, if the effects need no actual parameters.
+        /// has a duration of 0 is automatically removed from the list. /// It is valid to pass null
+        /// as the argument to this function, if the effects need no actual parameters.
         /// </remarks>
         /// <param name="args">Argument to pass to the Trigger function of each effect.</param>
         public void TriggerEffects(TriggerArgs args)
@@ -104,11 +104,5 @@ namespace GoRogue
 
             _effects.RemoveAll(eff => eff.Duration == 0);
         }
-
-        /// <summary>
-        /// Yields a string representation of each effect that has been added to the effect trigger.
-        /// </summary>
-        /// <returns>A string representation of each effect that has been added to the effect trigger.</returns>
-        public override string ToString() => _effects.ExtendToString();
     }
 }

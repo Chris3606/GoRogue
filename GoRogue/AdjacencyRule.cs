@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -10,7 +10,6 @@ namespace GoRogue
     /// </summary>
     public class AdjacencyRule
     {
-        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
         /// <summary>
         /// Represents method of determining adjacency where neighbors are considered adjacent if
         /// they are in a cardinal direction, eg. 4-way (manhattan-based) connectivity.
@@ -28,6 +27,8 @@ namespace GoRogue
         /// adjacent (eg. 8-way connectivity).
         /// </summary>
         public static readonly AdjacencyRule EIGHT_WAY = new AdjacencyRule(Types.EIGHT_WAY);
+
+        private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
 
         // Constructor, takes type.
         private AdjacencyRule(Types type)

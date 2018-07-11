@@ -88,7 +88,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns a string representation of the DisjointSet, showing parents and all elements in their set.
+        /// Returns a string representation of the DisjointSet, showing parents and all elements in
+        /// their set.
         /// </summary>
         /// <returns>A string representation of the DisjointSet.</returns>
         public override string ToString()
@@ -110,7 +111,6 @@ namespace GoRogue
 
             return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
         }
-
 
         // Used to ensure ToString doesn't affect the performance of future operations
         private int findNoCompression(int obj)

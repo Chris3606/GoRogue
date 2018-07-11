@@ -1,5 +1,5 @@
-﻿using Troschuetz.Random;
-using System.Linq;
+﻿using System.Linq;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {

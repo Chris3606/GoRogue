@@ -1,7 +1,7 @@
-﻿using GoRogue.Random;
-using GoRogue.MapViews;
-using Troschuetz.Random;
+﻿using GoRogue.MapViews;
+using GoRogue.Random;
 using System.Collections.Generic;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -18,18 +18,17 @@ namespace GoRogue.MapGeneration.Generators
         /// value of false in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
         /// <remarks>
-        /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be called
-        /// once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive 
-        /// and calling it multiples times costs little extra, and saves an internal allocation.
+        /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
+        /// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
+        /// inexpensive and calling it multiples times costs little extra, and saves an internal allocation.
         /// </remarks>
         /// <param name="map">The map to set values to.</param>
         /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
         /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
         /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
         /// <param name="attemptsPerRoom">
-        /// The maximum number of times the position of a room will be generated to try to position it
-        /// properly (eg. without overlapping with other rooms), before simply discarding
-        /// the room.
+        /// The maximum number of times the position of a room will be generated to try to position
+        /// it properly (eg. without overlapping with other rooms), before simply discarding the room.
         /// </param>
         /// <param name="rng">
         /// The RNG to use to place rooms and determine room size. If null is specified, the default
@@ -53,12 +52,11 @@ namespace GoRogue.MapGeneration.Generators
             if (roomMaxSize < roomMinSize)
                 throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be greater than or equal to roomMinSize.");
 
-           if (attemptsPerRoom <= 0) 
+            if (attemptsPerRoom <= 0)
                 throw new System.ArgumentOutOfRangeException(nameof(attemptsPerRoom), "attemptsPerRoom must be greater than 0.");
 
             if (map.Width - roomMaxSize < 0)
                 throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be smaller than map.");
-
 
             if (rng == null) rng = SingletonRandom.DefaultRNG;
 

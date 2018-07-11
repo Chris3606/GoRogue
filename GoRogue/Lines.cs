@@ -22,10 +22,11 @@ namespace GoRogue
             /// Bresenham's line algorithm.
             /// </summary>
             BRESENHAM,
+
             /// <summary>
-            /// Bresenham's line algorithm, with the points guaranteed to be in start to finish order.
-            /// This may be significantly slower than BRESENHAM, so if you really need ordering, consider
-            /// DDA instead, as it is both faster than Bresenham's and implicitly ordered
+            /// Bresenham's line algorithm, with the points guaranteed to be in start to finish
+            /// order. This may be significantly slower than BRESENHAM, so if you really need
+            /// ordering, consider DDA instead, as it is both faster than Bresenham's and implicitly ordered
             /// </summary>
             BRESENHAM_ORDERED,
 
@@ -80,12 +81,14 @@ namespace GoRogue
             {
                 case Algorithm.BRESENHAM:
                     return bresenham(startX, startY, endX, endY);
+
                 case Algorithm.BRESENHAM_ORDERED:
                     var line = bresenham(startX, startY, endX, endY).Reverse();
                     if (line.First() == Coord.Get(startX, startY))
                         return line;
                     else
                         return line.Reverse();
+
                 case Algorithm.DDA:
                     return dda(startX, startY, endX, endY);
 

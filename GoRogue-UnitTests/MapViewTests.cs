@@ -1,7 +1,6 @@
-﻿using GoRogue.MapViews;
-using GoRogue.MapGeneration.Generators;
+﻿using GoRogue.MapGeneration.Generators;
+using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
 
 namespace GoRogue_UnitTests
 {
@@ -19,7 +18,6 @@ namespace GoRogue_UnitTests
             checkMaps(map, lambdaMapView);
         }
 
-
         [TestMethod]
         public void LambdaSettableMapViewTest()
         {
@@ -32,18 +30,6 @@ namespace GoRogue_UnitTests
             RectangleMapGenerator.Generate(settable);
 
             checkMaps(controlMap, map);
-        }
-
-        [TestMethod]
-        public void LambdaTranslationMapTest()
-        {
-            ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
-            RectangleMapGenerator.Generate(map);
-
-            var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
-
-            checkMaps(map, lambdaMap);
-
         }
 
         [TestMethod]
@@ -60,6 +46,17 @@ namespace GoRogue_UnitTests
             checkMaps(controlMap, map);
         }
 
+        [TestMethod]
+        public void LambdaTranslationMapTest()
+        {
+            ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
+            RectangleMapGenerator.Generate(map);
+
+            var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
+
+            checkMaps(map, lambdaMap);
+        }
+
         private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
         {
             for (int x = 0; x < genMap.Width; x++)
@@ -68,10 +65,6 @@ namespace GoRogue_UnitTests
                     var properValue = genMap[x, y] ? 1.0 : 0.0;
                     Assert.AreEqual(properValue, fovMap[x, y]);
                 }
-
         }
     }
-
-
-   
 }

@@ -22,7 +22,7 @@ namespace GoRogue
         /// eg: <example>
         /// <code>
         /// foreach (var item in mySpatialMap.Items)
-        ///     // Do stuff
+        /// // Do stuff
         /// </code>
         /// </example>
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿using GoRogue;
-using GoRogue.SenseMapping;
 using GoRogue.MapViews;
+using GoRogue.SenseMapping;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;

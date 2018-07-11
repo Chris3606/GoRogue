@@ -1,8 +1,8 @@
 ﻿using GoRogue.MapGeneration;
+using GoRogue.Random;
 using System;
 using System.Collections.Generic;
 using Troschuetz.Random;
-using GoRogue.Random;
 
 namespace GoRogue
 {
@@ -136,27 +136,6 @@ namespace GoRogue
         public int Y { get; set; }
 
         /// <summary>
-        /// Gets a MapArea representing the exact union of the specified rectangles.
-        /// </summary>
-        /// <param name="r1">First rectangle.</param>
-        /// <param name="r2">Second rectangle.</param>
-        /// <returns>A MapArea containing exactly those positions in one (or both) rectangles.</returns>
-        public static MapArea GetExactUnion(Rectangle r1, Rectangle r2)
-        {
-            var retVal = new MapArea();
-
-            for (int x = r1.X; x <= r1.MaxX; x++)
-                for (int y = r1.Y; y <= r1.MaxY; y++)
-                    retVal.Add(x, y);
-
-            for (int x = r2.X; x <= r2.MaxX; x++)
-                for (int y = r2.Y; y <= r2.MaxY; y++)
-                    retVal.Add(x, y);
-
-            return retVal;
-        }
-
-        /// <summary>
         /// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
         /// </summary>
         /// <param name="rect1">First operand.</param>
@@ -173,6 +152,27 @@ namespace GoRogue
 
                 retVal.Add(pos);
             }
+
+            return retVal;
+        }
+
+        /// <summary>
+        /// Gets a MapArea representing the exact union of the specified rectangles.
+        /// </summary>
+        /// <param name="r1">First rectangle.</param>
+        /// <param name="r2">Second rectangle.</param>
+        /// <returns>A MapArea containing exactly those positions in one (or both) rectangles.</returns>
+        public static MapArea GetExactUnion(Rectangle r1, Rectangle r2)
+        {
+            var retVal = new MapArea();
+
+            for (int x = r1.X; x <= r1.MaxX; x++)
+                for (int y = r1.Y; y <= r1.MaxY; y++)
+                    retVal.Add(x, y);
+
+            for (int x = r2.X; x <= r2.MaxX; x++)
+                for (int y = r2.Y; y <= r2.MaxY; y++)
+                    retVal.Add(x, y);
 
             return retVal;
         }
@@ -338,7 +338,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested for loop.
+        /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested
+        /// for loop.
         /// </summary>
         /// <returns>All positions in the rectangle.</returns>
         public IEnumerable<Coord> Positions()
@@ -351,7 +352,7 @@ namespace GoRogue
         /// <summary>
         /// Returns a random position from within this rectangle.
         /// </summary>
-        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position from within the rectangle.</returns>
         public Coord RandomPosition(IGenerator rng = null)
         {
@@ -362,12 +363,19 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns a random position from within this rectangle, for which the selector function specified returns true
-        /// Random positions will continuously be generated until one that qualifies is found.
+        /// Returns a random position from within this rectangle, for which the selector function
+        /// specified returns true Random positions will continuously be generated until one that
+        /// qualifies is found.
         /// </summary>
-        /// <param name="selector">Selector function that takes a Coord, and returns true if it is an acceptable selection, and false otherwise.</param>
-        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
-        /// <returns>A random position from within the rectangle for which the given selector function returned true.</returns>
+        /// <param name="selector">
+        /// Selector function that takes a Coord, and returns true if it is an acceptable selection,
+        /// and false otherwise.
+        /// </param>
+        /// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>
+        /// A random position from within the rectangle for which the given selector function
+        /// returned true.
+        /// </returns>
         public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null)
         {
             if (rng == null)
@@ -380,7 +388,6 @@ namespace GoRogue
 
             return c;
         }
-
 
         /// <summary>
         /// Formats as (X, Y) -&gt; (MaxX, MaxY)

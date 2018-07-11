@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Troschuetz.Random;
-using GoRogue;
-using System;
 
 namespace GoRogue.MapGeneration
 {
@@ -11,11 +10,10 @@ namespace GoRogue.MapGeneration
     /// </summary>
     public class MapArea
     {
+        private readonly HashSet<Coord> positionsSet;
         private List<Coord> _positions;
 
         private int left, top, bottom, right;
-
-        private readonly HashSet<Coord> positionsSet;
 
         /// <summary>
         /// Constructor.
@@ -57,6 +55,27 @@ namespace GoRogue.MapGeneration
         public IReadOnlyList<Coord> Positions { get { return _positions.AsReadOnly(); } }
 
         /// <summary>
+        /// Gets a MapArea containing all positions in area1, minus those that are in area2.
+        /// </summary>
+        /// <param name="area1">The first MapArea.</param>
+        /// <param name="area2">The second MapArea.</param>
+        /// <returns>A MapArea with exactly those positions in area1 that are NOT in area2.</returns>
+        public static MapArea GetDifference(MapArea area1, MapArea area2)
+        {
+            var retVal = new MapArea();
+
+            foreach (var pos in area1.Positions)
+            {
+                if (area2.Contains(pos))
+                    continue;
+
+                retVal.Add(pos);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
         /// Gets a MapArea containing exactly those positions in both of the given MapAreas.
         /// </summary>
         /// <param name="area1">First MapArea.</param>
@@ -96,24 +115,51 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Gets a MapArea containing all positions in area1, minus those that are in area2.
+        /// Inequality comparison -- true if the two areas do NOT contain exactly the same points.
         /// </summary>
-        /// <param name="area1">The first MapArea.</param>
-        /// <param name="area2">The second MapArea.</param>
-        /// <returns>A MapArea with exactly those positions in area1 that are NOT in area2.</returns>
-        public static MapArea GetDifference(MapArea area1, MapArea area2)
+        /// <param name="lhs">First MapArea to compare.</param>
+        /// <param name="rhs">Second MapArea to compare.</param>
+        /// <returns>True if the MapAreas do NOT contain exactly the same points, false otherwise.</returns>
+        public static bool operator !=(MapArea lhs, MapArea rhs) => !(lhs == rhs);
+
+        /// <summary>
+        /// Creates a new MapArea with the Coords all shifted by the given vector (Coord).
+        /// </summary>
+        /// <param name="lhs">MapArea.</param>
+        /// <param name="rhs">Coord (vector) to add.</param>
+        /// <returns>
+        /// A new MapArea with the Coords all shifted by the given amount in x and y directions.
+        /// </returns>
+        public static MapArea operator +(MapArea lhs, Coord rhs)
         {
             var retVal = new MapArea();
 
-            foreach (var pos in area1.Positions)
-            {
-                if (area2.Contains(pos))
-                    continue;
-
-                retVal.Add(pos);
-            }
+            foreach (var pos in lhs.Positions)
+                retVal.Add(pos + rhs);
 
             return retVal;
+        }
+
+        /// <summary>
+        /// Compares for equality. Returns true if the two MapAreas are the same reference, or if
+        /// they contain exactly the same points.
+        /// </summary>
+        /// <param name="lhs">First MapArea to compare.</param>
+        /// <param name="rhs">Second MapArea to compare.</param>
+        /// <returns>True if the MapAreas contain exactly the same points, false otherwise.</returns>
+        public static bool operator ==(MapArea lhs, MapArea rhs)
+        {
+            if (ReferenceEquals(lhs, rhs))
+                return true;
+
+            if (lhs.Count != rhs.Count)
+                return false;
+
+            foreach (var pos in lhs.Positions)
+                if (!rhs.Contains(pos))
+                    return false;
+
+            return true;
         }
 
         /// <summary>
@@ -137,8 +183,8 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Adds the given positions to the list of points within the area if they are not already in the
-        /// list.
+        /// Adds the given positions to the list of points within the area if they are not already in
+        /// the list.
         /// </summary>
         /// <param name="positions">Positions to add to the list.</param>
         public void Add(IEnumerable<Coord> positions)
@@ -156,75 +202,6 @@ namespace GoRogue.MapGeneration
             foreach (var pos in rectangle.Positions())
                 Add(pos);
         }
-
-        /// <summary>
-        /// Removes the given position specified from the MapArea.  Particularly when the Remove operation
-        /// changes the bounds, this operation can be expensive, so if you must do multiple Remove operations,
-        /// it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
-        /// </summary>
-        /// <param name="position">The position to remove.</param>
-        public void Remove(Coord position) => Remove(position.Yield());
-
-        /// <summary>
-        /// Removes the given positions from the specified MapArea.
-        /// </summary>
-        /// <param name="positions">Positions to remove.</param>
-        public void Remove(IEnumerable<Coord> positions)
-        {
-            bool recalculateBounds = false;
-
-            foreach (var pos in positions)
-            {
-                if (positionsSet.Remove(pos))
-                {
-                    _positions.Remove(pos);
-                    // This coordinate was a bound so we'll need to recalculate when we're done.
-                    if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
-                        recalculateBounds = true;
-                }
-            }
-
-            if (recalculateBounds)
-            {
-                int leftLocal = int.MaxValue, topLocal = int.MaxValue;
-                int rightLocal = int.MinValue, bottomLocal = int.MinValue;
-
-                // Find new bounds
-                foreach (var pos in _positions)
-                {
-                    if (pos.X > rightLocal) rightLocal = pos.X;
-                    if (pos.X < leftLocal) leftLocal = pos.X;
-                    if (pos.Y > bottomLocal) bottomLocal = pos.Y;
-                    if (pos.Y < topLocal) topLocal = pos.Y;
-                }
-
-                left = leftLocal;
-                right = rightLocal;
-                top = topLocal;
-                bottom = bottomLocal;
-            }
-        }
-
-        /// <summary>
-        /// Removes the given position specified from the MapArea.  Particularly when the Remove operation
-        /// changes the bounds, this operation can be expensive, so if you must do multiple Remove operations,
-        /// it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
-        /// </summary>
-        /// <param name="x">X-coordinate of the position to remove.</param>
-        /// <param name="y">Y-coordinate of the position to remove.</param>
-        public void Remove(int x, int y) => Remove(Coord.Get(x, y));
-
-        /// <summary>
-        /// Removes all positions in the given MapArea from this one.
-        /// </summary>
-        /// <param name="area">Area containing positions to remove.</param>
-        public void Remove(MapArea area) => Remove(area.Positions);
-
-        /// <summary>
-        /// Removes all positions in the given Rectangle from this MapArea.
-        /// </summary>
-        /// <param name="rectangle">Rectangle containing positions to remove.</param>
-        public void Remove(Rectangle rectangle) => Remove(rectangle.Positions());
 
         /// <summary>
         /// Adds the given position to the list of points within the area if it is not already in the
@@ -286,20 +263,25 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Gets a random position from the MapArea.
+        /// Same as operator==. Returns false of obj is not a MapArea.
         /// </summary>
-        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
-        /// <returns>A random position from within the MapArea.</returns>
-        public Coord RandomPosition(IGenerator rng = null) => _positions.RandomItem(rng);
+        /// <param name="obj">Object to compare</param>
+        /// <returns>
+        /// True if the object given is a MapArea and is equal (contains the same points), false otherwise.
+        /// </returns>
+        public override bool Equals(object obj)
+        {
+            var area = obj as MapArea;
+            if (area == null) return false;
+
+            return this == area;
+        }
 
         /// <summary>
-        /// Gets a random position from the MapArea for which the given selector returns true.  Coords are repeatedly selected
-        /// until a valid one is found.
+        /// Returns hash of the underlying set.
         /// </summary>
-        /// <param name="selector">A function that should return true for any coordinate that is a valid selection, and false otherwise.</param>
-        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
-        /// <returns>A random position from within the MapArea for which the selector given returns true.</returns>
-        public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null) => _positions.RandomItem(selector, rng);
+        /// <returns>Hash code for the underlying set.</returns>
+        public override int GetHashCode() => positionsSet.GetHashCode();
 
         /// <summary>
         /// Returns whether or not the given map area intersects the current one. If you intend to
@@ -331,73 +313,98 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Same as operator==.  Returns false of obj is not a MapArea.
+        /// Gets a random position from the MapArea.
         /// </summary>
-        /// <param name="obj">Object to compare</param>
-        /// <returns>True if the object given is a MapArea and is equal (contains the same points), false otherwise.</returns>
-        public override bool Equals(object obj)
-        {
-            var area = obj as MapArea;
-            if (area == null) return false;
+        /// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>A random position from within the MapArea.</returns>
+        public Coord RandomPosition(IGenerator rng = null) => _positions.RandomItem(rng);
 
-            return this == area;
+        /// <summary>
+        /// Gets a random position from the MapArea for which the given selector returns true. Coords
+        /// are repeatedly selected until a valid one is found.
+        /// </summary>
+        /// <param name="selector">
+        /// A function that should return true for any coordinate that is a valid selection, and
+        /// false otherwise.
+        /// </param>
+        /// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>
+        /// A random position from within the MapArea for which the selector given returns true.
+        /// </returns>
+        public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null) => _positions.RandomItem(selector, rng);
+
+        /// <summary>
+        /// Removes the given position specified from the MapArea. Particularly when the Remove
+        /// operation changes the bounds, this operation can be expensive, so if you must do multiple
+        /// Remove operations, it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
+        /// </summary>
+        /// <param name="position">The position to remove.</param>
+        public void Remove(Coord position) => Remove(position.Yield());
+
+        /// <summary>
+        /// Removes the given positions from the specified MapArea.
+        /// </summary>
+        /// <param name="positions">Positions to remove.</param>
+        public void Remove(IEnumerable<Coord> positions)
+        {
+            bool recalculateBounds = false;
+
+            foreach (var pos in positions)
+            {
+                if (positionsSet.Remove(pos))
+                {
+                    _positions.Remove(pos);
+                    // This coordinate was a bound so we'll need to recalculate when we're done.
+                    if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
+                        recalculateBounds = true;
+                }
+            }
+
+            if (recalculateBounds)
+            {
+                int leftLocal = int.MaxValue, topLocal = int.MaxValue;
+                int rightLocal = int.MinValue, bottomLocal = int.MinValue;
+
+                // Find new bounds
+                foreach (var pos in _positions)
+                {
+                    if (pos.X > rightLocal) rightLocal = pos.X;
+                    if (pos.X < leftLocal) leftLocal = pos.X;
+                    if (pos.Y > bottomLocal) bottomLocal = pos.Y;
+                    if (pos.Y < topLocal) topLocal = pos.Y;
+                }
+
+                left = leftLocal;
+                right = rightLocal;
+                top = topLocal;
+                bottom = bottomLocal;
+            }
         }
 
         /// <summary>
-        /// Compares for equality.  Returns true if the two MapAreas are the same reference, or
-        /// if they contain exactly the same points.
+        /// Removes the given position specified from the MapArea. Particularly when the Remove
+        /// operation changes the bounds, this operation can be expensive, so if you must do multiple
+        /// Remove operations, it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
         /// </summary>
-        /// <param name="lhs">First MapArea to compare.</param>
-        /// <param name="rhs">Second MapArea to compare.</param>
-        /// <returns>True if the MapAreas contain exactly the same points, false otherwise.</returns>
-        public static bool operator==(MapArea lhs, MapArea rhs)
-        {
-            if (ReferenceEquals(lhs, rhs))
-                return true;
-
-            if (lhs.Count != rhs.Count)
-                return false;
-
-            foreach (var pos in lhs.Positions)
-                if (!rhs.Contains(pos))
-                    return false;
-
-            return true;
-        }
+        /// <param name="x">X-coordinate of the position to remove.</param>
+        /// <param name="y">Y-coordinate of the position to remove.</param>
+        public void Remove(int x, int y) => Remove(Coord.Get(x, y));
 
         /// <summary>
-        /// Creates a new MapArea with the Coords all shifted by the given vector (Coord).
+        /// Removes all positions in the given MapArea from this one.
         /// </summary>
-        /// <param name="lhs">MapArea.</param>
-        /// <param name="rhs">Coord (vector) to add.</param>
-        /// <returns>A new MapArea with the Coords all shifted by the given amount in x and y directions.</returns>
-        public static MapArea operator+(MapArea lhs, Coord rhs)
-        {
-            var retVal = new MapArea();
-
-            foreach (var pos in lhs.Positions)
-                retVal.Add(pos + rhs);
-
-            return retVal;
-        }
+        /// <param name="area">Area containing positions to remove.</param>
+        public void Remove(MapArea area) => Remove(area.Positions);
 
         /// <summary>
-        /// Inequality comparison -- true if the two areas do NOT contain exactly the same points.
+        /// Removes all positions in the given Rectangle from this MapArea.
         /// </summary>
-        /// <param name="lhs">First MapArea to compare.</param>
-        /// <param name="rhs">Second MapArea to compare.</param>
-        /// <returns>True if the MapAreas do NOT contain exactly the same points, false otherwise.</returns>
-        public static bool operator !=(MapArea lhs, MapArea rhs) => !(lhs == rhs);
+        /// <param name="rectangle">Rectangle containing positions to remove.</param>
+        public void Remove(Rectangle rectangle) => Remove(rectangle.Positions());
 
         /// <summary>
-        /// Returns hash of the underlying set.
-        /// </summary>
-        /// <returns>Hash code for the underlying set.</returns>
-        public override int GetHashCode() => positionsSet.GetHashCode();
-
-        /// <summary>
-        /// Returns the string of each position in the MapArea, in a square-bracket enclosed list, eg.
-        /// [(1, 2), (3, 4), (5, 6)].
+        /// Returns the string of each position in the MapArea, in a square-bracket enclosed list,
+        /// eg. [(1, 2), (3, 4), (5, 6)].
         /// </summary>
         /// <returns>A string representation of those coordinates in the MapArea.</returns>
         public override string ToString() => _positions.ExtendToString();
