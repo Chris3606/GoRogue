@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Troschuetz.Random;
+using GoRogue;
 using System;
 
 namespace GoRogue.MapGeneration
@@ -171,6 +173,22 @@ namespace GoRogue.MapGeneration
 
             return true;
         }
+
+        /// <summary>
+        /// Gets a random position from the MapArea.
+        /// </summary>
+        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>A random position from within the MapArea.</returns>
+        public Coord RandomPosition(IGenerator rng = null) => _positions.RandomItem(rng);
+
+        /// <summary>
+        /// Gets a random position from the MapArea for which the given selector returns true.  Coords are repeatedly selected
+        /// until a valid one is found.
+        /// </summary>
+        /// <param name="selector">A function that should return true for any coordinate that is a valid selection, and false otherwise.</param>
+        /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
+        /// <returns>A random position from within the MapArea for which the selector given returns true.</returns>
+        public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null) => _positions.RandomItem(selector, rng);
 
         /// <summary>
         /// Returns whether or not the given map area intersects the current one. If you intend to

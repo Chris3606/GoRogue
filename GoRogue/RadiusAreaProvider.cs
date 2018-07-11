@@ -142,11 +142,11 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns an IEnumerable of all unique Coords within the radius and bounds specified (as
+        /// Calculates the new radius, and returns an IEnumerable of all unique Coords within that radius and bounds specified (as
         /// applicable). See class description for details on the ordering.
         /// </summary>
         /// <returns>Enumerable of all unique Coords within the radius and bounds specified.</returns>
-        public IEnumerable<Coord> Positions()
+        public IEnumerable<Coord> CalculatePositions()
         {
             for (int x = 0; x < inQueue.GetLength(0); x++)
                 for (int y = 0; y < inQueue.GetLength(1); y++)

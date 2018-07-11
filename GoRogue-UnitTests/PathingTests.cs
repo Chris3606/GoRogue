@@ -81,7 +81,7 @@ namespace GoRogue_UnitTests
             RectangleMapGenerator.Generate(map);
 
             var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
-            foreach (var pos in stateMap.GetPositions())
+            foreach (var pos in stateMap.Positions())
                 stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
 
             stateMap[MAP_WIDTH / 2, MAP_WIDTH / 2] = GoalState.Goal;

@@ -157,6 +157,27 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
+        /// </summary>
+        /// <param name="rect1">First operand.</param>
+        /// <param name="rect2">Second operand.</param>
+        /// <returns></returns>
+        public static MapArea GetDifference(Rectangle rect1, Rectangle rect2)
+        {
+            var retVal = new MapArea();
+
+            foreach (var pos in rect1.Positions())
+            {
+                if (rect2.Contains(pos))
+                    continue;
+
+                retVal.Add(pos);
+            }
+
+            return retVal;
+        }
+
+        /// <summary>
         /// Returns the rectangle that represents the intersection of the two rectangles specified,
         /// or the empty rectangle if the specified rectangles do not intersect.
         /// </summary>
@@ -320,7 +341,7 @@ namespace GoRogue
         /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested for loop.
         /// </summary>
         /// <returns>All positions in the rectangle.</returns>
-        public IEnumerable<Coord> GetPositions()
+        public IEnumerable<Coord> Positions()
         {
             for (int y = 0; y < Height; y++)
                 for (int x = 0; x < Width; x++)
@@ -332,7 +353,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position from within the rectangle.</returns>
-        public Coord GetRandomPosition(IGenerator rng = null)
+        public Coord RandomPosition(IGenerator rng = null)
         {
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
@@ -347,7 +368,7 @@ namespace GoRogue
         /// <param name="selector">Selector function that takes a Coord, and returns true if it is an acceptable selection, and false otherwise.</param>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position from within the rectangle for which the given selector function returned true.</returns>
-        public Coord GetRandomPosition(Func<Coord, bool> selector, IGenerator rng = null)
+        public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null)
         {
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;

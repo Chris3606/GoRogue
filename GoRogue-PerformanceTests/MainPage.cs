@@ -102,7 +102,7 @@ namespace GoRogue_PerformanceTests
             /* Single-Goal GoalMap */
             var map = new ArrayMap<bool>(Runner.MAP_WIDTH, Runner.MAP_HEIGHT);
             CellularAutomataGenerator.Generate(map);
-            Coord goal = map.GetRandomPosition(true);
+            Coord goal = map.RandomPosition(true);
 
             var timeGoalMap = PathingTests.TimeForSingleSourceGoalMap(map, goal, Runner.ITERATIONS_FOR_TIMING);
 
@@ -115,7 +115,7 @@ namespace GoRogue_PerformanceTests
             var goals = new List<Coord>();
 
             for (int i = 0; i < Runner.NUM_GOALS; i++)
-                goals.Add(map.GetRandomPosition(true));
+                goals.Add(map.RandomPosition(true));
 
             var timeMGoalMap = PathingTests.TimeForMultiSourceGoalMap(map, goals, Runner.ITERATIONS_FOR_TIMING);
 

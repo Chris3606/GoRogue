@@ -64,6 +64,30 @@ namespace GoRogue
             return rng.Next(list.Count);
         }
 
+        /// <summary>
+        /// Extension method that selects and returns a random valid index from the list for which the selector function given
+        /// returns true, using the rng specified. Indices are repeatedly selected until a qualifying index is found.
+        /// -1 is returned if the list is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>>
+        /// <param name="list">List being operated on -- never specified manually as this is an extension method.</param>
+        /// <param name="selector">Function that returns true if the given index is valid selection, false otherwise.</param>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Index selected.</returns>
+        static public int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator rng = null)
+        {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
+            if (list.Count == 0)
+                return -1;
+
+            int index = rng.Next(list.Count);
+            while (!selector(index))
+                index = rng.Next(list.Count);
+
+            return index;
+        }
+
         
         /// <summary>
         /// Extension method that selects and returns a random item from the list, using the rng
@@ -83,6 +107,32 @@ namespace GoRogue
                 return default(T);
 
             return list[rng.Next(list.Count)];
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random item from the list for which the given selector returns true,
+        /// using the rng specified. Items are repeatedly selected until a qualifying item is found.
+        /// Default for type T is returned if the list is empty.
+        /// </summary>
+        /// <typeparam name="T">Type of elements in the list.</typeparam>
+        /// <param name="list">
+        ///  List being operated on -- never specified manually as this is an extension method.
+        /// </param>
+        /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
+        /// <param name="rng">RNG to use.</param>
+        /// <returns>Item selected.</returns> 
+        static public T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator rng = null)
+        {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
+
+            if (list.Count == 0)
+                return default(T);
+
+            T item = list[rng.Next(list.Count)];
+            while (!selector(item))
+                item = list[rng.Next(list.Count)];
+
+            return item;
         }
 
         /// <summary>

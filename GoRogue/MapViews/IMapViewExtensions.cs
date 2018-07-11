@@ -19,7 +19,7 @@ namespace GoRogue.MapViews
         /// <param name="mapView">Map view to iterate over positions for.  Never specified
         /// manually since this is an extension method.</param>
         /// <returns>All positions in the IMapView.</returns>
-        public static IEnumerable<Coord> GetPositions<T>(this IMapView<T> mapView)
+        public static IEnumerable<Coord> Positions<T>(this IMapView<T> mapView)
         {
             for (int y = 0; y < mapView.Height; y++)
                 for (int x = 0; x < mapView.Width; x++)
@@ -35,8 +35,8 @@ namespace GoRogue.MapViews
         /// <param name="validValue">A value to look for in the MapView to determine whether or not a generated Coord is valid.</param>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position whose value in this MapView is equal to the one specified.</returns>
-        public static Coord GetRandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator rng = null)
-            => mapView.GetRandomPosition((c, i) => i.Equals(validValue), rng);
+        public static Coord RandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator rng = null)
+            => mapView.RandomPosition((c, i) => i.Equals(validValue), rng);
 
         /// <summary>
         /// Gets a random position in the map view, whose value in map view is one of the ones specified.  Random positions
@@ -47,8 +47,8 @@ namespace GoRogue.MapViews
         /// <param name="validValues">A set of values to look for in the MapView to determine whether or not a generated Coord is valid.</param>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position whose value in this MapView is equal to one of the values specified.</returns>
-        public static Coord GetRandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator rng = null)
-            => mapView.GetRandomPosition((c, i) => validValues.Contains(i), rng);
+        public static Coord RandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator rng = null)
+            => mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
         /// <summary>
         /// Gets a random position in the map view, for which the selector returns true.  Random positions will continuously be generated until one
@@ -60,7 +60,7 @@ namespace GoRogue.MapViews
         /// and false if not.</param>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position in the MapView for which the selector returns true.</returns>
-        public static Coord GetRandomPosition<T>(this IMapView<T> mapView, Func<Coord, T, bool> selector, IGenerator rng = null)
+        public static Coord RandomPosition<T>(this IMapView<T> mapView, Func<Coord, T, bool> selector, IGenerator rng = null)
         {
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
@@ -80,7 +80,7 @@ namespace GoRogue.MapViews
         /// <param name="mapView">Map view to select from -- never specified manually as this is an extension method.</param>
         /// <param name="rng">The rng to use.  Defaults to SingletonRandom.DefaultRNG.</param>
         /// <returns>A random position within the MapView.</returns>
-        public static Coord GetRandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null)
+        public static Coord RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null)
         {
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
