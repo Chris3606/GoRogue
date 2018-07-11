@@ -136,22 +136,39 @@ namespace GoRogue.MapGeneration
             }
         }
 
+        /// <summary>
+        /// Adds the given positions to the list of points within the area if they are not already in the
+        /// list.
+        /// </summary>
+        /// <param name="positions">Positions to add to the list.</param>
         public void Add(IEnumerable<Coord> positions)
         {
             foreach (var pos in positions)
                 Add(pos);
         }
 
+        /// <summary>
+        /// Adds all positions in the given rectangle to the area, if they are not already present.
+        /// </summary>
+        /// <param name="rectangle">Rectangle whose points to add.</param>
         public void Add(Rectangle rectangle)
         {
             foreach (var pos in rectangle.Positions())
                 Add(pos);
         }
 
-
-
+        /// <summary>
+        /// Removes the given position specified from the MapArea.  Particularly when the Remove operation
+        /// changes the bounds, this operation can be expensive, so if you must do multiple Remove operations,
+        /// it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
+        /// </summary>
+        /// <param name="position">The position to remove.</param>
         public void Remove(Coord position) => Remove(position.Yield());
 
+        /// <summary>
+        /// Removes the given positions from the specified MapArea.
+        /// </summary>
+        /// <param name="positions">Positions to remove.</param>
         public void Remove(IEnumerable<Coord> positions)
         {
             bool recalculateBounds = false;
@@ -188,10 +205,25 @@ namespace GoRogue.MapGeneration
             }
         }
 
+        /// <summary>
+        /// Removes the given position specified from the MapArea.  Particularly when the Remove operation
+        /// changes the bounds, this operation can be expensive, so if you must do multiple Remove operations,
+        /// it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
+        /// </summary>
+        /// <param name="x">X-coordinate of the position to remove.</param>
+        /// <param name="y">Y-coordinate of the position to remove.</param>
         public void Remove(int x, int y) => Remove(Coord.Get(x, y));
 
+        /// <summary>
+        /// Removes all positions in the given MapArea from this one.
+        /// </summary>
+        /// <param name="area">Area containing positions to remove.</param>
         public void Remove(MapArea area) => Remove(area.Positions);
 
+        /// <summary>
+        /// Removes all positions in the given Rectangle from this MapArea.
+        /// </summary>
+        /// <param name="rectangle">Rectangle containing positions to remove.</param>
         public void Remove(Rectangle rectangle) => Remove(rectangle.Positions());
 
         /// <summary>
