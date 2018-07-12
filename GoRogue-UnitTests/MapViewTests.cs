@@ -1,5 +1,6 @@
 ﻿using GoRogue.MapGeneration.Generators;
 using GoRogue.MapViews;
+using GoRogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
@@ -55,6 +56,58 @@ namespace GoRogue_UnitTests
             var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
             checkMaps(map, lambdaMap);
+        }
+
+        [TestMethod]
+        public void ViewportTest()
+        {
+            var arrayMap = new ArrayMap<bool>(100, 100);
+            RectangleMapGenerator.Generate(arrayMap);
+
+            var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, 10, 10));
+            checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
+
+            viewport.MinCorner = Coord.Get(-1, 0); // Should end up being 0, 0 thanks to bounding
+            checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
+
+            viewport.MinCorner = Coord.Get(5, 5);
+            checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14)); 
+
+            viewport.MinCorner = Coord.Get(98, 98);
+            checkViewportBounds(viewport, Coord.Get(90, 90), Coord.Get(99, 99)); 
+        }
+
+
+        private static void checkViewportBounds(Viewport<bool> viewport, Coord expectedMinCorner, Coord expectedMaxCorner)
+        {
+            Assert.AreEqual(viewport.MinCorner, expectedMinCorner);
+            Assert.AreEqual(viewport.MaxCorner, expectedMaxCorner);
+
+            Assert.AreEqual(true, viewport.X >= 0);
+            Assert.AreEqual(true, viewport.Y >= 0);
+            Assert.AreEqual(true, viewport.X < viewport.MapView.Width);
+            Assert.AreEqual(true, viewport.Y < viewport.MapView.Height);
+
+
+            foreach (var pos in viewport.ViewArea.Positions())
+            {
+                Assert.AreEqual(true, pos.X >= viewport.X);
+                Assert.AreEqual(true, pos.Y >= viewport.Y);
+
+                Assert.AreEqual(true, pos.X <= viewport.MaxX);
+                Assert.AreEqual(true, pos.Y <= viewport.MaxY);
+
+                Assert.AreEqual(true, pos.X >= 0);
+                Assert.AreEqual(true, pos.Y >= 0);
+                Assert.AreEqual(true, pos.X < viewport.MapView.Width);
+                Assert.AreEqual(true, pos.Y < viewport.MapView.Height);
+
+                // 
+                if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 || pos.Y == viewport.MapView.Height - 1)
+                    Assert.AreEqual(false, viewport[pos - viewport.MinCorner]);
+                else
+                    Assert.AreEqual(true, viewport[pos - viewport.MinCorner]);
+            }
         }
 
         private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)

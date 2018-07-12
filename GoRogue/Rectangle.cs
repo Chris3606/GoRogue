@@ -344,8 +344,8 @@ namespace GoRogue
         /// <returns>All positions in the rectangle.</returns>
         public IEnumerable<Coord> Positions()
         {
-            for (int y = 0; y < Height; y++)
-                for (int x = 0; x < Width; x++)
+            for (int y = Y; y <= MaxY; y++)
+                for (int x = X; x <= MaxX; x++)
                     yield return Coord.Get(x, y);
         }
 
