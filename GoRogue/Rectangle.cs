@@ -9,7 +9,7 @@ namespace GoRogue
     /// <summary>
     /// Represents a rectangle in terms of grid squares. Provides numerous functions pertaining to area.
     /// </summary>
-    public struct Rectangle : IEquatable<Rectangle>, IReadOnlyRectangle
+    public struct Rectangle : IEquatable<Rectangle>
     {
         /// <summary>
         /// The empty rectangle. Has origin of 0, 0 with 0 width and height.
@@ -135,14 +135,14 @@ namespace GoRogue
         /// </summary>
         public int Y { get; set; }
 
-        public IReadOnlyRectangle AsReadOnly() => this;
+        public Rectangle AsReadOnly() => this;
         /// <summary>
         /// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
         /// </summary>
         /// <param name="rect1">First operand.</param>
         /// <param name="rect2">Second operand.</param>
         /// <returns></returns>
-        public static MapArea GetDifference(IReadOnlyRectangle rect1, IReadOnlyRectangle rect2)
+        public static MapArea GetDifference(Rectangle rect1, Rectangle rect2)
         {
             var retVal = new MapArea();
 
@@ -163,7 +163,7 @@ namespace GoRogue
         /// <param name="r1">First rectangle.</param>
         /// <param name="r2">Second rectangle.</param>
         /// <returns>A MapArea containing exactly those positions in one (or both) rectangles.</returns>
-        public static MapArea GetExactUnion(IReadOnlyRectangle r1, IReadOnlyRectangle r2)
+        public static MapArea GetExactUnion(Rectangle r1, Rectangle r2)
         {
             var retVal = new MapArea();
 
@@ -188,7 +188,7 @@ namespace GoRogue
         /// Rectangle representing the intersection of r1 and r2, or the empty rectangle if the two
         /// rectangles do not intersect.
         /// </returns>
-        public static Rectangle GetIntersection(IReadOnlyRectangle r1, IReadOnlyRectangle r2)
+        public static Rectangle GetIntersection(Rectangle r1, Rectangle r2)
         {
             if (r1.Intersects(r2))
             {
@@ -212,7 +212,7 @@ namespace GoRogue
         /// <returns>
         /// The smallest possible rectangle that includes the entire area of both r1 and r2.
         /// </returns>
-        public static Rectangle GetUnion(IReadOnlyRectangle r1, IReadOnlyRectangle r2)
+        public static Rectangle GetUnion(Rectangle r1, Rectangle r2)
         {
             int x = Math.Min(r1.X, r2.X);
             int y = Math.Min(r1.Y, r2.Y);
@@ -270,7 +270,7 @@ namespace GoRogue
         /// <returns>
         /// True if the given rectangle is completely contained within the current one, false otherwise.
         /// </returns>
-        public bool Contains(IReadOnlyRectangle other)
+        public bool Contains(Rectangle other)
         {
             return (X <= other.X && X + Width <= other.X + other.Width && Y <= other.Y && Y + Height <= other.Y + other.Height);
         }
@@ -333,7 +333,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="other">The rectangle to check.</param>
         /// <returns>True if the given rectangle intersects with the current one, false otherwise.</returns>
-        public bool Intersects(IReadOnlyRectangle other)
+        public bool Intersects(Rectangle other)
         {
             return (other.X < X + Width && X < other.X + other.Width && other.Y < Y + Height && Y < other.Y + other.Height);
         }
