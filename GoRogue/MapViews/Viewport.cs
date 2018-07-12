@@ -1,142 +1,83 @@
-﻿using System.Collections.Generic;
-
-namespace GoRogue.MapViews
+﻿namespace GoRogue.MapViews
 {
     /// <summary>
     /// Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalMaps), Viewport is a class that
-    /// effectively creates and maintains a "viewport" of the map.  Its indexers perform relative to absolute coordinate translations.
+    /// effectively creates and maintains a "viewport" of the map.  Its indexers perform relative to absolute coordinate translations, and return
+    /// the proper value of type T from the underlying map..
     /// </summary>
+    /// <typeparam name="T">The type being exposed by the MapView.</typeparam>
     public class Viewport<T> : IMapView<T>
     {
-        public IMapView<T> MapView { get; private set; }
+        private BoundedRectangle _boundedRect;
 
-        private Rectangle _viewArea;
+        /// <summary>
+        /// The area of the base MapView that this Viewport is exposing.  This property does NOT expose a get accessor - to get the value, use GetViewArea() (which returns a reference).
+        /// When set, the rectangle is automatically restricted by the edges of the map as necessary.
+        /// </summary>
         public Rectangle ViewArea
         {
-            get => _viewArea;
-            set
-            {
-                _viewArea = value;
-                boundLock();
-            }
+            set => _boundedRect.Area = value;
         }
 
-        public int X
-        {
-            get => _viewArea.X;
-            set
-            {
-                _viewArea.X = value;
-                boundLock();
-            }
-        }
+        /// <summary>
+        /// The MapView that this Viewport is exposing values from.
+        /// </summary>
+        public IMapView<T> MapView { get; private set; } 
 
-        public int Y
-        {
-            get => _viewArea.Y;
-            set
-            {
-                _viewArea.Y = value;
-                boundLock();
-            }
-        }
-
-        public Coord MinCorner
-        {
-            get => _viewArea.MinCorner;
-            set
-            {
-                _viewArea.MinCorner = value;
-                boundLock();
-            }
-        }
-
-        public int MaxX
-        {
-            get => _viewArea.MaxX;
-            set
-            {
-                _viewArea.MaxX = value;
-                boundLock();
-            }
-        }
-
-        public int MaxY
-        {
-            get => _viewArea.MaxY;
-            set
-            {
-                _viewArea.MaxY = value;
-                boundLock();
-            }
-        }
-
-        public Coord MaxCorner
-        {
-            get => _viewArea.MaxCorner;
-            set
-            {
-                _viewArea.MaxCorner = value;
-                boundLock();
-            }
-        }
-
-        public Coord Center
-        {
-            get => _viewArea.Center;
-            set
-            {
-                _viewArea.Center = value;
-                boundLock();
-            }
-        }
-
+        /// <summary>
+        /// The width of the ViewArea.
+        /// </summary>
         public int Width
         {
-            get => _viewArea.Width;
-            set
-            {
-                _viewArea.Width = value;
-                boundLock();
-            }
+            get => GetViewArea().Width;
         }
 
+        /// <summary>
+        /// The height of the ViewArea.
+        /// </summary>
         public int Height
         {
-            get => _viewArea.Height;
-            set
-            {
-                _viewArea.Height = value;
-                boundLock();
-            }
+            get => GetViewArea().Height;
         }
 
-        public T this[Coord relativePosition] => MapView[_viewArea.MinCorner + relativePosition];
+        /// <summary>
+        /// Given a position in relative coordinates, returns the "value" associated with that location in absolute coordinates.
+        /// </summary>
+        /// <param name="relativePosition">Viewport-relative position of the location to retrieve the value for.</param>
+        /// <returns>The "value" associated with the absolute location represented on the underlying MapView.</returns>
+        public T this[Coord relativePosition] => MapView[GetViewArea().MinCorner + relativePosition];
 
-        public T this[int relativeX, int relativeY] => MapView[_viewArea.X + relativeX, _viewArea.Y + relativeY];
+        /// <summary>
+        /// Given an X and Y value in relative coordinates, returns the "value" associated with that location in absolute coordinates.
+        /// </summary>
+        /// <param name="x">Viewport-relative X-value of location.</param>
+        /// <param name="y">Viewport-relative Y-value of location.</param>
+        /// <returns>The "value" associated with the absolute location represented on the underlying MapView.</returns>
+        public T this[int relativeX, int relativeY] => MapView[GetViewArea().X + relativeX, GetViewArea().Y + relativeY];
 
+        /// <summary>
+        /// Constructor.  Takes the MapView to represent, and the initial ViewArea for that map.
+        /// </summary>
+        /// <param name="mapView">The map view being represented.</param>
+        /// <param name="viewArea">The initial ViewArea for that map.</param>
         public Viewport(IMapView<T> mapView, Rectangle viewArea)
         {
             MapView = mapView;
+            _boundedRect = new BoundedRectangle(viewArea, MapView.Bounds());
             ViewArea = viewArea;
         }
 
-        private void boundLock()
-        {
-            if (_viewArea.Width > MapView.Width)
-                _viewArea.Width = MapView.Width;
-            if (_viewArea.Height > MapView.Height)
-                _viewArea.Height = MapView.Height;
+        /// <summary>
+        /// Constructor.  Takes the MapView to represent.  Initial ViewArea will be the entire MapView.
+        /// </summary>
+        /// <param name="mapView">The MapView to represent.</param>
+        public Viewport(IMapView<T> mapView)
+            : this(mapView, mapView.Bounds()) { }
 
-            if (_viewArea.X < 0)
-                _viewArea.X = 0;
-            if (_viewArea.Y < 0)
-                _viewArea.Y = 0;
-
-            if (_viewArea.MaxX > MapView.Width)
-                _viewArea.X = MapView.Width - _viewArea.Width;
-            if (_viewArea.MaxY > MapView.Height)
-                _viewArea.Y = MapView.Height - _viewArea.Height;
-        }
+        /// <summary>
+        /// Returns a reference to the ViewArea.  To set, see the ViewArea property.
+        /// </summary>
+        /// <returns>A reference to the ViewArea.</returns>
+        public ref Rectangle GetViewArea() => ref _boundedRect.GetArea();
     }
 }

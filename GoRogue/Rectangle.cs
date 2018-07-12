@@ -38,9 +38,10 @@ namespace GoRogue
         /// <param name="maxCorner">Maximum x and y values that are considered inside the rectangle.</param>
         public Rectangle(Coord minCorner, Coord maxCorner)
         {
-            X = Y = Width = Height = 0; // To allow assignment
-            MinCorner = minCorner;
-            MaxCorner = maxCorner;
+            X = minCorner.X;
+            Y = minCorner.Y;
+            Width = maxCorner.X - X + 1;
+            Height = maxCorner.Y - Y + 1;
         }
 
         /// <summary>
@@ -67,17 +68,18 @@ namespace GoRogue
         public Coord Center
         {
             get => Coord.Get(X + (Width / 2), Y + (Height / 2));
-            set
-            {
-                X = value.X - (Width / 2);
-                Y = value.Y - (Width / 2);
-            }
         }
+
+        public Rectangle NewWithCenter(Coord center)
+            => new Rectangle(center.X - (Width / 2), center.Y - (Height / 2), Width, Height);
 
         /// <summary>
         /// The height of the rectangle, in grid squares.
         /// </summary>
-        public int Height { get; set; }
+        public int Height { get; private set; }
+
+        public Rectangle NewWithHeight(int height)
+            => new Rectangle(X, Y, Width, height);
 
         /// <summary>
         /// Whether or not this rectangle is empty (has width and height of 0).
@@ -90,8 +92,10 @@ namespace GoRogue
         public Coord MaxCorner
         {
             get => Coord.Get(MaxX, MaxY);
-            set { MaxX = value.X; MaxY = value.Y; }
         }
+
+        public Rectangle NewWithMaxCorner(Coord maxCorner)
+            => new Rectangle(X, Y, maxCorner.X - X + 1, maxCorner.Y - Y + 1);
 
         /// <summary>
         /// The maximum X-coordinate that is included in the rectangle.
@@ -99,8 +103,9 @@ namespace GoRogue
         public int MaxX
         {
             get => X + Width - 1;
-            set => Width = value - X + 1;
         }
+
+        public Rectangle NewWithMaxX(int maxX) => new Rectangle(X, Y, maxX - X + 1, Height);
 
         /// <summary>
         /// The maximum Y-coordinate that is included in the rectangle.
@@ -108,8 +113,9 @@ namespace GoRogue
         public int MaxY
         {
             get => Y + Height - 1;
-            set => Height = value - Y + 1;
         }
+
+        public Rectangle NewWithMaxY(int maxY) => new Rectangle(X, Y, Width, maxY - Y + 1);
 
         /// <summary>
         /// Coord representing the minimum X and Y values that are included in the rectangle.
@@ -117,31 +123,37 @@ namespace GoRogue
         public Coord MinCorner
         {
             get => Coord.Get(X, Y);
-            set { X = value.X; Y = value.Y; }
         }
+
+        public Rectangle NewWithMinCorner(Coord minCorner)
+            => new Rectangle(minCorner.X, minCorner.Y, Width, Height);
 
         /// <summary>
         /// The width of the rectangle, in grid squares.
         /// </summary>
-        public int Width { get; set; }
+        public int Width { get; private set; }
+
+        public Rectangle NewWithWidth(int width) => new Rectangle(X, Y, width, Height);
 
         /// <summary>
         /// Minimum X-coordinate of the rectangle.
         /// </summary>
-        public int X { get; set; }
+        public int X { get; private set; }
+        public Rectangle NewWithX(int x) => new Rectangle(x, Y, Width, Height);
 
         /// <summary>
         /// Minimum Y-coordinate that is included in the rectangle.
         /// </summary>
-        public int Y { get; set; }
+        public int Y { get; private set; }
 
-        public Rectangle AsReadOnly() => this;
+        public Rectangle NewWithY(int y) => new Rectangle(X, y, Width, Height);
+
         /// <summary>
         /// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
         /// </summary>
         /// <param name="rect1">First operand.</param>
         /// <param name="rect2">Second operand.</param>
-        /// <returns></returns>
+        /// <returns>A MapArea representing every cell in rect1 that is NOT in rect2.</returns>
         public static MapArea GetDifference(Rectangle rect1, Rectangle rect2)
         {
             var retVal = new MapArea();
@@ -301,7 +313,7 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Expands the rectangle to include the additional specified number of tiles on the
+        /// Returns a new Rectangle, expanded to include the additional specified number of tiles on the
         /// left/right and top/bottom.
         /// </summary>
         /// <param name="horizontalChange">
@@ -310,14 +322,9 @@ namespace GoRogue
         /// <param name="verticalChange">
         /// Number of additional tiles to include on the top/bottom of the rectangle.
         /// </param>
-        public void Expand(int horizontalChange, int verticalChange)
-        {
-            X -= horizontalChange;
-            Width += 2 * horizontalChange;
-
-            Y -= verticalChange;
-            Height += 2 * verticalChange;
-        }
+        /// <returns>A new Rectangle, expanded appropriately.</returns>
+        public Rectangle Expand(int horizontalChange, int verticalChange)
+            => new Rectangle(X - horizontalChange, Y - verticalChange, Width + (2 * horizontalChange), Height + (2 * verticalChange));
 
         /// <summary>
         /// Simple hashing.

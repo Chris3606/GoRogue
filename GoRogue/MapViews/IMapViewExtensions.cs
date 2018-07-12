@@ -108,5 +108,13 @@ namespace GoRogue.MapViews
 
             return Coord.Get(rng.Next(mapView.Width), rng.Next(mapView.Height));
         }
+
+        /// <summary>
+        /// Gets a rectangle representing the bounds of the MapView.
+        /// </summary>
+        /// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+        /// <param name="mapView">Map view to select from -- never specified manually as this is an extension method</param>
+        /// <returns>A rectangle representing the MapView's bounds.</returns>
+        public static Rectangle Bounds<T>(this IMapView<T> mapView) => new Rectangle(0, 0, mapView.Width, mapView.Height);
     }
 }
