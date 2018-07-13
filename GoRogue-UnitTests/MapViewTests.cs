@@ -1,6 +1,6 @@
-﻿using GoRogue.MapGeneration.Generators;
+﻿using GoRogue;
+using GoRogue.MapGeneration.Generators;
 using GoRogue.MapViews;
-using GoRogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
@@ -71,12 +71,21 @@ namespace GoRogue_UnitTests
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
 
             viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(5, 5));
-            checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14)); 
+            checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14));
 
             viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(98, 98));
-            checkViewportBounds(viewport, Coord.Get(90, 90), Coord.Get(99, 99)); 
+            checkViewportBounds(viewport, Coord.Get(90, 90), Coord.Get(99, 99));
         }
 
+        private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
+        {
+            for (int x = 0; x < genMap.Width; x++)
+                for (int y = 0; y < genMap.Height; y++)
+                {
+                    var properValue = genMap[x, y] ? 1.0 : 0.0;
+                    Assert.AreEqual(properValue, fovMap[x, y]);
+                }
+        }
 
         private static void checkViewportBounds(Viewport<bool> viewport, Coord expectedMinCorner, Coord expectedMaxCorner)
         {
@@ -87,7 +96,6 @@ namespace GoRogue_UnitTests
             Assert.AreEqual(true, viewport.ViewArea.Y >= 0);
             Assert.AreEqual(true, viewport.ViewArea.X < viewport.MapView.Width);
             Assert.AreEqual(true, viewport.ViewArea.Y < viewport.MapView.Height);
-
 
             foreach (var pos in viewport.ViewArea.Positions())
             {
@@ -102,22 +110,13 @@ namespace GoRogue_UnitTests
                 Assert.AreEqual(true, pos.X < viewport.MapView.Width);
                 Assert.AreEqual(true, pos.Y < viewport.MapView.Height);
 
-                // Utterly stupid way to access things via viewport, but verifies that the coordinate translation is working properly.
+                // Utterly stupid way to access things via viewport, but verifies that the coordinate
+                // translation is working properly.
                 if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 || pos.Y == viewport.MapView.Height - 1)
                     Assert.AreEqual(false, viewport[pos - viewport.ViewArea.MinCorner]);
                 else
                     Assert.AreEqual(true, viewport[pos - viewport.ViewArea.MinCorner]);
             }
-        }
-
-        private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
-        {
-            for (int x = 0; x < genMap.Width; x++)
-                for (int y = 0; y < genMap.Height; y++)
-                {
-                    var properValue = genMap[x, y] ? 1.0 : 0.0;
-                    Assert.AreEqual(properValue, fovMap[x, y]);
-                }
         }
     }
 }

@@ -70,16 +70,10 @@ namespace GoRogue
             get => Coord.Get(X + (Width / 2), Y + (Height / 2));
         }
 
-        public Rectangle NewWithCenter(Coord center)
-            => new Rectangle(center.X - (Width / 2), center.Y - (Height / 2), Width, Height);
-
         /// <summary>
         /// The height of the rectangle, in grid squares.
         /// </summary>
         public int Height { get; private set; }
-
-        public Rectangle NewWithHeight(int height)
-            => new Rectangle(X, Y, Width, height);
 
         /// <summary>
         /// Whether or not this rectangle is empty (has width and height of 0).
@@ -94,9 +88,6 @@ namespace GoRogue
             get => Coord.Get(MaxX, MaxY);
         }
 
-        public Rectangle NewWithMaxCorner(Coord maxCorner)
-            => new Rectangle(X, Y, maxCorner.X - X + 1, maxCorner.Y - Y + 1);
-
         /// <summary>
         /// The maximum X-coordinate that is included in the rectangle.
         /// </summary>
@@ -104,8 +95,6 @@ namespace GoRogue
         {
             get => X + Width - 1;
         }
-
-        public Rectangle NewWithMaxX(int maxX) => new Rectangle(X, Y, maxX - X + 1, Height);
 
         /// <summary>
         /// The maximum Y-coordinate that is included in the rectangle.
@@ -115,8 +104,6 @@ namespace GoRogue
             get => Y + Height - 1;
         }
 
-        public Rectangle NewWithMaxY(int maxY) => new Rectangle(X, Y, Width, maxY - Y + 1);
-
         /// <summary>
         /// Coord representing the minimum X and Y values that are included in the rectangle.
         /// </summary>
@@ -125,28 +112,20 @@ namespace GoRogue
             get => Coord.Get(X, Y);
         }
 
-        public Rectangle NewWithMinCorner(Coord minCorner)
-            => new Rectangle(minCorner.X, minCorner.Y, Width, Height);
-
         /// <summary>
         /// The width of the rectangle, in grid squares.
         /// </summary>
         public int Width { get; private set; }
 
-        public Rectangle NewWithWidth(int width) => new Rectangle(X, Y, width, Height);
-
         /// <summary>
         /// Minimum X-coordinate of the rectangle.
         /// </summary>
         public int X { get; private set; }
-        public Rectangle NewWithX(int x) => new Rectangle(x, Y, Width, Height);
 
         /// <summary>
         /// Minimum Y-coordinate that is included in the rectangle.
         /// </summary>
         public int Y { get; private set; }
-
-        public Rectangle NewWithY(int y) => new Rectangle(X, y, Width, Height);
 
         /// <summary>
         /// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
@@ -313,8 +292,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns a new Rectangle, expanded to include the additional specified number of tiles on the
-        /// left/right and top/bottom.
+        /// Returns a new Rectangle, expanded to include the additional specified number of tiles on
+        /// the left/right and top/bottom.
         /// </summary>
         /// <param name="horizontalChange">
         /// Number of additional tiles to include on the left/right of the rectangle.
@@ -344,6 +323,80 @@ namespace GoRogue
         {
             return (other.X < X + Width && X < other.X + other.Width && other.Y < Y + Height && Y < other.Y + other.Height);
         }
+
+        /// <summary>
+        /// Creates and returns a new rectangle that is exactly the same as the current one, but with
+        /// the center moved to the given position.
+        /// </summary>
+        /// <param name="center">The center-point for the new Rectangle.</param>
+        /// <returns>
+        /// A new Rectangle that is exactly like the current one, but with the center moved to the
+        /// given location.
+        /// </returns>
+        public Rectangle NewWithCenter(Coord center)
+            => new Rectangle(center.X - (Width / 2), center.Y - (Height / 2), Width, Height);
+
+        /// <summary>
+        /// Creates and returns a new rectangle that is exactly the same as the current one, but with
+        /// the height changed to the given value.
+        /// </summary>
+        /// <param name="height">The height for the new Rectangle.</param>
+        /// <returns>A new rectangle with the Height changed to the given value.</returns>
+        public Rectangle NewWithHeight(int height)
+            => new Rectangle(X, Y, Width, height);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its MaxCorner moved to the given position.
+        /// </summary>
+        /// <param name="maxCorner">The MaxCorner for the new rectangle.</param>
+        /// <returns>A new rectangle with the MaxCorner changed to the given value.</returns>
+        public Rectangle NewWithMaxCorner(Coord maxCorner)
+            => new Rectangle(X, Y, maxCorner.X - X + 1, maxCorner.Y - Y + 1);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its MaxX moved to the given x-coordinate.
+        /// </summary>
+        /// <param name="maxX">The MaxX value for the new Rectangle.</param>
+        /// <returns>A new rectangle with MaxX changed to the given value.</returns>
+        public Rectangle NewWithMaxX(int maxX) => new Rectangle(X, Y, maxX - X + 1, Height);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its MaxY moved to the given y-coordinate.
+        /// </summary>
+        /// <param name="maxY">The MaxY value for the new Rectangle.</param>
+        /// <returns>A new rectangle with MaxY changed to the given value.</returns>
+        /// &gt;
+        public Rectangle NewWithMaxY(int maxY) => new Rectangle(X, Y, Width, maxY - Y + 1);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its MinCorner moved to the given position.
+        /// </summary>
+        /// <param name="minCorner">The MinCorner for the new rectangle.</param>
+        /// <returns>A new rectangle with the MinCorner changed to the given value.</returns>
+        public Rectangle NewWithMinCorner(Coord minCorner)
+            => new Rectangle(minCorner.X, minCorner.Y, Width, Height);
+
+        /// <summary>
+        /// Creates and returns a new rectangle that is exactly the same as the current one, but with
+        /// the width changed to the given value.
+        /// </summary>
+        /// <param name="width">The width for the new Rectangle.</param>
+        /// <returns>A new rectangle with the Width changed to the given value.</returns>
+        public Rectangle NewWithWidth(int width) => new Rectangle(X, Y, width, Height);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its X value moved to the given x-coordinate.
+        /// </summary>
+        /// <param name="x">The X value for the new Rectangle.</param>
+        /// <returns>A new rectangle with X changed to the given value.</returns>
+        public Rectangle NewWithX(int x) => new Rectangle(x, Y, Width, Height);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its Y value moved to the given y-coordinate.
+        /// </summary>
+        /// <param name="y">The Y value for the new Rectangle.</param>
+        /// <returns>A new rectangle with Y changed to the given value.</returns>
+        public Rectangle NewWithY(int y) => new Rectangle(X, y, Width, Height);
 
         /// <summary>
         /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested
