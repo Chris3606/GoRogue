@@ -71,7 +71,7 @@
         /// <returns>
         /// The "value" associated with the absolute location represented on the underlying MapView.
         /// </returns>
-        public virtual T this[Coord relativePosition] => MapView[ViewArea.MinCorner + relativePosition];
+        public virtual T this[Coord relativePosition] => MapView[ViewArea.Position + relativePosition];
 
         /// <summary>
         /// Given an X and Y value in relative coordinates, returns the "value" associated with that

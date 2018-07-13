@@ -67,13 +67,13 @@ namespace GoRogue_UnitTests
             var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, 10, 10));
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
 
-            viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
+            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
 
-            viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(5, 5));
+            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(5, 5));
             checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14));
 
-            viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(98, 98));
+            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(98, 98));
             checkViewportBounds(viewport, Coord.Get(90, 90), Coord.Get(99, 99));
         }
 
@@ -89,7 +89,7 @@ namespace GoRogue_UnitTests
 
         private static void checkViewportBounds(Viewport<bool> viewport, Coord expectedMinCorner, Coord expectedMaxCorner)
         {
-            Assert.AreEqual(viewport.ViewArea.MinCorner, expectedMinCorner);
+            Assert.AreEqual(viewport.ViewArea.Position, expectedMinCorner);
             Assert.AreEqual(viewport.ViewArea.MaxCorner, expectedMaxCorner);
 
             Assert.AreEqual(true, viewport.ViewArea.X >= 0);
@@ -113,9 +113,9 @@ namespace GoRogue_UnitTests
                 // Utterly stupid way to access things via viewport, but verifies that the coordinate
                 // translation is working properly.
                 if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 || pos.Y == viewport.MapView.Height - 1)
-                    Assert.AreEqual(false, viewport[pos - viewport.ViewArea.MinCorner]);
+                    Assert.AreEqual(false, viewport[pos - viewport.ViewArea.Position]);
                 else
-                    Assert.AreEqual(true, viewport[pos - viewport.ViewArea.MinCorner]);
+                    Assert.AreEqual(true, viewport[pos - viewport.ViewArea.Position]);
             }
         }
     }

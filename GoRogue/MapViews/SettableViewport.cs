@@ -42,7 +42,7 @@
         public new T this[Coord relativePosition]
         {
             get => base[relativePosition];
-            set => MapView[ViewArea.MinCorner + relativePosition] = value;
+            set => MapView[ViewArea.Position + relativePosition] = value;
         }
 
         /// <summary>
