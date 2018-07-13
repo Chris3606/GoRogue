@@ -11,12 +11,13 @@
         private BoundedRectangle _boundedRect;
 
         /// <summary>
-        /// The area of the base MapView that this Viewport is exposing.  This property does NOT expose a get accessor - to get the value, use GetViewArea() (which returns a reference).
-        /// When set, the rectangle is automatically restricted by the edges of the map as necessary.
+        /// The area of the base MapView that this Viewport is exposing.  Although this property does not explicitly expose a set accessor,
+        /// it is returning a reference and as such may be assigned to. When accessed, the rectangle is automatically restricted by the edges
+        /// of the map as necessary.
         /// </summary>
-        public Rectangle ViewArea
+        public ref Rectangle ViewArea
         {
-            set => _boundedRect.Area = value;
+            get => ref _boundedRect.Area;
         }
 
         /// <summary>
@@ -29,7 +30,7 @@
         /// </summary>
         public int Width
         {
-            get => GetViewArea().Width;
+            get => ViewArea.Width;
         }
 
         /// <summary>
@@ -37,7 +38,7 @@
         /// </summary>
         public int Height
         {
-            get => GetViewArea().Height;
+            get => ViewArea.Height;
         }
 
         /// <summary>
@@ -45,7 +46,7 @@
         /// </summary>
         /// <param name="relativePosition">Viewport-relative position of the location to retrieve the value for.</param>
         /// <returns>The "value" associated with the absolute location represented on the underlying MapView.</returns>
-        public T this[Coord relativePosition] => MapView[GetViewArea().MinCorner + relativePosition];
+        public virtual T this[Coord relativePosition] => MapView[ViewArea.MinCorner + relativePosition];
 
         /// <summary>
         /// Given an X and Y value in relative coordinates, returns the "value" associated with that location in absolute coordinates.
@@ -53,7 +54,7 @@
         /// <param name="x">Viewport-relative X-value of location.</param>
         /// <param name="y">Viewport-relative Y-value of location.</param>
         /// <returns>The "value" associated with the absolute location represented on the underlying MapView.</returns>
-        public T this[int relativeX, int relativeY] => MapView[GetViewArea().X + relativeX, GetViewArea().Y + relativeY];
+        public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
 
         /// <summary>
         /// Constructor.  Takes the MapView to represent, and the initial ViewArea for that map.
@@ -64,7 +65,6 @@
         {
             MapView = mapView;
             _boundedRect = new BoundedRectangle(viewArea, MapView.Bounds());
-            ViewArea = viewArea;
         }
 
         /// <summary>
@@ -73,11 +73,5 @@
         /// <param name="mapView">The MapView to represent.</param>
         public Viewport(IMapView<T> mapView)
             : this(mapView, mapView.Bounds()) { }
-
-        /// <summary>
-        /// Returns a reference to the ViewArea.  To set, see the ViewArea property.
-        /// </summary>
-        /// <returns>A reference to the ViewArea.</returns>
-        public ref Rectangle GetViewArea() => ref _boundedRect.GetArea();
     }
 }
