@@ -76,6 +76,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:aa360e6059a5068ebffe7d26561e55243"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#aa360e6059a5068ebffe7d26561e55243">Bounds&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView)</td></tr>
+<tr class="memdesc:aa360e6059a5068ebffe7d26561e55243"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a rectangle representing the bounds of the MapView.  <a href="#aa360e6059a5068ebffe7d26561e55243">More...</a><br /></td></tr>
+<tr class="separator:aa360e6059a5068ebffe7d26561e55243"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e0f04b332716bcbaec476857e74d722"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a1e0f04b332716bcbaec476857e74d722">Positions&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView)</td></tr>
 <tr class="memdesc:a1e0f04b332716bcbaec476857e74d722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterates through each position in the map view. Equivalent to nested for loop for (y = 0...) for (x = 0...)  <a href="#a1e0f04b332716bcbaec476857e74d722">More...</a><br /></td></tr>
 <tr class="separator:a1e0f04b332716bcbaec476857e74d722"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -95,6 +98,47 @@ Static Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extensions for the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> class that effectively act as methods with default implementations for them. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa360e6059a5068ebffe7d26561e55243"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa360e6059a5068ebffe7d26561e55243">&sect;&nbsp;</a></span>Bounds< T >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.MapViews.IMapViewExtensions.Bounds&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>mapView</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a rectangle representing the bounds of the MapView. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapView</td><td>Map view to select from &ndash; never specified manually as this is an extension method </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A rectangle representing the MapView's bounds.</dd></dl>
+
+</div>
+</div>
 <a id="a1e0f04b332716bcbaec476857e74d722"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e0f04b332716bcbaec476857e74d722">&sect;&nbsp;</a></span>Positions< T >()</h2>
 

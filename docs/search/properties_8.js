@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['name',['Name',['../class_go_rogue_1_1_effect.html#a46580d5e6a9abc39b313112d9bede1d6',1,'GoRogue::Effect']]],
-  ['newlyinsensemap',['NewlyInSenseMap',['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a721b911bb271a2615e2a755e5b090031',1,'GoRogue::SenseMapping::SenseMap']]],
-  ['newlyoutofsensemap',['NewlyOutOfSenseMap',['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#ab9e230a4e3d13fe4b936802331795fe5',1,'GoRogue::SenseMapping::SenseMap']]],
-  ['newlyseen',['NewlySeen',['../class_go_rogue_1_1_f_o_v.html#addf258b6c190162a1a75018c253b8303',1,'GoRogue::FOV']]],
-  ['newlyunseen',['NewlyUnseen',['../class_go_rogue_1_1_f_o_v.html#a8a4ffd48c7c3068cd8d4b9f45760493c',1,'GoRogue::FOV']]],
-  ['newposition',['NewPosition',['../class_go_rogue_1_1_item_moved_event_args.html#a0ab6d1dab2dcbd1df6a3d0d5b21342b0',1,'GoRogue::ItemMovedEventArgs']]],
-  ['none',['NONE',['../class_go_rogue_1_1_direction.html#a3c65e46328e691121571b9b339cab3cc',1,'GoRogue::Direction']]]
+  ['mapview',['MapView',['../class_go_rogue_1_1_map_views_1_1_settable_viewport.html#a8313482a24ceb9def7cc0fc67f91b3d9',1,'GoRogue.MapViews.SettableViewport.MapView()'],['../class_go_rogue_1_1_map_views_1_1_viewport.html#a81a6d3662dc64d92205520e0aa34e90e',1,'GoRogue.MapViews.Viewport.MapView()']]],
+  ['maxcorner',['MaxCorner',['../struct_go_rogue_1_1_rectangle.html#a995b9dd90c658121834d6f64a8448ee0',1,'GoRogue::Rectangle']]],
+  ['maxx',['MaxX',['../struct_go_rogue_1_1_rectangle.html#accd264fed365161a6ae328aea304c3d0',1,'GoRogue::Rectangle']]],
+  ['maxy',['MaxY',['../struct_go_rogue_1_1_rectangle.html#add3a1c987d3efa981289f65e915df241',1,'GoRogue::Rectangle']]],
+  ['mincorner',['MinCorner',['../struct_go_rogue_1_1_rectangle.html#aadf814f15c9cf756181a789851f63c09',1,'GoRogue::Rectangle']]],
+  ['multiplicity',['Multiplicity',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a65e608f4bf633683396e3afea36c00ba',1,'GoRogue::DiceNotation::Terms::DiceTerm']]]
 ];

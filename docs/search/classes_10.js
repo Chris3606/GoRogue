@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utility',['Utility',['../class_go_rogue_1_1_utility.html',1,'GoRogue']]]
+  ['translationmap',['TranslationMap',['../class_go_rogue_1_1_map_views_1_1_translation_map.html',1,'GoRogue::MapViews']]]
 ];
