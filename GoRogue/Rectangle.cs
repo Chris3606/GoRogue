@@ -392,8 +392,8 @@ namespace GoRogue
         /// Creates and returns a new Rectangle that has its Position moved to the given position.
         /// </summary>
         /// <param name="x">X-value for the position of the new Rectangle.</param>
-        /// <param name="y">Y-value for the position of the new Rectangle.</param>>
-        /// <returns>A new rectangle with the Position changed to the given value.</returns
+        /// <param name="y">Y-value for the position of the new Rectangle.</param>
+        /// <returns>A new rectangle with the Position changed to the given value.</returns>
         public Rectangle Move(int x, int y) => Move(Coord.Get(x, y));
 
         /// <summary>
@@ -429,57 +429,167 @@ namespace GoRogue
             return new Rectangle(newPos.X, newPos.Y, Width, Height);
         }
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the minimum extent is the specified value.
+        /// </summary>
+        /// <param name="minExtent">The minimum extent of the new rectangle.</param>
+        /// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
         public Rectangle SetMinExtent(Coord minExtent)
             => new Rectangle(minExtent, MaxExtent);
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the minimum extent is the specified value.
+        /// </summary>
+        /// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
+        /// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
+        /// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
         public Rectangle SetMinExtent(int x, int y)
             => new Rectangle(Coord.Get(x, y), MaxExtent);
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the x-value of minimum extent is changed to the specified value.
+        /// </summary>
+        /// <param name="x">The x-coordinate for the minimum extent of the new rectangle.</param>
+        /// <returns>A new rectangle, with the MinExtentX adjusted to the specified value.</returns>
         public Rectangle SetMinExtentX(int x)
             => new Rectangle(Coord.Get(x, MinExtentY), MaxExtent);
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the y-value of minimum extent is changed to the specified value.
+        /// </summary>
+        /// <param name="y">The y-coordinate for the minimum extent of the new rectangle.</param>
+        /// <returns>A new rectangle, with the MinExtentY adjusted to the specified value.</returns>>
         public Rectangle SetMinExtentY(int y)
             => new Rectangle(Coord.Get(MinExtentX, y), MaxExtent);
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the maximum extent is the specified value.
+        /// </summary>
+        /// <param name="maxExtent">The maximum extent of the new rectangle.</param>
+        /// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
         public Rectangle SetMaxExtent(Coord maxExtent)
             => new Rectangle(MinExtent, maxExtent);
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the maximum extent is the specified value.
+        /// </summary>
+        /// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
+        /// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
+        /// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
         public Rectangle SetMaxExtent(int x, int y)
             => new Rectangle(MinExtent, Coord.Get(x, y));
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the x-value of maximum extent is changed to the specified value.
+        /// </summary>
+        /// <param name="x">The x-coordinate for the maximum extent of the new rectangle.</param>
+        /// <returns>A new rectangle, with the MaxExtentX adjusted to the specified value.</returns>
         public Rectangle SetMaxExtentX(int x)
             => new Rectangle(MinExtent, Coord.Get(x, MaxExtentY));
 
+        /// <summary>
+        /// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
+        /// the y-value of maximum extent is changed to the specified value.
+        /// </summary>
+        /// <param name="y">The y-coordinate for the maximum extent of the new rectangle.</param>
+        /// <returns>A new rectangle, with the MaxExtentY adjusted to the specified value.</returns>
         public Rectangle SetMaxExtentY(int y)
             => new Rectangle(MinExtent, Coord.Get(MaxExtentX, y));
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position has been moved by the given delta-change values.
+        /// </summary>
+        /// <param name="deltaChange">Delta-x and delta-y values by which to move the new Rectangle.</param>
+        /// <returns>A new rectangle, whose position has been moved by the given delta-change values.</returns>
         public Rectangle Translate(Coord deltaChange)
             => new Rectangle(X + deltaChange.X, Y + deltaChange.Y, Width, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position has been moved by the given delta-change values.
+        /// </summary>
+        /// <param name="dx">Delta-x value by which to move the new Rectangle.</param>
+        /// <param name="dy">Delta-y value by which to move the new Rectangle.</param>
+        /// <returns>A new rectangle, whose position has been moved by the given delta-change values.</returns>
         public Rectangle Translate(int dx, int dy)
             => new Rectangle(X + dx, Y + dy, Width, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose x-position has been moved by the given delta value.
+        /// </summary>
+        /// <param name="dx">Value by which to move the new Rectangle's x-position.</param>
+        /// <returns>A new rectangle, whose x-position has been moved by the given delta-x value.</returns>
         public Rectangle TranslateX(int dx)
             => new Rectangle(X + dx, Y, Width, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose y-position has been moved by the given delta value.
+        /// </summary>
+        /// <param name="dy">Value by which to move the new Rectangle's y-position.</param>
+        /// <returns>A new rectangle, whose y-position has been moved by the given delta-y value.</returns>
         public Rectangle TranslateY(int dy)
             => new Rectangle(X, Y + dy, Width, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has the
+        /// specified width and height.
+        /// </summary>
+        /// <param name="width">The width for the new rectangle.</param>
+        /// <param name="height">The height for the new rectangle.</param>
+        /// <returns>A new Rectangle with the given width and height.</returns>
         public Rectangle SetSize(int width, int height)
             => new Rectangle(X, Y, width, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has the
+        /// specified width and height.
+        /// </summary>
+        /// <param name="size">Vector (width, height) specifying the width/height of the new rectangle.</param>
+        /// <returns>A new Rectangle with the given width and height.</returns>
         public Rectangle SetSize(Coord size)
             => new Rectangle(X, Y, size.X, size.Y);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has its width
+        /// and height changed by the given delta-change values.
+        /// </summary>
+        /// <param name="deltaWidth">Delta-change for the width of the new rectangle.</param>
+        /// <param name="deltaHeight">Delta-change for the height of the new rectangle.</param>
+        /// <returns>A new rectangle whose width/height are modified by the given delta-change values.</returns>
         public Rectangle ChangeSize(int deltaWidth, int deltaHeight)
             => new Rectangle(X, Y, Width + deltaWidth, Height + deltaHeight);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has its width
+        /// and height changed by the given delta-change values.
+        /// </summary>
+        /// <param name="deltaChange">Vector (deltaWidth, deltaHeight) specifying the delta-change values for
+        /// the width/height of the new Rectangle.</param>
+        /// <returns>A new rectangle whose width/height are modified by the given delta-change values.</returns>
         public Rectangle ChangeSize(Coord deltaChange)
             => new Rectangle(X, Y, Width + deltaChange.X, Height + deltaChange.Y);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has its width
+        /// changed by the given delta-change value.
+        /// </summary>
+        /// <param name="deltaWidth">Delta-change for the width of the new Rectangle.</param>
+        /// <returns>A new Rectangle whose width is modified by the given delta-change value.</returns>
         public Rectangle ChangeWidth(int deltaWidth)
             => new Rectangle(X, Y, Width + deltaWidth, Height);
 
+        /// <summary>
+        /// Creates and returns a new Rectangle whose position is the same as the current one, but has its height
+        /// changed by the given delta-change value.
+        /// </summary>
+        /// <param name="deltaHeight">Delta-change for the height of the new Rectangle.</param>
+        /// <returns>A new Rectangle whose height is modified by the given delta-change value.</returns>
         public Rectangle ChangeHeight(int deltaHeight)
             => new Rectangle(X, Y, Width, Height + deltaHeight);
 
