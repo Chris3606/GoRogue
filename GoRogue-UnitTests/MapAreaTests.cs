@@ -37,16 +37,16 @@ namespace GoRogue_UnitTests
             Assert.AreEqual(3, mapArea.Count);
             Assert.AreEqual(1, mapArea.Bounds.X);
             Assert.AreEqual(1, mapArea.Bounds.Y);
-            Assert.AreEqual(3, mapArea.Bounds.MaxX);
-            Assert.AreEqual(2, mapArea.Bounds.MaxY);
+            Assert.AreEqual(3, mapArea.Bounds.MaxExtentX);
+            Assert.AreEqual(2, mapArea.Bounds.MaxExtentY);
 
             mapArea.Remove(Coord.Get(3, 2));
 
             Assert.AreEqual(2, mapArea.Count);
             Assert.AreEqual(1, mapArea.Bounds.X);
             Assert.AreEqual(1, mapArea.Bounds.Y);
-            Assert.AreEqual(2, mapArea.Bounds.MaxX);
-            Assert.AreEqual(2, mapArea.Bounds.MaxY);
+            Assert.AreEqual(2, mapArea.Bounds.MaxExtentX);
+            Assert.AreEqual(2, mapArea.Bounds.MaxExtentY);
         }
 
         [TestMethod]

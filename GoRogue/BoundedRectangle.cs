@@ -33,7 +33,7 @@
             get
             {
                 if (_area.X < _boundingBox.X || _area.Y < _boundingBox.Y ||
-                    _area.MaxX > _boundingBox.MaxX || _area.MaxY > _boundingBox.MaxY)
+                    _area.MaxExtentX > _boundingBox.MaxExtentX || _area.MaxExtentY > _boundingBox.MaxExtentY)
                     boundLock();
 
                 return ref _area;
@@ -64,9 +64,9 @@
             if (y < 0)
                 y = 0;
 
-            if (_area.MaxX > _boundingBox.Width)
+            if (_area.MaxExtentX > _boundingBox.Width)
                 x = _boundingBox.Width - _area.Width;
-            if (_area.MaxY > _boundingBox.Height)
+            if (_area.MaxExtentY > _boundingBox.Height)
                 y = _boundingBox.Height - _area.Height;
 
             _area = new Rectangle(x, y, width, height);

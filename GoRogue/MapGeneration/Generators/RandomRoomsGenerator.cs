@@ -126,8 +126,8 @@ namespace GoRogue.MapGeneration.Generators
 
         static private void createRoom(ISettableMapView<bool> map, Rectangle room)
         {
-            for (int x = room.X + 1; x < room.MaxX; x++)
-                for (int y = room.Y + 1; y < room.MaxY; y++)
+            for (int x = room.X + 1; x < room.MaxExtentX; x++)
+                for (int y = room.Y + 1; y < room.MaxExtentY; y++)
                     map[x, y] = true;
         }
     }

@@ -67,13 +67,13 @@ namespace GoRogue_UnitTests
             var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, 10, 10));
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
 
-            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
+            viewport.ViewArea = viewport.ViewArea.Move(-1, 0); // Should end up being 0, 0 thanks to bounding
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
 
-            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(5, 5));
+            viewport.ViewArea = viewport.ViewArea.Move(5, 5);
             checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14));
 
-            viewport.ViewArea = viewport.ViewArea.SetPosition(Coord.Get(98, 98));
+            viewport.ViewArea = viewport.ViewArea.Move(98, 98);
             checkViewportBounds(viewport, Coord.Get(90, 90), Coord.Get(99, 99));
         }
 
@@ -90,7 +90,7 @@ namespace GoRogue_UnitTests
         private static void checkViewportBounds(Viewport<bool> viewport, Coord expectedMinCorner, Coord expectedMaxCorner)
         {
             Assert.AreEqual(viewport.ViewArea.Position, expectedMinCorner);
-            Assert.AreEqual(viewport.ViewArea.MaxCorner, expectedMaxCorner);
+            Assert.AreEqual(viewport.ViewArea.MaxExtent, expectedMaxCorner);
 
             Assert.AreEqual(true, viewport.ViewArea.X >= 0);
             Assert.AreEqual(true, viewport.ViewArea.Y >= 0);
@@ -102,8 +102,8 @@ namespace GoRogue_UnitTests
                 Assert.AreEqual(true, pos.X >= viewport.ViewArea.X);
                 Assert.AreEqual(true, pos.Y >= viewport.ViewArea.Y);
 
-                Assert.AreEqual(true, pos.X <= viewport.ViewArea.MaxX);
-                Assert.AreEqual(true, pos.Y <= viewport.ViewArea.MaxY);
+                Assert.AreEqual(true, pos.X <= viewport.ViewArea.MaxExtentX);
+                Assert.AreEqual(true, pos.Y <= viewport.ViewArea.MaxExtentY);
 
                 Assert.AreEqual(true, pos.X >= 0);
                 Assert.AreEqual(true, pos.Y >= 0);

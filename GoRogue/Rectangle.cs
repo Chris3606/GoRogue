@@ -32,16 +32,16 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Constructor. Takes the minimum and maximum Points taht are considered within the rectangle.
+        /// Constructor. Takes the minimum and maximum points taht are considered within the rectangle.
         /// </summary>
-        /// <param name="minCorner">Minimum x and y values that are considered inside the rectangle.</param>
-        /// <param name="maxCorner">Maximum x and y values that are considered inside the rectangle.</param>
-        public Rectangle(Coord minCorner, Coord maxCorner)
+        /// <param name="minExtent">Minimum x and y values that are considered inside the rectangle.</param>
+        /// <param name="maxExtent">Maximum x and y values that are considered inside the rectangle.</param>
+        public Rectangle(Coord minExtent, Coord maxExtent)
         {
-            X = minCorner.X;
-            Y = minCorner.Y;
-            Width = maxCorner.X - X + 1;
-            Height = maxCorner.Y - Y + 1;
+            X = minExtent.X;
+            Y = minExtent.Y;
+            Width = maxExtent.X - X + 1;
+            Height = maxExtent.Y - Y + 1;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// The height of the rectangle, in grid squares.
+        /// The height of the rectangle.
         /// </summary>
         public int Height { get; private set; }
 
@@ -83,15 +83,15 @@ namespace GoRogue
         /// <summary>
         /// The maximum X and Y coordinates that are included in the rectangle.
         /// </summary>
-        public Coord MaxCorner
+        public Coord MaxExtent
         {
-            get => Coord.Get(MaxX, MaxY);
+            get => Coord.Get(MaxExtentX, MaxExtentY);
         }
 
         /// <summary>
         /// The maximum X-coordinate that is included in the rectangle.
         /// </summary>
-        public int MaxX
+        public int MaxExtentX
         {
             get => X + Width - 1;
         }
@@ -99,7 +99,7 @@ namespace GoRogue
         /// <summary>
         /// The maximum Y-coordinate that is included in the rectangle.
         /// </summary>
-        public int MaxY
+        public int MaxExtentY
         {
             get => Y + Height - 1;
         }
@@ -113,7 +113,30 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// The width of the rectangle, in grid squares.
+        /// Minimum extent of the rectangle (minimum x and y values that are included within it).  Identical
+        /// to the Position because we define the rectangle's position by its minimum extent.
+        /// </summary>
+        public Coord MinExtent { get => Coord.Get(X, Y); }
+
+        /// <summary>
+        /// X-value of the minimum extent of the rectangle (minimum x value that is included within it).  Identical
+        /// to the X value because we define the rectangle's position by its minimum extent.
+        /// </summary>
+        public int MinExtentX { get => X; }
+
+        /// <summary>
+        /// Y-value of the minimum extent of the rectangle (minimum y value that is included within it).  Identical
+        /// to the Y value because we define the rectangle's position by its minimum extent.
+        /// </summary>
+        public int MinExtentY { get => Y; }
+        
+        /// <summary>
+        /// Returns a coordinate (Width, Height), which represents the size of the rectangle.
+        /// </summary>
+        public Coord Size { get => Coord.Get(Width, Height); }
+
+        /// <summary>
+        /// The width of the rectangle.
         /// </summary>
         public int Width { get; private set; }
 
@@ -158,12 +181,12 @@ namespace GoRogue
         {
             var retVal = new MapArea();
 
-            for (int x = r1.X; x <= r1.MaxX; x++)
-                for (int y = r1.Y; y <= r1.MaxY; y++)
+            for (int x = r1.X; x <= r1.MaxExtentX; x++)
+                for (int y = r1.Y; y <= r1.MaxExtentY; y++)
                     retVal.Add(x, y);
 
-            for (int x = r2.X; x <= r2.MaxX; x++)
-                for (int y = r2.Y; y <= r2.MaxY; y++)
+            for (int x = r2.X; x <= r2.MaxExtentX; x++)
+                for (int y = r2.Y; y <= r2.MaxExtentY; y++)
                     retVal.Add(x, y);
 
             return retVal;
@@ -325,21 +348,31 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Creates and returns a new rectangle that is exactly the same as the current one, but with
+        /// Creates and returns a new rectangle that is the same size as the current one, but with
         /// the center moved to the given position.
         /// </summary>
         /// <param name="center">The center-point for the new Rectangle.</param>
         /// <returns>
-        /// A new Rectangle that is exactly like the current one, but with the center moved to the
+        /// A new Rectangle that is the same size as the current one, but with the center moved to the
         /// given location.
         /// </returns>
-        public Rectangle SetCenter(Coord center)
+        public Rectangle CenterOn(Coord center)
             => new Rectangle(center.X - (Width / 2), center.Y - (Height / 2), Width, Height);
 
-        public Rectangle SetCenter(int x, int y) => SetCenter(Coord.Get(x, y));
+        /// <summary>
+        /// Creates and returns a new rectangle that is the same size as the current one, but with
+        /// the center moved to the given position.
+        /// </summary>
+        /// <param name="x">X-value for the center-point of the new Rectangle.</param>
+        /// <param name="y">Y-value for the center-point of the new Rectangle.</param>
+        /// <returns>
+        /// A new Rectangle that is the same size as the current one, but with the center moved to the
+        /// given location.
+        /// </returns>
+        public Rectangle CenterOn(int x, int y) => CenterOn(Coord.Get(x, y));
 
         /// <summary>
-        /// Creates and returns a new rectangle that is exactly the same as the current one, but with
+        /// Creates and returns a new rectangle that has the same position and width as the current one, but with
         /// the height changed to the given value.
         /// </summary>
         /// <param name="height">The height for the new Rectangle.</param>
@@ -348,35 +381,20 @@ namespace GoRogue
             => new Rectangle(X, Y, Width, height);
 
         /// <summary>
-        /// Creates and returns a new Rectangle that has been stretched/shrunk so its MaxCorner is at the given position.
+        /// Creates and returns a new Rectangle that has its Position moved to the given position.
         /// </summary>
-        /// <param name="maxCorner">The MaxCorner for the new rectangle.</param>
-        /// <returns>A new rectangle that has been stretched/shrunk so the MaxCorner is the given value.</returns>
-        public Rectangle SetMaxCorner(Coord maxCorner)
-            => new Rectangle(X, Y, maxCorner.X - X + 1, maxCorner.Y - Y + 1);
-
-        /// <summary>
-        /// Creates and returns a new Rectangle that has its MaxX moved to the given x-coordinate.
-        /// </summary>
-        /// <param name="maxX">The MaxX value for the new Rectangle.</param>
-        /// <returns>A new rectangle with MaxX changed to the given value.</returns>
-        public Rectangle SetMaxX(int maxX) => new Rectangle(X, Y, maxX - X + 1, Height);
-
-        /// <summary>
-        /// Creates and returns a new Rectangle that has its MaxY moved to the given y-coordinate.
-        /// </summary>
-        /// <param name="maxY">The MaxY value for the new Rectangle.</param>
-        /// <returns>A new rectangle with MaxY changed to the given value.</returns>
-        /// &gt;
-        public Rectangle SetMaxY(int maxY) => new Rectangle(X, Y, Width, maxY - Y + 1);
-
-        /// <summary>
-        /// Creates and returns a new Rectangle that has its MinCorner moved to the given position.
-        /// </summary>
-        /// <param name="position">The MinCorner for the new rectangle.</param>
-        /// <returns>A new rectangle with the MinCorner changed to the given value.</returns>
-        public Rectangle SetPosition(Coord position)
+        /// <param name="position">The Position for the new rectangle.</param>
+        /// <returns>A new rectangle that has its Position changed to the given value.</returns>
+        public Rectangle Move(Coord position)
             => new Rectangle(position.X, position.Y, Width, Height);
+
+        /// <summary>
+        /// Creates and returns a new Rectangle that has its Position moved to the given position.
+        /// </summary>
+        /// <param name="x">X-value for the position of the new Rectangle.</param>
+        /// <param name="y">Y-value for the position of the new Rectangle.</param>>
+        /// <returns>A new rectangle with the Position changed to the given value.</returns
+        public Rectangle Move(int x, int y) => Move(Coord.Get(x, y));
 
         /// <summary>
         /// Creates and returns a new rectangle that is exactly the same as the current one, but with
@@ -391,32 +409,81 @@ namespace GoRogue
         /// </summary>
         /// <param name="x">The X value for the new Rectangle.</param>
         /// <returns>A new rectangle with X changed to the given value.</returns>
-        public Rectangle SetX(int x) => new Rectangle(x, Y, Width, Height);
+        public Rectangle MoveX(int x) => new Rectangle(x, Y, Width, Height);
 
         /// <summary>
         /// Creates and returns a new Rectangle that has its Y value moved to the given y-coordinate.
         /// </summary>
         /// <param name="y">The Y value for the new Rectangle.</param>
         /// <returns>A new rectangle with Y changed to the given value.</returns>
-        public Rectangle SetY(int y) => new Rectangle(X, y, Width, Height);
+        public Rectangle MoveY(int y) => new Rectangle(X, y, Width, Height);
 
         /// <summary>
-        /// Creates and returns a new Rectangle that has been resized to have the given width/height.
+        /// Creates and returns a new Rectangle that has its Position moved in the given direction.
         /// </summary>
-        /// <param name="width">Width for the new Rectangle.</param>
-        /// <param name="height">Height for the new Rectangle.</param>
-        /// <returns></returns>
-        public Rectangle ResizeTo(int width, int height) => new Rectangle(X, Y, width, height);
+        /// <param name="direction">The direction to move the new Rectangle in.</param>
+        /// <returns>A new rectangle that has its position moved in the given direction.</returns>
+        public Rectangle MoveIn(Direction direction)
+        {
+            var newPos = Position + direction;
+            return new Rectangle(newPos.X, newPos.Y, Width, Height);
+        }
 
-        /// <summary>
-        /// Creates and returns a new Rectangle that has its width and height modified by the given values.
-        /// </summary>
-        /// <param name="deltaWidth">Value to modify the new Rectangle's width by.</param>
-        /// <param name="deltaHeight">Value to modify the new Rectangle's height by.</param>
-        /// <returns></returns>
-        public Rectangle Resize(int deltaWidth, int deltaHeight)
-            => new Rectangle(X, Y, Width - deltaWidth, Height - deltaHeight);
+        public Rectangle SetMinExtent(Coord minExtent)
+            => new Rectangle(minExtent, MaxExtent);
 
+        public Rectangle SetMinExtent(int x, int y)
+            => new Rectangle(Coord.Get(x, y), MaxExtent);
+
+        public Rectangle SetMinExtentX(int x)
+            => new Rectangle(Coord.Get(x, MinExtentY), MaxExtent);
+
+        public Rectangle SetMinExtentY(int y)
+            => new Rectangle(Coord.Get(MinExtentX, y), MaxExtent);
+
+        public Rectangle SetMaxExtent(Coord maxExtent)
+            => new Rectangle(MinExtent, maxExtent);
+
+        public Rectangle SetMaxExtent(int x, int y)
+            => new Rectangle(MinExtent, Coord.Get(x, y));
+
+        public Rectangle SetMaxExtentX(int x)
+            => new Rectangle(MinExtent, Coord.Get(x, MaxExtentY));
+
+        public Rectangle SetMaxExtentY(int y)
+            => new Rectangle(MinExtent, Coord.Get(MaxExtentX, y));
+
+        public Rectangle Translate(Coord deltaChange)
+            => new Rectangle(X + deltaChange.X, Y + deltaChange.Y, Width, Height);
+
+        public Rectangle Translate(int dx, int dy)
+            => new Rectangle(X + dx, Y + dy, Width, Height);
+
+        public Rectangle TranslateX(int dx)
+            => new Rectangle(X + dx, Y, Width, Height);
+
+        public Rectangle TranslateY(int dy)
+            => new Rectangle(X, Y + dy, Width, Height);
+
+        public Rectangle SetSize(int width, int height)
+            => new Rectangle(X, Y, width, Height);
+
+        public Rectangle SetSize(Coord size)
+            => new Rectangle(X, Y, size.X, size.Y);
+
+        public Rectangle ChangeSize(int deltaWidth, int deltaHeight)
+            => new Rectangle(X, Y, Width + deltaWidth, Height + deltaHeight);
+
+        public Rectangle ChangeSize(Coord deltaChange)
+            => new Rectangle(X, Y, Width + deltaChange.X, Height + deltaChange.Y);
+
+        public Rectangle ChangeWidth(int deltaWidth)
+            => new Rectangle(X, Y, Width + deltaWidth, Height);
+
+        public Rectangle ChangeHeight(int deltaHeight)
+            => new Rectangle(X, Y, Width, Height + deltaHeight);
+
+        
         /// <summary>
         /// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested
         /// for loop.
@@ -424,8 +491,8 @@ namespace GoRogue
         /// <returns>All positions in the rectangle.</returns>
         public IEnumerable<Coord> Positions()
         {
-            for (int y = Y; y <= MaxY; y++)
-                for (int x = X; x <= MaxX; x++)
+            for (int y = Y; y <= MaxExtentY; y++)
+                for (int x = X; x <= MaxExtentX; x++)
                     yield return Coord.Get(x, y);
         }
 
@@ -439,7 +506,7 @@ namespace GoRogue
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
 
-            return Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+            return Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
         }
 
         /// <summary>
@@ -461,10 +528,10 @@ namespace GoRogue
             if (rng == null)
                 rng = SingletonRandom.DefaultRNG;
 
-            var c = Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+            var c = Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
 
             while (!selector(c))
-                c = Coord.Get(rng.Next(X, MaxX + 1), rng.Next(Y, MaxY + 1));
+                c = Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
 
             return c;
         }
@@ -475,7 +542,7 @@ namespace GoRogue
         /// <returns>String formatted as above.</returns>
         public override string ToString()
         {
-            return Position + " -> " + MaxCorner;
+            return Position + " -> " + MaxExtent;
         }
     }
 }
