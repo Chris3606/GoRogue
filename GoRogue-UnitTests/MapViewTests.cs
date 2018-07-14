@@ -78,7 +78,6 @@ namespace GoRogue_UnitTests
             viewport.ViewArea = viewport.ViewArea.Move(Coord.Get(5, 5));
             checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
 
-
             // Move outside x-bounds by 1
             Coord newCenter = Coord.Get(MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
             // viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
