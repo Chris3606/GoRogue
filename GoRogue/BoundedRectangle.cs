@@ -59,16 +59,22 @@
             if (height > _boundingBox.Height)
                 height = _boundingBox.Height;
 
-            if (x < 0)
-                x = 0;
-            if (y < 0)
-                y = 0;
+            if (x < _boundingBox.X)
+                x = _boundingBox.X;
+            if (y < _boundingBox.Y)
+                y = _boundingBox.Y;
 
+            if (x > _boundingBox.MaxX - width + 1)
+                x = _boundingBox.MaxX - width + 1;
+            if (y > _boundingBox.MaxY - height + 1)
+                y = _boundingBox.MaxY - height + 1;
+
+            /*
             if (_area.MaxX > _boundingBox.Width)
                 x = _boundingBox.Width - _area.Width;
             if (_area.MaxY > _boundingBox.Height)
                 y = _boundingBox.Height - _area.Height;
-
+            */
             _area = new Rectangle(x, y, width, height);
         }
     }
