@@ -72,14 +72,13 @@ namespace GoRogue_UnitTests
             var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
             checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-            /*
-            viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
-            checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(9, 9));
+            viewport.ViewArea = viewport.ViewArea.Move(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
+            checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-            viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(5, 5));
-            checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(14, 14));
+            viewport.ViewArea = viewport.ViewArea.Move(Coord.Get(5, 5));
+            checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
 
-    */
+
             // Move outside x-bounds by 1
             Coord newCenter = Coord.Get(MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
             // viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
