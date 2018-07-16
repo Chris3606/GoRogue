@@ -58,8 +58,8 @@ namespace GoRogue
         {
             X = center.X - horizontalRadius;
             Y = center.Y - verticalRadius;
-            Width = center.X + horizontalRadius;
-            Height = center.Y + verticalRadius;
+            Width = 2 * horizontalRadius + 1;
+            Height = 2 * verticalRadius + 1;
         }
 
         /// <summary>
