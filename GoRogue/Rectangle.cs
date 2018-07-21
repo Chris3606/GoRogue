@@ -63,7 +63,8 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// The center coordinate of the rectangle, rounded down if the exact center is floating point.
+        /// The center coordinate of the rectangle, rounded up if the exact center is between two positions.
+        /// The center of a rectangle with width/height 1 is its Position.
         /// </summary>
         public Coord Center
         {
