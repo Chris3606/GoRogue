@@ -78,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadiusAreaProviderTests.cs" />
     <Compile Include="RadiusFOVSyncTests.cs" />
+    <Compile Include="RectangleTests.cs" />
     <Compile Include="SpatialMapTests.cs" />
     <Compile Include="ToStringTests.cs" />
     <Compile Include="Utility.cs" />

@@ -354,7 +354,7 @@ namespace GoRogue
         /// </returns>
         public bool Contains(Rectangle other)
         {
-            return (X <= other.X && X + Width <= other.X + other.Width && Y <= other.Y && Y + Height <= other.Y + other.Height);
+            return (X <= other.X && other.X + other.Width <= X + Width && Y <= other.Y && other.Y + other.Height <= Y + Height);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace GoRogue
         /// <param name="height">The height for the new rectangle.</param>
         /// <returns>A new Rectangle with the given width and height.</returns>
         public Rectangle SetSize(int width, int height)
-            => new Rectangle(X, Y, width, Height);
+            => new Rectangle(X, Y, width, height);
 
         /// <summary>
         /// Creates and returns a new Rectangle whose position is the same as the current one, but
