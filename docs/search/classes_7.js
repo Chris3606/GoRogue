@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['keepterm',['KeepTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_keep_term.html',1,'GoRogue::DiceNotation::Terms']]],
-  ['knownseriesgenerator',['KnownSeriesGenerator',['../class_go_rogue_1_1_random_1_1_known_series_generator.html',1,'GoRogue::Random']]]
+  ['horizontalverticaltunnelcreator',['HorizontalVerticalTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_horizontal_vertical_tunnel_creator.html',1,'GoRogue::MapGeneration::Connectors']]]
 ];

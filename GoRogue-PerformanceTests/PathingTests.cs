@@ -2,6 +2,7 @@
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Generators = GoRogue.MapGeneration.Generators;
 
@@ -30,23 +31,47 @@ namespace GoRogue_PerformanceTests
             return s.Elapsed;
         }
 
-        public static TimeSpan TimeForSingleSourceDijkstra(int mapWidth, int mapHeight, int iterations)
+        public static TimeSpan TimeForMultiSourceGoalMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
         {
             Stopwatch s = new Stopwatch();
 
-            var map = new ArrayMap<bool>(mapWidth, mapHeight);
-            Generators.RectangleMapGenerator.Generate(map);
+            var mapGoals = new ArrayMap<GoalState>(map.Width, map.Height);
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                    mapGoals[x, y] = map[x, y] ? GoalState.Clear : GoalState.Obstacle;
 
-            DijkstraMap dMap = new DijkstraMap(map);
+            foreach (var goal in goals)
+                mapGoals[goal] = GoalState.Goal;
 
-            dMap.AddGoal(5, 5);
+            var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
 
-            dMap.Calculate(); // warm-up value
+            mapBuilder.Update();
 
             s.Start();
             for (int i = 0; i < iterations; i++)
-                dMap.Calculate();
+                mapBuilder.Update();
+            s.Stop();
 
+            return s.Elapsed;
+        }
+
+        public static TimeSpan TimeForSingleSourceGoalMap(IMapView<bool> map, Coord goal, int iterations)
+        {
+            Stopwatch s = new Stopwatch();
+
+            var mapGoals = new ArrayMap<GoalState>(map.Width, map.Height);
+            for (int x = 0; x < map.Width; x++)
+                for (int y = 0; y < map.Height; y++)
+                    mapGoals[x, y] = map[x, y] ? GoalState.Clear : GoalState.Obstacle;
+
+            mapGoals[goal] = GoalState.Goal;
+
+            var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
+            mapBuilder.Update();
+
+            s.Start();
+            for (int i = 0; i < iterations; i++)
+                mapBuilder.Update();
             s.Stop();
 
             return s.Elapsed;

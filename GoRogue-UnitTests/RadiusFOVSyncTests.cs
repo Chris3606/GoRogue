@@ -136,7 +136,7 @@ namespace GoRogue_UnitTests
                         losMap[x, y] = true;
 
             var radArea = new RadiusAreaProvider(CENTER, RADIUS_LEGNTH, shape);
-            foreach (var pos in radArea.Positions())
+            foreach (var pos in radArea.CalculatePositions())
                 radiusMap[pos.X, pos.Y] = true;
 
             Console.WriteLine("Radius Shape: ");
@@ -167,7 +167,7 @@ namespace GoRogue_UnitTests
                         losMap[x, y] = true;
 
             var radArea = new RadiusAreaProvider(CENTER, RADIUS_LEGNTH, shape);
-            foreach (var pos in radArea.Positions())
+            foreach (var pos in radArea.CalculatePositions())
                 radiusMap[pos.X, pos.Y] = true;
 
             Console.WriteLine("Radius Shape: ");

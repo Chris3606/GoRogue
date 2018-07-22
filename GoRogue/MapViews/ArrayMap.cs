@@ -76,26 +76,31 @@ namespace GoRogue.MapViews
         public override string ToString() => array.ExtendToStringGrid();
 
         /// <summary>
-        /// Returns a string representation of the 2D array, using the elementStringifier
-        /// function given to determine what string represents which value.
+        /// Returns a string representation of the 2D array, using the elementStringifier function
+        /// given to determine what string represents which value.
         /// </summary>
         /// <remarks>
         /// This could be used, for example, on an ArrayMap of boolean values, to output '#' for
         /// false values, and '.' for true values.
         /// </remarks>
-        /// <param name="elementStringifier">Function determining the string representation of each element.</param>
+        /// <param name="elementStringifier">
+        /// Function determining the string representation of each element.
+        /// </param>
         /// <returns>A string representation of the 2D array.</returns>
         public string ToString(Func<T, string> elementStringifier) => array.ExtendToStringGrid(elementStringifier: elementStringifier);
 
         /// <summary>
-        /// Prints the values in the ArrayMap, using the function specified to turn elements
-        /// into strings, and using the "field length" specified. Each element of type T will have
-        /// spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-        /// than the length of the element's string represention.  A positive-number right-aligns
-        /// the text within the field, while a negative number left-aligns the text.
+        /// Prints the values in the ArrayMap, using the function specified to turn elements into
+        /// strings, and using the "field length" specified. Each element of type T will have spaces
+        /// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
+        /// than the length of the element's string represention. A positive-number right-aligns the
+        /// text within the field, while a negative number left-aligns the text.
         /// </summary>
         /// <param name="fieldSize">The size of the field to give each value.</param>
-        /// <param name="elementStringifier">Function to use to convert each element to a string. Null defaults to the ToString function of type T.</param>
+        /// <param name="elementStringifier">
+        /// Function to use to convert each element to a string. Null defaults to the ToString
+        /// function of type T.
+        /// </param>
         /// <returns>A string representation of the ArrayMap.</returns>
         public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => array.ExtendToStringGrid(fieldSize, elementStringifier: elementStringifier);
     }

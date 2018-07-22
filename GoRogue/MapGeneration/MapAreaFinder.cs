@@ -1,6 +1,6 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 
 namespace GoRogue.MapGeneration
 {

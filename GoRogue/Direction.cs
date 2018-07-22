@@ -222,34 +222,40 @@ namespace GoRogue
         internal static int yMult { get; private set; }
 
         /// <summary>
-        /// Returns the cardinal direction that most closely matches the degree heading of the given line.
-        /// Rounds clockwise if the heading is exactly on a diagonal direction.  Similar to GetDirection,
-        /// except gives only cardinal directions.
+        /// Returns the cardinal direction that most closely matches the degree heading of the given
+        /// line. Rounds clockwise if the heading is exactly on a diagonal direction. Similar to
+        /// GetDirection, except gives only cardinal directions.
         /// </summary>
         /// <param name="start">Starting coordinate of the line.</param>
         /// <param name="end">Ending coordinate of the line.</param>
-        /// <returns>The cardinal direction that most closely matches the heading formed by the given line.</returns>
+        /// <returns>
+        /// The cardinal direction that most closely matches the heading formed by the given line.
+        /// </returns>
         public static Direction GetCardinalDirection(Coord start, Coord end) => GetCardinalDirection(end.X - start.X, end.Y - start.Y);
 
         /// <summary>
-        /// Returns the cardinal direction that most closely matches the degree heading of the given line.
-        /// Rounds clockwise if the heading is exactly on a diagonal direction.  Similar to GetDirection,
-        /// except gives only cardinal directions.
+        /// Returns the cardinal direction that most closely matches the degree heading of the given
+        /// line. Rounds clockwise if the heading is exactly on a diagonal direction. Similar to
+        /// GetDirection, except gives only cardinal directions.
         /// </summary>
         /// <param name="startX">X-coordinate of the starting position of the line.</param>
         /// <param name="startY">Y-coordinate of the starting position of the line.</param>
         /// <param name="endX">X-coordinate of the ending position of the line.</param>
         /// <param name="endY">Y-coordinate of the ending position of the line.</param>
-        /// <returns>The cardinal direction that most closely matches the heading formed by the given line.</returns>
+        /// <returns>
+        /// The cardinal direction that most closely matches the heading formed by the given line.
+        /// </returns>
         public static Direction GetCardinalDirection(int startX, int startY, int endX, int endY) => GetCardinalDirection(endX - startX, endY - startY);
 
         /// <summary>
         /// Returns the cardinal direction that most closely matches the degree heading of a line
-        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal. Similar to GetDirection,
-        /// except gives only cardinal directions.
+        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal. Similar to
+        /// GetDirection, except gives only cardinal directions.
         /// </summary>
-        /// <param name="deltaChange">Vector representing the change in x and change in y across
-        /// the line (deltaChange.X is the change in x, deltaChange.Y is the change in y).</param>
+        /// <param name="deltaChange">
+        /// Vector representing the change in x and change in y across the line (deltaChange.X is the
+        /// change in x, deltaChange.Y is the change in y).
+        /// </param>
         /// <returns>
         /// The cardinal direction that most closely matches the degree heading of the given line.
         /// </returns>
@@ -257,8 +263,8 @@ namespace GoRogue
 
         /// <summary>
         /// Returns the cardinal direction that most closely matches the degree heading of a line
-        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal direction. Similar to GetDirection,
-        /// except gives only cardinal directions.
+        /// with the given dx and dy values. Rounds clockwise if exactly on a diagonal direction.
+        /// Similar to GetDirection, except gives only cardinal directions.
         /// </summary>
         /// <param name="dx">The change in x-values across the line.</param>
         /// <param name="dy">The change in x-values across the line.</param>
@@ -295,7 +301,9 @@ namespace GoRogue
         /// </summary>
         /// <param name="start">Starting coordinate of the line.</param>
         /// <param name="end">Ending coordinate of the line.</param>
-        /// <returns>The direction that most closely matches the heading formed by the given line.</returns>
+        /// <returns>
+        /// The direction that most closely matches the heading formed by the given line.
+        /// </returns>
         public static Direction GetDirection(Coord start, Coord end) => GetDirection(end.X - start.X, end.Y - start.Y);
 
         /// <summary>
@@ -306,16 +314,22 @@ namespace GoRogue
         /// <param name="startY">Y-coordinate of the starting position of the line.</param>
         /// <param name="endX">X-coordinate of the ending position of the line.</param>
         /// <param name="endY">Y-coordinate of the ending position of the line.</param>
-        /// <returns>The direction that most closely matches the heading formed by the given line.</returns>
+        /// <returns>
+        /// The direction that most closely matches the heading formed by the given line.
+        /// </returns>
         public static Direction GetDirection(int startX, int startY, int endX, int endY) => GetDirection(endX - startX, endY - startY);
 
         /// <summary>
         /// Returns the direction that most closely matches the degree heading of a line with the
         /// given delta-x and delta-y values. Rounds clockwise if the heading is exactly between two directions.
         /// </summary>
-        /// <param name="deltaChange">Vector representing the change in x and change in y across
-        /// the line (deltaChange.X is the change in x, deltaChange.Y is the change in y).</param>
-        /// <returns>The direction that most closely matches the heading formed by the given input.</returns>
+        /// <param name="deltaChange">
+        /// Vector representing the change in x and change in y across the line (deltaChange.X is the
+        /// change in x, deltaChange.Y is the change in y).
+        /// </param>
+        /// <returns>
+        /// The direction that most closely matches the heading formed by the given input.
+        /// </returns>
         public static Direction GetDirection(Coord deltaChange) => GetDirection(deltaChange.X, deltaChange.Y);
 
         /// <summary>
@@ -324,7 +338,9 @@ namespace GoRogue
         /// </summary>
         /// <param name="dx">The change in x-values across the line.</param>
         /// <param name="dy">The change in y-values across the line.</param>
-        /// <returns>The direction that most closely matches the heading formed by the given input.</returns>
+        /// <returns>
+        /// The direction that most closely matches the heading formed by the given input.
+        /// </returns>
         public static Direction GetDirection(int dx, int dy)
         {
             if (dx == 0 && dy == 0)
@@ -359,7 +375,7 @@ namespace GoRogue
 
         /// <summary>
         /// - operator. Returns the direction i directions counterclockwise of the given direction if
-        ///   i is positive. If is negative, the direction is moved clockwise. If any amount is added
+        /// i is positive. If is negative, the direction is moved clockwise. If any amount is added
         /// to NONE, it returns NONE.
         /// </summary>
         /// <param name="d">Direction to "subtract" from.</param>
@@ -372,7 +388,7 @@ namespace GoRogue
 
         /// <summary>
         /// -- operator (decrement). Returns the direction directly counterclockwise of the original
-        ///    direction. If NONE is decremented, returns NONE.
+        /// direction. If NONE is decremented, returns NONE.
         /// </summary>
         /// <param name="d">Direction to decrement.</param>
         /// <returns>The direction directly counterclockwise of d, or NONE if none was decremented.</returns>
@@ -380,8 +396,8 @@ namespace GoRogue
 
         /// <summary>
         /// + operator. Returns the direction i directions clockwise of the given direction if i is
-        ///   positive. If is negative, the direction is moved counterclockwise. If any amount is
-        /// added to NONE, it returns NONE.
+        /// positive. If is negative, the direction is moved counterclockwise. If any amount is added
+        /// to NONE, it returns NONE.
         /// </summary>
         /// <param name="d">Direction to "add" to.</param>
         /// <param name="i">Number of directions to "add".</param>
@@ -393,7 +409,7 @@ namespace GoRogue
 
         /// <summary>
         /// ++ operator (increment). Returns the direction directly clockwise of the original
-        ///    direction. If NONE is incremented, returns NONE.
+        /// direction. If NONE is incremented, returns NONE.
         /// </summary>
         /// <param name="d">Direction to increment.</param>
         /// <returns>The direction directly clockwise of d, or NONE if none is incremented.</returns>

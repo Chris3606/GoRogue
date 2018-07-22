@@ -1,6 +1,7 @@
 ﻿using GoRogue;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace GoRogue_UnitTests
 {
@@ -20,6 +21,21 @@ namespace GoRogue_UnitTests
 
         [TestMethod]
         public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.ORTHO);
+
+        [TestMethod]
+        public void OrderedBresenhamTest()
+        {
+            var rectangle = new Rectangle(0, 0, 60, 50);
+
+            for (int i = 0; i < 100; i++)
+            {
+                Coord start = rectangle.RandomPosition();
+                Coord end = rectangle.RandomPosition();
+
+                var line = Lines.Get(start, end, Lines.Algorithm.BRESENHAM_ORDERED).ToList();
+                Assert.AreEqual(start, line[0]);
+            }
+        }
 
         private void DrawLine(Coord start, Coord end, int width, int height, Lines.Algorithm type)
         {

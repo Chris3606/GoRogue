@@ -1,9 +1,9 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GoRogue.MapViews;
 
 namespace GoRogue.SenseMapping
 {
@@ -170,16 +170,22 @@ namespace GoRogue.SenseMapping
                     yield return senseMap[x, y];
         }
 
-        // Warning about hidden overload intentionally disabled -- the two methods are equivalent but the ToString method that takes 0, as opposed
-        // to all optional, parameters is necessary to override the one from base class object.  That one calls this one so the "hidden" overload
+        // Warning about hidden overload intentionally disabled -- the two methods are equivalent but
+        // the ToString method that takes 0, as opposed to all optional, parameters is necessary to
+        // override the one from base class object. That one calls this one so the "hidden" overload
         // is of no harm.
 #pragma warning disable RECS0137
+
         /// <summary>
         /// ToString that customizes the characters used to represent the map.
         /// </summary>
         /// <param name="normal">The character used for any location not in the SenseMap.</param>
-        /// <param name="center">The character used for any location that is the center-point of a source.</param>
-        /// <param name="sourceValue">The character used for any location that is in range of a SenseSource, but not a center point.</param>
+        /// <param name="center">
+        /// The character used for any location that is the center-point of a source.
+        /// </param>
+        /// <param name="sourceValue">
+        /// The character used for any location that is in range of a SenseSource, but not a center point.
+        /// </param>
         /// <returns>The string representation of the SenseMap, using the specified characters.</returns>
         public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')
 #pragma warning restore RECS0137
@@ -206,19 +212,22 @@ namespace GoRogue.SenseMapping
         }
 
         /// <summary>
-        /// Returns a string representation of the map, where any location not in the SenseMap is represented by a
-        /// '-' character, any position that is the center of some source is represented by a 'C' character, and
-        /// any position that has a non-zero value but is not a center is represented by an 'S'.
+        /// Returns a string representation of the map, where any location not in the SenseMap is
+        /// represented by a '-' character, any position that is the center of some source is
+        /// represented by a 'C' character, and any position that has a non-zero value but is not a
+        /// center is represented by an 'S'.
         /// </summary>
         /// <returns>A (multi-line) string representation of the SenseMap.</returns>
         public override string ToString() => ToString();
 
         /// <summary>
-        /// Returns a string representation of the map, with the actual values in the senseMap, rounded to the given number
-        /// of decimal places.
+        /// Returns a string representation of the map, with the actual values in the senseMap,
+        /// rounded to the given number of decimal places.
         /// </summary>
         /// <param name="decimalPlaces">The number of decimal places to round to.</param>
-        /// <returns>A string representation of the map, rounded to the given number of decimal places.</returns>
+        /// <returns>
+        /// A string representation of the map, rounded to the given number of decimal places.
+        /// </returns>
         public string ToString(int decimalPlaces) => senseMap.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>

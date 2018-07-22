@@ -11,8 +11,8 @@ namespace GoRogue.Random
     public static class SingletonRandom
     {
         /// <summary>
-        /// Settable field that specifies what IGenerator instance should be considered the default RNG.
-        /// Defaults to an XorShift128Generator with a time-dependent value used as a seed.
+        /// Settable field that specifies what IGenerator instance should be considered the default
+        /// RNG. Defaults to an XorShift128Generator with a time-dependent value used as a seed.
         /// </summary>
         public static IGenerator DefaultRNG = new XorShift128Generator();
     }

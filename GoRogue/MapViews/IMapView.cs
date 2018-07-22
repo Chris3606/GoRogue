@@ -11,17 +11,14 @@
     /// value at each position represents whether or not that tile is passable with respect to
     /// pathing. This boolean value might be determined by a number of things - terrain type, monster
     /// positions, etc. Thus, in practice, maintaining an actual 2D array of boolean values that such
-    /// an algorithm could take as input can be significant work.
-    ///
-    /// IMapView solves this problem by providing an interface that all such algorithms can take as
-    /// input -- pathfinding, for instance, would take an IMapView&lt;bool&gt; instance, rather than
-    /// a 2D array of booleans. A user of that algorithm might create a class that implements the
-    /// indexers below to check the terrain type, if there is a monster at the position, etc., and
-    /// returns the correct value. This prevents the need to maintain an actual 2D array in code that
-    /// pathfinding can use, if such an array does not fit with your game architecture.
-    ///
-    /// If an actual 2D array is desired, a class ArrayMap is provided that implements IMapView, and
-    /// acts much like an actual 2D array.
+    /// an algorithm could take as input can be significant work. /// IMapView solves this problem by
+    /// providing an interface that all such algorithms can take as input -- pathfinding, for
+    /// instance, would take an IMapView&lt;bool&gt; instance, rather than a 2D array of booleans. A
+    /// user of that algorithm might create a class that implements the indexers below to check the
+    /// terrain type, if there is a monster at the position, etc., and returns the correct value.
+    /// This prevents the need to maintain an actual 2D array in code that pathfinding can use, if
+    /// such an array does not fit with your game architecture. /// If an actual 2D array is desired,
+    /// a class ArrayMap is provided that implements IMapView, and acts much like an actual 2D array.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
     public interface IMapView<T>

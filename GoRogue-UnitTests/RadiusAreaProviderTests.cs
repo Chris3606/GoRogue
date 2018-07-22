@@ -14,7 +14,7 @@ namespace GoRogue_UnitTests
 
             var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.CIRCLE);
 
-            foreach (var pos in radAProv.Positions())
+            foreach (var pos in radAProv.CalculatePositions())
                 radius[pos.X, pos.Y] = true;
 
             for (int y = 0; y < radius.GetLength(1); y++)
@@ -37,7 +37,7 @@ namespace GoRogue_UnitTests
 
             var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.DIAMOND);
 
-            foreach (var pos in radAProv.Positions())
+            foreach (var pos in radAProv.CalculatePositions())
                 radius[pos.X, pos.Y] = true;
 
             for (int y = 0; y < radius.GetLength(1); y++)
@@ -51,7 +51,7 @@ namespace GoRogue_UnitTests
             }
 
             double maxDistance = 0;
-            foreach (var pos in radAProv.Positions())
+            foreach (var pos in radAProv.CalculatePositions())
             {
                 double distFromCenter = Distance.MANHATTAN.Calculate(Coord.Get(15, 15), pos);
                 if (distFromCenter < maxDistance)
@@ -68,7 +68,7 @@ namespace GoRogue_UnitTests
 
             var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.SQUARE);
 
-            foreach (var pos in radAProv.Positions())
+            foreach (var pos in radAProv.CalculatePositions())
                 radius[pos.X, pos.Y] = true;
 
             for (int y = 0; y < radius.GetLength(1); y++)
@@ -82,7 +82,7 @@ namespace GoRogue_UnitTests
             }
 
             double maxDistance = 0;
-            foreach (var pos in radAProv.Positions())
+            foreach (var pos in radAProv.CalculatePositions())
             {
                 double distFromCenter = Distance.CHEBYSHEV.Calculate(Coord.Get(15, 15), pos);
                 if (distFromCenter < maxDistance)

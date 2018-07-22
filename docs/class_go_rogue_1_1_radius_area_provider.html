@@ -90,9 +90,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a302d5394ed18812b4993667d5860de94"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a302d5394ed18812b4993667d5860de94">RadiusAreaProvider</a> (int centerX, int centerY, int radius, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc)</td></tr>
 <tr class="memdesc:a302d5394ed18812b4993667d5860de94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Specifies center, radius length, and distance calculation that defines the concept of radius, with no bounds.  <a href="#a302d5394ed18812b4993667d5860de94">More...</a><br /></td></tr>
 <tr class="separator:a302d5394ed18812b4993667d5860de94"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c552e1a9454b6a204881e12f15e3f5f"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a2c552e1a9454b6a204881e12f15e3f5f">Positions</a> ()</td></tr>
-<tr class="memdesc:a2c552e1a9454b6a204881e12f15e3f5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an IEnumerable of all unique Coords within the radius and bounds specified (as applicable). See class description for details on the ordering.  <a href="#a2c552e1a9454b6a204881e12f15e3f5f">More...</a><br /></td></tr>
-<tr class="separator:a2c552e1a9454b6a204881e12f15e3f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a921e4be17d96c6d5f4e9247b39122c56"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#a921e4be17d96c6d5f4e9247b39122c56">CalculatePositions</a> ()</td></tr>
+<tr class="memdesc:a921e4be17d96c6d5f4e9247b39122c56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the new radius, and returns an IEnumerable of all unique Coords within that radius and bounds specified (as applicable). See class description for details on the ordering.  <a href="#a921e4be17d96c6d5f4e9247b39122c56">More...</a><br /></td></tr>
+<tr class="separator:a921e4be17d96c6d5f4e9247b39122c56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4c82b00bbe7dde9b1806cd2263c5345"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_radius_area_provider.html#aa4c82b00bbe7dde9b1806cd2263c5345">ToString</a> ()</td></tr>
 <tr class="memdesc:aa4c82b00bbe7dde9b1806cd2263c5345"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the parameters of the <a class="el" href="class_go_rogue_1_1_radius_area_provider.html" title="Class capable of getting all unique positions inside of a given radius and (optional) bounds...">RadiusAreaProvider</a>.  <a href="#aa4c82b00bbe7dde9b1806cd2263c5345">More...</a><br /></td></tr>
 <tr class="separator:aa4c82b00bbe7dde9b1806cd2263c5345"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -324,14 +324,14 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2c552e1a9454b6a204881e12f15e3f5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c552e1a9454b6a204881e12f15e3f5f">&sect;&nbsp;</a></span>Positions()</h2>
+<a id="a921e4be17d96c6d5f4e9247b39122c56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a921e4be17d96c6d5f4e9247b39122c56">&sect;&nbsp;</a></span>CalculatePositions()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.RadiusAreaProvider.Positions </td>
+          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.RadiusAreaProvider.CalculatePositions </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -339,7 +339,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns an IEnumerable of all unique Coords within the radius and bounds specified (as applicable). See class description for details on the ordering. </p>
+<p>Calculates the new radius, and returns an IEnumerable of all unique Coords within that radius and bounds specified (as applicable). See class description for details on the ordering. </p>
 <dl class="section return"><dt>Returns</dt><dd>Enumerable of all unique Coords within the radius and bounds specified.</dd></dl>
 
 </div>

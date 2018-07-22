@@ -17,9 +17,8 @@ namespace GoRogue
     /// such as inventory items, where multiple items may be desired at one location. If one is
     /// implementing something akin to "buckets", one may also subclass this implementation and
     /// provide handlers to the various events it exposes to keep track of the object on top, etc.
-    ///
-    /// The two implementations could also in many cases be used in combination as necessary, since
-    /// they both implement the ISpatialMap interface.
+    /// /// The two implementations could also in many cases be used in combination as necessary,
+    /// since they both implement the ISpatialMap interface.
     /// </remarks>
     /// <typeparam name="T">The type of items being stored.</typeparam>
     public class MultiSpatialMap<T> : ISpatialMap<T> where T : IHasID
@@ -342,7 +341,8 @@ namespace GoRogue
         public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
 
         /// <summary>
-        /// Returns a string representation of the MultiSpatialMap, allowing display of the MultiSpatialMap's items in a specified way.
+        /// Returns a string representation of the MultiSpatialMap, allowing display of the
+        /// MultiSpatialMap's items in a specified way.
         /// </summary>
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the MultiSpatialMap.</returns>

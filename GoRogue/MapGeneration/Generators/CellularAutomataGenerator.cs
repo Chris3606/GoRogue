@@ -1,7 +1,7 @@
-﻿using GoRogue.Random;
-using GoRogue.MapViews;
-using Troschuetz.Random;
+﻿using GoRogue.MapViews;
+using GoRogue.Random;
 using System;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -13,11 +13,12 @@ namespace GoRogue.MapGeneration.Generators
     /// respectively) based on a probability given, then iteratively smoothing it via the process
     /// outlined in the cited roguebasin article. /// After generate is called, the passed in map
     /// will have had a value of true set to all floor tiles, and a value of false set to all wall
-    /// tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article below: http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
-    ///
-    /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be called
-    /// once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive 
-    /// and calling it multiples times costs little extra, and saves an internal allocation.
+    /// tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin
+    /// article below:
+    /// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
+    /// /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
+    /// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
+    /// inexpensive and calling it multiples times costs little extra, and saves an internal allocation.
     /// </remarks>
     static public class CellularAutomataGenerator
     {

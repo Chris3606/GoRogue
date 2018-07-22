@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.MapViews;
 
 namespace GoRogue
 {
@@ -201,8 +201,7 @@ namespace GoRogue
             currentFOV.Add(Coord.Get(startX, startY));
 
             // TODO: There may be a glitch here with too large radius, may have to set to longest
-            //       possible straight-line Manhattan dist for map intsead. No falloff issue --
-            //       shadow is on/off.
+            // possible straight-line Manhattan dist for map intsead. No falloff issue -- shadow is on/off.
             int ctr = 0;
             bool started = false;
             foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighborsCounterClockwise(Direction.UP_RIGHT))
@@ -247,8 +246,9 @@ namespace GoRogue
         /// </param>
         public void Calculate(Coord start, int radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
 
-// Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
+        // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
 #pragma warning disable RECS0137
+
         /// <summary>
         /// ToString overload that customizes the characters used to represent the map.
         /// </summary>
@@ -275,16 +275,16 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Returns a string representation of the map, with the actual values in the FOV, rounded to the given number
-        /// of decimal places.
+        /// Returns a string representation of the map, with the actual values in the FOV, rounded to
+        /// the given number of decimal places.
         /// </summary>
         /// <param name="decimalPlaces">The number of decimal places to round to.</param>
         /// <returns>A string representation of FOV, rounded to the given number of decimal places.</returns>
         public string ToString(int decimalPlaces) => light.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
-        /// Returns a string representation of the map, where any location not in FOV is represented by a
-        /// '-' character, and any position in FOV is represented  by a '+'.
+        /// Returns a string representation of the map, where any location not in FOV is represented
+        /// by a '-' character, and any position in FOV is represented by a '+'.
         /// </summary>
         /// <returns>A (multi-line) string representation of the FOV.</returns>
         public override string ToString() => ToString();

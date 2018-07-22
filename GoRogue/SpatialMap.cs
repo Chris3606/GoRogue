@@ -7,28 +7,24 @@ namespace GoRogue
     /// <summary>
     /// Designed as an more efficient data structure for recording objects on a map. The simple
     /// version: if you're about to use a List to store a bunch of objects in your map, consider
-    /// using this or MultiSpatialMap instead!
-    ///
-    /// More detail: typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for
-    /// terrain, and lists of objects for things like entities, items, etc. This is simple but
-    /// ultimately not efficient; for example, in that implementation, determining if there is an
-    /// object at a location takes an amount of time proportional to the number of objects in this
-    /// list. However, the other simple option is to use an array with size equal to the size of the
-    /// map (as many do for terrain) for all object lists. This is even less ideal, as in that case,
-    /// the time to iterate over all objects becomes proportional to the size of the map (since one
-    /// has to do that for rendering, ouch!), which is typically much larger than the number of
-    /// objects in a list. This is the problem SpatialMap is designed to solve. It provides fast,
-    /// near-constant-time operations for getting the object at a location, adding entities, removing
-    /// entities, and will allow you to iterate through all objects in the SpatialMap in time
-    /// proportional to the number of objects in it (the best possible).
-    ///
-    /// Effectively, it is a more efficient list for objects that have a position associated with
-    /// them. This implementation can only allow one item at a given location at a time -- for an
-    /// implementation that allows multiple items, see MultiSpatialMap.
-    ///
-    /// The objects stored in a SpatialMap must implement the IHasID (see that interface's
-    /// documentation for an easy implementation example). This is used internally to keep track of
-    /// the objects, since uints are easily hashable.
+    /// using this or MultiSpatialMap instead! /// More detail: typical roguelikes will use a 2D
+    /// array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like
+    /// entities, items, etc. This is simple but ultimately not efficient; for example, in that
+    /// implementation, determining if there is an object at a location takes an amount of time
+    /// proportional to the number of objects in this list. However, the other simple option is to
+    /// use an array with size equal to the size of the map (as many do for terrain) for all object
+    /// lists. This is even less ideal, as in that case, the time to iterate over all objects becomes
+    /// proportional to the size of the map (since one has to do that for rendering, ouch!), which is
+    /// typically much larger than the number of objects in a list. This is the problem SpatialMap is
+    /// designed to solve. It provides fast, near-constant-time operations for getting the object at
+    /// a location, adding entities, removing entities, and will allow you to iterate through all
+    /// objects in the SpatialMap in time proportional to the number of objects in it (the best
+    /// possible). /// Effectively, it is a more efficient list for objects that have a position
+    /// associated with them. This implementation can only allow one item at a given location at a
+    /// time -- for an implementation that allows multiple items, see MultiSpatialMap. /// The
+    /// objects stored in a SpatialMap must implement the IHasID (see that interface's documentation
+    /// for an easy implementation example). This is used internally to keep track of the objects,
+    /// since uints are easily hashable.
     /// </summary>
     /// <typeparam name="T">The type of object that will be contained by this SpatialMap.</typeparam>
     public class SpatialMap<T> : ISpatialMap<T> where T : IHasID
@@ -413,7 +409,8 @@ namespace GoRogue
         public override string ToString() => ToString((T obj) => obj.ToString());
 
         /// <summary>
-        /// Returns a string representation of the SpatialMap, allowing display of the SpatialMap's items in a specified way.
+        /// Returns a string representation of the SpatialMap, allowing display of the SpatialMap's
+        /// items in a specified way.
         /// </summary>
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the SpatialMap.</returns>
@@ -433,6 +430,7 @@ namespace GoRogue
         public Coord Position { get; set; }
 
         public string ToString(Func<T, string> itemStringifier) => Position + " : " + itemStringifier(Item);
+
         public override string ToString() => Position + " : " + Item;
     }
 }

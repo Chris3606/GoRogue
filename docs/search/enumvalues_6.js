@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['none',['NONE',['../class_go_rogue_1_1_direction.html#a504813cba47e2e71b66d510ff43898c8ab50339a10e1de285ac99d4c3990b8693',1,'GoRogue::Direction']]]
+  ['manhattan',['MANHATTAN',['../class_go_rogue_1_1_distance.html#aec5155b711e7b1950fc00a665c05aabca20548c3a17d5b27db0c2995b6646a792',1,'GoRogue::Distance']]]
 ];

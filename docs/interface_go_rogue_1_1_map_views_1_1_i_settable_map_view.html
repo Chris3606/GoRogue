@@ -79,9 +79,10 @@ Inheritance diagram for GoRogue.MapViews.ISettableMapView&lt; T &gt;:</div>
  <div class="center">
   <img src="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.png" usemap="#GoRogue.MapViews.ISettableMapView_3C_20T_20_3E_map" alt=""/>
   <map id="GoRogue.MapViews.ISettableMapView_3C_20T_20_3E_map" name="GoRogue.MapViews.ISettableMapView&lt; T &gt;_map">
-<area href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. " alt="GoRogue.MapViews.IMapView&lt; T &gt;" shape="rect" coords="157,0,461,24"/>
+<area href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. " alt="GoRogue.MapViews.IMapView&lt; T &gt;" shape="rect" coords="314,0,618,24"/>
 <area href="class_go_rogue_1_1_map_views_1_1_array_map.html" title="Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D a..." alt="GoRogue.MapViews.ArrayMap&lt; T &gt;" shape="rect" coords="0,112,304,136"/>
 <area href="class_go_rogue_1_1_map_views_1_1_lambda_settable_map_view.html" title="Class designed to make implementing simple ISettableMapViews more convenient, by providing the &quot;get&quot; ..." alt="GoRogue.MapViews.LambdaSettableMapView&lt; T &gt;" shape="rect" coords="314,112,618,136"/>
+<area href="class_go_rogue_1_1_map_views_1_1_settable_viewport.html" title="Similar to Viewport, but implements ISettableMapView and thus implements set functionality via relati..." alt="GoRogue.MapViews.SettableViewport&lt; T &gt;" shape="rect" coords="628,112,932,136"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -109,8 +110,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface designed to act as a standardized input/output for algorithms that need to make modifications to data. </p>
-<p>See <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> documentation. Algorithms such as map generation may need to modify their inputs. Again, creating an actual 2D array can be tedious, depending on the application. As such, this interface extends <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> to provide the capability to "set" values.</p>
-<p>Again, in case an actual 2D array is desired, <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html" title="Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D a...">ArrayMap</a> implements this interface and provides a similar interface. </p>
+<p>See <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> documentation. Algorithms such as map generation may need to modify their inputs. Again, creating an actual 2D array can be tedious, depending on the application. As such, this interface extends <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> to provide the capability to "set" values. /// Again, in case an actual 2D array is desired, <a class="el" href="class_go_rogue_1_1_map_views_1_1_array_map.html" title="Default implementation of the ISettableMapView interface, exposing the interface using an actual 2D a...">ArrayMap</a> implements this interface and provides a similar interface. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type of value being returned/set by the indexer functions.</td></tr>

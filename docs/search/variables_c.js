@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x',['X',['../class_go_rogue_1_1_coord.html#a8b7a017cfef4c432d60bbb609da7d74e',1,'GoRogue::Coord']]]
+  ['weights',['Weights',['../class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html#ace862e0d1f86831744ecc054be273118',1,'GoRogue::Pathing::WeightedGoalMap']]]
 ];

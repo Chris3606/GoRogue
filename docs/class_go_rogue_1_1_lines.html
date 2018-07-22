@@ -78,6 +78,7 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a8bc986220b795ee48df0f0c1c7b71b96"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96">Algorithm</a> { <a class="el" href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96af586191c28746e5cf657e4d803cac503">Algorithm.BRESENHAM</a>, 
+<a class="el" href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96afc775789f2e037d188fe422fee3cd472">Algorithm.BRESENHAM_ORDERED</a>, 
 <a class="el" href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96adc907b4fb49bcda4f6360644735c97ec">Algorithm.DDA</a>, 
 <a class="el" href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96a9441273d8f694623f0a3cf3e24c29944">Algorithm.ORTHO</a>
  }<tr class="memdesc:a8bc986220b795ee48df0f0c1c7b71b96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Various supported line-drawing algorithms.  <a href="class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96">More...</a><br /></td></tr>
@@ -119,6 +120,8 @@ Static Public Member Functions</h2></td></tr>
 <p>Various supported line-drawing algorithms. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8bc986220b795ee48df0f0c1c7b71b96af586191c28746e5cf657e4d803cac503"></a>BRESENHAM&#160;</td><td class="fielddoc"><p>Bresenham's line algorithm. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a8bc986220b795ee48df0f0c1c7b71b96afc775789f2e037d188fe422fee3cd472"></a>BRESENHAM_ORDERED&#160;</td><td class="fielddoc"><p>Bresenham's line algorithm, with the points guaranteed to be in start to finish order. This may be significantly slower than BRESENHAM, so if you really need ordering, consider DDA instead, as it is both faster than Bresenham's and implicitly ordered </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a8bc986220b795ee48df0f0c1c7b71b96adc907b4fb49bcda4f6360644735c97ec"></a>DDA&#160;</td><td class="fielddoc"><p>DDA line algorithm &ndash; effectively an optimized algorithm for producing Brensham-like lines. There may be slight differences in appearance when compared to lines created with Bresenham's, however this algorithm may also be measurably faster. Based on the algorithm here: <a href="https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/,">https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/,</a> as well as the Java library Squidlib's implementation. </p>
 </td></tr>

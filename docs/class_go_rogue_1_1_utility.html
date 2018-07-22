@@ -76,18 +76,6 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a1a0970e38b073bb8efccf63285189c29"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a1a0970e38b073bb8efccf63285189c29">FisherYatesShuffle&lt; T &gt;</a> (this List&lt; T &gt; list, IGenerator rng=null)</td></tr>
-<tr class="memdesc:a1a0970e38b073bb8efccf63285189c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for List that implements a fisher-yates shuffle. Modifies the list it is called on to randomly rearrange the elements therein.  <a href="#a1a0970e38b073bb8efccf63285189c29">More...</a><br /></td></tr>
-<tr class="separator:a1a0970e38b073bb8efccf63285189c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a784847162621fa3b709aa4f61af0a116"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a784847162621fa3b709aa4f61af0a116">RandomIndex&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, IGenerator rng=null)</td></tr>
-<tr class="memdesc:a784847162621fa3b709aa4f61af0a116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random valid index from the list, using the rng specified. -1 is returned if the list is empty.  <a href="#a784847162621fa3b709aa4f61af0a116">More...</a><br /></td></tr>
-<tr class="separator:a784847162621fa3b709aa4f61af0a116"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54a786461bf8a9739cc9e83e1deb90d4"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a54a786461bf8a9739cc9e83e1deb90d4">RandomItem&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, IGenerator rng=null)</td></tr>
-<tr class="memdesc:a54a786461bf8a9739cc9e83e1deb90d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random item from the list, using the rng specified. Default for type T is returned if the list is empty.  <a href="#a54a786461bf8a9739cc9e83e1deb90d4">More...</a><br /></td></tr>
-<tr class="separator:a54a786461bf8a9739cc9e83e1deb90d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d29b54a8a9a362222bd92297e32c1c3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a9d29b54a8a9a362222bd92297e32c1c3">Swap&lt; T &gt;</a> (ref T lhs, ref T rhs)</td></tr>
-<tr class="memdesc:a9d29b54a8a9a362222bd92297e32c1c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function that swaps the values pointed to by x and y.  <a href="#a9d29b54a8a9a362222bd92297e32c1c3">More...</a><br /></td></tr>
-<tr class="separator:a9d29b54a8a9a362222bd92297e32c1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9dc7718fb3ddce17a7974748d5ba23bb"><td class="memItemLeft" align="right" valign="top">static ReadOnlyDictionary&lt; K, V &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a9dc7718fb3ddce17a7974748d5ba23bb">AsReadOnly&lt; K, V &gt;</a> (this IDictionary&lt; K, V &gt; dictionary)</td></tr>
 <tr class="memdesc:a9dc7718fb3ddce17a7974748d5ba23bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an AsReadOnly method to IDictionary, similar to the AsReadOnly method of IList, that returns a read-only reference to the dictionary.  <a href="#a9dc7718fb3ddce17a7974748d5ba23bb">More...</a><br /></td></tr>
 <tr class="separator:a9dc7718fb3ddce17a7974748d5ba23bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -109,9 +97,33 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af73ce63b19a56fea37124fa6a1a5b3bd"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#af73ce63b19a56fea37124fa6a1a5b3bd">ExtendToStringGrid&lt; T &gt;</a> (this T[,] array, int fieldSize, string begin=&quot;&quot;, string beginRow=&quot;&quot;, Func&lt; T, string &gt; elementStringifier=null, string rowSeparator=&quot;\, string elementSeparator=&quot; &quot;, string endRow=&quot;&quot;, string end=&quot;&quot;)</td></tr>
 <tr class="memdesc:af73ce63b19a56fea37124fa6a1a5b3bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for 2D arrays allowing printing the contents, as if the array represents a grid-map. This differs from ExtendToString in that this method prints the grid where array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it. Effectively it assumes the indexes being used are grid/coordinate plane coordinates. Takes the size of the field to give each element, characters to surround the array, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row.  <a href="#af73ce63b19a56fea37124fa6a1a5b3bd">More...</a><br /></td></tr>
 <tr class="separator:af73ce63b19a56fea37124fa6a1a5b3bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a0970e38b073bb8efccf63285189c29"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a1a0970e38b073bb8efccf63285189c29">FisherYatesShuffle&lt; T &gt;</a> (this List&lt; T &gt; list, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a1a0970e38b073bb8efccf63285189c29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for List that implements a fisher-yates shuffle. Modifies the list it is called on to randomly rearrange the elements therein.  <a href="#a1a0970e38b073bb8efccf63285189c29">More...</a><br /></td></tr>
+<tr class="separator:a1a0970e38b073bb8efccf63285189c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1f4d1f601b7e68e63b536b7b9a004897"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a1f4d1f601b7e68e63b536b7b9a004897">Multiply</a> (this string str, int numTimes)</td></tr>
 <tr class="memdesc:a1f4d1f601b7e68e63b536b7b9a004897"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Multiplies", aka repeats, a given string the given number of times.  <a href="#a1f4d1f601b7e68e63b536b7b9a004897">More...</a><br /></td></tr>
 <tr class="separator:a1f4d1f601b7e68e63b536b7b9a004897"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a784847162621fa3b709aa4f61af0a116"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a784847162621fa3b709aa4f61af0a116">RandomIndex&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a784847162621fa3b709aa4f61af0a116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random valid index from the list, using the rng specified. -1 is returned if the list is empty.  <a href="#a784847162621fa3b709aa4f61af0a116">More...</a><br /></td></tr>
+<tr class="separator:a784847162621fa3b709aa4f61af0a116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52db3e9907eeeac15549c61e0819debf"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a52db3e9907eeeac15549c61e0819debf">RandomIndex&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, Func&lt; int, bool &gt; selector, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a52db3e9907eeeac15549c61e0819debf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random valid index from the list for which the selector function given returns true, using the rng specified. Indices are repeatedly selected until a qualifying index is found. -1 is returned if the list is empty.  <a href="#a52db3e9907eeeac15549c61e0819debf">More...</a><br /></td></tr>
+<tr class="separator:a52db3e9907eeeac15549c61e0819debf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54a786461bf8a9739cc9e83e1deb90d4"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a54a786461bf8a9739cc9e83e1deb90d4">RandomItem&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a54a786461bf8a9739cc9e83e1deb90d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random item from the list, using the rng specified. Default for type T is returned if the list is empty.  <a href="#a54a786461bf8a9739cc9e83e1deb90d4">More...</a><br /></td></tr>
+<tr class="separator:a54a786461bf8a9739cc9e83e1deb90d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4612dfe5b93bf3da2998c2394e06388"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#af4612dfe5b93bf3da2998c2394e06388">RandomItem&lt; T &gt;</a> (this IReadOnlyList&lt; T &gt; list, Func&lt; T, bool &gt; selector, IGenerator rng=null)</td></tr>
+<tr class="memdesc:af4612dfe5b93bf3da2998c2394e06388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that selects and returns a random item from the list for which the given selector returns true, using the rng specified. Items are repeatedly selected until a qualifying item is found. Default for type T is returned if the list is empty.  <a href="#af4612dfe5b93bf3da2998c2394e06388">More...</a><br /></td></tr>
+<tr class="separator:af4612dfe5b93bf3da2998c2394e06388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d29b54a8a9a362222bd92297e32c1c3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a9d29b54a8a9a362222bd92297e32c1c3">Swap&lt; T &gt;</a> (ref T lhs, ref T rhs)</td></tr>
+<tr class="memdesc:a9d29b54a8a9a362222bd92297e32c1c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function that swaps the values pointed to by x and y.  <a href="#a9d29b54a8a9a362222bd92297e32c1c3">More...</a><br /></td></tr>
+<tr class="separator:a9d29b54a8a9a362222bd92297e32c1c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9a0e39b419104d3ae3d34f16b98b08"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a3e9a0e39b419104d3ae3d34f16b98b08">Yield&lt; T &gt;</a> (this T item)</td></tr>
+<tr class="memdesc:a3e9a0e39b419104d3ae3d34f16b98b08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function that yields the given item as a single-item IEnumerable.  <a href="#a3e9a0e39b419104d3ae3d34f16b98b08">More...</a><br /></td></tr>
+<tr class="separator:a3e9a0e39b419104d3ae3d34f16b98b08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ff80a7ca96e35074201983155a01948"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_utility.html#a8ff80a7ca96e35074201983155a01948">Yield&lt; T &gt;</a> (params T[] values)</td></tr>
+<tr class="memdesc:a8ff80a7ca96e35074201983155a01948"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience function that takes multiple parameters and converts them to an IEnumerable.  <a href="#a8ff80a7ca96e35074201983155a01948">More...</a><br /></td></tr>
+<tr class="separator:a8ff80a7ca96e35074201983155a01948"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Static class full of miscellaneous helper methods. </p>
@@ -150,7 +162,7 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dictionary</td><td>Dictionary to create a read-only reference to &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">dictionary</td><td>Dictionary to create a read-only reference to &ndash; never specified manually as this is an extension method. </td></tr>
   </table>
   </dd>
 </dl>
@@ -223,7 +235,7 @@ Static Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Extension method for dictionaries allowing printing the contents. Takes the characters to surround the dictionary elements in, the method to use to get the string representation of each key and value (defaulting to the ToString function of the types), and the characters to use to separate the value from keys, and the key-value pairs. </p>
-<p>Defaults to a representation looking something like {key : value, key : value}.</p>
+<p>Defaults to a representation looking something like {key : value, key : value}. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">K</td><td>Type of keys of the dictionary.</td></tr>
@@ -233,10 +245,10 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dictionary</td><td>Dictionary to stringify &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">dictionary</td><td>Dictionary to stringify &ndash; never specified manually as this is an extension method. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the dictionary elements.</td></tr>
-    <tr><td class="paramname">keyStringifier</td><td>Function to use to get the string representation of each key. Null uses the ToString function of type K.</td></tr>
-    <tr><td class="paramname">valueStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type V.</td></tr>
+    <tr><td class="paramname">keyStringifier</td><td>Function to use to get the string representation of each key. Null uses the ToString function of type K. </td></tr>
+    <tr><td class="paramname">valueStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type V. </td></tr>
     <tr><td class="paramname">kvSeparator</td><td>Characters to separate each value from its key.</td></tr>
     <tr><td class="paramname">pairSeparator</td><td>Characters to separate each key-value pair from the next.</td></tr>
     <tr><td class="paramname">end</td><td>Character(s) that should follow the dictionary elements.</td></tr>
@@ -309,9 +321,9 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">enumerable</td><td>IEnumerable to stringify &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">enumerable</td><td>IEnumerable to stringify &ndash; never specified manually as this is an extension method. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the list elements.</td></tr>
-    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each element. Null uses the ToString function of type T.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each element. Null uses the ToString function of type T. </td></tr>
     <tr><td class="paramname">separator</td><td>Characters to separate the list by.</td></tr>
     <tr><td class="paramname">end</td><td>Character(s) that should follow the list elements.</td></tr>
   </table>
@@ -383,9 +395,9 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">set</td><td>Set to stringify &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">set</td><td>Set to stringify &ndash; never specified manually as this is an extension method. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the set elements.</td></tr>
-    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each element. Null uses the ToString function of type T.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each element. Null uses the ToString function of type T. </td></tr>
     <tr><td class="paramname">separator</td><td>Characters to separate the list by.</td></tr>
     <tr><td class="paramname">end</td><td>Character(s) that should follow the list elements.</td></tr>
   </table>
@@ -474,10 +486,10 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the array.</td></tr>
     <tr><td class="paramname">beginRow</td><td>Character(s) that should precede each row.</td></tr>
-    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T. </td></tr>
     <tr><td class="paramname">rowSeparator</td><td>Character(s) to separate each row from the next.</td></tr>
     <tr><td class="paramname">elementSeparator</td><td>Character(s) to separate each element from the next.</td></tr>
     <tr><td class="paramname">endRow</td><td>Character(s) that should follow each row.</td></tr>
@@ -568,10 +580,10 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the array.</td></tr>
     <tr><td class="paramname">beginRow</td><td>Character(s) that should precede each row.</td></tr>
-    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T. </td></tr>
     <tr><td class="paramname">rowSeparator</td><td>Character(s) to separate each row from the next.</td></tr>
     <tr><td class="paramname">elementSeparator</td><td>Character(s) to separate each element from the next.</td></tr>
     <tr><td class="paramname">endRow</td><td>Character(s) that should follow each row.</td></tr>
@@ -579,7 +591,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A string representation of the 2D array, as if the array is a 2D grid-based map.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the 2D array, as if the array is a 2D grid-based map. </dd></dl>
 
 </div>
 </div>
@@ -668,11 +680,11 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method.</td></tr>
-    <tr><td class="paramname">fieldSize</td><td>The amount of space each element should take up in characters. A positive number aligns the text to the right of the space, while a negative number aligns the text to the left.</td></tr>
+    <tr><td class="paramname">array</td><td>The array to stringify &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">fieldSize</td><td>The amount of space each element should take up in characters. A positive number aligns the text to the right of the space, while a negative number aligns the text to the left. </td></tr>
     <tr><td class="paramname">begin</td><td>Character(s) that should precede the array.</td></tr>
     <tr><td class="paramname">beginRow</td><td>Character(s) that should precede each row.</td></tr>
-    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T. </td></tr>
     <tr><td class="paramname">rowSeparator</td><td>Character(s) to separate each row from the next.</td></tr>
     <tr><td class="paramname">elementSeparator</td><td>Character(s) to separate each element from the next.</td></tr>
     <tr><td class="paramname">endRow</td><td>Character(s) that should follow each row.</td></tr>
@@ -680,7 +692,7 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A string representation of the 2D array, as if the array is a 2D grid-based map.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the 2D array, as if the array is a 2D grid-based map. </dd></dl>
 
 </div>
 </div>
@@ -773,7 +785,7 @@ Static Public Member Functions</h2></td></tr>
 <p>"Multiplies", aka repeats, a given string the given number of times. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>String to repeat. Never specified manually since this is an extension method.</td></tr>
+    <tr><td class="paramname">str</td><td>String to repeat. Never specified manually since this is an extension method. </td></tr>
     <tr><td class="paramname">numTimes</td><td>The number of times to repeat the string.</td></tr>
   </table>
   </dd>
@@ -783,7 +795,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a784847162621fa3b709aa4f61af0a116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a784847162621fa3b709aa4f61af0a116">&sect;&nbsp;</a></span>RandomIndex< T >()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a784847162621fa3b709aa4f61af0a116">&sect;&nbsp;</a></span>RandomIndex< T >() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -834,8 +846,67 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a52db3e9907eeeac15549c61e0819debf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52db3e9907eeeac15549c61e0819debf">&sect;&nbsp;</a></span>RandomIndex< T >() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static int GoRogue.Utility.RandomIndex&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this IReadOnlyList&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; int, bool &gt;&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extension method that selects and returns a random valid index from the list for which the selector function given returns true, using the rng specified. Indices are repeatedly selected until a qualifying index is found. -1 is returned if the list is empty. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of elements in the list.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&gt; </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">list</td><td>List being operated on &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">selector</td><td>Function that returns true if the given index is valid selection, false otherwise. </td></tr>
+    <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Index selected.</dd></dl>
+
+</div>
+</div>
 <a id="a54a786461bf8a9739cc9e83e1deb90d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54a786461bf8a9739cc9e83e1deb90d4">&sect;&nbsp;</a></span>RandomItem< T >()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a54a786461bf8a9739cc9e83e1deb90d4">&sect;&nbsp;</a></span>RandomItem< T >() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -878,6 +949,65 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">list</td><td>List being operated on &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Item selected.</dd></dl>
+
+</div>
+</div>
+<a id="af4612dfe5b93bf3da2998c2394e06388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4612dfe5b93bf3da2998c2394e06388">&sect;&nbsp;</a></span>RandomItem< T >() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T GoRogue.Utility.RandomItem&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this IReadOnlyList&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>list</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T, bool &gt;&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extension method that selects and returns a random item from the list for which the given selector returns true, using the rng specified. Items are repeatedly selected until a qualifying item is found. Default for type T is returned if the list is empty. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of elements in the list.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">list</td><td>List being operated on &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">selector</td><td>Function that returns true if the given item is valid selection, false otherwise. </td></tr>
     <tr><td class="paramname">rng</td><td>RNG to use.</td></tr>
   </table>
   </dd>
@@ -934,6 +1064,88 @@ Static Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a3e9a0e39b419104d3ae3d34f16b98b08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e9a0e39b419104d3ae3d34f16b98b08">&sect;&nbsp;</a></span>Yield< T >() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;T&gt; GoRogue.Utility.Yield&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this T&#160;</td>
+          <td class="paramname"><em>item</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convenience function that yields the given item as a single-item IEnumerable. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the item. Generally the compiler determines this since it is an extension method. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">item</td><td>The item to yield. Never specified manually as this is an extension method. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An IEnumerable containing only the item the function is called on.</dd></dl>
+
+</div>
+</div>
+<a id="a8ff80a7ca96e35074201983155a01948"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ff80a7ca96e35074201983155a01948">&sect;&nbsp;</a></span>Yield< T >() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static IEnumerable&lt;T&gt; GoRogue.Utility.Yield&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">params T []&#160;</td>
+          <td class="paramname"><em>values</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Convenience function that takes multiple parameters and converts them to an IEnumerable. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of the parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">values</td><td>Parameters (specified as multiple parameters to the function)</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An IEnumerable of all of the given items, in the order they were given to the function. </dd></dl>
 
 </div>
 </div>
