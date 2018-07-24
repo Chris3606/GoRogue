@@ -23,7 +23,7 @@ namespace GoRogue.Pathing
     {
         private HashSet<Coord> _closedSet = new HashSet<Coord>();
 
-        private Distance _distanceMeasurement;
+        private readonly Distance _distanceMeasurement;
 
         private HashSet<Coord> _edgeSet = new HashSet<Coord>();
 
@@ -31,14 +31,20 @@ namespace GoRogue.Pathing
 
         private HashSet<Coord> _walkable = new HashSet<Coord>();
 
-        /// <summary>
-        /// Constructor. Takes a base map and a distance measurement to use for calculation.
-        /// </summary>
-        /// <param name="baseMap">The underlying map as GoalStates.</param>
-        /// <param name="distanceMeasurement">
-        /// The distance measurement (and implicitly the AdjacencyRule) to use for calculation.
-        /// </param>
-        public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
+		public event Action Updated = () => { };
+
+		internal IEnumerable<Coord> Walkable { get { return _walkable; } }
+
+		internal Distance DistanceMeasurement { get { return _distanceMeasurement; } }
+
+		/// <summary>
+		/// Constructor. Takes a base map and a distance measurement to use for calculation.
+		/// </summary>
+		/// <param name="baseMap">The underlying map as GoalStates.</param>
+		/// <param name="distanceMeasurement">
+		/// The distance measurement (and implicitly the AdjacencyRule) to use for calculation.
+		/// </param>
+		public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             _distanceMeasurement = distanceMeasurement ?? throw new ArgumentNullException(nameof(baseMap));
@@ -180,6 +186,7 @@ namespace GoRogue.Pathing
                     _closedSet.Add(coord);
                 }
             }
+			Updated();
             return _closedSet.Count > 0;
         }
     }
