@@ -63,6 +63,15 @@ namespace GoRogue
         }
 
         /// <summary>
+        /// Calculates the area of the rectangle.
+        /// </summary>
+        public int Area { get => Width * Height; }
+        /// <summary>
+        /// Calculates the perimeter length of the rectangle.
+        /// </summary>
+        public int Perimeter { get => (2 * Width) + (2 * Height); }
+
+        /// <summary>
         /// The center coordinate of the rectangle, rounded up if the exact center is between two positions.
         /// The center of a rectangle with width/height 1 is its Position.
         /// </summary>

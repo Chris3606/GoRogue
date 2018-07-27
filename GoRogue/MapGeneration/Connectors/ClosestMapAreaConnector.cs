@@ -54,7 +54,7 @@ namespace GoRogue.MapGeneration.Connectors
             }
         }
 
-        static private int findNearestMapArea(IReadOnlyList<MapArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
+        static private int findNearestMapArea(IReadOnlyList<IReadOnlyMapArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
         {
             int closestIndex = mapAreaIndex;
             double distance = double.MaxValue;

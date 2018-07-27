@@ -18,19 +18,19 @@ namespace GoRogue
     /// changed, reallocation must be performed, however the overhead should be insignificant on
     /// everything but extremely large radiuses.
     /// </remarks>
-    public class RadiusAreaProvider
+    public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider
     {
         /// <summary>
         /// The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
         /// there are no bounds.
         /// </summary>
-        public Rectangle Bounds;
+        public Rectangle Bounds { get; set; }
 
         /// <summary>
         /// The distance calculation used to determine what shape the radius has (or a type
         /// implicitly convertible to Distance, eg. Radius).
         /// </summary>
-        public Distance DistanceCalc;
+        public Distance DistanceCalc { get; set; }
 
         private Coord _center;
 
@@ -140,6 +140,12 @@ namespace GoRogue
                 }
             }
         }
+
+        /// <summary>
+        /// Returns a read-only representation of this RadiusAreaProvider.
+        /// </summary>
+        /// <returns></returns>
+        public IReadOnlyRadiusAreaProvider AsReadOnly() => this;
 
         /// <summary>
         /// Calculates the new radius, and returns an IEnumerable of all unique Coords within that

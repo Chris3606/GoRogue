@@ -18,6 +18,6 @@ namespace GoRogue.MapGeneration.Connectors
         /// A tuple containing the coordinates from each MapArea to connect -- the first item in the
         /// tuple is the Coord in area1, the second is the Coord in area2.
         /// </returns>
-        Tuple<Coord, Coord> SelectConnectionPoints(MapArea area1, MapArea area2);
+        Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2);
     }
 }

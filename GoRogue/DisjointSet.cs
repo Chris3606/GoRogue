@@ -6,7 +6,7 @@ namespace GoRogue
     /// Basic representation of a Disjoint set data structure. Assumes it is holding integers between
     /// 0 and size - 1.
     /// </summary>
-    public class DisjointSet
+    public class DisjointSet : IReadOnlyDisjointSet
     {
         private int[] parents;
 
@@ -111,6 +111,12 @@ namespace GoRogue
 
             return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
         }
+
+        /// <summary>
+        /// Returns a read-only representation of the disjoint set.
+        /// </summary>
+        /// <returns>A read-only representation of the disjoint set.</returns>
+        public IReadOnlyDisjointSet AsReadOnly() => this;
 
         // Used to ensure ToString doesn't affect the performance of future operations
         private int findNoCompression(int obj)

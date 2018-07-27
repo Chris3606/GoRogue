@@ -18,7 +18,7 @@ namespace GoRogue.SenseMapping
     /// between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the
     /// sources being light, for example), and 0.0 is no intensity at all.
     /// </summary>
-    public class SenseMap : IEnumerable<double>, IMapView<double>
+    public class SenseMap : IReadOnlySenseMap, IEnumerable<double>, IMapView<double>
     {
         private List<SenseSource> _senseSources;
 
@@ -123,6 +123,12 @@ namespace GoRogue.SenseMapping
             _senseSources.Add(senseSource);
             senseSource.resMap = resMap;
         }
+
+        /// <summary>
+        /// Returns a read-only representation of the SenseMap.
+        /// </summary>
+        /// <returns>This SenseMap object as IReadOnlySenseMap.</returns>
+        public IReadOnlySenseMap AsReadOnly() => this;
 
         /// <summary>
         /// Function to make it do things. For each enabled source in the source list, it calculates
