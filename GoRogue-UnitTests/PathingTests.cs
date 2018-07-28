@@ -128,6 +128,57 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
+        public void FleeMapCorrectness()
+        {
+            const int WIDTH = 30;
+            const int HEIGHT = 30;
+            const int NUM_GOALS = 10;
+            const int ITERATIONS = 100;
+
+            for (int i = 0; i < ITERATIONS; i++)
+            {
+                var walkabilityMap = new ArrayMap<bool>(WIDTH, HEIGHT);
+                CellularAutomataGenerator.Generate(walkabilityMap);
+
+                var goals = new List<Coord>();
+                for (int j = 0; j < NUM_GOALS; j++)
+                    goals.Add(walkabilityMap.RandomPosition(true));
+
+
+                var gsMap = createGoalStateMap(walkabilityMap, goals);
+
+                var goalMap = new GoalMap(gsMap, Distance.CHEBYSHEV);
+                var origFleeMap = new OriginalFleeMap(goalMap);
+                var newFleeMap = new FleeMap(goalMap);
+
+                goalMap.Update();
+
+                bool areEqual = true;
+                Coord stoppingPos = null;
+                foreach (var pos in walkabilityMap.Positions())
+                {
+                    stoppingPos = pos;
+                    areEqual = origFleeMap[pos] == newFleeMap[pos];
+                    if (!areEqual)
+                        break;
+                }
+
+                if (!areEqual)
+                {
+                    Console.WriteLine("Original");
+                    Console.WriteLine(origFleeMap.ToString(4));
+                    Console.WriteLine("New");
+                    Console.WriteLine(newFleeMap.ToString(4));
+
+                    Assert.Fail($"Failed for {stoppingPos}, expected {origFleeMap[stoppingPos]}, actual {newFleeMap[stoppingPos]}");
+                }
+            }
+            
+
+            
+        }
+
+        [TestMethod]
         public void PathInitReversing()
         {
             Coord start = Coord.Get(1, 1);
@@ -326,6 +377,19 @@ namespace GoRogue_UnitTests
             for (int i = 0; i < expected.Count; i++)
                 Console.Write(actual.GetStepWithStart(i) + ",");
             Console.WriteLine();
+        }
+
+        private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
+        {
+            var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
+            for (int x = 0; x < walkabilityMap.Width; x++)
+                for (int y = 0; y < walkabilityMap.Height; y++)
+                    mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
+
+            foreach (var goal in goals)
+                mapGoals[goal] = GoalState.Goal;
+
+            return mapGoals;
         }
     }
 

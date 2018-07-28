@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
-
 namespace GoRogue.Pathing
 {
-    public class FleeMap : IMapView<double?>, IDisposable
+    public class OriginalFleeMap : IMapView<double?>, IDisposable
     {
         private readonly GoalMap _baseMap;
         private ArrayMap<double?> _goalMap;
@@ -14,14 +13,14 @@ namespace GoRogue.Pathing
         public int Width => _goalMap.Width;
         public double? this[Coord pos] => _goalMap[pos];
         public double? this[int x, int y] => _goalMap[x, y];
-        public FleeMap(GoalMap baseMap, double magnitude)
+        public OriginalFleeMap(GoalMap baseMap, double magnitude)
         {
             _baseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             this.Magnitude = magnitude;
             _goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
             _baseMap.Updated += this.Update;
         }
-        public FleeMap(GoalMap baseMap) : this(baseMap, 1.2)
+        public OriginalFleeMap(GoalMap baseMap) : this(baseMap, 1.2)
         {
         }
 
@@ -61,8 +60,6 @@ namespace GoRogue.Pathing
 
         private void Update()
         {
-            var adjacencyRule = (AdjacencyRule)_baseMap.DistanceMeasurement;
-
             var openSet = new HashSet<Coord>();
             foreach (var point in _baseMap.Walkable)
             {
@@ -72,7 +69,7 @@ namespace GoRogue.Pathing
             }
             var edgeSet = new HashSet<Coord>();
             var closedSet = new HashSet<Coord>();
-            // var walkable = new HashSet<Coord>(_baseMap.Walkable);
+            var walkable = new HashSet<Coord>(_baseMap.Walkable);
             while (openSet.Count > 0) //multiple runs are needed to deal with islands
             {
                 var min = (double)Width * Height;
@@ -87,10 +84,9 @@ namespace GoRogue.Pathing
                     }
                 }
                 closedSet.Add(minPoint);
-                openSet.Remove(minPoint);
-                foreach (var openPoint in adjacencyRule.Neighbors(minPoint))
+                foreach (var openPoint in ((AdjacencyRule)_baseMap.DistanceMeasurement).Neighbors(minPoint))
                 {
-                    if ((!closedSet.Contains(openPoint)) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle) // walkable.Contains(openPoint))
+                    if ((!closedSet.Contains(openPoint)) && walkable.Contains(openPoint))
                         edgeSet.Add(openPoint);
                 }
                 while (edgeSet.Count > 0)
@@ -98,9 +94,9 @@ namespace GoRogue.Pathing
                     foreach (var coord in edgeSet.ToArray())
                     {
                         var current = _goalMap[coord].Value;
-                        foreach (var openPoint in adjacencyRule.Neighbors(coord))
+                        foreach (var openPoint in ((AdjacencyRule)_baseMap.DistanceMeasurement).Neighbors(coord))
                         {
-                            if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle) // !walkable.Contains(openPoint))
+                            if (closedSet.Contains(openPoint) || !walkable.Contains(openPoint))
                                 continue;
                             var neighborValue = _goalMap[openPoint].Value;
                             var newValue = current + _baseMap.DistanceMeasurement.Calculate(coord, openPoint);
@@ -112,27 +108,22 @@ namespace GoRogue.Pathing
                         }
                         edgeSet.Remove(coord);
                         closedSet.Add(coord);
-                        openSet.Remove(coord);
                     }
                 }
-                // openSet.RemoveWhere(c => closedSet.Contains(c));
+                openSet.RemoveWhere(c => closedSet.Contains(c));
             }
         }
         #region IDisposable Support
         private bool _disposed = false;
-        ~FleeMap()
+        ~OriginalFleeMap()
         {
             Dispose();
         }
-
         public void Dispose()
         {
-            if (!_disposed)
-            {
-                _baseMap.Updated -= this.Update;
-                _disposed = true;
-                GC.SuppressFinalize(this);
-            }
+            _baseMap.Updated -= this.Update;
+            _disposed = true;
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
