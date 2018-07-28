@@ -13,18 +13,56 @@ namespace GoRogue.Pathing
         public PositionNode(Coord position) { Position = position; }
     }
 
+    /// <summary>
+    /// Implements the concept of a "safety map", also known as "flee map", as described in the
+    /// roguebasin article http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps.
+    /// </summary>
+    /// <remarks>
+    /// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically recalculated
+    /// when the underlying goal map is recalculated.  Implements IDisposable, so ensure that it is disposed of
+    /// properly after use.
+    /// </remarks>
     public class FleeMap : IMapView<double?>, IDisposable
     {
         private readonly GoalMap _baseMap;
         private ArrayMap<double?> _goalMap;
+        // Nodes for the priority queue used in Update.
         private ArrayMap<PositionNode> _nodes;
 
+        /// <summary>
+        /// The degree to which entities following this flee-map will prefer global safety to local safety.
+        /// Higher values will make entities try to move past an approaching "threat" from farther away.
+        /// </summary>
         public double Magnitude { get; set; }
+        /// <summary>
+        /// Height of the flee map.
+        /// </summary>
         public int Height => _goalMap.Height;
+        /// <summary>
+        /// Width of the flee map.
+        /// </summary>
         public int Width => _goalMap.Width;
+        /// <summary>
+        /// Returns the flee-map value for the given position.
+        /// </summary>
+        /// <param name="pos">The position to return the value for.</param>
+        /// <returns>The flee-map value for the given location.</returns>
         public double? this[Coord pos] => _goalMap[pos];
+        /// <summary>
+        /// Returns the goal-map value for the given position.
+        /// </summary>
+        /// <param name="x">The x-value of the position to return the value for.</param>
+        /// <param name="y">The y-value of the position to return the value for.</param>
+        /// <returns>The flee-map value for the given location.</returns>
         public double? this[int x, int y] => _goalMap[x, y];
-        public FleeMap(GoalMap baseMap, double magnitude)
+
+        /// <summary>
+        /// Constructor.  Takes a goal map where in all goals are treated as threats to be avoided,
+        /// and a magnitude to use (defaulting to 1.2).
+        /// </summary>
+        /// <param name="baseMap">The underlying goal map to use.</param>
+        /// <param name="magnitude">Magnitude to multiply by during calculation.</param>
+        public FleeMap(GoalMap baseMap, double magnitude = 1.2)
         {
             _baseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             Magnitude = magnitude;
@@ -34,9 +72,6 @@ namespace GoRogue.Pathing
                 _nodes[pos] = new PositionNode(pos);
 
             _baseMap.Updated += Update;
-        }
-        public FleeMap(GoalMap baseMap) : this(baseMap, 1.2)
-        {
         }
 
         /// <summary>
@@ -125,11 +160,18 @@ namespace GoRogue.Pathing
         }
         #region IDisposable Support
         private bool _disposed = false;
+
+        /// <summary>
+        /// Destructor for IDisposable implementation.
+        /// </summary>
         ~FleeMap()
         {
             Dispose();
         }
 
+        /// <summary>
+        /// Function called to dispose of the class, automatically unlinking it from its goal map.
+        /// </summary>
         public void Dispose()
         {
             if (!_disposed)
