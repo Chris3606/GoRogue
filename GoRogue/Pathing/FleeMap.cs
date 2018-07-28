@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
+using Priority_Queue;
 
 namespace GoRogue.Pathing
 {
@@ -63,18 +64,23 @@ namespace GoRogue.Pathing
         {
             var adjacencyRule = (AdjacencyRule)_baseMap.DistanceMeasurement;
 
-            var openSet = new HashSet<Coord>();
+            // var openSet = new HashSet<Coord>();
+
+            var openSet = new SimplePriorityQueue<Coord, double>();
             foreach (var point in _baseMap.Walkable)
             {
                 var newPoint = _baseMap[point] * -Magnitude;
                 _goalMap[point] = newPoint;
-                openSet.Add(point);
+                //openSet.Add(point);
+                if (!openSet.EnqueueWithoutDuplicates(point, newPoint.Value))
+                    throw new Exception("Duplicate item enqueued.");
             }
             var edgeSet = new HashSet<Coord>();
             var closedSet = new HashSet<Coord>();
             // var walkable = new HashSet<Coord>(_baseMap.Walkable);
             while (openSet.Count > 0) //multiple runs are needed to deal with islands
             {
+                /*
                 var min = (double)Width * Height;
                 var minPoint = Coord.Get(-1, -1);
                 foreach (var point in openSet)
@@ -86,8 +92,11 @@ namespace GoRogue.Pathing
                         minPoint = point;
                     }
                 }
+                */
+                var minPoint = openSet.Dequeue();
                 closedSet.Add(minPoint);
-                openSet.Remove(minPoint);
+                // openSet.Remove(minPoint);
+
                 foreach (var openPoint in adjacencyRule.Neighbors(minPoint))
                 {
                     if ((!closedSet.Contains(openPoint)) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle) // walkable.Contains(openPoint))
@@ -107,6 +116,10 @@ namespace GoRogue.Pathing
                             if (newValue < neighborValue)
                             {
                                 _goalMap[openPoint] = newValue;
+                                if (openSet.Contains(openPoint))
+                                    openSet.UpdatePriority(openPoint, newValue);
+                                else
+                                    throw new Exception("Values are changing that aren't walkable.");
                                 edgeSet.Add(openPoint);
                             }
                         }
