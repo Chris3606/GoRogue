@@ -87,11 +87,15 @@ namespace GoRogue.Pathing
         /// </remarks>
         /// <param name="start">The starting point of the path.</param>
         /// <param name="end">The ending point of the path.</param>
+        /// <param name="assumeEndpointsWalkable">
+        /// Whether or not to assume the start and end points are walkable, regardless
+        /// of what the walkability map reports.  Defaults to true.
+        /// </param>
         /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
-        public Path ShortestPath(Coord start, Coord end)
+        public Path ShortestPath(Coord start, Coord end, bool assumeEndpointsWalkable = true)
         {
             // Don't waste initialization time if there is definately no path
-            if (!WalkabilityMap[start] || !WalkabilityMap[end])
+            if (!assumeEndpointsWalkable && (!WalkabilityMap[start] || !WalkabilityMap[end]))
                 return null; // There is no path
 
             // If the path is simply the start, don't bother with graph initialization and such
@@ -155,7 +159,7 @@ namespace GoRogue.Pathing
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width || neighborPos.Y >= WalkabilityMap.Height)
                         continue;
 
-                    if (!WalkabilityMap[neighborPos]) // Not part of walkable node "graph", ignore
+                    if (!checkWalkability(neighborPos, start, end, assumeEndpointsWalkable)) // Not part of walkable node "graph", ignore
                         continue;
 
                     int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
@@ -195,8 +199,21 @@ namespace GoRogue.Pathing
         /// <param name="startY">The y-coordinate of the starting point of the path.</param>
         /// <param name="endX">The x-coordinate of the ending point of the path.</param>
         /// <param name="endY">The y-coordinate of the ending point of the path.</param>
+        /// <param name="assumeEndpointsWalkable">
+        /// Whether or not to assume the start and end points are walkable, regardless
+        /// of what the walkability map reports.  Defaults to true.
+        /// </param>
         /// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
-        public Path ShortestPath(int startX, int startY, int endX, int endY) => ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY));
+        public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
+            => ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY), assumeEndpointsWalkable);
+
+        private bool checkWalkability(Coord pos, Coord start, Coord end, bool assumeEndpointsWalkable)
+        {
+            if (!assumeEndpointsWalkable)
+                return WalkabilityMap[pos];
+
+            return WalkabilityMap[pos] || pos == start || pos == end;
+        }
 
         // These neighbor functions are special in that they return (approximately) the closest
         // directions to the end goal first. This is intended to "prioritize" more direct-looking

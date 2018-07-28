@@ -173,9 +173,66 @@ namespace GoRogue_UnitTests
                     Assert.Fail($"Failed for {stoppingPos}, expected {origFleeMap[stoppingPos]}, actual {newFleeMap[stoppingPos]}");
                 }
             }
-            
+        }
 
-            
+        [TestMethod]
+        public void AStarAssumeWalkable()
+        {
+            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(walkabilityMap);
+
+            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = true;
+
+            var path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = true;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+        }
+
+        [TestMethod]
+        public void AStarNoAssumeWalkable()
+        {
+            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(walkabilityMap);
+
+            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = true;
+
+            var path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = true;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(true, path != null);
         }
 
         [TestMethod]
