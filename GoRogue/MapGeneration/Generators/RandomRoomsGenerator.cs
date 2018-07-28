@@ -14,6 +14,32 @@ namespace GoRogue.MapGeneration.Generators
     static public class RandomRoomsGenerator
     {
         /// <summary>
+        /// Generates the map using the default RNG. After this function has been completed, non-passable tiles will have a
+        /// value of false in the ISettableMapView given, and passable ones will have a value of true.
+        /// </summary>
+        /// <remarks>
+        /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
+        /// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
+        /// inexpensive and calling it multiples times costs little extra, and saves an internal allocation.
+        /// </remarks>
+        /// <param name="map">The map to set values to.</param>
+        /// <param name="maxRooms">The maximum number of rooms to attempt to place on the map.</param>
+        /// <param name="roomMinSize">The minimum size in width and height of each room.</param>
+        /// <param name="roomMaxSize">The maximum size in width and height of each room.</param>
+        /// <param name="attemptsPerRoom">
+        /// The maximum number of times the position of a room will be generated to try to position
+        /// it properly (eg. without overlapping with other rooms), before simply discarding the room.
+        /// </param>
+        /// <param name="connectUsingDefault">
+        /// Whether or not to ensure the rooms generated are connected. If this is true,
+        /// OrderedMapAreaConnector.Connect will be used to connect the areas in a random order,
+        /// using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which
+        /// will connect the center of room to each other.
+        /// </param>
+        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom,
+                                     bool connectUsingDefault = true) => Generate(map, null, maxRooms, roomMinSize, roomMaxSize, attemptsPerRoom, connectUsingDefault);
+
+        /// <summary>
         /// Generates the map. After this function has been completed, non-passable tiles will have a
         /// value of false in the ISettableMapView given, and passable ones will have a value of true.
         /// </summary>
@@ -40,7 +66,7 @@ namespace GoRogue.MapGeneration.Generators
         /// using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which
         /// will connect the center of room to each other.
         /// </param>
-        static public void Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, IGenerator rng = null,
+        static public void Generate(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom,
                                      bool connectUsingDefault = true)
         {
             if (maxRooms <= 0)
@@ -63,7 +89,7 @@ namespace GoRogue.MapGeneration.Generators
             ArrayMap<bool> tempMap = map as ArrayMap<bool>;
             bool wasArrayMap = tempMap != null;
 
-            if (!wasArrayMap) tempMap = new ArrayMap<bool>(map.Width, map.Height);
+            if (tempMap == null) tempMap = new ArrayMap<bool>(map.Width, map.Height);
 
             // To account for walls, dimensions specified were inner dimensions
             roomMinSize += 2;

@@ -29,7 +29,7 @@ namespace GoRogue_UnitTests
         {
             var random = new StandardGenerator();
             var map = new ArrayMap<bool>(30, 30);
-            Generators.RandomRoomsGenerator.Generate(map, 7, 4, 7, 5, random);
+            Generators.RandomRoomsGenerator.Generate(map, random, 7, 4, 7, 5);
 
             displayMap(map);
             // TODO: Some assert here

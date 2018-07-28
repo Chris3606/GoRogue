@@ -16,7 +16,7 @@ namespace GoRogue
     /// 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the
     /// cooresponding coordinate is outside of FOV entirely (not visible).
     /// </summary>
-    public class FOV : IMapView<double>
+    public class FOV : IReadOnlyFOV, IMapView<double>
     {
         private HashSet<Coord> currentFOV;
         private double[,] light;
@@ -89,6 +89,12 @@ namespace GoRogue
         {
             get { return light[x, y]; }
         }
+
+        /// <summary>
+        /// Returns a read-only representation of the fov.
+        /// </summary>
+        /// <returns>This fov object, exposed as an IReadOnlyFOV.</returns>
+        public IReadOnlyFOV AsReadOnly() => this;
 
         // Since the values aren't compile-time constants, we have to do it this way (with overloads,
         // vs. default values).

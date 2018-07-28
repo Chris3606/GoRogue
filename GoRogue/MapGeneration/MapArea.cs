@@ -8,7 +8,7 @@ namespace GoRogue.MapGeneration
     /// Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each
     /// unique position considered connected.
     /// </summary>
-    public class MapArea
+    public class MapArea : IReadOnlyMapArea
     {
         private readonly HashSet<Coord> positionsSet;
         private List<Coord> _positions;
@@ -60,7 +60,7 @@ namespace GoRogue.MapGeneration
         /// <param name="area1">The first MapArea.</param>
         /// <param name="area2">The second MapArea.</param>
         /// <returns>A MapArea with exactly those positions in area1 that are NOT in area2.</returns>
-        public static MapArea GetDifference(MapArea area1, MapArea area2)
+        public static MapArea GetDifference(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
         {
             var retVal = new MapArea();
 
@@ -81,7 +81,7 @@ namespace GoRogue.MapGeneration
         /// <param name="area1">First MapArea.</param>
         /// <param name="area2">Second MapArea.</param>
         /// <returns>A MapArea containing exactly those positions in both of the given MapAreas.</returns>
-        public static MapArea GetIntersection(MapArea area1, MapArea area2)
+        public static MapArea GetIntersection(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
         {
             var retVal = new MapArea();
 
@@ -104,7 +104,7 @@ namespace GoRogue.MapGeneration
         /// <param name="area1">First MapArea.</param>
         /// <param name="area2">Second MapArea.</param>
         /// <returns>A MapArea containing only those positions in one or both of the given MapAreas.</returns>
-        public static MapArea GetUnion(MapArea area1, MapArea area2)
+        public static MapArea GetUnion(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
         {
             var retVal = new MapArea();
 
@@ -216,7 +216,7 @@ namespace GoRogue.MapGeneration
         /// Adds all coordinates in the given map area to this one.
         /// </summary>
         /// <param name="area">Area containing positions to add.</param>
-        public void Add(MapArea area)
+        public void Add(IReadOnlyMapArea area)
         {
             foreach (var pos in area.Positions)
                 Add(pos);
@@ -250,7 +250,7 @@ namespace GoRogue.MapGeneration
         /// <returns>
         /// True if the given MapArea is completely contained within the current one, false otherwise.
         /// </returns>
-        public bool Contains(MapArea area)
+        public bool Contains(IReadOnlyMapArea area)
         {
             if (!Bounds.Contains(area.Bounds))
                 return false;
@@ -291,7 +291,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="area">The MapArea to check.</param>
         /// <returns>True if the given MapArea intersects the current one, false otherwise.</returns>
-        public bool Intersects(MapArea area)
+        public bool Intersects(IReadOnlyMapArea area)
         {
             if (!area.Bounds.Intersects(Bounds))
                 return false;
@@ -394,7 +394,7 @@ namespace GoRogue.MapGeneration
         /// Removes all positions in the given MapArea from this one.
         /// </summary>
         /// <param name="area">Area containing positions to remove.</param>
-        public void Remove(MapArea area) => Remove(area.Positions);
+        public void Remove(IReadOnlyMapArea area) => Remove(area.Positions);
 
         /// <summary>
         /// Removes all positions in the given Rectangle from this MapArea.

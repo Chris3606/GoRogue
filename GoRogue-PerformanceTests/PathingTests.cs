@@ -31,18 +31,11 @@ namespace GoRogue_PerformanceTests
             return s.Elapsed;
         }
 
-        public static TimeSpan TimeForMultiSourceGoalMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
+        public static TimeSpan TimeForGoalMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
         {
             Stopwatch s = new Stopwatch();
 
-            var mapGoals = new ArrayMap<GoalState>(map.Width, map.Height);
-            for (int x = 0; x < map.Width; x++)
-                for (int y = 0; y < map.Height; y++)
-                    mapGoals[x, y] = map[x, y] ? GoalState.Clear : GoalState.Obstacle;
-
-            foreach (var goal in goals)
-                mapGoals[goal] = GoalState.Goal;
-
+            var mapGoals = createGoalStateMap(map, goals); 
             var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
 
             mapBuilder.Update();
@@ -55,18 +48,14 @@ namespace GoRogue_PerformanceTests
             return s.Elapsed;
         }
 
-        public static TimeSpan TimeForSingleSourceGoalMap(IMapView<bool> map, Coord goal, int iterations)
+        public static TimeSpan TimeForFleeMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
         {
             Stopwatch s = new Stopwatch();
 
-            var mapGoals = new ArrayMap<GoalState>(map.Width, map.Height);
-            for (int x = 0; x < map.Width; x++)
-                for (int y = 0; y < map.Height; y++)
-                    mapGoals[x, y] = map[x, y] ? GoalState.Clear : GoalState.Obstacle;
-
-            mapGoals[goal] = GoalState.Goal;
-
+            var mapGoals = createGoalStateMap(map, goals);
             var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
+            var fleeMap = new FleeMap(mapBuilder);
+
             mapBuilder.Update();
 
             s.Start();
@@ -75,6 +64,37 @@ namespace GoRogue_PerformanceTests
             s.Stop();
 
             return s.Elapsed;
+        }
+
+        public static TimeSpan TimeForOriginalFleeMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
+        {
+            Stopwatch s = new Stopwatch();
+
+            var mapGoals = createGoalStateMap(map, goals);
+            var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
+            var fleeMap = new OriginalFleeMap(mapBuilder);
+
+            mapBuilder.Update();
+
+            s.Start();
+            for (int i = 0; i < iterations; i++)
+                mapBuilder.Update();
+            s.Stop();
+
+            return s.Elapsed;
+        }
+
+        private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
+        {
+            var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
+            for (int x = 0; x < walkabilityMap.Width; x++)
+                for (int y = 0; y < walkabilityMap.Height; y++)
+                    mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
+
+            foreach (var goal in goals)
+                mapGoals[goal] = GoalState.Goal;
+
+            return mapGoals;
         }
     }
 }

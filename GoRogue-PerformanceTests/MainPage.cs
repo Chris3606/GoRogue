@@ -105,11 +105,15 @@ namespace GoRogue_PerformanceTests
             CellularAutomataGenerator.Generate(map);
             Coord goal = map.RandomPosition(true);
 
-            var timeGoalMap = PathingTests.TimeForSingleSourceGoalMap(map, goal, Runner.ITERATIONS_FOR_TIMING);
+            var timeGoalMap = PathingTests.TimeForGoalMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);
+            var timeFleeMap = PathingTests.TimeForFleeMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);
+            var timeOrigFleeMap = PathingTests.TimeForOriginalFleeMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);
 
             Console.WriteLine();
             Console.WriteLine($"Time to calculate single-source goal map on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times:");
             Console.WriteLine($"\tGoal-Map    : {timeGoalMap}");
+            Console.WriteLine($"\tFlee-Map    : {timeFleeMap}");
+            Console.WriteLine($"\tOrigFlee-Map: {timeOrigFleeMap}");
 
             /* Multi-Goal GoalMap */
             var goals = new List<Coord>();
@@ -117,11 +121,15 @@ namespace GoRogue_PerformanceTests
             for (int i = 0; i < Runner.NUM_GOALS; i++)
                 goals.Add(map.RandomPosition(true));
 
-            var timeMGoalMap = PathingTests.TimeForMultiSourceGoalMap(map, goals, Runner.ITERATIONS_FOR_TIMING);
+            var timeMGoalMap = PathingTests.TimeForGoalMap(map, goals, Runner.ITERATIONS_FOR_TIMING);
+            var timeMFleeMap = PathingTests.TimeForFleeMap(map, goals, Runner.ITERATIONS_FOR_TIMING);
+            var timeMOrigFleeMap = PathingTests.TimeForOriginalFleeMap(map, goals, Runner.ITERATIONS_FOR_TIMING);
 
             Console.WriteLine();
             Console.WriteLine($"Time to calculate multi-source goal map on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times:");
             Console.WriteLine($"\tGoal-Map    : {timeMGoalMap}");
+            Console.WriteLine($"\tFlee-Map    : {timeMFleeMap}");
+            Console.WriteLine($"\tOrigFlee-Map: {timeMOrigFleeMap}");
         }
 
         private static void Quit()

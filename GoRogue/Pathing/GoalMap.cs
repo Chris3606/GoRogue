@@ -23,13 +23,23 @@ namespace GoRogue.Pathing
     {
         private HashSet<Coord> _closedSet = new HashSet<Coord>();
 
-        private Distance _distanceMeasurement;
-
         private HashSet<Coord> _edgeSet = new HashSet<Coord>();
 
         private ArrayMap<double?> _goalMap;
 
         private HashSet<Coord> _walkable = new HashSet<Coord>();
+
+        /// <summary>
+        /// Triggers when the GoalMap is updated.
+        /// </summary>
+        public event Action Updated = () => { };
+
+        internal IEnumerable<Coord> Walkable { get { return _walkable; } }
+
+        /// <summary>
+        /// The distance measurement the GoalMap is using to calculate distance.
+        /// </summary>
+        public Distance DistanceMeasurement { get; }
 
         /// <summary>
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
@@ -41,7 +51,7 @@ namespace GoRogue.Pathing
         public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
-            _distanceMeasurement = distanceMeasurement ?? throw new ArgumentNullException(nameof(baseMap));
+            DistanceMeasurement = distanceMeasurement ?? throw new ArgumentNullException(nameof(baseMap));
 
             _goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
             Update();
@@ -81,7 +91,7 @@ namespace GoRogue.Pathing
         /// Returns the goal-map values represented as a 2D grid-style string.
         /// </summary>
         /// <returns>A string representing the goal map values.</returns>
-		public override string ToString() =>
+        public override string ToString() =>
             _goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
 
         /// <summary>
@@ -143,6 +153,8 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
         {
+            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
+
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _edgeSet.Clear();
             _closedSet.Clear();
@@ -164,12 +176,12 @@ namespace GoRogue.Pathing
                 foreach (var coord in _edgeSet.ToArray())
                 {
                     var current = _goalMap[coord].Value;
-                    foreach (var openPoint in ((AdjacencyRule)_distanceMeasurement).Neighbors(coord))
+                    foreach (var openPoint in adjacencyRule.Neighbors(coord))
                     {
                         if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
                             continue;
                         var neighborValue = _goalMap[openPoint].Value;
-                        var newValue = current + _distanceMeasurement.Calculate(coord, openPoint);
+                        var newValue = current + DistanceMeasurement.Calculate(coord, openPoint);
                         if (newValue < neighborValue)
                         {
                             _goalMap[openPoint] = newValue;
@@ -180,6 +192,7 @@ namespace GoRogue.Pathing
                     _closedSet.Add(coord);
                 }
             }
+            Updated();
             return _closedSet.Count > 0;
         }
     }
