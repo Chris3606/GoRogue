@@ -130,9 +130,9 @@ namespace GoRogue_UnitTests
         [TestMethod]
         public void FleeMapCorrectness()
         {
-            const int WIDTH = 30;
-            const int HEIGHT = 30;
-            const int NUM_GOALS = 10;
+            const int WIDTH = 100;
+            const int HEIGHT = 100;
+            const int NUM_GOALS = 30;
             const int ITERATIONS = 100;
 
             for (int i = 0; i < ITERATIONS; i++)

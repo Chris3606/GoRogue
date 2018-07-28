@@ -6,10 +6,19 @@ using Priority_Queue;
 
 namespace GoRogue.Pathing
 {
+    class PositionNode : GenericPriorityQueueNode<double>
+    {
+        public Coord Position { get; }
+
+        public PositionNode(Coord position) { Position = position; }
+    }
+
     public class FleeMap : IMapView<double?>, IDisposable
     {
         private readonly GoalMap _baseMap;
         private ArrayMap<double?> _goalMap;
+        private ArrayMap<PositionNode> _nodes;
+
         public double Magnitude { get; set; }
         public int Height => _goalMap.Height;
         public int Width => _goalMap.Width;
@@ -20,6 +29,10 @@ namespace GoRogue.Pathing
             _baseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             this.Magnitude = magnitude;
             _goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
+            _nodes = new ArrayMap<PositionNode>(baseMap.Width, baseMap.Height);
+            foreach (var pos in _nodes.Positions())
+                _nodes[pos] = new PositionNode(pos);
+
             _baseMap.Updated += this.Update;
         }
         public FleeMap(GoalMap baseMap) : this(baseMap, 1.2)
@@ -66,14 +79,18 @@ namespace GoRogue.Pathing
 
             // var openSet = new HashSet<Coord>();
 
-            var openSet = new SimplePriorityQueue<Coord, double>();
+            var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
             foreach (var point in _baseMap.Walkable)
             {
                 var newPoint = _baseMap[point] * -Magnitude;
                 _goalMap[point] = newPoint;
                 //openSet.Add(point);
-                if (!openSet.EnqueueWithoutDuplicates(point, newPoint.Value))
-                    throw new Exception("Duplicate item enqueued.");
+                //if (!openSet.EnqueueWithoutDuplicates(point, newPoint.Value))
+                //    throw new Exception("Duplicate item enqueued.");
+                if (!openSet.Contains(_nodes[point]))
+                    openSet.Enqueue(_nodes[point], newPoint.Value);
+                // else
+                //    throw new Exception("Duplicate item attempted to be enqueued.");
             }
             var edgeSet = new HashSet<Coord>();
             var closedSet = new HashSet<Coord>();
@@ -93,11 +110,11 @@ namespace GoRogue.Pathing
                     }
                 }
                 */
-                var minPoint = openSet.Dequeue();
-                closedSet.Add(minPoint);
+                var minNode = openSet.Dequeue();
+                closedSet.Add(minNode.Position);
                 // openSet.Remove(minPoint);
 
-                foreach (var openPoint in adjacencyRule.Neighbors(minPoint))
+                foreach (var openPoint in adjacencyRule.Neighbors(minNode.Position))
                 {
                     if ((!closedSet.Contains(openPoint)) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle) // walkable.Contains(openPoint))
                         edgeSet.Add(openPoint);
@@ -116,16 +133,13 @@ namespace GoRogue.Pathing
                             if (newValue < neighborValue)
                             {
                                 _goalMap[openPoint] = newValue;
-                                if (openSet.Contains(openPoint))
-                                    openSet.UpdatePriority(openPoint, newValue);
-                                else
-                                    throw new Exception("Values are changing that aren't walkable.");
+                                openSet.UpdatePriority(_nodes[openPoint], newValue);
                                 edgeSet.Add(openPoint);
                             }
                         }
                         edgeSet.Remove(coord);
                         closedSet.Add(coord);
-                        openSet.Remove(coord);
+                        openSet.Remove(_nodes[coord]);
                     }
                 }
                 // openSet.RemoveWhere(c => closedSet.Contains(c));
