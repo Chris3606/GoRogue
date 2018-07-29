@@ -14,8 +14,9 @@ namespace GoRogue.MapGeneration.Generators
     static public class RandomRoomsGenerator
     {
         /// <summary>
-        /// Generates the map using the default RNG. After this function has been completed, non-passable tiles will have a
-        /// value of false in the ISettableMapView given, and passable ones will have a value of true.
+        /// Generates the map using the default RNG. After this function has been completed,
+        /// non-passable tiles will have a value of false in the ISettableMapView given, and passable
+        /// ones will have a value of true.
         /// </summary>
         /// <remarks>
         /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be

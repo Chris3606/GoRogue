@@ -35,6 +35,12 @@ namespace GoRogue
         public int Count { get; private set; }
 
         /// <summary>
+        /// Returns a read-only representation of the disjoint set.
+        /// </summary>
+        /// <returns>A read-only representation of the disjoint set.</returns>
+        public IReadOnlyDisjointSet AsReadOnly() => this;
+
+        /// <summary>
         /// Returns the parent of the set containing obj, performing path compression as search is completed.
         /// </summary>
         /// <param name="obj">Object to search for.</param>
@@ -111,12 +117,6 @@ namespace GoRogue
 
             return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
         }
-
-        /// <summary>
-        /// Returns a read-only representation of the disjoint set.
-        /// </summary>
-        /// <returns>A read-only representation of the disjoint set.</returns>
-        public IReadOnlyDisjointSet AsReadOnly() => this;
 
         // Used to ensure ToString doesn't affect the performance of future operations
         private int findNoCompression(int obj)

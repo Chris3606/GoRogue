@@ -79,9 +79,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a6830907ae30eb5bc2ec179b7041a533d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a6830907ae30eb5bc2ec179b7041a533d">Connect</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_adjacency_rule.html">AdjacencyRule</a> adjacencyRule, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null, IGenerator rng=null, bool randomizeOrder=true)</td></tr>
 <tr class="memdesc:a6830907ae30eb5bc2ec179b7041a533d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by determining all unique areas on the map given using a <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that list of areas found. It then simply connects areas adjacent to each other in that list, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#a6830907ae30eb5bc2ec179b7041a533d">More...</a><br /></td></tr>
 <tr class="separator:a6830907ae30eb5bc2ec179b7041a533d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31c4408c0a6216d588701ce3c800dcc7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#a31c4408c0a6216d588701ce3c800dcc7">Connect</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IReadOnlyList&lt; <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> &gt; mapAreas, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null)</td></tr>
-<tr class="memdesc:a31c4408c0a6216d588701ce3c800dcc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by simply connecting areas adjacent to each other in the passed in list of areas, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#a31c4408c0a6216d588701ce3c800dcc7">More...</a><br /></td></tr>
-<tr class="separator:a31c4408c0a6216d588701ce3c800dcc7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af93f612ed25b7d43e91035b6a6560655"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_ordered_map_area_connector.html#af93f612ed25b7d43e91035b6a6560655">Connect</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IReadOnlyList&lt; <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> &gt; mapAreas, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null)</td></tr>
+<tr class="memdesc:af93f612ed25b7d43e91035b6a6560655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the areas by simply connecting areas adjacent to each other in the passed in list of areas, using the methods specified to determine points within two areas to connect, and how to create the tunnel between the two points.  <a href="#af93f612ed25b7d43e91035b6a6560655">More...</a><br /></td></tr>
+<tr class="separator:af93f612ed25b7d43e91035b6a6560655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Same as <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html" title="Implements a connection algorithm that connects all unique map areas in the given map by connecting e...">ClosestMapAreaConnector</a>, but connects random rooms instead of determining the closest one, or connects rooms in the order specified if you give it a list of MapAreas. </p>
@@ -159,8 +159,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a31c4408c0a6216d588701ce3c800dcc7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31c4408c0a6216d588701ce3c800dcc7">&sect;&nbsp;</a></span>Connect() <span class="overload">[2/2]</span></h2>
+<a id="af93f612ed25b7d43e91035b6a6560655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af93f612ed25b7d43e91035b6a6560655">&sect;&nbsp;</a></span>Connect() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +177,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">IReadOnlyList&lt; <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> &gt;&#160;</td>
+          <td class="paramtype">IReadOnlyList&lt; <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> &gt;&#160;</td>
           <td class="paramname"><em>mapAreas</em>, </td>
         </tr>
         <tr>

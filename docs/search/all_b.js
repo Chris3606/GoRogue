@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['magnitude',['Magnitude',['../class_go_rogue_1_1_pathing_1_1_flee_map.html#af7cc0c9053122dd667f799865340d382',1,'GoRogue::Pathing::FleeMap']]],
   ['makeunion',['MakeUnion',['../class_go_rogue_1_1_disjoint_set.html#af0289bbcf9b0acad251172b13340db9b',1,'GoRogue::DisjointSet']]],
   ['manhattan',['MANHATTAN',['../class_go_rogue_1_1_distance.html#ad7eca4d749ac63ddb46b632f9e54b9d0',1,'GoRogue.Distance.MANHATTAN()'],['../class_go_rogue_1_1_distance.html#aec5155b711e7b1950fc00a665c05aabca20548c3a17d5b27db0c2995b6646a792',1,'GoRogue.Distance.MANHATTAN()']]],
   ['map',['Map',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#ac96878f5a94467220a4329a6227a52a9',1,'GoRogue::MapGeneration::MapAreaFinder']]],
@@ -33,8 +34,8 @@ var searchData=
   ['movey',['MoveY',['../struct_go_rogue_1_1_rectangle.html#a1cf601b59fe04619c5239fa47ee0eb61',1,'GoRogue::Rectangle']]],
   ['multiplicity',['Multiplicity',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#a65e608f4bf633683396e3afea36c00ba',1,'GoRogue::DiceNotation::Terms::DiceTerm']]],
   ['multiply',['Multiply',['../class_go_rogue_1_1_utility.html#a1f4d1f601b7e68e63b536b7b9a004897',1,'GoRogue::Utility']]],
-  ['multiplyterm',['MultiplyTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_multiply_term.html#a765405685c428f4abd69e2cacf13f0f2',1,'GoRogue::DiceNotation::Terms::MultiplyTerm']]],
   ['multiplyterm',['MultiplyTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_multiply_term.html',1,'GoRogue::DiceNotation::Terms']]],
-  ['multispatialmap',['MultiSpatialMap',['../class_go_rogue_1_1_multi_spatial_map.html#aec61c2c2f269a8c406d12551a1bdcfc5',1,'GoRogue::MultiSpatialMap']]],
-  ['multispatialmap',['MultiSpatialMap',['../class_go_rogue_1_1_multi_spatial_map.html',1,'GoRogue']]]
+  ['multiplyterm',['MultiplyTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_multiply_term.html#a765405685c428f4abd69e2cacf13f0f2',1,'GoRogue::DiceNotation::Terms::MultiplyTerm']]],
+  ['multispatialmap',['MultiSpatialMap',['../class_go_rogue_1_1_multi_spatial_map.html',1,'GoRogue']]],
+  ['multispatialmap',['MultiSpatialMap',['../class_go_rogue_1_1_multi_spatial_map.html#aec61c2c2f269a8c406d12551a1bdcfc5',1,'GoRogue::MultiSpatialMap']]]
 ];

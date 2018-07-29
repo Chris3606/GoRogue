@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
+using System.Collections.Generic;
 
 namespace GoRogue
 {

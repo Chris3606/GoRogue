@@ -86,15 +86,15 @@ Inheritance diagram for GoRogue.MapGeneration.Connectors.IAreaConnectionPointSel
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9e96c560ed670a47443abad779b232ac"><td class="memItemLeft" align="right" valign="top">Tuple&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html#a9e96c560ed670a47443abad779b232ac">SelectConnectionPoints</a> (<a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> area1, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> area2)</td></tr>
-<tr class="memdesc:a9e96c560ed670a47443abad779b232ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the algorithm. Returns a tuple of two Coords &ndash; the first <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is the position in area1 to use, the second <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is the position in area2 to use.  <a href="#a9e96c560ed670a47443abad779b232ac">More...</a><br /></td></tr>
-<tr class="separator:a9e96c560ed670a47443abad779b232ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36f83f0e08136ae044dcd93ba2c69174"><td class="memItemLeft" align="right" valign="top">Tuple&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html#a36f83f0e08136ae044dcd93ba2c69174">SelectConnectionPoints</a> (<a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> area1, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> area2)</td></tr>
+<tr class="memdesc:a36f83f0e08136ae044dcd93ba2c69174"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implements the algorithm. Returns a tuple of two Coords &ndash; the first <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is the position in area1 to use, the second <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is the position in area2 to use.  <a href="#a36f83f0e08136ae044dcd93ba2c69174">More...</a><br /></td></tr>
+<tr class="separator:a36f83f0e08136ae044dcd93ba2c69174"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for implementing an algorithm for selecting the Coords to connect in order to connect two given map areas. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9e96c560ed670a47443abad779b232ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e96c560ed670a47443abad779b232ac">&sect;&nbsp;</a></span>SelectConnectionPoints()</h2>
+<a id="a36f83f0e08136ae044dcd93ba2c69174"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36f83f0e08136ae044dcd93ba2c69174">&sect;&nbsp;</a></span>SelectConnectionPoints()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -102,13 +102,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Tuple&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.SelectConnectionPoints </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a>&#160;</td>
           <td class="paramname"><em>area1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a>&#160;</td>
           <td class="paramname"><em>area2</em>&#160;</td>
         </tr>
         <tr>
@@ -129,7 +129,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A tuple containing the coordinates from each <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a> to connect &ndash; the first item in the tuple is the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> in area1, the second is the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> in area2. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html#a28d0dc03c66397c47bb6a255451e35c3">GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector</a>, and <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_center_bounds_connection_point_selector.html#a0a7ac7f538207235c403c674a2a78c6e">GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html#a0a5e8af368b5a6bfd1bb8786676048cd">GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector</a>, and <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_center_bounds_connection_point_selector.html#a6608f2deae984f0539006b6b8d986a74">GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector</a>.</p>
 
 </div>
 </div>

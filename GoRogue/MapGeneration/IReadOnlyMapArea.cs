@@ -78,6 +78,5 @@ namespace GoRogue.MapGeneration
         /// A random position from within the MapArea for which the selector given returns true.
         /// </returns>
         Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null);
-
     }
 }

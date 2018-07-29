@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GoRogue;
+﻿using GoRogue;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
 {
@@ -36,13 +36,12 @@ namespace GoRogue_UnitTests
             Assert.AreEqual(true, myRect.Contains(myRect2));
             Assert.AreEqual(true, myRect2.Contains(myRect));
 
-
             myRect2 = new Rectangle(10, 10, 5, 5); // Contained within and smaller than myRect
             Assert.AreEqual(true, myRect.Contains(myRect2));
             Assert.AreEqual(false, myRect2.Contains(myRect));
 
-            // Although myRect3 largely overlaps with myRect, myRect does NOT
-            // completely contain myRect3, nor does myRect3 completely contain myRect.
+            // Although myRect3 largely overlaps with myRect, myRect does NOT completely contain
+            // myRect3, nor does myRect3 completely contain myRect.
             myRect2 = new Rectangle(-5, -5, 50, 50);
             Assert.AreEqual(false, myRect.Contains(myRect2));
             Assert.AreEqual(false, myRect2.Contains(myRect));

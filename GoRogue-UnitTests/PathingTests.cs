@@ -21,6 +21,36 @@ namespace GoRogue_UnitTests
         static private readonly Coord START = Coord.Get(1, 2);
 
         [TestMethod]
+        public void AStarAssumeWalkable()
+        {
+            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(walkabilityMap);
+
+            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = true;
+
+            var path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = true;
+            path = pather.ShortestPath(START, END, true);
+            Assert.AreEqual(true, path != null);
+        }
+
+        [TestMethod]
         public void AStarMatchesCorrectChebyshev() => aStarMatches(Distance.CHEBYSHEV);
 
         [TestMethod]
@@ -28,6 +58,36 @@ namespace GoRogue_UnitTests
 
         [TestMethod]
         public void AStarMatchesCorrectManhattan() => aStarMatches(Distance.MANHATTAN);
+
+        [TestMethod]
+        public void AStarNoAssumeWalkable()
+        {
+            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+            RectangleMapGenerator.Generate(walkabilityMap);
+
+            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = true;
+
+            var path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = false;
+            walkabilityMap[END] = false;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(false, path != null);
+
+            walkabilityMap[START] = true;
+            walkabilityMap[END] = true;
+            path = pather.ShortestPath(START, END, false);
+            Assert.AreEqual(true, path != null);
+        }
 
         public Coord getWalkableCoord(IMapView<bool> mapView)
         {
@@ -128,66 +188,6 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
-        public void AStarAssumeWalkable()
-        {
-            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-            RectangleMapGenerator.Generate(walkabilityMap);
-
-            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
-
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = true;
-
-            var path = pather.ShortestPath(START, END, true);
-            Assert.AreEqual(true, path != null);
-
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, true);
-            Assert.AreEqual(true, path != null);
-
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, true);
-            Assert.AreEqual(true, path != null);
-
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = true;
-            path = pather.ShortestPath(START, END, true);
-            Assert.AreEqual(true, path != null);
-        }
-
-        [TestMethod]
-        public void AStarNoAssumeWalkable()
-        {
-            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-            RectangleMapGenerator.Generate(walkabilityMap);
-
-            var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
-
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = true;
-
-            var path = pather.ShortestPath(START, END, false);
-            Assert.AreEqual(false, path != null);
-
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, false);
-            Assert.AreEqual(false, path != null);
-
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, false);
-            Assert.AreEqual(false, path != null);
-
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = true;
-            path = pather.ShortestPath(START, END, false);
-            Assert.AreEqual(true, path != null);
-        }
-
-        [TestMethod]
         public void PathInitReversing()
         {
             Coord start = Coord.Get(1, 1);
@@ -243,6 +243,19 @@ namespace GoRogue_UnitTests
         {
             foreach (var pos in path.StepsWithStart)
                 Assert.AreEqual(true, map[pos]);
+        }
+
+        private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
+        {
+            var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
+            for (int x = 0; x < walkabilityMap.Width; x++)
+                for (int y = 0; y < walkabilityMap.Height; y++)
+                    mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
+
+            foreach (var goal in goals)
+                mapGoals[goal] = GoalState.Goal;
+
+            return mapGoals;
         }
 
         private static CA.Heuristic distanceHeuristic(Distance distanceCalc)
@@ -386,19 +399,6 @@ namespace GoRogue_UnitTests
             for (int i = 0; i < expected.Count; i++)
                 Console.Write(actual.GetStepWithStart(i) + ",");
             Console.WriteLine();
-        }
-
-        private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
-        {
-            var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
-            for (int x = 0; x < walkabilityMap.Width; x++)
-                for (int y = 0; y < walkabilityMap.Height; y++)
-                    mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
-
-            foreach (var goal in goals)
-                mapGoals[goal] = GoalState.Goal;
-
-            return mapGoals;
         }
     }
 

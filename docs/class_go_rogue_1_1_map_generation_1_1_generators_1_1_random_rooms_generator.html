@@ -76,15 +76,18 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a7f1deda1f101bbaee5fa50a345712ed1"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_random_rooms_generator.html#a7f1deda1f101bbaee5fa50a345712ed1">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, IGenerator rng=null, bool connectUsingDefault=true)</td></tr>
-<tr class="memdesc:a7f1deda1f101bbaee5fa50a345712ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map. After this function has been completed, non-passable tiles will have a value of false in the ISettableMapView given, and passable ones will have a value of true.  <a href="#a7f1deda1f101bbaee5fa50a345712ed1">More...</a><br /></td></tr>
-<tr class="separator:a7f1deda1f101bbaee5fa50a345712ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914987ece9ee8ec870271753b5c6762b"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_random_rooms_generator.html#a914987ece9ee8ec870271753b5c6762b">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, bool connectUsingDefault=true)</td></tr>
+<tr class="memdesc:a914987ece9ee8ec870271753b5c6762b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map using the default RNG. After this function has been completed, non-passable tiles will have a value of false in the ISettableMapView given, and passable ones will have a value of true.  <a href="#a914987ece9ee8ec870271753b5c6762b">More...</a><br /></td></tr>
+<tr class="separator:a914987ece9ee8ec870271753b5c6762b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1b625d21191823303609394d9ad2273"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_random_rooms_generator.html#ae1b625d21191823303609394d9ad2273">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom, bool connectUsingDefault=true)</td></tr>
+<tr class="memdesc:ae1b625d21191823303609394d9ad2273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the map. After this function has been completed, non-passable tiles will have a value of false in the ISettableMapView given, and passable ones will have a value of true.  <a href="#ae1b625d21191823303609394d9ad2273">More...</a><br /></td></tr>
+<tr class="separator:ae1b625d21191823303609394d9ad2273"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Generates a map by attempting to randomly place the specified number of rooms, ranging in size between the specified min size and max size, trying the specified number of times to position a room without overlap before discarding the room entirely. The given map will have a value of false set to all non-passable tiles, and true set to all passable ones. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a7f1deda1f101bbaee5fa50a345712ed1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f1deda1f101bbaee5fa50a345712ed1">&sect;&nbsp;</a></span>Generate()</h2>
+<a id="a914987ece9ee8ec870271753b5c6762b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a914987ece9ee8ec870271753b5c6762b">&sect;&nbsp;</a></span>Generate() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -125,8 +128,82 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>connectUsingDefault</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates the map using the default RNG. After this function has been completed, non-passable tiles will have a value of false in the ISettableMapView given, and passable ones will have a value of true. </p>
+<p>It is guaranteed that the "set" function of the ISettableMapView passed in will only be called once per tile, unless the type is ArrayMap of bool, in which case the operation is inexpensive and calling it multiples times costs little extra, and saves an internal allocation. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>The map to set values to.</td></tr>
+    <tr><td class="paramname">maxRooms</td><td>The maximum number of rooms to attempt to place on the map.</td></tr>
+    <tr><td class="paramname">roomMinSize</td><td>The minimum size in width and height of each room.</td></tr>
+    <tr><td class="paramname">roomMaxSize</td><td>The maximum size in width and height of each room.</td></tr>
+    <tr><td class="paramname">attemptsPerRoom</td><td>The maximum number of times the position of a room will be generated to try to position it properly (eg. without overlapping with other rooms), before simply discarding the room. </td></tr>
+    <tr><td class="paramname">connectUsingDefault</td><td>Whether or not to ensure the rooms generated are connected. If this is true, OrderedMapAreaConnector.Connect will be used to connect the areas in a random order, using the RNG given to this function, and a CenterBoundsConnectionPointSelector, which will connect the center of room to each other. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae1b625d21191823303609394d9ad2273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1b625d21191823303609394d9ad2273">&sect;&nbsp;</a></span>Generate() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GoRogue.MapGeneration.Generators.RandomRoomsGenerator.Generate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">IGenerator&#160;</td>
-          <td class="paramname"><em>rng</em> = <code>null</code>, </td>
+          <td class="paramname"><em>rng</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxRooms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>roomMinSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>roomMaxSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>attemptsPerRoom</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

@@ -30,18 +30,6 @@ namespace GoRogue.Pathing
         private HashSet<Coord> _walkable = new HashSet<Coord>();
 
         /// <summary>
-        /// Triggers when the GoalMap is updated.
-        /// </summary>
-        public event Action Updated = () => { };
-
-        internal IEnumerable<Coord> Walkable { get { return _walkable; } }
-
-        /// <summary>
-        /// The distance measurement the GoalMap is using to calculate distance.
-        /// </summary>
-        public Distance DistanceMeasurement { get; }
-
-        /// <summary>
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
         /// </summary>
         /// <param name="baseMap">The underlying map as GoalStates.</param>
@@ -58,9 +46,19 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
+        /// Triggers when the GoalMap is updated.
+        /// </summary>
+        public event Action Updated = () => { };
+
+        /// <summary>
         /// The underlying map.
         /// </summary>
         public IMapView<GoalState> BaseMap { get; private set; }
+
+        /// <summary>
+        /// The distance measurement the GoalMap is using to calculate distance.
+        /// </summary>
+        public Distance DistanceMeasurement { get; }
 
         /// <summary>
         /// Height of the goal map.
@@ -71,6 +69,8 @@ namespace GoRogue.Pathing
         /// Width of the goal map.
         /// </summary>
         public int Width { get => BaseMap.Width; }
+
+        internal IEnumerable<Coord> Walkable { get { return _walkable; } }
 
         /// <summary>
         /// Returns the goal-map value for the given position.

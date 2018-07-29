@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
+using System.Collections.Generic;
 
 namespace GoRogue.SenseMapping
 {
@@ -13,6 +13,7 @@ namespace GoRogue.SenseMapping
         /// value other than 0.0.
         /// </summary>
         IEnumerable<Coord> CurrentSenseMap { get; }
+
         /// <summary>
         /// IEnumerable of positions that DO have a non-zero value in the sense map as of the most
         /// current Calculate call, but DID NOT have a non-zero value after the previous time
@@ -26,6 +27,7 @@ namespace GoRogue.SenseMapping
         /// Calculate was called.
         /// </summary>
         IEnumerable<Coord> NewlyOutOfSenseMap { get; }
+
         /// <summary>
         /// Read-only list of all sources currently taken into account. Some may have their enabled
         /// flag set to false, so all of these may or may not be counted when Calculate is called.

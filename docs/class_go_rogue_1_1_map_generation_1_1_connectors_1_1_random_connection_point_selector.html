@@ -88,9 +88,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae3d67a6e07e9126a85371d9542f83dea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html#ae3d67a6e07e9126a85371d9542f83dea">RandomConnectionPointSelector</a> (IGenerator rng=null)</td></tr>
 <tr class="memdesc:ae3d67a6e07e9126a85371d9542f83dea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Specifies the RNG to use, or null if the default RNG should be used.  <a href="#ae3d67a6e07e9126a85371d9542f83dea">More...</a><br /></td></tr>
 <tr class="separator:ae3d67a6e07e9126a85371d9542f83dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28d0dc03c66397c47bb6a255451e35c3"><td class="memItemLeft" align="right" valign="top">Tuple&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html#a28d0dc03c66397c47bb6a255451e35c3">SelectConnectionPoints</a> (<a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> area1, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> area2)</td></tr>
-<tr class="memdesc:a28d0dc03c66397c47bb6a255451e35c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects and returns a random point from each <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>'s positions list.  <a href="#a28d0dc03c66397c47bb6a255451e35c3">More...</a><br /></td></tr>
-<tr class="separator:a28d0dc03c66397c47bb6a255451e35c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a5e8af368b5a6bfd1bb8786676048cd"><td class="memItemLeft" align="right" valign="top">Tuple&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html#a0a5e8af368b5a6bfd1bb8786676048cd">SelectConnectionPoints</a> (<a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> area1, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a> area2)</td></tr>
+<tr class="memdesc:a0a5e8af368b5a6bfd1bb8786676048cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Selects and returns a random point from each map area's positions list.  <a href="#a0a5e8af368b5a6bfd1bb8786676048cd">More...</a><br /></td></tr>
+<tr class="separator:a0a5e8af368b5a6bfd1bb8786676048cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a the selection algorithm that simply selects random points from the given <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>'s positions lists, using the RNG specified, or the default rng if null is given. </p>
@@ -122,8 +122,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a28d0dc03c66397c47bb6a255451e35c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28d0dc03c66397c47bb6a255451e35c3">&sect;&nbsp;</a></span>SelectConnectionPoints()</h2>
+<a id="a0a5e8af368b5a6bfd1bb8786676048cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a5e8af368b5a6bfd1bb8786676048cd">&sect;&nbsp;</a></span>SelectConnectionPoints()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -131,13 +131,13 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Tuple&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.SelectConnectionPoints </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a>&#160;</td>
           <td class="paramname"><em>area1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html">IReadOnlyMapArea</a>&#160;</td>
           <td class="paramname"><em>area2</em>&#160;</td>
         </tr>
         <tr>
@@ -148,17 +148,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Selects and returns a random point from each <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>'s positions list. </p>
+<p>Selects and returns a random point from each map area's positions list. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">area1</td><td>First <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a> to connect.</td></tr>
-    <tr><td class="paramname">area2</td><td>Second <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a> to connect</td></tr>
+    <tr><td class="paramname">area1</td><td>First map area to connect.</td></tr>
+    <tr><td class="paramname">area2</td><td>Second area to connect</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A tuple containing the selected Coords.</dd></dl>
 
-<p>Implements <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html#a9e96c560ed670a47443abad779b232ac">GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector</a>.</p>
+<p>Implements <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html#a36f83f0e08136ae044dcd93ba2c69174">GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector</a>.</p>
 
 </div>
 </div>

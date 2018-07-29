@@ -1,63 +1,30 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using Priority_Queue;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.MapViews;
-using Priority_Queue;
 
 namespace GoRogue.Pathing
 {
-    class PositionNode : GenericPriorityQueueNode<double>
-    {
-        public Coord Position { get; }
-
-        public PositionNode(Coord position) { Position = position; }
-    }
-
     /// <summary>
     /// Implements the concept of a "safety map", also known as "flee map", as described in the
     /// roguebasin article http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps.
     /// </summary>
     /// <remarks>
-    /// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically recalculated
-    /// when the underlying goal map is recalculated.  Implements IDisposable, so ensure that it is disposed of
-    /// properly after use.
+    /// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically
+    /// recalculated when the underlying goal map is recalculated. Implements IDisposable, so ensure
+    /// that it is disposed of properly after use.
     /// </remarks>
     public class FleeMap : IMapView<double?>, IDisposable
     {
         private readonly GoalMap _baseMap;
         private ArrayMap<double?> _goalMap;
+
         // Nodes for the priority queue used in Update.
         private ArrayMap<PositionNode> _nodes;
 
         /// <summary>
-        /// The degree to which entities following this flee-map will prefer global safety to local safety.
-        /// Higher values will make entities try to move past an approaching "threat" from farther away.
-        /// </summary>
-        public double Magnitude { get; set; }
-        /// <summary>
-        /// Height of the flee map.
-        /// </summary>
-        public int Height => _goalMap.Height;
-        /// <summary>
-        /// Width of the flee map.
-        /// </summary>
-        public int Width => _goalMap.Width;
-        /// <summary>
-        /// Returns the flee-map value for the given position.
-        /// </summary>
-        /// <param name="pos">The position to return the value for.</param>
-        /// <returns>The flee-map value for the given location.</returns>
-        public double? this[Coord pos] => _goalMap[pos];
-        /// <summary>
-        /// Returns the goal-map value for the given position.
-        /// </summary>
-        /// <param name="x">The x-value of the position to return the value for.</param>
-        /// <param name="y">The y-value of the position to return the value for.</param>
-        /// <returns>The flee-map value for the given location.</returns>
-        public double? this[int x, int y] => _goalMap[x, y];
-
-        /// <summary>
-        /// Constructor.  Takes a goal map where in all goals are treated as threats to be avoided,
+        /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
         /// and a magnitude to use (defaulting to 1.2).
         /// </summary>
         /// <param name="baseMap">The underlying goal map to use.</param>
@@ -73,6 +40,38 @@ namespace GoRogue.Pathing
 
             _baseMap.Updated += Update;
         }
+
+        /// <summary>
+        /// Height of the flee map.
+        /// </summary>
+        public int Height => _goalMap.Height;
+
+        /// <summary>
+        /// The degree to which entities following this flee-map will prefer global safety to local
+        /// safety. Higher values will make entities try to move past an approaching "threat" from
+        /// farther away.
+        /// </summary>
+        public double Magnitude { get; set; }
+
+        /// <summary>
+        /// Width of the flee map.
+        /// </summary>
+        public int Width => _goalMap.Width;
+
+        /// <summary>
+        /// Returns the flee-map value for the given position.
+        /// </summary>
+        /// <param name="pos">The position to return the value for.</param>
+        /// <returns>The flee-map value for the given location.</returns>
+        public double? this[Coord pos] => _goalMap[pos];
+
+        /// <summary>
+        /// Returns the goal-map value for the given position.
+        /// </summary>
+        /// <param name="x">The x-value of the position to return the value for.</param>
+        /// <param name="y">The y-value of the position to return the value for.</param>
+        /// <returns>The flee-map value for the given location.</returns>
+        public double? this[int x, int y] => _goalMap[x, y];
 
         /// <summary>
         /// Returns the flee-map values represented as a 2D grid-style string.
@@ -158,7 +157,9 @@ namespace GoRogue.Pathing
                 }
             }
         }
+
         #region IDisposable Support
+
         private bool _disposed = false;
 
         /// <summary>
@@ -181,6 +182,19 @@ namespace GoRogue.Pathing
                 GC.SuppressFinalize(this);
             }
         }
-        #endregion
+
+        #endregion IDisposable Support
+    }
+
+    // Priority queue node for coords
+    internal class PositionNode : GenericPriorityQueueNode<double>
+    {
+        public PositionNode(Coord position)
+        {
+            Position = position;
+        }
+
+        // Position being represented.
+        public Coord Position { get; }
     }
 }

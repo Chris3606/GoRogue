@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['sensesources',['SenseSources',['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#ac83218fcf4a7c3c1c77515e9ee65d5cd',1,'GoRogue::SenseMapping::SenseMap']]],
+  ['sensesources',['SenseSources',['../interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#ae13d0b9dae99471427c3c133a09a769b',1,'GoRogue.SenseMapping.IReadOnlySenseMap.SenseSources()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#ac83218fcf4a7c3c1c77515e9ee65d5cd',1,'GoRogue.SenseMapping.SenseMap.SenseSources()']]],
   ['sides',['Sides',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#aa88c18862ce6600a3b9143b888ab8d1c',1,'GoRogue::DiceNotation::Terms::DiceTerm']]],
   ['size',['Size',['../struct_go_rogue_1_1_rectangle.html#a8e76bf51feda2abbd6a0f106e1d6168f',1,'GoRogue::Rectangle']]],
   ['start',['Start',['../class_go_rogue_1_1_pathing_1_1_path.html#a99dbf3e537c6bc6fe2541ff1faeabaea',1,'GoRogue::Pathing::Path']]],

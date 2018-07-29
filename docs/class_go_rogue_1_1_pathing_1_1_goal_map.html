@@ -67,6 +67,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#properties">Properties</a> &#124;
+<a href="#events">Events</a> &#124;
 <a href="class_go_rogue_1_1_pathing_1_1_goal_map-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue.Pathing.GoalMap Class Reference</div>  </div>
@@ -123,6 +124,9 @@ Properties</h2></td></tr>
 <tr class="memitem:ab2a8148dd4ea42a71c10a2b5211a5b69"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; <a class="el" href="namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498">GoalState</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#ab2a8148dd4ea42a71c10a2b5211a5b69">BaseMap</a><code> [get]</code></td></tr>
 <tr class="memdesc:ab2a8148dd4ea42a71c10a2b5211a5b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">The underlying map.  <a href="#ab2a8148dd4ea42a71c10a2b5211a5b69">More...</a><br /></td></tr>
 <tr class="separator:ab2a8148dd4ea42a71c10a2b5211a5b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae983ebf06ecf73a9a21833f28e1d6428"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#ae983ebf06ecf73a9a21833f28e1d6428">DistanceMeasurement</a><code> [get]</code></td></tr>
+<tr class="memdesc:ae983ebf06ecf73a9a21833f28e1d6428"><td class="mdescLeft">&#160;</td><td class="mdescRight">The distance measurement the <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html" title="Implementation of a goal map system, also known as Dijkstra maps ( http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps ) ">GoalMap</a> is using to calculate distance.  <a href="#ae983ebf06ecf73a9a21833f28e1d6428">More...</a><br /></td></tr>
+<tr class="separator:ae983ebf06ecf73a9a21833f28e1d6428"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae60fe34408aeb611f2256d1e2502e29b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#ae60fe34408aeb611f2256d1e2502e29b">Height</a><code> [get]</code></td></tr>
 <tr class="memdesc:ae60fe34408aeb611f2256d1e2502e29b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Height of the goal map.  <a href="#ae60fe34408aeb611f2256d1e2502e29b">More...</a><br /></td></tr>
 <tr class="separator:ae60fe34408aeb611f2256d1e2502e29b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,6 +146,12 @@ Properties</h2></td></tr>
 <tr class="memitem:a76d7b4ef01e03488fc0f96bb41ff7648 inherit properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#a76d7b4ef01e03488fc0f96bb41ff7648">this[Coord pos]</a><code> [get]</code></td></tr>
 <tr class="memdesc:a76d7b4ef01e03488fc0f96bb41ff7648 inherit properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a Coord, should return the "value" associated with that location.  <a href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#a76d7b4ef01e03488fc0f96bb41ff7648">More...</a><br /></td></tr>
 <tr class="separator:a76d7b4ef01e03488fc0f96bb41ff7648 inherit properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
+Events</h2></td></tr>
+<tr class="memitem:aabd811bda6a6d46f3209f27323c30b2a"><td class="memItemLeft" align="right" valign="top">Action&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#aabd811bda6a6d46f3209f27323c30b2a">Updated</a> = () =&gt; { }</td></tr>
+<tr class="memdesc:aabd811bda6a6d46f3209f27323c30b2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Triggers when the <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html" title="Implementation of a goal map system, also known as Dijkstra maps ( http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps ) ">GoalMap</a> is updated.  <a href="#aabd811bda6a6d46f3209f27323c30b2a">More...</a><br /></td></tr>
+<tr class="separator:aabd811bda6a6d46f3209f27323c30b2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of a goal map system, also known as Dijkstra maps ( <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps</a> ) </p>
@@ -410,6 +420,30 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="ae983ebf06ecf73a9a21833f28e1d6428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae983ebf06ecf73a9a21833f28e1d6428">&sect;&nbsp;</a></span>DistanceMeasurement</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> GoRogue.Pathing.GoalMap.DistanceMeasurement</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The distance measurement the <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html" title="Implementation of a goal map system, also known as Dijkstra maps ( http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps ) ">GoalMap</a> is using to calculate distance. </p>
+
+</div>
+</div>
 <a id="ae60fe34408aeb611f2256d1e2502e29b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae60fe34408aeb611f2256d1e2502e29b">&sect;&nbsp;</a></span>Height</h2>
 
@@ -455,6 +489,23 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Width of the goal map. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Event Documentation</h2>
+<a id="aabd811bda6a6d46f3209f27323c30b2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabd811bda6a6d46f3209f27323c30b2a">&sect;&nbsp;</a></span>Updated</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Action GoRogue.Pathing.GoalMap.Updated = () =&gt; { }</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Triggers when the <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html" title="Implementation of a goal map system, also known as Dijkstra maps ( http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps ) ">GoalMap</a> is updated. </p>
 
 </div>
 </div>

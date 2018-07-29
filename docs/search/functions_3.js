@@ -8,5 +8,6 @@ var searchData=
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a4acb0f42cb78042011b778103ef108ff',1,'GoRogue::MapGeneration::Connectors::DirectLineTunnelCreator']]],
   ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html#ab54aa0bc405e0a48d3ae600cfb5d46a0',1,'GoRogue::Random::DiscreteConverter']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html#aa2601dd5c7f9a809762aafd0985a5a23',1,'GoRogue::DisjointSet']]],
+  ['dispose',['Dispose',['../class_go_rogue_1_1_pathing_1_1_flee_map.html#a0f770a7911c2fc2ed3db9e69a00454a2',1,'GoRogue::Pathing::FleeMap']]],
   ['divideterm',['DivideTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_divide_term.html#a97d1245ff9e8ad6470258b16c94fc03a',1,'GoRogue::DiceNotation::Terms::DivideTerm']]]
 ];

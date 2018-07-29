@@ -1,8 +1,8 @@
 ﻿namespace GoRogue
 {
     /// <summary>
-    /// Basic read-only representation of a Disjoint set data structure. Assumes it is holding integers between
-    /// 0 and size - 1.
+    /// Basic read-only representation of a Disjoint set data structure. Assumes it is holding
+    /// integers between 0 and size - 1.
     /// </summary>
     public interface IReadOnlyDisjointSet
     {

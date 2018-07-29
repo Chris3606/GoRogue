@@ -20,18 +20,6 @@ namespace GoRogue
     /// </remarks>
     public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider
     {
-        /// <summary>
-        /// The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
-        /// there are no bounds.
-        /// </summary>
-        public Rectangle Bounds { get; set; }
-
-        /// <summary>
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to Distance, eg. Radius).
-        /// </summary>
-        public Distance DistanceCalc { get; set; }
-
         private Coord _center;
 
         private int _radius;
@@ -106,6 +94,12 @@ namespace GoRogue
             : this(Coord.Get(centerX, centerY), radius, distanceCalc, Rectangle.EMPTY) { }
 
         /// <summary>
+        /// The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
+        /// there are no bounds.
+        /// </summary>
+        public Rectangle Bounds { get; set; }
+
+        /// <summary>
         /// The center point of the radius.
         /// </summary>
         public Coord Center
@@ -117,6 +111,12 @@ namespace GoRogue
                 topLeft = _center - _radius;
             }
         }
+
+        /// <summary>
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to Distance, eg. Radius).
+        /// </summary>
+        public Distance DistanceCalc { get; set; }
 
         /// <summary>
         /// The length of the radius, eg. the number of tiles from the center point (as defined by the distance

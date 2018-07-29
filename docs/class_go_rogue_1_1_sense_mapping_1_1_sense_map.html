@@ -80,7 +80,9 @@ Inheritance diagram for GoRogue.SenseMapping.SenseMap:</div>
  <div class="center">
   <img src="class_go_rogue_1_1_sense_mapping_1_1_sense_map.png" usemap="#GoRogue.SenseMapping.SenseMap_map" alt=""/>
   <map id="GoRogue.SenseMapping.SenseMap_map" name="GoRogue.SenseMapping.SenseMap_map">
-<area href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" alt="GoRogue.MapViews.IMapView&lt; double &gt;" shape="rect" coords="259,0,508,24"/>
+<area href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html" title="Read-only interface of a SenseMap. " alt="GoRogue.SenseMapping.IReadOnlySenseMap" shape="rect" coords="142,56,417,80"/>
+<area href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" alt="GoRogue.MapViews.IMapView&lt; double &gt;" shape="rect" coords="712,56,987,80"/>
+<area href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" alt="GoRogue.MapViews.IMapView&lt; double &gt;" shape="rect" coords="285,0,560,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -92,6 +94,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa2f95f7c9d06b71f74f02055825abee0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#aa2f95f7c9d06b71f74f02055825abee0">AddSenseSource</a> (<a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html">SenseSource</a> senseSource)</td></tr>
 <tr class="memdesc:aa2f95f7c9d06b71f74f02055825abee0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html" title="Represents a source location to be used in a SenseMap. One would typically create these and call Sens...">SenseSource</a> to the list of sources. If the source has its <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a86aa00aa626eded78fa22c9c6f449cd6" title="Whether or not this source is enabled. If a source is disabled when its SenseMap&#39;s Calculate function...">SenseSource.Enabled</a> flag set when Calculate is next called, then this will be used as a source.  <a href="#aa2f95f7c9d06b71f74f02055825abee0">More...</a><br /></td></tr>
 <tr class="separator:aa2f95f7c9d06b71f74f02055825abee0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b64b436fdfa7833d434b495c13ea12f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html">IReadOnlySenseMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a5b64b436fdfa7833d434b495c13ea12f">AsReadOnly</a> ()</td></tr>
+<tr class="memdesc:a5b64b436fdfa7833d434b495c13ea12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a read-only representation of the <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html" title="Class responsible for calculating a map for senses (sound, light, etc). Anything that has a resistanc...">SenseMap</a>.  <a href="#a5b64b436fdfa7833d434b495c13ea12f">More...</a><br /></td></tr>
+<tr class="separator:a5b64b436fdfa7833d434b495c13ea12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af3b07a1fa3cb087164fddce21eb1dada"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#af3b07a1fa3cb087164fddce21eb1dada">Calculate</a> ()</td></tr>
 <tr class="memdesc:af3b07a1fa3cb087164fddce21eb1dada"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to make it do things. For each enabled source in the source list, it calculates the sense map, and puts them all together when this function is called. Sensory values are capped at 1.0 automatically.  <a href="#af3b07a1fa3cb087164fddce21eb1dada">More...</a><br /></td></tr>
 <tr class="separator:af3b07a1fa3cb087164fddce21eb1dada"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -137,6 +142,19 @@ Properties</h2></td></tr>
 <tr class="memitem:a1aae889fdb2f5b98e44332d6ef30e7be"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1aae889fdb2f5b98e44332d6ef30e7be">this[int x, int y]</a><code> [get]</code></td></tr>
 <tr class="memdesc:a1aae889fdb2f5b98e44332d6ef30e7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array-style indexer that takes an (x, y) value as the index. Similarly to the <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> indexer, you may call mySenseMap[1, 3] to get the "sensory value" at 1, 3.  <a href="#a1aae889fdb2f5b98e44332d6ef30e7be">More...</a><br /></td></tr>
 <tr class="separator:a1aae889fdb2f5b98e44332d6ef30e7be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html">GoRogue.SenseMapping.IReadOnlySenseMap</a></td></tr>
+<tr class="memitem:a60d9ad703bf5c6587bba527e0548ba61 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a60d9ad703bf5c6587bba527e0548ba61">CurrentSenseMap</a><code> [get]</code></td></tr>
+<tr class="memdesc:a60d9ad703bf5c6587bba527e0548ba61 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEnumerable of only positions currently "in" the sense map, eg. all positions that have a value other than 0.0.  <a href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a60d9ad703bf5c6587bba527e0548ba61">More...</a><br /></td></tr>
+<tr class="separator:a60d9ad703bf5c6587bba527e0548ba61 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3adb88b45129a6fd9c665ad85c6346d7 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a3adb88b45129a6fd9c665ad85c6346d7">NewlyInSenseMap</a><code> [get]</code></td></tr>
+<tr class="memdesc:a3adb88b45129a6fd9c665ad85c6346d7 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEnumerable of positions that DO have a non-zero value in the sense map as of the most current Calculate call, but DID NOT have a non-zero value after the previous time Calculate was called.  <a href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a3adb88b45129a6fd9c665ad85c6346d7">More...</a><br /></td></tr>
+<tr class="separator:a3adb88b45129a6fd9c665ad85c6346d7 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8766a5063241a10907d5762cb33b6425 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a8766a5063241a10907d5762cb33b6425">NewlyOutOfSenseMap</a><code> [get]</code></td></tr>
+<tr class="memdesc:a8766a5063241a10907d5762cb33b6425 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the most current Calculate call, but DID have a non-zero value after the previous time Calculate was called.  <a href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a8766a5063241a10907d5762cb33b6425">More...</a><br /></td></tr>
+<tr class="separator:a8766a5063241a10907d5762cb33b6425 inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae13d0b9dae99471427c3c133a09a769b inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memItemLeft" align="right" valign="top">IReadOnlyList&lt; <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html">SenseSource</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#ae13d0b9dae99471427c3c133a09a769b">SenseSources</a><code> [get]</code></td></tr>
+<tr class="memdesc:ae13d0b9dae99471427c3c133a09a769b inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read-only list of all sources currently taken into account. Some may have their enabled flag set to false, so all of these may or may not be counted when Calculate is called.  <a href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#ae13d0b9dae99471427c3c133a09a769b">More...</a><br /></td></tr>
+<tr class="separator:ae13d0b9dae99471427c3c133a09a769b inherit properties_interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_go_rogue_1_1_map_views_1_1_i_map_view')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">GoRogue.MapViews.IMapView&lt; double &gt;</a></td></tr>
 <tr class="memitem:ac955696915edd3d046f3aab06c3fd08e inherit properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#ac955696915edd3d046f3aab06c3fd08e">Height</a><code> [get]</code></td></tr>
 <tr class="memdesc:ac955696915edd3d046f3aab06c3fd08e inherit properties_interface_go_rogue_1_1_map_views_1_1_i_map_view"><td class="mdescLeft">&#160;</td><td class="mdescRight">The height of the map being represented.  <a href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html#ac955696915edd3d046f3aab06c3fd08e">More...</a><br /></td></tr>
@@ -204,6 +222,26 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a5b64b436fdfa7833d434b495c13ea12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b64b436fdfa7833d434b495c13ea12f">&sect;&nbsp;</a></span>AsReadOnly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html">IReadOnlySenseMap</a> GoRogue.SenseMapping.SenseMap.AsReadOnly </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a read-only representation of the <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html" title="Class responsible for calculating a map for senses (sound, light, etc). Anything that has a resistanc...">SenseMap</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>This <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html" title="Class responsible for calculating a map for senses (sound, light, etc). Anything that has a resistanc...">SenseMap</a> object as <a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html" title="Read-only interface of a SenseMap. ">IReadOnlySenseMap</a>.</dd></dl>
 
 </div>
 </div>
