@@ -64,25 +64,7 @@ namespace GoRogue_PerformanceTests
             s.Stop();
 
             return s.Elapsed;
-        }
-
-        public static TimeSpan TimeForOriginalFleeMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
-        {
-            Stopwatch s = new Stopwatch();
-
-            var mapGoals = createGoalStateMap(map, goals);
-            var mapBuilder = new GoalMap(mapGoals, Distance.CHEBYSHEV);
-            var fleeMap = new OriginalFleeMap(mapBuilder);
-
-            mapBuilder.Update();
-
-            s.Start();
-            for (int i = 0; i < iterations; i++)
-                mapBuilder.Update();
-            s.Stop();
-
-            return s.Elapsed;
-        }
+        } 
 
         private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
         {

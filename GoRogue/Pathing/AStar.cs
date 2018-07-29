@@ -101,8 +101,7 @@ namespace GoRogue.Pathing
             // If the path is simply the start, don't bother with graph initialization and such
             if (start == end)
             {
-                var retVal = new List<Coord>();
-                retVal.Add(start);
+                var retVal = new List<Coord> { start };
                 return new Path(retVal);
             }
 

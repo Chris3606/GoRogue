@@ -128,54 +128,6 @@ namespace GoRogue_UnitTests
         }
 
         [TestMethod]
-        public void FleeMapCorrectness()
-        {
-            const int WIDTH = 100;
-            const int HEIGHT = 100;
-            const int NUM_GOALS = 30;
-            const int ITERATIONS = 100;
-
-            for (int i = 0; i < ITERATIONS; i++)
-            {
-                var walkabilityMap = new ArrayMap<bool>(WIDTH, HEIGHT);
-                CellularAutomataGenerator.Generate(walkabilityMap);
-
-                var goals = new List<Coord>();
-                for (int j = 0; j < NUM_GOALS; j++)
-                    goals.Add(walkabilityMap.RandomPosition(true));
-
-
-                var gsMap = createGoalStateMap(walkabilityMap, goals);
-
-                var goalMap = new GoalMap(gsMap, Distance.CHEBYSHEV);
-                var origFleeMap = new OriginalFleeMap(goalMap);
-                var newFleeMap = new FleeMap(goalMap);
-
-                goalMap.Update();
-
-                bool areEqual = true;
-                Coord stoppingPos = null;
-                foreach (var pos in walkabilityMap.Positions())
-                {
-                    stoppingPos = pos;
-                    areEqual = origFleeMap[pos] == newFleeMap[pos];
-                    if (!areEqual)
-                        break;
-                }
-
-                if (!areEqual)
-                {
-                    Console.WriteLine("Original");
-                    Console.WriteLine(origFleeMap.ToString(4));
-                    Console.WriteLine("New");
-                    Console.WriteLine(newFleeMap.ToString(4));
-
-                    Assert.Fail($"Failed for {stoppingPos}, expected {origFleeMap[stoppingPos]}, actual {newFleeMap[stoppingPos]}");
-                }
-            }
-        }
-
-        [TestMethod]
         public void AStarAssumeWalkable()
         {
             var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
