@@ -92,6 +92,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a56e8e1353ad4b599c0e7452a81337075"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a56e8e1353ad4b599c0e7452a81337075">LambdaMapView</a> (Func&lt; int &gt; widthGetter, Func&lt; int &gt; heightGetter, Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, T &gt; valueGetter)</td></tr>
 <tr class="memdesc:a56e8e1353ad4b599c0e7452a81337075"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes functions that retrieve the width and height of the map, and the function used to retrieve the value for a location.  <a href="#a56e8e1353ad4b599c0e7452a81337075">More...</a><br /></td></tr>
 <tr class="separator:a56e8e1353ad4b599c0e7452a81337075"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9826f05b0298b0fc53b5c3ca3c1fe4a"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#af9826f05b0298b0fc53b5c3ca3c1fe4a">ToString</a> ()</td></tr>
+<tr class="memdesc:af9826f05b0298b0fc53b5c3ca3c1fe4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>.  <a href="#af9826f05b0298b0fc53b5c3ca3c1fe4a">More...</a><br /></td></tr>
+<tr class="separator:af9826f05b0298b0fc53b5c3ca3c1fe4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebfb10ecf595781195fc288e9eea0745"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#aebfb10ecf595781195fc288e9eea0745">ToString</a> (Func&lt; T, string &gt; elementStringifier)</td></tr>
+<tr class="memdesc:aebfb10ecf595781195fc288e9eea0745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>, using the elementStringifier function given to determine what string represents which value.  <a href="#aebfb10ecf595781195fc288e9eea0745">More...</a><br /></td></tr>
+<tr class="separator:aebfb10ecf595781195fc288e9eea0745"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a392c6eee801d1c9e4a2c5d15c30adf9f"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html#a392c6eee801d1c9e4a2c5d15c30adf9f">ToString</a> (int fieldSize, Func&lt; T, string &gt; elementStringifier=null)</td></tr>
+<tr class="memdesc:a392c6eee801d1c9e4a2c5d15c30adf9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text.  <a href="#a392c6eee801d1c9e4a2c5d15c30adf9f">More...</a><br /></td></tr>
+<tr class="separator:a392c6eee801d1c9e4a2c5d15c30adf9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -218,6 +227,93 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="af9826f05b0298b0fc53b5c3ca3c1fe4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9826f05b0298b0fc53b5c3ca3c1fe4a">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html">GoRogue.MapViews.LambdaMapView</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>.</dd></dl>
+
+</div>
+</div>
+<a id="aebfb10ecf595781195fc288e9eea0745"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebfb10ecf595781195fc288e9eea0745">&sect;&nbsp;</a></span>ToString() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html">GoRogue.MapViews.LambdaMapView</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>, using the elementStringifier function given to determine what string represents which value. </p>
+<p>This could be used, for example, on an <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a> of boolean values, to output '#' for false values, and '.' for true values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elementStringifier</td><td>Function determining the string representation of each element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>.</dd></dl>
+
+</div>
+</div>
+<a id="a392c6eee801d1c9e4a2c5d15c30adf9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a392c6eee801d1c9e4a2c5d15c30adf9f">&sect;&nbsp;</a></span>ToString() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html">GoRogue.MapViews.LambdaMapView</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fieldSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fieldSize</td><td>The size of the field to give each value.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to convert each element to a string. Null defaults to the ToString function of type T. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_map_view.html" title="Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot; function...">LambdaMapView</a>.</dd></dl>
 
 </div>
 </div>

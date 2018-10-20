@@ -94,9 +94,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab31c1311237699fd4053c589e208d446"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#ab31c1311237699fd4053c589e208d446">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, IGenerator rng=null)</td></tr>
 <tr class="memdesc:ab31c1311237699fd4053c589e208d446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position within the MapView.  <a href="#ab31c1311237699fd4053c589e208d446">More...</a><br /></td></tr>
 <tr class="separator:ab31c1311237699fd4053c589e208d446"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5d5433ffe4a186e271b1ef63b34bcfd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#ae5d5433ffe4a186e271b1ef63b34bcfd">Size&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView)</td></tr>
-<tr class="memdesc:ae5d5433ffe4a186e271b1ef63b34bcfd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> (Width, Height) representing the size of the MapView.  <a href="#ae5d5433ffe4a186e271b1ef63b34bcfd">More...</a><br /></td></tr>
-<tr class="separator:ae5d5433ffe4a186e271b1ef63b34bcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3268eca01a36ccee763e0820e9d2ac8a"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a3268eca01a36ccee763e0820e9d2ac8a">ExtendToString&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; map, string begin=&quot;&quot;, string beginRow=&quot;&quot;, Func&lt; T, string &gt; elementStringifier=null, string rowSeparator=&quot;\, string elementSeparator=&quot; &quot;, string endRow=&quot;&quot;, string end=&quot;&quot;)</td></tr>
+<tr class="memdesc:a3268eca01a36ccee763e0820e9d2ac8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for IMapViews allowing printing the contents. Takes characters to surround the map printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row.  <a href="#a3268eca01a36ccee763e0820e9d2ac8a">More...</a><br /></td></tr>
+<tr class="separator:a3268eca01a36ccee763e0820e9d2ac8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99809fecdde1501ae1a498ef3994d674"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a99809fecdde1501ae1a498ef3994d674">ExtendToString&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; map, int fieldSize, string begin=&quot;&quot;, string beginRow=&quot;&quot;, Func&lt; T, string &gt; elementStringifier=null, string rowSeparator=&quot;\, string elementSeparator=&quot; &quot;, string endRow=&quot;&quot;, string end=&quot;&quot;)</td></tr>
+<tr class="memdesc:a99809fecdde1501ae1a498ef3994d674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for IMapViews allowing printing the contents. Takes characters to surround the map, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. Takes the size of the field to give each element, characters to surround the MapView printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row.  <a href="#a99809fecdde1501ae1a498ef3994d674">More...</a><br /></td></tr>
+<tr class="separator:a99809fecdde1501ae1a498ef3994d674"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extensions for the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> class that effectively act as methods with default implementations for them. </p>
@@ -139,6 +142,201 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A rectangle representing the MapView's bounds.</dd></dl>
+
+</div>
+</div>
+<a id="a3268eca01a36ccee763e0820e9d2ac8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3268eca01a36ccee763e0820e9d2ac8a">&sect;&nbsp;</a></span>ExtendToString< T >() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string GoRogue.MapViews.IMapViewExtensions.ExtendToString&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>begin</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>beginRow</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>rowSeparator</em> = <code>&quot;\n&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>elementSeparator</em> = <code>&quot;&#160;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>endRow</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>end</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extension method for IMapViews allowing printing the contents. Takes characters to surround the map printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of elements in the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>The <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> to stringify &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">begin</td><td>Character(s) that should precede the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> printout.</td></tr>
+    <tr><td class="paramname">beginRow</td><td>Character(s) that should precede each row.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T. </td></tr>
+    <tr><td class="paramname">rowSeparator</td><td>Character(s) to separate each row from the next.</td></tr>
+    <tr><td class="paramname">elementSeparator</td><td>Character(s) to separate each element from the next.</td></tr>
+    <tr><td class="paramname">endRow</td><td>Character(s) that should follow each row.</td></tr>
+    <tr><td class="paramname">end</td><td>Character(s) that should follow the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> printout.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the map, as viewd by the given map view. </dd></dl>
+
+</div>
+</div>
+<a id="a99809fecdde1501ae1a498ef3994d674"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99809fecdde1501ae1a498ef3994d674">&sect;&nbsp;</a></span>ExtendToString< T >() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string GoRogue.MapViews.IMapViewExtensions.ExtendToString&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fieldSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>begin</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>beginRow</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>rowSeparator</em> = <code>&quot;\n&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>elementSeparator</em> = <code>&quot;&#160;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>endRow</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>end</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extension method for IMapViews allowing printing the contents. Takes characters to surround the map, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. Takes the size of the field to give each element, characters to surround the MapView printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of elements in the 2D array.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>The <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> to stringify &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">fieldSize</td><td>The amount of space each element should take up in characters. A positive number aligns the text to the right of the space, while a negative number aligns the text to the left. </td></tr>
+    <tr><td class="paramname">begin</td><td>Character(s) that should precede the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> printout.</td></tr>
+    <tr><td class="paramname">beginRow</td><td>Character(s) that should precede each row.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to get the string representation of each value. Null uses the ToString function of type T. </td></tr>
+    <tr><td class="paramname">rowSeparator</td><td>Character(s) to separate each row from the next.</td></tr>
+    <tr><td class="paramname">elementSeparator</td><td>Character(s) to separate each element from the next.</td></tr>
+    <tr><td class="paramname">endRow</td><td>Character(s) that should follow each row.</td></tr>
+    <tr><td class="paramname">end</td><td>Character(s) that should follow the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> printout.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the map, as viewd by the given map view. </dd></dl>
 
 </div>
 </div>
@@ -409,47 +607,6 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A random position within the MapView.</dd></dl>
-
-</div>
-</div>
-<a id="ae5d5433ffe4a186e271b1ef63b34bcfd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5d5433ffe4a186e271b1ef63b34bcfd">&sect;&nbsp;</a></span>Size< T >()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> GoRogue.MapViews.IMapViewExtensions.Size&lt; T &gt; </td>
-          <td>(</td>
-          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
-          <td class="paramname"><em>mapView</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Returns a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> (Width, Height) representing the size of the MapView. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>&gt; </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">mapView</td><td>Map view to get bounds for &ndash; never specified manually as this is an extension method. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> (Width, Height) representing the size of the MapView.</dd></dl>
 
 </div>
 </div>

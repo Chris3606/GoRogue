@@ -92,8 +92,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adbcb8ed30406c8d899b44fa6e854cfa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies view data to your map.  <a href="#adbcb8ed30406c8d899b44fa6e854cfa2">More...</a><br /></td></tr>
 <tr class="separator:adbcb8ed30406c8d899b44fa6e854cfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a5708ff23a78a1cba34d96b6b6cc494cc">ToString</a> ()</td></tr>
-<tr class="memdesc:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the underlying map.  <a href="#a5708ff23a78a1cba34d96b6b6cc494cc">More...</a><br /></td></tr>
+<tr class="memdesc:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>.  <a href="#a5708ff23a78a1cba34d96b6b6cc494cc">More...</a><br /></td></tr>
 <tr class="separator:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdb215b97d1d5ba822d0239ed02ccc0d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#afdb215b97d1d5ba822d0239ed02ccc0d">ToString</a> (Func&lt; T2, string &gt; elementStringifier)</td></tr>
+<tr class="memdesc:afdb215b97d1d5ba822d0239ed02ccc0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>, using the elementStringifier function given to determine what string represents which value.  <a href="#afdb215b97d1d5ba822d0239ed02ccc0d">More...</a><br /></td></tr>
+<tr class="separator:afdb215b97d1d5ba822d0239ed02ccc0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a19f4deb22fa94005a805f3b2dc5a82"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a3a19f4deb22fa94005a805f3b2dc5a82">ToString</a> (int fieldSize, Func&lt; T2, string &gt; elementStringifier=null)</td></tr>
+<tr class="memdesc:a3a19f4deb22fa94005a805f3b2dc5a82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text.  <a href="#a3a19f4deb22fa94005a805f3b2dc5a82">More...</a><br /></td></tr>
+<tr class="separator:a3a19f4deb22fa94005a805f3b2dc5a82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -254,7 +260,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="a5708ff23a78a1cba34d96b6b6cc494cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5708ff23a78a1cba34d96b6b6cc494cc">&sect;&nbsp;</a></span>ToString()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5708ff23a78a1cba34d96b6b6cc494cc">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -268,7 +274,74 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Returns a string representation of the underlying map. </p>
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>.</dd></dl>
+
+</div>
+</div>
+<a id="afdb215b97d1d5ba822d0239ed02ccc0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afdb215b97d1d5ba822d0239ed02ccc0d">&sect;&nbsp;</a></span>ToString() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; T2, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>, using the elementStringifier function given to determine what string represents which value. </p>
+<p>This could be used, for example, on an <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a> of boolean values, to output '#' for false values, and '.' for true values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elementStringifier</td><td>Function determining the string representation of each element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>.</dd></dl>
+
+</div>
+</div>
+<a id="a3a19f4deb22fa94005a805f3b2dc5a82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a19f4deb22fa94005a805f3b2dc5a82">&sect;&nbsp;</a></span>ToString() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fieldSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T2, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fieldSize</td><td>The size of the field to give each value.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to convert each element to a string. Null defaults to the ToString function of type T. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>.</dd></dl>
 
 </div>
 </div>

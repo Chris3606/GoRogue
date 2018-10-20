@@ -215,8 +215,10 @@ namespace GoRogue
 		/// A string representation of the 2D array, as if the array is a 2D grid-based map.
 		/// </returns>
 		public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
-													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "") =>
-			new ArrayMap<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
+		{
+			return new ArrayMap<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+		}
 
 		/// <summary>
 		/// Extension method for 2D arrays allowing printing the contents, as if the array represents
@@ -249,8 +251,10 @@ namespace GoRogue
 		/// A string representation of the 2D array, as if the array is a 2D grid-based map.
 		/// </returns>
 		public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
-													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "") =>
-			new ArrayMap<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
+		{
+			return new ArrayMap<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+		}
 
 		/// <summary>
 		/// Extension method for List that implements a fisher-yates shuffle. Modifies the list it is

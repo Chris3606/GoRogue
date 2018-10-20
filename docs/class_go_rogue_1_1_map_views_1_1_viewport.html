@@ -94,6 +94,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5422d40f22fefc7a89472f2cd6bf995a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html#a5422d40f22fefc7a89472f2cd6bf995a">Viewport</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView)</td></tr>
 <tr class="memdesc:a5422d40f22fefc7a89472f2cd6bf995a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the MapView to represent. Initial ViewArea will be the entire MapView.  <a href="#a5422d40f22fefc7a89472f2cd6bf995a">More...</a><br /></td></tr>
 <tr class="separator:a5422d40f22fefc7a89472f2cd6bf995a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a539927c2629164b76ab4e50908c618b9"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html#a539927c2629164b76ab4e50908c618b9">ToString</a> ()</td></tr>
+<tr class="memdesc:a539927c2629164b76ab4e50908c618b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>.  <a href="#a539927c2629164b76ab4e50908c618b9">More...</a><br /></td></tr>
+<tr class="separator:a539927c2629164b76ab4e50908c618b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30bb93a5a251d8d59024a4b63557711e"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html#a30bb93a5a251d8d59024a4b63557711e">ToString</a> (Func&lt; T, string &gt; elementStringifier)</td></tr>
+<tr class="memdesc:a30bb93a5a251d8d59024a4b63557711e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>, using the elementStringifier function given to determine what string represents which value.  <a href="#a30bb93a5a251d8d59024a4b63557711e">More...</a><br /></td></tr>
+<tr class="separator:a30bb93a5a251d8d59024a4b63557711e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20cf5828ec048b3914ab60c15d67ecb3"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html#a20cf5828ec048b3914ab60c15d67ecb3">ToString</a> (int fieldSize, Func&lt; T, string &gt; elementStringifier=null)</td></tr>
+<tr class="memdesc:a20cf5828ec048b3914ab60c15d67ecb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text.  <a href="#a20cf5828ec048b3914ab60c15d67ecb3">More...</a><br /></td></tr>
+<tr class="separator:a20cf5828ec048b3914ab60c15d67ecb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -201,6 +210,93 @@ Properties</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a539927c2629164b76ab4e50908c618b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a539927c2629164b76ab4e50908c618b9">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">override string <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html">GoRogue.MapViews.Viewport</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>.</dd></dl>
+
+</div>
+</div>
+<a id="a30bb93a5a251d8d59024a4b63557711e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30bb93a5a251d8d59024a4b63557711e">&sect;&nbsp;</a></span>ToString() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html">GoRogue.MapViews.Viewport</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>, using the elementStringifier function given to determine what string represents which value. </p>
+<p>This could be used, for example, on an <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a> of boolean values, to output '#' for false values, and '.' for true values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">elementStringifier</td><td>Function determining the string representation of each element. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>.</dd></dl>
+
+</div>
+</div>
+<a id="a20cf5828ec048b3914ab60c15d67ecb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20cf5828ec048b3914ab60c15d67ecb3">&sect;&nbsp;</a></span>ToString() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html">GoRogue.MapViews.Viewport</a>&lt; T &gt;.ToString </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>fieldSize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
+          <td class="paramname"><em>elementStringifier</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints the values in the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>, using the function specified to turn elements into strings, and using the "field length" specified. Each element of type T will have spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is less than the length of the element's string represention. A positive-number right-aligns the text within the field, while a negative number left-aligns the text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fieldSize</td><td>The size of the field to give each value.</td></tr>
+    <tr><td class="paramname">elementStringifier</td><td>Function to use to convert each element to a string. Null defaults to the ToString function of type T. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_viewport.html" title="Since some algorithms that use MapViews can be expensive to run entirely on large maps (such as GoalM...">Viewport</a>.</dd></dl>
 
 </div>
 </div>
