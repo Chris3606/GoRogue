@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Troschuetz.Random;
 
 namespace GoRogue.MapViews
@@ -120,14 +121,108 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Returns a Coord (Width, Height) representing the size of the MapView.
+		/// Extension method for IMapViews allowing printing the contents. Takes characters
+		/// to surround the map printout, and each row, the method used to get the string representation of
+		/// each element (defaulting to the ToString function of type T), and separation characters
+		/// for each element and row.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// &gt;
-		/// <param name="mapView">
-		/// Map view to get bounds for -- never specified manually as this is an extension method.
+		/// <typeparam name="T">Type of elements in the IMapView.</typeparam>
+		/// <param name="map">
+		/// The IMapView to stringify -- never specified manually as this is an extension method.
 		/// </param>
-		/// <returns>A Coord (Width, Height) representing the size of the MapView.</returns>
-		public static Coord Size<T>(this IMapView<T> mapView) => Coord.Get(mapView.Width, mapView.Height);
+		/// <param name="begin">Character(s) that should precede the IMapView printout.</param>
+		/// <param name="beginRow">Character(s) that should precede each row.</param>
+		/// <param name="elementStringifier">
+		/// Function to use to get the string representation of each value. Null uses the ToString
+		/// function of type T.
+		/// </param>
+		/// <param name="rowSeparator">Character(s) to separate each row from the next.</param>
+		/// <param name="elementSeparator">Character(s) to separate each element from the next.</param>
+		/// <param name="endRow">Character(s) that should follow each row.</param>
+		/// <param name="end">Character(s) that should follow the IMapView printout.</param>
+		/// <returns>
+		/// A string representation of the map, as viewd by the given map view.
+		/// </returns>
+		public static string ExtendToString<T>(this IMapView<T> map, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
+		{
+			if (elementStringifier == null)
+				elementStringifier = (T obj) => obj.ToString();
+
+			var result = new StringBuilder(begin);
+			for (int y = 0; y < map.Height; y++)
+			{
+				result.Append(beginRow);
+				for (int x = 0; x < map.Width; x++)
+				{
+					result.Append(elementStringifier(map[x, y]));
+					if (x != map.Width - 1) result.Append(elementSeparator);
+				}
+
+				result.Append(endRow);
+				if (y != map.Height - 1) result.Append(rowSeparator);
+			}
+
+			result.Append(end);
+
+			return result.ToString();
+		}
+
+		/// <summary>
+		/// Extension method for IMapViews allowing printing the contents. Takes characters
+		/// to surround the map, and each row, the method used to get the string representation of
+		/// each element (defaulting to the ToString function of type T), and separation characters
+		/// for each element and row. Takes the size
+		/// of the field to give each element, characters to surround the MapView printout, and each row, the
+		/// method used to get the string representation of each element (defaulting to the ToString
+		/// function of type T), and separation characters for each element and row.
+		/// </summary>
+		/// <typeparam name="T">Type of elements in the 2D array.</typeparam>	
+		/// <param name="map">
+		/// The IMapView to stringify -- never specified manually as this is an extension method.
+		/// </param>
+		/// <param name="fieldSize">
+		/// The amount of space each element should take up in characters. A positive number aligns
+		/// the text to the right of the space, while a negative number aligns the text to the left.
+		/// </param>
+		/// <param name="begin">Character(s) that should precede the IMapView printout.</param>
+		/// <param name="beginRow">Character(s) that should precede each row.</param>
+		/// <param name="elementStringifier">
+		/// Function to use to get the string representation of each value. Null uses the ToString
+		/// function of type T.
+		/// </param>
+		/// <param name="rowSeparator">Character(s) to separate each row from the next.</param>
+		/// <param name="elementSeparator">Character(s) to separate each element from the next.</param>
+		/// <param name="endRow">Character(s) that should follow each row.</param>
+		/// <param name="end">Character(s) that should follow the IMapView printout.</param>
+		/// <returns>
+		/// A string representation of the map, as viewd by the given map view.
+		/// </returns>
+		public static string ExtendToString<T>(this IMapView<T> map, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
+		{
+			if (elementStringifier == null)
+				elementStringifier = (T obj) => obj.ToString();
+
+			var result = new StringBuilder(begin);
+			for (int y = 0; y < map.Height; y++)
+			{
+				result.Append(beginRow);
+				for (int x = 0; x < map.Width; x++)
+				{
+					result.Append(string.Format($"{{0, {fieldSize}}} ", elementStringifier(map[x, y])));
+					if (x != map.Width - 1) result.Append(elementSeparator);
+				}
+
+				result.Append(endRow);
+				if (y != map.Height - 1) result.Append(rowSeparator);
+			}
+
+			result.Append(end);
+
+			return result.ToString();
+		}
+
+
 	}
 }

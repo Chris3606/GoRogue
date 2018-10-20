@@ -98,5 +98,40 @@ namespace GoRogue.MapViews
 		/// provided at construction.
 		/// </returns>
 		public T this[Coord pos] { get => valueGetter(pos); }
+
+		/// <summary>
+		/// Returns a string representation of the LambdaMapView.
+		/// </summary>
+		/// <returns>A string representation of the LambdaMapView.</returns>
+		public override string ToString() => this.ExtendToString();
+
+		/// <summary>
+		/// Returns a string representation of the LambdaMapView, using the elementStringifier function
+		/// given to determine what string represents which value.
+		/// </summary>
+		/// <remarks>
+		/// This could be used, for example, on an LambdaMapView of boolean values, to output '#' for
+		/// false values, and '.' for true values.
+		/// </remarks>
+		/// <param name="elementStringifier">
+		/// Function determining the string representation of each element.
+		/// </param>
+		/// <returns>A string representation of the LambdaMapView.</returns>
+		public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+
+		/// <summary>
+		/// Prints the values in the LambdaMapView, using the function specified to turn elements into
+		/// strings, and using the "field length" specified. Each element of type T will have spaces
+		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
+		/// than the length of the element's string represention. A positive-number right-aligns the
+		/// text within the field, while a negative number left-aligns the text.
+		/// </summary>
+		/// <param name="fieldSize">The size of the field to give each value.</param>
+		/// <param name="elementStringifier">
+		/// Function to use to convert each element to a string. Null defaults to the ToString
+		/// function of type T.
+		/// </param>
+		/// <returns>A string representation of the LambdaMapView.</returns>
+		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 	}
 }

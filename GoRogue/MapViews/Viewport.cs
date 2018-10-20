@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapViews
+﻿using System;
+
+namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Since some algorithms that use MapViews can be expensive to run entirely on large maps (such
@@ -83,5 +85,41 @@
 		/// The "value" associated with the absolute location represented on the underlying MapView.
 		/// </returns>
 		public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
+
+		/// <summary>
+		/// Returns a string representation of the Viewport.
+		/// </summary>
+		/// <returns>A string representation of the Viewport.</returns>
+		public override string ToString() => this.ExtendToString();
+
+		/// <summary>
+		/// Returns a string representation of the Viewport, using the elementStringifier function
+		/// given to determine what string represents which value.
+		/// </summary>
+		/// <remarks>
+		/// This could be used, for example, on an Viewport of boolean values, to output '#' for
+		/// false values, and '.' for true values.
+		/// </remarks>
+		/// <param name="elementStringifier">
+		/// Function determining the string representation of each element.
+		/// </param>
+		/// <returns>A string representation of the Viewport.</returns>
+		public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+
+		/// <summary>
+		/// Prints the values in the Viewport, using the function specified to turn elements into
+		/// strings, and using the "field length" specified. Each element of type T will have spaces
+		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
+		/// than the length of the element's string represention. A positive-number right-aligns the
+		/// text within the field, while a negative number left-aligns the text.
+		/// </summary>
+		/// <param name="fieldSize">The size of the field to give each value.</param>
+		/// <param name="elementStringifier">
+		/// Function to use to convert each element to a string. Null defaults to the ToString
+		/// function of type T.
+		/// </param>
+		/// <returns>A string representation of the Viewport.</returns>
+		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+
 	}
 }

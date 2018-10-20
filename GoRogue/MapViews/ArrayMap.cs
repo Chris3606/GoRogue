@@ -21,6 +21,13 @@ namespace GoRogue.MapViews
 			array = new T[width, height];
 		}
 
+		// Sets the internal array to the existing one.  Should not (and cannot) be used outside of GoRogue.  Be careful,
+		// as it is a straight reference assignment!
+		internal ArrayMap(T[,] existingArray)
+		{
+			array = existingArray;
+		}
+
 		/// <summary>
 		/// The height of the array.
 		/// </summary>
@@ -73,7 +80,7 @@ namespace GoRogue.MapViews
 		/// Returns a string representation of the 2D array.
 		/// </summary>
 		/// <returns>A string representation of the 2D array.</returns>
-		public override string ToString() => array.ExtendToStringGrid();
+		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
 		/// Returns a string representation of the 2D array, using the elementStringifier function
@@ -87,7 +94,7 @@ namespace GoRogue.MapViews
 		/// Function determining the string representation of each element.
 		/// </param>
 		/// <returns>A string representation of the 2D array.</returns>
-		public string ToString(Func<T, string> elementStringifier) => array.ExtendToStringGrid(elementStringifier: elementStringifier);
+		public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
 
 		/// <summary>
 		/// Prints the values in the ArrayMap, using the function specified to turn elements into
@@ -102,6 +109,6 @@ namespace GoRogue.MapViews
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the ArrayMap.</returns>
-		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => array.ExtendToStringGrid(fieldSize, elementStringifier: elementStringifier);
+		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 	}
 }

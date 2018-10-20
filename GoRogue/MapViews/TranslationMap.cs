@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapViews
+﻿using System;
+
+namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Map view class capable of taking complex data and providing a simpler view of it. For a
@@ -8,8 +10,8 @@
 	/// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
 	/// poor match for your game's actual map data. For example, map generation works with bools, and
 	/// FOV calculation with doubles, while your map data may model each map cell as a class or
-	/// struct containing many different member values. /// This class allows you to build descendant
-	/// classes that override the TranslateGet method for simple mapping, or the this properties if
+	/// struct containing many different member values. This class allows you to build descendant
+	/// classes that override the TranslateGet method for simple mapping, or the "this" indexers if
 	/// you need full access to the underlying data for context, in order to present a simplified
 	/// view of your data to an algorithm without having to create the large amount of duplicate code
 	/// associated with multiple ISettableMapView instances that all extract data from a Cell or Tile class.
@@ -67,9 +69,40 @@
 		}
 
 		/// <summary>
-		/// Returns a string representation of the underlying map.
+		/// Returns a string representation of the TranslationMap.
 		/// </summary>
-		public override string ToString() => BaseMap.ToString();
+		/// <returns>A string representation of the TranslationMap.</returns>
+		public override string ToString() => this.ExtendToString();
+
+		/// <summary>
+		/// Returns a string representation of the TranslationMap, using the elementStringifier function
+		/// given to determine what string represents which value.
+		/// </summary>
+		/// <remarks>
+		/// This could be used, for example, on an TranslationMap of boolean values, to output '#' for
+		/// false values, and '.' for true values.
+		/// </remarks>
+		/// <param name="elementStringifier">
+		/// Function determining the string representation of each element.
+		/// </param>
+		/// <returns>A string representation of the TranslationMap.</returns>
+		public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+
+		/// <summary>
+		/// Prints the values in the TranslationMap, using the function specified to turn elements into
+		/// strings, and using the "field length" specified. Each element of type T will have spaces
+		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
+		/// than the length of the element's string represention. A positive-number right-aligns the
+		/// text within the field, while a negative number left-aligns the text.
+		/// </summary>
+		/// <param name="fieldSize">The size of the field to give each value.</param>
+		/// <param name="elementStringifier">
+		/// Function to use to convert each element to a string. Null defaults to the ToString
+		/// function of type T.
+		/// </param>
+		/// <returns>A string representation of the TranslationMap.</returns>
+		public string ToString(int fieldSize, Func<T2, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+
 
 		/// <summary>
 		/// Translates your map data into the view type.
