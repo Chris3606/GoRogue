@@ -162,25 +162,8 @@ namespace GoRogue
 		public int Y { get; private set; }
 
 		/// <summary>
-		/// Creates a rectangle with the given position and size.  Effectively a constructor, but with extra overloads not possible to provide in constructors alone.
-		/// </summary>
-		/// <param name="x">Minimum x coordinate that is inside the rectangle.</param>
-		/// <param name="y">Minimum y coordinate that is inside the rectangle.</param>
-		/// <param name="width">Width of the rectangle.</param>
-		/// <param name="height">Height of the rectangle.</param>>
-		/// <returns>A new rectangle at the given position with the given width and height.</returns>
-		public static Rectangle CreateWithSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
-
-		/// <summary>
-		/// Creates a rectangle with the given position and size.  Effectively a constructor, but with extra overloads not possible to provide in constructors alone.
-		/// </summary>
-		/// <param name="position">Minimum (x, y) values that are inside the resulting rectangle.</param>
-		/// <param name="size">The size of the rectangle, in form (width, height).</param>
-		/// <returns>A new rectangle at the given position with the given size.</returns>
-		public static Rectangle CreateWithSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
-
-		/// <summary>
-		/// Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. 
+		/// Creates a rectangle with the given minimum and maximum extents. Effectively a
+		/// constructor, but with extra overloads not possible to provide in constructors alone.
 		/// </summary>
 		/// <param name="minX">Minimum x coordinate that is inside the rectangle.</param>
 		/// <param name="minY">Minimum y coordinate that is inside the rectangle.</param>
@@ -190,7 +173,8 @@ namespace GoRogue
 		public static Rectangle CreateWithExtents(int minX, int minY, int maxX, int maxY) => new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
 
 		/// <summary>
-		/// Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. 
+		/// Creates a rectangle with the given minimum and maximum extents. Effectively a
+		/// constructor, but with extra overloads not possible to provide in constructors alone.
 		/// </summary>
 		/// <param name="minExtent">Minimum (x, y) coordinates that are inside the rectangle.</param>
 		/// <param name="maxExtent">Maximum (x, y) coordinates that are inside the rectangle.</param>
@@ -198,26 +182,57 @@ namespace GoRogue
 		public static Rectangle CreateWithExtents(Coord minExtent, Coord maxExtent) => new Rectangle(minExtent, maxExtent);
 
 		/// <summary>
-		/// Creates a rectangle centered on the given position, with the given horizontal and vertical radius values.  Effectively a constructor, but with extra overloads
-		/// not possible to provide in constructors alone. 
+		/// Creates a rectangle centered on the given position, with the given horizontal and
+		/// vertical radius values. Effectively a constructor, but with extra overloads not possible
+		/// to provide in constructors alone.
 		/// </summary>
 		/// <param name="centerX">X-value of the center of the rectangle.</param>
 		/// <param name="centerY">Y-value of the center of the rectangle.</param>
-		/// <param name="horizontalRadius">Number of units to the left and right of the center point that are included within the rectangle.</param>
-		/// <param name="verticalRadius">Number of units to the top and bottom of the center point that are included within the rectangle.</param>
+		/// <param name="horizontalRadius">
+		/// Number of units to the left and right of the center point that are included within the rectangle.
+		/// </param>
+		/// <param name="verticalRadius">
+		/// Number of units to the top and bottom of the center point that are included within the rectangle.
+		/// </param>
 		/// <returns>A new rectangle with the given center point and radius values.</returns>
 		public static Rectangle CreateWithRadius(int centerX, int centerY, int horizontalRadius, int verticalRadius)
 			=> new Rectangle(centerX - horizontalRadius, centerY - verticalRadius, 2 * horizontalRadius + 1, 2 * verticalRadius + 1);
 
 		/// <summary>
-		/// Creates a rectangle centered on the given position, with the given horizontal and vertical radius values.  Effectively a constructor, but with extra overloads
-		/// not possible to provide in constructors alone.  
+		/// Creates a rectangle centered on the given position, with the given horizontal and
+		/// vertical radius values. Effectively a constructor, but with extra overloads not possible
+		/// to provide in constructors alone.
 		/// </summary>
 		/// <param name="center">Center of the rectangle.</param>
-		/// <param name="horizontalRadius">Number of units to the left and right of the center point that are included within the rectangle.</param>
-		/// <param name="verticalRadius">Number of units to the top and bottom of the center point that are included within the rectangle.</param>
+		/// <param name="horizontalRadius">
+		/// Number of units to the left and right of the center point that are included within the rectangle.
+		/// </param>
+		/// <param name="verticalRadius">
+		/// Number of units to the top and bottom of the center point that are included within the rectangle.
+		/// </param>
 		/// <returns>A new rectangle with the given center point and radius values.</returns>
 		public static Rectangle CreateWithRadius(Coord center, int horizontalRadius, int verticalRadius) => new Rectangle(center, horizontalRadius, verticalRadius);
+
+		/// <summary>
+		/// Creates a rectangle with the given position and size. Effectively a constructor, but with
+		/// extra overloads not possible to provide in constructors alone.
+		/// </summary>
+		/// <param name="x">Minimum x coordinate that is inside the rectangle.</param>
+		/// <param name="y">Minimum y coordinate that is inside the rectangle.</param>
+		/// <param name="width">Width of the rectangle.</param>
+		/// <param name="height">Height of the rectangle.</param>
+		/// &gt;
+		/// <returns>A new rectangle at the given position with the given width and height.</returns>
+		public static Rectangle CreateWithSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
+
+		/// <summary>
+		/// Creates a rectangle with the given position and size. Effectively a constructor, but with
+		/// extra overloads not possible to provide in constructors alone.
+		/// </summary>
+		/// <param name="position">Minimum (x, y) values that are inside the resulting rectangle.</param>
+		/// <param name="size">The size of the rectangle, in form (width, height).</param>
+		/// <returns>A new rectangle at the given position with the given size.</returns>
+		public static Rectangle CreateWithSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
 
 		/// <summary>
 		/// Gets a MapArea representing every cell in rect1 that is NOT in rect2.

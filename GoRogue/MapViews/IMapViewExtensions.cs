@@ -23,14 +23,6 @@ namespace GoRogue.MapViews
 		public static Rectangle Bounds<T>(this IMapView<T> mapView) => new Rectangle(0, 0, mapView.Width, mapView.Height);
 
 		/// <summary>
-		/// Returns a Coord (Width, Height) representing the size of the MapView.
-		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>>
-		/// <param name="mapView">Map view to get bounds for -- never specified manually as this is an extension method.</param>
-		/// <returns>A Coord (Width, Height) representing the size of the MapView.</returns>
-		public static Coord Size<T>(this IMapView<T> mapView) => Coord.Get(mapView.Width, mapView.Height);
-
-		/// <summary>
 		/// Iterates through each position in the map view. Equivalent to nested for loop for (y =
 		/// 0...) for (x = 0...)
 		/// </summary>
@@ -126,5 +118,16 @@ namespace GoRogue.MapViews
 
 			return Coord.Get(rng.Next(mapView.Width), rng.Next(mapView.Height));
 		}
+
+		/// <summary>
+		/// Returns a Coord (Width, Height) representing the size of the MapView.
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// &gt;
+		/// <param name="mapView">
+		/// Map view to get bounds for -- never specified manually as this is an extension method.
+		/// </param>
+		/// <returns>A Coord (Width, Height) representing the size of the MapView.</returns>
+		public static Coord Size<T>(this IMapView<T> mapView) => Coord.Get(mapView.Width, mapView.Height);
 	}
 }
