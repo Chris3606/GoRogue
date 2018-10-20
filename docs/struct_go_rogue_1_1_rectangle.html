@@ -91,7 +91,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4b90151a860cbc8f858a8278da990aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the minimum x and y values of the rectangle, along with the width and height.  <a href="#a4b90151a860cbc8f858a8278da990aa7">More...</a><br /></td></tr>
 <tr class="separator:a4b90151a860cbc8f858a8278da990aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78d3c849e4a7957076f60413c6594b9a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a78d3c849e4a7957076f60413c6594b9a">Rectangle</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> minExtent, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> maxExtent)</td></tr>
-<tr class="memdesc:a78d3c849e4a7957076f60413c6594b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the minimum and maximum points taht are considered within the rectangle.  <a href="#a78d3c849e4a7957076f60413c6594b9a">More...</a><br /></td></tr>
+<tr class="memdesc:a78d3c849e4a7957076f60413c6594b9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes the minimum and maximum points that are considered within the rectangle.  <a href="#a78d3c849e4a7957076f60413c6594b9a">More...</a><br /></td></tr>
 <tr class="separator:a78d3c849e4a7957076f60413c6594b9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a424c6f1c998065b33379bcf6fa77b7c8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a424c6f1c998065b33379bcf6fa77b7c8">Rectangle</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> center, int horizontalRadius, int verticalRadius)</td></tr>
 <tr class="memdesc:a424c6f1c998065b33379bcf6fa77b7c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes a center point, and horizontal/vertical radius defining the bounds.  <a href="#a424c6f1c998065b33379bcf6fa77b7c8">More...</a><br /></td></tr>
@@ -216,6 +216,24 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ad71d37d5d673d2bf7269a0babf8347cb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#ad71d37d5d673d2bf7269a0babf8347cb">CreateWithExtents</a> (int minX, int minY, int maxX, int maxY)</td></tr>
+<tr class="memdesc:ad71d37d5d673d2bf7269a0babf8347cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#ad71d37d5d673d2bf7269a0babf8347cb">More...</a><br /></td></tr>
+<tr class="separator:ad71d37d5d673d2bf7269a0babf8347cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc0dea299e51454c62235d6047927713"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#afc0dea299e51454c62235d6047927713">CreateWithExtents</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> minExtent, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> maxExtent)</td></tr>
+<tr class="memdesc:afc0dea299e51454c62235d6047927713"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#afc0dea299e51454c62235d6047927713">More...</a><br /></td></tr>
+<tr class="separator:afc0dea299e51454c62235d6047927713"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af80ece2c1c75d81ebc968caa968036da"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#af80ece2c1c75d81ebc968caa968036da">CreateWithRadius</a> (int centerX, int centerY, int horizontalRadius, int verticalRadius)</td></tr>
+<tr class="memdesc:af80ece2c1c75d81ebc968caa968036da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle centered on the given position, with the given horizontal and vertical radius values. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#af80ece2c1c75d81ebc968caa968036da">More...</a><br /></td></tr>
+<tr class="separator:af80ece2c1c75d81ebc968caa968036da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3193538546d311773562e2fb8bd0414d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a3193538546d311773562e2fb8bd0414d">CreateWithRadius</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> center, int horizontalRadius, int verticalRadius)</td></tr>
+<tr class="memdesc:a3193538546d311773562e2fb8bd0414d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle centered on the given position, with the given horizontal and vertical radius values. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#a3193538546d311773562e2fb8bd0414d">More...</a><br /></td></tr>
+<tr class="separator:a3193538546d311773562e2fb8bd0414d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5f6f0f474a6b542244987cf4ea7159f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#ab5f6f0f474a6b542244987cf4ea7159f">CreateWithSize</a> (int x, int y, int width, int height)</td></tr>
+<tr class="memdesc:ab5f6f0f474a6b542244987cf4ea7159f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle with the given position and size. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#ab5f6f0f474a6b542244987cf4ea7159f">More...</a><br /></td></tr>
+<tr class="separator:ab5f6f0f474a6b542244987cf4ea7159f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eb849501b57fe34e2b5890bf67d13d9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a8eb849501b57fe34e2b5890bf67d13d9">CreateWithSize</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> size)</td></tr>
+<tr class="memdesc:a8eb849501b57fe34e2b5890bf67d13d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a rectangle with the given position and size. Effectively a constructor, but with extra overloads not possible to provide in constructors alone.  <a href="#a8eb849501b57fe34e2b5890bf67d13d9">More...</a><br /></td></tr>
+<tr class="separator:a8eb849501b57fe34e2b5890bf67d13d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#a664ecdc9dbd03ab90f9dd0f8e59a1240">GetDifference</a> (<a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> rect1, <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> rect2)</td></tr>
 <tr class="memdesc:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a MapArea representing every cell in rect1 that is NOT in rect2.  <a href="#a664ecdc9dbd03ab90f9dd0f8e59a1240">More...</a><br /></td></tr>
 <tr class="separator:a664ecdc9dbd03ab90f9dd0f8e59a1240"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -238,7 +256,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:af7c359ebea5a45d6717fc2db08a29346"><td class="memItemLeft" align="right" valign="top">static readonly <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_go_rogue_1_1_rectangle.html#af7c359ebea5a45d6717fc2db08a29346">EMPTY</a> = new <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a>(0, 0, 0, 0)</td></tr>
-<tr class="memdesc:af7c359ebea5a45d6717fc2db08a29346"><td class="mdescLeft">&#160;</td><td class="mdescRight">The empty rectangle. Has origin of 0, 0 with 0 width and height.  <a href="#af7c359ebea5a45d6717fc2db08a29346">More...</a><br /></td></tr>
+<tr class="memdesc:af7c359ebea5a45d6717fc2db08a29346"><td class="mdescLeft">&#160;</td><td class="mdescRight">The empty rectangle. Has origin of (0, 0) with 0 width and height.  <a href="#af7c359ebea5a45d6717fc2db08a29346">More...</a><br /></td></tr>
 <tr class="separator:af7c359ebea5a45d6717fc2db08a29346"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
@@ -372,7 +390,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor. Takes the minimum and maximum points taht are considered within the rectangle. </p>
+<p>Constructor. Takes the minimum and maximum points that are considered within the rectangle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">minExtent</td><td>Minimum x and y values that are considered inside the rectangle.</td></tr>
@@ -419,8 +437,8 @@ Properties</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">center</td><td>The center point of the rectangle.</td></tr>
-    <tr><td class="paramname">horizontalRadius</td><td>Number of tiles to the left and right of the center point that are included within the rectangle. </td></tr>
-    <tr><td class="paramname">verticalRadius</td><td>Number of tiles to the top and bottom of the center point that are included within the rectangle. </td></tr>
+    <tr><td class="paramname">horizontalRadius</td><td>Number of units to the left and right of the center point that are included within the rectangle. </td></tr>
+    <tr><td class="paramname">verticalRadius</td><td>Number of units to the top and bottom of the center point that are included within the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -701,6 +719,331 @@ Properties</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the given rectangle is completely contained within the current one, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ad71d37d5d673d2bf7269a0babf8347cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad71d37d5d673d2bf7269a0babf8347cb">&sect;&nbsp;</a></span>CreateWithExtents() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithExtents </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>minX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>minY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>maxY</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minX</td><td>Minimum x coordinate that is inside the rectangle.</td></tr>
+    <tr><td class="paramname">minY</td><td>Minimum y coordinate that is inside the rectangle.</td></tr>
+    <tr><td class="paramname">maxX</td><td>Maximum x coordinate that is inside the rectangle.</td></tr>
+    <tr><td class="paramname">maxY</td><td>Maximum y coordinate that is inside the rectangle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="struct_go_rogue_1_1_rectangle.html" title="Represents a rectangle in terms of grid squares. Provides numerous functions pertaining to area...">Rectangle</a> with the given minimum and maximum extents.</dd></dl>
+
+</div>
+</div>
+<a id="afc0dea299e51454c62235d6047927713"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc0dea299e51454c62235d6047927713">&sect;&nbsp;</a></span>CreateWithExtents() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithExtents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>minExtent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>maxExtent</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle with the given minimum and maximum extents. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">minExtent</td><td>Minimum (x, y) coordinates that are inside the rectangle.</td></tr>
+    <tr><td class="paramname">maxExtent</td><td>Maximum (x, y) coordinates that are inside the rectangle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="struct_go_rogue_1_1_rectangle.html" title="Represents a rectangle in terms of grid squares. Provides numerous functions pertaining to area...">Rectangle</a> with the given minimum and maximum extents.</dd></dl>
+
+</div>
+</div>
+<a id="af80ece2c1c75d81ebc968caa968036da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80ece2c1c75d81ebc968caa968036da">&sect;&nbsp;</a></span>CreateWithRadius() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithRadius </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>centerX</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>centerY</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>horizontalRadius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>verticalRadius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle centered on the given position, with the given horizontal and vertical radius values. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">centerX</td><td>X-value of the center of the rectangle.</td></tr>
+    <tr><td class="paramname">centerY</td><td>Y-value of the center of the rectangle.</td></tr>
+    <tr><td class="paramname">horizontalRadius</td><td>Number of units to the left and right of the center point that are included within the rectangle. </td></tr>
+    <tr><td class="paramname">verticalRadius</td><td>Number of units to the top and bottom of the center point that are included within the rectangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new rectangle with the given center point and radius values.</dd></dl>
+
+</div>
+</div>
+<a id="a3193538546d311773562e2fb8bd0414d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3193538546d311773562e2fb8bd0414d">&sect;&nbsp;</a></span>CreateWithRadius() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithRadius </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>center</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>horizontalRadius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>verticalRadius</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle centered on the given position, with the given horizontal and vertical radius values. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">center</td><td>Center of the rectangle.</td></tr>
+    <tr><td class="paramname">horizontalRadius</td><td>Number of units to the left and right of the center point that are included within the rectangle. </td></tr>
+    <tr><td class="paramname">verticalRadius</td><td>Number of units to the top and bottom of the center point that are included within the rectangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new rectangle with the given center point and radius values.</dd></dl>
+
+</div>
+</div>
+<a id="ab5f6f0f474a6b542244987cf4ea7159f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5f6f0f474a6b542244987cf4ea7159f">&sect;&nbsp;</a></span>CreateWithSize() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithSize </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>width</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>height</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle with the given position and size. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>Minimum x coordinate that is inside the rectangle.</td></tr>
+    <tr><td class="paramname">y</td><td>Minimum y coordinate that is inside the rectangle.</td></tr>
+    <tr><td class="paramname">width</td><td>Width of the rectangle.</td></tr>
+    <tr><td class="paramname">height</td><td>Height of the rectangle.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>&gt; </p><dl class="section return"><dt>Returns</dt><dd>A new rectangle at the given position with the given width and height.</dd></dl>
+
+</div>
+</div>
+<a id="a8eb849501b57fe34e2b5890bf67d13d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eb849501b57fe34e2b5890bf67d13d9">&sect;&nbsp;</a></span>CreateWithSize() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> GoRogue.Rectangle.CreateWithSize </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a rectangle with the given position and size. Effectively a constructor, but with extra overloads not possible to provide in constructors alone. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>Minimum (x, y) values that are inside the resulting rectangle.</td></tr>
+    <tr><td class="paramname">size</td><td>The size of the rectangle, in form (width, height).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new rectangle at the given position with the given size.</dd></dl>
 
 </div>
 </div>
@@ -1868,7 +2211,7 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>The empty rectangle. Has origin of 0, 0 with 0 width and height. </p>
+<p>The empty rectangle. Has origin of (0, 0) with 0 width and height. </p>
 
 </div>
 </div>
