@@ -41,6 +41,36 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
+		/// Gets the value at a random position in the MapView.
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">
+		/// Map view to select from -- never specified manually as this is an extension method.
+		/// </param>
+		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <returns>The item at a random position in the MapView.</returns>
+		public static T RandomItem<T>(this IMapView<T> mapView, IGenerator rng = null)
+			=> mapView[RandomPosition(mapView, rng)];
+
+		/// <summary>
+		/// Gets the item at a random position in the map view, for which the selector returns true. Random
+		/// positions will continuously be generated until one that qualifies is found.
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">
+		/// Map view to select from -- never specified manually as this is an extension method.
+		/// </param>
+		/// <param name="selector">
+		/// Function that takes a Coord and the value at that Coord, and returns true if it is an
+		/// acceptable selection, and false if not.
+		/// </param>
+		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <returns>The item at a random position in the MapView for which the selector returns true.</returns>
+		public static T RandomItem<T>(this IMapView<T> mapView, Func<Coord, T, bool> selector, IGenerator rng = null)
+			=> mapView[RandomPosition(mapView, selector, rng)];
+		
+
+		/// <summary>
 		/// Gets a random position in the map view, whose value in that map view is the specified
 		/// one. Random positions will continually be generated until one with the specified value is found.
 		/// </summary>
@@ -75,6 +105,46 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator rng = null)
 			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
+
+		/// <summary>
+		/// Gets a random position in the map view, whose value in map view is one of the ones
+		/// specified in the HashSet. Random positions will continually be generated until one that has one of the
+		/// specified values is found. 
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">
+		/// Map view to select from -- never specified manually as this is an extension method.
+		/// </param>
+		/// <param name="validValues">
+		/// A set of values to look for in the MapView to determine whether or not a generated Coord
+		/// is valid.
+		/// </param>
+		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <returns>
+		/// A random position whose value in this MapView is equal to one of the values specified.
+		/// </returns>
+		public static Coord RandomPosition<T>(this IMapView<T> mapView, HashSet<T> validValues, IGenerator rng = null)
+			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
+
+		/// <summary>
+		/// Gets a random position in the map view, whose value in map view is one of the ones
+		/// specified in validValues. Random positions will continually be generated until one that has one of the
+		/// specified values is found.  
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">
+		/// Map view to select from -- never specified manually as this is an extension method.
+		/// </param>
+		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="validValues">
+		/// A set of values to look for in the MapView to determine whether or not a generated Coord
+		/// is valid.
+		/// </param>
+		/// <returns>
+		/// A random position whose value in this MapView is equal to one of the values specified.
+		/// </returns>
+		public static Coord RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null, params T[] validValues)
+			=> RandomPosition(mapView, (IEnumerable<T>)validValues, rng);
 
 		/// <summary>
 		/// Gets a random position in the map view, for which the selector returns true. Random
