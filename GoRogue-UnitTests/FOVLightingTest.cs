@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
+using GoRogue.MapGeneration.Generators;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -168,6 +169,44 @@ namespace GoRogue_UnitTests
 					else
 						Assert.AreEqual(false, currentSenseMap.Contains(Coord.Get(x, y)));
 				}
+
+		}
+
+		[TestMethod]
+		public void FOVBooleanInput()
+		{
+			var map = new ArrayMap<bool>(10, 10);
+			RectangleMapGenerator.Generate(map);
+
+			var identicalResMap = new BoxResMap(10, 10);
+
+			var fov = new FOV(map);
+			var fovDouble = new FOV(identicalResMap);
+
+			fov.Calculate(5, 5, 3);
+			fovDouble.Calculate(5, 5, 3);
+
+			foreach (var pos in fov.Positions())
+				Assert.AreEqual(fov[pos], fovDouble[pos]);
+		}
+
+		[TestMethod]
+		public void FOVBooleanOutput()
+		{
+			var map = new ArrayMap<bool>(10, 10);
+			RectangleMapGenerator.Generate(map);
+
+			var fov = new FOV(map);
+			fov.Calculate(5, 5, 3);
+
+			Console.WriteLine("FOV for reference:");
+			Console.WriteLine(fov.ToString(2));
+
+			foreach (var pos in fov.Positions())
+			{
+				bool inFOV = fov[pos] != 0.0;
+				Assert.AreEqual(inFOV, fov.BooleanFOV[pos]);
+			}
 		}
 	}
 

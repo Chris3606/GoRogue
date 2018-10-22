@@ -25,6 +25,11 @@ namespace GoRogue
 		private IMapView<double> resMap;
 
 		/// <summary>
+		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and false indicates it is not.
+		/// </summary>
+		public IMapView<bool> BooleanFOV { get; private set; }
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="resMap">
@@ -34,10 +39,20 @@ namespace GoRogue
 		public FOV(IMapView<double> resMap)
 		{
 			this.resMap = resMap;
+			BooleanFOV = new LambdaTranslationMap<double, bool>(this, val => val > 0.0 ? true : false);
+
 			light = null;
 			currentFOV = new HashSet<Coord>();
 			previousFOV = new HashSet<Coord>();
 		}
+
+		/// <summary>
+		/// Constructor.  Takes resistance map as a simple map view of boolean values, where true indicates
+		/// the location is transparent (does NOT block FOV), and false indicates it is not transparent (does block FOV)
+		/// </summary>
+		/// <param name="resMap">The map to use for FOV calculation.</param>
+		public FOV(IMapView<bool> resMap)
+			: this(new LambdaTranslationMap<bool, double>(resMap, v => v ? 0.0 : 1.0)) { }
 
 		/// <summary>
 		/// IEnumerable of only positions currently in FOV.
