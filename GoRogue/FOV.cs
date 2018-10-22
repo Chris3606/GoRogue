@@ -23,7 +23,6 @@ namespace GoRogue
 		private HashSet<Coord> previousFOV;
 
 		private IMapView<double> resMap;
-		// Last light cached
 
 		/// <summary>
 		/// Constructor.
@@ -109,7 +108,7 @@ namespace GoRogue
 		/// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
 		/// If no radius is specified, it is effectively infinite.
 		/// </param>
-		public void Calculate(int startX, int startY, int radius = int.MaxValue) => Calculate(startX, startY, radius, Radius.CIRCLE);
+		public void Calculate(int startX, int startY, double radius = double.MaxValue) => Calculate(startX, startY, radius, Radius.CIRCLE);
 
 		/// <summary>
 		/// Calculates FOV, given an origin point, with a given radius. If no radius is specified,
@@ -121,7 +120,7 @@ namespace GoRogue
 		/// The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
 		/// If no radius is specified, it is effectively infinite.
 		/// </param>
-		public void Calculate(Coord start, int radius = int.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
+		public void Calculate(Coord start, double radius = double.MaxValue) => Calculate(start.X, start.Y, radius, Radius.CIRCLE);
 
 		/// <summary>
 		/// Calculates FOV, given an origin point of (startX, startY), with the given radius and
@@ -136,10 +135,10 @@ namespace GoRogue
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public void Calculate(int startX, int startY, int radius, Distance distanceCalc)
+		public void Calculate(int startX, int startY, double radius, Distance distanceCalc)
 		{
-			double rad = Math.Max(1, radius);
-			double decay = 1.0 / (rad + 1);
+			radius = Math.Max(1, radius);
+			double decay = 1.0 / (radius + 1);
 
 			previousFOV = currentFOV;
 			currentFOV = new HashSet<Coord>();
@@ -150,8 +149,8 @@ namespace GoRogue
 
 			foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
 			{
-				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
-				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
 			}
 		}
 
@@ -166,7 +165,7 @@ namespace GoRogue
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public void Calculate(Coord start, int radius, Distance distanceCalc) => Calculate(start.X, start.Y, radius, distanceCalc);
+		public void Calculate(Coord start, double radius, Distance distanceCalc) => Calculate(start.X, start.Y, radius, distanceCalc);
 
 		/// <summary>
 		/// Calculates FOV, given an origin point of (startX, startY), with the given radius and
@@ -191,41 +190,33 @@ namespace GoRogue
 		/// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
 		/// degrees are included on either side of the span line.
 		/// </param>
-		public void Calculate(int startX, int startY, int radius, Distance distanceCalc, double angle, double span)
+		public void Calculate(int startX, int startY, double radius, Distance distanceCalc, double angle, double span)
 		{
-			double rad = Math.Max(1, radius);
-			double decay = 1.0 / (rad + 1);
+			radius = Math.Max(1, radius);
+			double decay = 1.0 / (radius + 1);
 
-			double angle2 = MathHelpers.ToRadian((angle > 360.0 || angle < 0.0) ? Math.IEEERemainder(angle + 720.0, 360.0) : angle);
-			double span2 = MathHelpers.ToRadian(span);
+			angle = MathHelpers.ToRadian((angle > 360.0 || angle < 0.0) ? Math.IEEERemainder(angle + 720.0, 360.0) : angle);
+			span = MathHelpers.ToRadian(span);
 
 			previousFOV = currentFOV;
 			currentFOV = new HashSet<Coord>();
 
 			initializeLightMap();
-			light[startX, startY] = 1; // Starting space full light
+			light[startX, startY] = 1; // Full power to starting space
 			currentFOV.Add(Coord.Get(startX, startY));
 
-			// TODO: There may be a glitch here with too large radius, may have to set to longest
-			// possible straight-line Manhattan dist for map intsead. No falloff issue -- shadow is on/off.
-			int ctr = 0;
-			bool started = false;
-			foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighborsCounterClockwise(Direction.UP_RIGHT))
-			{
-				ctr %= 4;
-				ctr++;
-				if (angle <= Math.PI / 2.0 * ctr + span / 2.0)
-					started = true;
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
 
-				if (started)
-				{
-					if (ctr < 4 && angle < Math.PI / 2.0 * (ctr - 1) - span / 2.0)
-						break;
 
-					light = shadowCastLimited(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, (int)rad, startX, startY, decay, light, resMap, distanceCalc, angle2, span2);
-					light = shadowCastLimited(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, (int)rad, startX, startY, decay, light, resMap, distanceCalc, angle2, span2);
-				}
-			}
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
 		}
 
 		/// <summary>
@@ -250,7 +241,7 @@ namespace GoRogue
 		/// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
 		/// degrees are included on either side of the span line.
 		/// </param>
-		public void Calculate(Coord start, int radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
+		public void Calculate(Coord start, double radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
 
 		// Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
 #pragma warning disable RECS0137
@@ -295,14 +286,13 @@ namespace GoRogue
 		/// <returns>A (multi-line) string representation of the FOV.</returns>
 		public override string ToString() => ToString();
 
-		// Returns value because its recursive
-		private static double[,] shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
-									 int radius, int startX, int startY, double decay, double[,] lightMap, HashSet<Coord> fovSet,
+		private static void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
+									 double radius, int startX, int startY, double decay, double[,] lightMap, HashSet<Coord> fovSet,
 									 IMapView<double> map, Distance distanceStrategy)
 		{
 			double newStart = 0;
 			if (start < end)
-				return lightMap;
+				return;
 
 			bool blocked = false;
 			for (int distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
@@ -346,21 +336,20 @@ namespace GoRogue
 						if (map[currentX, currentY] >= 1 && distance < radius) // Wall within sight line
 						{
 							blocked = true;
-							lightMap = shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy);
+							shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy);
 							newStart = rightSlope;
 						}
 					}
 				}
 			}
-			return lightMap;
 		}
 
-		private static double[,] shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, int radius, int startX, int startY, double decay,
-												   double[,] lightMap, IMapView<double> map, Distance distanceStrategy, double angle, double span)
+		private static void shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, double radius, int startX, int startY, double decay,
+												   double[,] lightMap, HashSet<Coord> fovSet, IMapView<double> map, Distance distanceStrategy, double angle, double span)
 		{
 			double newStart = 0;
 			if (start < end)
-				return lightMap;
+				return;
 
 			bool blocked = false;
 			for (int distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
@@ -379,8 +368,10 @@ namespace GoRogue
 					if (end > leftSlope)
 						break;
 
-					double newAngle = Math.Atan2(currentY - startY, currentX - startX) + Math.PI * 2;
-					if (Math.Abs(Math.IEEERemainder(angle - newAngle + Math.PI * 8, Math.PI * 2)) > span / 2.0)
+					double newAngle = (Math.Atan2(currentY - startY, currentX - startX) + Math.PI * 8.0) % (Math.PI * 2);
+					double remainder = (angle - newAngle + Math.PI * 2) % (Math.PI * 2);
+					double iRemainder = (newAngle - angle + Math.PI * 2) % (Math.PI * 2);
+					if (Math.Abs(remainder) > span * 0.5 && Math.Abs(iRemainder) > span * 0.5)
 						continue;
 
 					double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
@@ -388,11 +379,14 @@ namespace GoRogue
 					{
 						double bright = 1 - decay * deltaRadius;
 						lightMap[currentX, currentY] = bright;
+
+						if (bright > 0.0)
+							fovSet.Add(Coord.Get(currentX, currentY));
 					}
 
 					if (blocked) // Previous cell was blocking
 					{
-						if (map[currentX, currentY] >= 1) // We hit a wall
+						if (map[currentX, currentY] >= 1) // We hit a wall...
 							newStart = rightSlope;
 						else
 						{
@@ -405,13 +399,12 @@ namespace GoRogue
 						if (map[currentX, currentY] >= 1 && distance < radius) // Wall within line of sight
 						{
 							blocked = true;
-							lightMap = shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, map, distanceStrategy, angle, span);
+							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy, angle, span);
 							newStart = rightSlope;
 						}
 					}
 				}
 			}
-			return lightMap;
 		}
 
 		private void initializeLightMap()

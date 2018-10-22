@@ -3,11 +3,16 @@
 namespace GoRogue
 {
 	/// <summary>
-	/// Static class consisting of mathematical "helper" functions -- things like angle unit
+	/// Static class consisting of mathematical "helper" functions and constants -- things like angle unit
 	/// conversions, and other helpful functions.
 	/// </summary>
 	public static class MathHelpers
 	{
+		/// <summary>
+		/// Result of 1/360; represents in decimal form a percent of a circle that a degree constitutes.
+		/// </summary>
+		public const double DEGREE_PCT_OF_CIRCLE = 0.002777777777777778;
+
 		/// <summary>
 		/// Rounds the given number up (toward highest number), to the nearest multiple of the
 		/// specified value.

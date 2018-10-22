@@ -57,7 +57,7 @@ namespace GoRogue.SenseMapping
 		internal bool[,] nearLight;
 		internal IMapView<double> resMap;
 		private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
-		private int _radius;
+		private double _radius;
 
 		private int size;
 
@@ -75,7 +75,7 @@ namespace GoRogue.SenseMapping
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public SenseSource(SourceType type, Coord position, int radius, Distance distanceCalc)
+		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc)
 		{
 			Type = type;
 			Position = position;
@@ -105,7 +105,7 @@ namespace GoRogue.SenseMapping
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public SenseSource(SourceType type, int positionX, int positionY, int radius, Distance distanceCalc)
+		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc)
 			: this(type, Coord.Get(positionX, positionY), radius, distanceCalc) { }
 
 		/// <summary>
@@ -133,7 +133,7 @@ namespace GoRogue.SenseMapping
 		/// there is no need to since Calculate in SenseMap immediately copies values from local
 		/// array to its "master" array.
 		/// </summary>
-		public int Radius
+		public double Radius
 		{
 			get => _radius;
 			set
@@ -141,7 +141,9 @@ namespace GoRogue.SenseMapping
 				if (_radius != value)
 				{
 					_radius = value;
-					size = _radius * 2 + 1;
+					// Can round down here because the EUCLIDEAN distance shape is always contained within
+					// the CHEBYSHEV distance shape
+					size = (int)_radius * 2 + 1;
 					light = new double[size, size];
 					nearLight = new bool[size, size];
 				}
@@ -229,8 +231,8 @@ namespace GoRogue.SenseMapping
 				{
 					int x2 = p.X + dir.DeltaX;
 					int y2 = p.Y + dir.DeltaY;
-					int globalX2 = Position.X - Radius + x2;
-					int globalY2 = Position.Y - Radius + y2;
+					int globalX2 = Position.X - (int)Radius + x2;
+					int globalY2 = Position.Y - (int)Radius + y2;
 
 					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
 						DistanceCalc.Calculate(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
@@ -271,8 +273,8 @@ namespace GoRogue.SenseMapping
 			{
 				int x2 = x + di.DeltaX;
 				int y2 = y + di.DeltaY;
-				int globalX2 = Position.X - Radius + x2;
-				int globalY2 = Position.Y - Radius + y2;
+				int globalX2 = Position.X - (int)Radius + x2;
+				int globalY2 = Position.Y - (int)Radius + y2;
 
 				if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
 				{
@@ -300,8 +302,8 @@ namespace GoRogue.SenseMapping
 			int lit = 0, indirects = 0;
 			foreach (Coord p in neighbors)
 			{
-				int gpx = Position.X - Radius + p.X;
-				int gpy = Position.Y - Radius + p.Y;
+				int gpx = Position.X - (int)Radius + p.X;
+				int gpy = Position.Y - (int)Radius + p.Y;
 				if (light[p.X, p.Y] > 0)
 				{
 					lit++;
@@ -325,7 +327,7 @@ namespace GoRogue.SenseMapping
 
 		private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
 		{
-			int radius = Math.Max(1, Radius);
+			double radius = Math.Max(1, Radius);
 			double decay = 1.0 / (radius + 1);
 
 			double newStart = 0;
@@ -340,8 +342,8 @@ namespace GoRogue.SenseMapping
 				{
 					int currentX = size / 2 + deltaX * xx + deltaY * xy;
 					int currentY = size / 2 + deltaX * yx + deltaY * yy;
-					int gCurrentX = Position.X - Radius + currentX;
-					int gCurrentY = Position.Y - Radius + currentY;
+					int gCurrentX = Position.X - (int)Radius + currentX;
+					int gCurrentY = Position.Y - (int)Radius + currentY;
 					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
 					double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
