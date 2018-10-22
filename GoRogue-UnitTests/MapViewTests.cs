@@ -88,6 +88,20 @@ namespace GoRogue_UnitTests
 			checkViewportBounds(viewport, minVal, maxVal);
 		}
 
+		[TestMethod]
+		public void ApplyOverlayTest()
+		{
+			var map = new ArrayMap<bool>(100, 100);
+			CellularAutomataGenerator.Generate(map);
+
+			var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
+
+			duplicateMap.ApplyOverlay(map);
+
+			foreach (var pos in map.Positions())
+				Assert.AreEqual(map[pos], duplicateMap[pos]);
+		}
+
 		private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
 		{
 			for (int x = 0; x < genMap.Width; x++)

@@ -10,7 +10,7 @@ namespace GoRogue.MapViews
 	/// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
 	/// poor match for your game's actual map data. For example, map generation works with bools, and
 	/// FOV calculation with doubles, while your map data may model each map cell as a class or
-	/// struct containing many different member values. /// This class allows you to build descendant
+	/// struct containing many different member values. This class allows you to build descendant
 	/// classes that override the TranslateGet and TranslateSet methods for simple mapping, or the
 	/// this[Coord] properties if you need full access to the underlying data for context, in order
 	/// to present a simplified view of your data to an algorithm without having to create the large
@@ -44,7 +44,7 @@ namespace GoRogue.MapViews
 		/// </param>
 		protected SettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay) : this(baseMap)
 		{
-			ApplyOverlay(overlay);
+			this.ApplyOverlay(overlay);
 		}
 
 		/// <summary>
@@ -86,22 +86,6 @@ namespace GoRogue.MapViews
 		{
 			get => this[Coord.Get(x, y)];
 			set => this[Coord.Get(x, y)] = value;
-		}
-
-		/// <summary>
-		/// Applies view data to your map.
-		/// </summary>
-		/// <param name="overlay">
-		/// The view data to apply to the map. Must have identical dimensions to BaseMap.
-		/// </param>
-		public void ApplyOverlay(ISettableMapView<T2> overlay)
-		{
-			if (BaseMap.Height != overlay.Height || BaseMap.Width != overlay.Width)
-				throw new ArgumentException("Overlay size must match base map size.");
-
-			for (int y = 0; y < BaseMap.Height; ++y)
-				for (int x = 0; x < BaseMap.Width; ++x)
-					this[x, y] = overlay[x, y];
 		}
 
 		/// <summary>

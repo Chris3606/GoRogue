@@ -50,7 +50,7 @@ namespace GoRogue.MapViews
 			_getter = getter ?? throw new ArgumentNullException(nameof(getter));
 			_setter = setter ?? throw new ArgumentNullException(nameof(setter));
 
-			ApplyOverlay(overlay);
+			this.ApplyOverlay(overlay);
 		}
 
 		/// <summary>

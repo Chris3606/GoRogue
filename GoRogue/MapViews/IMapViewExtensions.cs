@@ -223,6 +223,22 @@ namespace GoRogue.MapViews
 			return result.ToString();
 		}
 
+		/// <summary>
+		/// Extension method that applies values of the overlay to the current one -- effectively
+		/// sets all the values of the current map to be corresponding to the one you pass in.
+		/// </summary>
+		/// <param name="self">The current ISettableMapView.  Never specified manually as this is an extension method.</param>
+		/// <param name="overlay">
+		/// The data apply to the map. Must have identical dimensions to the current map.
+		/// </param>
+		public static void ApplyOverlay<T>(this ISettableMapView<T> self, ISettableMapView<T> overlay)
+		{
+			if (self.Height != overlay.Height || self.Width != overlay.Width)
+				throw new ArgumentException("Overlay size must match current map size.");
 
+			for (int y = 0; y < self.Height; ++y)
+				for (int x = 0; x < self.Width; ++x)
+					self[x, y] = overlay[x, y];
+		}
 	}
 }
