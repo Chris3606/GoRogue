@@ -88,9 +88,6 @@ Inheritance diagram for GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt;:
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adbcb8ed30406c8d899b44fa6e854cfa2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#adbcb8ed30406c8d899b44fa6e854cfa2">ApplyOverlay</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T2 &gt; overlay)</td></tr>
-<tr class="memdesc:adbcb8ed30406c8d899b44fa6e854cfa2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies view data to your map.  <a href="#adbcb8ed30406c8d899b44fa6e854cfa2">More...</a><br /></td></tr>
-<tr class="separator:adbcb8ed30406c8d899b44fa6e854cfa2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a5708ff23a78a1cba34d96b6b6cc494cc">ToString</a> ()</td></tr>
 <tr class="memdesc:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html" title="Settable map view class capable of taking complex data and providing a simpler view of it...">SettableTranslationMap</a>.  <a href="#a5708ff23a78a1cba34d96b6b6cc494cc">More...</a><br /></td></tr>
 <tr class="separator:a5708ff23a78a1cba34d96b6b6cc494cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,7 +140,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Settable map view class capable of taking complex data and providing a simpler view of it. For a version that provides only "get" functionality, see <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html" title="Map view class capable of taking complex data and providing a simpler view of it. For a version that ...">TranslationMap</a>. </p>
-<p>Many <a class="el" href="namespace_go_rogue.html">GoRogue</a> algorithms work on a <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> of a simple data type, which is likely to be a poor match for your game's actual map data. For example, map generation works with bools, and <a class="el" href="class_go_rogue_1_1_f_o_v.html" title="Class responsible for caculating basic FOV (see SenseMap for more advanced lighting). Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only shadowcasting. This is more conducive to the typical use case for FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of radius types, as specified in Radius class (all the same ones that SenseMap supports). It also supports both 360 degree FOV and a &quot;field of view&quot; (cone) FOV. One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible). ">FOV</a> calculation with doubles, while your map data may model each map cell as a class or struct containing many different member values. /// This class allows you to build descendant classes that override the TranslateGet and TranslateSet methods for simple mapping, or the this[<a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>] properties if you need full access to the underlying data for context, in order to present a simplified view of your data to an algorithm without having to create the large amount of duplicate code associated with multiple <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> instances that all extract data from a Cell or Tile class. </p>
+<p>Many <a class="el" href="namespace_go_rogue.html">GoRogue</a> algorithms work on a <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> of a simple data type, which is likely to be a poor match for your game's actual map data. For example, map generation works with bools, and <a class="el" href="class_go_rogue_1_1_f_o_v.html" title="Class responsible for caculating basic FOV (see SenseMap for more advanced lighting). Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only shadowcasting. This is more conducive to the typical use case for FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of radius types, as specified in Radius class (all the same ones that SenseMap supports). It also supports both 360 degree FOV and a &quot;field of view&quot; (cone) FOV. One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible). ">FOV</a> calculation with doubles, while your map data may model each map cell as a class or struct containing many different member values. This class allows you to build descendant classes that override the TranslateGet and TranslateSet methods for simple mapping, or the this[<a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>] properties if you need full access to the underlying data for context, in order to present a simplified view of your data to an algorithm without having to create the large amount of duplicate code associated with multiple <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> instances that all extract data from a Cell or Tile class. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T1</td><td>The type of your underlying data.</td></tr>
@@ -233,32 +230,6 @@ Properties</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="adbcb8ed30406c8d899b44fa6e854cfa2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbcb8ed30406c8d899b44fa6e854cfa2">&sect;&nbsp;</a></span>ApplyOverlay()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.ApplyOverlay </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T2 &gt;&#160;</td>
-          <td class="paramname"><em>overlay</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Applies view data to your map. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">overlay</td><td>The view data to apply to the map. Must have identical dimensions to BaseMap. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a5708ff23a78a1cba34d96b6b6cc494cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5708ff23a78a1cba34d96b6b6cc494cc">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/3]</span></h2>
 

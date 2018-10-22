@@ -82,12 +82,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a1e0f04b332716bcbaec476857e74d722"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a1e0f04b332716bcbaec476857e74d722">Positions&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView)</td></tr>
 <tr class="memdesc:a1e0f04b332716bcbaec476857e74d722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterates through each position in the map view. Equivalent to nested for loop for (y = 0...) for (x = 0...)  <a href="#a1e0f04b332716bcbaec476857e74d722">More...</a><br /></td></tr>
 <tr class="separator:a1e0f04b332716bcbaec476857e74d722"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a55e92fffabc309bcaf6d9064260dd8"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a2a55e92fffabc309bcaf6d9064260dd8">RandomItem&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a2a55e92fffabc309bcaf6d9064260dd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the value at a random position in the MapView.  <a href="#a2a55e92fffabc309bcaf6d9064260dd8">More...</a><br /></td></tr>
+<tr class="separator:a2a55e92fffabc309bcaf6d9064260dd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfb1a148e0a7dfca6f64e9686011ff53"><td class="memItemLeft" align="right" valign="top">static T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#adfb1a148e0a7dfca6f64e9686011ff53">RandomItem&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, T, bool &gt; selector, IGenerator rng=null)</td></tr>
+<tr class="memdesc:adfb1a148e0a7dfca6f64e9686011ff53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at a random position in the map view, for which the selector returns true. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continuously be generated until one that qualifies is found.  <a href="#adfb1a148e0a7dfca6f64e9686011ff53">More...</a><br /></td></tr>
+<tr class="separator:adfb1a148e0a7dfca6f64e9686011ff53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89a3b757188b6ff5f489d3459b30bc5a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a89a3b757188b6ff5f489d3459b30bc5a">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, T validValue, IGenerator rng=null)</td></tr>
 <tr class="memdesc:a89a3b757188b6ff5f489d3459b30bc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position in the map view, whose value in that map view is the specified one. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one with the specified value is found.  <a href="#a89a3b757188b6ff5f489d3459b30bc5a">More...</a><br /></td></tr>
 <tr class="separator:a89a3b757188b6ff5f489d3459b30bc5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af825fcdce4e3615e628777cc1e7013ff"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#af825fcdce4e3615e628777cc1e7013ff">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, IEnumerable&lt; T &gt; validValues, IGenerator rng=null)</td></tr>
 <tr class="memdesc:af825fcdce4e3615e628777cc1e7013ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position in the map view, whose value in map view is one of the ones specified. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one that has one of the specified values is found.  <a href="#af825fcdce4e3615e628777cc1e7013ff">More...</a><br /></td></tr>
 <tr class="separator:af825fcdce4e3615e628777cc1e7013ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b46684e608d697cad691589da328f08"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a9b46684e608d697cad691589da328f08">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, HashSet&lt; T &gt; validValues, IGenerator rng=null)</td></tr>
+<tr class="memdesc:a9b46684e608d697cad691589da328f08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position in the map view, whose value in map view is one of the ones specified in the HashSet. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one that has one of the specified values is found.  <a href="#a9b46684e608d697cad691589da328f08">More...</a><br /></td></tr>
+<tr class="separator:a9b46684e608d697cad691589da328f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add260739e40205804097643be631e8cd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#add260739e40205804097643be631e8cd">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, IGenerator rng=null, params T[] validValues)</td></tr>
+<tr class="memdesc:add260739e40205804097643be631e8cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position in the map view, whose value in map view is one of the ones specified in validValues. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one that has one of the specified values is found.  <a href="#add260739e40205804097643be631e8cd">More...</a><br /></td></tr>
+<tr class="separator:add260739e40205804097643be631e8cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b760c17481419d92dfe1ea4616bc737"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a6b760c17481419d92dfe1ea4616bc737">RandomPosition&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; mapView, Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, T, bool &gt; selector, IGenerator rng=null)</td></tr>
 <tr class="memdesc:a6b760c17481419d92dfe1ea4616bc737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a random position in the map view, for which the selector returns true. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continuously be generated until one that qualifies is found.  <a href="#a6b760c17481419d92dfe1ea4616bc737">More...</a><br /></td></tr>
 <tr class="separator:a6b760c17481419d92dfe1ea4616bc737"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,10 +112,58 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a99809fecdde1501ae1a498ef3994d674"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a99809fecdde1501ae1a498ef3994d674">ExtendToString&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; map, int fieldSize, string begin=&quot;&quot;, string beginRow=&quot;&quot;, Func&lt; T, string &gt; elementStringifier=null, string rowSeparator=&quot;\, string elementSeparator=&quot; &quot;, string endRow=&quot;&quot;, string end=&quot;&quot;)</td></tr>
 <tr class="memdesc:a99809fecdde1501ae1a498ef3994d674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for IMapViews allowing printing the contents. Takes characters to surround the map, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. Takes the size of the field to give each element, characters to surround the MapView printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row.  <a href="#a99809fecdde1501ae1a498ef3994d674">More...</a><br /></td></tr>
 <tr class="separator:a99809fecdde1501ae1a498ef3994d674"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ca1299f59016ff00fc3451b7a537347"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a2ca1299f59016ff00fc3451b7a537347">ApplyOverlay&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt; self, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt; overlay)</td></tr>
+<tr class="memdesc:a2ca1299f59016ff00fc3451b7a537347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that applies values of the overlay to the current one &ndash; effectively sets all the values of the current map to be corresponding to the one you pass in.  <a href="#a2ca1299f59016ff00fc3451b7a537347">More...</a><br /></td></tr>
+<tr class="separator:a2ca1299f59016ff00fc3451b7a537347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extensions for the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> class that effectively act as methods with default implementations for them. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2ca1299f59016ff00fc3451b7a537347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ca1299f59016ff00fc3451b7a537347">&sect;&nbsp;</a></span>ApplyOverlay< T >()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GoRogue.MapViews.IMapViewExtensions.ApplyOverlay&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>overlay</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Extension method that applies values of the overlay to the current one &ndash; effectively sets all the values of the current map to be corresponding to the one you pass in. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>The current <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a>. Never specified manually as this is an extension method.</td></tr>
+    <tr><td class="paramname">overlay</td><td>The data apply to the map. Must have identical dimensions to the current map. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aa360e6059a5068ebffe7d26561e55243"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa360e6059a5068ebffe7d26561e55243">&sect;&nbsp;</a></span>Bounds< T >()</h2>
 
@@ -381,8 +441,119 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2a55e92fffabc309bcaf6d9064260dd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a55e92fffabc309bcaf6d9064260dd8">&sect;&nbsp;</a></span>RandomItem< T >() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T GoRogue.MapViews.IMapViewExtensions.RandomItem&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>mapView</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the value at a random position in the MapView. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapView</td><td>Map view to select from &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The item at a random position in the MapView.</dd></dl>
+
+</div>
+</div>
+<a id="adfb1a148e0a7dfca6f64e9686011ff53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfb1a148e0a7dfca6f64e9686011ff53">&sect;&nbsp;</a></span>RandomItem< T >() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static T GoRogue.MapViews.IMapViewExtensions.RandomItem&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>mapView</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, T, bool &gt;&#160;</td>
+          <td class="paramname"><em>selector</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the item at a random position in the map view, for which the selector returns true. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continuously be generated until one that qualifies is found. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapView</td><td>Map view to select from &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">selector</td><td>Function that takes a <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> and the value at that <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>, and returns true if it is an acceptable selection, and false if not. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The item at a random position in the MapView for which the selector returns true.</dd></dl>
+
+</div>
+</div>
 <a id="a89a3b757188b6ff5f489d3459b30bc5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89a3b757188b6ff5f489d3459b30bc5a">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a89a3b757188b6ff5f489d3459b30bc5a">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[1/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,7 +612,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="af825fcdce4e3615e628777cc1e7013ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af825fcdce4e3615e628777cc1e7013ff">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af825fcdce4e3615e628777cc1e7013ff">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[2/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -499,8 +670,126 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a9b46684e608d697cad691589da328f08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b46684e608d697cad691589da328f08">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[3/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> GoRogue.MapViews.IMapViewExtensions.RandomPosition&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>mapView</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">HashSet&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>validValues</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a random position in the map view, whose value in map view is one of the ones specified in the HashSet. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one that has one of the specified values is found. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapView</td><td>Map view to select from &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">validValues</td><td>A set of values to look for in the MapView to determine whether or not a generated <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is valid. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A random position whose value in this MapView is equal to one of the values specified. </dd></dl>
+
+</div>
+</div>
+<a id="add260739e40205804097643be631e8cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add260739e40205804097643be631e8cd">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[4/6]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> GoRogue.MapViews.IMapViewExtensions.RandomPosition&lt; T &gt; </td>
+          <td>(</td>
+          <td class="paramtype">this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>mapView</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IGenerator&#160;</td>
+          <td class="paramname"><em>rng</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">params T []&#160;</td>
+          <td class="paramname"><em>validValues</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a random position in the map view, whose value in map view is one of the ones specified in validValues. <a class="el" href="namespace_go_rogue_1_1_random.html">Random</a> positions will continually be generated until one that has one of the specified values is found. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type of items being exposed by the MapView.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mapView</td><td>Map view to select from &ndash; never specified manually as this is an extension method. </td></tr>
+    <tr><td class="paramname">rng</td><td>The rng to use. Defaults to SingletonRandom.DefaultRNG.</td></tr>
+    <tr><td class="paramname">validValues</td><td>A set of values to look for in the MapView to determine whether or not a generated <a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a> is valid. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A random position whose value in this MapView is equal to one of the values specified. </dd></dl>
+
+</div>
+</div>
 <a id="a6b760c17481419d92dfe1ea4616bc737"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b760c17481419d92dfe1ea4616bc737">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b760c17481419d92dfe1ea4616bc737">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[5/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -559,7 +848,7 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab31c1311237699fd4053c589e208d446"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab31c1311237699fd4053c589e208d446">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab31c1311237699fd4053c589e208d446">&sect;&nbsp;</a></span>RandomPosition< T >() <span class="overload">[6/6]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

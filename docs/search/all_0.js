@@ -7,7 +7,7 @@ var searchData=
   ['adjacencymethod',['AdjacencyMethod',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a70843aa6f6d61c191103109dbc22b97e',1,'GoRogue::MapGeneration::MapAreaFinder']]],
   ['adjacencyrule',['AdjacencyRule',['../class_go_rogue_1_1_adjacency_rule.html',1,'GoRogue']]],
   ['algorithm',['Algorithm',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96',1,'GoRogue::Lines']]],
-  ['applyoverlay',['ApplyOverlay',['../class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#adbcb8ed30406c8d899b44fa6e854cfa2',1,'GoRogue::MapViews::SettableTranslationMap']]],
+  ['applyoverlay_3c_20t_20_3e',['ApplyOverlay&lt; T &gt;',['../class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a2ca1299f59016ff00fc3451b7a537347',1,'GoRogue::MapViews::IMapViewExtensions']]],
   ['area',['Area',['../class_go_rogue_1_1_bounded_rectangle.html#a83179f2b68ecb0a3a6a58f72c83790e8',1,'GoRogue.BoundedRectangle.Area()'],['../struct_go_rogue_1_1_rectangle.html#a396ad1593496a406360e5a54f5a5f293',1,'GoRogue.Rectangle.Area()']]],
   ['arraymap',['ArrayMap',['../class_go_rogue_1_1_map_views_1_1_array_map.html#a969aa2bc9d2e2952c32c6f5f750277b1',1,'GoRogue::MapViews::ArrayMap']]],
   ['arraymap',['ArrayMap',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],

@@ -2,6 +2,7 @@ var searchData=
 [
   ['dda',['DDA',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96adc907b4fb49bcda4f6360644735c97ec',1,'GoRogue::Lines']]],
   ['defaultrng',['DefaultRNG',['../class_go_rogue_1_1_random_1_1_singleton_random.html#a0ac9eff6a0a470f8dbcbb21480820840',1,'GoRogue::Random::SingletonRandom']]],
+  ['degree_5fpct_5fof_5fcircle',['DEGREE_PCT_OF_CIRCLE',['../class_go_rogue_1_1_math_helpers.html#a3561981da8deb96c65983b37a695e846',1,'GoRogue::MathHelpers']]],
   ['deltax',['DeltaX',['../class_go_rogue_1_1_direction.html#a68be74f8378001fc2e0167f0acf8f008',1,'GoRogue::Direction']]],
   ['deltay',['DeltaY',['../class_go_rogue_1_1_direction.html#adaf7c3ef90a767c8677a98663e29e622',1,'GoRogue::Direction']]],
   ['diagonals',['DIAGONALS',['../class_go_rogue_1_1_adjacency_rule.html#ac07c57ab39482ea4d7b61081e1b9f725',1,'GoRogue.AdjacencyRule.DIAGONALS()'],['../class_go_rogue_1_1_adjacency_rule.html#afc62c23c2824b8171dce1052c969a525a8b10954fae9deffda2cfbff6d78d92a9',1,'GoRogue.AdjacencyRule.DIAGONALS()']]],
@@ -19,8 +20,8 @@ var searchData=
   ['directionsofneighborscounterclockwise',['DirectionsOfNeighborsCounterClockwise',['../class_go_rogue_1_1_adjacency_rule.html#aaf55999654f42f7692f46ff9811c4920',1,'GoRogue::AdjacencyRule']]],
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html',1,'GoRogue::MapGeneration::Connectors']]],
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a4acb0f42cb78042011b778103ef108ff',1,'GoRogue::MapGeneration::Connectors::DirectLineTunnelCreator']]],
-  ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html#ab54aa0bc405e0a48d3ae600cfb5d46a0',1,'GoRogue::Random::DiscreteConverter']]],
   ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html',1,'GoRogue::Random']]],
+  ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html#ab54aa0bc405e0a48d3ae600cfb5d46a0',1,'GoRogue::Random::DiscreteConverter']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html#aa2601dd5c7f9a809762aafd0985a5a23',1,'GoRogue::DisjointSet']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html',1,'GoRogue']]],
   ['dispose',['Dispose',['../class_go_rogue_1_1_pathing_1_1_flee_map.html#a0f770a7911c2fc2ed3db9e69a00454a2',1,'GoRogue::Pathing::FleeMap']]],
