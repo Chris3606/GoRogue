@@ -301,7 +301,7 @@ namespace GoRogue.MapViews
 		/// <param name="overlay">
 		/// The data apply to the map. Must have identical dimensions to the current map.
 		/// </param>
-		public static void ApplyOverlay<T>(this ISettableMapView<T> self, ISettableMapView<T> overlay)
+		public static void ApplyOverlay<T>(this ISettableMapView<T> self, IMapView<T> overlay)
 		{
 			if (self.Height != overlay.Height || self.Width != overlay.Width)
 				throw new ArgumentException("Overlay size must match current map size.");
