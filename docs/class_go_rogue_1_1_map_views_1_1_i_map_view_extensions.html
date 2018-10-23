@@ -112,15 +112,15 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a99809fecdde1501ae1a498ef3994d674"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a99809fecdde1501ae1a498ef3994d674">ExtendToString&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; map, int fieldSize, string begin=&quot;&quot;, string beginRow=&quot;&quot;, Func&lt; T, string &gt; elementStringifier=null, string rowSeparator=&quot;\, string elementSeparator=&quot; &quot;, string endRow=&quot;&quot;, string end=&quot;&quot;)</td></tr>
 <tr class="memdesc:a99809fecdde1501ae1a498ef3994d674"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method for IMapViews allowing printing the contents. Takes characters to surround the map, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row. Takes the size of the field to give each element, characters to surround the MapView printout, and each row, the method used to get the string representation of each element (defaulting to the ToString function of type T), and separation characters for each element and row.  <a href="#a99809fecdde1501ae1a498ef3994d674">More...</a><br /></td></tr>
 <tr class="separator:a99809fecdde1501ae1a498ef3994d674"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ca1299f59016ff00fc3451b7a537347"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a2ca1299f59016ff00fc3451b7a537347">ApplyOverlay&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt; self, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt; overlay)</td></tr>
-<tr class="memdesc:a2ca1299f59016ff00fc3451b7a537347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that applies values of the overlay to the current one &ndash; effectively sets all the values of the current map to be corresponding to the one you pass in.  <a href="#a2ca1299f59016ff00fc3451b7a537347">More...</a><br /></td></tr>
-<tr class="separator:a2ca1299f59016ff00fc3451b7a537347"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d5eb088860c62be89cc368fbdd93dca"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_i_map_view_extensions.html#a5d5eb088860c62be89cc368fbdd93dca">ApplyOverlay&lt; T &gt;</a> (this <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt; self, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt; overlay)</td></tr>
+<tr class="memdesc:a5d5eb088860c62be89cc368fbdd93dca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extension method that applies values of the overlay to the current one &ndash; effectively sets all the values of the current map to be corresponding to the one you pass in.  <a href="#a5d5eb088860c62be89cc368fbdd93dca">More...</a><br /></td></tr>
+<tr class="separator:a5d5eb088860c62be89cc368fbdd93dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Extensions for the <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> class that effectively act as methods with default implementations for them. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a2ca1299f59016ff00fc3451b7a537347"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ca1299f59016ff00fc3451b7a537347">&sect;&nbsp;</a></span>ApplyOverlay< T >()</h2>
+<a id="a5d5eb088860c62be89cc368fbdd93dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d5eb088860c62be89cc368fbdd93dca">&sect;&nbsp;</a></span>ApplyOverlay< T >()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -137,7 +137,7 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html">IMapView</a>&lt; T &gt;&#160;</td>
           <td class="paramname"><em>overlay</em>&#160;</td>
         </tr>
         <tr>
