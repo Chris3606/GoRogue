@@ -14,7 +14,8 @@ namespace GoRogue
 	/// also supports both 360 degree FOV and a "field of view" (cone) FOV. One may access this class
 	/// like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where
 	/// 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the
-	/// cooresponding coordinate is outside of FOV entirely (not visible).
+	/// cooresponding coordinate is outside of FOV entirely (not visible).  Values fall off linearly
+	/// with respect to radius as distance from the center increases.
 	/// </summary>
 	public class FOV : IReadOnlyFOV, IMapView<double>
 	{
@@ -30,7 +31,7 @@ namespace GoRogue
 		public IMapView<bool> BooleanFOV { get; private set; }
 
 		/// <summary>
-		/// Constructor.
+		/// Constructor.  Takes SenseMap-style resistance map as input data.
 		/// </summary>
 		/// <param name="resMap">
 		/// The resistance map to use to calculate FOV. Values of 1.0 are considered blocking to FOV,
