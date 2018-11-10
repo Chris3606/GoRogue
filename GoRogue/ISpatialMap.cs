@@ -169,8 +169,8 @@ namespace GoRogue
 		public ItemMovedEventArgs(T item, Coord oldPosition, Coord newPosition)
 		{
 			Item = item;
-			oldPosition = OldPosition;
-			newPosition = NewPosition;
+			OldPosition = oldPosition;
+			NewPosition = newPosition;
 		}
 
 		/// <summary>
