@@ -68,6 +68,8 @@
     <Compile Include="DirectionTests.cs" />
     <Compile Include="EffectTests.cs" />
     <Compile Include="FOVLightingTest.cs" />
+    <Compile Include="LayeredSpatialMapTests.cs" />
+    <Compile Include="LayerMaskTests.cs" />
     <Compile Include="LineTests.cs" />
     <Compile Include="MapAreaTests.cs" />
     <Compile Include="MapGenTests.cs" />

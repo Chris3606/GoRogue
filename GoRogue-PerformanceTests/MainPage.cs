@@ -15,6 +15,7 @@ namespace GoRogue_PerformanceTests
 				  new Option("Dice Notation Tests", DiceNotation),
 				  new Option("Line Tests", Line),
 				  new Option("Pathing Tests", Pathing),
+				  new Option("LayerMask Tests", LayerMask),
 				  new Option("Quit", Quit))
 		{ }
 
@@ -51,12 +52,12 @@ namespace GoRogue_PerformanceTests
 		{
 			// Doesn't work properly in release mode, only in debug mode.
 			/*
-            long lightingMem = LightingFOVTests.MemorySingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
-            long fovMem = LightingFOVTests.MemorySingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
-            Console.WriteLine($"Memory for {MAP_WIDTH}x{MAP_HEIGHT}, Radius {LIGHT_RADIUS}:");
-            Console.WriteLine($"\tLighting: {lightingMem} bytes");
-            Console.WriteLine($"\tFOV     : {fovMem} bytes");
-            */
+			long lightingMem = LightingFOVTests.MemorySingleLightSourceLighting(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
+			long fovMem = LightingFOVTests.MemorySingleLightSourceFOV(MAP_WIDTH, MAP_HEIGHT, LIGHT_RADIUS);
+			Console.WriteLine($"Memory for {MAP_WIDTH}x{MAP_HEIGHT}, Radius {LIGHT_RADIUS}:");
+			Console.WriteLine($"\tLighting: {lightingMem} bytes");
+			Console.WriteLine($"\tFOV     : {fovMem} bytes");
+			*/
 
 			var timeSingleLighting = LightingFOVTests.TimeForSingleLightSourceLighting(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.SOURCE_TYPE,
 																					   Runner.LIGHT_RADIUS, Runner.RADIUS_STRATEGY, Runner.ITERATIONS_FOR_TIMING);
@@ -126,6 +127,23 @@ namespace GoRogue_PerformanceTests
 			Console.WriteLine($"Time to calculate multi-source goal map on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times:");
 			Console.WriteLine($"\tGoal-Map    : {timeMGoalMap}");
 			Console.WriteLine($"\tFlee-Map    : {timeMFleeMap}");
+		}
+
+		private static void LayerMask()
+		{
+			var timeForRetrieveLayers = LayerMaskTests.TimeForGetLayers(Runner.ITERATIONS_FOR_TIMING);
+			var timeForRetrieve1Layer = LayerMaskTests.TimeForGetRandomLayers(Runner.ITERATIONS_FOR_TIMING, 1);
+			var timeForRetrieve3Layers = LayerMaskTests.TimeForGetRandomLayers(Runner.ITERATIONS_FOR_TIMING, 3);
+			var timeForRetrieve7Layers = LayerMaskTests.TimeForGetRandomLayers(Runner.ITERATIONS_FOR_TIMING, 7);
+			var timeForRetrieve32Layers = LayerMaskTests.TimeForGetRandomLayers(Runner.ITERATIONS_FOR_TIMING, 32);
+
+			Console.WriteLine($"Time for retrieving layers from mask {Runner.ITERATIONS_FOR_TIMING} times:");
+			Console.WriteLine($"\tLayers [0, 2, 5]      : {timeForRetrieveLayers}");
+			Console.WriteLine("\tTime for random layers :");
+			Console.WriteLine($"\t\t1 Layer  : {timeForRetrieve1Layer}");
+			Console.WriteLine($"\t\t3 Layers : {timeForRetrieve3Layers}");
+			Console.WriteLine($"\t\t7 Layers : {timeForRetrieve7Layers}");
+			Console.WriteLine($"\t\t32 Layers: {timeForRetrieve32Layers}");
 		}
 
 		private static void Quit()

@@ -14,6 +14,15 @@ namespace GoRogue.Random
 		/// Settable field that specifies what IGenerator instance should be considered the default
 		/// RNG. Defaults to an XorShift128Generator with a time-dependent value used as a seed.
 		/// </summary>
-		public static IGenerator DefaultRNG = new XorShift128Generator();
+		public static IGenerator DefaultRNG = GetDefaultGenerator();
+
+		private static IGenerator GetDefaultGenerator()
+		{
+			var gen = new XorShift128Generator();
+			for (int i = 0; i < 3; i++) // Becuase of bug in RNG, make sure we are completely pseudo-random
+				gen.Next();
+
+			return gen;
+		}
 	}
 }

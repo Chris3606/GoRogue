@@ -5,7 +5,7 @@ namespace GoRogue_PerformanceTests
 {
 	public class Runner
 	{
-		public static readonly int ITERATIONS_FOR_TIMING = 100;
+		public static readonly int ITERATIONS_FOR_TIMING = 100000;
 		public static readonly int LIGHT_RADIUS = 10;
 		public static readonly Coord LINE_END = Coord.Get(3, 5);
 		public static readonly Coord LINE_START = Coord.Get(29, 23);

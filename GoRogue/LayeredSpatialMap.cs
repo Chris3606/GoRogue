@@ -6,56 +6,35 @@ using System.Linq;
 namespace GoRogue
 {
 	/// <summary>
-	/// Contains static functions to help with constructing and interpreting layer-masking, since LayeredSpatialMap cannot implement standard enum layer-masking.
-	/// </summary>
-	static public class LayerMask
-	{
-		public const uint ALL = uint.MaxValue;
-		public const uint NONE = 0;
-
-		public static uint GetMask(params int[] layers) => GetMask((IEnumerable<int>)layers);
-
-		public static uint GetMask(IEnumerable<int> layers)
-		{
-			uint mask = 0;
-
-			foreach (var layer in layers)
-				mask |= ((uint)1 << layer);
-
-			return mask;
-		}
-
-		public static bool HasLayer(uint mask, int layer) => (mask & ((uint)1 << layer)) != 0;
-
-		public static IEnumerable<int> LayersInMask(uint mask)
-		{
-			int layer = 0;
-			while (mask != 0)
-			{
-				if ((mask & 1) != 0)
-					yield return layer;
-
-				mask >>= 1;
-				layer++;
-			}
-		}
-	}
-
-	/// <summary>
-	/// SpatialMap implementation that can be used to efficiently represent "layers" of objects, with each layer represented as a SpatialMap
+	/// SpatialMap implementation that can be used to efficiently represent "layers" of objects, with each layer represented as a SpatialMap.
+	/// It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers.  Items must implement IHasID and IHasLayer,
+	/// and their Layer value MUST NOT change while they are in the data structure.
 	/// </summary>
 	/// <remarks>
 	/// This class is desinged to wrap a bunch of ISpatialMap instances together.  At creation, whether or not each layer supports
-	/// multiple items at the same location is specified.  One spatial map represents one layer of a map (items, monsters, etc).  It provides
-	/// read-only access to each layer, as well as functions to add/remove/move items, do item grabbing based on layers, etc.  Will not allow
-	/// the same item to be added to multiple layers.
+	/// multiple items at the same location is specified via a layer mask..  One spatial map represents one layer of a map (items, monsters, etc).
+	/// This class provides read-only access to each layer, as well as functions to add/remove/move items, do item grabbing based on layers, etc.
+	/// Will not allow the same item to be added to multiple layers.
 	/// </remarks>
-	/// <typeparam name="T">Type of items in the layers.</typeparam>
+	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasID and IHasLayer, and its IHasLayer.Layer value MUST NOT
+	/// change while the item is in the LayeredSpatialMap.</typeparam>
 	public class LayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasID, IHasLayer
 	{
 		private ISpatialMap<T>[] _layers;
-		private int _startingLayer;
-		private HashSet<Coord> _positionCache;
+		private HashSet<Coord> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
+
+		/// <summary>
+		/// Starting index for layers included in theis LayeredSpatialMap.  Specified at construction.
+		/// </summary>
+		public int StartingLayer { get; }
+
+		/// <summary>
+		/// Object that helps get layer masks as they pertain to this LayeredSpatialMap
+		/// </summary>
+		public LayerMasker LayerMasker { get; }
+
+		// Same as above but startingLayers less layers, for actual use, since we view our layers as 0 - numberOfLayers - 1
+		private LayerMasker _internalLayerMasker; 
 
 		/// <summary>
 		/// Gets read-only spatial maps representing each layer.  To access a specific layer, instead use GetLayer.
@@ -117,18 +96,35 @@ namespace GoRogue
 				_positionCache.Clear();
 			}
 		}
-		
-		public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = LayerMask.NONE)
+
+		/// <summary>
+		/// Constructor.  Takes number of layers to include, as well as a starting layer index (defaulting to 0) and a layer mask indicating which
+		/// layers support multiple items at a single position (defaulting to no layers).
+		/// </summary>
+		/// <remarks>
+		/// This class allows you to specify the starting index in order to make it easy to combine with other structures in a map which may represent other
+		/// layers.  For example, if a startingLayer of 0 is specified, layers in the spatialMap will have number [0-numberOfLayers - 1].  If 1 is specified,
+		/// layers will have numbers [1-numberOfLayers], and anything to do with layer 0 will be ignored.  If a layer-mask that includes layers 0, 2, and 3
+		/// is passed to a function, for example, only layers 2 and 3 are considered (since they are the only ones that would be included in the LayeredSpatialMap.
+		/// </remarks>
+		/// <param name="numberOfLayers">Number of layers to include.</param>
+		/// <param name="startingLayer">Index to use for the first layer.</param>
+		/// <param name="layersSupportingMultipleItems">A layer mask indicating which layers should support multiple items residing at the same location on that
+		/// layer.  Defaults to no layers.</param>
+		public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
 		{
-			if (numberOfLayers > 32)
-				throw new ArgumentOutOfRangeException(nameof(numberOfLayers), $"More than 32 layers is not supported by {nameof(LayeredSpatialMap<T>)}");
+			if (numberOfLayers > 32 - startingLayer)
+				throw new ArgumentOutOfRangeException(nameof(numberOfLayers), $"More than {32 - startingLayer} layers is not supported by {nameof(LayeredSpatialMap<T>)} starting at layer {startingLayer}");
 
 			_layers = new ISpatialMap<T>[numberOfLayers];
-			_startingLayer = startingLayer;
+			StartingLayer = startingLayer;
 			_positionCache = new HashSet<Coord>();
 
+			LayerMasker = new LayerMasker(numberOfLayers + startingLayer);
+			_internalLayerMasker = new LayerMasker(numberOfLayers);
+
 			for (int i = 0; i < _layers.Length; i++)
-				if (LayerMask.HasLayer(layersSupportingMultipleItems, i + _startingLayer))
+				if (LayerMasker.HasLayer(layersSupportingMultipleItems, i + StartingLayer))
 					_layers[i] = new MultiSpatialMap<T>();
 				else
 					_layers[i] = new SpatialMap<T>();
@@ -146,12 +142,17 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="layer">The layer to retrieve.</param>
 		/// <returns>The IReadOnlySpatialMap that represents the given layer.</returns>
-		public IReadOnlySpatialMap<T> GetLayer(int layer) => _layers[layer - _startingLayer].AsReadOnly();
+		public IReadOnlySpatialMap<T> GetLayer(int layer) => _layers[layer - StartingLayer].AsReadOnly();
 
-		public IEnumerable<IReadOnlySpatialMap<T>> GetLayers(uint mask)
+		/// <summary>
+		/// Returns read-only spatial maps that represent each layer included in the given layer mask.  Defaults to all layers.
+		/// </summary>
+		/// <param name="layerMask">Layer mask indicating which layers to return.  Defaults to all layers.</param>
+		/// <returns></returns>
+		public IEnumerable<IReadOnlySpatialMap<T>> GetLayers(uint layerMask = uint.MaxValue)
 		{
-			foreach (var num in LayerMask.LayersInMask(mask))
-				yield return _layers[num - _startingLayer];
+			foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer)) // LayerMasking will ignore layers that dont' actually exist
+				yield return _layers[num - StartingLayer];
 		}
 
 		/// <summary>
@@ -159,8 +160,8 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="newItem">Item to add.</param>
 		/// <param name="position">Position to add item at.</param>
-		/// <returns></returns>
-		public bool Add(T newItem, Coord position) => _layers[newItem.Layer - _startingLayer].Add(newItem, position);
+		/// <returns>True if the item was successfully added -- false otherwise.</returns>
+		public bool Add(T newItem, Coord position) => Add(newItem, position.X, position.Y);
 
 		/// <summary>
 		/// Adds the given item at the given position, or returns false if the item cannot be added.  Item is automatically added to correct layer.
@@ -168,8 +169,15 @@ namespace GoRogue
 		/// <param name="newItem">Item to add.</param>
 		/// <param name="x">X-value of position to add item at.</param>
 		/// <param name="y">Y-value of position to add item at.</param>
-		/// <returns></returns>
-		public bool Add(T newItem, int x, int y) => _layers[newItem.Layer - _startingLayer].Add(newItem, x, y);
+		/// <returns>True if the item was successfully added, false otherwise.</returns>
+		public bool Add(T newItem, int x, int y)
+		{
+			int relativeLayer = newItem.Layer - StartingLayer;
+			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+				return false;
+
+			return _layers[relativeLayer].Add(newItem, x, y);
+		}
 
 		/// <summary>
 		/// Clears all items from all layers.
@@ -186,7 +194,7 @@ namespace GoRogue
 		/// <param name="item">Item to move.</param>
 		/// <param name="target">Position to move the given item to.</param>
 		/// <returns>True if the item was successfully moved, false otherwise.</returns>
-		public bool Move(T item, Coord target) => _layers[item.Layer - _startingLayer].Move(item, target);
+		public bool Move(T item, Coord target) => Move(item, target.X, target.Y);
 
 		/// <summary>
 		/// Moves the given item to the given position, or returns false if the item cannot be moved.
@@ -194,64 +202,259 @@ namespace GoRogue
 		/// <param name="item">Item to move.</param>
 		/// <param name="targetX">X-value of position to move the given item to.</param>
 		/// <param name="targetY">Y-value of position to move the given item to.</param>
-		/// <returns></returns>
-		public bool Move(T item, int targetX, int targetY) => _layers[item.Layer - _startingLayer].Move(item, targetX, targetY);
+		/// <returns>True if the item was successfully moved, false otherwise.</returns>
+		public bool Move(T item, int targetX, int targetY)
+		{
+			int relativeLayer = item.Layer - StartingLayer;
+			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+				return false;
+
+			return _layers[relativeLayer].Move(item, targetX, targetY);
+		}
 
 		/// <summary>
-		/// Moves all items (on all layers) at the given position to the new position.  
+		/// Moves all items on all layers at the given position to the new position.
 		/// </summary>
-		/// <param name="current"></param>
-		/// <param name="target"></param>
-		/// <returns></returns>
-		public IEnumerable<T> Move(Coord current, Coord target) => Move(current.X, current.Y, target.X, target.Y);
+		/// <param name="current">Position to move items from.</param>
+		/// <param name="target">Position to move items to</param>
+		/// <returns>All items moved.</returns>
+		IEnumerable<T> ISpatialMap<T>.Move(Coord current, Coord target) => Move(current.X, current.Y, target.X, target.Y);
 
-		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY)
+		/// <summary>
+		/// Moves all items at the given position, that are on any layer specified by the given layer mask, to the new position.
+		/// If no layer mask is specified, defaults to all layers.
+		/// </summary>
+		/// <param name="current">Position to move all items from.</param>
+		/// <param name="target">Position to move all items to.</param>
+		/// <param name="layerMask">Layer mask specifying which layers to search for items on. Defaults to all layers.</param>
+		/// <returns>All items moved.</returns>
+		public IEnumerable<T> Move(Coord current, Coord target, uint layerMask = uint.MaxValue) => Move(current.X, current.Y, target.X, target.Y, layerMask);
+
+		/// <summary>
+		/// Moves all items on all layers at the given position to the new position.
+		/// </summary>
+		/// <param name="currentX">X-value of the position to move items from.</param>
+		/// <param name="currentY">Y-value of the position to move items from.</param>
+		/// <param name="targetX">X-value of the position to move items to.</param>
+		/// <param name="targetY">Y-value of the position to move itesm from.</param>
+		/// <returns>All items moved.</returns>
+		IEnumerable<T> ISpatialMap<T>.Move(int currentX, int currentY, int targetX, int targetY) => Move(currentX, currentY, targetX, targetY, uint.MaxValue);
+
+		/// <summary>
+		/// Moves all items at the given position, that are on any layer specified by the given layer mask, to the new position.
+		/// If no layer mask is specified, defaults to all layers.
+		/// </summary>
+		/// <param name="currentX">X-value of the position to move items from.</param>
+		/// <param name="currentY">Y-value of the position to move items from.</param>
+		/// <param name="targetX">X-value of the position to move items to.</param>
+		/// <param name="targetY">Y-value of the position to move itesm from.</param>
+		/// <param name="layerMask">Layer mask specifying which layers to search for items on.  Defaults to all layers.</param>
+		/// <returns>All items moved.</returns>
+		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
 		{
-			foreach (var layer in _layers)
-				foreach (var itemMoved in layer.Move(currentX, currentY, targetX, targetY))
+			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+				foreach (var itemMoved in _layers[relativeLayerNumber].Move(currentX, currentY, targetX, targetY))
 					yield return itemMoved;
 		}
 
-		public bool Remove(T item) => _layers[item.Layer - _startingLayer].Remove(item);
-
-		public IEnumerable<T> Remove(Coord position) => Remove(position.X, position.Y);
-
-		public IEnumerable<T> Remove(int x, int y)
+		/// <summary>
+		/// Removes the given item from the LayerdSpatialMap.  Returns false if the item did not exist.
+		/// </summary>
+		/// <param name="item">The item to remove.</param>
+		/// <returns>True if the item was removed, false otherwise (eg. the item did not exist)</returns>
+		public bool Remove(T item)
 		{
-			foreach (var layer in _layers)
-				foreach (var item in layer.Remove(x, y))
+			int relativeLayer = item.Layer - StartingLayer;
+			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+				return false;
+
+			return _layers[relativeLayer].Remove(item);
+		}
+
+		/// <summary>
+		/// Removes all items at the specified location on all layers from the data structure. Returns any items
+		/// that were removed.
+		/// </summary>
+		/// <param name="position">Position to remove items from.</param>
+		/// <returns>Any items that were removed, or nothing if no items were removed.</returns>
+		IEnumerable<T> ISpatialMap<T>.Remove(Coord position) => Remove(position);
+
+		/// <summary>
+		/// Removes all items at the specified location that are on any layer included in the given layer mask from the data structure. Returns any items
+		/// that were removed.  Defaults to all layers.
+		/// </summary>
+		/// <param name="position">Position to remove items from.</param>
+		/// <param name="layerMask">The layer mask indicating which layers to search for items.  Defaults to all layers.</param>
+		/// <returns>Any items that were removed, or nothing if no items were removed.</returns>
+		public IEnumerable<T> Remove(Coord position, uint layerMask = uint.MaxValue) => Remove(position.X, position.Y, layerMask);
+
+		/// <summary>
+		/// Removes all items at the specified location on all layers from the data structure. Returns any items
+		/// that were removed.
+		/// </summary>
+		/// <param name="x">X-value of the position to remove items from.</param>
+		/// <param name="y">Y-value of the position to remove items from.</param>
+		/// <returns>Any items that were removed, or nothing if no items were removed.</returns>
+		IEnumerable<T> ISpatialMap<T>.Remove(int x, int y) => Remove(x, y);
+
+		/// <summary>
+		/// Removes all items at the specified location that are on any layer included in the given layer mask from the data structure. Returns any items
+		/// that were removed.  Defaults to all layers.
+		/// </summary>
+		/// <param name="x">X-value of the position to remove items from.</param>
+		/// <param name="y">Y-value of the position to remove items from.</param>
+		/// <param name="layerMask">The layer mask indicating which layers to search for items.  Defaults to all layers.</param>
+		/// <returns>Any items that were removed, or nothing if no items were removed.</returns>
+		public IEnumerable<T> Remove(int x, int y, uint layerMask = uint.MaxValue)
+		{
+			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+				foreach (var item in _layers[relativeLayerNumber].Remove(x, y))
 					yield return item;
 		}
 
+		/// <summary>
+		/// Returns a read-only reference to the data structure as an ISpatialMap.
+		/// </summary>
+		/// <returns>The current data structure, as a "read-only" reference.</returns>
 		IReadOnlySpatialMap<T> IReadOnlySpatialMap<T>.AsReadOnly() => this;
 
+		/// <summary>
+		/// Returns a read-only reference to the data structure. Convenient for "safely" exposing the
+		/// structure as a property.
+		/// </summary>
+		/// <returns>The current data structure, as a "read-only" reference.</returns>
 		public IReadOnlyLayeredSpatialMap<T> AsReadOnly() => this;
 
-		public bool Contains(T item) => _layers[item.Layer - _startingLayer].Contains(item);
-
-		public bool Contains(Coord position) => Contains(position.X, position.Y);
-
-		public bool Contains(int x, int y)
+		/// <summary>
+		/// Returns whether or not the data structure contains the given item.
+		/// </summary>
+		/// <param name="item">The item to check for.</param>
+		/// <returns>True if the given item is in the data structure, false if not.</returns>
+		public bool Contains(T item)
 		{
-			foreach (var layer in _layers)
-				if (layer.Contains(x, y))
+			int relativeLayer = item.Layer - StartingLayer;
+			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+				return false;
+
+			return _layers[relativeLayer].Contains(item);
+		}
+
+		/// <summary>
+		/// Returns if there is an item in the data structure at the given position (on any layer) or not.
+		/// </summary>
+		/// <param name="position">The position to check for.</param>
+		/// <returns>True if there is some item at the given position on some layer, false if not.</returns>
+		bool IReadOnlySpatialMap<T>.Contains(Coord position) => Contains(position);
+
+		/// <summary>
+		/// Returns whether or not there is an item in the data structure at the given position that is on a layer included in the given layer mask.  Defaults
+		/// to searching on all layers.
+		/// </summary>
+		/// <param name="position">The position to check for.</param>
+		/// <param name="layerMask">Layer mask that indicates which layers to check.  Defaults to all layers.</param>
+		/// <returns>True if there is some item at the given position on a layer included in the given layer mask, false if not.</returns>
+		public bool Contains(Coord position, uint layerMask = uint.MaxValue) => Contains(position.X, position.Y, layerMask);
+
+		/// <summary>
+		/// Returns if there is an item in the data structure at the given position (on any layer) or not.
+		/// </summary>
+		/// <param name="x">X-value of the position to check for.</param>
+		/// <param name="y">Y-value of the position to check for.</param>
+		/// <returns>True if there is some item at the given position on some layer, false if not.</returns>
+		bool IReadOnlySpatialMap<T>.Contains(int x, int y) => Contains(x, y);
+
+		/// <summary>
+		/// Returns whether or not there is an item in the data structure at the given position, that is on a layer included in the given layer mask.
+		/// </summary>
+		/// <param name="x">X-value of the position to check for.</param>
+		/// <param name="y">Y-value of the position to check for.</param>
+		/// <param name="layerMask">Layer mask that indicates which layers to check. Defaults to all layers.</param>
+		/// <returns>True if there is some item at the given position on a layer included in the given layer mask, false if not.</returns>
+		public bool Contains(int x, int y, uint layerMask = uint.MaxValue)
+		{
+			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+				if (_layers[relativeLayerNumber].Contains(x, y))
 					return true;
 
 			return false;
 		}
 
-		public IEnumerable<T> GetItems(Coord position, int startingLayer) => GetItems(position.X, position.Y, startingLayer);
+		/// <summary>
+		/// Gets the item(s) associated with the given position (from all layers) if there are any items, or returns
+		/// nothing if there is nothing at that position.
+		/// </summary>
+		/// <param name="position">The position to return the item(s) for.</param>
+		/// <returns>
+		/// The item(s) at the given position if there are any items, or nothing if there is nothing
+		/// at that position.
+		/// </returns>
+		IEnumerable<T> IReadOnlySpatialMap<T>.GetItems(Coord position) => GetItems(position);
 
-		// TODO: Going to start here for layer proofing, need to use layer-masking here
-		public IEnumerable<T> GetItems(int x, int y, int startingLayer)
+		/// <summary>
+		/// Gets the item(s) associated with the given position that reside on any layer included in the given layer mask.  Returns
+		/// nothing if there is nothing at that position on a layer included in the given layer mask.
+		/// </summary>
+		/// <param name="position">The position to return the item(s) for.</param>
+		/// <param name="layerMask">Layer mask that indicates which layers to check. Defaults to all layers.</param>
+		/// <returns>
+		/// The item(s) at the given position that reside on a layer included in the layer mask if there are any items, or nothing if there is nothing
+		/// at that position.
+		/// </returns>
+		public IEnumerable<T> GetItems(Coord position, uint layerMask = uint.MaxValue) => GetItems(position.X, position.Y, layerMask);
+
+		/// <summary>
+		/// Gets the item(s) associated with the given position (from all layers) if there are any items, or returns
+		/// nothing if there is nothing at that position.
+		/// </summary>
+		/// <param name="x">X-value of the position to return the item(s) for.</param>
+		/// <param name="y">Y-value of the position to return the item(s) for.</param>
+		/// <returns>
+		/// The item(s) at the given position if there are any items, or nothing if there is nothing
+		/// at that position.
+		/// </returns>
+		IEnumerable<T> IReadOnlySpatialMap<T>.GetItems(int x, int y) => GetItems(x, y);
+
+		/// <summary>
+		/// Gets the item(s) associated with the given position that reside on any layer included in the given layer mask.  Returns
+		/// nothing if there is nothing at that position on a layer included in the given layer mask.
+		/// </summary>
+		/// <param name="x">X-value of the position to return the item(s) for.</param>
+		/// <param name="y">Y-value of the position to return the item(s) for.</param>
+		/// <param name="layerMask">Layer mask that indicates which layers to check. Defaults to all layers.</param>
+		/// <returns>
+		/// The item(s) at the given position that reside on a layer included in the layer mask if there are any items, or nothing if there is nothing
+		/// at that position.
+		/// </returns>
+		public IEnumerable<T> GetItems(int x, int y, uint layerMask = uint.MaxValue)
 		{
-			for (int i = Math.Min(_layers.Length - 1, startingLayer); i >= 0; i--)
-				foreach (var item in _layers[i].GetItems(x, y))
+			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+				foreach (var item in _layers[relativeLayerNumber].GetItems(x, y))
 					yield return item;
 		}
 
-		public Coord GetPosition(T item) => _layers[item.Layer].GetPosition(item);
+		/// <summary>
+		/// Gets the position associated with the item in the data structure, or null if that item is
+		/// not found.
+		/// </summary>
+		/// <param name="item">The item to get the position for.</param>
+		/// <returns>
+		/// The position associated with the given item, if it exists in the data structure, or null
+		/// if the item does not exist.
+		/// </returns>
+		public Coord GetPosition(T item)
+		{
+			int relativeLayer = item.Layer - StartingLayer;
+			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+				return null;
 
+			return _layers[relativeLayer].GetPosition(item);
+		}
+
+		/// <summary>
+		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
+		/// foreach loop. Generally should never be called explicitly.
+		/// </summary>
+		/// <returns>An enumerator for the SpatialMap</returns>
 		public IEnumerator<ISpatialTuple<T>> GetEnumerator()
 		{
 			foreach (var layer in _layers)
@@ -259,15 +462,15 @@ namespace GoRogue
 					yield return tuple;
 		}
 
+		/// <summary>
+		/// Generic iterator used internally by foreach loops.
+		/// </summary>
+		/// <returns>Enumerator to ISpatialTuple instances.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			foreach (var layer in _layers)
 				foreach (var tuple in layer)
 					yield return tuple;
 		}
-
-		public IEnumerable<T> GetItems(Coord position) => GetItems(position.X, position.Y, _layers.Length - 1);
-
-		public IEnumerable<T> GetItems(int x, int y) => GetItems(x, y, _layers.Length - 1);
 	}
 }
