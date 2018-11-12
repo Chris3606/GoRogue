@@ -5,22 +5,20 @@ using System.Linq;
 
 namespace GoRogue.GameFramework
 {
-	public class Map
+	public class Map<BaseObject> : IMapView<IEnumerable<BaseObject>> where BaseObject : GameObject<BaseObject>
 	{
-		private ArrayMap<GameObject> _terrain;
-		public IMapView<GameObject> Terrain => _terrain;
+		private ArrayMap<BaseObject> _terrain;
+		public IMapView<BaseObject> Terrain => _terrain;
 
-		private ArrayMap<bool> _explored;
-		public IMapView<bool> Explored => _explored;
+		public ArrayMap<bool> Explored;
 
-		// TODO: Rename to EntityLayers?
-		private LayeredSpatialMap<GameObject> _entities;
-		public IReadOnlyLayeredSpatialMap<GameObject> Entities => _entities.AsReadOnly();
+		private LayeredSpatialMap<BaseObject> _entities;
+		public IReadOnlyLayeredSpatialMap<BaseObject> Entities => _entities.AsReadOnly();
 
 		public LayerMasker LayerMasker => _entities.LayerMasker;
 
-		private uint LayersBlockingWalkability { get; }
-		private uint LayersBlockingTransparency { get; }
+		public uint LayersBlockingWalkability { get; }
+		public uint LayersBlockingTransparency { get; }
 
 		public IMapView<bool> TransparencyView { get; }
 		public IMapView<bool> WalkabilityView { get; }
@@ -31,13 +29,21 @@ namespace GoRogue.GameFramework
 		public AStar AStar { get; }
 		Distance DistanceMeasurement => AStar.DistanceMeasurement;
 
+		public int Height => _terrain.Height;
+
+		public int Width => _terrain.Width;
+
+		public IEnumerable<BaseObject> this[Coord pos] => GetObjects(pos);
+
+		public IEnumerable<BaseObject> this[int x, int y] => GetObjects(x, y);
+
 		public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 			       uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
 		{
-			_terrain = new ArrayMap<GameObject>(width, height);
-			_explored = new ArrayMap<bool>(width, height);
+			_terrain = new ArrayMap<BaseObject>(width, height);
+			Explored = new ArrayMap<bool>(width, height);
 
-			_entities = new LayeredSpatialMap<GameObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
+			_entities = new LayeredSpatialMap<BaseObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
 
 			LayersBlockingWalkability = layersBlockingWalkability;
 			LayersBlockingTransparency = layersBlockingTransparency;
@@ -57,40 +63,41 @@ namespace GoRogue.GameFramework
 		}
 
 		#region Terrain
-		public GameObject GetTerrain(Coord position) => _terrain[position];
+		public BaseObject GetTerrain(Coord position) => _terrain[position];
 
-		public GameObject GetTerrain(int x, int y) => _terrain[x, y];
+		public BaseObject GetTerrain(int x, int y) => _terrain[x, y];
 
-		public void SetTerrain(Coord position, GameObject terrain) => SetTerrain(position.X, position.Y, terrain);
-		public void SetTerrain(int x, int y, GameObject terrain)
+		public void SetTerrain(BaseObject terrain)
 		{
 			if (!terrain.IsStatic)
-				throw new System.ArgumentException($"Terrain for Map must be marked static via its {nameof(GameObject.IsStatic)} flag.", nameof(terrain));
+				throw new System.ArgumentException($"Terrain for Map must be marked static via its {nameof(GameObject<BaseObject>.IsStatic)} flag.", nameof(terrain));
+
+			_terrain[terrain.Position] = terrain;
 		}
 		#endregion
 
 		#region Entities
-		public bool AddEntity(GameObject entity)
+		public bool AddEntity(BaseObject entity)
 		{
 			if (entity.CurrentMap == this)
 				return false;
-
 
 			if (!entity.IsWalkable && (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer) || !WalkabilityView[entity.Position]))
 				return false;
 
 			if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
-				return false;			
+				return false;
 
 			if (!_entities.Add(entity, entity.Position))
 				return false;
 
 			entity.CurrentMap?.RemoveEntity(entity);
+			entity.CurrentMap = this;
 			entity.Moved += OnEntityMoved;
 			return true;
 		}
 
-		public bool RemoveEntity(GameObject entity)
+		public bool RemoveEntity(BaseObject entity)
 		{
 			if (!_entities.Remove(entity))
 				return false;
@@ -101,11 +108,11 @@ namespace GoRogue.GameFramework
 		#endregion
 
 		#region GetObjects
-		public GameObject GetObject(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask).FirstOrDefault();
-		public GameObject GetObject(int x, int y, uint layerMask = uint.MaxValue) => GetObjects(x, y, layerMask).FirstOrDefault();
+		public BaseObject GetObject(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask).FirstOrDefault();
+		public BaseObject GetObject(int x, int y, uint layerMask = uint.MaxValue) => GetObjects(x, y, layerMask).FirstOrDefault();
 
-		public IEnumerable<GameObject> GetObjects(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask);
-		public IEnumerable<GameObject> GetObjects(int x, int y, uint layerMask = uint.MaxValue)
+		public IEnumerable<BaseObject> GetObjects(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask);
+		public IEnumerable<BaseObject> GetObjects(int x, int y, uint layerMask = uint.MaxValue)
 		{
 			foreach (var entity in _entities.GetItems(x, y, layerMask))
 				yield return entity;
@@ -122,7 +129,7 @@ namespace GoRogue.GameFramework
 			_fov.Calculate(x, y, radius);
 
 			foreach (var pos in _fov.NewlySeen)
-				_explored[pos] = true;
+				Explored[pos] = true;
 		}
 
 		public void CalculateFOV(Coord position, double radius, Distance radiusShape) => CalculateFOV(position.X, position.Y, radius, radiusShape);
@@ -131,7 +138,7 @@ namespace GoRogue.GameFramework
 			_fov.Calculate(x, y, radius, radiusShape);
 
 			foreach (var pos in _fov.NewlySeen)
-				_explored[pos] = true;
+				Explored[pos] = true;
 		}
 
 		public void CalculateFOV(Coord position, double radius, Distance radiusShape, double angle, double span)
@@ -142,11 +149,11 @@ namespace GoRogue.GameFramework
 			_fov.Calculate(x, y, radius, radiusShape, angle, span);
 
 			foreach (var pos in _fov.NewlySeen)
-				_explored[pos] = true;
+				Explored[pos] = true;
 		}
 		#endregion
 
-		private void OnEntityMoved(object s, ItemMovedEventArgs<GameObject> e)
+		private void OnEntityMoved(object s, ItemMovedEventArgs<BaseObject> e)
 		{
 			_entities.Move(e.Item, e.NewPosition);
 		}

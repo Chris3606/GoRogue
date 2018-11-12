@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace GoRogue.GameFramework
 {
-	public class GameObject : IHasID, IHasLayer
+	public class GameObject<BaseSubclass> : IHasID, IHasLayer where BaseSubclass : GameObject<BaseSubclass>
 	{
-		private List<Component> _components;
-
 		private Coord _position;
 		public virtual Coord Position
 		{
@@ -20,12 +17,12 @@ namespace GoRogue.GameFramework
 				{
 					var oldPos = _position;
 					_position = value;
-					Moved?.Invoke(this, new ItemMovedEventArgs<GameObject>(this, oldPos, _position));
+					Moved?.Invoke(this, new ItemMovedEventArgs<BaseSubclass>((BaseSubclass)this, oldPos, _position));
 				}
 			}
 		}
 
-		public event EventHandler<ItemMovedEventArgs<GameObject>> Moved;
+		public event EventHandler<ItemMovedEventArgs<BaseSubclass>> Moved;
 
 		public virtual bool IsWalkable { get; set; }
 		public virtual bool IsTransparent { get; set; }
@@ -35,13 +32,14 @@ namespace GoRogue.GameFramework
 		public uint ID { get; }
 		public int Layer { get; }
 
-		public Map CurrentMap { get; internal set; }
+		public Map<BaseSubclass> CurrentMap { get; internal set; }
 
 		private static IDGenerator _idGenerator = new IDGenerator();
 
 		public GameObject(Coord position, int layer, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
 		{
-			Position = position;
+			_position = position;
+			Layer = layer;
 			IsWalkable = isWalkable;
 			IsTransparent = isTransparent;
 			IsStatic = isStatic;
@@ -49,34 +47,16 @@ namespace GoRogue.GameFramework
 			CurrentMap = null;
 
 			ID = _idGenerator.UseID();
+		}
 
-			_components = new List<Component>();
+		public bool MoveIn(Direction direction)
+		{
+			Coord oldPos = _position;
+			Position += direction;
+
+			return _position != oldPos;
 		}
 
 		public static void SetStartingID(uint id) => _idGenerator = new IDGenerator(id);
-
-		#region Components
-		public void AddComponent(Component component)
-		{
-			component.GameObject = this;
-			_components.Add(component);
-		}
-
-		public ComponentType GetComponent<ComponentType>() where ComponentType : Component
-		{
-			foreach (var component in _components)
-				if (component is ComponentType returnableComponent)
-					return returnableComponent;
-
-			return null;
-		}
-
-		public IEnumerable<Component> GetComponents<ComponentType>() where ComponentType : Component
-		{
-			foreach (var component in _components)
-				if (component is ComponentType returnableComponent)
-					yield return returnableComponent;
-		}
-		#endregion
 	}
 }
