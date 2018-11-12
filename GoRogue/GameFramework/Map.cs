@@ -2,6 +2,7 @@
 using GoRogue.Pathing;
 using GoRogue.MapViews;
 using System.Linq;
+using System;
 
 namespace GoRogue.GameFramework
 {
@@ -29,6 +30,10 @@ namespace GoRogue.GameFramework
 		public AStar AStar { get; }
 		Distance DistanceMeasurement => AStar.DistanceMeasurement;
 
+		public event EventHandler<ItemEventArgs<BaseObject>> ObjectAdded;
+		public event EventHandler<ItemEventArgs<BaseObject>> ObjectRemoved;
+		public event EventHandler<ItemMovedEventArgs<BaseObject>> ObjectMoved;
+
 		public int Height => _terrain.Height;
 
 		public int Width => _terrain.Width;
@@ -47,6 +52,10 @@ namespace GoRogue.GameFramework
 
 			LayersBlockingWalkability = layersBlockingWalkability;
 			LayersBlockingTransparency = layersBlockingTransparency;
+
+			_entities.ItemAdded += (s, e) => ObjectAdded?.Invoke(this, e);
+			_entities.ItemRemoved += (s, e) => ObjectRemoved?.Invoke(this, e);
+			_entities.ItemMoved += (s, e) => ObjectMoved?.Invoke(this, e);
 
 			if (layersBlockingTransparency == 1) // Only terrain so we optimize
 				TransparencyView = new LambdaMapView<bool>(width, height, c => _terrain[c] == null || _terrain[c].IsTransparent);
@@ -72,7 +81,11 @@ namespace GoRogue.GameFramework
 			if (!terrain.IsStatic)
 				throw new System.ArgumentException($"Terrain for Map must be marked static via its {nameof(GameObject<BaseObject>.IsStatic)} flag.", nameof(terrain));
 
+			if (_terrain[terrain.Position] != null)
+				ObjectRemoved?.Invoke(this, new ItemEventArgs<BaseObject>(terrain, terrain.Position));
+
 			_terrain[terrain.Position] = terrain;
+			ObjectAdded?.Invoke(this, new ItemEventArgs<BaseObject>(terrain, terrain.Position));
 		}
 		#endregion
 
