@@ -28,7 +28,7 @@ namespace GoRogue.GameFramework
 		public IReadOnlyFOV FOV => _fov.AsReadOnly();
 
 		public AStar AStar { get; }
-		Distance DistanceMeasurement => AStar.DistanceMeasurement;
+		public Distance DistanceMeasurement => AStar.DistanceMeasurement;
 
 		public event EventHandler<ItemEventArgs<BaseObject>> ObjectAdded;
 		public event EventHandler<ItemEventArgs<BaseObject>> ObjectRemoved;
