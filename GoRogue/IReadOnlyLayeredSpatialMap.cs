@@ -6,8 +6,8 @@ namespace GoRogue
 	/// <summary>
 	/// Read-only interface for LayeredSpatialMap -- useful for exposing LayeredSpatialMap instances as read-only properties.
 	/// </summary>
-	/// <typeparam name="T">Type of element stored in the layered spatial map -- must implement IHasID and IHasLayer.</typeparam>
-	public interface IReadOnlyLayeredSpatialMap<T> : IReadOnlySpatialMap<T> where T : IHasID, IHasLayer
+	/// <typeparam name="T">Type of element stored in the layered spatial map -- must implement IHasLayer.</typeparam>
+	public interface IReadOnlyLayeredSpatialMap<T> : IReadOnlySpatialMap<T> where T : IHasLayer
 	{ 
 		/// <summary>
 		/// Starting index for layers included in this structure.

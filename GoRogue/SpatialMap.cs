@@ -29,11 +29,8 @@ namespace GoRogue
 	/// since uints are easily (efficiently) hashable.
 	/// </remarks>
 	/// <typeparam name="T">The type of object that will be contained by this SpatialMap.  Must implement IHasID and be a reference-type.</typeparam>
-	public class SpatialMap<T> : ISpatialMap<T> where T : class, IHasID
+	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : IHasID
 	{
-		private Dictionary<T, SpatialTuple<T>> itemMapping;
-		private Dictionary<Coord, SpatialTuple<T>> positionMapping;
-
 		/// <summary>
 		/// Constructor. Creates an empty SpatialMap.
 		/// </summary>
@@ -42,8 +39,38 @@ namespace GoRogue
 		/// internally resize data structures. Defaults to 32.
 		/// </param>
 		public SpatialMap(int initialCapacity = 32)
+			: base(new IDComparer<T>(), initialCapacity)
+		{ }
+	}
+
+
+	/// <summary>
+	/// Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comparison of type T.
+	/// May be useful for cases where one does not want to implement IHasID, or if you need to use a value type in a SpatialMap.  For simple
+	/// cases, it is recommended to use SpatialMap instead.
+	/// </summary>
+	/// <remarks>
+	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer -- it will in large part determine the performance of
+	/// AdvancedSpatialMap!
+	/// </remarks>
+	/// <typeparam name="T">The type of object that will be contained by this AdvancedSpatialMap.</typeparam>
+	public class AdvancedSpatialMap<T> : ISpatialMap<T>
+	{
+		private Dictionary<T, SpatialTuple<T>> itemMapping;
+		private Dictionary<Coord, SpatialTuple<T>> positionMapping;
+
+		/// <summary>
+		/// Constructor. Creates an empty AdvancedSpatialMap.
+		/// </summary>
+		/// <param name="comparer">Equality comparer to use for comparison and hashing of type T.  Be mindful of the efficiency
+		/// of this instances GetHashCode function, as it will determine the efficiency of many AdvancedSpatialMap functions.</param>
+		/// <param name="initialCapacity">
+		/// The initial maximum number of elements the SpatialMap can hold before it has to
+		/// internally resize data structures. Defaults to 32.
+		/// </param>
+		public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
 		{
-			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, new IDComparer<T>());
+			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
 			positionMapping = new Dictionary<Coord, SpatialTuple<T>>(initialCapacity);
 		}
 
@@ -420,7 +447,7 @@ namespace GoRogue
 			=> positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
 	}
 
-	internal class SpatialTuple<T> : ISpatialTuple<T> where T : IHasID
+	internal class SpatialTuple<T> : ISpatialTuple<T>
 	{
 		public SpatialTuple(T item, Coord position)
 		{

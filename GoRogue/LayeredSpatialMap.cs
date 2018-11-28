@@ -6,7 +6,7 @@ using System.Linq;
 namespace GoRogue
 {
 	/// <summary>
-	/// SpatialMap implementation that can be used to efficiently represent "layers" of objects, with each layer represented as a SpatialMap.
+	/// ISpatialMap implementation that can be used to efficiently represent "layers" of objects, with each layer represented as a SpatialMap.
 	/// It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers.  Items must implement IHasID and IHasLayer,
 	/// be a reference type, and their Layer value MUST NOT change while they are in the data structure.
 	/// </summary>
@@ -16,9 +16,41 @@ namespace GoRogue
 	/// This class provides read-only access to each layer, as well as functions to add/remove/move items, do item grabbing based on layers, etc.
 	/// Will not allow the same item to be added to multiple layers.
 	/// </remarks>
-	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasID and IHasLayer, be a reference type, and its IHasLayer.Layer value MUST NOT
+	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasID and IHasLayer, must be a reference type, and its IHasLayer.Layer value MUST NOT
 	/// change while the item is in the LayeredSpatialMap.</typeparam>
-	public class LayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : class, IHasID, IHasLayer
+	public class LayeredSpatialMap<T> : AdvancedLayeredSpatialMap<T> where T : class, IHasLayer, IHasID
+	{
+		/// <summary>
+		/// Constructor.  Takes number of layers to include, as well as a starting layer index (defaulting to 0) and a layer mask indicating which
+		/// layers support multiple items at a single position (defaulting to no layers).
+		/// </summary>
+		/// <remarks>
+		/// This class allows you to specify the starting index in order to make it easy to combine with other structures in a map which may represent other
+		/// layers.  For example, if a startingLayer of 0 is specified, layers in the spatialMap will have number [0-numberOfLayers - 1].  If 1 is specified,
+		/// layers will have numbers [1-numberOfLayers], and anything to do with layer 0 will be ignored.  If a layer-mask that includes layers 0, 2, and 3
+		/// is passed to a function, for example, only layers 2 and 3 are considered (since they are the only ones that would be included in the LayeredSpatialMap.
+		/// </remarks>
+		/// <param name="numberOfLayers">Number of layers to include.</param>
+		/// <param name="startingLayer">Index to use for the first layer.</param>
+		/// <param name="layersSupportingMultipleItems">A layer mask indicating which layers should support multiple items residing at the same location on that
+		/// layer.  Defaults to no layers.</param>
+		public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
+			: base(new IDComparer<T>(), numberOfLayers, startingLayer, layersSupportingMultipleItems)
+		{ }
+	}
+
+	/// <summary>
+	/// Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing and comparison of type T.
+	/// May be useful for cases where one does not want to implement IHasID, or if you need to use a value type in a LayeredSpatialMap.  For simple
+	/// cases, it is recommended to use LayeredSpatialMap instead.
+	/// </summary>
+	/// <remarks>
+	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer -- it will in large part determine the performance of
+	/// AdvancedLayeredSpatialMap!
+	/// </remarks>
+	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasLayer, and its IHasLayer.Layer value MUST NOT
+	/// change while the item is in the AdvancedLayeredSpatialMap.</typeparam>
+	public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasLayer
 	{
 		private ISpatialMap<T>[] _layers;
 		private HashSet<Coord> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
@@ -98,7 +130,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Constructor.  Takes number of layers to include, as well as a starting layer index (defaulting to 0) and a layer mask indicating which
+		/// Constructor.  Takes a comparator to use, number of layers to include, as well as a starting layer index (defaulting to 0) and a layer mask indicating which
 		/// layers support multiple items at a single position (defaulting to no layers).
 		/// </summary>
 		/// <remarks>
@@ -107,14 +139,16 @@ namespace GoRogue
 		/// layers will have numbers [1-numberOfLayers], and anything to do with layer 0 will be ignored.  If a layer-mask that includes layers 0, 2, and 3
 		/// is passed to a function, for example, only layers 2 and 3 are considered (since they are the only ones that would be included in the LayeredSpatialMap.
 		/// </remarks>
+		/// <param name="comparer">Equality comparer to use for comparison and hashing of type T.  Be mindful of the efficiency
+		/// of this instances GetHashCode function, as it will determine the efficiency of many AdvancedLayeredSpatialMap functions.</param>
 		/// <param name="numberOfLayers">Number of layers to include.</param>
 		/// <param name="startingLayer">Index to use for the first layer.</param>
 		/// <param name="layersSupportingMultipleItems">A layer mask indicating which layers should support multiple items residing at the same location on that
 		/// layer.  Defaults to no layers.</param>
-		public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
+		public AdvancedLayeredSpatialMap(IEqualityComparer<T> comparer, int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
 		{
 			if (numberOfLayers > 32 - startingLayer)
-				throw new ArgumentOutOfRangeException(nameof(numberOfLayers), $"More than {32 - startingLayer} layers is not supported by {nameof(LayeredSpatialMap<T>)} starting at layer {startingLayer}");
+				throw new ArgumentOutOfRangeException(nameof(numberOfLayers), $"More than {32 - startingLayer} layers is not supported by {nameof(AdvancedLayeredSpatialMap<T>)} starting at layer {startingLayer}");
 
 			_layers = new ISpatialMap<T>[numberOfLayers];
 			StartingLayer = startingLayer;
@@ -125,9 +159,9 @@ namespace GoRogue
 
 			for (int i = 0; i < _layers.Length; i++)
 				if (LayerMasker.HasLayer(layersSupportingMultipleItems, i + StartingLayer))
-					_layers[i] = new MultiSpatialMap<T>();
+					_layers[i] = new AdvancedMultiSpatialMap<T>(comparer);
 				else
-					_layers[i] = new SpatialMap<T>();
+					_layers[i] = new AdvancedSpatialMap<T>(comparer);
 
 			foreach (var layer in _layers)
 			{

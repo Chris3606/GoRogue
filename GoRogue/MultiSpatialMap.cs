@@ -21,7 +21,31 @@ namespace GoRogue
 	/// since they both implement the ISpatialMap interface.
 	/// </remarks>
 	/// <typeparam name="T">The type of items being stored.  Must implement IHasID and be a reference-type.</typeparam>
-	public class MultiSpatialMap<T> : ISpatialMap<T> where T : class, IHasID
+	public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : IHasID
+	{
+		/// <summary>
+		/// Constructor. Creates an empty MultiSpatialMap.
+		/// </summary>
+		/// <param name="initialCapacity">
+		/// The initial maximum number of elements the SpatialMap can hold before it has to
+		/// internally resize data structures. Defaults to 32.
+		/// </param>
+		public MultiSpatialMap(int initialCapacity = 32)
+			: base(new IDComparer<T>(), initialCapacity)
+		{ }
+	}
+
+	/// <summary>
+	/// Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for hashing and comparison of type T.
+	/// May be useful for cases where one does not want to implement IHasID, or if you need to use a value type in a MultiSpatialMap.  For simple
+	/// cases, it is recommended to use MultiSpatialMap instead.
+	/// </summary>
+	/// <remarks>
+	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer -- it will in large part determine the performance of
+	/// AdvancedMultiSpatialMap!
+	/// </remarks>
+	/// <typeparam name="T">The type of object that will be contained by this AdvancedMultiSpatialMap.</typeparam>
+	public class AdvancedMultiSpatialMap<T> : ISpatialMap<T>
 	{
 		private Dictionary<T, SpatialTuple<T>> itemMapping;
 		private Dictionary<Coord, List<SpatialTuple<T>>> positionMapping;
@@ -29,13 +53,15 @@ namespace GoRogue
 		/// <summary>
 		/// Constructor. Creates an empty MultiSpatialMap.
 		/// </summary>
+		/// <param name="comparer">Equality comparer to use for comparison and hashing of type T.  Be mindful of the efficiency
+		/// of this instances GetHashCode function, as it will determine the efficiency of many AdvancedMultiSpatialMap functions.</param>
 		/// <param name="initialCapacity">
 		/// The initial maximum number of elements the MultiSpatialMap can hold before it has to
 		/// internally resize data structures. Defaults to 32.
 		/// </param>
-		public MultiSpatialMap(int initialCapacity = 32)
+		public AdvancedMultiSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
 		{
-			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, new IDComparer<T>());
+			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
 			positionMapping = new Dictionary<Coord, List<SpatialTuple<T>>>(initialCapacity);
 		}
 
