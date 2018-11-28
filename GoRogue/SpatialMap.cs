@@ -7,7 +7,9 @@ namespace GoRogue
 	/// <summary>
 	/// Designed as an more efficient data structure for recording objects on a map. The simple
 	/// version: if you're about to use a List to store a bunch of objects in your map, consider
-	/// using this or MultiSpatialMap instead! /// More detail: typical roguelikes will use a 2D
+	/// using this or MultiSpatialMap instead!
+	/// </summary>
+	/// <remarks>Typical roguelikes will use a 2D
 	/// array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like
 	/// entities, items, etc. This is simple but ultimately not efficient; for example, in that
 	/// implementation, determining if there is an object at a location takes an amount of time
@@ -19,17 +21,17 @@ namespace GoRogue
 	/// designed to solve. It provides fast, near-constant-time operations for getting the object at
 	/// a location, adding entities, removing entities, and will allow you to iterate through all
 	/// objects in the SpatialMap in time proportional to the number of objects in it (the best
-	/// possible). /// Effectively, it is a more efficient list for objects that have a position
+	/// possible). Effectively, it is a more efficient list for objects that have a position
 	/// associated with them. This implementation can only allow one item at a given location at a
-	/// time -- for an implementation that allows multiple items, see MultiSpatialMap. /// The
+	/// time -- for an implementation that allows multiple items, see MultiSpatialMap. The
 	/// objects stored in a SpatialMap must implement the IHasID (see that interface's documentation
 	/// for an easy implementation example). This is used internally to keep track of the objects,
-	/// since uints are easily hashable.
-	/// </summary>
-	/// <typeparam name="T">The type of object that will be contained by this SpatialMap.</typeparam>
-	public class SpatialMap<T> : ISpatialMap<T> where T : IHasID
+	/// since uints are easily (efficiently) hashable.
+	/// </remarks>
+	/// <typeparam name="T">The type of object that will be contained by this SpatialMap.  Must implement IHasID and be a reference-type.</typeparam>
+	public class SpatialMap<T> : ISpatialMap<T> where T : class, IHasID
 	{
-		private Dictionary<uint, SpatialTuple<T>> itemMapping;
+		private Dictionary<T, SpatialTuple<T>> itemMapping;
 		private Dictionary<Coord, SpatialTuple<T>> positionMapping;
 
 		/// <summary>
@@ -41,7 +43,7 @@ namespace GoRogue
 		/// </param>
 		public SpatialMap(int initialCapacity = 32)
 		{
-			itemMapping = new Dictionary<uint, SpatialTuple<T>>(initialCapacity);
+			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, new IDComparer<T>());
 			positionMapping = new Dictionary<Coord, SpatialTuple<T>>(initialCapacity);
 		}
 
@@ -99,14 +101,14 @@ namespace GoRogue
 		/// <returns>True if the item was added, false if not.</returns>
 		public bool Add(T newItem, Coord position)
 		{
-			if (itemMapping.ContainsKey(newItem.ID))
+			if (itemMapping.ContainsKey(newItem))
 				return false;
 
 			if (positionMapping.ContainsKey(position))
 				return false;
 
 			var tuple = new SpatialTuple<T>(newItem, position);
-			itemMapping.Add(newItem.ID, tuple);
+			itemMapping.Add(newItem, tuple);
 			positionMapping.Add(position, tuple);
 			ItemAdded?.Invoke(this, new ItemEventArgs<T>(newItem, position));
 			return true;
@@ -140,7 +142,7 @@ namespace GoRogue
 		/// <summary>
 		/// See IReadOnlySpatialMap.Contains.
 		/// </summary>
-		public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+		public bool Contains(T item) => itemMapping.ContainsKey(item);
 
 		/// <summary>
 		/// See IReadOnlySpatialMap.Contains.
@@ -253,7 +255,7 @@ namespace GoRogue
 		public Coord GetPosition(T item)
 		{
 			SpatialTuple<T> tuple;
-			itemMapping.TryGetValue(item.ID, out tuple);
+			itemMapping.TryGetValue(item, out tuple);
 			if (tuple == null) return null;
 			return tuple.Position;
 		}
@@ -268,13 +270,13 @@ namespace GoRogue
 		/// <returns>True if the item was moved, false if not.</returns>
 		public bool Move(T item, Coord target)
 		{
-			if (!itemMapping.ContainsKey(item.ID))
+			if (!itemMapping.ContainsKey(item))
 				return false;
 
 			if (positionMapping.ContainsKey(target))
 				return false;
 
-			var movingTuple = itemMapping[item.ID];
+			var movingTuple = itemMapping[item];
 			Coord oldPos = movingTuple.Position;
 			positionMapping.Remove(movingTuple.Position);
 			movingTuple.Position = target;
@@ -350,11 +352,11 @@ namespace GoRogue
 		/// <returns>True if the item was removed, false if the item was not found.</returns>
 		public bool Remove(T item)
 		{
-			if (!itemMapping.ContainsKey(item.ID))
+			if (!itemMapping.ContainsKey(item))
 				return false;
 
-			var tuple = itemMapping[item.ID];
-			itemMapping.Remove(item.ID);
+			var tuple = itemMapping[item];
+			itemMapping.Remove(item);
 			positionMapping.Remove(tuple.Position);
 			ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, tuple.Position));
 			return true;
@@ -380,7 +382,7 @@ namespace GoRogue
 			if (tuple != null)
 			{
 				positionMapping.Remove(position);
-				itemMapping.Remove(tuple.Item.ID);
+				itemMapping.Remove(tuple.Item);
 				ItemRemoved?.Invoke(this, new ItemEventArgs<T>(tuple.Item, tuple.Position));
 				yield return tuple.Item;
 			}

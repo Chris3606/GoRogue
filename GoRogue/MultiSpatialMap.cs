@@ -17,13 +17,13 @@ namespace GoRogue
 	/// such as inventory items, where multiple items may be desired at one location. If one is
 	/// implementing something akin to "buckets", one may also subclass this implementation and
 	/// provide handlers to the various events it exposes to keep track of the object on top, etc.
-	/// /// The two implementations could also in many cases be used in combination as necessary,
+	/// The two implementations could also in many cases be used in combination as necessary,
 	/// since they both implement the ISpatialMap interface.
 	/// </remarks>
-	/// <typeparam name="T">The type of items being stored.</typeparam>
-	public class MultiSpatialMap<T> : ISpatialMap<T> where T : IHasID
+	/// <typeparam name="T">The type of items being stored.  Must implement IHasID and be a reference-type.</typeparam>
+	public class MultiSpatialMap<T> : ISpatialMap<T> where T : class, IHasID
 	{
-		private Dictionary<uint, SpatialTuple<T>> itemMapping;
+		private Dictionary<T, SpatialTuple<T>> itemMapping;
 		private Dictionary<Coord, List<SpatialTuple<T>>> positionMapping;
 
 		/// <summary>
@@ -35,7 +35,7 @@ namespace GoRogue
 		/// </param>
 		public MultiSpatialMap(int initialCapacity = 32)
 		{
-			itemMapping = new Dictionary<uint, SpatialTuple<T>>(initialCapacity);
+			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, new IDComparer<T>());
 			positionMapping = new Dictionary<Coord, List<SpatialTuple<T>>>(initialCapacity);
 		}
 
@@ -93,11 +93,11 @@ namespace GoRogue
 		/// <returns>True if the item was added, false if not.</returns>
 		public bool Add(T newItem, Coord position)
 		{
-			if (itemMapping.ContainsKey(newItem.ID))
+			if (itemMapping.ContainsKey(newItem))
 				return false;
 
 			var tuple = new SpatialTuple<T>(newItem, position);
-			itemMapping.Add(newItem.ID, tuple);
+			itemMapping.Add(newItem, tuple);
 
 			if (!positionMapping.ContainsKey(position))
 				positionMapping.Add(position, new List<SpatialTuple<T>>());
@@ -137,7 +137,7 @@ namespace GoRogue
 		/// <summary>
 		/// See IReadOnlySpatialMap.Contains.
 		/// </summary>
-		public bool Contains(T item) => itemMapping.ContainsKey(item.ID);
+		public bool Contains(T item) => itemMapping.ContainsKey(item);
 
 		/// <summary>
 		/// See IReadOnlySpatialMap.Contains.
@@ -191,7 +191,7 @@ namespace GoRogue
 		public Coord GetPosition(T item)
 		{
 			SpatialTuple<T> tuple;
-			itemMapping.TryGetValue(item.ID, out tuple);
+			itemMapping.TryGetValue(item, out tuple);
 			if (tuple == null) return null;
 			return tuple.Position;
 		}
@@ -206,10 +206,10 @@ namespace GoRogue
 		/// <returns>True if the item was moved, false if not.</returns>
 		public bool Move(T item, Coord target)
 		{
-			if (!itemMapping.ContainsKey(item.ID))
+			if (!itemMapping.ContainsKey(item))
 				return false;
 
-			var movingTuple = itemMapping[item.ID];
+			var movingTuple = itemMapping[item];
 
 			Coord oldPos = movingTuple.Position;
 			positionMapping[movingTuple.Position].Remove(movingTuple);
@@ -289,11 +289,11 @@ namespace GoRogue
 		/// <returns>True if the item was removed, false if the item was not found.</returns>
 		public bool Remove(T item)
 		{
-			if (!itemMapping.ContainsKey(item.ID))
+			if (!itemMapping.ContainsKey(item))
 				return false;
 
-			var tuple = itemMapping[item.ID];
-			itemMapping.Remove(item.ID);
+			var tuple = itemMapping[item];
+			itemMapping.Remove(item);
 			positionMapping[tuple.Position].Remove(tuple);
 
 			if (positionMapping[tuple.Position].Count == 0)
@@ -317,7 +317,7 @@ namespace GoRogue
 			{
 				foreach (var tuple in positionMapping[position])
 				{
-					itemMapping.Remove(tuple.Item.ID);
+					itemMapping.Remove(tuple.Item);
 					yield return tuple.Item;
 				}
 

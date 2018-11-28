@@ -8,7 +8,7 @@ namespace GoRogue
 	/// <summary>
 	/// SpatialMap implementation that can be used to efficiently represent "layers" of objects, with each layer represented as a SpatialMap.
 	/// It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers.  Items must implement IHasID and IHasLayer,
-	/// and their Layer value MUST NOT change while they are in the data structure.
+	/// be a reference type, and their Layer value MUST NOT change while they are in the data structure.
 	/// </summary>
 	/// <remarks>
 	/// This class is desinged to wrap a bunch of ISpatialMap instances together.  At creation, whether or not each layer supports
@@ -16,9 +16,9 @@ namespace GoRogue
 	/// This class provides read-only access to each layer, as well as functions to add/remove/move items, do item grabbing based on layers, etc.
 	/// Will not allow the same item to be added to multiple layers.
 	/// </remarks>
-	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasID and IHasLayer, and its IHasLayer.Layer value MUST NOT
+	/// <typeparam name="T">Type of items in the layers.  Type T must implement IHasID and IHasLayer, be a reference type, and its IHasLayer.Layer value MUST NOT
 	/// change while the item is in the LayeredSpatialMap.</typeparam>
-	public class LayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasID, IHasLayer
+	public class LayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : class, IHasID, IHasLayer
 	{
 		private ISpatialMap<T>[] _layers;
 		private HashSet<Coord> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap

@@ -34,8 +34,6 @@ namespace GoRogue.GameFramework
 
 		public Map<BaseSubclass> CurrentMap { get; internal set; }
 
-		private static IDGenerator _idGenerator = new IDGenerator();
-
 		public GameObject(Coord position, int layer, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
 		{
 			_position = position;
@@ -46,7 +44,7 @@ namespace GoRogue.GameFramework
 
 			CurrentMap = null;
 
-			ID = _idGenerator.UseID();
+			ID = GenerateID();
 		}
 
 		public bool MoveIn(Direction direction)
@@ -57,6 +55,6 @@ namespace GoRogue.GameFramework
 			return _position != oldPos;
 		}
 
-		public static void SetStartingID(uint id) => _idGenerator = new IDGenerator(id);
+		protected virtual uint GenerateID() => GoRogue.Random.SingletonRandom.DefaultRNG.NextUInt();
 	}
 }

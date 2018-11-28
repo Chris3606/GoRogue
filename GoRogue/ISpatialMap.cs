@@ -199,4 +199,11 @@ namespace GoRogue
 		/// </summary>
 		public Coord OldPosition { get; private set; }
 	}
+
+	// Class for dictionary-hashing of things that implement IHasID
+	class IDComparer<T> : IEqualityComparer<T> where T : IHasID
+	{
+		public bool Equals(T x, T y) => ReferenceEquals(x, y);
+		public int GetHashCode(T obj) => obj.ID.GetHashCode();
+	}
 }
