@@ -11,7 +11,7 @@ namespace GoRogue.MapViews
 	/// poor match for your game's actual map data. For example, map generation works with bools, and
 	/// FOV calculation with doubles, while your map data may model each map cell as a class or
 	/// struct containing many different member values. This class allows you to build descendant
-	/// classes that override the TranslateGet and TranslateSet methods for simple mapping, or the
+	/// classes that override the TranslateGet and TranslateSet method(s) for simple mapping, or the
 	/// this[Coord] properties if you need full access to the underlying data for context, in order
 	/// to present a simplified view of your data to an algorithm without having to create the large
 	/// amount of duplicate code associated with multiple ISettableMapView instances that all extract
@@ -71,8 +71,8 @@ namespace GoRogue.MapViews
 		/// <returns>The translated "value" associated with the provided location.</returns>
 		public virtual T2 this[Coord pos]
 		{
-			get => TranslateGet(BaseMap[pos]);
-			set => BaseMap[pos] = TranslateSet(value);
+			get => TranslateGet(pos, BaseMap[pos]);
+			set => BaseMap[pos] = TranslateSet(pos, value);
 		}
 
 		/// <summary>
@@ -89,18 +89,40 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Translates your map data into the view type.
+		/// Translates your map data into the view type.  Takes only a value from the underlying map.  If a position is also needed to perform
+		/// the translation, use TranslateGet(Coord, T1) instead.
 		/// </summary>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type</returns>
-		protected abstract T2 TranslateGet(T1 value);
+		protected virtual T2 TranslateGet(T1 value) =>
+			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Coord, T1) was not re-implemented.  One of these two functions must be implemented.");
 
 		/// <summary>
-		/// Translates the view type into the appropriate form for your map data.
+		/// Translates your map data into the view type.  Takes a value from the underlying map and the corresponding position for that value.  If a position
+		/// is not needed to perform the translation, use TranslateGet(T1) instead.
+		/// </summary>
+		/// <param name="position">The position of the given data value from your map.</param>
+		/// <param name="value">The data value from your map.</param>
+		/// <returns>A value of the mapped data type</returns>
+		protected virtual T2 TranslateGet(Coord position, T1 value) => TranslateGet(value);
+
+		/// <summary>
+		/// Translates the view type into the appropriate form for your map data.  Takes only a value from the underlying map.  If a position is also needed to perform
+		/// the translation, use TranslateSet(Coord, T2) instead.
 		/// </summary>
 		/// <param name="value">A value of the mapped data type</param>
 		/// <returns>The data value for your map.</returns>
-		protected abstract T1 TranslateSet(T2 value);
+		protected virtual T1 TranslateSet(T2 value) =>
+			throw new NotImplementedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Coord, T2) was not re-implemented.  One of these two functions must be implemented.");
+
+		/// <summary>
+		/// Translates the view type into the appropriate form for your map data.  Takes a value from the underlying map, and it corresponding position. 
+		/// If a position is not needed to perform the translation, use TranslateSet(T2) instead.
+		/// </summary>
+		/// <param name="position">The position of the given mapped data type.</param>
+		/// <param name="value">A value of the mapped data type</param>
+		/// <returns>The data value for your map.</returns>
+		protected virtual T1 TranslateSet(Coord position, T2 value) => TranslateSet(value);
 
 		/// <summary>
 		/// Returns a string representation of the SettableTranslationMap.

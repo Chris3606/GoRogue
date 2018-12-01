@@ -16,6 +16,7 @@ namespace GoRogue_PerformanceTests
 				  new Option("Line Tests", Line),
 				  new Option("Pathing Tests", Pathing),
 				  new Option("LayerMask Tests", LayerMask),
+				  new Option("LambdaTranslationMap Tests", LambdaTranslationMap),
 				  new Option("Quit", Quit))
 		{ }
 
@@ -144,6 +145,16 @@ namespace GoRogue_PerformanceTests
 			Console.WriteLine($"\t\t3 Layers : {timeForRetrieve3Layers}");
 			Console.WriteLine($"\t\t7 Layers : {timeForRetrieve7Layers}");
 			Console.WriteLine($"\t\t32 Layers: {timeForRetrieve32Layers}");
+		}
+
+		private static void LambdaTranslationMap()
+		{
+			var timeFor1ParamAccess = MapViewTests.TimeForLambdaTranslationMap1ParamAccess(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING);
+			var timeFor2ParamAccess = MapViewTests.TimeForLambdaTranslationMap2ParamAccess(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING);
+
+			Console.WriteLine($"Time for accessing {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} LambdaTranslationMap {Runner.ITERATIONS_FOR_TIMING} times:");
+			Console.WriteLine($"\tSingle-param: {timeFor1ParamAccess}");
+			Console.WriteLine($"\tDouble-param: {timeFor2ParamAccess}");
 		}
 
 		private static void Quit()
