@@ -58,6 +58,7 @@ namespace GoRogue.SenseMapping
 		internal IMapView<double> resMap;
 		private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
 		private double _radius;
+		private double _decay; // Set when radius is set
 
 		private int size;
 
@@ -140,12 +141,14 @@ namespace GoRogue.SenseMapping
 			{
 				if (_radius != value)
 				{
-					_radius = value;
+					_radius = Math.Max(1, value);
 					// Can round down here because the EUCLIDEAN distance shape is always contained within
 					// the CHEBYSHEV distance shape
 					size = (int)_radius * 2 + 1;
 					light = new double[size, size];
 					nearLight = new bool[size, size];
+
+					_decay = 1.0 / (_radius + 1);
 				}
 			}
 		}
@@ -214,9 +217,6 @@ namespace GoRogue.SenseMapping
 
 		private void doRippleFOV(int ripple, IMapView<double> map)
 		{
-			double rad = Math.Max(1, Radius);
-			double decay = 1.0 / (rad + 1);
-
 			LinkedList<Coord> dq = new LinkedList<Coord>();
 			dq.AddLast(Coord.Get(size / 2, size / 2)); // Add starting point
 			while (!(dq.Count == 0))
@@ -235,10 +235,10 @@ namespace GoRogue.SenseMapping
 					int globalY2 = Position.Y - (int)Radius + y2;
 
 					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-						DistanceCalc.Calculate(size / 2, size / 2, x2, y2) > rad) // +1 covers starting tile at least
+						DistanceCalc.Calculate(size / 2, size / 2, x2, y2) > _radius) // +1 covers starting tile at least
 						continue;
 
-					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, decay, map);
+					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
 					if (light[x2, y2] < surroundingLight)
 					{
 						light[x2, y2] = surroundingLight;
@@ -260,7 +260,7 @@ namespace GoRogue.SenseMapping
 		}
 
 		// TODO: Make these virtual, to allow directional light sources?
-		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, double decay, IMapView<double> map)
+		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, IMapView<double> map)
 		{
 			if (x == size / 2 && y == size / 2)
 				return 1;
@@ -315,7 +315,7 @@ namespace GoRogue.SenseMapping
 					if (gpx == Position.X && gpy == Position.Y)
 						resistance = 0.0;
 
-					curLight = Math.Max(curLight, light[p.X, p.Y] - dist * decay - resistance);
+					curLight = Math.Max(curLight, light[p.X, p.Y] - dist * _decay - resistance);
 				}
 			}
 
@@ -327,23 +327,20 @@ namespace GoRogue.SenseMapping
 
 		private void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
 		{
-			double radius = Math.Max(1, Radius);
-			double decay = 1.0 / (radius + 1);
-
 			double newStart = 0;
 			if (start < end)
 				return;
 
 			bool blocked = false;
-			for (int distance = row; distance <= radius && distance < size + size && !blocked; distance++)
+			for (int distance = row; distance <= _radius && distance < size + size && !blocked; distance++)
 			{
 				int deltaY = -distance;
 				for (int deltaX = -distance; deltaX <= 0; deltaX++)
 				{
 					int currentX = size / 2 + deltaX * xx + deltaY * xy;
 					int currentY = size / 2 + deltaX * yx + deltaY * yy;
-					int gCurrentX = Position.X - (int)Radius + currentX;
-					int gCurrentY = Position.Y - (int)Radius + currentY;
+					int gCurrentX = Position.X - (int)_radius + currentX;
+					int gCurrentY = Position.Y - (int)_radius + currentY;
 					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
 					double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
@@ -354,9 +351,9 @@ namespace GoRogue.SenseMapping
 						break;
 
 					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
-					if (deltaRadius <= radius)
+					if (deltaRadius <= _radius)
 					{
-						double bright = 1 - decay * deltaRadius;
+						double bright = 1 - _decay * deltaRadius;
 						light[currentX, currentY] = bright;
 					}
 
@@ -372,7 +369,7 @@ namespace GoRogue.SenseMapping
 					}
 					else
 					{
-						if (map[gCurrentX, gCurrentY] >= 1 && distance < radius) // Wall within FOV
+						if (map[gCurrentX, gCurrentY] >= 1 && distance < _radius) // Wall within FOV
 						{
 							blocked = true;
 							shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);
