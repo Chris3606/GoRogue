@@ -61,6 +61,7 @@ namespace GoRogue.SenseMapping
 		private double _decay; // Set when radius is set
 
 		private int size;
+		private int halfSize;
 
 		/// <summary>
 		/// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
@@ -181,6 +182,8 @@ namespace GoRogue.SenseMapping
 					// Can round down here because the EUCLIDEAN distance shape is always contained within
 					// the CHEBYSHEV distance shape
 					size = (int)_radius * 2 + 1;
+					// Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
+					halfSize = size / 2;
 					light = new double[size, size];
 					nearLight = new bool[size, size]; // ALlocate whether we use shadow or not, just to support.  Could be lazy but its just bools
 
@@ -207,6 +210,7 @@ namespace GoRogue.SenseMapping
 		{
 			if (Enabled)
 			{
+				initArrays();
 				switch (Type)
 				{
 					case SourceType.RIPPLE:
@@ -214,15 +218,12 @@ namespace GoRogue.SenseMapping
 					case SourceType.RIPPLE_TIGHT:
 					case SourceType.RIPPLE_VERY_LOOSE:
 						if (IsAngleRestricted)
-							throw new NotImplementedException("Angle-based sources for ripple algorithm have not been implemented yet");
-
-						initArrays();
-						doRippleFOV(rippleValue(Type), resMap);
+							doRippleFOV(rippleValue(Type), resMap, MathHelpers.ToRadian(_angle), MathHelpers.ToRadian(_span));
+						else
+							doRippleFOV(rippleValue(Type), resMap);
 						break;
 
 					case SourceType.SHADOW:
-						initArrays();
-
 						if (IsAngleRestricted)
 						{
 							double angleRadians = MathHelpers.ToRadian(_angle);
@@ -278,7 +279,7 @@ namespace GoRogue.SenseMapping
 		private void doRippleFOV(int ripple, IMapView<double> map)
 		{
 			LinkedList<Coord> dq = new LinkedList<Coord>();
-			dq.AddLast(Coord.Get(size / 2, size / 2)); // Add starting point
+			dq.AddLast(Coord.Get(halfSize, halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
 				Coord p = dq.First.Value;
@@ -295,7 +296,45 @@ namespace GoRogue.SenseMapping
 					int globalY2 = Position.Y - (int)Radius + y2;
 
 					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-						DistanceCalc.Calculate(size / 2, size / 2, x2, y2) > _radius) // +1 covers starting tile at least
+						DistanceCalc.Calculate(halfSize, halfSize, x2, y2) > _radius) // +1 covers starting tile at least
+						continue;
+
+					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
+					if (light[x2, y2] < surroundingLight)
+					{
+						light[x2, y2] = surroundingLight;
+						if (map[globalX2, globalY2] < 1) // Not a wall (fully blocking)
+							dq.AddLast(Coord.Get(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
+					}
+				}
+			}
+		}
+
+		private void doRippleFOV(int ripple, IMapView<double> map, double angle, double span)
+		{
+			LinkedList<Coord> dq = new LinkedList<Coord>();
+			dq.AddLast(Coord.Get(halfSize, halfSize)); // Add starting point
+			while (!(dq.Count == 0))
+			{
+				Coord p = dq.First.Value;
+				dq.RemoveFirst();
+
+				if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
+					continue; // Nothing left to spread!
+
+				foreach (Direction dir in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsCounterClockwise(Direction.RIGHT))
+				{
+					int x2 = p.X + dir.DeltaX;
+					int y2 = p.Y + dir.DeltaY;
+					int globalX2 = Position.X - (int)Radius + x2;
+					int globalY2 = Position.Y - (int)Radius + y2;
+
+					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
+						DistanceCalc.Calculate(halfSize, halfSize, x2, y2) > _radius) // +1 covers starting tile at least
+						continue;
+
+					double newAngle = Math.Atan2(y2 - halfSize, x2 - halfSize) + Math.PI * 2;
+					if (Math.Abs(Math.IEEERemainder(angle - newAngle + Math.PI * 8, Math.PI * 2)) > span / 2.0)
 						continue;
 
 					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
@@ -313,16 +352,14 @@ namespace GoRogue.SenseMapping
 		private void initArrays() // Prep for lighting calculations
 		{
 			Array.Clear(light, 0, light.Length);
-			// Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
-			int center = size / 2;
-			light[center, center] = 1; // source light is center, starts out at 1
+			light[halfSize, halfSize] = 1; // source light is center, starts out at 1
 			if (Type != SourceType.SHADOW) // Only clear if we are using it, since this is called at each calculate
 				Array.Clear(nearLight, 0, nearLight.Length);
 		}
 
 		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, IMapView<double> map)
 		{
-			if (x == size / 2 && y == size / 2)
+			if (x == halfSize && y == halfSize)
 				return 1;
 
 			List<Coord> neighbors = new List<Coord>();
@@ -338,13 +375,13 @@ namespace GoRogue.SenseMapping
 
 				if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
 				{
-					tmpDistance = DistanceCalc.Calculate(size / 2, size / 2, x2, y2);
+					tmpDistance = DistanceCalc.Calculate(halfSize, halfSize, x2, y2);
 					int idx = 0;
 
 					for (int i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
 					{
 						c = neighbors[i];
-						testDistance = DistanceCalc.Calculate(size / 2, size / 2, c.X, c.Y);
+						testDistance = DistanceCalc.Calculate(halfSize, halfSize, c.X, c.Y);
 						if (tmpDistance < testDistance)
 							break;
 
@@ -397,8 +434,8 @@ namespace GoRogue.SenseMapping
 				int deltaY = -distance;
 				for (int deltaX = -distance; deltaX <= 0; deltaX++)
 				{
-					int currentX = size / 2 + deltaX * xx + deltaY * xy;
-					int currentY = size / 2 + deltaX * yx + deltaY * yy;
+					int currentX = halfSize + deltaX * xx + deltaY * xy;
+					int currentY = halfSize + deltaX * yx + deltaY * yy;
 					int gCurrentX = Position.X - (int)_radius + currentX;
 					int gCurrentY = Position.Y - (int)_radius + currentY;
 					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
@@ -445,8 +482,6 @@ namespace GoRogue.SenseMapping
 			double newStart = 0;
 			if (start < end)
 				return;
-
-			int halfSize = size / 2;
 
 			bool blocked = false;
 			for (int distance = row; distance <= _radius && distance < size + size && !blocked; distance++)

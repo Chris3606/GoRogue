@@ -218,6 +218,15 @@ namespace GoRogue_UnitTests
 				}
 			}
 
+
+			var degreesList = Enumerable.Range(0, 360).ToList();
+			degreesList.FisherYatesShuffle();
+			var spanList = Enumerable.Range(1, 359).ToList();
+			spanList.FisherYatesShuffle();
+
+			var degrees = degreesList.Take(30).ToList();
+			var spans = spanList.Take(30).ToList();
+
 			senseSource.IsAngleRestricted = true;
 			// Test angle-based shadowcasting
 			foreach (var curPos in positions.Take(1))
@@ -225,11 +234,11 @@ namespace GoRogue_UnitTests
 				if (!map[curPos])
 					continue;
 
-				for (int degrees = 0; degrees < 360; degrees++)
+				foreach (var degree in degrees)
 				{
-					for (int span = 1; span < 360; span++)
+					foreach (var span in spans)
 					{
-						senseSource.Angle = degrees;
+						senseSource.Angle = degree;
 						senseSource.Span = span;
 
 						senseSource.Position = curPos;
