@@ -85,6 +85,16 @@ namespace GoRogue.SenseMapping
 
 			resMap = null;
 			Enabled = true;
+
+			IsAngleRestricted = false;
+		}
+
+		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span)
+			: this(type, position, radius, distanceCalc)
+		{
+			IsAngleRestricted = true;
+			Angle = angle;
+			Span = span;
 		}
 
 		/// <summary>
@@ -127,6 +137,32 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public Coord Position { get; set; }
 
+
+		public bool IsAngleRestricted { get; set; }
+
+		private double _angle;
+
+		public double Angle
+		{
+			get => IsAngleRestricted ? _angle : 0.0;
+			set
+			{
+				if (_angle != value)
+					_angle = ((value > 360.0 || value < 0.0) ? Math.IEEERemainder(value + 720.0, 360) : value);
+			}
+		}
+
+		private double _span;
+		public double Span
+		{
+			get => IsAngleRestricted ? _span : 360.0;
+			set
+			{
+				if (_span != value)
+					_span = Math.Max(0, Math.Min(360.0, value));
+			}
+		}
+
 		/// <summary>
 		/// The maximum radius of the source -- this is the maximum distance the source values will
 		/// emanate, provided the area is completely unobstructed. Changing this will trigger
@@ -146,7 +182,7 @@ namespace GoRogue.SenseMapping
 					// the CHEBYSHEV distance shape
 					size = (int)_radius * 2 + 1;
 					light = new double[size, size];
-					nearLight = new bool[size, size];
+					nearLight = new bool[size, size]; // ALlocate whether we use shadow or not, just to support.  Could be lazy but its just bools
 
 					_decay = 1.0 / (_radius + 1);
 				}
@@ -177,16 +213,40 @@ namespace GoRogue.SenseMapping
 					case SourceType.RIPPLE_LOOSE:
 					case SourceType.RIPPLE_TIGHT:
 					case SourceType.RIPPLE_VERY_LOOSE:
+						if (IsAngleRestricted)
+							throw new NotImplementedException("Angle-based sources for ripple algorithm have not been implemented yet");
+
 						initArrays();
 						doRippleFOV(rippleValue(Type), resMap);
 						break;
 
 					case SourceType.SHADOW:
 						initArrays();
-						foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
+
+						if (IsAngleRestricted)
 						{
-							shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
-							shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);
+							double angleRadians = MathHelpers.ToRadian(_angle);
+							double spanRadians = MathHelpers.ToRadian(_span);
+
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, resMap, angleRadians, spanRadians);
+
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, resMap, angleRadians, spanRadians);
+
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, resMap, angleRadians, spanRadians);
+
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, resMap, angleRadians, spanRadians);
+						}
+						else
+						{
+							foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
+							{
+								shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
+								shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);
+							}
 						}
 						break;
 				}
@@ -256,10 +316,10 @@ namespace GoRogue.SenseMapping
 			// Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
 			int center = size / 2;
 			light[center, center] = 1; // source light is center, starts out at 1
-			Array.Clear(nearLight, 0, nearLight.Length);
+			if (Type != SourceType.SHADOW) // Only clear if we are using it, since this is called at each calculate
+				Array.Clear(nearLight, 0, nearLight.Length);
 		}
 
-		// TODO: Make these virtual, to allow directional light sources?
 		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, IMapView<double> map)
 		{
 			if (x == size / 2 && y == size / 2)
@@ -373,6 +433,69 @@ namespace GoRogue.SenseMapping
 						{
 							blocked = true;
 							shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);
+							newStart = rightSlope;
+						}
+					}
+				}
+			}
+		}
+
+		private void shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map, double angleRadians, double spanRadians)
+		{
+			double newStart = 0;
+			if (start < end)
+				return;
+
+			int halfSize = size / 2;
+
+			bool blocked = false;
+			for (int distance = row; distance <= _radius && distance < size + size && !blocked; distance++)
+			{
+				int deltaY = -distance;
+				for (int deltaX = -distance; deltaX <= 0; deltaX++)
+				{
+					int currentX = halfSize + deltaX * xx + deltaY * xy;
+					int currentY = halfSize + deltaX * yx + deltaY * yy;
+					int gCurrentX = Position.X - (int)_radius + currentX;
+					int gCurrentY = Position.Y - (int)_radius + currentY;
+					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
+					double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
+
+					if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < map.Width && gCurrentY < map.Height) || start < rightSlope)
+						continue;
+
+					if (end > leftSlope)
+						break;
+
+					double newAngle = (Math.Atan2(currentY - halfSize, currentX - halfSize) + Math.PI * 8.0) % (Math.PI * 2);
+					double remainder = (angleRadians - newAngle + Math.PI * 2) % (Math.PI * 2);
+					double iRemainder = (newAngle - angleRadians + Math.PI * 2) % (Math.PI * 2);
+					if (Math.Abs(remainder) > spanRadians * 0.5 && Math.Abs(iRemainder) > spanRadians * 0.5)
+						continue;
+
+					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
+					if (deltaRadius <= _radius)
+					{
+						double bright = 1 - _decay * deltaRadius;
+						light[currentX, currentY] = bright;
+					}
+
+					if (blocked) // Previous cell was blocked
+					{
+						if (map[gCurrentX, gCurrentY] >= 1) // Hit a wall...
+							newStart = rightSlope;
+						else
+						{
+							blocked = false;
+							start = newStart;
+						}
+					}
+					else
+					{
+						if (map[gCurrentX, gCurrentY] >= 1 && distance < _radius) // Wall within FOV
+						{
+							blocked = true;
+							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, map, angleRadians, spanRadians);
 							newStart = rightSlope;
 						}
 					}

@@ -4,6 +4,7 @@ using GoRogue.MapGeneration.Generators;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace GoRogue_UnitTests
@@ -170,6 +171,87 @@ namespace GoRogue_UnitTests
 						Assert.AreEqual(false, currentSenseMap.Contains(Coord.Get(x, y)));
 				}
 
+		}
+
+		[TestMethod]
+		public void FOVSenseMapEquivalency()
+		{
+			ArrayMap<bool> map = new ArrayMap<bool>(100, 100);
+			RectangleMapGenerator.Generate(map);
+
+			var positions = Enumerable.Range(0, 100).Select(x => map.RandomPosition(true)).ToList();
+
+			// Make 2-layer thick walls to verify wall-lighting is working properly
+			foreach (var pos in map.Positions())
+			{
+				if (pos.X == 1 || pos.Y == 1 || pos.X == map.Width - 2 || pos.Y == map.Height - 2)
+					map[pos] = false;
+			}
+
+			var fov = new FOV(map);
+			var senseMap = new SenseMap(new LambdaTranslationMap<bool, double>(map, x => x ? 0.0 : 1.0));
+			var senseSource = new SenseSource(SourceType.SHADOW, map.RandomPosition(true), 5, Distance.EUCLIDEAN);
+			senseMap.AddSenseSource(senseSource);
+
+
+			foreach (var curPos in positions)
+			{
+				if (!map[curPos])
+					continue;
+
+				senseSource.Position = curPos;
+				fov.Calculate(senseSource.Position, senseSource.Radius, senseSource.DistanceCalc);
+				senseMap.Calculate();
+
+				foreach (var pos in map.Positions())
+				{
+					bool success = fov.BooleanFOV[pos] == (senseMap[pos] > 0.0 ? true : false);
+
+					if (!success)
+					{
+						Console.WriteLine($"Failed on pos {pos} with source at {senseSource.Position}.");
+						Console.WriteLine($"FOV: {fov[pos]}, SenseMap: {senseMap[pos]}");
+						Console.WriteLine($"Distance between source and fail point: {Distance.EUCLIDEAN.Calculate(senseSource.Position, pos)}, source radius: {senseSource.Radius}");
+					}
+
+					Assert.AreEqual(true, success);
+				}
+			}
+
+			senseSource.IsAngleRestricted = true;
+			// Test angle-based shadowcasting
+			foreach (var curPos in positions.Take(1))
+			{
+				if (!map[curPos])
+					continue;
+
+				for (int degrees = 0; degrees < 360; degrees++)
+				{
+					for (int span = 1; span < 360; span++)
+					{
+						senseSource.Angle = degrees;
+						senseSource.Span = span;
+
+						senseSource.Position = curPos;
+						fov.Calculate(senseSource.Position, senseSource.Radius, senseSource.DistanceCalc, senseSource.Angle, senseSource.Span);
+						senseMap.Calculate();
+
+						foreach (var pos in map.Positions())
+						{
+							bool success = fov.BooleanFOV[pos] == (senseMap[pos] > 0.0 ? true : false);
+
+							if (!success)
+							{
+								Console.WriteLine($"Failed on pos {pos} with source at {senseSource.Position}, angle: {senseSource.Angle}, span: {senseSource.Span}.");
+								Console.WriteLine($"FOV: {fov[pos]}, SenseMap: {senseMap[pos]}");
+								Console.WriteLine($"Distance between source and fail point: {Distance.EUCLIDEAN.Calculate(senseSource.Position, pos)}, source radius: {senseSource.Radius}");
+							}
+
+							Assert.AreEqual(true, success);
+						}
+					}
+				}
+			}
 		}
 
 		[TestMethod]
