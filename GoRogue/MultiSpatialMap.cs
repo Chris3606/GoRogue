@@ -21,7 +21,7 @@ namespace GoRogue
 	/// since they both implement the ISpatialMap interface.
 	/// </remarks>
 	/// <typeparam name="T">The type of items being stored.  Must implement IHasID and be a reference-type.</typeparam>
-	public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : IHasID
+	public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
 	{
 		/// <summary>
 		/// Constructor. Creates an empty MultiSpatialMap.

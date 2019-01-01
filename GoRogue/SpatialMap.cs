@@ -29,7 +29,7 @@ namespace GoRogue
 	/// since uints are easily (efficiently) hashable.
 	/// </remarks>
 	/// <typeparam name="T">The type of object that will be contained by this SpatialMap.  Must implement IHasID and be a reference-type.</typeparam>
-	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : IHasID
+	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
 	{
 		/// <summary>
 		/// Constructor. Creates an empty SpatialMap.

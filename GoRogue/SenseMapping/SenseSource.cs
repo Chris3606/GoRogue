@@ -90,6 +90,25 @@ namespace GoRogue.SenseMapping
 			IsAngleRestricted = false;
 		}
 
+		/// <summary>
+		/// Constructor.  Creates a source whose spread is restricted to a certain angle and span.
+		/// </summary>
+		/// <param name="type">The spread mechanics to use for source values.</param>
+		/// <param name="position">The position on a map that the source is located at.</param>
+		/// <param name="radius">
+		/// The maximum radius of the source -- this is the maximum distance the source values will
+		/// emanate, provided the area is completely unobstructed.
+		/// </param>
+		/// <param name="distanceCalc">
+		/// The distance calculation used to determine what shape the radius has (or a type
+		/// implicitly convertible to Distance, eg. Radius).
+		/// </param>
+		/// <param name="angle">The angle in degrees that specifies the outermost center point of the cone formed
+		/// by the source's values. 0 degrees points right.</param>
+		/// <param name="span">
+		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
+		/// angle/2 degrees are included on either side of the cone's center line.
+		/// </param>
 		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span)
 			: this(type, position, radius, distanceCalc)
 		{
@@ -138,11 +157,18 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public Coord Position { get; set; }
 
-
+		/// <summary>
+		/// Whether or not the spreading of values from this source is restricted to an angle and span.
+		/// </summary>
 		public bool IsAngleRestricted { get; set; }
 
 		private double _angle;
 
+		/// <summary>
+		/// If IsAngleRestricted is true, the angle in degrees that represents a line from the source's start to
+		/// the outermost center point of the cone formed by the source's calculated values.  0 degrees points right.
+		/// If IsAngleRestricted is false, this will be 0.0 degrees.
+		/// </summary>
 		public double Angle
 		{
 			get => IsAngleRestricted ? _angle : 0.0;
@@ -154,6 +180,11 @@ namespace GoRogue.SenseMapping
 		}
 
 		private double _span;
+
+		/// <summary>
+		/// If IsAngleRestricted is true, the angle in degrees that represents the full arc of the cone formed by
+		/// the source's calculated values.  If IsAngleRestricted is false, it will be 360 degrees.
+		/// </summary>
 		public double Span
 		{
 			get => IsAngleRestricted ? _span : 360.0;

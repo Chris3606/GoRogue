@@ -204,7 +204,7 @@ namespace GoRogue
 		/// </param>
 		/// <param name="span">
 		/// The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
-		/// degrees are included on either side of the span line.
+		/// degrees are included on either side of the cone's center line.
 		/// </param>
 		public void Calculate(int startX, int startY, double radius, Distance distanceCalc, double angle, double span)
 		{

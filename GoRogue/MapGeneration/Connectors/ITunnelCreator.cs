@@ -10,7 +10,7 @@ namespace GoRogue.MapGeneration.Connectors
 	{
 		/// <summary>
 		/// Implements the algorithm, creating the tunnel between the two points (ensuring there is a
-		/// path of positions set to true between those two points.
+		/// path of positions set to true between those two points).
 		/// </summary>
 		/// <param name="map">Map to create the tunnel on.</param>
 		/// <param name="start">Start position to connect.</param>

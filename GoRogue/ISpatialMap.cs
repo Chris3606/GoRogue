@@ -7,8 +7,8 @@ namespace GoRogue
 	/// General interface for a data structure that records objects on a map.
 	/// </summary>
 	/// <remarks>
-	/// Two different implementations of this interface are provided by to the library, each
-	/// providing somewhat different implementations and constraints, however both provide more
+	/// Different implementations of this interface are provided by to the library, each
+	/// providing somewhat different implementations and constraints, however generally they provide more
 	/// efficient implementations of many of these operations than the standard "list of monsters"
 	/// that is often used in roguelike map design.
 	/// </remarks>
@@ -201,7 +201,7 @@ namespace GoRogue
 	}
 
 	// Class for dictionary-hashing of things that implement IHasID
-	class IDComparer<T> : IEqualityComparer<T> where T : IHasID
+	class IDComparer<T> : IEqualityComparer<T> where T : class, IHasID
 	{
 		public bool Equals(T x, T y) => ReferenceEquals(x, y);
 		public int GetHashCode(T obj) => obj.ID.GetHashCode();
