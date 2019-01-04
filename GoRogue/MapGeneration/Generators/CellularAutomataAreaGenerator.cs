@@ -6,24 +6,25 @@ using Troschuetz.Random;
 namespace GoRogue.MapGeneration.Generators
 {
 	/// <summary>
-	/// Implements a cellular automata genereation algorithm to generate a cave-like map.
+	/// Implements a cellular automata genereation algorithm to add cave-like (unconnected) areas to a map. A connection algorithm would be needed to connect
+	/// these areas.  For automatic connection, see GoRogue.MapGeneration.QuickGenerators.CellularAutomata().
 	/// </summary>
 	/// <remarks>
 	/// Generates a map by randomly filling the map surface with floor or wall values (true and false
 	/// respectively) based on a probability given, then iteratively smoothing it via the process
-	/// outlined in the cited roguebasin article. /// After generate is called, the passed in map
+	/// outlined in the cited roguebasin article. After generate is called, the passed in map
 	/// will have had a value of true set to all floor tiles, and a value of false set to all wall
 	/// tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin
 	/// article below:
 	/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
-	/// /// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
+	/// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
 	/// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
 	/// inexpensive and calling it multiples times costs little extra, and saves an internal allocation.
 	/// </remarks>
-	static public class CellularAutomataGenerator
+	public static class CellularAutomataAreaGenerator
 	{
 		/// <summary>
-		/// Generates the map. Floor tiles will be set to true in the provided map, and wall tiles
+		/// Generates the areas. Floor tiles will be set to true in the provided map, and wall tiles
 		/// will be set to false.
 		/// </summary>
 		/// <param name="map">The map to fill with values when generate is called.</param>
@@ -44,21 +45,15 @@ namespace GoRogue.MapGeneration.Generators
 		/// result in "breaking up" large areas will be run before switching to the more standard
 		/// nearest neighbors version. Recommended to be in range [2, 7] (4 is used in roguebasin article).
 		/// </param>
-		/// <param name="connectUsingDefault">
-		/// Whether or not to ensure all areas generated are connected. If this is true,
-		/// ClosestMapAreaConnector.Connect will be used to connect the areas, with
-		/// Distance.MANHATTAN distance used, the RNG given, a RandomConnectionPointSelector that
-		/// uses the RNG specified to this function, and default values for all other optional
-		/// parameters of ClosestMapAreaConnector.Connect.
-		/// </param>
-		static public void Generate(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4,
-			bool connectUsingDefault = true)
+		static public void Generate(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-			var tempMap = map as ArrayMap<bool>;
-			bool wasArrayMap = tempMap != null;
+			// We must allocate a new one to avoid messing up other map gen features that happened on the original
+			var tempMap = new ArrayMap<bool>(map.Width, map.Height);
+			tempMap.ApplyOverlay(map);
 
+			// Sets each cell so as of this point, tempMap is in a clean state
 			randomlyFillCells(tempMap, rng, fillProbability);
 
 			for (int i = 0; i < totalIterations; i++)
@@ -74,15 +69,10 @@ namespace GoRogue.MapGeneration.Generators
 			// kill the path to an area.
 			fillToRectangle(tempMap);
 
-			if (connectUsingDefault)
-				Connectors.ClosestMapAreaConnector.Connect(tempMap, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
-
-			if (!wasArrayMap)
-			{
-				for (int x = 0; x < tempMap.Width; x++)
-					for (int y = 0; y < tempMap.Height; y++)
-						map[x, y] = tempMap[x, y];
-			}
+			// Set rooms to true, but do NOT enforce where walls (false values) are -- this is done by making sure the blank slate passed in is all false.
+			foreach (var pos in tempMap.Positions())
+				if (tempMap[pos])
+					map[pos] = true;
 		}
 
 		static private void cellAutoBigAreaAlgo(ISettableMapView<bool> map)

@@ -1,5 +1,5 @@
 ﻿using GoRogue;
-using GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +12,7 @@ namespace GoRogue_UnitTests
 		public void LambaMapViewTest()
 		{
 			ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
@@ -25,10 +25,10 @@ namespace GoRogue_UnitTests
 			ArrayMap<double> map = new ArrayMap<double>(10, 10);
 
 			ArrayMap<bool> controlMap = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(controlMap);
+			QuickGenerators.GenerateRectangleMap(controlMap);
 
 			var settable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0, (c, b) => map[c] = b ? 1.0 : 0.0);
-			RectangleMapGenerator.Generate(settable);
+			QuickGenerators.GenerateRectangleMap(settable);
 
 			checkMaps(controlMap, map);
 		}
@@ -39,10 +39,10 @@ namespace GoRogue_UnitTests
 			ArrayMap<double> map = new ArrayMap<double>(10, 10);
 
 			ArrayMap<bool> controlMap = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(controlMap);
+			QuickGenerators.GenerateRectangleMap(controlMap);
 
 			var settable = new LambdaSettableTranslationMap<double, bool>(map, d => d > 0.0, b => b ? 1.0 : 0.0);
-			RectangleMapGenerator.Generate(settable);
+			QuickGenerators.GenerateRectangleMap(settable);
 
 			checkMaps(controlMap, map);
 		}
@@ -51,7 +51,7 @@ namespace GoRogue_UnitTests
 		public void LambdaTranslationMapTest()
 		{
 			ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
@@ -67,7 +67,7 @@ namespace GoRogue_UnitTests
 			const int MAP_HEIGHT = 250;
 
 			var arrayMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(arrayMap);
+			QuickGenerators.GenerateRectangleMap(arrayMap);
 
 			var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
 			checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
@@ -92,7 +92,7 @@ namespace GoRogue_UnitTests
 		public void ApplyOverlayTest()
 		{
 			var map = new ArrayMap<bool>(100, 100);
-			CellularAutomataGenerator.Generate(map);
+			QuickGenerators.GenerateCellularAutomataMap(map);
 
 			var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
 

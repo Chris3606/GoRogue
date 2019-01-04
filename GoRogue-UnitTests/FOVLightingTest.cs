@@ -1,6 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
-using GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -177,7 +177,7 @@ namespace GoRogue_UnitTests
 		public void FOVSenseMapEquivalency()
 		{
 			ArrayMap<bool> map = new ArrayMap<bool>(100, 100);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var positions = Enumerable.Range(0, 100).Select(x => map.RandomPosition(true)).ToList();
 
@@ -267,7 +267,7 @@ namespace GoRogue_UnitTests
 		public void FOVBooleanInput()
 		{
 			var map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var identicalResMap = new BoxResMap(10, 10);
 
@@ -285,7 +285,7 @@ namespace GoRogue_UnitTests
 		public void FOVBooleanOutput()
 		{
 			var map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var fov = new FOV(map);
 			fov.Calculate(5, 5, 3);

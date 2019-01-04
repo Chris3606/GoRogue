@@ -77,6 +77,11 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
+		/// Sets each element in the ArrayMap to the default fo type T.
+		/// </summary>
+		public void SetToDefault() => Array.Clear(array, 0, array.Length);
+
+		/// <summary>
 		/// Returns a string representation of the 2D array.
 		/// </summary>
 		/// <returns>A string representation of the 2D array.</returns>

@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using Troschuetz.Random.Generators;
-using Generators = GoRogue.MapGeneration.Generators;
 
 namespace GoRogue_UnitTests
 {
@@ -17,7 +16,7 @@ namespace GoRogue_UnitTests
 		{
 			var random = new StandardGenerator();
 			var map = new ArrayMap<bool>(80, 50);
-			Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
+			QuickGenerators.GenerateCellularAutomataMap(map, random, 40, 7, 4);
 
 			displayMap(map);
 
@@ -28,8 +27,21 @@ namespace GoRogue_UnitTests
 		public void ManualTestRandomRoomsGen()
 		{
 			var random = new StandardGenerator();
-			var map = new ArrayMap<bool>(30, 30);
-			Generators.RandomRoomsGenerator.Generate(map, random, 7, 4, 7, 5);
+			var map = new ArrayMap<bool>(80, 50);
+			QuickGenerators.GenerateRandomRoomsMap(map, random, 10, 4, 15, 5);
+
+			displayMap(map);
+			// TODO: Some assert here
+		}
+
+		[TestMethod]
+		public void ManualTestDungeonMazeGen()
+		{
+			var random = new StandardGenerator(12345);
+			//GoRogue.Random.SingletonRandom.DefaultRNG = new StandardGenerator(12345);
+			var map = new ArrayMap<bool>(80, 50);
+			QuickGenerators.GenerateDungeonMazeMap(map, random, 4, 10, 4, 7);
+			//QuickGenerators.GenerateDungeonMazeMap(map, GoRogue.Random.SingletonRandom.DefaultRNG, 4, 10, 4, 7);
 
 			displayMap(map);
 			// TODO: Some assert here
@@ -40,11 +52,11 @@ namespace GoRogue_UnitTests
 		{
 			var random = new StandardGenerator();
 			var map = new ArrayMap<bool>(80, 50);
-			Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
+			QuickGenerators.GenerateCellularAutomataMap(map, random, 40, 7, 4);
 
 			for (int i = 0; i < 500; i++)
 			{
-				Generators.CellularAutomataGenerator.Generate(map, random, 40, 7, 4);
+				QuickGenerators.GenerateCellularAutomataMap(map, random, 40, 7, 4);
 
 				// Ensure it's connected
 				var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
@@ -68,7 +80,7 @@ namespace GoRogue_UnitTests
 		public void TestRandomRoomsGenSize()
 		{
 			var map = new ArrayMap<bool>(40, 40);
-			Generators.RandomRoomsGenerator.Generate(map, 30, 4, 6, 10);
+			QuickGenerators.GenerateRandomRoomsMap(map, 30, 4, 6, 10);
 
 			Console.WriteLine(map.ToString(b => b ? "." : "#"));
 		}

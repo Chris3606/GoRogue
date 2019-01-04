@@ -4,7 +4,7 @@ using GoRogue.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Generators = GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 
 namespace GoRogue_PerformanceTests
 {
@@ -18,7 +18,7 @@ namespace GoRogue_PerformanceTests
 			var s = new Stopwatch();
 
 			var map = new ArrayMap<bool>(mapWidth, mapHeight);
-			Generators.RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 			var path = pather.ShortestPath(START, END); // Cache warmup

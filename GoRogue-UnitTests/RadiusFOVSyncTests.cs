@@ -3,7 +3,7 @@ using GoRogue.MapViews;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Generators = GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 
 namespace GoRogue_UnitTests
 {
@@ -110,7 +110,7 @@ namespace GoRogue_UnitTests
 			var map = new ArrayMap<bool>(mapWidth, mapHeight);
 			var resMap = new ArrayMap<double>(mapWidth, mapHeight);
 
-			Generators.RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			for (int x = 0; x < map.Width; x++)
 				for (int y = 0; y < map.Height; y++)

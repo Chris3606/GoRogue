@@ -1,7 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.DiceNotation;
 using GoRogue.MapGeneration;
-using GoRogue.MapGeneration.Generators;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
@@ -80,7 +79,7 @@ namespace GoRogue_UnitTests
 		public void ManualPrintFOV()
 		{
 			var map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 			var resMap = new ResMap(map);
 
 			FOV myFov = new FOV(resMap);
@@ -136,7 +135,7 @@ namespace GoRogue_UnitTests
 		public void ManualPrintPath()
 		{
 			var map = new ArrayMap<bool>(30, 30);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.MANHATTAN);
 			var path = pather.ShortestPath(1, 2, 5, 6);
@@ -176,7 +175,7 @@ namespace GoRogue_UnitTests
 		public void ManualPrintSenseMap()
 		{
 			var map = new ArrayMap<bool>(30, 30);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var resMap = new ResMap(map);
 			var senseMap = new SenseMap(resMap);

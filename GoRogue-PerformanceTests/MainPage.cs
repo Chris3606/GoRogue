@@ -1,6 +1,6 @@
 ﻿using EasyConsole;
 using GoRogue;
-using GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using System;
 using System.Collections.Generic;
@@ -104,7 +104,7 @@ namespace GoRogue_PerformanceTests
 
 			/* Single-Goal GoalMap */
 			var map = new ArrayMap<bool>(Runner.MAP_WIDTH, Runner.MAP_HEIGHT);
-			CellularAutomataGenerator.Generate(map);
+			QuickGenerators.GenerateCellularAutomataMap(map);
 			Coord goal = map.RandomPosition(true);
 
 			var timeGoalMap = PathingTests.TimeForGoalMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);

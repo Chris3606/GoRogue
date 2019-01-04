@@ -1,5 +1,5 @@
 ﻿using GoRogue;
-using GoRogue.MapGeneration.Generators;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.Random;
@@ -24,7 +24,7 @@ namespace GoRogue_UnitTests
 		public void AStarAssumeWalkable()
 		{
 			var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(walkabilityMap);
+			QuickGenerators.GenerateRectangleMap(walkabilityMap);
 
 			var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
 
@@ -63,7 +63,7 @@ namespace GoRogue_UnitTests
 		public void AStarNoAssumeWalkable()
 		{
 			var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(walkabilityMap);
+			QuickGenerators.GenerateRectangleMap(walkabilityMap);
 
 			var pather = new AStar(walkabilityMap, Distance.CHEBYSHEV);
 
@@ -103,7 +103,7 @@ namespace GoRogue_UnitTests
 		public void ManualAStarChebyshevTest()
 		{
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 			var path = pather.ShortestPath(START, END);
@@ -118,7 +118,7 @@ namespace GoRogue_UnitTests
 		public void ManualAStarEuclidianTest()
 		{
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.EUCLIDEAN);
 			var path = pather.ShortestPath(START, END);
@@ -133,7 +133,7 @@ namespace GoRogue_UnitTests
 		public void ManualAStarManhattanTest()
 		{
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.MANHATTAN);
 			var path = pather.ShortestPath(START, END);
@@ -148,7 +148,7 @@ namespace GoRogue_UnitTests
 		public void ManualGoalMapTest()
 		{
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
 			foreach (var pos in stateMap.Positions())
@@ -195,7 +195,7 @@ namespace GoRogue_UnitTests
 			// Because Path constructor is internal to avoid confusion, we use AStar to return a
 			// (simple) known path
 			var map = new ArrayMap<bool>(10, 10);
-			RectangleMapGenerator.Generate(map);
+			QuickGenerators.GenerateRectangleMap(map);
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 
 			var actualPath = pather.ShortestPath(start, end);
@@ -317,7 +317,7 @@ namespace GoRogue_UnitTests
 		private void aStarMatches(Distance distanceCalc)
 		{
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-			CellularAutomataGenerator.Generate(map);
+			QuickGenerators.GenerateCellularAutomataMap(map);
 			var graphTuple = initGraph(map, distanceCalc);
 
 			var pather = new AStar(map, distanceCalc);
