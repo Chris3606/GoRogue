@@ -3,6 +3,7 @@ using System.Linq;
 using GoRogue.MapViews;
 using Troschuetz.Random;
 using GoRogue.Random;
+using System.Runtime.CompilerServices;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -238,21 +239,12 @@ namespace GoRogue.MapGeneration.Generators
 		static bool IsPointConsideredEmpty(IMapView<bool> map, Coord location)
 		{
 			return !IsPointMapEdge(map, location) &&  // exclude outer ridge of map
-				   IsPointOdd(location) && // check is odd number position
+				   location.X % 2 != 0 && location.Y % 2 != 0 && // check is odd number position
 				   IsPointSurroundedByWall(map, location) && // make sure is surrounded by a wall.
-				   IsPointWall(map, location); // The location is a wall
+				   !map[location]; // The location is a wall
 		}
 
-		static bool IsPointWall(IMapView<bool> map, Coord location)
-		{
-			return !map[location];
-		}
-
-		static bool IsPointOdd(Coord location)
-		{
-			return location.X % 2 != 0 && location.Y % 2 != 0;
-		}
-
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)
 		{
 			if (onlyEdgeTest)
