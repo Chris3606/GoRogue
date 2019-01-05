@@ -194,7 +194,9 @@ namespace GoRogue.MapGeneration.Generators
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		static bool PercentageCheck(double outOfHundred, IGenerator rng) => outOfHundred > 0d && rng.NextDouble() < outOfHundred;
 
 		class Crawler

@@ -9,8 +9,8 @@
 	<PackageLicenseUrl>https://github.com/Chris3606/GoRogue/blob/master/LICENSE</PackageLicenseUrl>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Hotfix. See https://github.com/Chris3606/GoRogue/releases/tag/v1.6.2 for release notes.</PackageReleaseNotes>
-    <Copyright>Copyright ©  2018 Christopher Ridley.  All rights reserved.</Copyright>
+	<PackageReleaseNotes>WARNING: May require small changes for backwards compatibility. See https://github.com/Chris3606/GoRogue/releases/tag/v1.7.0 for release notes.</PackageReleaseNotes>
+    <Copyright>Copyright ©  2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>
 
@@ -30,7 +30,7 @@
 	</Target>
   
 	<ItemGroup>
-	  <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
+	  <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
 	  <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
 	</ItemGroup>
 </Project>
