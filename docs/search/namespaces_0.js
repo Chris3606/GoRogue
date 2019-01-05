@@ -3,6 +3,7 @@ var searchData=
   ['connectors',['Connectors',['../namespace_go_rogue_1_1_map_generation_1_1_connectors.html',1,'GoRogue::MapGeneration']]],
   ['dicenotation',['DiceNotation',['../namespace_go_rogue_1_1_dice_notation.html',1,'GoRogue']]],
   ['exceptions',['Exceptions',['../namespace_go_rogue_1_1_dice_notation_1_1_exceptions.html',1,'GoRogue::DiceNotation']]],
+  ['gameframework',['GameFramework',['../namespace_go_rogue_1_1_game_framework.html',1,'GoRogue']]],
   ['generators',['Generators',['../namespace_go_rogue_1_1_map_generation_1_1_generators.html',1,'GoRogue::MapGeneration']]],
   ['gorogue',['GoRogue',['../namespace_go_rogue.html',1,'']]],
   ['mapgeneration',['MapGeneration',['../namespace_go_rogue_1_1_map_generation.html',1,'GoRogue']]],

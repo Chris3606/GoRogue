@@ -69,7 +69,7 @@ $(function() {
 <a href="#properties">Properties</a> &#124;
 <a href="class_go_rogue_1_1_map_views_1_1_settable_translation_map-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt; Class Template Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">GoRogue.MapViews.SettableTranslationMap&lt; T1, T2 &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
@@ -106,12 +106,18 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a1fa80f1b4b9e222b821918d28d52e15a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a1fa80f1b4b9e222b821918d28d52e15a">SettableTranslationMap</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T1 &gt; baseMap, <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; T2 &gt; overlay)</td></tr>
 <tr class="memdesc:a1fa80f1b4b9e222b821918d28d52e15a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes an existing map view to create a view from and applies view data to it.  <a href="#a1fa80f1b4b9e222b821918d28d52e15a">More...</a><br /></td></tr>
 <tr class="separator:a1fa80f1b4b9e222b821918d28d52e15a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a5523f01af94b07d1f3ab908bb79089"><td class="memItemLeft" align="right" valign="top">abstract T2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a9a5523f01af94b07d1f3ab908bb79089">TranslateGet</a> (T1 value)</td></tr>
-<tr class="memdesc:a9a5523f01af94b07d1f3ab908bb79089"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates your map data into the view type.  <a href="#a9a5523f01af94b07d1f3ab908bb79089">More...</a><br /></td></tr>
-<tr class="separator:a9a5523f01af94b07d1f3ab908bb79089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a532036cda44fe296dab553bccc63b12d"><td class="memItemLeft" align="right" valign="top">abstract T1&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a532036cda44fe296dab553bccc63b12d">TranslateSet</a> (T2 value)</td></tr>
-<tr class="memdesc:a532036cda44fe296dab553bccc63b12d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates the view type into the appropriate form for your map data.  <a href="#a532036cda44fe296dab553bccc63b12d">More...</a><br /></td></tr>
-<tr class="separator:a532036cda44fe296dab553bccc63b12d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a973a06eeba758ad1d7c9d0c48eebed54"><td class="memItemLeft" align="right" valign="top">virtual T2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a973a06eeba758ad1d7c9d0c48eebed54">TranslateGet</a> (T1 value)</td></tr>
+<tr class="memdesc:a973a06eeba758ad1d7c9d0c48eebed54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates your map data into the view type. Takes only a value from the underlying map. If a position is also needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#ab59c48b9593518197236ec9566346196" title="Translates your map data into the view type. Takes a value from the underlying map and the correspond...">TranslateGet(Coord, T1)</a> instead.  <a href="#a973a06eeba758ad1d7c9d0c48eebed54">More...</a><br /></td></tr>
+<tr class="separator:a973a06eeba758ad1d7c9d0c48eebed54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab59c48b9593518197236ec9566346196"><td class="memItemLeft" align="right" valign="top">virtual T2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#ab59c48b9593518197236ec9566346196">TranslateGet</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, T1 value)</td></tr>
+<tr class="memdesc:ab59c48b9593518197236ec9566346196"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates your map data into the view type. Takes a value from the underlying map and the corresponding position for that value. If a position is not needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a973a06eeba758ad1d7c9d0c48eebed54" title="Translates your map data into the view type. Takes only a value from the underlying map...">TranslateGet(T1)</a> instead.  <a href="#ab59c48b9593518197236ec9566346196">More...</a><br /></td></tr>
+<tr class="separator:ab59c48b9593518197236ec9566346196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af797ea93886707ed64b4c84a7bc2c5bf"><td class="memItemLeft" align="right" valign="top">virtual T1&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#af797ea93886707ed64b4c84a7bc2c5bf">TranslateSet</a> (T2 value)</td></tr>
+<tr class="memdesc:af797ea93886707ed64b4c84a7bc2c5bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates the view type into the appropriate form for your map data. Takes only a value from the underlying map. If a position is also needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a6493002b198dd57b6cf27d79aa78d342" title="Translates the view type into the appropriate form for your map data. Takes a value from the underlyi...">TranslateSet(Coord, T2)</a> instead.  <a href="#af797ea93886707ed64b4c84a7bc2c5bf">More...</a><br /></td></tr>
+<tr class="separator:af797ea93886707ed64b4c84a7bc2c5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6493002b198dd57b6cf27d79aa78d342"><td class="memItemLeft" align="right" valign="top">virtual T1&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a6493002b198dd57b6cf27d79aa78d342">TranslateSet</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, T2 value)</td></tr>
+<tr class="memdesc:a6493002b198dd57b6cf27d79aa78d342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translates the view type into the appropriate form for your map data. Takes a value from the underlying map, and it corresponding position. If a position is not needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#af797ea93886707ed64b4c84a7bc2c5bf" title="Translates the view type into the appropriate form for your map data. Takes only a value from the und...">TranslateSet(T2)</a> instead.  <a href="#a6493002b198dd57b6cf27d79aa78d342">More...</a><br /></td></tr>
+<tr class="separator:a6493002b198dd57b6cf27d79aa78d342"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
@@ -140,7 +146,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Settable map view class capable of taking complex data and providing a simpler view of it. For a version that provides only "get" functionality, see <a class="el" href="class_go_rogue_1_1_map_views_1_1_translation_map.html" title="Map view class capable of taking complex data and providing a simpler view of it. For a version that ...">TranslationMap</a>. </p>
-<p>Many <a class="el" href="namespace_go_rogue.html">GoRogue</a> algorithms work on a <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> of a simple data type, which is likely to be a poor match for your game's actual map data. For example, map generation works with bools, and <a class="el" href="class_go_rogue_1_1_f_o_v.html" title="Class responsible for caculating basic FOV (see SenseMap for more advanced lighting). Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only shadowcasting. This is more conducive to the typical use case for FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of radius types, as specified in Radius class (all the same ones that SenseMap supports). It also supports both 360 degree FOV and a &quot;field of view&quot; (cone) FOV. One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect to radius as distance from the center increases. ">FOV</a> calculation with doubles, while your map data may model each map cell as a class or struct containing many different member values. This class allows you to build descendant classes that override the TranslateGet and TranslateSet methods for simple mapping, or the this[<a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>] properties if you need full access to the underlying data for context, in order to present a simplified view of your data to an algorithm without having to create the large amount of duplicate code associated with multiple <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> instances that all extract data from a Cell or Tile class. </p>
+<p>Many <a class="el" href="namespace_go_rogue.html">GoRogue</a> algorithms work on a <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_map_view.html" title="Interface designed to act as a standardized input/output for algorithms. ">IMapView</a> of a simple data type, which is likely to be a poor match for your game's actual map data. For example, map generation works with bools, and <a class="el" href="class_go_rogue_1_1_f_o_v.html" title="Class responsible for caculating basic FOV (see SenseMap for more advanced lighting). Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only shadowcasting. This is more conducive to the typical use case for FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of radius types, as specified in Radius class (all the same ones that SenseMap supports). It also supports both 360 degree FOV and a &quot;field of view&quot; (cone) FOV. One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect to radius as distance from the center increases. ">FOV</a> calculation with doubles, while your map data may model each map cell as a class or struct containing many different member values. This class allows you to build descendant classes that override the TranslateGet and TranslateSet method(s) for simple mapping, or the this[<a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>] properties if you need full access to the underlying data for context, in order to present a simplified view of your data to an algorithm without having to create the large amount of duplicate code associated with multiple <a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html" title="Interface designed to act as a standardized input/output for algorithms that need to make modificatio...">ISettableMapView</a> instances that all extract data from a Cell or Tile class. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T1</td><td>The type of your underlying data.</td></tr>
@@ -316,8 +322,8 @@ Properties</h2></td></tr>
 
 </div>
 </div>
-<a id="a9a5523f01af94b07d1f3ab908bb79089"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a5523f01af94b07d1f3ab908bb79089">&sect;&nbsp;</a></span>TranslateGet()</h2>
+<a id="a973a06eeba758ad1d7c9d0c48eebed54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a973a06eeba758ad1d7c9d0c48eebed54">&sect;&nbsp;</a></span>TranslateGet() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -326,7 +332,7 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">abstract T2 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateGet </td>
+          <td class="memname">virtual T2 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateGet </td>
           <td>(</td>
           <td class="paramtype">T1&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -335,12 +341,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Translates your map data into the view type. </p>
+<p>Translates your map data into the view type. Takes only a value from the underlying map. If a position is also needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#ab59c48b9593518197236ec9566346196" title="Translates your map data into the view type. Takes a value from the underlying map and the correspond...">TranslateGet(Coord, T1)</a> instead. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>The data value from your map.</td></tr>
@@ -349,12 +355,10 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A value of the mapped data type</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_translation_map.html#a7d23647095ac1b5eef338b1537432e06">GoRogue.MapViews.LambdaSettableTranslationMap&lt; T1, T2 &gt;</a>.</p>
-
 </div>
 </div>
-<a id="a532036cda44fe296dab553bccc63b12d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a532036cda44fe296dab553bccc63b12d">&sect;&nbsp;</a></span>TranslateSet()</h2>
+<a id="ab59c48b9593518197236ec9566346196"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab59c48b9593518197236ec9566346196">&sect;&nbsp;</a></span>TranslateGet() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -363,7 +367,55 @@ Properties</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">abstract T1 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateSet </td>
+          <td class="memname">virtual T2 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateGet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T1&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Translates your map data into the view type. Takes a value from the underlying map and the corresponding position for that value. If a position is not needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a973a06eeba758ad1d7c9d0c48eebed54" title="Translates your map data into the view type. Takes only a value from the underlying map...">TranslateGet(T1)</a> instead. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The position of the given data value from your map.</td></tr>
+    <tr><td class="paramname">value</td><td>The data value from your map.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A value of the mapped data type</dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_translation_map.html#a84d1e915ce4136e76bdc14892a5011ea">GoRogue.MapViews.LambdaSettableTranslationMap&lt; T1, T2 &gt;</a>.</p>
+
+</div>
+</div>
+<a id="af797ea93886707ed64b4c84a7bc2c5bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af797ea93886707ed64b4c84a7bc2c5bf">&sect;&nbsp;</a></span>TranslateSet() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual T1 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateSet </td>
           <td>(</td>
           <td class="paramtype">T2&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -372,12 +424,12 @@ Properties</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Translates the view type into the appropriate form for your map data. </p>
+<p>Translates the view type into the appropriate form for your map data. Takes only a value from the underlying map. If a position is also needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a6493002b198dd57b6cf27d79aa78d342" title="Translates the view type into the appropriate form for your map data. Takes a value from the underlyi...">TranslateSet(Coord, T2)</a> instead. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>A value of the mapped data type</td></tr>
@@ -386,7 +438,53 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The data value for your map.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_translation_map.html#a5f7c46043ba5078ad9246d2ca15839ac">GoRogue.MapViews.LambdaSettableTranslationMap&lt; T1, T2 &gt;</a>.</p>
+</div>
+</div>
+<a id="a6493002b198dd57b6cf27d79aa78d342"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6493002b198dd57b6cf27d79aa78d342">&sect;&nbsp;</a></span>TranslateSet() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual T1 <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html">GoRogue.MapViews.SettableTranslationMap</a>&lt; T1, T2 &gt;.TranslateSet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T2&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Translates the view type into the appropriate form for your map data. Takes a value from the underlying map, and it corresponding position. If a position is not needed to perform the translation, use <a class="el" href="class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#af797ea93886707ed64b4c84a7bc2c5bf" title="Translates the view type into the appropriate form for your map data. Takes only a value from the und...">TranslateSet(T2)</a> instead. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The position of the given mapped data type.</td></tr>
+    <tr><td class="paramname">value</td><td>A value of the mapped data type</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The data value for your map.</dd></dl>
+
+<p>Reimplemented in <a class="el" href="class_go_rogue_1_1_map_views_1_1_lambda_settable_translation_map.html#a20a2aba6c90af9ecb92f11d186185df7">GoRogue.MapViews.LambdaSettableTranslationMap&lt; T1, T2 &gt;</a>.</p>
 
 </div>
 </div>

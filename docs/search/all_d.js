@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['objectadded',['ObjectAdded',['../class_go_rogue_1_1_game_framework_1_1_map.html#a4b48d6ff61c6cfdfc242d6fd2f7430a0',1,'GoRogue::GameFramework::Map']]],
+  ['objectmoved',['ObjectMoved',['../class_go_rogue_1_1_game_framework_1_1_map.html#a41104dadbdb51ffe72e040eab55198d9',1,'GoRogue::GameFramework::Map']]],
+  ['objectremoved',['ObjectRemoved',['../class_go_rogue_1_1_game_framework_1_1_map.html#abf75185de2a76e1c50ecb7065db4ec7a',1,'GoRogue::GameFramework::Map']]],
   ['obstacle',['Obstacle',['../namespace_go_rogue_1_1_pathing.html#a7996d969a41dbe06b05e9291c16aa498afe29c1262b319e6d200d32384ae636c7',1,'GoRogue::Pathing']]],
   ['octahedron',['OCTAHEDRON',['../class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e',1,'GoRogue.Radius.OCTAHEDRON()'],['../class_go_rogue_1_1_radius.html#ad5fa7074059bbb86e9dd6469ec5bb7b1af90dd475a67e9d29408b539a832510ff',1,'GoRogue.Radius.OCTAHEDRON()']]],
   ['oldposition',['OldPosition',['../class_go_rogue_1_1_item_moved_event_args.html#add9ed70be683ad18631958c4981f9c43',1,'GoRogue::ItemMovedEventArgs']]],

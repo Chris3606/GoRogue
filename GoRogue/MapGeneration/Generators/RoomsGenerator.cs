@@ -14,7 +14,7 @@ namespace GoRogue.MapGeneration.Generators
 	static public class RoomsGenerator
 	{
 		/// <summary>
-		/// Carves random rectangles out of the map, setting the interior of the room to <see langword="true"/>. Does not set the wall of the rooms to false.
+		/// Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false.
 		/// </summary>
 		/// <param name="map">The map to modify.</param>
 		/// <param name="minRooms">Minimum amount of rooms to generate.</param>
@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Generators
 			=> Generate(map, null, minRooms, maxRooms, roomMaxSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
 		
 		/// <summary>
-		/// Carves random rectangles out of the map, setting the interior of the room to <see langword="true"/>. Does not set the wall of the rooms to false.
+		/// Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false.
 		/// </summary>
 		/// <param name="map">The map to modify.</param>
 		/// <param name="rng">RNG to use.</param>

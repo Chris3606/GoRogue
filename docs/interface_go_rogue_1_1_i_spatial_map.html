@@ -80,9 +80,13 @@ Inheritance diagram for GoRogue.ISpatialMap&lt; T &gt;:</div>
  <div class="center">
   <img src="interface_go_rogue_1_1_i_spatial_map.png" usemap="#GoRogue.ISpatialMap_3C_20T_20_3E_map" alt=""/>
   <map id="GoRogue.ISpatialMap_3C_20T_20_3E_map" name="GoRogue.ISpatialMap&lt; T &gt;_map">
-<area href="interface_go_rogue_1_1_i_read_only_spatial_map.html" title="See ISpatialMap documentation. Similar in principle to the C# standard IReadOnlyList/IReadOnlyCollect..." alt="GoRogue.IReadOnlySpatialMap&lt; T &gt;" shape="rect" coords="116,56,339,80"/>
-<area href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it..." alt="GoRogue.MultiSpatialMap&lt; T &gt;" shape="rect" coords="0,168,223,192"/>
-<area href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y..." alt="GoRogue.SpatialMap&lt; T &gt;" shape="rect" coords="233,168,456,192"/>
+<area href="interface_go_rogue_1_1_i_read_only_spatial_map.html" title="See ISpatialMap documentation. Similar in principle to the C# standard IReadOnlyList/IReadOnlyCollect..." alt="GoRogue.IReadOnlySpatialMap&lt; T &gt;" shape="rect" coords="277,56,544,80"/>
+<area href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a..." alt="GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;" shape="rect" coords="0,168,267,192"/>
+<area href="class_go_rogue_1_1_advanced_multi_spatial_map.html" title="Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for hashing and..." alt="GoRogue.AdvancedMultiSpatialMap&lt; T &gt;" shape="rect" coords="277,168,544,192"/>
+<area href="class_go_rogue_1_1_advanced_spatial_map.html" title="Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comp..." alt="GoRogue.AdvancedSpatialMap&lt; T &gt;" shape="rect" coords="554,168,821,192"/>
+<area href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. " alt="GoRogue.LayeredSpatialMap&lt; T &gt;" shape="rect" coords="0,224,267,248"/>
+<area href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it..." alt="GoRogue.MultiSpatialMap&lt; T &gt;" shape="rect" coords="277,224,544,248"/>
+<area href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y..." alt="GoRogue.SpatialMap&lt; T &gt;" shape="rect" coords="554,224,821,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -168,7 +172,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>General interface for a data structure that records objects on a map. </p>
-<p>Two different implementations of this interface are provided by to the library, each providing somewhat different implementations and constraints, however both provide more efficient implementations of many of these operations than the standard "list of monsters" that is often used in roguelike map design. </p>
+<p>Different implementations of this interface are provided by to the library, each providing somewhat different implementations and constraints, however generally they provide more efficient implementations of many of these operations than the standard "list of monsters" that is often used in roguelike map design. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The type of object that will be contained by the data structure.</td></tr>
@@ -212,7 +216,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if item was successfully added, false otherwise.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a48209e0b3c847a1ab14fa6cef713ad7a">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a6a3cae9e58328653df6467d026d6f6ad">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#add71103a0da7109496fac95d95c6d03b">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae59bb3c7c4a9f45368b92601addc9c8d">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#aee53e17990e1cdec0a7fbc57879d4d00">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -259,7 +263,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if item was successfully added, false otherwise.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a3a55c54549dd435297827ec47a2799f4">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a04425804c37fef6c0401421bd16b0b59">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ad87d04378f3a2aa4802a58a551a90a0e">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad6bb55f76cec1a35a1c1d0a0d7a0365e">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a76cae8505481638b73aff57a1796277e">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -280,7 +284,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Clears all items out of the data structure. </p>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a65af9055960fcc2f024ac2c59f6d7c9f">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a3e5daa75de3adb36f2109c62131c2e20">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a52724ad7a0ad11726e51ba8df9893b38">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#afdf6a92bc79403e546dd8b407c8e6d42">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a8a22a6c4e2f7852161d2e9d042837ae2">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -320,7 +324,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if item was successfully moved, false otherwise.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a28eaa95d21ede006815a174a2baaac67">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a5b4afafc3f1679107fb82b656b7f9843">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae0c65c28b81b740fb39b58e9dcff8f21">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#addb99542ef60c79c33f7d2e8e5848990">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#adcbf7cc805895d0e829fc5e8aaf7d988">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -367,7 +371,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if item was successfully moved, false otherwise.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a5ffc055c8c1188d9620108bfb84a25f0">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a607cb3161970d117304be33e9124b85b">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae7aba9d0ec8371563eece53a51130488">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a92087222884ab17a6c6078ea0b780078">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a5283e45e27be790061448945405d3979">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -407,7 +411,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Any items that were moved, nothing if no items were moved.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a522a02b57c97505f6d8a14f783a37598">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a6fe5f1195ad418f4af880f34ebead00d">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aa11c76a628bb27d47fe5dde614e5bca2">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a54e16dc76f224955b21eaa28fa10b0bb">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -461,7 +465,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Any items that were moved, nothing if no items were moved.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a74d44cb34bcbab329a3a19e2aa6e9ea7">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a4c87f4e41afd7d2e39fb840968b6da90">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a0e7a65d0fb87d903681fc4021b8531fb">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a26b63c6c0392cf40f52d3c9596beb364">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -490,7 +494,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if item was removed, false otherwise.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a28f50161cc976f4b3247a72165819cd4">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a0a2e4c4a32ba7dbbfd70c37fe317e6aa">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad01da163b40b82a6fed528a49ba983f7">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#abdda6c0d7a8b175475f362716884f744">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#afa4db56234a2b15595aebef40bd5778a">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -519,7 +523,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Any items that were removed, or nothing if no items were removed.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#ae3ab3ee4fafa9edf5b3194024d39f748">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a89737919d85c0a5b48ea7eb8249624f9">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#abb0140a640cd0ad9491cfac1fad595a9">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a1f940469769ddf5cf33ea7636dca0596">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -559,7 +563,7 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Any items that were removed, or nothing if no items were removed.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a5a70830a0df776176435ef45113ce821">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#adc7214ecc373736760574eac3def1c6d">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a195ddc34fff9b0b9cbc8d16c08ae820f">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#aa3282a1a2d548177effbb88fb664ce49">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>

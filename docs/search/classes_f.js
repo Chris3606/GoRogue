@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['sensemap',['SenseMap',['../class_go_rogue_1_1_sense_mapping_1_1_sense_map.html',1,'GoRogue::SenseMapping']]],
-  ['sensesource',['SenseSource',['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html',1,'GoRogue::SenseMapping']]],
-  ['settabletranslationmap',['SettableTranslationMap',['../class_go_rogue_1_1_map_views_1_1_settable_translation_map.html',1,'GoRogue::MapViews']]],
-  ['settableviewport',['SettableViewport',['../class_go_rogue_1_1_map_views_1_1_settable_viewport.html',1,'GoRogue::MapViews']]],
-  ['singletonrandom',['SingletonRandom',['../class_go_rogue_1_1_random_1_1_singleton_random.html',1,'GoRogue::Random']]],
-  ['spatialmap',['SpatialMap',['../class_go_rogue_1_1_spatial_map.html',1,'GoRogue']]],
-  ['subtractterm',['SubtractTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_subtract_term.html',1,'GoRogue::DiceNotation::Terms']]]
+  ['radius',['Radius',['../class_go_rogue_1_1_radius.html',1,'GoRogue']]],
+  ['radiusareaprovider',['RadiusAreaProvider',['../class_go_rogue_1_1_radius_area_provider.html',1,'GoRogue']]],
+  ['randomconnectionpointselector',['RandomConnectionPointSelector',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_random_connection_point_selector.html',1,'GoRogue::MapGeneration::Connectors']]],
+  ['rectangle',['Rectangle',['../struct_go_rogue_1_1_rectangle.html',1,'GoRogue']]],
+  ['roomdoorconnector',['RoomDoorConnector',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_room_door_connector.html',1,'GoRogue::MapGeneration::Connectors']]],
+  ['roomsgenerator',['RoomsGenerator',['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_rooms_generator.html',1,'GoRogue::MapGeneration::Generators']]]
 ];

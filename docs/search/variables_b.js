@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['variance',['Variance',['../class_go_rogue_1_1_random_1_1_discrete_converter.html#a4eb858966745584c837f3202bed55344',1,'GoRogue::Random::DiscreteConverter']]]
+  ['octahedron',['OCTAHEDRON',['../class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e',1,'GoRogue::Radius']]]
 ];

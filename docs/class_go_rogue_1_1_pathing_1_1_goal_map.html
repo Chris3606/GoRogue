@@ -106,6 +106,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a333d1df46b1b2ef98342055d35552333"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a333d1df46b1b2ef98342055d35552333">Update</a> ()</td></tr>
 <tr class="memdesc:a333d1df46b1b2ef98342055d35552333"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-evaluates the entire goal map. Should be called when obstacles change. If the obstacles have not changed but the goals have, call <a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a4723c046e00ec44d93f1f66db44af696" title="Re-evaluates the walkable portion of the goal map. Should be called anytime the goals change...">UpdatePathsOnly()</a> for better efficiency.  <a href="#a333d1df46b1b2ef98342055d35552333">More...</a><br /></td></tr>
 <tr class="separator:a333d1df46b1b2ef98342055d35552333"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d49a20a69e97abf9237f673330db608"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a1d49a20a69e97abf9237f673330db608">GetDirectionOfMinValue</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:a1d49a20a69e97abf9237f673330db608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the direction of the neighbor with the minimum goal-map value from the given position.  <a href="#a1d49a20a69e97abf9237f673330db608">More...</a><br /></td></tr>
+<tr class="separator:a1d49a20a69e97abf9237f673330db608"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4723c046e00ec44d93f1f66db44af696"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_pathing_1_1_goal_map.html#a4723c046e00ec44d93f1f66db44af696">UpdatePathsOnly</a> ()</td></tr>
 <tr class="memdesc:a4723c046e00ec44d93f1f66db44af696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Re-evaluates the walkable portion of the goal map. Should be called anytime the goals change.  <a href="#a4723c046e00ec44d93f1f66db44af696">More...</a><br /></td></tr>
 <tr class="separator:a4723c046e00ec44d93f1f66db44af696"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -195,6 +198,33 @@ Events</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1d49a20a69e97abf9237f673330db608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d49a20a69e97abf9237f673330db608">&sect;&nbsp;</a></span>GetDirectionOfMinValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_direction.html">Direction</a> GoRogue.Pathing.GoalMap.GetDirectionOfMinValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the direction of the neighbor with the minimum goal-map value from the given position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The position to get the minimum value for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The direction that has the minimum value in the goal-map, or <a class="el" href="class_go_rogue_1_1_direction.html#a3c65e46328e691121571b9b339cab3cc" title="No direction. ">Direction.NONE</a> if the neighbors are all obstacles.</dd></dl>
+
+</div>
+</div>
 <a id="a62f7643ded72dafe1f9ea23db2bc4c2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a62f7643ded72dafe1f9ea23db2bc4c2d">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/4]</span></h2>
 

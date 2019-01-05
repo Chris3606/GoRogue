@@ -1,6 +1,7 @@
 var searchData=
 [
   ['dda',['DDA',['../class_go_rogue_1_1_lines.html#a8bc986220b795ee48df0f0c1c7b71b96adc907b4fb49bcda4f6360644735c97ec',1,'GoRogue::Lines']]],
+  ['default',['DEFAULT',['../class_go_rogue_1_1_layer_masker.html#aeb604bb236ac8a25d5338a80994f93b5',1,'GoRogue::LayerMasker']]],
   ['defaultrng',['DefaultRNG',['../class_go_rogue_1_1_random_1_1_singleton_random.html#a0ac9eff6a0a470f8dbcbb21480820840',1,'GoRogue::Random::SingletonRandom']]],
   ['degree_5fpct_5fof_5fcircle',['DEGREE_PCT_OF_CIRCLE',['../class_go_rogue_1_1_math_helpers.html#a3561981da8deb96c65983b37a695e846',1,'GoRogue::MathHelpers']]],
   ['deltax',['DeltaX',['../class_go_rogue_1_1_direction.html#a68be74f8378001fc2e0167f0acf8f008',1,'GoRogue::Direction']]],
@@ -22,12 +23,12 @@ var searchData=
   ['directlinetunnelcreator',['DirectLineTunnelCreator',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html#a4acb0f42cb78042011b778103ef108ff',1,'GoRogue::MapGeneration::Connectors::DirectLineTunnelCreator']]],
   ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html',1,'GoRogue::Random']]],
   ['discreteconverter',['DiscreteConverter',['../class_go_rogue_1_1_random_1_1_discrete_converter.html#ab54aa0bc405e0a48d3ae600cfb5d46a0',1,'GoRogue::Random::DiscreteConverter']]],
-  ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html#aa2601dd5c7f9a809762aafd0985a5a23',1,'GoRogue::DisjointSet']]],
   ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html',1,'GoRogue']]],
+  ['disjointset',['DisjointSet',['../class_go_rogue_1_1_disjoint_set.html#aa2601dd5c7f9a809762aafd0985a5a23',1,'GoRogue::DisjointSet']]],
   ['dispose',['Dispose',['../class_go_rogue_1_1_pathing_1_1_flee_map.html#a0f770a7911c2fc2ed3db9e69a00454a2',1,'GoRogue::Pathing::FleeMap']]],
   ['distance',['Distance',['../class_go_rogue_1_1_distance.html',1,'GoRogue']]],
   ['distancecalc',['DistanceCalc',['../interface_go_rogue_1_1_i_read_only_radius_area_provider.html#a2f097890d7f8abac2ec14e2c3838bbf3',1,'GoRogue.IReadOnlyRadiusAreaProvider.DistanceCalc()'],['../class_go_rogue_1_1_radius_area_provider.html#a2a150b99b133c965a3960cef54c0f35d',1,'GoRogue.RadiusAreaProvider.DistanceCalc()'],['../class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#ab14539e4507e9ee1c3355bbf47258d41',1,'GoRogue.SenseMapping.SenseSource.DistanceCalc()']]],
-  ['distancemeasurement',['DistanceMeasurement',['../class_go_rogue_1_1_pathing_1_1_a_star.html#ae7b6a7c7cb90d4ea89b3eeab88261c4e',1,'GoRogue.Pathing.AStar.DistanceMeasurement()'],['../class_go_rogue_1_1_pathing_1_1_goal_map.html#ae983ebf06ecf73a9a21833f28e1d6428',1,'GoRogue.Pathing.GoalMap.DistanceMeasurement()']]],
+  ['distancemeasurement',['DistanceMeasurement',['../class_go_rogue_1_1_game_framework_1_1_map.html#ada29f0303a0ae4d08aedd4a4d2506d1d',1,'GoRogue.GameFramework.Map.DistanceMeasurement()'],['../class_go_rogue_1_1_pathing_1_1_a_star.html#ae7b6a7c7cb90d4ea89b3eeab88261c4e',1,'GoRogue.Pathing.AStar.DistanceMeasurement()'],['../class_go_rogue_1_1_pathing_1_1_goal_map.html#ae983ebf06ecf73a9a21833f28e1d6428',1,'GoRogue.Pathing.GoalMap.DistanceMeasurement()']]],
   ['distributionhelpers',['DistributionHelpers',['../class_go_rogue_1_1_random_1_1_distribution_helpers.html',1,'GoRogue::Random']]],
   ['divideterm',['DivideTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_divide_term.html',1,'GoRogue::DiceNotation::Terms']]],
   ['divideterm',['DivideTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_divide_term.html#a97d1245ff9e8ad6470258b16c94fc03a',1,'GoRogue::DiceNotation::Terms::DivideTerm']]],

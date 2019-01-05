@@ -1,6 +1,7 @@
 var searchData=
 [
   ['basemap',['BaseMap',['../class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a085f51a15eb7a117194eb3553f03a92c',1,'GoRogue.MapViews.SettableTranslationMap.BaseMap()'],['../class_go_rogue_1_1_map_views_1_1_translation_map.html#ac57d28f13ba43776ca51843f84cd1f83',1,'GoRogue.MapViews.TranslationMap.BaseMap()'],['../class_go_rogue_1_1_pathing_1_1_goal_map.html#ab2a8148dd4ea42a71c10a2b5211a5b69',1,'GoRogue.Pathing.GoalMap.BaseMap()']]],
+  ['basicroomsgenerator',['BasicRoomsGenerator',['../class_go_rogue_1_1_map_generation_1_1_generators_1_1_basic_rooms_generator.html',1,'GoRogue::MapGeneration::Generators']]],
   ['bearingofline',['BearingOfLine',['../class_go_rogue_1_1_coord.html#ac34adee17cb4d5d1fcfc9446134ddad8',1,'GoRogue.Coord.BearingOfLine(Coord start, Coord end)'],['../class_go_rogue_1_1_coord.html#aca4de2d3ae82dd0c24c073720f65b85a',1,'GoRogue.Coord.BearingOfLine(int startX, int startY, int endX, int endY)'],['../class_go_rogue_1_1_coord.html#ab1f2652147bedb92e14f5ffdd06f1be5',1,'GoRogue.Coord.BearingOfLine(Coord deltaChange)'],['../class_go_rogue_1_1_coord.html#add706c406dbee4de35aee58dfbb0b160',1,'GoRogue.Coord.BearingOfLine(int dx, int dy)']]],
   ['booleanfov',['BooleanFOV',['../class_go_rogue_1_1_f_o_v.html#af6db7112e1359592ed78a7ba0027abf3',1,'GoRogue.FOV.BooleanFOV()'],['../interface_go_rogue_1_1_i_read_only_f_o_v.html#a8080d5a17a4a1af28419b451860342d5',1,'GoRogue.IReadOnlyFOV.BooleanFOV()']]],
   ['boundedrectangle',['BoundedRectangle',['../class_go_rogue_1_1_bounded_rectangle.html',1,'GoRogue']]],

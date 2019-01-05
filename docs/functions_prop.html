@@ -62,9 +62,15 @@ $(function() {
 &#160;
 
 <h3><a id="index_a"></a>- a -</h3><ul>
+<li>Angle
+: <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a6967cf3e2c2780aa7d463793c4e9aca4">GoRogue.SenseMapping.SenseSource</a>
+</li>
 <li>Area
 : <a class="el" href="class_go_rogue_1_1_bounded_rectangle.html#a83179f2b68ecb0a3a6a58f72c83790e8">GoRogue.BoundedRectangle</a>
 , <a class="el" href="struct_go_rogue_1_1_rectangle.html#a396ad1593496a406360e5a54f5a5f293">GoRogue.Rectangle</a>
+</li>
+<li>AStar
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#a150dd49911ed53d783520ce2283d9b69">GoRogue.GameFramework.Map&lt; BaseObject &gt;</a>
 </li>
 </ul>
 
@@ -101,16 +107,19 @@ $(function() {
 : <a class="el" href="class_go_rogue_1_1_random_1_1_discrete_converter.html#ae462eb3d62731bbb6dfaa1029b7778f8">GoRogue.Random.DiscreteConverter&lt; T &gt;</a>
 </li>
 <li>Count
-: <a class="el" href="class_go_rogue_1_1_disjoint_set.html#a2ac0f165a746fd6e3efe78870abd6718">GoRogue.DisjointSet</a>
+: <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a74adfb93c80b6fd131ad990bda0f28d4">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_disjoint_set.html#a2ac0f165a746fd6e3efe78870abd6718">GoRogue.DisjointSet</a>
 , <a class="el" href="interface_go_rogue_1_1_i_read_only_disjoint_set.html#a5d98f07992e68439c3194efc03f92b4c">GoRogue.IReadOnlyDisjointSet</a>
 , <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
 , <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html#a2b735b79da456dbff48a8721cd2b3650">GoRogue.MapGeneration.IReadOnlyMapArea</a>
 , <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#a749150f7ad5fa0882ea38eee641c009f">GoRogue.MapGeneration.MapArea</a>
-, <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a5f8b8fac8851b59d1ee9b7a18940d4af">GoRogue.MultiSpatialMap&lt; T &gt;</a>
 </li>
 <li>CurrentFOV
 : <a class="el" href="class_go_rogue_1_1_f_o_v.html#a241493a52c7ab9191595ffa02ef2f67f">GoRogue.FOV</a>
 , <a class="el" href="interface_go_rogue_1_1_i_read_only_f_o_v.html#a99eea1ccbbedfd111217f5572cf7d118">GoRogue.IReadOnlyFOV</a>
+</li>
+<li>CurrentMap
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#a5c4eeb51436e278b668dd8c677815f6a">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
 </li>
 <li>CurrentSenseMap
 : <a class="el" href="interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html#a60d9ad703bf5c6587bba527e0548ba61">GoRogue.SenseMapping.IReadOnlySenseMap</a>
@@ -186,10 +195,23 @@ $(function() {
 
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>ID
-: <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html#a8dc6bb60696aaba9e75b14557ef9c5cb">GoRogue.IHasID</a>
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#abe04e5be11788bafd184c89817c9495d">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html#a8dc6bb60696aaba9e75b14557ef9c5cb">GoRogue.IHasID</a>
+</li>
+<li>IsAngleRestricted
+: <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#ae77c3eaa66ecca852ff7e4d1cbf0effd">GoRogue.SenseMapping.SenseSource</a>
 </li>
 <li>IsEmpty
 : <a class="el" href="struct_go_rogue_1_1_rectangle.html#a0294ad8d99ee26fe1aea9fb50e49b5e9">GoRogue.Rectangle</a>
+</li>
+<li>IsStatic
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#a9cb12d4d79a772ac11a5aa31ccaba527">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
+</li>
+<li>IsTransparent
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#a8d6c13b731b9ab45e361c63852dc8075">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
+</li>
+<li>IsWalkable
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#a9f6dacb48535b73cd4da10cac3671a9a">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
 </li>
 <li>Item
 : <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html#ac9cbce699125edaca2979a097d0fdd84">GoRogue.ISpatialTuple&lt; T &gt;</a>
@@ -197,9 +219,10 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_item_moved_event_args.html#a13da8795d1f4bd8828b967471f3b7f66">GoRogue.ItemMovedEventArgs&lt; T &gt;</a>
 </li>
 <li>Items
-: <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#ad4c47c0f372ad664e24ffe07059dc6f8">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#aa0f1cc63c19d9a621ec35832bfe2c525">GoRogue.MultiSpatialMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_spatial_map.html#ae2fd59303b5d5cf0e217d6cacadb6ee3">GoRogue.SpatialMap&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#acf8d67b462318e0f744b21ece2047773">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a2d177a5ff0e776e1867361824a187bb9">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aea112744b6115987f203f7a9b7d0c13f">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#ad4c47c0f372ad664e24ffe07059dc6f8">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
 </li>
 </ul>
 
@@ -210,6 +233,23 @@ $(function() {
 </li>
 <li>LastSidedness
 : <a class="el" href="class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html#ad4377895ef7262636ef66e57f5b363ac">GoRogue.DiceNotation.Terms.DiceTerm</a>
+</li>
+<li>Layer
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#a02413a2bd57ac374da2c1d5498027497">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_has_layer.html#a09bd56e2b3feff93bd91666308a162ae">GoRogue.IHasLayer</a>
+</li>
+<li>LayerMasker
+: <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4835e519975b9c6f87082e63071bec44">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a3f7f11a3489ae1ce4a59c11845bbeeb0">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>
+</li>
+<li>Layers
+: <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#abce802a1ff4a214918d9fe6b3f08d528">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>
+</li>
+<li>LayersBlockingTransparency
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#a6e74d5e2c110642967050e7b314ed633">GoRogue.GameFramework.Map&lt; BaseObject &gt;</a>
+</li>
+<li>LayersBlockingWalkability
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#adc16c2d821597ab4cd93f45be98bd0d5">GoRogue.GameFramework.Map&lt; BaseObject &gt;</a>
 </li>
 <li>LEFT
 : <a class="el" href="class_go_rogue_1_1_direction.html#a4d2fd11417b037ba53989468f21ce9bf">GoRogue.Direction</a>
@@ -281,6 +321,10 @@ $(function() {
 <li>NONE
 : <a class="el" href="class_go_rogue_1_1_direction.html#a3c65e46328e691121571b9b339cab3cc">GoRogue.Direction</a>
 </li>
+<li>NumberOfLayers
+: <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#aae203a71427bcb1a29a2630d61cbb9e0">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_layer_masker.html#a69cb48a7b1aa78c0bfc37fa48fd1a90c">GoRogue.LayerMasker</a>
+</li>
 </ul>
 
 
@@ -296,17 +340,19 @@ $(function() {
 : <a class="el" href="struct_go_rogue_1_1_rectangle.html#ac9f0575eb24de95bc2294617a18eaec6">GoRogue.Rectangle</a>
 </li>
 <li>Position
-: <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html#a2208439418bd20d9469d2c16be4302c5">GoRogue.ISpatialTuple&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_game_object.html#ae66245574019eb7215ce38353690f8c5">GoRogue.GameFramework.GameObject&lt; BaseSubclass &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html#a2208439418bd20d9469d2c16be4302c5">GoRogue.ISpatialTuple&lt; T &gt;</a>
 , <a class="el" href="class_go_rogue_1_1_item_event_args.html#ae109242b06bbab63a69bd328c0467970">GoRogue.ItemEventArgs&lt; T &gt;</a>
 , <a class="el" href="struct_go_rogue_1_1_rectangle.html#aa1debe4b00ae9d021be72567a2744369">GoRogue.Rectangle</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#aa83af42c7639aec43fd82fd2aa572a64">GoRogue.SenseMapping.SenseSource</a>
 </li>
 <li>Positions
-: <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
+: <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a25fba6fa1a6d165d0329054ac5ce5026">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a5f65b3c856967dae24772e609b7c2ca2">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>
+, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af6ad8c62117ffb0ec08d6b8423548704">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>
 , <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html#a470663bbfaee0f6ea300b3be976f6553">GoRogue.MapGeneration.IReadOnlyMapArea</a>
 , <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#af19b4a5654a7d4a72fc39e6a98b87d6b">GoRogue.MapGeneration.MapArea</a>
-, <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a27491f5298b09d1565d4a969484a4e10">GoRogue.MultiSpatialMap&lt; T &gt;</a>
-, <a class="el" href="class_go_rogue_1_1_spatial_map.html#aa8ca49f13161a395d45c423bec4ca624">GoRogue.SpatialMap&lt; T &gt;</a>
 </li>
 </ul>
 
@@ -334,8 +380,15 @@ $(function() {
 <li>Size
 : <a class="el" href="struct_go_rogue_1_1_rectangle.html#a8e76bf51feda2abbd6a0f106e1d6168f">GoRogue.Rectangle</a>
 </li>
+<li>Span
+: <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_source.html#a03f88f1659226a1ba32e21898a0a6898">GoRogue.SenseMapping.SenseSource</a>
+</li>
 <li>Start
 : <a class="el" href="class_go_rogue_1_1_pathing_1_1_path.html#a99dbf3e537c6bc6fe2541ff1faeabaea">GoRogue.Pathing.Path</a>
+</li>
+<li>StartingLayer
+: <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a0ddd78a73b60384620a79aab8bd57da8">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>
+, <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a7087f7a6a27f49841c740e3691f13736">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>
 </li>
 <li>Steps
 : <a class="el" href="class_go_rogue_1_1_pathing_1_1_path.html#a5f3e461e48bf8a1ac873f8d34b15caa0">GoRogue.Pathing.Path</a>
@@ -390,6 +443,9 @@ $(function() {
 , <a class="el" href="class_go_rogue_1_1_pathing_1_1_weighted_goal_map.html#a8d4ac9a64d924774e2693e79f3906393">GoRogue.Pathing.WeightedGoalMap</a>
 , <a class="el" href="class_go_rogue_1_1_sense_mapping_1_1_sense_map.html#a1aae889fdb2f5b98e44332d6ef30e7be">GoRogue.SenseMapping.SenseMap</a>
 </li>
+<li>TransparencyView
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#a6a5018fcc69eca21c79b62e7f3b63f09">GoRogue.GameFramework.Map&lt; BaseObject &gt;</a>
+</li>
 <li>Type
 : <a class="el" href="class_go_rogue_1_1_adjacency_rule.html#ac118627b700a8911540360ae029c0ad2">GoRogue.AdjacencyRule</a>
 , <a class="el" href="class_go_rogue_1_1_direction.html#a1369ef0e4366cf08f16361715516d34e">GoRogue.Direction</a>
@@ -421,6 +477,9 @@ $(function() {
 <h3><a id="index_w"></a>- w -</h3><ul>
 <li>WalkabilityMap
 : <a class="el" href="class_go_rogue_1_1_pathing_1_1_a_star.html#ad6410c02b589401551bea0c632f598fe">GoRogue.Pathing.AStar</a>
+</li>
+<li>WalkabilityView
+: <a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#ab6841e6b10a8ec25c5e9df7b84721d05">GoRogue.GameFramework.Map&lt; BaseObject &gt;</a>
 </li>
 <li>Width
 : <a class="el" href="class_go_rogue_1_1_f_o_v.html#ad6d59714fb2ad68af500703cc33328e1">GoRogue.FOV</a>

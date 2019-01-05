@@ -65,16 +65,13 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#properties">Properties</a> &#124;
-<a href="#events">Events</a> &#124;
 <a href="class_go_rogue_1_1_spatial_map-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">GoRogue.SpatialMap&lt; T &gt; Class Template Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Designed as an more efficient data structure for recording objects on a map. The simple version: if you're about to use a List to store a bunch of objects in your map, consider using this or <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a> instead! /// More detail: typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like entities, items, etc. This is simple but ultimately not efficient; for example, in that implementation, determining if there is an object at a location takes an amount of time proportional to the number of objects in this list. However, the other simple option is to use an array with size equal to the size of the map (as many do for terrain) for all object lists. This is even less ideal, as in that case, the time to iterate over all objects becomes proportional to the size of the map (since one has to do that for rendering, ouch!), which is typically much larger than the number of objects in a list. This is the problem <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> is designed to solve. It provides fast, near-constant-time operations for getting the object at a location, adding entities, removing entities, and will allow you to iterate through all objects in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> in time proportional to the number of objects in it (the best possible). /// Effectively, it is a more efficient list for objects that have a position associated with them. This implementation can only allow one item at a given location at a time &ndash; for an implementation that allows multiple items, see <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>. /// The objects stored in a <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> must implement the <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html" title="Interface for a class that has an ID unique to all other instnaces of that class. Typical implementat...">IHasID</a> (see that interface's documentation for an easy implementation example). This is used internally to keep track of the objects, since uints are easily hashable.  
+<p>Designed as an more efficient data structure for recording objects on a map. The simple version: if you're about to use a List to store a bunch of objects in your map, consider using this or <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a> instead!  
  <a href="class_go_rogue_1_1_spatial_map.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for GoRogue.SpatialMap&lt; T &gt;:</div>
@@ -82,6 +79,7 @@ Inheritance diagram for GoRogue.SpatialMap&lt; T &gt;:</div>
  <div class="center">
   <img src="class_go_rogue_1_1_spatial_map.png" usemap="#GoRogue.SpatialMap_3C_20T_20_3E_map" alt=""/>
   <map id="GoRogue.SpatialMap_3C_20T_20_3E_map" name="GoRogue.SpatialMap&lt; T &gt;_map">
+<area href="class_go_rogue_1_1_advanced_spatial_map.html" title="Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comp..." alt="GoRogue.AdvancedSpatialMap&lt; T &gt;" shape="rect" coords="0,168,223,192"/>
 <area href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. " alt="GoRogue.ISpatialMap&lt; T &gt;" shape="rect" coords="0,112,223,136"/>
 <area href="interface_go_rogue_1_1_i_read_only_spatial_map.html" title="See ISpatialMap documentation. Similar in principle to the C# standard IReadOnlyList/IReadOnlyCollect..." alt="GoRogue.IReadOnlySpatialMap&lt; T &gt;" shape="rect" coords="0,56,223,80"/>
 </map>
@@ -92,87 +90,90 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e2e8d656d19129cd674aee4500845e0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a7e2e8d656d19129cd674aee4500845e0">SpatialMap</a> (int initialCapacity=32)</td></tr>
 <tr class="memdesc:a7e2e8d656d19129cd674aee4500845e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Creates an empty <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.  <a href="#a7e2e8d656d19129cd674aee4500845e0">More...</a><br /></td></tr>
 <tr class="separator:a7e2e8d656d19129cd674aee4500845e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a48209e0b3c847a1ab14fa6cef713ad7a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a48209e0b3c847a1ab14fa6cef713ad7a">Add</a> (T newItem, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
-<tr class="memdesc:a48209e0b3c847a1ab14fa6cef713ad7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true.  <a href="#a48209e0b3c847a1ab14fa6cef713ad7a">More...</a><br /></td></tr>
-<tr class="separator:a48209e0b3c847a1ab14fa6cef713ad7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3a55c54549dd435297827ec47a2799f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a3a55c54549dd435297827ec47a2799f4">Add</a> (T newItem, int x, int y)</td></tr>
-<tr class="memdesc:a3a55c54549dd435297827ec47a2799f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true.  <a href="#a3a55c54549dd435297827ec47a2799f4">More...</a><br /></td></tr>
-<tr class="separator:a3a55c54549dd435297827ec47a2799f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a817692b1d08c2c19e48dbb8aa36617f8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a817692b1d08c2c19e48dbb8aa36617f8">AsReadOnly</a> ()</td></tr>
-<tr class="memdesc:a817692b1d08c2c19e48dbb8aa36617f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08" title="Returns a read-only reference to the data structure. Convenient for &quot;safely&quot; exposing the structure a...">IReadOnlySpatialMap.AsReadOnly</a>.  <a href="#a817692b1d08c2c19e48dbb8aa36617f8">More...</a><br /></td></tr>
-<tr class="separator:a817692b1d08c2c19e48dbb8aa36617f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65af9055960fcc2f024ac2c59f6d7c9f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a65af9055960fcc2f024ac2c59f6d7c9f">Clear</a> ()</td></tr>
-<tr class="memdesc:a65af9055960fcc2f024ac2c59f6d7c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0759eb1941739294179f0d87ea3be54b" title="Clears all items out of the data structure. ">ISpatialMap.Clear</a>.  <a href="#a65af9055960fcc2f024ac2c59f6d7c9f">More...</a><br /></td></tr>
-<tr class="separator:a65af9055960fcc2f024ac2c59f6d7c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77002734f4c92bb7d70bad92804e7f13"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a77002734f4c92bb7d70bad92804e7f13">Contains</a> (T item)</td></tr>
-<tr class="memdesc:a77002734f4c92bb7d70bad92804e7f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="#a77002734f4c92bb7d70bad92804e7f13">More...</a><br /></td></tr>
-<tr class="separator:a77002734f4c92bb7d70bad92804e7f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8629350c62bc584e49dcae54bb40a7b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#af8629350c62bc584e49dcae54bb40a7b">Contains</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
-<tr class="memdesc:af8629350c62bc584e49dcae54bb40a7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="#af8629350c62bc584e49dcae54bb40a7b">More...</a><br /></td></tr>
-<tr class="separator:af8629350c62bc584e49dcae54bb40a7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a011fcb7522157ab8897106d65d85e8bc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a011fcb7522157ab8897106d65d85e8bc">Contains</a> (int x, int y)</td></tr>
-<tr class="memdesc:a011fcb7522157ab8897106d65d85e8bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="#a011fcb7522157ab8897106d65d85e8bc">More...</a><br /></td></tr>
-<tr class="separator:a011fcb7522157ab8897106d65d85e8bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0300392ee2f773ba501264a484ccfcf8"><td class="memItemLeft" align="right" valign="top">IEnumerator&lt; <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html">ISpatialTuple</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a0300392ee2f773ba501264a484ccfcf8">GetEnumerator</a> ()</td></tr>
-<tr class="memdesc:a0300392ee2f773ba501264a484ccfcf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly.  <a href="#a0300392ee2f773ba501264a484ccfcf8">More...</a><br /></td></tr>
-<tr class="separator:a0300392ee2f773ba501264a484ccfcf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99800dee2405a3b4a0c9c79f6ca668d9"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a99800dee2405a3b4a0c9c79f6ca668d9">GetItem</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
-<tr class="memdesc:a99800dee2405a3b4a0c9c79f6ca668d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position, or null/equivalent if no item exists.  <a href="#a99800dee2405a3b4a0c9c79f6ca668d9">More...</a><br /></td></tr>
-<tr class="separator:a99800dee2405a3b4a0c9c79f6ca668d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f586fdabf0a5bc5bdbcd1059d1ea974"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a7f586fdabf0a5bc5bdbcd1059d1ea974">GetItem</a> (int x, int y)</td></tr>
-<tr class="memdesc:a7f586fdabf0a5bc5bdbcd1059d1ea974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position, or null/equivalent if no item exists.  <a href="#a7f586fdabf0a5bc5bdbcd1059d1ea974">More...</a><br /></td></tr>
-<tr class="separator:a7f586fdabf0a5bc5bdbcd1059d1ea974"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a66760fed4c5d08021da86bdbaf9c51"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a0a66760fed4c5d08021da86bdbaf9c51">GetItems</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
-<tr class="memdesc:a0a66760fed4c5d08021da86bdbaf9c51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position.  <a href="#a0a66760fed4c5d08021da86bdbaf9c51">More...</a><br /></td></tr>
-<tr class="separator:a0a66760fed4c5d08021da86bdbaf9c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59b87a079dfcf2ec614b05982b9de2f9"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a59b87a079dfcf2ec614b05982b9de2f9">GetItems</a> (int x, int y)</td></tr>
-<tr class="memdesc:a59b87a079dfcf2ec614b05982b9de2f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position.  <a href="#a59b87a079dfcf2ec614b05982b9de2f9">More...</a><br /></td></tr>
-<tr class="separator:a59b87a079dfcf2ec614b05982b9de2f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab08fd96f389eb06e76c89d3e6f2bb116"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#ab08fd96f389eb06e76c89d3e6f2bb116">GetPosition</a> (T item)</td></tr>
-<tr class="memdesc:ab08fd96f389eb06e76c89d3e6f2bb116"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a023e4cb39df2424d29d258692071fdcd" title="Gets the position associated with the item in the data structure, or null if that item is not found...">IReadOnlySpatialMap.GetPosition</a>.  <a href="#ab08fd96f389eb06e76c89d3e6f2bb116">More...</a><br /></td></tr>
-<tr class="separator:ab08fd96f389eb06e76c89d3e6f2bb116"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28eaa95d21ede006815a174a2baaac67"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a28eaa95d21ede006815a174a2baaac67">Move</a> (T item, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> target)</td></tr>
-<tr class="memdesc:a28eaa95d21ede006815a174a2baaac67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true.  <a href="#a28eaa95d21ede006815a174a2baaac67">More...</a><br /></td></tr>
-<tr class="separator:a28eaa95d21ede006815a174a2baaac67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5ffc055c8c1188d9620108bfb84a25f0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a5ffc055c8c1188d9620108bfb84a25f0">Move</a> (T item, int targetX, int targetY)</td></tr>
-<tr class="memdesc:a5ffc055c8c1188d9620108bfb84a25f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true.  <a href="#a5ffc055c8c1188d9620108bfb84a25f0">More...</a><br /></td></tr>
-<tr class="separator:a5ffc055c8c1188d9620108bfb84a25f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a522a02b57c97505f6d8a14f783a37598"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a522a02b57c97505f6d8a14f783a37598">Move</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> current, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> target)</td></tr>
-<tr class="memdesc:a522a02b57c97505f6d8a14f783a37598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing.  <a href="#a522a02b57c97505f6d8a14f783a37598">More...</a><br /></td></tr>
-<tr class="separator:a522a02b57c97505f6d8a14f783a37598"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74d44cb34bcbab329a3a19e2aa6e9ea7"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a74d44cb34bcbab329a3a19e2aa6e9ea7">Move</a> (int currentX, int currentY, int targetX, int targetY)</td></tr>
-<tr class="memdesc:a74d44cb34bcbab329a3a19e2aa6e9ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing.  <a href="#a74d44cb34bcbab329a3a19e2aa6e9ea7">More...</a><br /></td></tr>
-<tr class="separator:a74d44cb34bcbab329a3a19e2aa6e9ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28f50161cc976f4b3247a72165819cd4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a28f50161cc976f4b3247a72165819cd4">Remove</a> (T item)</td></tr>
-<tr class="memdesc:a28f50161cc976f4b3247a72165819cd4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the item specified, if it exists, and returns true. Returns false if the item was not in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.  <a href="#a28f50161cc976f4b3247a72165819cd4">More...</a><br /></td></tr>
-<tr class="separator:a28f50161cc976f4b3247a72165819cd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae3ab3ee4fafa9edf5b3194024d39f748"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#ae3ab3ee4fafa9edf5b3194024d39f748">Remove</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
-<tr class="memdesc:ae3ab3ee4fafa9edf5b3194024d39f748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified.  <a href="#ae3ab3ee4fafa9edf5b3194024d39f748">More...</a><br /></td></tr>
-<tr class="separator:ae3ab3ee4fafa9edf5b3194024d39f748"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a70830a0df776176435ef45113ce821"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a5a70830a0df776176435ef45113ce821">Remove</a> (int x, int y)</td></tr>
-<tr class="memdesc:a5a70830a0df776176435ef45113ce821"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified.  <a href="#a5a70830a0df776176435ef45113ce821">More...</a><br /></td></tr>
-<tr class="separator:a5a70830a0df776176435ef45113ce821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f8355a41f972137a2913e742142dbec"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a8f8355a41f972137a2913e742142dbec">ToString</a> ()</td></tr>
-<tr class="memdesc:a8f8355a41f972137a2913e742142dbec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.  <a href="#a8f8355a41f972137a2913e742142dbec">More...</a><br /></td></tr>
-<tr class="separator:a8f8355a41f972137a2913e742142dbec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25dc17bea6dca04005bc92a2567371ba"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a25dc17bea6dca04005bc92a2567371ba">ToString</a> (Func&lt; T, string &gt; itemStringifier)</td></tr>
-<tr class="memdesc:a25dc17bea6dca04005bc92a2567371ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, allowing display of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>'s items in a specified way.  <a href="#a25dc17bea6dca04005bc92a2567371ba">More...</a><br /></td></tr>
-<tr class="separator:a25dc17bea6dca04005bc92a2567371ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_go_rogue_1_1_advanced_spatial_map')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html">GoRogue.AdvancedSpatialMap&lt; T &gt;</a></td></tr>
+<tr class="memitem:af276211991dc007a617e593d3f2f2193 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af276211991dc007a617e593d3f2f2193">AdvancedSpatialMap</a> (IEqualityComparer&lt; T &gt; comparer, int initialCapacity=32)</td></tr>
+<tr class="memdesc:af276211991dc007a617e593d3f2f2193 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Creates an empty <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html" title="Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comp...">AdvancedSpatialMap</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#af276211991dc007a617e593d3f2f2193">More...</a><br /></td></tr>
+<tr class="separator:af276211991dc007a617e593d3f2f2193 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae59bb3c7c4a9f45368b92601addc9c8d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae59bb3c7c4a9f45368b92601addc9c8d">Add</a> (T newItem, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:ae59bb3c7c4a9f45368b92601addc9c8d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ae59bb3c7c4a9f45368b92601addc9c8d">More...</a><br /></td></tr>
+<tr class="separator:ae59bb3c7c4a9f45368b92601addc9c8d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6bb55f76cec1a35a1c1d0a0d7a0365e inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad6bb55f76cec1a35a1c1d0a0d7a0365e">Add</a> (T newItem, int x, int y)</td></tr>
+<tr class="memdesc:ad6bb55f76cec1a35a1c1d0a0d7a0365e inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ad6bb55f76cec1a35a1c1d0a0d7a0365e">More...</a><br /></td></tr>
+<tr class="separator:ad6bb55f76cec1a35a1c1d0a0d7a0365e inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2576cd070ebb9204bdee985a672079fc inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a2576cd070ebb9204bdee985a672079fc">AsReadOnly</a> ()</td></tr>
+<tr class="memdesc:a2576cd070ebb9204bdee985a672079fc inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08" title="Returns a read-only reference to the data structure. Convenient for &quot;safely&quot; exposing the structure a...">IReadOnlySpatialMap.AsReadOnly</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a2576cd070ebb9204bdee985a672079fc">More...</a><br /></td></tr>
+<tr class="separator:a2576cd070ebb9204bdee985a672079fc inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdf6a92bc79403e546dd8b407c8e6d42 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#afdf6a92bc79403e546dd8b407c8e6d42">Clear</a> ()</td></tr>
+<tr class="memdesc:afdf6a92bc79403e546dd8b407c8e6d42 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0759eb1941739294179f0d87ea3be54b" title="Clears all items out of the data structure. ">ISpatialMap.Clear</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#afdf6a92bc79403e546dd8b407c8e6d42">More...</a><br /></td></tr>
+<tr class="separator:afdf6a92bc79403e546dd8b407c8e6d42 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a927ae6cbc1b099b8bc73c0a6517d9429 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a927ae6cbc1b099b8bc73c0a6517d9429">Contains</a> (T item)</td></tr>
+<tr class="memdesc:a927ae6cbc1b099b8bc73c0a6517d9429 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a927ae6cbc1b099b8bc73c0a6517d9429">More...</a><br /></td></tr>
+<tr class="separator:a927ae6cbc1b099b8bc73c0a6517d9429 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0f21de82023e6ab52cd9c6fef514922 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ab0f21de82023e6ab52cd9c6fef514922">Contains</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:ab0f21de82023e6ab52cd9c6fef514922 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ab0f21de82023e6ab52cd9c6fef514922">More...</a><br /></td></tr>
+<tr class="separator:ab0f21de82023e6ab52cd9c6fef514922 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad38ab4d59f23ce58543f479977846a47 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad38ab4d59f23ce58543f479977846a47">Contains</a> (int x, int y)</td></tr>
+<tr class="memdesc:ad38ab4d59f23ce58543f479977846a47 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ad38ab4d59f23ce58543f479977846a47">More...</a><br /></td></tr>
+<tr class="separator:ad38ab4d59f23ce58543f479977846a47 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78951f7fbb66d5c85eaa90958fd46fc4 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerator&lt; <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html">ISpatialTuple</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a78951f7fbb66d5c85eaa90958fd46fc4">GetEnumerator</a> ()</td></tr>
+<tr class="memdesc:a78951f7fbb66d5c85eaa90958fd46fc4 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a78951f7fbb66d5c85eaa90958fd46fc4">More...</a><br /></td></tr>
+<tr class="separator:a78951f7fbb66d5c85eaa90958fd46fc4 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50caaa647455cc316f106a624f79db1f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a50caaa647455cc316f106a624f79db1f">GetItem</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:a50caaa647455cc316f106a624f79db1f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position, or null/equivalent if no item exists.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a50caaa647455cc316f106a624f79db1f">More...</a><br /></td></tr>
+<tr class="separator:a50caaa647455cc316f106a624f79db1f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad473496acb120599fd9b4ef5e3f09708 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad473496acb120599fd9b4ef5e3f09708">GetItem</a> (int x, int y)</td></tr>
+<tr class="memdesc:ad473496acb120599fd9b4ef5e3f09708 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position, or null/equivalent if no item exists.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ad473496acb120599fd9b4ef5e3f09708">More...</a><br /></td></tr>
+<tr class="separator:ad473496acb120599fd9b4ef5e3f09708 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a113b5c32ea982c004e5f12b33b27c65b inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a113b5c32ea982c004e5f12b33b27c65b">GetItems</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:a113b5c32ea982c004e5f12b33b27c65b inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a113b5c32ea982c004e5f12b33b27c65b">More...</a><br /></td></tr>
+<tr class="separator:a113b5c32ea982c004e5f12b33b27c65b inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf8a325c971a3d94a70d376d28a9df2d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aaf8a325c971a3d94a70d376d28a9df2d">GetItems</a> (int x, int y)</td></tr>
+<tr class="memdesc:aaf8a325c971a3d94a70d376d28a9df2d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#aaf8a325c971a3d94a70d376d28a9df2d">More...</a><br /></td></tr>
+<tr class="separator:aaf8a325c971a3d94a70d376d28a9df2d inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7f3630f5140c847143135d61db453ca inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af7f3630f5140c847143135d61db453ca">GetPosition</a> (T item)</td></tr>
+<tr class="memdesc:af7f3630f5140c847143135d61db453ca inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a023e4cb39df2424d29d258692071fdcd" title="Gets the position associated with the item in the data structure, or null if that item is not found...">IReadOnlySpatialMap.GetPosition</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#af7f3630f5140c847143135d61db453ca">More...</a><br /></td></tr>
+<tr class="separator:af7f3630f5140c847143135d61db453ca inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0c65c28b81b740fb39b58e9dcff8f21 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae0c65c28b81b740fb39b58e9dcff8f21">Move</a> (T item, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> target)</td></tr>
+<tr class="memdesc:ae0c65c28b81b740fb39b58e9dcff8f21 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ae0c65c28b81b740fb39b58e9dcff8f21">More...</a><br /></td></tr>
+<tr class="separator:ae0c65c28b81b740fb39b58e9dcff8f21 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae7aba9d0ec8371563eece53a51130488 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ae7aba9d0ec8371563eece53a51130488">Move</a> (T item, int targetX, int targetY)</td></tr>
+<tr class="memdesc:ae7aba9d0ec8371563eece53a51130488 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ae7aba9d0ec8371563eece53a51130488">More...</a><br /></td></tr>
+<tr class="separator:ae7aba9d0ec8371563eece53a51130488 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa11c76a628bb27d47fe5dde614e5bca2 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aa11c76a628bb27d47fe5dde614e5bca2">Move</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> current, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> target)</td></tr>
+<tr class="memdesc:aa11c76a628bb27d47fe5dde614e5bca2 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#aa11c76a628bb27d47fe5dde614e5bca2">More...</a><br /></td></tr>
+<tr class="separator:aa11c76a628bb27d47fe5dde614e5bca2 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e7a65d0fb87d903681fc4021b8531fb inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a0e7a65d0fb87d903681fc4021b8531fb">Move</a> (int currentX, int currentY, int targetX, int targetY)</td></tr>
+<tr class="memdesc:a0e7a65d0fb87d903681fc4021b8531fb inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a0e7a65d0fb87d903681fc4021b8531fb">More...</a><br /></td></tr>
+<tr class="separator:a0e7a65d0fb87d903681fc4021b8531fb inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01da163b40b82a6fed528a49ba983f7 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad01da163b40b82a6fed528a49ba983f7">Remove</a> (T item)</td></tr>
+<tr class="memdesc:ad01da163b40b82a6fed528a49ba983f7 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the item specified, if it exists, and returns true. Returns false if the item was not in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#ad01da163b40b82a6fed528a49ba983f7">More...</a><br /></td></tr>
+<tr class="separator:ad01da163b40b82a6fed528a49ba983f7 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb0140a640cd0ad9491cfac1fad595a9 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#abb0140a640cd0ad9491cfac1fad595a9">Remove</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
+<tr class="memdesc:abb0140a640cd0ad9491cfac1fad595a9 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#abb0140a640cd0ad9491cfac1fad595a9">More...</a><br /></td></tr>
+<tr class="separator:abb0140a640cd0ad9491cfac1fad595a9 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a195ddc34fff9b0b9cbc8d16c08ae820f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a195ddc34fff9b0b9cbc8d16c08ae820f">Remove</a> (int x, int y)</td></tr>
+<tr class="memdesc:a195ddc34fff9b0b9cbc8d16c08ae820f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a195ddc34fff9b0b9cbc8d16c08ae820f">More...</a><br /></td></tr>
+<tr class="separator:a195ddc34fff9b0b9cbc8d16c08ae820f inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c461e428b59d52bc39b53a4aeb4b7f0 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">override string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a5c461e428b59d52bc39b53a4aeb4b7f0">ToString</a> ()</td></tr>
+<tr class="memdesc:a5c461e428b59d52bc39b53a4aeb4b7f0 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a5c461e428b59d52bc39b53a4aeb4b7f0">More...</a><br /></td></tr>
+<tr class="separator:a5c461e428b59d52bc39b53a4aeb4b7f0 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06b84805f10ecaa2c4e53f7ba64ac3a8 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a06b84805f10ecaa2c4e53f7ba64ac3a8">ToString</a> (Func&lt; T, string &gt; itemStringifier)</td></tr>
+<tr class="memdesc:a06b84805f10ecaa2c4e53f7ba64ac3a8 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, allowing display of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>'s items in a specified way.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a06b84805f10ecaa2c4e53f7ba64ac3a8">More...</a><br /></td></tr>
+<tr class="separator:a06b84805f10ecaa2c4e53f7ba64ac3a8 inherit pub_methods_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:a6279df33fdff4a6fb7829d51012d5f7d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a6279df33fdff4a6fb7829d51012d5f7d">Count</a> =&gt; itemMapping.Count</td></tr>
-<tr class="memdesc:a6279df33fdff4a6fb7829d51012d5f7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754" title="The number of items in the data structure. ">IReadOnlySpatialMap.Count</a>.  <a href="#a6279df33fdff4a6fb7829d51012d5f7d">More...</a><br /></td></tr>
-<tr class="separator:a6279df33fdff4a6fb7829d51012d5f7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
-Properties</h2></td></tr>
-<tr class="memitem:ae2fd59303b5d5cf0e217d6cacadb6ee3"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#ae2fd59303b5d5cf0e217d6cacadb6ee3">Items</a><code> [get]</code></td></tr>
-<tr class="memdesc:ae2fd59303b5d5cf0e217d6cacadb6ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#ad4c47c0f372ad664e24ffe07059dc6f8" title="Enumerable of the items stored in the data structure: for use to iterate over all items...">IReadOnlySpatialMap.Items</a>.  <a href="#ae2fd59303b5d5cf0e217d6cacadb6ee3">More...</a><br /></td></tr>
-<tr class="separator:ae2fd59303b5d5cf0e217d6cacadb6ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8ca49f13161a395d45c423bec4ca624"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#aa8ca49f13161a395d45c423bec4ca624">Positions</a><code> [get]</code></td></tr>
-<tr class="memdesc:aa8ca49f13161a395d45c423bec4ca624"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7" title="Enumerable of all positions that contain items. Likely this won&#39;t be used as much, since most objects that are contained in a spatial map implementation will record their position as a member, however in case that is not the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided. ">IReadOnlySpatialMap.Positions</a>.  <a href="#aa8ca49f13161a395d45c423bec4ca624">More...</a><br /></td></tr>
-<tr class="separator:aa8ca49f13161a395d45c423bec4ca624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_attribs_class_go_rogue_1_1_advanced_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_class_go_rogue_1_1_advanced_spatial_map')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html">GoRogue.AdvancedSpatialMap&lt; T &gt;</a></td></tr>
+<tr class="memitem:af17d3dd9762f7608a2b566f04da35ca7 inherit pub_attribs_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af17d3dd9762f7608a2b566f04da35ca7">Count</a> =&gt; itemMapping.Count</td></tr>
+<tr class="memdesc:af17d3dd9762f7608a2b566f04da35ca7 inherit pub_attribs_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754" title="The number of items in the data structure. ">IReadOnlySpatialMap.Count</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#af17d3dd9762f7608a2b566f04da35ca7">More...</a><br /></td></tr>
+<tr class="separator:af17d3dd9762f7608a2b566f04da35ca7 inherit pub_attribs_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header properties_class_go_rogue_1_1_advanced_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('properties_class_go_rogue_1_1_advanced_spatial_map')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html">GoRogue.AdvancedSpatialMap&lt; T &gt;</a></td></tr>
+<tr class="memitem:aea112744b6115987f203f7a9b7d0c13f inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aea112744b6115987f203f7a9b7d0c13f">Items</a><code> [get]</code></td></tr>
+<tr class="memdesc:aea112744b6115987f203f7a9b7d0c13f inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#ad4c47c0f372ad664e24ffe07059dc6f8" title="Enumerable of the items stored in the data structure: for use to iterate over all items...">IReadOnlySpatialMap.Items</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#aea112744b6115987f203f7a9b7d0c13f">More...</a><br /></td></tr>
+<tr class="separator:aea112744b6115987f203f7a9b7d0c13f inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6ad8c62117ffb0ec08d6b8423548704 inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af6ad8c62117ffb0ec08d6b8423548704">Positions</a><code> [get]</code></td></tr>
+<tr class="memdesc:af6ad8c62117ffb0ec08d6b8423548704 inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7" title="Enumerable of all positions that contain items. Likely this won&#39;t be used as much, since most objects that are contained in a spatial map implementation will record their position as a member, however in case that is not the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided. ">IReadOnlySpatialMap.Positions</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#af6ad8c62117ffb0ec08d6b8423548704">More...</a><br /></td></tr>
+<tr class="separator:af6ad8c62117ffb0ec08d6b8423548704 inherit properties_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_go_rogue_1_1_i_read_only_spatial_map')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a></td></tr>
 <tr class="memitem:a9849457dd851dfd4db9e3eb0e6262754 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754">Count</a><code> [get]</code></td></tr>
 <tr class="memdesc:a9849457dd851dfd4db9e3eb0e6262754 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of items in the data structure.  <a href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754">More...</a><br /></td></tr>
@@ -183,18 +184,16 @@ Properties</h2></td></tr>
 <tr class="memitem:afbb770171e81c003c8ecc4496b2165d7 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7">Positions</a><code> [get]</code></td></tr>
 <tr class="memdesc:afbb770171e81c003c8ecc4496b2165d7 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerable of all positions that contain items. Likely this won't be used as much, since most objects that are contained in a spatial map implementation will record their position as a member, however in case that is not the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided.  <a href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7">More...</a><br /></td></tr>
 <tr class="separator:afbb770171e81c003c8ecc4496b2165d7 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
-Events</h2></td></tr>
-<tr class="memitem:a45ffa59f4d51ec2b6c61ec0779931fa1"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a45ffa59f4d51ec2b6c61ec0779931fa1">ItemAdded</a></td></tr>
-<tr class="memdesc:a45ffa59f4d51ec2b6c61ec0779931fa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0ecfa5b443e064340260102b65b5d5e6" title="Fired directly after an item has been added to the data structure. ">ISpatialMap.ItemAdded</a>.  <a href="#a45ffa59f4d51ec2b6c61ec0779931fa1">More...</a><br /></td></tr>
-<tr class="separator:a45ffa59f4d51ec2b6c61ec0779931fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a503a821e7beab9589ff3d814f6ecb6fb"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_moved_event_args.html">ItemMovedEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a503a821e7beab9589ff3d814f6ecb6fb">ItemMoved</a></td></tr>
-<tr class="memdesc:a503a821e7beab9589ff3d814f6ecb6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#aeaa536f408fa24a3a82ba684ba886642" title="Fired directly after an item in the data structure has been moved. ">ISpatialMap.ItemMoved</a>.  <a href="#a503a821e7beab9589ff3d814f6ecb6fb">More...</a><br /></td></tr>
-<tr class="separator:a503a821e7beab9589ff3d814f6ecb6fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6507627fc5bf13790696ef5effc87544"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_spatial_map.html#a6507627fc5bf13790696ef5effc87544">ItemRemoved</a></td></tr>
-<tr class="memdesc:a6507627fc5bf13790696ef5effc87544"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a883dedd339eb96b81bc0b0236b18556a" title="Fired directly after an item has been removed from the data structure. ">ISpatialMap.ItemRemoved</a>.  <a href="#a6507627fc5bf13790696ef5effc87544">More...</a><br /></td></tr>
-<tr class="separator:a6507627fc5bf13790696ef5effc87544"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header events_class_go_rogue_1_1_advanced_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('events_class_go_rogue_1_1_advanced_spatial_map')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html">GoRogue.AdvancedSpatialMap&lt; T &gt;</a></td></tr>
+<tr class="memitem:a9fc9d0b4795c5b1adf28c0d2c9141d4f inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a9fc9d0b4795c5b1adf28c0d2c9141d4f">ItemAdded</a></td></tr>
+<tr class="memdesc:a9fc9d0b4795c5b1adf28c0d2c9141d4f inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0ecfa5b443e064340260102b65b5d5e6" title="Fired directly after an item has been added to the data structure. ">ISpatialMap.ItemAdded</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a9fc9d0b4795c5b1adf28c0d2c9141d4f">More...</a><br /></td></tr>
+<tr class="separator:a9fc9d0b4795c5b1adf28c0d2c9141d4f inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d244655859edc0c85b3003dca651676 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_moved_event_args.html">ItemMovedEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a2d244655859edc0c85b3003dca651676">ItemMoved</a></td></tr>
+<tr class="memdesc:a2d244655859edc0c85b3003dca651676 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#aeaa536f408fa24a3a82ba684ba886642" title="Fired directly after an item in the data structure has been moved. ">ISpatialMap.ItemMoved</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a2d244655859edc0c85b3003dca651676">More...</a><br /></td></tr>
+<tr class="separator:a2d244655859edc0c85b3003dca651676 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e8bb4059f20f5d3e81ce426e7bd9254 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a3e8bb4059f20f5d3e81ce426e7bd9254">ItemRemoved</a></td></tr>
+<tr class="memdesc:a3e8bb4059f20f5d3e81ce426e7bd9254 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a883dedd339eb96b81bc0b0236b18556a" title="Fired directly after an item has been removed from the data structure. ">ISpatialMap.ItemRemoved</a>.  <a href="class_go_rogue_1_1_advanced_spatial_map.html#a3e8bb4059f20f5d3e81ce426e7bd9254">More...</a><br /></td></tr>
+<tr class="separator:a3e8bb4059f20f5d3e81ce426e7bd9254 inherit events_class_go_rogue_1_1_advanced_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header events_interface_go_rogue_1_1_i_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('events_interface_go_rogue_1_1_i_spatial_map')"><img src="closed.png" alt="-"/>&#160;Events inherited from <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html">GoRogue.ISpatialMap&lt; T &gt;</a></td></tr>
 <tr class="memitem:a0ecfa5b443e064340260102b65b5d5e6 inherit events_interface_go_rogue_1_1_i_spatial_map"><td class="memItemLeft" align="right" valign="top">EventHandler&lt; <a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0ecfa5b443e064340260102b65b5d5e6">ItemAdded</a></td></tr>
 <tr class="memdesc:a0ecfa5b443e064340260102b65b5d5e6 inherit events_interface_go_rogue_1_1_i_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fired directly after an item has been added to the data structure.  <a href="interface_go_rogue_1_1_i_spatial_map.html#a0ecfa5b443e064340260102b65b5d5e6">More...</a><br /></td></tr>
@@ -207,16 +206,18 @@ Events</h2></td></tr>
 <tr class="separator:a883dedd339eb96b81bc0b0236b18556a inherit events_interface_go_rogue_1_1_i_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Designed as an more efficient data structure for recording objects on a map. The simple version: if you're about to use a List to store a bunch of objects in your map, consider using this or <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a> instead! /// More detail: typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like entities, items, etc. This is simple but ultimately not efficient; for example, in that implementation, determining if there is an object at a location takes an amount of time proportional to the number of objects in this list. However, the other simple option is to use an array with size equal to the size of the map (as many do for terrain) for all object lists. This is even less ideal, as in that case, the time to iterate over all objects becomes proportional to the size of the map (since one has to do that for rendering, ouch!), which is typically much larger than the number of objects in a list. This is the problem <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> is designed to solve. It provides fast, near-constant-time operations for getting the object at a location, adding entities, removing entities, and will allow you to iterate through all objects in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> in time proportional to the number of objects in it (the best possible). /// Effectively, it is a more efficient list for objects that have a position associated with them. This implementation can only allow one item at a given location at a time &ndash; for an implementation that allows multiple items, see <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>. /// The objects stored in a <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> must implement the <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html" title="Interface for a class that has an ID unique to all other instnaces of that class. Typical implementat...">IHasID</a> (see that interface's documentation for an easy implementation example). This is used internally to keep track of the objects, since uints are easily hashable. </p>
+<div class="textblock"><p>Designed as an more efficient data structure for recording objects on a map. The simple version: if you're about to use a List to store a bunch of objects in your map, consider using this or <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a> instead! </p>
+<p>Typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like entities, items, etc. This is simple but ultimately not efficient; for example, in that implementation, determining if there is an object at a location takes an amount of time proportional to the number of objects in this list. However, the other simple option is to use an array with size equal to the size of the map (as many do for terrain) for all object lists. This is even less ideal, as in that case, the time to iterate over all objects becomes proportional to the size of the map (since one has to do that for rendering, ouch!), which is typically much larger than the number of objects in a list. This is the problem <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> is designed to solve. It provides fast, near-constant-time operations for getting the object at a location, adding entities, removing entities, and will allow you to iterate through all objects in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> in time proportional to the number of objects in it (the best possible). Effectively, it is a more efficient list for objects that have a position associated with them. This implementation can only allow one item at a given location at a time &ndash; for an implementation that allows multiple items, see <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it...">MultiSpatialMap</a>. The objects stored in a <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> must implement the <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html" title="Interface for a class that has an ID, typically used for hashing purposes. The ID should be unique or...">IHasID</a> (see that interface's documentation for an easy implementation example). This is used internally to keep track of the objects, since uints are easily (efficiently) hashable. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>The type of object that will be contained by this <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.</td></tr>
+    <tr><td class="paramname">T</td><td>The type of object that will be contained by this <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. Must implement <a class="el" href="interface_go_rogue_1_1_i_has_i_d.html" title="Interface for a class that has an ID, typically used for hashing purposes. The ID should be unique or...">IHasID</a> and be a reference-type.</td></tr>
   </table>
   </dd>
 </dl>
 <div class="typeconstraint">
 <dl><dt><b>Type Constraints</b></dt><dd>
 <table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em>class</em></td><td>&#160;</td></tr>
 <tr><td valign="top"><em>T</em></td><td>&#160;:</td><td valign="top"><em><a class="el" href="interface_go_rogue_1_1_i_has_i_d.html">IHasID</a></em></td><td>&#160;</td></tr>
 </table>
 </dd>
@@ -246,837 +247,6 @@ Events</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a48209e0b3c847a1ab14fa6cef713ad7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48209e0b3c847a1ab14fa6cef713ad7a">&sect;&nbsp;</a></span>Add() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Add </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>newItem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>position</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">newItem</td><td>The item to add.</td></tr>
-    <tr><td class="paramname">position</td><td>The position at which to add the new item.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not.</dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a427f33ca5566188485ba1816f608202c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a3a55c54549dd435297827ec47a2799f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a55c54549dd435297827ec47a2799f4">&sect;&nbsp;</a></span>Add() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Add </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>newItem</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Adds the given item at the given position, provided the item is not already in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> and the position is not already filled. If either of those are the case, returns false. Otherwise (if item was successfully added), returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">newItem</td><td>The item to add.</td></tr>
-    <tr><td class="paramname">x</td><td>X-value of the position to add item to.</td></tr>
-    <tr><td class="paramname">y</td><td>Y-value of the position to add item to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was added, false if not.</dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a006540e72e630cca15477f597467de12">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a817692b1d08c2c19e48dbb8aa36617f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a817692b1d08c2c19e48dbb8aa36617f8">&sect;&nbsp;</a></span>AsReadOnly()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.AsReadOnly </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08" title="Returns a read-only reference to the data structure. Convenient for &quot;safely&quot; exposing the structure a...">IReadOnlySpatialMap.AsReadOnly</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a00324c875d4ec4b16e19364365d27e08">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a65af9055960fcc2f024ac2c59f6d7c9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a65af9055960fcc2f024ac2c59f6d7c9f">&sect;&nbsp;</a></span>Clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Clear </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0759eb1941739294179f0d87ea3be54b" title="Clears all items out of the data structure. ">ISpatialMap.Clear</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0759eb1941739294179f0d87ea3be54b">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a77002734f4c92bb7d70bad92804e7f13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77002734f4c92bb7d70bad92804e7f13">&sect;&nbsp;</a></span>Contains() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Contains </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>item</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="af8629350c62bc584e49dcae54bb40a7b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af8629350c62bc584e49dcae54bb40a7b">&sect;&nbsp;</a></span>Contains() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Contains </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a756a002e7bede48f5aaf4ae95389dd14">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a011fcb7522157ab8897106d65d85e8bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a011fcb7522157ab8897106d65d85e8bc">&sect;&nbsp;</a></span>Contains() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Contains </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9383eb74cc372f53c8798c7f39f9c382" title="Returns whether or not the data structure contains the given item. ">IReadOnlySpatialMap.Contains</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#adbfce6442d25cf76c7c5e013b26226e9">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a0300392ee2f773ba501264a484ccfcf8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0300392ee2f773ba501264a484ccfcf8">&sect;&nbsp;</a></span>GetEnumerator()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerator&lt;<a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html">ISpatialTuple</a>&lt;T&gt; &gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetEnumerator </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly. </p>
-<dl class="section return"><dt>Returns</dt><dd>An enumerator for the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a></dd></dl>
-
-</div>
-</div>
-<a id="a99800dee2405a3b4a0c9c79f6ca668d9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99800dee2405a3b4a0c9c79f6ca668d9">&sect;&nbsp;</a></span>GetItem() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">T <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetItem </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the item at the given position, or null/equivalent if no item exists. </p>
-<p>Intended to be a more convenient function as compared to GetItems, for times when you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">position</td><td>The postiion to return the item for.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item at the given position, or null/equivalent if no item exists at that location. </dd></dl>
-
-</div>
-</div>
-<a id="a7f586fdabf0a5bc5bdbcd1059d1ea974"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f586fdabf0a5bc5bdbcd1059d1ea974">&sect;&nbsp;</a></span>GetItem() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">T <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetItem </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the item at the given position, or null/equivalent if no item exists. </p>
-<p>Intended to be a more convenient function as compared to GetItems, for times when you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>The x-value of the position to return the item for.</td></tr>
-    <tr><td class="paramname">y</td><td>The y-value of the position to return the item for.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item at the given position, or null/equivalent if no item exists at that location. </dd></dl>
-
-</div>
-</div>
-<a id="a0a66760fed4c5d08021da86bdbaf9c51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a66760fed4c5d08021da86bdbaf9c51">&sect;&nbsp;</a></span>GetItems() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetItems </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position. </p>
-<p>Again, since this implementation guarantees that only one item can be at any given location at once, the return value is guaranteed to be at most one element. For times when you are know you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances, this specific class also provides a GetItem function that returns a more intuitive null if no item was found, or the item at the location as applicable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">position</td><td>The position to return the item for.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item at the given position as a 1-element enumerable, if there is an item there, or nothing if there is no item there. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a14896069cf39a12287e723f34037b594">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a59b87a079dfcf2ec614b05982b9de2f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59b87a079dfcf2ec614b05982b9de2f9">&sect;&nbsp;</a></span>GetItems() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetItems </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the item at the given position as a 1-element enumerable if there is any item there, or nothing if there is nothing at that position. </p>
-<p>Again, since this implementation guarantees that only one item can be at any given location at once, the return value is guaranteed to be at most one element. For times when you are know you are dealing exclusively with <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a> instances, this specific class also provides a GetItem function that returns a more intuitive null if no item was found, or the item at the location as applicable. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>The x-value of the position to return the item(s) for.</td></tr>
-    <tr><td class="paramname">y</td><td>The y-value of the position to return the item(s) for.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item at the given position as a 1-element enumerable, if there is an item there, or nothing if there is no item there. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#aa49f6c8c2640bbe019cb5a0837bc4bcf">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="ab08fd96f389eb06e76c89d3e6f2bb116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab08fd96f389eb06e76c89d3e6f2bb116">&sect;&nbsp;</a></span>GetPosition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.GetPosition </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>item</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a023e4cb39df2424d29d258692071fdcd" title="Gets the position associated with the item in the data structure, or null if that item is not found...">IReadOnlySpatialMap.GetPosition</a>. </p>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a023e4cb39df2424d29d258692071fdcd">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a28eaa95d21ede006815a174a2baaac67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28eaa95d21ede006815a174a2baaac67">&sect;&nbsp;</a></span>Move() <span class="overload">[1/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Move </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>item</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>target</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">item</td><td>The item to move.</td></tr>
-    <tr><td class="paramname">target</td><td>The position to move it to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not.</dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a6f484eff09aea0c74c514a6236b9526c">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a5ffc055c8c1188d9620108bfb84a25f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ffc055c8c1188d9620108bfb84a25f0">&sect;&nbsp;</a></span>Move() <span class="overload">[2/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Move </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>item</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>targetX</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>targetY</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Move the item specified to the position specified. Returns true if successful. If the item does not exist in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, or the position is already filled by something, does nothing and returns false. Otherwise, returns true. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">item</td><td>The item to move.</td></tr>
-    <tr><td class="paramname">targetX</td><td>X-value of the location to move item to.</td></tr>
-    <tr><td class="paramname">targetY</td><td>Y-value of the location to move item to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was moved, false if not.</dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a88550649aa58929f75e8a5016abfbb50">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a522a02b57c97505f6d8a14f783a37598"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a522a02b57c97505f6d8a14f783a37598">&sect;&nbsp;</a></span>Move() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Move </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>current</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>target</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing. </p>
-<p>Since this implementation of <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. ">ISpatialMap</a> guarantees that only one item may be at any given location at a time, the returned values will either be none, or a single value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">current</td><td>The position of the item to move.</td></tr>
-    <tr><td class="paramname">target</td><td>The position to move the item to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item moved as a 1-element IEnumerable if something was moved, or nothing if no item was moved. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#abe1c116e481e071914c12f098715fd94">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a74d44cb34bcbab329a3a19e2aa6e9ea7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74d44cb34bcbab329a3a19e2aa6e9ea7">&sect;&nbsp;</a></span>Move() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Move </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>currentX</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>currentY</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>targetX</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>targetY</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Moves whatever is at position current, if anything, to postion target. If something was moved, returns what was moved. If nothing was moved, eg. either there was nothing at position current or already something at position target, returns nothing. </p>
-<p>Since this implementation of <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. ">ISpatialMap</a> guarantees that only one item may be at any given location at a time, the returned values will either be none, or a single value. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">currentX</td><td>X-value of the location to move item from.</td></tr>
-    <tr><td class="paramname">currentY</td><td>Y-value of the location to move item from.</td></tr>
-    <tr><td class="paramname">targetX</td><td>X-value of the location to move item to.</td></tr>
-    <tr><td class="paramname">targetY</td><td>Y-value of the location to move item to.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item moved as a 1-element IEnumerable if something was moved, or nothing if no item was moved. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a6faadc437a5e4c99e95a41771c334b3a">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a28f50161cc976f4b3247a72165819cd4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28f50161cc976f4b3247a72165819cd4">&sect;&nbsp;</a></span>Remove() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Remove </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>item</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes the item specified, if it exists, and returns true. Returns false if the item was not in the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">item</td><td>The item to remove.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>True if the item was removed, false if the item was not found.</dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a9b513e282b60abef61f762191a1b7619">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="ae3ab3ee4fafa9edf5b3194024d39f748"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3ab3ee4fafa9edf5b3194024d39f748">&sect;&nbsp;</a></span>Remove() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Remove </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td>
-          <td class="paramname"><em>position</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified. </p>
-<p>Again, since this implementation guarantees that only one item can be at any given location at a time, the returned value is guaranteed to be either nothing or a single element. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">position</td><td>The position of the item to remove.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item removed as a 1-element IEnumerable, if something was removed; nothing if no item was found at that position. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#ae1d0f366b878a9a2ade6c84a34911105">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a5a70830a0df776176435ef45113ce821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a70830a0df776176435ef45113ce821">&sect;&nbsp;</a></span>Remove() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Remove </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>y</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Removes whatever is at the given position, if anything, and returns the item removed as a 1-element IEnumerable. Returns nothing if no item was at the position specified. </p>
-<p>Again, since this implementation guarantees that only one item can be at any given location at a time, the returned value is guaranteed to be either nothing or a single element. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>X-value of the position to remove item from.</td></tr>
-    <tr><td class="paramname">y</td><td>Y-value of the position to remove item from.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The item removed as a 1-element IEnumerable, if something was removed; nothing if no item was found at that position. </dd></dl>
-
-<p>Implements <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a893227047a1eab5ef97ce0145d414c39">GoRogue.ISpatialMap&lt; T &gt;</a>.</p>
-
-</div>
-</div>
-<a id="a8f8355a41f972137a2913e742142dbec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f8355a41f972137a2913e742142dbec">&sect;&nbsp;</a></span>ToString() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">override string <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.ToString </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.</dd></dl>
-
-</div>
-</div>
-<a id="a25dc17bea6dca04005bc92a2567371ba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25dc17bea6dca04005bc92a2567371ba">&sect;&nbsp;</a></span>ToString() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">string <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.ToString </td>
-          <td>(</td>
-          <td class="paramtype">Func&lt; T, string &gt;&#160;</td>
-          <td class="paramname"><em>itemStringifier</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns a string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>, allowing display of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>'s items in a specified way. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">itemStringifier</td><td>Function that turns an item into a string.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A string representation of the <a class="el" href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y...">SpatialMap</a>.</dd></dl>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a6279df33fdff4a6fb7829d51012d5f7d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6279df33fdff4a6fb7829d51012d5f7d">&sect;&nbsp;</a></span>Count</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Count =&gt; itemMapping.Count</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754" title="The number of items in the data structure. ">IReadOnlySpatialMap.Count</a>. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Property Documentation</h2>
-<a id="ae2fd59303b5d5cf0e217d6cacadb6ee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2fd59303b5d5cf0e217d6cacadb6ee3">&sect;&nbsp;</a></span>Items</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;T&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Items</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#ad4c47c0f372ad664e24ffe07059dc6f8" title="Enumerable of the items stored in the data structure: for use to iterate over all items...">IReadOnlySpatialMap.Items</a>. </p>
-
-</div>
-</div>
-<a id="aa8ca49f13161a395d45c423bec4ca624"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8ca49f13161a395d45c423bec4ca624">&sect;&nbsp;</a></span>Positions</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.Positions</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">get</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7" title="Enumerable of all positions that contain items. Likely this won&#39;t be used as much, since most objects that are contained in a spatial map implementation will record their position as a member, however in case that is not the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided. ">IReadOnlySpatialMap.Positions</a>. </p>
-
-</div>
-</div>
-<h2 class="groupheader">Event Documentation</h2>
-<a id="a45ffa59f4d51ec2b6c61ec0779931fa1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45ffa59f4d51ec2b6c61ec0779931fa1">&sect;&nbsp;</a></span>ItemAdded</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EventHandler&lt;<a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt;T&gt; &gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.ItemAdded</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a0ecfa5b443e064340260102b65b5d5e6" title="Fired directly after an item has been added to the data structure. ">ISpatialMap.ItemAdded</a>. </p>
-
-</div>
-</div>
-<a id="a503a821e7beab9589ff3d814f6ecb6fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a503a821e7beab9589ff3d814f6ecb6fb">&sect;&nbsp;</a></span>ItemMoved</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EventHandler&lt;<a class="el" href="class_go_rogue_1_1_item_moved_event_args.html">ItemMovedEventArgs</a>&lt;T&gt; &gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.ItemMoved</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#aeaa536f408fa24a3a82ba684ba886642" title="Fired directly after an item in the data structure has been moved. ">ISpatialMap.ItemMoved</a>. </p>
-
-</div>
-</div>
-<a id="a6507627fc5bf13790696ef5effc87544"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6507627fc5bf13790696ef5effc87544">&sect;&nbsp;</a></span>ItemRemoved</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EventHandler&lt;<a class="el" href="class_go_rogue_1_1_item_event_args.html">ItemEventArgs</a>&lt;T&gt; &gt; <a class="el" href="class_go_rogue_1_1_spatial_map.html">GoRogue.SpatialMap</a>&lt; T &gt;.ItemRemoved</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>See <a class="el" href="interface_go_rogue_1_1_i_spatial_map.html#a883dedd339eb96b81bc0b0236b18556a" title="Fired directly after an item has been removed from the data structure. ">ISpatialMap.ItemRemoved</a>. </p>
 
 </div>
 </div>

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['octahedron',['OCTAHEDRON',['../class_go_rogue_1_1_radius.html#af0c1a66bf12434df42ef9ff125e45f7e',1,'GoRogue::Radius']]]
+  ['layermasker',['LayerMasker',['../class_go_rogue_1_1_game_framework_1_1_map.html#a28241d55c6f65cbef991b0d4ddc8572c',1,'GoRogue::GameFramework::Map']]],
+  ['layers',['Layers',['../class_go_rogue_1_1_advanced_layered_spatial_map.html#a7a27b0d3a952b1d676caedf039d13f63',1,'GoRogue::AdvancedLayeredSpatialMap']]]
 ];

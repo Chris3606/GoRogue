@@ -80,9 +80,16 @@ Inheritance diagram for GoRogue.IReadOnlySpatialMap&lt; T &gt;:</div>
  <div class="center">
   <img src="interface_go_rogue_1_1_i_read_only_spatial_map.png" usemap="#GoRogue.IReadOnlySpatialMap_3C_20T_20_3E_map" alt=""/>
   <map id="GoRogue.IReadOnlySpatialMap_3C_20T_20_3E_map" name="GoRogue.IReadOnlySpatialMap&lt; T &gt;_map">
-<area href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. " alt="GoRogue.ISpatialMap&lt; T &gt;" shape="rect" coords="115,112,336,136"/>
-<area href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it..." alt="GoRogue.MultiSpatialMap&lt; T &gt;" shape="rect" coords="0,168,221,192"/>
-<area href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y..." alt="GoRogue.SpatialMap&lt; T &gt;" shape="rect" coords="231,168,452,192"/>
+<area href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html" title="Read-only interface for LayeredSpatialMap – useful for exposing LayeredSpatialMap instances as read-..." alt="GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;" shape="rect" coords="0,112,268,136"/>
+<area href="interface_go_rogue_1_1_i_spatial_map.html" title="General interface for a data structure that records objects on a map. " alt="GoRogue.ISpatialMap&lt; T &gt;" shape="rect" coords="556,112,824,136"/>
+<area href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a..." alt="GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;" shape="rect" coords="0,168,268,192"/>
+<area href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a..." alt="GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;" shape="rect" coords="278,168,546,192"/>
+<area href="class_go_rogue_1_1_advanced_multi_spatial_map.html" title="Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for hashing and..." alt="GoRogue.AdvancedMultiSpatialMap&lt; T &gt;" shape="rect" coords="556,168,824,192"/>
+<area href="class_go_rogue_1_1_advanced_spatial_map.html" title="Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comp..." alt="GoRogue.AdvancedSpatialMap&lt; T &gt;" shape="rect" coords="834,168,1102,192"/>
+<area href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. " alt="GoRogue.LayeredSpatialMap&lt; T &gt;" shape="rect" coords="0,224,268,248"/>
+<area href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. " alt="GoRogue.LayeredSpatialMap&lt; T &gt;" shape="rect" coords="278,224,546,248"/>
+<area href="class_go_rogue_1_1_multi_spatial_map.html" title="See SpatialMap documentation – similar in principle. However, this implementation allows multiple it..." alt="GoRogue.MultiSpatialMap&lt; T &gt;" shape="rect" coords="556,224,824,248"/>
+<area href="class_go_rogue_1_1_spatial_map.html" title="Designed as an more efficient data structure for recording objects on a map. The simple version: if y..." alt="GoRogue.SpatialMap&lt; T &gt;" shape="rect" coords="834,224,1102,248"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -143,7 +150,7 @@ Properties</h2></td></tr>
 <p>Returns a read-only reference to the data structure. Convenient for "safely" exposing the structure as a property. </p>
 <dl class="section return"><dt>Returns</dt><dd>The current data structure, as a "read-only" reference.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a817692b1d08c2c19e48dbb8aa36617f8">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a00e56d30e6d55542c2d592f5696b542e">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a08c318785e02877f27c8f1b13df0efca">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a2576cd070ebb9204bdee985a672079fc">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a4cd388d6bc4ace6a61e3eb28ab0938d7">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>, and <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#ac5d5697771abf852f57508709ae1a02a">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -172,7 +179,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if the given item is in the data structure, false if not.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a77002734f4c92bb7d70bad92804e7f13">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a4798ac0b608bfe9c5ce53c73536ce5ee">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a89fa088b6a99d34c398876bf70d0e1bf">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a927ae6cbc1b099b8bc73c0a6517d9429">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a8fdfe011a2453a54ed275eabc56c1ea5">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -201,7 +208,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position, false if not.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#af8629350c62bc584e49dcae54bb40a7b">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a24121241cacd5074fb6c28d4c525ce06">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ab0f21de82023e6ab52cd9c6fef514922">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#afc29209a0099751e1ff7f95094828b96">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -241,7 +248,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position, false if not.</dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a011fcb7522157ab8897106d65d85e8bc">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a051fb0625f3663d5a9e8bf708da020c5">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#ad38ab4d59f23ce58543f479977846a47">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a89356fe63fff0da24251dd9e3c12dad1">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -270,7 +277,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The item(s) at the given position if there are any items, or nothing if there is nothing at that position. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a0a66760fed4c5d08021da86bdbaf9c51">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a3bab3faac5748f04b53f3dd003144e9c">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#a113b5c32ea982c004e5f12b33b27c65b">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a5bef78cf8155acd12a1fae761aa93bc4">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -310,7 +317,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The item(s) at the given position if there are any items, or nothing if there is nothing at that position. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#a59b87a079dfcf2ec614b05982b9de2f9">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a879098d362cb09de54a9b49937028422">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#aaf8a325c971a3d94a70d376d28a9df2d">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a9db0b62eb8575b07d38bd7b18e8750bf">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>
@@ -339,7 +346,7 @@ Properties</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The position associated with the given item, if it exists in the data structure, or null if the item does not exist. </dd></dl>
 
-<p>Implemented in <a class="el" href="class_go_rogue_1_1_spatial_map.html#ab08fd96f389eb06e76c89d3e6f2bb116">GoRogue.SpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_multi_spatial_map.html#a97b9ca1010012bdae66b8382244b3a2a">GoRogue.MultiSpatialMap&lt; T &gt;</a>.</p>
+<p>Implemented in <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a6bded25652242d6b77101bbf9cbd0230">GoRogue.AdvancedLayeredSpatialMap&lt; T &gt;</a>, <a class="el" href="class_go_rogue_1_1_advanced_spatial_map.html#af7f3630f5140c847143135d61db453ca">GoRogue.AdvancedSpatialMap&lt; T &gt;</a>, and <a class="el" href="class_go_rogue_1_1_advanced_multi_spatial_map.html#a1923669db21ed9563b8a9778e45ac237">GoRogue.AdvancedMultiSpatialMap&lt; T &gt;</a>.</p>
 
 </div>
 </div>

@@ -5,5 +5,5 @@ var searchData=
   ['fleemap',['FleeMap',['../class_go_rogue_1_1_pathing_1_1_flee_map.html#ae6c9e8ac3ea9a52d6efaf21751adbf4b',1,'GoRogue::Pathing::FleeMap']]],
   ['fleemap',['FleeMap',['../class_go_rogue_1_1_pathing_1_1_flee_map.html',1,'GoRogue::Pathing']]],
   ['fov',['FOV',['../class_go_rogue_1_1_f_o_v.html',1,'GoRogue']]],
-  ['fov',['FOV',['../class_go_rogue_1_1_f_o_v.html#a8e964853f2bd76617e0aa4c70edbba4f',1,'GoRogue.FOV.FOV(IMapView&lt; double &gt; resMap)'],['../class_go_rogue_1_1_f_o_v.html#a85576a7e94c9a866559ac93a86cf35f6',1,'GoRogue.FOV.FOV(IMapView&lt; bool &gt; resMap)']]]
+  ['fov',['FOV',['../class_go_rogue_1_1_game_framework_1_1_map.html#a576920700e7a7fe301f183088413a2f7',1,'GoRogue.GameFramework.Map.FOV()'],['../class_go_rogue_1_1_f_o_v.html#a8e964853f2bd76617e0aa4c70edbba4f',1,'GoRogue.FOV.FOV(IMapView&lt; double &gt; resMap)'],['../class_go_rogue_1_1_f_o_v.html#a85576a7e94c9a866559ac93a86cf35f6',1,'GoRogue.FOV.FOV(IMapView&lt; bool &gt; resMap)']]]
 ];
