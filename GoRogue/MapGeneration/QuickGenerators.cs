@@ -31,7 +31,7 @@ namespace GoRogue.MapGeneration
 		/// </param>
 		/// <returns>Rectangles representing each room generated.</returns>
 		public static IEnumerable<Rectangle> GenerateRandomRoomsMap(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom = 10)
-			=> GenerateRandomRoomsMap(map, null, maxRooms, roomMinSize, roomMinSize, attemptsPerRoom);
+			=> GenerateRandomRoomsMap(map, null, maxRooms, roomMinSize, roomMaxSize, attemptsPerRoom);
 
 		/// <summary>
 		/// Generates a map by attempting to randomly place the specified number of rooms, ranging in

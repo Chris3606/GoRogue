@@ -27,7 +27,7 @@ namespace GoRogue.GameFramework
 	/// <typeparam name="BaseObject">The class deriving from GameObject that this map will hold.</typeparam>
 	public class Map<BaseObject> : IMapView<IEnumerable<BaseObject>> where BaseObject : GameObject<BaseObject>
 	{
-		private ArrayMap<BaseObject> _terrain;
+		private ISettableMapView<BaseObject> _terrain;
 		/// <summary>
 		/// Terrain of the map.  Terrain at each location may be set via the SetTerrain function.
 		/// </summary>
@@ -127,7 +127,7 @@ namespace GoRogue.GameFramework
 		public IEnumerable<BaseObject> this[int x, int y] => GetObjects(x, y);
 
 		/// <summary>
-		/// Constructor.
+		/// Constructor.  Constructs terrain map as ArrayMap&lt;BaseObject&gt; with the given width/height.
 		/// </summary>
 		/// <param name="width">Width of the map.</param>
 		/// <param name="height">Height of the map.</param>
@@ -140,10 +140,29 @@ namespace GoRogue.GameFramework
 		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
 		/// location on the same layer.  Defaults to no layers.</param>
 		public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
+			: this(new ArrayMap<BaseObject>(width, height), numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
+				  layersBlockingTransparency, entityLayersSupportingMultipleItems)
+		{ }
+
+		/// <summary>
+		/// Constructor.  Constructs map with the given terrain layer, determining width/height based on the width/height of that terrain layer.
+		/// </summary>
+		/// <param name="terrainLayer">The ISettableMapView that represents the terrain layer for this map.  It is intended that this be modified
+		/// ONLY via the SetTerrain function -- if it is modified outside of that, the ItemAdded/Removed events are NOT guaranteed to be called!</param>
+		/// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
+		/// <param name="distanceMeasurement">Distance measurement to use for pathing/measuring distance on the map.</param>
+		/// <param name="layersBlockingWalkability">Layer mask containing those layers that should be allowed to have items that block walkability.
+		/// Defaults to all layers.</param>
+		/// <param name="layersBlockingTransparency">Layer mask containing those layers that should be allowed to have items that block FOV.
+		/// Defaults to all layers.</param>
+		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
+		/// location on the same layer.  Defaults to no layers.</param>
+		public Map(ISettableMapView<BaseObject> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 			       uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
 		{
-			_terrain = new ArrayMap<BaseObject>(width, height);
-			Explored = new ArrayMap<bool>(width, height);
+			_terrain = terrainLayer;
+			Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
 
 			_entities = new LayeredSpatialMap<BaseObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
 
@@ -155,14 +174,14 @@ namespace GoRogue.GameFramework
 			_entities.ItemMoved += (s, e) => ObjectMoved?.Invoke(this, e);
 
 			if (layersBlockingTransparency == 1) // Only terrain so we optimize
-				TransparencyView = new LambdaMapView<bool>(width, height, c => _terrain[c] == null || _terrain[c].IsTransparent);
+				TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c] == null || _terrain[c].IsTransparent);
 			else
-				TransparencyView = new LambdaMapView<bool>(width, height, FullIsTransparent);
+				TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsTransparent);
 
 			if (layersBlockingWalkability == 1) // Similar, only terrain blocks, so optimize
-				WalkabilityView = new LambdaMapView<bool>(width, height, c => _terrain[c] == null || _terrain[c].IsWalkable);
+				WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c] == null || _terrain[c].IsWalkable);
 			else
-				WalkabilityView = new LambdaMapView<bool>(width, height, FullIsWalkable);
+				WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
 			_fov = new FOV(TransparencyView);
 			AStar = new AStar(WalkabilityView, distanceMeasurement);
