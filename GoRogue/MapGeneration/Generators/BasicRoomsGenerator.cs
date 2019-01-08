@@ -52,19 +52,19 @@ namespace GoRogue.MapGeneration.Generators
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 		{
 			if (maxRooms <= 0)
-				throw new System.ArgumentOutOfRangeException(nameof(maxRooms), "maxRooms must be greater than 0.");
+				throw new System.ArgumentOutOfRangeException(nameof(maxRooms), "Maximum number of rooms must be greater than 0.");
 
 			if (roomMinSize <= 0)
-				throw new System.ArgumentOutOfRangeException(nameof(roomMinSize), "roomMinSize must be greater than 0.");
+				throw new System.ArgumentOutOfRangeException(nameof(roomMinSize), "Minimum room size must be greater than 0.");
 
 			if (roomMaxSize < roomMinSize)
-				throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be greater than or equal to roomMinSize.");
+				throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "Maximum room size must be greater than or equal to roomMinSize.");
 
 			if (attemptsPerRoom <= 0)
-				throw new System.ArgumentOutOfRangeException(nameof(attemptsPerRoom), "attemptsPerRoom must be greater than 0.");
+				throw new System.ArgumentOutOfRangeException(nameof(attemptsPerRoom), "Placement attempts per room must be greater than 0.");
 
 			if (map.Width - roomMaxSize < 0)
-				throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "roomMaxSize must be smaller than map.");
+				throw new System.ArgumentOutOfRangeException(nameof(roomMaxSize), "Maximum room size must be smaller than map.");
 
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
