@@ -6,7 +6,6 @@ var searchData=
   ['advancedmultispatialmap',['AdvancedMultiSpatialMap',['../class_go_rogue_1_1_advanced_multi_spatial_map.html',1,'GoRogue']]],
   ['advancedspatialmap',['AdvancedSpatialMap',['../class_go_rogue_1_1_advanced_spatial_map.html',1,'GoRogue']]],
   ['arraymap',['ArrayMap',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],
-  ['arraymap_3c_20baseobject_20_3e',['ArrayMap&lt; BaseObject &gt;',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],
   ['arraymap_3c_20bool_20_3e',['ArrayMap&lt; bool &gt;',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],
   ['arraymap_3c_20double_3f_3e',['ArrayMap&lt; double?&gt;',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],
   ['arraymap_3c_20positionnode_20_3e',['ArrayMap&lt; PositionNode &gt;',['../class_go_rogue_1_1_map_views_1_1_array_map.html',1,'GoRogue::MapViews']]],

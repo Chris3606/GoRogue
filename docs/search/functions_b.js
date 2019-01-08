@@ -1,7 +1,7 @@
 var searchData=
 [
   ['makeunion',['MakeUnion',['../class_go_rogue_1_1_disjoint_set.html#af0289bbcf9b0acad251172b13340db9b',1,'GoRogue::DisjointSet']]],
-  ['map',['Map',['../class_go_rogue_1_1_game_framework_1_1_map.html#a6e5d7f44f74736a8023a790b6222ce16',1,'GoRogue::GameFramework::Map']]],
+  ['map',['Map',['../class_go_rogue_1_1_game_framework_1_1_map.html#a6e5d7f44f74736a8023a790b6222ce16',1,'GoRogue.GameFramework.Map.Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability=uint.MaxValue, uint layersBlockingTransparency=uint.MaxValue, uint entityLayersSupportingMultipleItems=0)'],['../class_go_rogue_1_1_game_framework_1_1_map.html#a0decc8455b802ba3e4e4987a8b1f34d1',1,'GoRogue.GameFramework.Map.Map(ISettableMapView&lt; BaseObject &gt; terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability=uint.MaxValue, uint layersBlockingTransparency=uint.MaxValue, uint entityLayersSupportingMultipleItems=0)']]],
   ['maparea',['MapArea',['../class_go_rogue_1_1_map_generation_1_1_map_area.html#a9928b04d1b95a31b87f60bc40e22de9c',1,'GoRogue::MapGeneration::MapArea']]],
   ['mapareafinder',['MapAreaFinder',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#a22b36c65b11875b526b1d03c9839ff8e',1,'GoRogue::MapGeneration::MapAreaFinder']]],
   ['mapareas',['MapAreas',['../class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#aaede4f19a725ddeed349d2664310d3e5',1,'GoRogue::MapGeneration::MapAreaFinder']]],

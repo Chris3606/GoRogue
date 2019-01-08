@@ -88,8 +88,11 @@ Inheritance diagram for GoRogue.GameFramework.Map&lt; BaseObject &gt;:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6e5d7f44f74736a8023a790b6222ce16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#a6e5d7f44f74736a8023a790b6222ce16">Map</a> (int width, int height, int numberOfEntityLayers, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceMeasurement, uint layersBlockingWalkability=uint.MaxValue, uint layersBlockingTransparency=uint.MaxValue, uint entityLayersSupportingMultipleItems=0)</td></tr>
-<tr class="memdesc:a6e5d7f44f74736a8023a790b6222ce16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor.  <a href="#a6e5d7f44f74736a8023a790b6222ce16">More...</a><br /></td></tr>
+<tr class="memdesc:a6e5d7f44f74736a8023a790b6222ce16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Constructs terrain map as ArrayMap&lt;BaseObject&gt; with the given width/height.  <a href="#a6e5d7f44f74736a8023a790b6222ce16">More...</a><br /></td></tr>
 <tr class="separator:a6e5d7f44f74736a8023a790b6222ce16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0decc8455b802ba3e4e4987a8b1f34d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#a0decc8455b802ba3e4e4987a8b1f34d1">Map</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; BaseObject &gt; terrainLayer, int numberOfEntityLayers, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceMeasurement, uint layersBlockingWalkability=uint.MaxValue, uint layersBlockingTransparency=uint.MaxValue, uint entityLayersSupportingMultipleItems=0)</td></tr>
+<tr class="memdesc:a0decc8455b802ba3e4e4987a8b1f34d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Constructs map with the given terrain layer, determining width/height based on the width/height of that terrain layer.  <a href="#a0decc8455b802ba3e4e4987a8b1f34d1">More...</a><br /></td></tr>
+<tr class="separator:a0decc8455b802ba3e4e4987a8b1f34d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae58c463d310687204dc6f428b9d5ed05"><td class="memItemLeft" align="right" valign="top">BaseObject&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html#ae58c463d310687204dc6f428b9d5ed05">GetTerrain</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
 <tr class="memdesc:ae58c463d310687204dc6f428b9d5ed05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the terrain object at the given location, or null if no terrain is set to that location.  <a href="#ae58c463d310687204dc6f428b9d5ed05">More...</a><br /></td></tr>
 <tr class="separator:ae58c463d310687204dc6f428b9d5ed05"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -220,7 +223,7 @@ Events</h2></td></tr>
 </div>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6e5d7f44f74736a8023a790b6222ce16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e5d7f44f74736a8023a790b6222ce16">&sect;&nbsp;</a></span>Map()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e5d7f44f74736a8023a790b6222ce16">&sect;&nbsp;</a></span>Map() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -275,11 +278,76 @@ Events</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Constructor. </p>
+<p>Constructor. Constructs terrain map as ArrayMap&lt;BaseObject&gt; with the given width/height. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">width</td><td>Width of the map.</td></tr>
     <tr><td class="paramname">height</td><td>Height of the map.</td></tr>
+    <tr><td class="paramname">numberOfEntityLayers</td><td>Number of non-terrain layers for the map.</td></tr>
+    <tr><td class="paramname">distanceMeasurement</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> measurement to use for pathing/measuring distance on the map.</td></tr>
+    <tr><td class="paramname">layersBlockingWalkability</td><td>Layer mask containing those layers that should be allowed to have items that block walkability. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layersBlockingTransparency</td><td>Layer mask containing those layers that should be allowed to have items that block <a class="el" href="class_go_rogue_1_1_f_o_v.html" title="Class responsible for caculating basic FOV (see SenseMap for more advanced lighting). Effectively a simplified, slightly faster interface compared to SenseMap, that supports only a single source and only shadowcasting. This is more conducive to the typical use case for FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of radius types, as specified in Radius class (all the same ones that SenseMap supports). It also supports both 360 degree FOV and a &quot;field of view&quot; (cone) FOV. One may access this class like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the cooresponding coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect to radius as distance from the center increases. ">FOV</a>. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">entityLayersSupportingMultipleItems</td><td>Layer mask containing those layers that should be allowed to have multiple objects at the same location on the same layer. Defaults to no layers.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0decc8455b802ba3e4e4987a8b1f34d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0decc8455b802ba3e4e4987a8b1f34d1">&sect;&nbsp;</a></span>Map() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html">GoRogue.GameFramework.Map</a>&lt; BaseObject &gt;.<a class="el" href="class_go_rogue_1_1_game_framework_1_1_map.html">Map</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; BaseObject &gt;&#160;</td>
+          <td class="paramname"><em>terrainLayer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>numberOfEntityLayers</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceMeasurement</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>layersBlockingWalkability</em> = <code>uint.MaxValue</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>layersBlockingTransparency</em> = <code>uint.MaxValue</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint&#160;</td>
+          <td class="paramname"><em>entityLayersSupportingMultipleItems</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructor. Constructs map with the given terrain layer, determining width/height based on the width/height of that terrain layer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">terrainLayer</td><td>The ISettableMapView that represents the terrain layer for this map. It is intended that this be modified ONLY via the SetTerrain function &ndash; if it is modified outside of that, the ItemAdded/Removed events are NOT guaranteed to be called!</td></tr>
     <tr><td class="paramname">numberOfEntityLayers</td><td>Number of non-terrain layers for the map.</td></tr>
     <tr><td class="paramname">distanceMeasurement</td><td><a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> measurement to use for pathing/measuring distance on the map.</td></tr>
     <tr><td class="paramname">layersBlockingWalkability</td><td>Layer mask containing those layers that should be allowed to have items that block walkability. Defaults to all layers.</td></tr>

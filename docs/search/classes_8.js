@@ -27,6 +27,7 @@ var searchData=
   ['ireadonlysensemap',['IReadOnlySenseMap',['../interface_go_rogue_1_1_sense_mapping_1_1_i_read_only_sense_map.html',1,'GoRogue::SenseMapping']]],
   ['ireadonlyspatialmap',['IReadOnlySpatialMap',['../interface_go_rogue_1_1_i_read_only_spatial_map.html',1,'GoRogue']]],
   ['isettablemapview',['ISettableMapView',['../interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html',1,'GoRogue::MapViews']]],
+  ['isettablemapview_3c_20baseobject_20_3e',['ISettableMapView&lt; BaseObject &gt;',['../interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html',1,'GoRogue::MapViews']]],
   ['isettablemapview_3c_20t2_20_3e',['ISettableMapView&lt; T2 &gt;',['../interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html',1,'GoRogue::MapViews']]],
   ['ispatialmap',['ISpatialMap',['../interface_go_rogue_1_1_i_spatial_map.html',1,'GoRogue']]],
   ['ispatialtuple',['ISpatialTuple',['../interface_go_rogue_1_1_i_spatial_tuple.html',1,'GoRogue']]],
