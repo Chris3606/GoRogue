@@ -11,12 +11,13 @@ namespace GoRogue_PerformanceTests
 	{
 		public MainPage(Program program)
 			: base("Main Menu", program,
-				  new Option("Lighting/FOV Tests", LightingFOV),
 				  new Option("Dice Notation Tests", DiceNotation),
+				  new Option("Effects Tests", Effects), // 0.0025-0.0032
+				  new Option("LambdaTranslationMap Tests", LambdaTranslationMap),
+				  new Option("LayerMask Tests", LayerMask),
+				  new Option("Lighting/FOV Tests", LightingFOV),
 				  new Option("Line Tests", Line),
 				  new Option("Pathing Tests", Pathing),
-				  new Option("LayerMask Tests", LayerMask),
-				  new Option("LambdaTranslationMap Tests", LambdaTranslationMap),
 				  new Option("Quit", Quit))
 		{ }
 
@@ -77,6 +78,17 @@ namespace GoRogue_PerformanceTests
 
 			Console.WriteLine();
 			TestLightingNSource(4);
+		}
+
+		private static void Effects()
+		{
+			var timeNoEventHandler = EffectsTests.TestEffectManagerNoExpiredHandler(Runner.NUM_EFFECTS, Runner.ITERATIONS_FOR_TIMING);
+			var timeWithEventHandler = EffectsTests.TestEffectManagerWithExpiredHandler(Runner.NUM_EFFECTS, Runner.ITERATIONS_FOR_TIMING);
+
+			Console.WriteLine();
+			Console.WriteLine($"Time for processing {Runner.NUM_EFFECTS} {Runner.ITERATIONS_FOR_TIMING} times:");
+			Console.WriteLine($"\tNo Event Handler:   {timeNoEventHandler}");
+			Console.WriteLine($"\tWith Event Handler: {timeWithEventHandler}");
 		}
 
 		private static void Line()

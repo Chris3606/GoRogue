@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DiceNotationTests.cs" />
+    <Compile Include="EffectsTests.cs" />
     <Compile Include="LayerMaskTests.cs" />
     <Compile Include="LightingFOVTests.cs" />
     <Compile Include="LineTests.cs" />
