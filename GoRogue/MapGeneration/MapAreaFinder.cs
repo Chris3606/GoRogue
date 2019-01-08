@@ -74,13 +74,17 @@ namespace GoRogue.MapGeneration
 				{
 					var area = visit(Coord.Get(x, y));
 
-					if (area.Count != 0)
+					if (area != null && area.Count != 0)
 						yield return area;
 				}
 		}
 
 		private MapArea visit(Coord position)
 		{
+			// Don't bother allocating a MapArea, because the starting point isn't valid.
+			if (!Map[position])
+				return null;
+
 			var stack = new Stack<Coord>();
 			var area = new MapArea();
 			stack.Push(position);

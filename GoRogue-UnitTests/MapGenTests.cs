@@ -38,10 +38,9 @@ namespace GoRogue_UnitTests
 		public void ManualTestDungeonMazeGen()
 		{
 			var random = new StandardGenerator(12345);
-			//GoRogue.Random.SingletonRandom.DefaultRNG = new StandardGenerator(12345);
+
 			var map = new ArrayMap<bool>(80, 50);
 			QuickGenerators.GenerateDungeonMazeMap(map, random, 4, 10, 4, 7);
-			//QuickGenerators.GenerateDungeonMazeMap(map, GoRogue.Random.SingletonRandom.DefaultRNG, 4, 10, 4, 7);
 
 			displayMap(map);
 			// TODO: Some assert here

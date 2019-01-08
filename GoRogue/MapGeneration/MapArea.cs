@@ -152,6 +152,10 @@ namespace GoRogue.MapGeneration
 			if (ReferenceEquals(lhs, rhs))
 				return true;
 
+			// If one side is null (can't both be null or above would have returned)
+			if (ReferenceEquals(null, lhs) || ReferenceEquals(null, rhs))
+				return false;
+
 			if (lhs.Count != rhs.Count)
 				return false;
 

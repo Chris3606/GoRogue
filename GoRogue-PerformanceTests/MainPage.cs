@@ -17,6 +17,7 @@ namespace GoRogue_PerformanceTests
 				  new Option("LayerMask Tests", LayerMask),
 				  new Option("Lighting/FOV Tests", LightingFOV),
 				  new Option("Line Tests", Line),
+				  new Option("Map Generation Tests", MapGeneration),
 				  new Option("Pathing Tests", Pathing),
 				  new Option("Quit", Quit))
 		{ }
@@ -65,7 +66,7 @@ namespace GoRogue_PerformanceTests
 																					   Runner.LIGHT_RADIUS, Runner.RADIUS_STRATEGY, Runner.ITERATIONS_FOR_TIMING);
 			var timeSingleFOV = LightingFOVTests.TimeForSingleLightSourceFOV(Runner.MAP_WIDTH, Runner.MAP_HEIGHT,
 																			 Runner.LIGHT_RADIUS, Runner.ITERATIONS_FOR_TIMING);
-			Console.WriteLine();
+
 			Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} calculates, single source, {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map, Radius {Runner.LIGHT_RADIUS}:");
 			Console.WriteLine($"\tSenseMap: {timeSingleLighting.ToString()}");
 			Console.WriteLine($"\tFOV     : {timeSingleFOV.ToString()}");
@@ -85,7 +86,6 @@ namespace GoRogue_PerformanceTests
 			var timeNoEventHandler = EffectsTests.TestEffectManagerNoExpiredHandler(Runner.NUM_EFFECTS, Runner.ITERATIONS_FOR_TIMING);
 			var timeWithEventHandler = EffectsTests.TestEffectManagerWithExpiredHandler(Runner.NUM_EFFECTS, Runner.ITERATIONS_FOR_TIMING);
 
-			Console.WriteLine();
 			Console.WriteLine($"Time for processing {Runner.NUM_EFFECTS} {Runner.ITERATIONS_FOR_TIMING} times:");
 			Console.WriteLine($"\tNo Event Handler:   {timeNoEventHandler}");
 			Console.WriteLine($"\tWith Event Handler: {timeWithEventHandler}");
@@ -98,7 +98,6 @@ namespace GoRogue_PerformanceTests
 			var timeDDA = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.DDA, Runner.ITERATIONS_FOR_TIMING);
 			var timeOrtho = LineTests.TimeForLineGeneration(Runner.LINE_START, Runner.LINE_END, Lines.Algorithm.ORTHO, Runner.ITERATIONS_FOR_TIMING);
 
-			Console.WriteLine();
 			Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} generations of line from {Runner.LINE_START} to {Runner.LINE_END}:");
 			Console.WriteLine($"\tBresenham        : {timeBres}");
 			Console.WriteLine($"\tBresenham Ordered: {timeBresOrdered}");
@@ -110,7 +109,6 @@ namespace GoRogue_PerformanceTests
 		{
 			/* AStar */
 			var timeAStar = PathingTests.TimeForAStar(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING);
-			Console.WriteLine();
 			Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} paths, on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map:");
 			Console.WriteLine($"\tAStar: {timeAStar}");
 
@@ -167,6 +165,15 @@ namespace GoRogue_PerformanceTests
 			Console.WriteLine($"Time for accessing {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} LambdaTranslationMap {Runner.ITERATIONS_FOR_TIMING} times:");
 			Console.WriteLine($"\tSingle-param: {timeFor1ParamAccess}");
 			Console.WriteLine($"\tDouble-param: {timeFor2ParamAccess}");
+		}
+
+		private static void MapGeneration()
+		{
+			var timeForRandRooms = MapGenerationTests.TimeForRandomRooms(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING,
+																		 Runner.RANDROOMS_MAX_ROOMS, Runner.RANDROOMS_MIN_SIZE, Runner.RANDROOMS_MAX_SIZE);
+
+			Console.WriteLine($"Time for GenerateRandomRoomsMap to generate {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map {Runner.ITERATIONS_FOR_TIMING} times, up to {Runner.RANDROOMS_MAX_ROOMS} rooms of size {Runner.RANDROOMS_MIN_SIZE}-{Runner.RANDROOMS_MAX_SIZE}:");
+			Console.WriteLine($"\tTime: {timeForRandRooms}");
 		}
 
 		private static void Quit()

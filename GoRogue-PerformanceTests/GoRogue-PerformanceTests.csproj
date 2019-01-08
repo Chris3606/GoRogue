@@ -59,6 +59,7 @@
     <Compile Include="LightingFOVTests.cs" />
     <Compile Include="LineTests.cs" />
     <Compile Include="MainPage.cs" />
+    <Compile Include="MapGenerationTests.cs" />
     <Compile Include="MapViewTests.cs" />
     <Compile Include="PathingTests.cs" />
     <Compile Include="PerfTests.cs" />

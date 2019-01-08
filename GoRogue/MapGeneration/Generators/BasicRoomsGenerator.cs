@@ -1,6 +1,7 @@
 ﻿using GoRogue.MapViews;
 using GoRogue.Random;
 using System.Collections.Generic;
+using System.Linq;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Generators
@@ -80,7 +81,7 @@ namespace GoRogue.MapGeneration.Generators
 				int roomYPos = rng.Next(map.Height - roomHeight + 1);
 
 				var newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
-				bool newRoomIntersects = checkOverlap(newRoom, rooms);
+				bool newRoomIntersects = checkOverlap(newRoom, rooms, map);
 
 				int positionAttempts = 1;
 				while (newRoomIntersects && positionAttempts < attemptsPerRoom)
@@ -89,7 +90,7 @@ namespace GoRogue.MapGeneration.Generators
 					roomYPos = rng.Next(map.Height - roomHeight + 1);
 
 					newRoom = new Rectangle(roomXPos, roomYPos, roomWidth, roomHeight);
-					newRoomIntersects = checkOverlap(newRoom, rooms);
+					newRoomIntersects = checkOverlap(newRoom, rooms, map);
 
 					positionAttempts++;
 				}
@@ -104,13 +105,20 @@ namespace GoRogue.MapGeneration.Generators
 			return rooms;
 		}
 
-		static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms)
+		static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms, IMapView<bool> map)
 		{
-			foreach (var existingRoom in existingRooms)
-				if (room.Intersects(existingRoom))
-					return true;
+			bool intersected = false;
+			foreach (var point in room.Positions())
+			{
+				if (map[point])
+				{
+					intersected = true;
+					break;
+				}
+			}
 
-			return false;
+
+			return intersected || existingRooms.Any(rect => rect.Intersects(room));
 		}
 
 		static private void createRoom(ISettableMapView<bool> map, Rectangle room)
