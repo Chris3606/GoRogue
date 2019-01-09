@@ -11,18 +11,28 @@ namespace GoRogue.MapGeneration.Generators
 	/// Generates a maze, and adds it to the given map.
 	/// </summary>
 	public static class MazeGenerator
-	{
+    {
+        /// <summary>
+        /// Generates a maze in map using crawlers that walk the map carving tunnels.
+        /// </summary>
+        /// <param name="map">The map to modify.</param>
+        /// <param name="crawlerChangeDirectionImprovement">Out of 100, how much to increase the chance of the crawler changing direction each step. Once it changes
+        /// direction, the chance resets to 0 and increases by this amount.  Defaults to 10.</param>
+        /// <param name="saveDeadEndChance">After the crawler finishes, the small dead ends will be trimmed out. This value indicates the chance out of 100 that the
+        /// dead end remains.  Defaults to 0.</param>
+        public static void Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0)
+            => Generate(map, null, crawlerChangeDirectionImprovement, saveDeadEndChance);
 
-		/// <summary>
-		/// Generates a maze in map using crawlers that walk the map carving tunnels.
-		/// </summary>
-		/// <param name="map">The map to modify.</param>
-		/// <param name="rng">The RNG to use.</param>
-		/// <param name="crawlerChangeDirectionImprovement">Out of 100, how much to increase the chance of the crawler changing direction each step. Once it changes
-		/// direction, the chance resets to 0 and increases by this amount.  Defaults to 10.</param>
-		/// <param name="saveDeadEndChance">After the crawler finishes, the small dead ends will be trimmed out. This value indicates the chance out of 100 that the
-		/// dead end remains.  Defaults to 0.</param>
-		public static void Generate(ISettableMapView<bool> map, IGenerator rng = null, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0)
+        /// <summary>
+        /// Generates a maze in map using crawlers that walk the map carving tunnels.
+        /// </summary>
+        /// <param name="map">The map to modify.</param>
+        /// <param name="rng">The RNG to use.</param>
+        /// <param name="crawlerChangeDirectionImprovement">Out of 100, how much to increase the chance of the crawler changing direction each step. Once it changes
+        /// direction, the chance resets to 0 and increases by this amount.  Defaults to 10.</param>
+        /// <param name="saveDeadEndChance">After the crawler finishes, the small dead ends will be trimmed out. This value indicates the chance out of 100 that the
+        /// dead end remains.  Defaults to 0.</param>
+        public static void Generate(ISettableMapView<bool> map, IGenerator rng = null, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0)
 		{
 			// Implemented the logic from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
