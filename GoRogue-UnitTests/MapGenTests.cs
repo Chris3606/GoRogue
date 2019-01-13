@@ -3,6 +3,7 @@ using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random.Generators;
 
@@ -51,7 +52,6 @@ namespace GoRogue_UnitTests
 		{
 			var random = new StandardGenerator();
 			var map = new ArrayMap<bool>(80, 50);
-			QuickGenerators.GenerateCellularAutomataMap(map, random, 40, 7, 4);
 
 			for (int i = 0; i < 500; i++)
 			{
@@ -76,12 +76,74 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
+		public void TestMazeGenConnectivityAndEnclosure()
+		{
+			var random = new StandardGenerator();
+			var map = new ArrayMap<bool>(80, 50);
+
+
+
+			for (int i = 0; i < 500; i++)
+			{
+				QuickGenerators.GenerateDungeonMazeMap(map, random, 10, 20, 4, 15);
+
+				// Ensure it's connected
+				var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+				if (areas.Count != 1)
+				{
+					Console.WriteLine($"Map attempt {i + 1}/500 failed, had {areas.Count} areas: ");
+					displayMapAreas(map, areas);
+				}
+
+				Assert.AreEqual(1, areas.Count);
+
+				// Ensure it's enclosed
+				for (int x = 0; x < map.Width; x++)
+				{
+					Assert.AreEqual(false, map[x, 0]);
+					Assert.AreEqual(false, map[x, map.Height - 1]);
+				}
+				for (int y = 0; y < map.Height; y++)
+				{
+					Assert.AreEqual(false, map[0, y]);
+					Assert.AreEqual(false, map[map.Width - 1, y]);
+				}
+			}
+		}
+
+		[TestMethod]
 		public void TestRandomRoomsGenSize()
 		{
 			var map = new ArrayMap<bool>(40, 40);
 			QuickGenerators.GenerateRandomRoomsMap(map, 30, 4, 6, 10);
 
 			Console.WriteLine(map.ToString(b => b ? "." : "#"));
+		}
+
+		private void displayMapAreas(IMapView<bool> map, IEnumerable<MapArea> areas)
+		{
+			for (int y = 0; y < map.Height; y++)
+			{
+				for (int x = 0; x < map.Width; x++)
+				{
+					if (map[x, y])
+					{
+						int areaIndex = 0;
+						foreach (var area in areas)
+						{
+							if (area.Contains(x, y))
+								break;
+
+							areaIndex++;
+						}
+
+						Console.Write((char)('1' + areaIndex));
+					}
+					else
+						Console.Write('-');
+				}
+				Console.WriteLine();
+			}
 		}
 
 		private void displayMap(IMapView<bool> map)
