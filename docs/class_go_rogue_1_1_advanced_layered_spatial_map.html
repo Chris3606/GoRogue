@@ -95,21 +95,45 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a73bb3ab805d23a01e02ec7012ae2ace7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a73bb3ab805d23a01e02ec7012ae2ace7">AdvancedLayeredSpatialMap</a> (IEqualityComparer&lt; T &gt; comparer, int numberOfLayers, int startingLayer=0, uint layersSupportingMultipleItems=0)</td></tr>
 <tr class="memdesc:a73bb3ab805d23a01e02ec7012ae2ace7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. Takes a comparator to use, number of layers to include, as well as a starting layer index (defaulting to 0) and a layer mask indicating which layers support multiple items at a single position (defaulting to no layers).  <a href="#a73bb3ab805d23a01e02ec7012ae2ace7">More...</a><br /></td></tr>
 <tr class="separator:a73bb3ab805d23a01e02ec7012ae2ace7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ab13fcb2b8930c7efbfc0d88e4d9ae3dc">GetLayer</a> (int layer)</td></tr>
-<tr class="memdesc:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a read-only spatial map representing the layer given.  <a href="#ab13fcb2b8930c7efbfc0d88e4d9ae3dc">More...</a><br /></td></tr>
-<tr class="separator:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e83b49cbce34a124f91b2d289bb3f56"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4e83b49cbce34a124f91b2d289bb3f56">GetLayers</a> (uint layerMask=uint.MaxValue)</td></tr>
-<tr class="memdesc:a4e83b49cbce34a124f91b2d289bb3f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns read-only spatial maps that represent each layer included in the given layer mask. Defaults to all layers.  <a href="#a4e83b49cbce34a124f91b2d289bb3f56">More...</a><br /></td></tr>
-<tr class="separator:a4e83b49cbce34a124f91b2d289bb3f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add71103a0da7109496fac95d95c6d03b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#add71103a0da7109496fac95d95c6d03b">Add</a> (T newItem, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
 <tr class="memdesc:add71103a0da7109496fac95d95c6d03b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position. Item is automatically added to correct layer.  <a href="#add71103a0da7109496fac95d95c6d03b">More...</a><br /></td></tr>
 <tr class="separator:add71103a0da7109496fac95d95c6d03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad87d04378f3a2aa4802a58a551a90a0e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ad87d04378f3a2aa4802a58a551a90a0e">Add</a> (T newItem, int x, int y)</td></tr>
 <tr class="memdesc:ad87d04378f3a2aa4802a58a551a90a0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds the given item at the given position, or returns false if the item cannot be added. Item is automatically added to correct layer.  <a href="#ad87d04378f3a2aa4802a58a551a90a0e">More...</a><br /></td></tr>
 <tr class="separator:ad87d04378f3a2aa4802a58a551a90a0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08c318785e02877f27c8f1b13df0efca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html">IReadOnlyLayeredSpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a08c318785e02877f27c8f1b13df0efca">AsReadOnly</a> ()</td></tr>
+<tr class="memdesc:a08c318785e02877f27c8f1b13df0efca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a read-only reference to the data structure. Convenient for "safely" exposing the structure as a property.  <a href="#a08c318785e02877f27c8f1b13df0efca">More...</a><br /></td></tr>
+<tr class="separator:a08c318785e02877f27c8f1b13df0efca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a52724ad7a0ad11726e51ba8df9893b38"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a52724ad7a0ad11726e51ba8df9893b38">Clear</a> ()</td></tr>
 <tr class="memdesc:a52724ad7a0ad11726e51ba8df9893b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all items from all layers.  <a href="#a52724ad7a0ad11726e51ba8df9893b38">More...</a><br /></td></tr>
 <tr class="separator:a52724ad7a0ad11726e51ba8df9893b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89fa088b6a99d34c398876bf70d0e1bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a89fa088b6a99d34c398876bf70d0e1bf">Contains</a> (T item)</td></tr>
+<tr class="memdesc:a89fa088b6a99d34c398876bf70d0e1bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not the data structure contains the given item.  <a href="#a89fa088b6a99d34c398876bf70d0e1bf">More...</a><br /></td></tr>
+<tr class="separator:a89fa088b6a99d34c398876bf70d0e1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a822b6c4478818f41430ea646d2361e7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a822b6c4478818f41430ea646d2361e7f">Contains</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, uint layerMask=uint.MaxValue)</td></tr>
+<tr class="memdesc:a822b6c4478818f41430ea646d2361e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not there is an item in the data structure at the given position that is on a layer included in the given layer mask. Defaults to searching on all layers.  <a href="#a822b6c4478818f41430ea646d2361e7f">More...</a><br /></td></tr>
+<tr class="separator:a822b6c4478818f41430ea646d2361e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e18f628fd96acaedb1b2ff714450bc9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4e18f628fd96acaedb1b2ff714450bc9">Contains</a> (int x, int y, uint layerMask=uint.MaxValue)</td></tr>
+<tr class="memdesc:a4e18f628fd96acaedb1b2ff714450bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not there is an item in the data structure at the given position, that is on a layer included in the given layer mask.  <a href="#a4e18f628fd96acaedb1b2ff714450bc9">More...</a><br /></td></tr>
+<tr class="separator:a4e18f628fd96acaedb1b2ff714450bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86156c4d7450e9300bde5044f0da64fe"><td class="memItemLeft" align="right" valign="top">IEnumerator&lt; <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html">ISpatialTuple</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a86156c4d7450e9300bde5044f0da64fe">GetEnumerator</a> ()</td></tr>
+<tr class="memdesc:a86156c4d7450e9300bde5044f0da64fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly.  <a href="#a86156c4d7450e9300bde5044f0da64fe">More...</a><br /></td></tr>
+<tr class="separator:a86156c4d7450e9300bde5044f0da64fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adffcc0606ef9d013e02e20acf5c8a573"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#adffcc0606ef9d013e02e20acf5c8a573">GetItems</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, uint layerMask=uint.MaxValue)</td></tr>
+<tr class="memdesc:adffcc0606ef9d013e02e20acf5c8a573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item(s) associated with the given position that reside on any layer included in the given layer mask. Returns nothing if there is nothing at that position on a layer included in the given layer mask.  <a href="#adffcc0606ef9d013e02e20acf5c8a573">More...</a><br /></td></tr>
+<tr class="separator:adffcc0606ef9d013e02e20acf5c8a573"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f484cbac48c4d1fcb286d0663cb4723"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a0f484cbac48c4d1fcb286d0663cb4723">GetItems</a> (int x, int y, uint layerMask=uint.MaxValue)</td></tr>
+<tr class="memdesc:a0f484cbac48c4d1fcb286d0663cb4723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item(s) associated with the given position that reside on any layer included in the given layer mask. Returns nothing if there is nothing at that position on a layer included in the given layer mask.  <a href="#a0f484cbac48c4d1fcb286d0663cb4723">More...</a><br /></td></tr>
+<tr class="separator:a0f484cbac48c4d1fcb286d0663cb4723"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ab13fcb2b8930c7efbfc0d88e4d9ae3dc">GetLayer</a> (int layer)</td></tr>
+<tr class="memdesc:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a read-only spatial map representing the layer given.  <a href="#ab13fcb2b8930c7efbfc0d88e4d9ae3dc">More...</a><br /></td></tr>
+<tr class="separator:ab13fcb2b8930c7efbfc0d88e4d9ae3dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e83b49cbce34a124f91b2d289bb3f56"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4e83b49cbce34a124f91b2d289bb3f56">GetLayers</a> (uint layerMask=uint.MaxValue)</td></tr>
+<tr class="memdesc:a4e83b49cbce34a124f91b2d289bb3f56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns read-only spatial maps that represent each layer included in the given layer mask. Defaults to all layers.  <a href="#a4e83b49cbce34a124f91b2d289bb3f56">More...</a><br /></td></tr>
+<tr class="separator:a4e83b49cbce34a124f91b2d289bb3f56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6bded25652242d6b77101bbf9cbd0230"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a6bded25652242d6b77101bbf9cbd0230">GetPosition</a> (T item)</td></tr>
+<tr class="memdesc:a6bded25652242d6b77101bbf9cbd0230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position associated with the item in the data structure, or null if that item is not found.  <a href="#a6bded25652242d6b77101bbf9cbd0230">More...</a><br /></td></tr>
+<tr class="separator:a6bded25652242d6b77101bbf9cbd0230"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adcbf7cc805895d0e829fc5e8aaf7d988"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#adcbf7cc805895d0e829fc5e8aaf7d988">Move</a> (T item, <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> target)</td></tr>
 <tr class="memdesc:adcbf7cc805895d0e829fc5e8aaf7d988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the given item to the given position, or returns false if the item cannot be moved.  <a href="#adcbf7cc805895d0e829fc5e8aaf7d988">More...</a><br /></td></tr>
 <tr class="separator:adcbf7cc805895d0e829fc5e8aaf7d988"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,57 +155,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c71c8aad1744a3c0918cadbd4308b33"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a7c71c8aad1744a3c0918cadbd4308b33">Remove</a> (int x, int y, uint layerMask=uint.MaxValue)</td></tr>
 <tr class="memdesc:a7c71c8aad1744a3c0918cadbd4308b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all items at the specified location that are on any layer included in the given layer mask from the data structure. Returns any items that were removed. Defaults to all layers.  <a href="#a7c71c8aad1744a3c0918cadbd4308b33">More...</a><br /></td></tr>
 <tr class="separator:a7c71c8aad1744a3c0918cadbd4308b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08c318785e02877f27c8f1b13df0efca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html">IReadOnlyLayeredSpatialMap</a>&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a08c318785e02877f27c8f1b13df0efca">AsReadOnly</a> ()</td></tr>
-<tr class="memdesc:a08c318785e02877f27c8f1b13df0efca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a read-only reference to the data structure. Convenient for "safely" exposing the structure as a property.  <a href="#a08c318785e02877f27c8f1b13df0efca">More...</a><br /></td></tr>
-<tr class="separator:a08c318785e02877f27c8f1b13df0efca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89fa088b6a99d34c398876bf70d0e1bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a89fa088b6a99d34c398876bf70d0e1bf">Contains</a> (T item)</td></tr>
-<tr class="memdesc:a89fa088b6a99d34c398876bf70d0e1bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not the data structure contains the given item.  <a href="#a89fa088b6a99d34c398876bf70d0e1bf">More...</a><br /></td></tr>
-<tr class="separator:a89fa088b6a99d34c398876bf70d0e1bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a822b6c4478818f41430ea646d2361e7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a822b6c4478818f41430ea646d2361e7f">Contains</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, uint layerMask=uint.MaxValue)</td></tr>
-<tr class="memdesc:a822b6c4478818f41430ea646d2361e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not there is an item in the data structure at the given position that is on a layer included in the given layer mask. Defaults to searching on all layers.  <a href="#a822b6c4478818f41430ea646d2361e7f">More...</a><br /></td></tr>
-<tr class="separator:a822b6c4478818f41430ea646d2361e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e18f628fd96acaedb1b2ff714450bc9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4e18f628fd96acaedb1b2ff714450bc9">Contains</a> (int x, int y, uint layerMask=uint.MaxValue)</td></tr>
-<tr class="memdesc:a4e18f628fd96acaedb1b2ff714450bc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether or not there is an item in the data structure at the given position, that is on a layer included in the given layer mask.  <a href="#a4e18f628fd96acaedb1b2ff714450bc9">More...</a><br /></td></tr>
-<tr class="separator:a4e18f628fd96acaedb1b2ff714450bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adffcc0606ef9d013e02e20acf5c8a573"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#adffcc0606ef9d013e02e20acf5c8a573">GetItems</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position, uint layerMask=uint.MaxValue)</td></tr>
-<tr class="memdesc:adffcc0606ef9d013e02e20acf5c8a573"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item(s) associated with the given position that reside on any layer included in the given layer mask. Returns nothing if there is nothing at that position on a layer included in the given layer mask.  <a href="#adffcc0606ef9d013e02e20acf5c8a573">More...</a><br /></td></tr>
-<tr class="separator:adffcc0606ef9d013e02e20acf5c8a573"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f484cbac48c4d1fcb286d0663cb4723"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a0f484cbac48c4d1fcb286d0663cb4723">GetItems</a> (int x, int y, uint layerMask=uint.MaxValue)</td></tr>
-<tr class="memdesc:a0f484cbac48c4d1fcb286d0663cb4723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the item(s) associated with the given position that reside on any layer included in the given layer mask. Returns nothing if there is nothing at that position on a layer included in the given layer mask.  <a href="#a0f484cbac48c4d1fcb286d0663cb4723">More...</a><br /></td></tr>
-<tr class="separator:a0f484cbac48c4d1fcb286d0663cb4723"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bded25652242d6b77101bbf9cbd0230"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a6bded25652242d6b77101bbf9cbd0230">GetPosition</a> (T item)</td></tr>
-<tr class="memdesc:a6bded25652242d6b77101bbf9cbd0230"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position associated with the item in the data structure, or null if that item is not found.  <a href="#a6bded25652242d6b77101bbf9cbd0230">More...</a><br /></td></tr>
-<tr class="separator:a6bded25652242d6b77101bbf9cbd0230"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86156c4d7450e9300bde5044f0da64fe"><td class="memItemLeft" align="right" valign="top">IEnumerator&lt; <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html">ISpatialTuple</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a86156c4d7450e9300bde5044f0da64fe">GetEnumerator</a> ()</td></tr>
-<tr class="memdesc:a86156c4d7450e9300bde5044f0da64fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by foreach loop, so that the class will give <a class="el" href="interface_go_rogue_1_1_i_spatial_tuple.html" title="Interface specifying return type for item-location pairs in a spatial map implementation. ">ISpatialTuple</a> objects when used in a foreach loop. Generally should never be called explicitly.  <a href="#a86156c4d7450e9300bde5044f0da64fe">More...</a><br /></td></tr>
-<tr class="separator:a86156c4d7450e9300bde5044f0da64fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ae23dcccc1a0f17f0482e9f87ddd4affc">Count</a> =&gt; _layers.Sum(map =&gt; map.Count)</td></tr>
+<tr class="memdesc:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entities on all layers.  <a href="#ae23dcccc1a0f17f0482e9f87ddd4affc">More...</a><br /></td></tr>
+<tr class="separator:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a27b0d3a952b1d676caedf039d13f63"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a7a27b0d3a952b1d676caedf039d13f63">Layers</a> =&gt; _layers</td></tr>
 <tr class="memdesc:a7a27b0d3a952b1d676caedf039d13f63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets read-only spatial maps representing each layer. To access a specific layer, instead use GetLayer.  <a href="#a7a27b0d3a952b1d676caedf039d13f63">More...</a><br /></td></tr>
 <tr class="separator:a7a27b0d3a952b1d676caedf039d13f63"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeba23db78b1021ae0a1d4a7166508c2d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#aeba23db78b1021ae0a1d4a7166508c2d">NumberOfLayers</a> =&gt; _layers.Length</td></tr>
 <tr class="memdesc:aeba23db78b1021ae0a1d4a7166508c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of layers represented.  <a href="#aeba23db78b1021ae0a1d4a7166508c2d">More...</a><br /></td></tr>
 <tr class="separator:aeba23db78b1021ae0a1d4a7166508c2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#ae23dcccc1a0f17f0482e9f87ddd4affc">Count</a> =&gt; _layers.Sum(map =&gt; map.Count)</td></tr>
-<tr class="memdesc:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entities on all layers.  <a href="#ae23dcccc1a0f17f0482e9f87ddd4affc">More...</a><br /></td></tr>
-<tr class="separator:ae23dcccc1a0f17f0482e9f87ddd4affc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
-<tr class="memitem:a0ddd78a73b60384620a79aab8bd57da8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a0ddd78a73b60384620a79aab8bd57da8">StartingLayer</a><code> [get]</code></td></tr>
-<tr class="memdesc:a0ddd78a73b60384620a79aab8bd57da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting index for layers included in theis <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>. Specified at construction.  <a href="#a0ddd78a73b60384620a79aab8bd57da8">More...</a><br /></td></tr>
-<tr class="separator:a0ddd78a73b60384620a79aab8bd57da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4835e519975b9c6f87082e63071bec44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_layer_masker.html">LayerMasker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4835e519975b9c6f87082e63071bec44">LayerMasker</a><code> [get]</code></td></tr>
-<tr class="memdesc:a4835e519975b9c6f87082e63071bec44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object that helps get layer masks as they pertain to this <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>  <a href="#a4835e519975b9c6f87082e63071bec44">More...</a><br /></td></tr>
-<tr class="separator:a4835e519975b9c6f87082e63071bec44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acf8d67b462318e0f744b21ece2047773"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#acf8d67b462318e0f744b21ece2047773">Items</a><code> [get]</code></td></tr>
 <tr class="memdesc:acf8d67b462318e0f744b21ece2047773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all the items on all layers.  <a href="#acf8d67b462318e0f744b21ece2047773">More...</a><br /></td></tr>
 <tr class="separator:acf8d67b462318e0f744b21ece2047773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4835e519975b9c6f87082e63071bec44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_layer_masker.html">LayerMasker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a4835e519975b9c6f87082e63071bec44">LayerMasker</a><code> [get]</code></td></tr>
+<tr class="memdesc:a4835e519975b9c6f87082e63071bec44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object that helps get layer masks as they pertain to this <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>  <a href="#a4835e519975b9c6f87082e63071bec44">More...</a><br /></td></tr>
+<tr class="separator:a4835e519975b9c6f87082e63071bec44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25fba6fa1a6d165d0329054ac5ce5026"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a25fba6fa1a6d165d0329054ac5ce5026">Positions</a><code> [get]</code></td></tr>
 <tr class="memdesc:a25fba6fa1a6d165d0329054ac5ce5026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all positions that have items for each layer. No positions are duplicated if multiple layers have an item at a position.  <a href="#a25fba6fa1a6d165d0329054ac5ce5026">More...</a><br /></td></tr>
 <tr class="separator:a25fba6fa1a6d165d0329054ac5ce5026"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ddd78a73b60384620a79aab8bd57da8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html#a0ddd78a73b60384620a79aab8bd57da8">StartingLayer</a><code> [get]</code></td></tr>
+<tr class="memdesc:a0ddd78a73b60384620a79aab8bd57da8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting index for layers included in theis <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>. Specified at construction.  <a href="#a0ddd78a73b60384620a79aab8bd57da8">More...</a><br /></td></tr>
+<tr class="separator:a0ddd78a73b60384620a79aab8bd57da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_go_rogue_1_1_i_read_only_spatial_map')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">GoRogue.IReadOnlySpatialMap&lt; T &gt;</a></td></tr>
 <tr class="memitem:a9849457dd851dfd4db9e3eb0e6262754 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754">Count</a><code> [get]</code></td></tr>
 <tr class="memdesc:a9849457dd851dfd4db9e3eb0e6262754 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of items in the data structure.  <a href="interface_go_rogue_1_1_i_read_only_spatial_map.html#a9849457dd851dfd4db9e3eb0e6262754">More...</a><br /></td></tr>
@@ -193,18 +193,18 @@ Properties</h2></td></tr>
 <tr class="memdesc:afbb770171e81c003c8ecc4496b2165d7 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumerable of all positions that contain items. Likely this won't be used as much, since most objects that are contained in a spatial map implementation will record their position as a member, however in case that is not the case for a particular use, or just as a convenience if you only care about the coordinates, this is provided.  <a href="interface_go_rogue_1_1_i_read_only_spatial_map.html#afbb770171e81c003c8ecc4496b2165d7">More...</a><br /></td></tr>
 <tr class="separator:afbb770171e81c003c8ecc4496b2165d7 inherit properties_interface_go_rogue_1_1_i_read_only_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td colspan="2" onclick="javascript:toggleInherit('properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map')"><img src="closed.png" alt="-"/>&#160;Properties inherited from <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a></td></tr>
-<tr class="memitem:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a7087f7a6a27f49841c740e3691f13736">StartingLayer</a><code> [get]</code></td></tr>
-<tr class="memdesc:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting index for layers included in this structure.  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a7087f7a6a27f49841c740e3691f13736">More...</a><br /></td></tr>
-<tr class="separator:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#abce802a1ff4a214918d9fe6b3f08d528">Layers</a><code> [get]</code></td></tr>
-<tr class="memdesc:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets read-only spatial maps representing each layer. To access a specific layer, instead use GetLayer.  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#abce802a1ff4a214918d9fe6b3f08d528">More...</a><br /></td></tr>
-<tr class="separator:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f7f11a3489ae1ce4a59c11845bbeeb0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_go_rogue_1_1_layer_masker.html">LayerMasker</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a3f7f11a3489ae1ce4a59c11845bbeeb0">LayerMasker</a><code> [get]</code></td></tr>
 <tr class="memdesc:a3f7f11a3489ae1ce4a59c11845bbeeb0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Object that helps get layer masks as they pertain to this <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a3f7f11a3489ae1ce4a59c11845bbeeb0">More...</a><br /></td></tr>
 <tr class="separator:a3f7f11a3489ae1ce4a59c11845bbeeb0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top">IEnumerable&lt; <a class="el" href="interface_go_rogue_1_1_i_read_only_spatial_map.html">IReadOnlySpatialMap</a>&lt; T &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#abce802a1ff4a214918d9fe6b3f08d528">Layers</a><code> [get]</code></td></tr>
+<tr class="memdesc:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets read-only spatial maps representing each layer. To access a specific layer, instead use GetLayer.  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#abce802a1ff4a214918d9fe6b3f08d528">More...</a><br /></td></tr>
+<tr class="separator:abce802a1ff4a214918d9fe6b3f08d528 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae203a71427bcb1a29a2630d61cbb9e0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#aae203a71427bcb1a29a2630d61cbb9e0">NumberOfLayers</a><code> [get]</code></td></tr>
 <tr class="memdesc:aae203a71427bcb1a29a2630d61cbb9e0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of layers represented.  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#aae203a71427bcb1a29a2630d61cbb9e0">More...</a><br /></td></tr>
 <tr class="separator:aae203a71427bcb1a29a2630d61cbb9e0 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a7087f7a6a27f49841c740e3691f13736">StartingLayer</a><code> [get]</code></td></tr>
+<tr class="memdesc:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting index for layers included in this structure.  <a href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a7087f7a6a27f49841c740e3691f13736">More...</a><br /></td></tr>
+<tr class="separator:a7087f7a6a27f49841c740e3691f13736 inherit properties_interface_go_rogue_1_1_i_read_only_layered_spatial_map"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="events"></a>
 Events</h2></td></tr>
@@ -233,7 +233,7 @@ Events</h2></td></tr>
 <p>Be mindful of the efficiency of your hashing function specified in the IEqualityComparer &ndash; it will in large part determine the performance of AdvancedLayeredSpatialMap! </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type of items in the layers. Type T must implement <a class="el" href="interface_go_rogue_1_1_i_has_layer.html" title="Interface to be implemented by objects that will be used in LayeredSpatialMap/Map classes...">IHasLayer</a>, and its <a class="el" href="interface_go_rogue_1_1_i_has_layer.html#a09bd56e2b3feff93bd91666308a162ae" title="The layer on which the object should reside. Higher numbers indicate layers closer to the &quot;top&quot;...">IHasLayer.Layer</a> value MUST NOT change while the item is in the <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a...">AdvancedLayeredSpatialMap</a>.</td></tr>
+    <tr><td class="paramname">T</td><td>Type of items in the layers. Type T must implement <a class="el" href="interface_go_rogue_1_1_i_has_layer.html" title="Interface to be implemented by objects that will be used in LayeredSpatialMap/Map classes...">IHasLayer</a>, and its <a class="el" href="interface_go_rogue_1_1_i_has_layer.html#a09bd56e2b3feff93bd91666308a162ae" title="The layer on which the object should reside. Higher numbers indicate layers closer to the &quot;top&quot;...">IHasLayer.Layer</a> value MUST NOT change while the item is in the <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a...">AdvancedLayeredSpatialMap</a>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -288,10 +288,10 @@ Events</h2></td></tr>
 <p>This class allows you to specify the starting index in order to make it easy to combine with other structures in a map which may represent other layers. For example, if a startingLayer of 0 is specified, layers in the spatialMap will have number [0-numberOfLayers - 1]. If 1 is specified, layers will have numbers [1-numberOfLayers], and anything to do with layer 0 will be ignored. If a layer-mask that includes layers 0, 2, and 3 is passed to a function, for example, only layers 2 and 3 are considered (since they are the only ones that would be included in the <a class="el" href="class_go_rogue_1_1_layered_spatial_map.html" title="ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects, with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be a reference type, and their Layer value MUST NOT change while they are in the data structure. ">LayeredSpatialMap</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">comparer</td><td>Equality comparer to use for comparison and hashing of type T. Be mindful of the efficiency of this instances GetHashCode function, as it will determine the efficiency of many <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a...">AdvancedLayeredSpatialMap</a> functions.</td></tr>
+    <tr><td class="paramname">comparer</td><td>Equality comparer to use for comparison and hashing of type T. Be mindful of the efficiency of this instances GetHashCode function, as it will determine the efficiency of many <a class="el" href="class_go_rogue_1_1_advanced_layered_spatial_map.html" title="Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for hashing a...">AdvancedLayeredSpatialMap</a> functions. </td></tr>
     <tr><td class="paramname">numberOfLayers</td><td>Number of layers to include.</td></tr>
     <tr><td class="paramname">startingLayer</td><td>Index to use for the first layer.</td></tr>
-    <tr><td class="paramname">layersSupportingMultipleItems</td><td>A layer mask indicating which layers should support multiple items residing at the same location on that layer. Defaults to no layers.</td></tr>
+    <tr><td class="paramname">layersSupportingMultipleItems</td><td>A layer mask indicating which layers should support multiple items residing at the same location on that layer. Defaults to no layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -488,11 +488,11 @@ Events</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>The position to check for.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position on a layer included in the given layer mask, false if not.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position on a layer included in the given layer mask, false if not. </dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#acb91546d86d44b996313630628a4ac38">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>.</p>
 
@@ -535,11 +535,11 @@ Events</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">x</td><td>X-value of the position to check for.</td></tr>
     <tr><td class="paramname">y</td><td>Y-value of the position to check for.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position on a layer included in the given layer mask, false if not.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>True if there is some item at the given position on a layer included in the given layer mask, false if not. </dd></dl>
 
 <p>Implements <a class="el" href="interface_go_rogue_1_1_i_read_only_layered_spatial_map.html#a319591aacce24f720390c21c3840f73f">GoRogue.IReadOnlyLayeredSpatialMap&lt; T &gt;</a>.</p>
 
@@ -595,7 +595,7 @@ Events</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>The position to return the item(s) for.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -642,7 +642,7 @@ Events</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">x</td><td>X-value of the position to return the item(s) for.</td></tr>
     <tr><td class="paramname">y</td><td>Y-value of the position to return the item(s) for.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask that indicates which layers to check. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -700,7 +700,7 @@ Events</h2></td></tr>
 <p>Returns read-only spatial maps that represent each layer included in the given layer mask. Defaults to all layers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">layerMask</td><td>Layer mask indicating which layers to return. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask indicating which layers to return. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -863,7 +863,7 @@ Events</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">current</td><td>Position to move all items from.</td></tr>
     <tr><td class="paramname">target</td><td>Position to move all items to.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask specifying which layers to search for items on. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask specifying which layers to search for items on. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -922,7 +922,7 @@ Events</h2></td></tr>
     <tr><td class="paramname">currentY</td><td>Y-value of the position to move items from.</td></tr>
     <tr><td class="paramname">targetX</td><td>X-value of the position to move items to.</td></tr>
     <tr><td class="paramname">targetY</td><td>Y-value of the position to move itesm from.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>Layer mask specifying which layers to search for items on. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>Layer mask specifying which layers to search for items on. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -989,7 +989,7 @@ Events</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">position</td><td>Position to remove items from.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>The layer mask indicating which layers to search for items. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>The layer mask indicating which layers to search for items. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1034,7 +1034,7 @@ Events</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">x</td><td>X-value of the position to remove items from.</td></tr>
     <tr><td class="paramname">y</td><td>Y-value of the position to remove items from.</td></tr>
-    <tr><td class="paramname">layerMask</td><td>The layer mask indicating which layers to search for items. Defaults to all layers.</td></tr>
+    <tr><td class="paramname">layerMask</td><td>The layer mask indicating which layers to search for items. Defaults to all layers. </td></tr>
   </table>
   </dd>
 </dl>

@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>1.8.0</PackageVersion>
+	<PackageVersion>1.8.1</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>See https://github.com/Chris3606/GoRogue/releases/tag/v1.8.0 for release notes.</PackageReleaseNotes>
+	<PackageReleaseNotes>Bugfixes.  See https://github.com/Chris3606/GoRogue/releases/tag/v1.8.1 for release notes.</PackageReleaseNotes>
     <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>
