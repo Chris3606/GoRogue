@@ -29,7 +29,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// <returns>A collection of room rectangles that were added to the map.</returns>
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
-			=> Generate(map, null, minRooms, maxRooms, roomMaxSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
+			=> Generate(map, null, minRooms, maxRooms, roomMinSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
 		
 		/// <summary>
 		/// Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false.
