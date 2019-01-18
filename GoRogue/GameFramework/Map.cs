@@ -7,16 +7,16 @@ using System;
 namespace GoRogue.GameFramework
 {
 	/// <summary>
-	/// Base class for a map that consists of one or more objects of type BaseObject.  It implements basic functionality to manage these objects, as well as
-	/// commonly needed functinonality like tile exploration, FOV, and pathfinding.  BaseObject must be a type that derives from
-	/// GameObject&lt;BaseObject&gt;.
+	/// Base class for a map that consists of one or more objects of base type GameObject.  It implements basic functionality to manage and access these objects, as well as
+	/// commonly needed functinonality like tile exploration, FOV, and pathfinding.  It also provides methods to easily access these objects as instances of some derived
+	/// type, that can be used to access functionality you've implemented in a subclass.
 	/// </summary>
 	/// <remarks>
-	/// A Map consists of BaseObjects on one or more layers.  These layers are numbered, from the lowest layer of 0 upward.  Each Map contains at minimum a
+	/// A Map consists of GameObjects on one or more layers.  These layers are numbered, from the lowest layer of 0 upward.  Each Map contains at minimum a
 	/// "terrain" layer.  This is considered to be layer 0.  All objects added to this layer must have their IsStatic flag set to true, and must reside
 	/// on layer 0.
 	/// 
-	/// A map will typically also have some other layers, for non terrain objects like the player, monsters, items, etc.  The number of these layers present
+	/// A map will typically also have some other layers, for non terrain objects like monsters, items, etc.  The number of these layers present
 	/// on the map, along with which of all the layers participate in collision detection, etc., can be specified in the constructor.
 	/// 
 	/// While this class has some flexibility, it does, unlike the rest of the library, tend to impose itself on your architecture.  In cases where this is
@@ -24,14 +24,13 @@ namespace GoRogue.GameFramework
 	/// all exist as their own (more flexible) components).  This class is not intended to cover every possible use case, but instead may act as an example or starting
 	/// point in the case where you would like to use the components in a different way or within a different architecture.
 	/// </remarks>
-	/// <typeparam name="BaseObject">The class deriving from GameObject that this map will hold.</typeparam>
-	public class Map<BaseObject> : IMapView<IEnumerable<BaseObject>> where BaseObject : GameObject<BaseObject>
+	public class Map : IMapView<IEnumerable<GameObject>>
 	{
-		private ISettableMapView<BaseObject> _terrain;
+		private ISettableMapView<GameObject> _terrain;
 		/// <summary>
 		/// Terrain of the map.  Terrain at each location may be set via the SetTerrain function.
 		/// </summary>
-		public IMapView<BaseObject> Terrain => _terrain;
+		public IMapView<GameObject> Terrain => _terrain;
 
 		/// <summary>
 		/// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as they are within
@@ -39,11 +38,11 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public ArrayMap<bool> Explored;
 
-		private LayeredSpatialMap<BaseObject> _entities;
+		private LayeredSpatialMap<GameObject> _entities;
 		/// <summary>
 		/// IReadOnlyLayeredSpatialMap of all entities (non-terrain objects) on the map.
 		/// </summary>
-		public IReadOnlyLayeredSpatialMap<BaseObject> Entities => _entities.AsReadOnly();
+		public IReadOnlyLayeredSpatialMap<GameObject> Entities => _entities.AsReadOnly();
 
 		/// <summary>
 		/// LayerMasker that should be used to create layer masks for this Map.
@@ -91,15 +90,15 @@ namespace GoRogue.GameFramework
 		/// <summary>
 		/// Event that is fired whenever some object is added to the map.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<BaseObject>> ObjectAdded;
+		public event EventHandler<ItemEventArgs<GameObject>> ObjectAdded;
 		/// <summary>
 		/// Event that is fired whenever some object is removed from the map.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<BaseObject>> ObjectRemoved;
+		public event EventHandler<ItemEventArgs<GameObject>> ObjectRemoved;
 		/// <summary>
 		/// Event that is fired whenever some object that is part of the map is successfully moved.
 		/// </summary>
-		public event EventHandler<ItemMovedEventArgs<BaseObject>> ObjectMoved;
+		public event EventHandler<ItemMovedEventArgs<GameObject>> ObjectMoved;
 
 		/// <summary>
 		/// Height of the map, in grid spaces.
@@ -116,7 +115,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="pos">The position to retrieve objects for.</param>
 		/// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-		public IEnumerable<BaseObject> this[Coord pos] => GetObjects(pos);
+		public IEnumerable<GameObject> this[Coord pos] => GetObjects(pos);
 
 		/// <summary>
 		/// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
@@ -124,7 +123,7 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the position to retrieve objects for.</param>
 		/// <param name="y">Y-value of the position to retrieve objects for.</param>
 		/// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-		public IEnumerable<BaseObject> this[int x, int y] => GetObjects(x, y);
+		public IEnumerable<GameObject> this[int x, int y] => GetObjects(x, y);
 
 		/// <summary>
 		/// Constructor.  Constructs terrain map as ArrayMap&lt;BaseObject&gt; with the given width/height.
@@ -141,7 +140,7 @@ namespace GoRogue.GameFramework
 		/// location on the same layer.  Defaults to no layers.</param>
 		public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
-			: this(new ArrayMap<BaseObject>(width, height), numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
+			: this(new ArrayMap<GameObject>(width, height), numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
 				  layersBlockingTransparency, entityLayersSupportingMultipleItems)
 		{ }
 
@@ -158,13 +157,13 @@ namespace GoRogue.GameFramework
 		/// Defaults to all layers.</param>
 		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
 		/// location on the same layer.  Defaults to no layers.</param>
-		public Map(ISettableMapView<BaseObject> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+		public Map(ISettableMapView<GameObject> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 			       uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
 		{
 			_terrain = terrainLayer;
 			Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
 
-			_entities = new LayeredSpatialMap<BaseObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
+			_entities = new LayeredSpatialMap<GameObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
 
 			LayersBlockingWalkability = layersBlockingWalkability;
 			LayersBlockingTransparency = layersBlockingTransparency;
@@ -193,7 +192,16 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="position">The position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public BaseObject GetTerrain(Coord position) => _terrain[position];
+		public GameObject GetTerrain(Coord position) => _terrain[position];
+
+		/// <summary>
+		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
+		/// cannot be casted to the type specified.
+		/// </summary>
+		/// <typeparam name="TerrainType">Type to return the terrain as.</typeparam>
+		/// <param name="position">The position to get the terrain for.</param>
+		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type TerrainType.</returns>
+		public TerrainType GetTerrain<TerrainType>(Coord position) where TerrainType : GameObject => _terrain[position] as TerrainType;
 
 		/// <summary>
 		/// Gets the terrain object at the given location, or null if no terrain is set to that location.
@@ -201,36 +209,46 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the position to get the terrain for.</param>
 		/// <param name="y">Y-value of the position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public BaseObject GetTerrain(int x, int y) => _terrain[x, y];
+		public GameObject GetTerrain(int x, int y) => _terrain[x, y];
+
+		/// <summary>
+		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
+		/// cannot be casted to the type specified.
+		/// </summary>
+		/// <typeparam name="TerrainType">Type to return the terrain as.</typeparam>
+		/// <param name="x">X-value of the position to get the terrain for.</param>
+		/// <param name="y">Y-value of the position to get the terrain for.</param>
+		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type TerrainType.</returns>
+		public TerrainType GetTerrain<TerrainType>(int x, int y) where TerrainType : GameObject => _terrain[x, y] as TerrainType;
 
 		/// <summary>
 		/// Sets the terrain at the given objects location to the given object, overwriting any terrain already present there.
 		/// </summary>
 		/// <param name="terrain">Terrain to replace the current terrain with.</param>
-		public void SetTerrain(BaseObject terrain)
+		public void SetTerrain(GameObject terrain)
 		{
 			if (terrain.Layer != 0)
 				throw new ArgumentException($"Terrain for Map must reside on layer 0.", nameof(terrain));
 
 			if (!terrain.IsStatic)
-				throw new ArgumentException($"Terrain for Map must be marked static via its {nameof(GameObject<BaseObject>.IsStatic)} flag.", nameof(terrain));
+				throw new ArgumentException($"Terrain for Map must be marked static via its {nameof(GameObject.IsStatic)} flag.", nameof(terrain));
 
 			if (_terrain[terrain.Position] != null)
-				ObjectRemoved?.Invoke(this, new ItemEventArgs<BaseObject>(terrain, terrain.Position));
+				ObjectRemoved?.Invoke(this, new ItemEventArgs<GameObject>(terrain, terrain.Position));
 
 			_terrain[terrain.Position] = terrain;
-			ObjectAdded?.Invoke(this, new ItemEventArgs<BaseObject>(terrain, terrain.Position));
+			ObjectAdded?.Invoke(this, new ItemEventArgs<GameObject>(terrain, terrain.Position));
 		}
 		#endregion
 
 		#region Entities
 		/// <summary>
-		/// Adds the given entity to its recorded location, removing it from the map it is currently a part of.  Returns true if the entity was added, 
+		/// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part of.  Returns true if the entity was added, 
 		/// false otherwise (eg., collision detection would not allow it, etc.)
 		/// </summary>
 		/// <param name="entity">Entity to add.</param>
 		/// <returns>True if the entity was successfully added to the map, false otherwise.</returns>
-		public bool AddEntity(BaseObject entity)
+		public bool AddEntity(GameObject entity)
 		{
 			if (entity.CurrentMap == this)
 				return false;
@@ -254,11 +272,11 @@ namespace GoRogue.GameFramework
 		}
 
 		/// <summary>
-		/// Removes the given entity from the map, returning true if it was successfully removed, false otherwise.
+		/// Removes the given entity (non-terrain object) from the map, returning true if it was successfully removed, false otherwise.
 		/// </summary>
 		/// <param name="entity">The entity to remove from the map.</param>
 		/// <returns>True if the entity was removed successfully, false otherwise (eg, the entity was not part of this map).</returns>
-		public bool RemoveEntity(BaseObject entity)
+		public bool RemoveEntity(GameObject entity)
 		{
 			if (!_entities.Remove(entity))
 				return false;
@@ -276,17 +294,46 @@ namespace GoRogue.GameFramework
 		/// <param name="position">Position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-		public BaseObject GetObject(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask).FirstOrDefault();
+		public GameObject GetObject(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask).FirstOrDefault();
+
+		
+		/// <summary>
+		/// Gets the first object encountered at the given position that can be casted to the type specified, moving from the highest existing layer in the
+		/// layer mask downward. Layer mask defaults to all layers.  Null is returned if no objects of the specified type are found, or if there are no objects at the
+		/// location.
+		/// </summary>
+		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <param name="position">Position to get object for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of the specified
+		/// type are found.</returns>
+		public ObjectType GetObject<ObjectType>(Coord position, uint layerMask = uint.MaxValue) where ObjectType : GameObject
+			=> GetObjects<ObjectType>(position.X, position.Y, layerMask).FirstOrDefault();
 
 		/// <summary>
-		/// Gets the first object encountered at the given position, moving from the highest existing layer in the layer mask downward.  Layer mask defaults to all
-		/// layers.
+		/// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the layer mask
+		/// downward. Layer mask defaults to all layers. Null is returned if no objects of the specified type are found, or if there are no objects at the
+		/// location.
 		/// </summary>
 		/// <param name="x">X-value of the position to get object for.</param>
 		/// <param name="y">Y-value of the position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-		public BaseObject GetObject(int x, int y, uint layerMask = uint.MaxValue) => GetObjects(x, y, layerMask).FirstOrDefault();
+		public GameObject GetObject(int x, int y, uint layerMask = uint.MaxValue) => GetObjects(x, y, layerMask).FirstOrDefault();
+
+		/// <summary>
+		/// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the layer mask
+		/// downward. Layer mask defaults to all layers. Null is returned if no objects of the specified type are found, or if there are no objects at the
+		/// location.
+		/// </summary>
+		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <param name="x">X-value of the position to get object for.</param>
+		/// <param name="y">Y-value of the position to get object for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of the specified
+		/// type are found.</returns>
+		public ObjectType GetObject<ObjectType>(int x, int y, uint layerMask = uint.MaxValue) where ObjectType : GameObject
+			=> GetObjects<ObjectType>(x, y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults to all layers.
@@ -294,7 +341,19 @@ namespace GoRogue.GameFramework
 		/// <param name="position">Position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position, in order from the highest existing layer in the mask downward.</returns>
-		public IEnumerable<BaseObject> GetObjects(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask);
+		public IEnumerable<GameObject> GetObjects(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask);
+
+		/// <summary>
+		/// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer mask downward.
+		/// Layer mask defaults to all layers.
+		/// </summary>
+		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <param name="position">Position to get objects for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
+		/// in the mask downward.</returns>
+		public IEnumerable<ObjectType> GetObjects<ObjectType>(Coord position, uint layerMask = uint.MaxValue) where ObjectType : GameObject
+			=> GetObjects<ObjectType>(position.X, position.Y, layerMask);
 
 		/// <summary>
 		/// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults to all layers.
@@ -303,13 +362,33 @@ namespace GoRogue.GameFramework
 		/// <param name="y">Y-value of the position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position, in order from the highest existing layer in the mask downward.</returns>
-		public IEnumerable<BaseObject> GetObjects(int x, int y, uint layerMask = uint.MaxValue)
+		public IEnumerable<GameObject> GetObjects(int x, int y, uint layerMask = uint.MaxValue)
 		{
 			foreach (var entity in _entities.GetItems(x, y, layerMask))
 				yield return entity;
 
 			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] != null)
 				yield return _terrain[x, y];
+		}
+
+		/// <summary>
+		/// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer mask downward.
+		/// Layer mask defaults to all layers.
+		/// </summary>
+		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <param name="x">X-value of the position to get objects for.</param>
+		/// <param name="y">Y-value of the position to get objects for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
+		/// in the mask downward.</returns>
+		public IEnumerable<ObjectType> GetObjects<ObjectType>(int x, int y, uint layerMask = uint.MaxValue) where ObjectType : GameObject
+		{
+			foreach (var entity in _entities.GetItems(x, y, layerMask))
+				if (entity is ObjectType e)
+					yield return e;
+
+			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] is ObjectType t)
+				yield return t;
 		}
 		#endregion
 
@@ -395,7 +474,7 @@ namespace GoRogue.GameFramework
 		}
 		#endregion
 
-		private void OnEntityMoved(object s, ItemMovedEventArgs<BaseObject> e)
+		private void OnEntityMoved(object s, ItemMovedEventArgs<GameObject> e)
 		{
 			_entities.Move(e.Item, e.NewPosition);
 		}
