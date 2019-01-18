@@ -3,8 +3,8 @@
 namespace GoRogue
 {
 	/// <summary>
-	/// Static class consisting of mathematical "helper" functions and constants -- things like angle unit
-	/// conversions, and other helpful functions.
+	/// Static class consisting of mathematical "helper" functions and constants -- things like angle
+	/// unit conversions, and other helpful functions.
 	/// </summary>
 	public static class MathHelpers
 	{

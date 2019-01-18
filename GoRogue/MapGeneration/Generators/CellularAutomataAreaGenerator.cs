@@ -6,16 +6,17 @@ using Troschuetz.Random;
 namespace GoRogue.MapGeneration.Generators
 {
 	/// <summary>
-	/// Implements a cellular automata genereation algorithm to add cave-like (unconnected) areas to a map. A connection algorithm would be needed to connect
-	/// these areas.  For automatic connection, see GoRogue.MapGeneration.QuickGenerators.CellularAutomata().
+	/// Implements a cellular automata genereation algorithm to add cave-like (unconnected) areas to
+	/// a map. A connection algorithm would be needed to connect these areas. For automatic
+	/// connection, see GoRogue.MapGeneration.QuickGenerators.CellularAutomata().
 	/// </summary>
 	/// <remarks>
 	/// Generates a map by randomly filling the map surface with floor or wall values (true and false
 	/// respectively) based on a probability given, then iteratively smoothing it via the process
-	/// outlined in the cited roguebasin article. After generate is called, the passed in map
-	/// will have had a value of true set to all floor tiles, and a value of false set to all wall
-	/// tiles. Based on the C# roguelike library RogueSharp's implementation, and the roguebasin
-	/// article below:
+	/// outlined in the cited roguebasin article. After generate is called, the passed in map will
+	/// have had a value of true set to all floor tiles, and a value of false set to all wall tiles.
+	/// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article
+	/// below:
 	/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
 	/// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
 	/// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
@@ -49,7 +50,8 @@ namespace GoRogue.MapGeneration.Generators
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-			// We must allocate a new one to avoid messing up other map gen features that happened on the original
+			// We must allocate a new one to avoid messing up other map gen features that happened on
+			// the original
 			var tempMap = new ArrayMap<bool>(map.Width, map.Height);
 			tempMap.ApplyOverlay(map);
 
@@ -69,7 +71,8 @@ namespace GoRogue.MapGeneration.Generators
 			// kill the path to an area.
 			fillToRectangle(tempMap);
 
-			// Set rooms to true, but do NOT enforce where walls (false values) are -- this is done by making sure the blank slate passed in is all false.
+			// Set rooms to true, but do NOT enforce where walls (false values) are -- this is done
+			// by making sure the blank slate passed in is all false.
 			foreach (var pos in tempMap.Positions())
 				if (tempMap[pos])
 					map[pos] = true;

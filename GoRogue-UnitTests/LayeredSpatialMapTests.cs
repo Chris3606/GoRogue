@@ -1,30 +1,33 @@
-﻿using System;
+﻿using GoRogue;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoRogue;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GoRogue_UnitTests
 {
-	public class MySpatialMapItem : IHasID, IHasLayer
-	{
-		public int Layer { get; }
-		public uint ID { get; }
-
-		private static IDGenerator _idGen = new IDGenerator();
-
-		public MySpatialMapItem(int layer)
-		{
-			ID = _idGen.UseID();
-			Layer = layer;
-		}
-	}
-
 	[TestClass]
 	public class LayeredSpatialMapTests
 	{
+		[TestMethod]
+		public void TestAdd()
+		{
+			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
+			bool result;
+			for (int i = 0; i < 5; i++)
+			{
+				var item = new MySpatialMapItem(i);
+				result = sm.Add(item, Coord.Get(1, 2));
+				Assert.AreEqual(true, result);
+			}
+
+			result = sm.Add(new MySpatialMapItem(5), Coord.Get(2, 3)); // Out of range layer
+			Assert.AreEqual(false, result);
+
+			sm = new LayeredSpatialMap<MySpatialMapItem>(5, 1);
+			result = sm.Add(new MySpatialMapItem(0), Coord.Get(5, 6));
+			Assert.AreEqual(false, result);
+		}
+
 		[TestMethod]
 		public void TestConstruction()
 		{
@@ -58,87 +61,26 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
-		public void TestAdd()
-		{
-			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
-			bool result;
-			for (int i = 0; i < 5; i++)
-			{
-				var item = new MySpatialMapItem(i);
-				result = sm.Add(item, Coord.Get(1, 2));
-				Assert.AreEqual(true, result);
-			}
-
-			result = sm.Add(new MySpatialMapItem(5), Coord.Get(2, 3)); // Out of range layer
-			Assert.AreEqual(false, result);
-
-			sm = new LayeredSpatialMap<MySpatialMapItem>(5, 1);
-			result = sm.Add(new MySpatialMapItem(0), Coord.Get(5, 6));
-			Assert.AreEqual(false, result);
-		}
-
-		[TestMethod]
-		public void TestRemove()
-		{
-			/*
-			var itemsAdded = new List<MySpatialMapItem>();
-			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
-
-			for (int i = 0; i < 5; i++)
-			{
-				var item = new MySpatialMapItem(i);
-				itemsAdded.Add(item);
-				sm.Add(item, Coord.Get(1, 2));
-			}
-
-			bool result;
-			
-			var nonAddedItem = new MySpatialMapItem(2);
-			result = sm.Remove(nonAddedItem);
-			Assert.AreEqual(false, result);
-
-			foreach (var i in itemsAdded)
-			{
-				result = sm.Remove(i);
-				Assert.AreEqual(true, result);
-			}
-
-			
-			foreach (var i in itemsAdded)
-			{
-				sm.Add(i, Coord.Get(1, 2));
-			}
-
-			List<MySpatialMapItem> itemsRemoved = sm.Remove(Coord.Get(5, 6)).ToList();
-			Assert.AreEqual(0, itemsRemoved.Count);
-
-			itemsRemoved = sm.Remove(Coord.Get(1, 2)).ToList();
-			Assert.AreEqual(itemsAdded.Count, itemsRemoved.Count);
-			*/
-		}
-
-		[TestMethod]
 		public void TestMove()
 		{
-			
 			var itemsAdded = new List<MySpatialMapItem>();
-			
+
 			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
-			
+
 			for (int i = 0; i < 5; i++)
 			{
 				var item = new MySpatialMapItem(i);
 				itemsAdded.Add(item);
 				sm.Add(item, Coord.Get(1, 2));
 			}
-			
+
 			var lastItem = new MySpatialMapItem(3);
 			itemsAdded.Add(lastItem);
 			sm.Add(lastItem, Coord.Get(5, 6));
-			
+
 			bool result = sm.Move(lastItem, 1, 2);
 			Assert.AreEqual(false, result); // Blocked by first 5 adds and they no layers support multiple items
-			
+
 			result = sm.Move(lastItem, Coord.Get(2, 3)); // At 2, 3 we now have item on layer 3
 			Assert.AreEqual(true, result);
 
@@ -167,6 +109,45 @@ namespace GoRogue_UnitTests
 			Assert.AreEqual(true, found);
 		}
 
+		[TestMethod]
+		public void TestRemove()
+		{
+			/*
+			var itemsAdded = new List<MySpatialMapItem>();
+			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
+
+			for (int i = 0; i < 5; i++)
+			{
+				var item = new MySpatialMapItem(i);
+				itemsAdded.Add(item);
+				sm.Add(item, Coord.Get(1, 2));
+			}
+
+			bool result;
+
+			var nonAddedItem = new MySpatialMapItem(2);
+			result = sm.Remove(nonAddedItem);
+			Assert.AreEqual(false, result);
+
+			foreach (var i in itemsAdded)
+			{
+				result = sm.Remove(i);
+				Assert.AreEqual(true, result);
+			}
+
+			foreach (var i in itemsAdded)
+			{
+				sm.Add(i, Coord.Get(1, 2));
+			}
+
+			List<MySpatialMapItem> itemsRemoved = sm.Remove(Coord.Get(5, 6)).ToList();
+			Assert.AreEqual(0, itemsRemoved.Count);
+
+			itemsRemoved = sm.Remove(Coord.Get(1, 2)).ToList();
+			Assert.AreEqual(itemsAdded.Count, itemsRemoved.Count);
+			*/
+		}
+
 		// TODO: Implement
 		/*
 		[TestMethod]
@@ -181,5 +162,19 @@ namespace GoRogue_UnitTests
 			throw new NotImplementedException();
 		}
 		*/
+	}
+
+	public class MySpatialMapItem : IHasID, IHasLayer
+	{
+		private static IDGenerator _idGen = new IDGenerator();
+
+		public MySpatialMapItem(int layer)
+		{
+			ID = _idGen.UseID();
+			Layer = layer;
+		}
+
+		public uint ID { get; }
+		public int Layer { get; }
 	}
 }

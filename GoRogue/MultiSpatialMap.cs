@@ -5,44 +5,14 @@ using System.Collections.Generic;
 namespace GoRogue
 {
 	/// <summary>
-	/// See SpatialMap documentation -- similar in principle. However, this implementation allows
-	/// multiple items to exist at one point in the SpatialMap, in exchange for the loss of the
-	/// convenience functions like GetItem vs GetItems, as well as potential performance differences
-	/// (although unless the number of objects at any given location is large, the performance is
-	/// asymptotically the same).
+	/// Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for
+	/// hashing and comparison of type T. May be useful for cases where one does not want to
+	/// implement IHasID, or if you need to use a value type in a MultiSpatialMap. For simple cases,
+	/// it is recommended to use MultiSpatialMap instead.
 	/// </summary>
 	/// <remarks>
-	/// Although SpatialMap should generally be preferred in cases where only one item is allowed at
-	/// a location in the first place, this implementation may be particularly useful for situations
-	/// such as inventory items, where multiple items may be desired at one location. If one is
-	/// implementing something akin to "buckets", one may also subclass this implementation and
-	/// provide handlers to the various events it exposes to keep track of the object on top, etc.
-	/// The two implementations could also in many cases be used in combination as necessary,
-	/// since they both implement the ISpatialMap interface.
-	/// </remarks>
-	/// <typeparam name="T">The type of items being stored.  Must implement IHasID and be a reference-type.</typeparam>
-	public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
-	{
-		/// <summary>
-		/// Constructor. Creates an empty MultiSpatialMap.
-		/// </summary>
-		/// <param name="initialCapacity">
-		/// The initial maximum number of elements the SpatialMap can hold before it has to
-		/// internally resize data structures. Defaults to 32.
-		/// </param>
-		public MultiSpatialMap(int initialCapacity = 32)
-			: base(new IDComparer<T>(), initialCapacity)
-		{ }
-	}
-
-	/// <summary>
-	/// Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for hashing and comparison of type T.
-	/// May be useful for cases where one does not want to implement IHasID, or if you need to use a value type in a MultiSpatialMap.  For simple
-	/// cases, it is recommended to use MultiSpatialMap instead.
-	/// </summary>
-	/// <remarks>
-	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer -- it will in large part determine the performance of
-	/// AdvancedMultiSpatialMap!
+	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer --
+	/// it will in large part determine the performance of AdvancedMultiSpatialMap!
 	/// </remarks>
 	/// <typeparam name="T">The type of object that will be contained by this AdvancedMultiSpatialMap.</typeparam>
 	public class AdvancedMultiSpatialMap<T> : ISpatialMap<T>
@@ -53,8 +23,11 @@ namespace GoRogue
 		/// <summary>
 		/// Constructor. Creates an empty MultiSpatialMap.
 		/// </summary>
-		/// <param name="comparer">Equality comparer to use for comparison and hashing of type T.  Be mindful of the efficiency
-		/// of this instances GetHashCode function, as it will determine the efficiency of many AdvancedMultiSpatialMap functions.</param>
+		/// <param name="comparer">
+		/// Equality comparer to use for comparison and hashing of type T. Be mindful of the
+		/// efficiency of this instances GetHashCode function, as it will determine the efficiency of
+		/// many AdvancedMultiSpatialMap functions.
+		/// </param>
 		/// <param name="initialCapacity">
 		/// The initial maximum number of elements the MultiSpatialMap can hold before it has to
 		/// internally resize data structures. Defaults to 32.
@@ -383,5 +356,38 @@ namespace GoRogue
 		/// <returns>A string representation of the MultiSpatialMap.</returns>
 		public override string ToString()
 			=> ToString((T obj) => obj.ToString());
+	}
+
+	/// <summary>
+	/// See SpatialMap documentation -- similar in principle. However, this implementation allows
+	/// multiple items to exist at one point in the SpatialMap, in exchange for the loss of the
+	/// convenience functions like GetItem vs GetItems, as well as potential performance differences
+	/// (although unless the number of objects at any given location is large, the performance is
+	/// asymptotically the same).
+	/// </summary>
+	/// <remarks>
+	/// Although SpatialMap should generally be preferred in cases where only one item is allowed at
+	/// a location in the first place, this implementation may be particularly useful for situations
+	/// such as inventory items, where multiple items may be desired at one location. If one is
+	/// implementing something akin to "buckets", one may also subclass this implementation and
+	/// provide handlers to the various events it exposes to keep track of the object on top, etc.
+	/// The two implementations could also in many cases be used in combination as necessary, since
+	/// they both implement the ISpatialMap interface.
+	/// </remarks>
+	/// <typeparam name="T">
+	/// The type of items being stored. Must implement IHasID and be a reference-type.
+	/// </typeparam>
+	public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
+	{
+		/// <summary>
+		/// Constructor. Creates an empty MultiSpatialMap.
+		/// </summary>
+		/// <param name="initialCapacity">
+		/// The initial maximum number of elements the SpatialMap can hold before it has to
+		/// internally resize data structures. Defaults to 32.
+		/// </param>
+		public MultiSpatialMap(int initialCapacity = 32)
+			: base(new IDComparer<T>(), initialCapacity)
+		{ }
 	}
 }

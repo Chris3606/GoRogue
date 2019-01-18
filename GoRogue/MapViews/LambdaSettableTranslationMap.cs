@@ -20,7 +20,8 @@ namespace GoRogue.MapViews
 		private Func<Coord, T2, T1> _setter;
 
 		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from, and getter/setter functions taking only a map value.
+		/// Constructor. Takes an existing map view to create a view from, and getter/setter
+		/// functions taking only a map value.
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>
@@ -38,7 +39,8 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from, and getter/setter functions taking a map value and its corresponding position.
+		/// Constructor. Takes an existing map view to create a view from, and getter/setter
+		/// functions taking a map value and its corresponding position.
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>
@@ -84,7 +86,7 @@ namespace GoRogue.MapViews
 		/// Translates your map data into the view type by calling the lambda getter specified in the
 		/// class constructor.
 		/// </summary>
-		/// <param name="position">Position corresponding to given data value of your map. </param>
+		/// <param name="position">Position corresponding to given data value of your map.</param>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type (via the getter specified in the class constructor).</returns>
 		protected override T2 TranslateGet(Coord position, T1 value) => _getter(position, value);

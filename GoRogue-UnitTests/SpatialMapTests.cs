@@ -6,9 +6,10 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class SpatialMapTests
 	{
+		private Coord newPos;
+
 		// Used to test events
 		private Coord oldPos;
-		private Coord newPos;
 
 		[TestMethod]
 		public void SpatialMapAdd()
@@ -109,6 +110,26 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
+		public void SpatialMapMoveEvent()
+		{
+			var mySpatialMap = new SpatialMap<MyIDImpl>();
+
+			var myId1 = new MyIDImpl(0);
+			var myId2 = new MyIDImpl(1);
+			var myId3 = new MyIDImpl(2);
+
+			mySpatialMap.Add(myId1, Coord.Get(1, 2));
+			mySpatialMap.Add(myId2, Coord.Get(2, 3));
+			mySpatialMap.Add(myId3, Coord.Get(3, 4));
+
+			mySpatialMap.ItemMoved += onItemMoved;
+			oldPos = Coord.Get(1, 2);
+			newPos = Coord.Get(5, 6);
+			mySpatialMap.Move(myId1, Coord.Get(5, 6));
+			mySpatialMap.ItemMoved -= onItemMoved;
+		}
+
+		[TestMethod]
 		public void SpatialMapRemove()
 		{
 			var mySpatialMap = new SpatialMap<MyIDImpl>();
@@ -145,26 +166,6 @@ namespace GoRogue_UnitTests
 			foreach (var i in mySpatialMap.Remove(Coord.Get(5, 6)))
 				count++;
 			Assert.AreEqual(0, count);
-		}
-
-		[TestMethod]
-		public void SpatialMapMoveEvent()
-		{
-			var mySpatialMap = new SpatialMap<MyIDImpl>();
-
-			var myId1 = new MyIDImpl(0);
-			var myId2 = new MyIDImpl(1);
-			var myId3 = new MyIDImpl(2);
-
-			mySpatialMap.Add(myId1, Coord.Get(1, 2));
-			mySpatialMap.Add(myId2, Coord.Get(2, 3));
-			mySpatialMap.Add(myId3, Coord.Get(3, 4));
-
-			mySpatialMap.ItemMoved += onItemMoved;
-			oldPos = Coord.Get(1, 2);
-			newPos = Coord.Get(5, 6);
-			mySpatialMap.Move(myId1, Coord.Get(5, 6));
-			mySpatialMap.ItemMoved -= onItemMoved;
 		}
 
 		private void onItemMoved(object s, ItemMovedEventArgs<MyIDImpl> e)

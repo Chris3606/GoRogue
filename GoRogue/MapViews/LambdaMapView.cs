@@ -106,8 +106,8 @@ namespace GoRogue.MapViews
 		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
-		/// Returns a string representation of the LambdaMapView, using the elementStringifier function
-		/// given to determine what string represents which value.
+		/// Returns a string representation of the LambdaMapView, using the elementStringifier
+		/// function given to determine what string represents which value.
 		/// </summary>
 		/// <remarks>
 		/// This could be used, for example, on an LambdaMapView of boolean values, to output '#' for
@@ -120,11 +120,11 @@ namespace GoRogue.MapViews
 		public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
 
 		/// <summary>
-		/// Prints the values in the LambdaMapView, using the function specified to turn elements into
-		/// strings, and using the "field length" specified. Each element of type T will have spaces
-		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-		/// than the length of the element's string represention. A positive-number right-aligns the
-		/// text within the field, while a negative number left-aligns the text.
+		/// Prints the values in the LambdaMapView, using the function specified to turn elements
+		/// into strings, and using the "field length" specified. Each element of type T will have
+		/// spaces added to cause it to take up exactly fieldSize characters, provided fieldSize is
+		/// less than the length of the element's string represention. A positive-number right-aligns
+		/// the text within the field, while a negative number left-aligns the text.
 		/// </summary>
 		/// <param name="fieldSize">The size of the field to give each value.</param>
 		/// <param name="elementStringifier">

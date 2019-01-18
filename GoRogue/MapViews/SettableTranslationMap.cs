@@ -89,54 +89,18 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Translates your map data into the view type.  Takes only a value from the underlying map.  If a position is also needed to perform
-		/// the translation, use TranslateGet(Coord, T1) instead.
-		/// </summary>
-		/// <param name="value">The data value from your map.</param>
-		/// <returns>A value of the mapped data type</returns>
-		protected virtual T2 TranslateGet(T1 value) =>
-			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Coord, T1) was not re-implemented.  One of these two functions must be implemented.");
-
-		/// <summary>
-		/// Translates your map data into the view type.  Takes a value from the underlying map and the corresponding position for that value.  If a position
-		/// is not needed to perform the translation, use TranslateGet(T1) instead.
-		/// </summary>
-		/// <param name="position">The position of the given data value from your map.</param>
-		/// <param name="value">The data value from your map.</param>
-		/// <returns>A value of the mapped data type</returns>
-		protected virtual T2 TranslateGet(Coord position, T1 value) => TranslateGet(value);
-
-		/// <summary>
-		/// Translates the view type into the appropriate form for your map data.  Takes only a value from the underlying map.  If a position is also needed to perform
-		/// the translation, use TranslateSet(Coord, T2) instead.
-		/// </summary>
-		/// <param name="value">A value of the mapped data type</param>
-		/// <returns>The data value for your map.</returns>
-		protected virtual T1 TranslateSet(T2 value) =>
-			throw new NotImplementedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Coord, T2) was not re-implemented.  One of these two functions must be implemented.");
-
-		/// <summary>
-		/// Translates the view type into the appropriate form for your map data.  Takes a value from the underlying map, and it corresponding position. 
-		/// If a position is not needed to perform the translation, use TranslateSet(T2) instead.
-		/// </summary>
-		/// <param name="position">The position of the given mapped data type.</param>
-		/// <param name="value">A value of the mapped data type</param>
-		/// <returns>The data value for your map.</returns>
-		protected virtual T1 TranslateSet(Coord position, T2 value) => TranslateSet(value);
-
-		/// <summary>
 		/// Returns a string representation of the SettableTranslationMap.
 		/// </summary>
 		/// <returns>A string representation of the SettableTranslationMap.</returns>
 		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
-		/// Returns a string representation of the SettableTranslationMap, using the elementStringifier function
-		/// given to determine what string represents which value.
+		/// Returns a string representation of the SettableTranslationMap, using the
+		/// elementStringifier function given to determine what string represents which value.
 		/// </summary>
 		/// <remarks>
-		/// This could be used, for example, on an SettableTranslationMap of boolean values, to output '#' for
-		/// false values, and '.' for true values.
+		/// This could be used, for example, on an SettableTranslationMap of boolean values, to
+		/// output '#' for false values, and '.' for true values.
 		/// </remarks>
 		/// <param name="elementStringifier">
 		/// Function determining the string representation of each element.
@@ -145,11 +109,11 @@ namespace GoRogue.MapViews
 		public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
 
 		/// <summary>
-		/// Prints the values in the SettableTranslationMap, using the function specified to turn elements into
-		/// strings, and using the "field length" specified. Each element of type T will have spaces
-		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-		/// than the length of the element's string represention. A positive-number right-aligns the
-		/// text within the field, while a negative number left-aligns the text.
+		/// Prints the values in the SettableTranslationMap, using the function specified to turn
+		/// elements into strings, and using the "field length" specified. Each element of type T
+		/// will have spaces added to cause it to take up exactly fieldSize characters, provided
+		/// fieldSize is less than the length of the element's string represention. A positive-number
+		/// right-aligns the text within the field, while a negative number left-aligns the text.
 		/// </summary>
 		/// <param name="fieldSize">The size of the field to give each value.</param>
 		/// <param name="elementStringifier">
@@ -159,5 +123,43 @@ namespace GoRogue.MapViews
 		/// <returns>A string representation of the SettableTranslationMap.</returns>
 		public string ToString(int fieldSize, Func<T2, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 
+		/// <summary>
+		/// Translates your map data into the view type. Takes only a value from the underlying map.
+		/// If a position is also needed to perform the translation, use TranslateGet(Coord, T1) instead.
+		/// </summary>
+		/// <param name="value">The data value from your map.</param>
+		/// <returns>A value of the mapped data type</returns>
+		protected virtual T2 TranslateGet(T1 value) =>
+			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Coord, T1) was not re-implemented.  One of these two functions must be implemented.");
+
+		/// <summary>
+		/// Translates your map data into the view type. Takes a value from the underlying map and
+		/// the corresponding position for that value. If a position is not needed to perform the
+		/// translation, use TranslateGet(T1) instead.
+		/// </summary>
+		/// <param name="position">The position of the given data value from your map.</param>
+		/// <param name="value">The data value from your map.</param>
+		/// <returns>A value of the mapped data type</returns>
+		protected virtual T2 TranslateGet(Coord position, T1 value) => TranslateGet(value);
+
+		/// <summary>
+		/// Translates the view type into the appropriate form for your map data. Takes only a value
+		/// from the underlying map. If a position is also needed to perform the translation, use
+		/// TranslateSet(Coord, T2) instead.
+		/// </summary>
+		/// <param name="value">A value of the mapped data type</param>
+		/// <returns>The data value for your map.</returns>
+		protected virtual T1 TranslateSet(T2 value) =>
+			throw new NotImplementedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Coord, T2) was not re-implemented.  One of these two functions must be implemented.");
+
+		/// <summary>
+		/// Translates the view type into the appropriate form for your map data. Takes a value from
+		/// the underlying map, and it corresponding position. If a position is not needed to perform
+		/// the translation, use TranslateSet(T2) instead.
+		/// </summary>
+		/// <param name="position">The position of the given mapped data type.</param>
+		/// <param name="value">A value of the mapped data type</param>
+		/// <returns>The data value for your map.</returns>
+		protected virtual T1 TranslateSet(Coord position, T2 value) => TranslateSet(value);
 	}
 }

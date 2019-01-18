@@ -57,11 +57,14 @@ namespace GoRogue.SenseMapping
 		internal bool[,] nearLight;
 		internal IMapView<double> resMap;
 		private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
+		private double _angle;
+		private double _decay;
 		private double _radius;
-		private double _decay; // Set when radius is set
+		// Set when radius is set
 
-		private int size;
+		private double _span;
 		private int halfSize;
+		private int size;
 
 		/// <summary>
 		/// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
@@ -91,7 +94,7 @@ namespace GoRogue.SenseMapping
 		}
 
 		/// <summary>
-		/// Constructor.  Creates a source whose spread is restricted to a certain angle and span.
+		/// Constructor. Creates a source whose spread is restricted to a certain angle and span.
 		/// </summary>
 		/// <param name="type">The spread mechanics to use for source values.</param>
 		/// <param name="position">The position on a map that the source is located at.</param>
@@ -103,11 +106,13 @@ namespace GoRogue.SenseMapping
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		/// <param name="angle">The angle in degrees that specifies the outermost center point of the cone formed
-		/// by the source's values. 0 degrees points right.</param>
+		/// <param name="angle">
+		/// The angle in degrees that specifies the outermost center point of the cone formed by the
+		/// source's values. 0 degrees points right.
+		/// </param>
 		/// <param name="span">
-		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
-		/// angle/2 degrees are included on either side of the cone's center line.
+		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the
+		/// source's values -- angle/2 degrees are included on either side of the cone's center line.
 		/// </param>
 		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span)
 			: this(type, position, radius, distanceCalc)
@@ -140,6 +145,22 @@ namespace GoRogue.SenseMapping
 			: this(type, Coord.Get(positionX, positionY), radius, distanceCalc) { }
 
 		/// <summary>
+		/// If IsAngleRestricted is true, the angle in degrees that represents a line from the
+		/// source's start to the outermost center point of the cone formed by the source's
+		/// calculated values. 0 degrees points right. If IsAngleRestricted is false, this will be
+		/// 0.0 degrees.
+		/// </summary>
+		public double Angle
+		{
+			get => IsAngleRestricted ? _angle : 0.0;
+			set
+			{
+				if (_angle != value)
+					_angle = ((value > 360.0 || value < 0.0) ? Math.IEEERemainder(value + 720.0, 360) : value);
+			}
+		}
+
+		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius)
 		/// </summary>
@@ -153,47 +174,14 @@ namespace GoRogue.SenseMapping
 		public bool Enabled { get; set; }
 
 		/// <summary>
-		/// The position on a map that the source is located at.
-		/// </summary>
-		public Coord Position { get; set; }
-
-		/// <summary>
 		/// Whether or not the spreading of values from this source is restricted to an angle and span.
 		/// </summary>
 		public bool IsAngleRestricted { get; set; }
 
-		private double _angle;
-
 		/// <summary>
-		/// If IsAngleRestricted is true, the angle in degrees that represents a line from the source's start to
-		/// the outermost center point of the cone formed by the source's calculated values.  0 degrees points right.
-		/// If IsAngleRestricted is false, this will be 0.0 degrees.
+		/// The position on a map that the source is located at.
 		/// </summary>
-		public double Angle
-		{
-			get => IsAngleRestricted ? _angle : 0.0;
-			set
-			{
-				if (_angle != value)
-					_angle = ((value > 360.0 || value < 0.0) ? Math.IEEERemainder(value + 720.0, 360) : value);
-			}
-		}
-
-		private double _span;
-
-		/// <summary>
-		/// If IsAngleRestricted is true, the angle in degrees that represents the full arc of the cone formed by
-		/// the source's calculated values.  If IsAngleRestricted is false, it will be 360 degrees.
-		/// </summary>
-		public double Span
-		{
-			get => IsAngleRestricted ? _span : 360.0;
-			set
-			{
-				if (_span != value)
-					_span = Math.Max(0, Math.Min(360.0, value));
-			}
-		}
+		public Coord Position { get; set; }
 
 		/// <summary>
 		/// The maximum radius of the source -- this is the maximum distance the source values will
@@ -210,8 +198,8 @@ namespace GoRogue.SenseMapping
 				if (_radius != value)
 				{
 					_radius = Math.Max(1, value);
-					// Can round down here because the EUCLIDEAN distance shape is always contained within
-					// the CHEBYSHEV distance shape
+					// Can round down here because the EUCLIDEAN distance shape is always contained
+					// within the CHEBYSHEV distance shape
 					size = (int)_radius * 2 + 1;
 					// Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
 					halfSize = size / 2;
@@ -220,6 +208,21 @@ namespace GoRogue.SenseMapping
 
 					_decay = 1.0 / (_radius + 1);
 				}
+			}
+		}
+
+		/// <summary>
+		/// If IsAngleRestricted is true, the angle in degrees that represents the full arc of the
+		/// cone formed by the source's calculated values. If IsAngleRestricted is false, it will be
+		/// 360 degrees.
+		/// </summary>
+		public double Span
+		{
+			get => IsAngleRestricted ? _span : 360.0;
+			set
+			{
+				if (_span != value)
+					_span = Math.Max(0, Math.Min(360.0, value));
 			}
 		}
 

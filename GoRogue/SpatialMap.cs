@@ -5,53 +5,14 @@ using System.Collections.Generic;
 namespace GoRogue
 {
 	/// <summary>
-	/// Designed as an more efficient data structure for recording objects on a map. The simple
-	/// version: if you're about to use a List to store a bunch of objects in your map, consider
-	/// using this or MultiSpatialMap instead!
-	/// </summary>
-	/// <remarks>Typical roguelikes will use a 2D
-	/// array (or 1D array accessed as a 2D array), for terrain, and lists of objects for things like
-	/// entities, items, etc. This is simple but ultimately not efficient; for example, in that
-	/// implementation, determining if there is an object at a location takes an amount of time
-	/// proportional to the number of objects in this list. However, the other simple option is to
-	/// use an array with size equal to the size of the map (as many do for terrain) for all object
-	/// lists. This is even less ideal, as in that case, the time to iterate over all objects becomes
-	/// proportional to the size of the map (since one has to do that for rendering, ouch!), which is
-	/// typically much larger than the number of objects in a list. This is the problem SpatialMap is
-	/// designed to solve. It provides fast, near-constant-time operations for getting the object at
-	/// a location, adding entities, removing entities, and will allow you to iterate through all
-	/// objects in the SpatialMap in time proportional to the number of objects in it (the best
-	/// possible). Effectively, it is a more efficient list for objects that have a position
-	/// associated with them. This implementation can only allow one item at a given location at a
-	/// time -- for an implementation that allows multiple items, see MultiSpatialMap. The
-	/// objects stored in a SpatialMap must implement the IHasID (see that interface's documentation
-	/// for an easy implementation example). This is used internally to keep track of the objects,
-	/// since uints are easily (efficiently) hashable.
-	/// </remarks>
-	/// <typeparam name="T">The type of object that will be contained by this SpatialMap.  Must implement IHasID and be a reference-type.</typeparam>
-	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
-	{
-		/// <summary>
-		/// Constructor. Creates an empty SpatialMap.
-		/// </summary>
-		/// <param name="initialCapacity">
-		/// The initial maximum number of elements the SpatialMap can hold before it has to
-		/// internally resize data structures. Defaults to 32.
-		/// </param>
-		public SpatialMap(int initialCapacity = 32)
-			: base(new IDComparer<T>(), initialCapacity)
-		{ }
-	}
-
-
-	/// <summary>
-	/// Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing and comparison of type T.
-	/// May be useful for cases where one does not want to implement IHasID, or if you need to use a value type in a SpatialMap.  For simple
-	/// cases, it is recommended to use SpatialMap instead.
+	/// Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing
+	/// and comparison of type T. May be useful for cases where one does not want to implement
+	/// IHasID, or if you need to use a value type in a SpatialMap. For simple cases, it is
+	/// recommended to use SpatialMap instead.
 	/// </summary>
 	/// <remarks>
-	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer -- it will in large part determine the performance of
-	/// AdvancedSpatialMap!
+	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer --
+	/// it will in large part determine the performance of AdvancedSpatialMap!
 	/// </remarks>
 	/// <typeparam name="T">The type of object that will be contained by this AdvancedSpatialMap.</typeparam>
 	public class AdvancedSpatialMap<T> : ISpatialMap<T>
@@ -62,8 +23,11 @@ namespace GoRogue
 		/// <summary>
 		/// Constructor. Creates an empty AdvancedSpatialMap.
 		/// </summary>
-		/// <param name="comparer">Equality comparer to use for comparison and hashing of type T.  Be mindful of the efficiency
-		/// of this instances GetHashCode function, as it will determine the efficiency of many AdvancedSpatialMap functions.</param>
+		/// <param name="comparer">
+		/// Equality comparer to use for comparison and hashing of type T. Be mindful of the
+		/// efficiency of this instances GetHashCode function, as it will determine the efficiency of
+		/// many AdvancedSpatialMap functions.
+		/// </param>
 		/// <param name="initialCapacity">
 		/// The initial maximum number of elements the SpatialMap can hold before it has to
 		/// internally resize data structures. Defaults to 32.
@@ -445,6 +409,47 @@ namespace GoRogue
 		/// <returns>A string representation of the SpatialMap.</returns>
 		public string ToString(Func<T, string> itemStringifier)
 			=> positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
+	}
+
+	/// <summary>
+	/// Designed as an more efficient data structure for recording objects on a map. The simple
+	/// version: if you're about to use a List to store a bunch of objects in your map, consider
+	/// using this or MultiSpatialMap instead!
+	/// </summary>
+	/// <remarks>
+	/// Typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and
+	/// lists of objects for things like entities, items, etc. This is simple but ultimately not
+	/// efficient; for example, in that implementation, determining if there is an object at a
+	/// location takes an amount of time proportional to the number of objects in this list. However,
+	/// the other simple option is to use an array with size equal to the size of the map (as many do
+	/// for terrain) for all object lists. This is even less ideal, as in that case, the time to
+	/// iterate over all objects becomes proportional to the size of the map (since one has to do
+	/// that for rendering, ouch!), which is typically much larger than the number of objects in a
+	/// list. This is the problem SpatialMap is designed to solve. It provides fast,
+	/// near-constant-time operations for getting the object at a location, adding entities, removing
+	/// entities, and will allow you to iterate through all objects in the SpatialMap in time
+	/// proportional to the number of objects in it (the best possible). Effectively, it is a more
+	/// efficient list for objects that have a position associated with them. This implementation can
+	/// only allow one item at a given location at a time -- for an implementation that allows
+	/// multiple items, see MultiSpatialMap. The objects stored in a SpatialMap must implement the
+	/// IHasID (see that interface's documentation for an easy implementation example). This is used
+	/// internally to keep track of the objects, since uints are easily (efficiently) hashable.
+	/// </remarks>
+	/// <typeparam name="T">
+	/// The type of object that will be contained by this SpatialMap. Must implement IHasID and be a reference-type.
+	/// </typeparam>
+	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
+	{
+		/// <summary>
+		/// Constructor. Creates an empty SpatialMap.
+		/// </summary>
+		/// <param name="initialCapacity">
+		/// The initial maximum number of elements the SpatialMap can hold before it has to
+		/// internally resize data structures. Defaults to 32.
+		/// </param>
+		public SpatialMap(int initialCapacity = 32)
+			: base(new IDComparer<T>(), initialCapacity)
+		{ }
 	}
 
 	internal class SpatialTuple<T> : ISpatialTuple<T>

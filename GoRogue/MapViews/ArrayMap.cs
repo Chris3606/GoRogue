@@ -21,8 +21,8 @@ namespace GoRogue.MapViews
 			array = new T[width, height];
 		}
 
-		// Sets the internal array to the existing one.  Should not (and cannot) be used outside of GoRogue.  Be careful,
-		// as it is a straight reference assignment!
+		// Sets the internal array to the existing one. Should not (and cannot) be used outside of
+		// GoRogue. Be careful, as it is a straight reference assignment!
 		internal ArrayMap(T[,] existingArray)
 		{
 			array = existingArray;

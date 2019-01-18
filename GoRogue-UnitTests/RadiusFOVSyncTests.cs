@@ -1,9 +1,9 @@
 ﻿using GoRogue;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using GoRogue.MapGeneration;
 
 namespace GoRogue_UnitTests
 {

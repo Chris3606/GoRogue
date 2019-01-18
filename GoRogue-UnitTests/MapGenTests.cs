@@ -25,23 +25,23 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
-		public void ManualTestRandomRoomsGen()
-		{
-			var random = new StandardGenerator();
-			var map = new ArrayMap<bool>(80, 50);
-			QuickGenerators.GenerateRandomRoomsMap(map, random, 10, 4, 15, 5);
-
-			displayMap(map);
-			// TODO: Some assert here
-		}
-
-		[TestMethod]
 		public void ManualTestDungeonMazeGen()
 		{
 			var random = new StandardGenerator(12345);
 
 			var map = new ArrayMap<bool>(80, 50);
 			QuickGenerators.GenerateDungeonMazeMap(map, random, 4, 10, 4, 7);
+
+			displayMap(map);
+			// TODO: Some assert here
+		}
+
+		[TestMethod]
+		public void ManualTestRandomRoomsGen()
+		{
+			var random = new StandardGenerator();
+			var map = new ArrayMap<bool>(80, 50);
+			QuickGenerators.GenerateRandomRoomsMap(map, random, 10, 4, 15, 5);
 
 			displayMap(map);
 			// TODO: Some assert here
@@ -81,8 +81,6 @@ namespace GoRogue_UnitTests
 			var random = new StandardGenerator();
 			var map = new ArrayMap<bool>(80, 50);
 
-
-
 			for (int i = 0; i < 500; i++)
 			{
 				QuickGenerators.GenerateDungeonMazeMap(map, random, 10, 20, 4, 15);
@@ -120,6 +118,16 @@ namespace GoRogue_UnitTests
 			Console.WriteLine(map.ToString(b => b ? "." : "#"));
 		}
 
+		private void displayMap(IMapView<bool> map)
+		{
+			for (int y = 0; y < map.Height; y++)
+			{
+				for (int x = 0; x < map.Width; x++)
+					Console.Write((map[x, y] ? '.' : '#'));
+				Console.WriteLine();
+			}
+		}
+
 		private void displayMapAreas(IMapView<bool> map, IEnumerable<MapArea> areas)
 		{
 			for (int y = 0; y < map.Height; y++)
@@ -142,16 +150,6 @@ namespace GoRogue_UnitTests
 					else
 						Console.Write('-');
 				}
-				Console.WriteLine();
-			}
-		}
-
-		private void displayMap(IMapView<bool> map)
-		{
-			for (int y = 0; y < map.Height; y++)
-			{
-				for (int x = 0; x < map.Width; x++)
-					Console.Write((map[x, y] ? '.' : '#'));
 				Console.WriteLine();
 			}
 		}

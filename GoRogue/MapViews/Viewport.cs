@@ -120,6 +120,5 @@ namespace GoRogue.MapViews
 		/// </param>
 		/// <returns>A string representation of the Viewport.</returns>
 		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
-
 	}
 }

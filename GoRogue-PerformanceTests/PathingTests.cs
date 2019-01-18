@@ -1,10 +1,10 @@
 ﻿using GoRogue;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GoRogue.MapGeneration;
 
 namespace GoRogue_PerformanceTests
 {

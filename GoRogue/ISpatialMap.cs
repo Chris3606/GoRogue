@@ -7,8 +7,8 @@ namespace GoRogue
 	/// General interface for a data structure that records objects on a map.
 	/// </summary>
 	/// <remarks>
-	/// Different implementations of this interface are provided by to the library, each
-	/// providing somewhat different implementations and constraints, however generally they provide more
+	/// Different implementations of this interface are provided by to the library, each providing
+	/// somewhat different implementations and constraints, however generally they provide more
 	/// efficient implementations of many of these operations than the standard "list of monsters"
 	/// that is often used in roguelike map design.
 	/// </remarks>
@@ -202,18 +202,22 @@ namespace GoRogue
 
 	// Class for dictionary-hashing of things that implement IHasID
 	/// <summary>
-	/// Class intended for comparing/hashing objects that implement IHasID.  Type T must be a reference type.
+	/// Class intended for comparing/hashing objects that implement IHasID. Type T must be a
+	/// reference type.
 	/// </summary>
-	/// <typeparam name="T">Type of object being compared.  Type T must be a reference type that implements IHasID.</typeparam>
-	class IDComparer<T> : IEqualityComparer<T> where T : class, IHasID
+	/// <typeparam name="T">
+	/// Type of object being compared. Type T must be a reference type that implements IHasID.
+	/// </typeparam>
+	internal class IDComparer<T> : IEqualityComparer<T> where T : class, IHasID
 	{
 		/// <summary>
-		/// Equality comparison.  Performs comparison via the object's ReferenceEquals function.
+		/// Equality comparison. Performs comparison via the object's ReferenceEquals function.
 		/// </summary>
 		/// <param name="x">First object to compare.</param>
 		/// <param name="y">Second object to compare.</param>
 		/// <returns>True if the objects are considered equal, false otherwise.</returns>
 		public bool Equals(T x, T y) => ReferenceEquals(x, y);
+
 		/// <summary>
 		/// Generates a hash based on the object's ID.GetHashCode() function.
 		/// </summary>
