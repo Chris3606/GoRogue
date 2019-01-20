@@ -3,6 +3,7 @@ using GoRogue.Random;
 using System;
 using System.Collections.Generic;
 using Troschuetz.Random;
+using XnaRectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace GoRogue
 {
@@ -750,5 +751,8 @@ namespace GoRogue
 		/// <returns>A new rectangle, whose y-position has been moved by the given delta-y value.</returns>
 		public Rectangle TranslateY(int dy)
 			=> new Rectangle(X, Y + dy, Width, Height);
+
+		public static implicit operator XnaRectangle(Rectangle rect) => new XnaRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		public static implicit operator Rectangle(XnaRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
 	}
 }

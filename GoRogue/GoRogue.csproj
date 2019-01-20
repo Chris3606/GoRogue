@@ -3,19 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>1.8.0</PackageVersion>
+	<PackageVersion>2.0.0-pre1</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>See https://github.com/Chris3606/GoRogue/releases/tag/v1.8.0 for release notes.</PackageReleaseNotes>
+	<PackageReleaseNotes>Added optional dependency on MonoGame, and implicit conversions for MonoGame primitives.</PackageReleaseNotes>
     <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="$(ProjectDir)..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="$(ProjectDir)..\LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -34,6 +34,7 @@
 	</Target>
   
 	<ItemGroup>
+	  <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
 	  <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
 	  <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
 	</ItemGroup>

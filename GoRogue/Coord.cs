@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace GoRogue
 {
@@ -400,5 +401,8 @@ namespace GoRogue
 		/// </param>
 		/// <returns>The coordinate (X + deltaChange.X, Y + deltaChange.Y)</returns>
 		public Coord Translate(Coord deltaChange) => Get(X + deltaChange.X, Y + deltaChange.Y);
+
+		public static implicit operator Point(Coord pos) => new Point(pos.X, pos.Y);
+		public static implicit operator Coord(Point pos) => new Coord(pos.X, pos.Y);
 	}
 }
