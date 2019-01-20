@@ -209,6 +209,8 @@ namespace GoRogue
 				return false;
 
 			var movingTuple = itemMapping[item];
+			if (movingTuple.Position == target)
+				return false;
 
 			Coord oldPos = movingTuple.Position;
 			positionMapping[movingTuple.Position].Remove(movingTuple);
@@ -244,7 +246,7 @@ namespace GoRogue
 		/// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
 		public IEnumerable<T> Move(Coord current, Coord target)
 		{
-			if (positionMapping.ContainsKey(current))
+			if (positionMapping.ContainsKey(current) && current != target)
 			{
 				if (!positionMapping.ContainsKey(target))
 					positionMapping.Add(target, new List<SpatialTuple<T>>());
