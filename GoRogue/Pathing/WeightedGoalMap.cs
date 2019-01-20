@@ -6,7 +6,7 @@ namespace GoRogue.Pathing
 {
 	/// <summary>
 	/// Implementation of the second half of the goal map system described in
-	/// http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps , the ability
+	/// http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps, the ability
 	/// to combine multiple goal maps with different weights.
 	/// </summary>
 	/// <remarks>
