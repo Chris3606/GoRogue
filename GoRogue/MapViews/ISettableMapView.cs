@@ -28,5 +28,13 @@
 		/// <param name="pos">Location to get/set the value for.</param>
 		/// <returns>The "value" associated with the provided location.</returns>
 		new T this[Coord pos] { get; set; }
+
+		/// <summary>
+		/// Given an 1-dimensional index, should use Coord.ToIndex to calculate the 2D position
+		/// represented by that 1D index, and return/set the value at that location.
+		/// </summary>
+		/// <param name="index1D">1D index of location to get/set the "value" for.</param>
+		/// <returns>The "Value" associated with the given location.</returns>
+		new T this[int index1D] { get; set; }
 	}
 }

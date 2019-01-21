@@ -10,8 +10,8 @@ namespace GoRogue_PerformanceTests
 {
 	public static class PathingTests
 	{
-		private static Coord END = Coord.Get(17, 14);
-		private static Coord START = Coord.Get(1, 2);
+		private static Coord END = new Coord(17, 14);
+		private static Coord START = new Coord(1, 2);
 
 		public static TimeSpan TimeForAStar(int mapWidth, int mapHeight, int iterations)
 		{

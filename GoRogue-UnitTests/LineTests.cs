@@ -8,10 +8,10 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class LineTests
 	{
-		private static readonly Coord END = Coord.Get(8, 6);
+		private static readonly Coord END = (8, 6);
 		private static readonly int MAP_HEIGHT = 10;
 		private static readonly int MAP_WIDTH = 10;
-		private static readonly Coord START = Coord.Get(1, 1);
+		private static readonly Coord START = (1, 1);
 
 		[TestMethod]
 		public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);

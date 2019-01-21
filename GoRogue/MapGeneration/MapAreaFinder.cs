@@ -72,7 +72,7 @@ namespace GoRogue.MapGeneration
 			for (int x = 0; x < Map.Width; x++)
 				for (int y = 0; y < Map.Height; y++)
 				{
-					var area = visit(Coord.Get(x, y));
+					var area = visit(new Coord(x, y));
 
 					if (area != null && area.Count != 0)
 						yield return area;

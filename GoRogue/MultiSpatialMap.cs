@@ -142,7 +142,7 @@ namespace GoRogue
 		/// <param name="x">x-value of the position to add item to.</param>
 		/// <param name="y">y-value of the position to add item to.</param>
 		/// <returns>True if the item was added, false if not.</returns>
-		public bool Add(T newItem, int x, int y) => Add(newItem, Coord.Get(x, y));
+		public bool Add(T newItem, int x, int y) => Add(newItem, new Coord(x, y));
 
 		/// <summary>
 		/// Returns a ReadOnly reference to the SpatialMap. Convenient for "safely" exposing a
@@ -173,7 +173,7 @@ namespace GoRogue
 		/// <summary>
 		/// See IReadOnlySpatialMap.Contains.
 		/// </summary>
-		public bool Contains(int x, int y) => Contains(Coord.Get(x, y));
+		public bool Contains(int x, int y) => Contains(new Coord(x, y));
 
 		/// <summary>
 		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -209,7 +209,7 @@ namespace GoRogue
 		/// <summary>
 		/// See IReadOnlySpatialMap.GetItems.
 		/// </summary>
-		public IEnumerable<T> GetItems(int x, int y) => GetItems(Coord.Get(x, y));
+		public IEnumerable<T> GetItems(int x, int y) => GetItems(new Coord(x, y));
 
 		/// <summary>
 		/// See IReadOnlySpatialMap.GetPosition.
@@ -218,7 +218,7 @@ namespace GoRogue
 		{
 			SpatialTuple<T> tuple;
 			itemMapping.TryGetValue(item, out tuple);
-			if (tuple == null) return null;
+			if (tuple == null) return Coord.NONE;
 			return tuple.Position;
 		}
 
@@ -259,7 +259,7 @@ namespace GoRogue
 		/// <param name="targetX">X-value of the location to move it to.</param>
 		/// <param name="targetY">Y-value of the location to move it to.</param>
 		/// <returns>True if the item was moved, false if not.</returns>
-		public bool Move(T item, int targetX, int targetY) => Move(item, Coord.Get(targetX, targetY));
+		public bool Move(T item, int targetX, int targetY) => Move(item, new Coord(targetX, targetY));
 
 		/// <summary>
 		/// Moves everything at position current, if anything, to postion target. If something was
@@ -305,7 +305,7 @@ namespace GoRogue
 		/// <param name="targetX">X-value of the location to move items to.</param>
 		/// <param name="targetY">Y-value of the location to move items to.</param>
 		/// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
-		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(Coord.Get(currentX, currentY), Coord.Get(targetX, targetY));
+		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(new Coord(currentX, currentY), new Coord(targetX, targetY));
 
 		/// <summary>
 		/// Removes the item specified, if it exists, and returns true. Returns false if the item was
@@ -364,7 +364,7 @@ namespace GoRogue
 		/// <returns>
 		/// The items removed, if any were removed; nothing if no item was found at that position.
 		/// </returns>
-		public IEnumerable<T> Remove(int x, int y) => Remove(Coord.Get(x, y));
+		public IEnumerable<T> Remove(int x, int y) => Remove(new Coord(x, y));
 
 		/// <summary>
 		/// Returns a string representation of the MultiSpatialMap, allowing display of the

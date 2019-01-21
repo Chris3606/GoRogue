@@ -244,7 +244,7 @@ namespace GoRogue
 		/// <param name="startingX">X-coordinate of location to return neighbors for.</param>
 		/// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
 		/// <returns>All neighbors of the given location.</returns>
-		public IEnumerable<Coord> Neighbors(int startingX, int startingY) => Neighbors(Coord.Get(startingX, startingY));
+		public IEnumerable<Coord> Neighbors(int startingX, int startingY) => Neighbors(new Coord(startingX, startingY));
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
@@ -276,7 +276,7 @@ namespace GoRogue
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)
-			=> NeighborsClockwise(Coord.Get(startingX, startingY), startingDirection);
+			=> NeighborsClockwise(new Coord(startingX, startingY), startingDirection);
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
@@ -308,7 +308,7 @@ namespace GoRogue
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
-			=> NeighborsCounterClockwise(Coord.Get(startingX, startingY), startingDirection);
+			=> NeighborsCounterClockwise(new Coord(startingX, startingY), startingDirection);
 
 		/// <summary>
 		/// Returns a string representation of the AdjacencyRule.

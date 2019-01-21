@@ -65,15 +65,15 @@ namespace GoRogue_UnitTests
 			for (int i = 0; i < 5; i++)
 			{
 				var item = new MySpatialMapItem(i);
-				result = sm.Add(item, Coord.Get(1, 2));
+				result = sm.Add(item, (1, 2));
 				Assert.AreEqual(true, result);
 			}
 
-			result = sm.Add(new MySpatialMapItem(5), Coord.Get(2, 3)); // Out of range layer
+			result = sm.Add(new MySpatialMapItem(5), (2, 3)); // Out of range layer
 			Assert.AreEqual(false, result);
 
 			sm = new LayeredSpatialMap<MySpatialMapItem>(5, 1);
-			result = sm.Add(new MySpatialMapItem(0), Coord.Get(5, 6));
+			result = sm.Add(new MySpatialMapItem(0), (5, 6));
 			Assert.AreEqual(false, result);
 		}
 
@@ -129,37 +129,37 @@ namespace GoRogue_UnitTests
 			{
 				var item = new MySpatialMapItem(i);
 				itemsAdded.Add(item);
-				sm.Add(item, Coord.Get(1, 2));
+				sm.Add(item, (1, 2));
 			}
 			
 			var lastItem = new MySpatialMapItem(3);
 			itemsAdded.Add(lastItem);
-			sm.Add(lastItem, Coord.Get(5, 6));
+			sm.Add(lastItem, (5, 6));
 			
 			bool result = sm.Move(lastItem, 1, 2);
 			Assert.AreEqual(false, result); // Blocked by first 5 adds and they no layers support multiple items
 			
-			result = sm.Move(lastItem, Coord.Get(2, 3)); // At 2, 3 we now have item on layer 3
+			result = sm.Move(lastItem, (2, 3)); // At 2, 3 we now have item on layer 3
 			Assert.AreEqual(true, result);
 
-			List<MySpatialMapItem> itemsMoved = sm.Move(Coord.Get(1, 2), Coord.Get(2, 3)).ToList();
+			List<MySpatialMapItem> itemsMoved = sm.Move((1, 2), (2, 3)).ToList();
 			Assert.AreEqual(4, itemsMoved.Count); // All original items minus 1 because that one was blocked
 
-			itemsMoved = sm.Move(Coord.Get(2, 3), Coord.Get(1, 2), ~sm.LayerMasker.Mask(2)).ToList();
+			itemsMoved = sm.Move((2, 3), (1, 2), ~sm.LayerMasker.Mask(2)).ToList();
 			Assert.AreEqual(3, itemsMoved.Count); // lastItem from above masked out by layer
 
 			sm = new LayeredSpatialMap<MySpatialMapItem>(5, 1);
 			for (int i = 0; i < itemsAdded.Count - 1; i++) // All but that last item so we add at diff pos
-				sm.Add(itemsAdded[i], Coord.Get(1, 2));
+				sm.Add(itemsAdded[i], (1, 2));
 
-			sm.Add(lastItem, Coord.Get(2, 3));
+			sm.Add(lastItem, (2, 3));
 			// We should have added all but the one that was layer 0
 			itemsMoved = sm.Move(1, 2, 2, 3).ToList();
 			Assert.AreEqual(3, itemsMoved.Count);
 
 			itemsMoved = sm.Move(2, 3, 1, 2, ~sm.LayerMasker.Mask(2)).ToList();
 			Assert.AreEqual(2, itemsMoved.Count);
-			List<MySpatialMapItem> itemsLeft = sm.GetItems(Coord.Get(2, 3)).ToList();
+			List<MySpatialMapItem> itemsLeft = sm.GetItems((2, 3)).ToList();
 			Assert.AreEqual(2, itemsLeft.Count);
 			bool found = false;
 			foreach (var item in itemsLeft)

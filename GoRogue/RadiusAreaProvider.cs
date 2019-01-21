@@ -64,7 +64,7 @@ namespace GoRogue
 		/// </param>
 		/// <param name="bounds">The bounds to constrain the returned Coords to.</param>
 		public RadiusAreaProvider(int centerX, int centerY, int radius, Distance distanceCalc, Rectangle bounds)
-			: this(Coord.Get(centerX, centerY), radius, distanceCalc, bounds) { }
+			: this(new Coord(centerX, centerY), radius, distanceCalc, bounds) { }
 
 		/// <summary>
 		/// Constructor. Specifies center, radius length, and distance calculation that defines the
@@ -91,7 +91,7 @@ namespace GoRogue
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
 		public RadiusAreaProvider(int centerX, int centerY, int radius, Distance distanceCalc)
-			: this(Coord.Get(centerX, centerY), radius, distanceCalc, Rectangle.EMPTY) { }
+			: this(new Coord(centerX, centerY), radius, distanceCalc, Rectangle.EMPTY) { }
 
 		/// <summary>
 		/// The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
@@ -111,6 +111,9 @@ namespace GoRogue
 				topLeft = _center - _radius;
 			}
 		}
+
+		public int CenterX => _center.X;
+		public int CenterY => _center.Y;
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
@@ -192,7 +195,7 @@ namespace GoRogue
 		public override string ToString()
 		{
 			string bounds = (Bounds.IsEmpty) ? "None" : Bounds.ToString();
-			return $"Center: {Center}, Radius: {Radius}, Distance Measurement: {DistanceCalc}, Bounds: {bounds}";
+			return $"Center: {_center}, Radius: {Radius}, Distance Measurement: {DistanceCalc}, Bounds: {bounds}";
 		}
 	}
 }

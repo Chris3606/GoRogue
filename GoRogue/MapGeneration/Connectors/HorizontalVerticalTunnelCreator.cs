@@ -55,7 +55,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="startY">Y-value of the start position of the tunnel.</param>
 		/// <param name="endX">X-value of the end position of the tunnel.</param>
 		/// <param name="endY">Y-value of the end position of the tunnel.</param>
-		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, Coord.Get(startX, startY), Coord.Get(endX, endY));
+		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Coord(startX, startY), new Coord(endX, endY));
 
 		static private void createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
 		{

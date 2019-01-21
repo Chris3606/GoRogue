@@ -141,7 +141,7 @@ namespace GoRogue
 		/// <param name="x">X-value of the current position of the item.</param>
 		/// <param name="y">Y-value of the current position of the item.</param>
 		public ItemEventArgs(T item, int x, int y)
-			: this(item, Coord.Get(x, y)) { }
+			: this(item, new Coord(x, y)) { }
 
 		/// <summary>
 		/// Item being represented.
@@ -182,7 +182,7 @@ namespace GoRogue
 		/// <param name="newPositionX">X-value of the position of item after it has been moved.</param>
 		/// <param name="newPositionY">Y-value of the position of item after it has been moved.</param>
 		public ItemMovedEventArgs(T item, int oldPositionX, int oldPositionY, int newPositionX, int newPositionY)
-			: this(item, Coord.Get(oldPositionX, oldPositionY), Coord.Get(newPositionX, newPositionY)) { }
+			: this(item, new Coord(oldPositionX, oldPositionY), new Coord(newPositionX, newPositionY)) { }
 
 		/// <summary>
 		/// Item being represented.

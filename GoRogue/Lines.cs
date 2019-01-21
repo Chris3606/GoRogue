@@ -84,7 +84,7 @@ namespace GoRogue
 
 				case Algorithm.BRESENHAM_ORDERED:
 					var line = bresenham(startX, startY, endX, endY).Reverse();
-					if (line.First() == Coord.Get(startX, startY))
+					if (line.First() == new Coord(startX, startY))
 						return line;
 					else
 						return line.Reverse();
@@ -125,9 +125,9 @@ namespace GoRogue
 			for (int x = startX; x <= endX; x++)
 			{
 				if (steep)
-					yield return Coord.Get(y, x);
+					yield return new Coord(y, x);
 				else
-					yield return Coord.Get(x, y);
+					yield return new Coord(x, y);
 
 				err -= dy;
 				if (err < 0)
@@ -154,7 +154,7 @@ namespace GoRogue
 
 			if (mn == 0)
 			{
-				yield return Coord.Get(startX, startY);
+				yield return new Coord(startX, startY);
 				yield break;
 			}
 
@@ -162,10 +162,10 @@ namespace GoRogue
 			{
 				if (dx > 0)
 					for (int x = startX; x <= endX; x++)
-						yield return Coord.Get(x, startY);
+						yield return new Coord(x, startY);
 				else
 					for (int x = startX; x >= endX; x--)
-						yield return Coord.Get(x, startY);
+						yield return new Coord(x, startY);
 
 				yield break;
 			}
@@ -174,10 +174,10 @@ namespace GoRogue
 			{
 				if (dy > 0)
 					for (int y = startY; y <= endY; y++)
-						yield return Coord.Get(startX, y);
+						yield return new Coord(startX, y);
 				else
 					for (int y = startY; y >= endY; y--)
-						yield return Coord.Get(startX, y);
+						yield return new Coord(startX, y);
 
 				yield break;
 			}
@@ -187,49 +187,49 @@ namespace GoRogue
 				case 0: // +x, +y
 					move = (ny << 16) / nx;
 					for (int primary = startX; primary <= endX; primary++, frac += move)
-						yield return Coord.Get(primary, startY + ((frac + MODIFIER_Y) >> 16));
+						yield return new Coord(primary, startY + ((frac + MODIFIER_Y) >> 16));
 					break;
 
 				case 1:
 					move = (nx << 16) / ny;
 					for (int primary = startY; primary <= endY; primary++, frac += move)
-						yield return Coord.Get(startX + ((frac + MODIFIER_X) >> 16), primary);
+						yield return new Coord(startX + ((frac + MODIFIER_X) >> 16), primary);
 					break;
 
 				case 2: // -x, +y
 					move = (ny << 16) / nx;
 					for (int primary = startX; primary >= endX; primary--, frac += move)
-						yield return Coord.Get(primary, startY + ((frac + MODIFIER_Y) >> 16));
+						yield return new Coord(primary, startY + ((frac + MODIFIER_Y) >> 16));
 					break;
 
 				case 3:
 					move = (nx << 16) / ny;
 					for (int primary = startY; primary <= endY; primary++, frac += move)
-						yield return Coord.Get(startX - ((frac + MODIFIER_X) >> 16), primary);
+						yield return new Coord(startX - ((frac + MODIFIER_X) >> 16), primary);
 					break;
 
 				case 6: // -x, -y
 					move = (ny << 16) / nx;
 					for (int primary = startX; primary >= endX; primary--, frac += move)
-						yield return Coord.Get(primary, startY - ((frac + MODIFIER_Y) >> 16));
+						yield return new Coord(primary, startY - ((frac + MODIFIER_Y) >> 16));
 					break;
 
 				case 7:
 					move = (nx << 16) / ny;
 					for (int primary = startY; primary >= endY; primary--, frac += move)
-						yield return Coord.Get(startX - ((frac + MODIFIER_X) >> 16), primary);
+						yield return new Coord(startX - ((frac + MODIFIER_X) >> 16), primary);
 					break;
 
 				case 4: // +x, -y
 					move = (ny << 16) / nx;
 					for (int primary = startX; primary <= endX; primary++, frac += move)
-						yield return Coord.Get(primary, startY - ((frac + MODIFIER_Y) >> 16));
+						yield return new Coord(primary, startY - ((frac + MODIFIER_Y) >> 16));
 					break;
 
 				case 5:
 					move = (nx << 16) / ny;
 					for (int primary = startY; primary >= endY; primary--, frac += move)
-						yield return Coord.Get(startX + ((frac + MODIFIER_X) >> 16), primary);
+						yield return new Coord(startX + ((frac + MODIFIER_X) >> 16), primary);
 					break;
 			}
 		}
@@ -248,7 +248,7 @@ namespace GoRogue
 			int workX = startX;
 			int workY = startY;
 
-			yield return Coord.Get(startX, startY);
+			yield return new Coord(startX, startY);
 
 			for (int ix = 0, iy = 0; ix < nx || iy < ny;)
 			{
@@ -263,7 +263,7 @@ namespace GoRogue
 					iy++;
 				}
 
-				yield return Coord.Get(workX, workY);
+				yield return new Coord(workX, workY);
 			}
 		}
 	}

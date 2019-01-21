@@ -70,21 +70,21 @@ namespace GoRogue_UnitTests
 			QuickGenerators.GenerateRectangleMap(arrayMap);
 
 			var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-			checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
+			checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-			viewport.ViewArea = viewport.ViewArea.Move(Coord.Get(-1, 0)); // Should end up being 0, 0 thanks to bounding
-			checkViewportBounds(viewport, Coord.Get(0, 0), Coord.Get(VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
+			viewport.ViewArea = viewport.ViewArea.Move((-1, 0)); // Should end up being 0, 0 thanks to bounding
+			checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-			viewport.ViewArea = viewport.ViewArea.Move(Coord.Get(5, 5));
-			checkViewportBounds(viewport, Coord.Get(5, 5), Coord.Get(VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
+			viewport.ViewArea = viewport.ViewArea.Move((5, 5));
+			checkViewportBounds(viewport, (5, 5), (VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
 
 			// Move outside x-bounds by 1
-			Coord newCenter = Coord.Get(MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
+			Coord newCenter = (MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
 			// viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
 			viewport.ViewArea = viewport.ViewArea.CenterOn(newCenter);
 
-			Coord minVal = Coord.Get(MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
-			Coord maxVal = Coord.Get(MAP_WIDTH - 1, MAP_HEIGHT - 1);
+			Coord minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
+			Coord maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
 			checkViewportBounds(viewport, minVal, maxVal);
 		}
 

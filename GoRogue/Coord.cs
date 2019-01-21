@@ -22,8 +22,10 @@ namespace GoRogue
 	/// collections, this can significantly improve on efficiency. Later, support may be added for
 	/// modifying this range as necessary.
 	/// </remarks>
-	public class Coord
+	public struct Coord : IEquatable<Coord>, IEquatable<(int x, int y)>
 	{
+		public static readonly Coord NONE = new Coord(int.MinValue, int.MinValue);
+
 		/// <summary>
 		/// X-value of the coordinate.
 		/// </summary>
@@ -34,24 +36,7 @@ namespace GoRogue
 		/// </summary>
 		public readonly int Y;
 
-		private static Coord[,] POOL = new Coord[259, 259];
-
-		// Make sure pool is initialized to proper width/height.
-		static Coord()
-		{
-			int width = POOL.GetLength(0), height = POOL.GetLength(1);
-			for (int i = 0; i < width; i++)
-				for (int j = 0; j < height; j++)
-					POOL[i, j] = new Coord(i - 3, j - 3);
-		}
-
-		private Coord()
-		{
-			X = 0;
-			Y = 0;
-		}
-
-		private Coord(int x, int y)
+		public Coord(int x, int y)
 		{
 			X = x;
 			Y = y;
@@ -165,20 +150,6 @@ namespace GoRogue
 		/// </returns>
 		public static double EuclideanDistanceMagnitude(int dx, int dy) => dx * dx + dy * dy;
 
-		/// <summary>
-		/// Returns the proper Coord instance for the given x and y values. Will return the one in
-		/// the array if the values are in the appropriate range, otherwise will create a new one and
-		/// return that one.
-		/// </summary>
-		/// <param name="x">The x-value for the coordinate.</param>
-		/// <param name="y">The y-value for the coordinate.</param>
-		/// <returns>The Coord representing the given x-value and y-value.</returns>
-		public static Coord Get(int x, int y)
-		{
-			if (x >= -3 && y >= -3 && x < POOL.GetLength(0) - 3 && y < POOL.GetLength(1) - 3)
-				return POOL[x + 3, y + 3];
-			else return new Coord(x, y);
-		}
 
 		/// <summary>
 		/// Returns the midpoint between the two points.
@@ -187,7 +158,7 @@ namespace GoRogue
 		/// <param name="c2">The second point.</param>
 		/// <returns>The midpoint between c1 and c2.</returns>
 		public static Coord Midpoint(Coord c1, Coord c2) =>
-			Get((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
+			new Coord((int)Math.Round((c1.X + c2.X) / 2.0f, MidpointRounding.AwayFromZero), (int)Math.Round((c1.Y + c2.Y) / 2.0f, MidpointRounding.AwayFromZero));
 
 		/// <summary>
 		/// Returns the midpoint between the two points.
@@ -197,7 +168,7 @@ namespace GoRogue
 		/// <param name="x2">The x-value of the second location.</param>
 		/// <param name="y2">The y-value of the second location.</param>
 		/// <returns>The midpoint between the two points.</returns>
-		public static Coord Midpoint(int x1, int y1, int x2, int y2) => Midpoint(Coord.Get(x1, y1), Coord.Get(x2, y2));
+		public static Coord Midpoint(int x1, int y1, int x2, int y2) => Midpoint(new Coord(x1, y1), new Coord(x2, y2));
 
 		/// <summary>
 		/// - operator. Returns the coordinate (c1.X - c2.X, c1.Y - c2.Y)
@@ -205,7 +176,7 @@ namespace GoRogue
 		/// <param name="c1">The first coordinate.</param>
 		/// <param name="c2">The coordinate to subtract from c1.</param>
 		/// <returns>c1 - c2, eg. (c1.X - c2.X, c1.Y - c2.Y)</returns>
-		public static Coord operator -(Coord c1, Coord c2) => Get(c1.X - c2.X, c1.Y - c2.Y);
+		public static Coord operator -(Coord c1, Coord c2) => new Coord(c1.X - c2.X, c1.Y - c2.Y);
 
 		/// <summary>
 		/// - operator. Subtracts scalar i from the x and y values of c1, eg. returns (c.X - i, c.Y - i).
@@ -213,7 +184,7 @@ namespace GoRogue
 		/// <param name="c">Coordinate to subtract the scalar from.</param>
 		/// <param name="i">Scalar to subtract from the coordinate.</param>
 		/// <returns></returns>
-		public static Coord operator -(Coord c, int i) => Get(c.X - i, c.Y - i);
+		public static Coord operator -(Coord c, int i) => new Coord(c.X - i, c.Y - i);
 
 		/// <summary>
 		/// True if either the x-values or y-values are not equal.
@@ -231,7 +202,7 @@ namespace GoRogue
 		/// <param name="c">Coordinate to multiply by the scalar.</param>
 		/// <param name="i">Scalar to multiply the coordinate by.</param>
 		/// <returns>Coordinate (c.X * i, c.Y * i)</returns>
-		public static Coord operator *(Coord c, int i) => Get(c.X * i, c.Y * i);
+		public static Coord operator *(Coord c, int i) => new Coord(c.X * i, c.Y * i);
 
 		/// <summary>
 		/// * operator, similar to the int version. Rounds x-value and y-value to the nearest
@@ -243,7 +214,7 @@ namespace GoRogue
 		/// Coordinate (c.X * i, c.Y * i), with the resulting values rounded to nearest integer.
 		/// </returns>
 		public static Coord operator *(Coord c, double i) =>
-			Get((int)Math.Round(c.X * i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y * i, MidpointRounding.AwayFromZero));
+			new Coord((int)Math.Round(c.X * i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y * i, MidpointRounding.AwayFromZero));
 
 		/// <summary>
 		/// / operator. Divides the x-value and y-value of c by i, eg. returns (c.X / i, c.Y / i).
@@ -253,7 +224,7 @@ namespace GoRogue
 		/// <param name="i">The scalar to divide the coordinate by.</param>
 		/// <returns>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</returns>
 		public static Coord operator /(Coord c, int i) =>
-			Get((int)Math.Round(c.X / (double)i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / (double)i, MidpointRounding.AwayFromZero));
+			new Coord((int)Math.Round(c.X / (double)i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / (double)i, MidpointRounding.AwayFromZero));
 
 		/// <summary>
 		/// / operator. Similar to int version.
@@ -262,7 +233,7 @@ namespace GoRogue
 		/// <param name="i">The scalar to divide the coordinate by.</param>
 		/// <returns>(c.X / i, c.Y / i), with the resulting values rounded to the nearest integer.</returns>
 		public static Coord operator /(Coord c, double i) =>
-			Get((int)Math.Round(c.X / i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / i, MidpointRounding.AwayFromZero));
+			new Coord((int)Math.Round(c.X / i, MidpointRounding.AwayFromZero), (int)Math.Round(c.Y / i, MidpointRounding.AwayFromZero));
 
 		/// <summary>
 		/// + operator. Returns the coordinate (c1.X + c2.X, c1.Y + c2.Y).
@@ -270,7 +241,7 @@ namespace GoRogue
 		/// <param name="c1">The first coordinate.</param>
 		/// <param name="c2">The coordinate to add to c1.</param>
 		/// <returns>c1 + c2, eg. (c1.X + c2.X, c1.Y + c2.Y)</returns>
-		public static Coord operator +(Coord c1, Coord c2) => Get(c1.X + c2.X, c1.Y + c2.Y);
+		public static Coord operator +(Coord c1, Coord c2) => new Coord(c1.X + c2.X, c1.Y + c2.Y);
 
 		/// <summary>
 		/// + operator. Adds scalar i to the x and y values of c; eg., returns (c.X + i, c.Y + i).
@@ -278,7 +249,7 @@ namespace GoRogue
 		/// <param name="c">Coordinate to add scalar to.</param>
 		/// <param name="i">Scalar to add to coordinate.</param>
 		/// <returns>Coordinate resulting from adding scalar i to x-value and y-value of c1.</returns>
-		public static Coord operator +(Coord c, int i) => Get(c.X + i, c.Y + i);
+		public static Coord operator +(Coord c, int i) => new Coord(c.X + i, c.Y + i);
 
 		/// <summary>
 		/// + operator. Translates the given coordinate by the given direction, eg. returns (c.X +
@@ -289,7 +260,7 @@ namespace GoRogue
 		/// <returns>
 		/// The coordinate translated by the given direction, eg. (c.X + d.DeltaX, c.Y + d.DeltaY
 		/// </returns>
-		public static Coord operator +(Coord c, Direction d) => Get(c.X + d.DeltaX, c.Y + d.DeltaY);
+		public static Coord operator +(Coord c, Direction d) => new Coord(c.X + d.DeltaX, c.Y + d.DeltaY);
 
 		/// <summary>
 		/// True if c1.X == c2.X and c1.Y == c2.Y.
@@ -314,7 +285,7 @@ namespace GoRogue
 		/// <param name="index">The index in 1D form.</param>
 		/// <param name="width">The width of the 2D array.</param>
 		/// <returns>The Coord represented by the 1D index given.</returns>
-		public static Coord ToCoord(int index, int width) => Get(index % width, index / width);
+		public static Coord ToCoord(int index, int width) => new Coord(index % width, index / width);
 
 		/// <summary>
 		/// Returns y * width + x. Same as Coord.ToIndex(int width), just takes x and y instead.
@@ -348,7 +319,7 @@ namespace GoRogue
 		/// <returns>
 		/// True if o is a Coord instance, and the two coordinates are equal, false otherwise.
 		/// </returns>
-		public override bool Equals(object obj) => this == (obj as Coord); // If cast is null, operator== will take care of it.
+		public override bool Equals(object obj) => obj is Coord c && Equals(c); // If cast is null, operator== will take care of it.
 
 		/// <summary>
 		/// Returns a hash code for the Coord. The important parts: it should be fairly fast and it
@@ -389,7 +360,7 @@ namespace GoRogue
 		/// <param name="dx">Delta x to add to coordinate.</param>
 		/// <param name="dy">Delta y to add to coordinate.</param>
 		/// <returns>The coordinate (X + dx, Y + dy)</returns>
-		public Coord Translate(int dx, int dy) => Get(X + dx, Y + dy);
+		public Coord Translate(int dx, int dy) => new Coord(X + dx, Y + dy);
 
 		/// <summary>
 		/// Returns the coordinate resulting from adding dx to the X-value of the coordinate, and dy
@@ -400,9 +371,38 @@ namespace GoRogue
 		/// delta-y value.
 		/// </param>
 		/// <returns>The coordinate (X + deltaChange.X, Y + deltaChange.Y)</returns>
-		public Coord Translate(Coord deltaChange) => Get(X + deltaChange.X, Y + deltaChange.Y);
+		public Coord Translate(Coord deltaChange) => new Coord(X + deltaChange.X, Y + deltaChange.Y);
 
-		public static implicit operator Point(Coord pos) => new Point(pos.X, pos.Y);
-		public static implicit operator Coord(Point pos) => new Coord(pos.X, pos.Y);
+		public bool Equals(Coord other) => X == other.X && Y == other.Y;
+
+		#region MonoGame Conversions
+		public static implicit operator Point(Coord c) => new Point(c.X, c.Y);
+		public static implicit operator Coord(Point p) => new Coord(p.X, p.Y);
+		#endregion
+
+		#region TupleCompatibility
+		public void Deconstruct(out int x, out int y)
+		{
+			x = X;
+			y = Y;
+		}
+
+		public bool Equals((int x, int y) other) => X == other.x && Y == other.y;
+
+		public static implicit operator (int x, int y) (Coord c) => (c.X, c.Y);
+		public static implicit operator Coord((int x, int y) tuple) => new Coord(tuple.x, tuple.y);
+
+		/// <summary>
+		/// True if first tuple value is equal to coord's x, and second tuple value is equal to coord's y.
+		/// </summary>
+		/// <param name="c1">First coodinate to compare.</param>
+		/// <param name="tuple">Second position to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public static bool operator ==(Coord c1, (int x, int y) tuple) => c1.X == tuple.x && c1.Y == tuple.y;
+		public static bool operator !=(Coord c1, (int x, int y) tuple) => !(c1 == tuple);
+
+		public static bool operator ==((int x, int y) tuple, Coord c2) => tuple.x == c2.X && tuple.y == c2.Y;
+		public static bool operator !=((int x, int y) tuple, Coord c2) => !(tuple == c2);
+		#endregion
 	}
 }

@@ -82,6 +82,8 @@ namespace GoRogue
 		/// </summary>
 		public int Width { get => resMap.Width; }
 
+		public double this[int index1D] => light[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
+
 		/// <summary>
 		/// Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the
 		/// given location.
@@ -161,7 +163,7 @@ namespace GoRogue
 
 			initializeLightMap();
 			light[startX, startY] = 1; // Full power to starting space
-			currentFOV.Add(Coord.Get(startX, startY));
+			currentFOV.Add(new Coord(startX, startY));
 
 			foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
 			{
@@ -219,7 +221,7 @@ namespace GoRogue
 
 			initializeLightMap();
 			light[startX, startY] = 1; // Full power to starting space
-			currentFOV.Add(Coord.Get(startX, startY));
+			currentFOV.Add(new Coord(startX, startY));
 
 			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
 			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
@@ -334,7 +336,7 @@ namespace GoRogue
 						double bright = 1 - decay * deltaRadius;
 						lightMap[currentX, currentY] = bright;
 						if (bright > 0.0)
-							fovSet.Add(Coord.Get(currentX, currentY));
+							fovSet.Add(new Coord(currentX, currentY));
 					}
 
 					if (blocked) // Previous cell was blocked
@@ -397,7 +399,7 @@ namespace GoRogue
 						lightMap[currentX, currentY] = bright;
 
 						if (bright > 0.0)
-							fovSet.Add(Coord.Get(currentX, currentY));
+							fovSet.Add(new Coord(currentX, currentY));
 					}
 
 					if (blocked) // Previous cell was blocking

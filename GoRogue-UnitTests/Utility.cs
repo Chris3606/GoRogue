@@ -44,8 +44,8 @@ namespace GoRogue_UnitTests
 
 		public static Tuple<Coord, Coord> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
 		{
-			Coord start = null;
-			Coord end = null;
+			Coord start = Coord.NONE;
+			Coord end = Coord.NONE;
 
 			using (var reader = new StreamReader(filePath))
 			{
@@ -57,10 +57,10 @@ namespace GoRogue_UnitTests
 					for (int col = 0; col < line.Length; col++)
 					{
 						if (line[col] == startChar)
-							start = Coord.Get(col, row);
+							start = (col, row);
 
 						if (line[col] == endChar)
-							end = Coord.Get(col, row);
+							end = (col, row);
 					}
 					row++;
 				}
@@ -72,7 +72,7 @@ namespace GoRogue_UnitTests
 		public static IEnumerable<Coord> ToCoords(IEnumerable<CA.Node> points)
 		{
 			foreach (var p in points)
-				yield return Coord.Get((int)p.X, (int)p.Y);
+				yield return ((int)p.X, (int)p.Y);
 		}
 	}
 
@@ -104,7 +104,7 @@ namespace GoRogue_UnitTests
 		public int Height => view.Height;
 		public int Width => view.Width;
 		public double this[Coord pos] => (view[pos]) ? 0.0 : 1.0;
-
 		public double this[int x, int y] => (view[x, y]) ? 0.0 : 1.0;
+		public double this[int index1D] => (view[index1D]) ? 0.0 : 1.0;
 	}
 }

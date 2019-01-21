@@ -14,11 +14,11 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class PathingTests
 	{
-		static private readonly Coord END = Coord.Get(17, 14);
+		static private readonly Coord END = (17, 14);
 		static private readonly int ITERATIONS = 100;
 		static private readonly int MAP_HEIGHT = 30;
 		static private readonly int MAP_WIDTH = 30;
-		static private readonly Coord START = Coord.Get(1, 2);
+		static private readonly Coord START = (1, 2);
 
 		[TestMethod]
 		public void AStarAssumeWalkable()
@@ -91,10 +91,10 @@ namespace GoRogue_UnitTests
 
 		public Coord getWalkableCoord(IMapView<bool> mapView)
 		{
-			var c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+			var c = (SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
 
 			while (!mapView[c])
-				c = Coord.Get(SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+				c = (SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
 
 			return c;
 		}
@@ -173,8 +173,8 @@ namespace GoRogue_UnitTests
 				for (int y = 0; y < map.Height; y++)
 					map[x, y] = true;
 
-			Coord start = Coord.Get(1, 6);
-			Coord end = Coord.Get(0, 1);
+			Coord start = (1, 6);
+			Coord end = (0, 1);
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 
 			try
@@ -190,8 +190,8 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void PathInitReversing()
 		{
-			Coord start = Coord.Get(1, 1);
-			Coord end = Coord.Get(6, 6);
+			Coord start = (1, 1);
+			Coord end = (6, 6);
 			// Because Path constructor is internal to avoid confusion, we use AStar to return a
 			// (simple) known path
 			var map = new ArrayMap<bool>(10, 10);
@@ -202,7 +202,7 @@ namespace GoRogue_UnitTests
 			var expectedPath = new List<Coord>();
 
 			for (int i = start.X; i <= end.X; i++)
-				expectedPath.Add(Coord.Get(i, i));
+				expectedPath.Add((i, i));
 
 			Console.WriteLine("Pre-Reverse:");
 			printExpectedAndActual(expectedPath, actualPath);
@@ -326,13 +326,13 @@ namespace GoRogue_UnitTests
 
 			for (int i = 0; i < ITERATIONS; i++)
 			{
-				Coord start = Coord.Get(SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+				Coord start = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 				while (!map[start])
-					start = Coord.Get(SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+					start = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 
-				Coord end = Coord.Get(SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+				Coord end = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 				while (end == start || !map[end])
-					end = Coord.Get(SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+					end = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 
 				var path1 = pather.ShortestPath(start, end);
 				controlPather.SearchPath(graphTuple.Nodes[start.X, start.Y], graphTuple.Nodes[end.X, end.Y]);

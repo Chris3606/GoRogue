@@ -49,6 +49,6 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type (via the getter specified in the class constructor).</returns>
-		protected override T2 TranslateGet(T1 value) => _getter(Coord.Get(1, 1), value);
+		protected override T2 TranslateGet(T1 value) => _getter(new Coord(1, 1), value);
 	}
 }

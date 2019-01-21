@@ -20,7 +20,7 @@ namespace GoRogue_UnitTests
 			var myLighting = new SenseMap(testResMap);
 			// Circle at 8, 8; radius 7
 
-			myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(8, 8), 7, Radius.CIRCLE));
+			myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, (8, 8), 7, Radius.CIRCLE));
 			myFov.Calculate(8, 8, 7, Radius.CIRCLE);
 			myLighting.Calculate();
 			for (int x = 0; x < testResMap.Width; x++)
@@ -42,7 +42,7 @@ namespace GoRogue_UnitTests
 			var myFov = new FOV(testResMap);
 			var myLighting = new SenseMap(testResMap);
 			// Circle at 8, 8; radius 7
-			myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(8, 8), 7, Radius.CIRCLE));
+			myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, (8, 8), 7, Radius.CIRCLE));
 			myFov.Calculate(8, 8, 7, Radius.CIRCLE);
 			myLighting.Calculate();
 			Console.WriteLine("LOS: ");
@@ -66,7 +66,7 @@ namespace GoRogue_UnitTests
 			for (int x = 0; x < testResMap.Width; x++)
 				for (int y = 0; y < testResMap.Height; y++)
 				{
-					System.Console.WriteLine($"We have ({x},{y}) fov {myFov[x, y]}, lighting {myLighting[Coord.Get(x, y)]}");
+					System.Console.WriteLine($"We have ({x},{y}) fov {myFov[x, y]}, lighting {myLighting[(x, y)]}");
 					Assert.AreEqual(myFov[x, y], myLighting[x, y]); // Both got the same results
 				}
 		}
@@ -86,9 +86,9 @@ namespace GoRogue_UnitTests
 				for (int y = 0; y < map.Height; y++)
 				{
 					if (fov[x, y] > 0.0)
-						Assert.AreEqual(true, currentFov.Contains(Coord.Get(x, y)));
+						Assert.AreEqual(true, currentFov.Contains((x, y)));
 					else
-						Assert.AreEqual(false, currentFov.Contains(Coord.Get(x, y)));
+						Assert.AreEqual(false, currentFov.Contains((x, y)));
 				}
 		}
 
@@ -129,7 +129,7 @@ namespace GoRogue_UnitTests
 			int MAP_SIZE = 30;
 			int RADIUS = 10;
 			Radius RAD_TYPE = Radius.CIRCLE;
-			Coord SOURCE_POS = Coord.Get(15, 15);
+			Coord SOURCE_POS = (15, 15);
 
 			BoxResMap resMap = new BoxResMap(MAP_SIZE, MAP_SIZE);
 			SenseMap senseMap = new SenseMap(resMap);
@@ -155,7 +155,7 @@ namespace GoRogue_UnitTests
 		{
 			var map = new BoxResMap(50, 50);
 			var senseMap = new SenseMap(map);
-			senseMap.AddSenseSource(new SenseSource(SourceType.RIPPLE, Coord.Get(20, 20), 10, Radius.CIRCLE));
+			senseMap.AddSenseSource(new SenseSource(SourceType.RIPPLE, (20, 20), 10, Radius.CIRCLE));
 
 			senseMap.Calculate();
 
@@ -166,9 +166,9 @@ namespace GoRogue_UnitTests
 				for (int y = 0; y < map.Height; y++)
 				{
 					if (senseMap[x, y] > 0.0)
-						Assert.AreEqual(true, currentSenseMap.Contains(Coord.Get(x, y)));
+						Assert.AreEqual(true, currentSenseMap.Contains((x, y)));
 					else
-						Assert.AreEqual(false, currentSenseMap.Contains(Coord.Get(x, y)));
+						Assert.AreEqual(false, currentSenseMap.Contains((x, y)));
 				}
 
 		}
@@ -329,6 +329,7 @@ namespace GoRogue_UnitTests
 		public int Width { get; private set; }
 		public double this[int x, int y] { get => 0.0; }
 		public double this[Coord c] { get => 0.0; }
+		public double this[int index1D] => 0.0;
 	}
 
 	internal class TestResMap : ArrayMap<double>

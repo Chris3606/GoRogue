@@ -10,13 +10,13 @@ namespace GoRogue_UnitTests
 		public void RectangleConstruction()
 		{
 			var rect = new Rectangle(1, 1, 10, 10);
-			TestRect(rect, Coord.Get(1, 1), Coord.Get(10, 10));
+			TestRect(rect, (1, 1), (10, 10));
 
-			rect = new Rectangle(Coord.Get(2, 2), Coord.Get(10, 10));
-			TestRect(rect, Coord.Get(2, 2), Coord.Get(10, 10));
+			rect = new Rectangle((2, 2), (10, 10));
+			TestRect(rect, (2, 2), (10, 10));
 
-			rect = new Rectangle(Coord.Get(10, 5), 10, 5);
-			TestRect(rect, Coord.Get(0, 0), Coord.Get(20, 10));
+			rect = new Rectangle((10, 5), 10, 5);
+			TestRect(rect, (0, 0), (20, 10));
 		}
 
 		[TestMethod]
@@ -51,12 +51,12 @@ namespace GoRogue_UnitTests
 		public void RectangleSetSize()
 		{
 			Rectangle myRect = new Rectangle(1, 1, 50, 25);
-			Assert.AreEqual(Coord.Get(50, 25), myRect.Size);
+			Assert.AreEqual(new Coord(50, 25), myRect.Size);
 
 			myRect = myRect.SetSize(20, 15);
-			Assert.AreEqual(Coord.Get(20, 15), myRect.Size);
-			myRect = myRect.SetSize(Coord.Get(21, 16));
-			Assert.AreEqual(Coord.Get(21, 16), myRect.Size);
+			Assert.AreEqual(new Coord(20, 15), myRect.Size);
+			myRect = myRect.SetSize((21, 16));
+			Assert.AreEqual(new Coord(21, 16), myRect.Size);
 		}
 
 		private void TestRect(Rectangle rect, Coord expectedMinExtent, Coord expectedMaxExtent)
@@ -68,7 +68,7 @@ namespace GoRogue_UnitTests
 		private void TestRectContains(Rectangle rect, bool expectedValue, int containsX, int containsY)
 		{
 			Assert.AreEqual(expectedValue, rect.Contains(containsX, containsY));
-			Assert.AreEqual(expectedValue, rect.Contains(Coord.Get(containsX, containsY)));
+			Assert.AreEqual(expectedValue, rect.Contains((containsX, containsY)));
 		}
 	}
 }

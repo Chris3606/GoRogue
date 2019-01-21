@@ -479,7 +479,7 @@ namespace GoRogue
 		{
 			int relativeLayer = item.Layer - StartingLayer;
 			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-				return null;
+				return Coord.NONE;
 
 			return _layers[relativeLayer].GetPosition(item);
 		}

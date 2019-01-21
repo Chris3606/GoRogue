@@ -214,7 +214,7 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		/// <param name="x">X-coordinate of the position to add.</param>
 		/// <param name="y">Y-coordinate of the position to add.</param>
-		public void Add(int x, int y) => Add(Coord.Get(x, y));
+		public void Add(int x, int y) => Add(new Coord(x, y));
 
 		/// <summary>
 		/// Adds all coordinates in the given map area to this one.
@@ -244,7 +244,7 @@ namespace GoRogue.MapGeneration
 		/// <returns>True if the specified position is within the area, false otherwise.</returns>
 		public bool Contains(int x, int y)
 		{
-			return positionsSet.Contains(Coord.Get(x, y));
+			return positionsSet.Contains(new Coord(x, y));
 		}
 
 		/// <summary>
@@ -392,7 +392,7 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		/// <param name="x">X-coordinate of the position to remove.</param>
 		/// <param name="y">Y-coordinate of the position to remove.</param>
-		public void Remove(int x, int y) => Remove(Coord.Get(x, y));
+		public void Remove(int x, int y) => Remove(new Coord(x, y));
 
 		/// <summary>
 		/// Removes all positions in the given MapArea from this one.

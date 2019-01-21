@@ -29,6 +29,12 @@
 			get => (ISettableMapView<T>)base.MapView;
 		}
 
+		public new T this[int relativeIndex1D]
+		{
+			get => base[relativeIndex1D];
+			set => MapView[ViewArea.Position + Coord.ToCoord(relativeIndex1D, Width)] = value;
+		}
+
 		/// <summary>
 		/// Given a position in relative coordinates, sets/returns the "value" associated with that
 		/// location in absolute coordinates.
@@ -43,6 +49,7 @@
 		{
 			get => base[relativePosition];
 			set => MapView[ViewArea.Position + relativePosition] = value;
+			
 		}
 
 		/// <summary>

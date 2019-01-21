@@ -89,6 +89,8 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public int Width { get => resMap.Width; }
 
+		public double this[int index1D] => senseMap[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
+
 		/// <summary>
 		/// Array-style indexer that takes a Coord as the index. Because of this function, given a
 		/// SenseMap called mySenseMap, you may call mySenseMap[Coord.Get(1, 3)] to access the
@@ -273,13 +275,13 @@ namespace GoRogue.SenseMapping
 			int maxY = Math.Min((int)source.Radius, resMap.Height - 1 - source.Position.Y);
 
 			// Use radius bounds to extrapalate global coordinate scheme mins and maxes
-			Coord gMin = source.Position - Coord.Get(minX, minY);
+			Coord gMin = source.Position - new Coord(minX, minY);
 			//Coord gMax = source.Position + Coord.Get(maxX, maxY);
 
 			// Use radius bound to extrapalate light-local coordinate scheme min and max bounds that
 			// are actually blitted
-			Coord lMin = Coord.Get((int)source.Radius - minX, (int)source.Radius - minY);
-			Coord lMax = Coord.Get((int)source.Radius + maxX, (int)source.Radius + maxY);
+			Coord lMin = new Coord((int)source.Radius - minX, (int)source.Radius - minY);
+			Coord lMax = new Coord((int)source.Radius + maxX, (int)source.Radius + maxY);
 
 			for (int xOffset = 0; xOffset <= lMax.X - lMin.X; xOffset++)
 			//Parallel.For(0, lMax.X - lMin.X + 1, xOffset => // By light radius 30 or so, there is enough work to get benefit here.  Manual thread splitting may also be an option.
@@ -287,7 +289,7 @@ namespace GoRogue.SenseMapping
 				for (int yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
 				{
 					// Offset local/current by proper amount, and update lightmap
-					Coord c = Coord.Get(xOffset, yOffset);
+					Coord c = new Coord(xOffset, yOffset);
 					Coord gCur = gMin + c;
 					Coord lCur = lMin + c;
 

@@ -63,6 +63,8 @@ namespace GoRogue.MapViews
 			get => ViewArea.Width;
 		}
 
+		public T this[int relativeIndex1D] => MapView[ViewArea.Position + Coord.ToCoord(relativeIndex1D, Width)];
+
 		/// <summary>
 		/// Given a position in relative coordinates, returns the "value" associated with that
 		/// location in absolute coordinates.

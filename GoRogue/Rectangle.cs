@@ -74,7 +74,7 @@ namespace GoRogue
 		/// </summary>
 		public Coord Center
 		{
-			get => Coord.Get(X + (Width / 2), Y + (Height / 2));
+			get => new Coord(X + (Width / 2), Y + (Height / 2));
 		}
 
 		/// <summary>
@@ -92,7 +92,7 @@ namespace GoRogue
 		/// </summary>
 		public Coord MaxExtent
 		{
-			get => Coord.Get(MaxExtentX, MaxExtentY);
+			get => new Coord(MaxExtentX, MaxExtentY);
 		}
 
 		/// <summary>
@@ -115,7 +115,7 @@ namespace GoRogue
 		/// Minimum extent of the rectangle (minimum x and y values that are included within it).
 		/// Identical to the Position because we define the rectangle's position by its minimum extent.
 		/// </summary>
-		public Coord MinExtent { get => Coord.Get(X, Y); }
+		public Coord MinExtent { get => new Coord(X, Y); }
 
 		/// <summary>
 		/// X-value of the minimum extent of the rectangle (minimum x value that is included within
@@ -139,13 +139,13 @@ namespace GoRogue
 		/// </summary>
 		public Coord Position
 		{
-			get => Coord.Get(X, Y);
+			get => new Coord(X, Y);
 		}
 
 		/// <summary>
 		/// Returns a coordinate (Width, Height), which represents the size of the rectangle.
 		/// </summary>
-		public Coord Size { get => Coord.Get(Width, Height); }
+		public Coord Size { get => new Coord(Width, Height); }
 
 		/// <summary>
 		/// The width of the rectangle.
@@ -365,7 +365,7 @@ namespace GoRogue
 		/// A new Rectangle that is the same size as the current one, but with the center moved to
 		/// the given location.
 		/// </returns>
-		public Rectangle CenterOn(int x, int y) => CenterOn(Coord.Get(x, y));
+		public Rectangle CenterOn(int x, int y) => CenterOn(new Coord(x, y));
 
 		/// <summary>
 		/// Creates and returns a new Rectangle whose position is the same as the current one, but
@@ -427,7 +427,7 @@ namespace GoRogue
 		/// <param name="x">The x-value position to check.</param>
 		/// <param name="y">The y-value position to check.</param>
 		/// <returns>Whether or not the specified point is considered within the rectangle.</returns>
-		public bool Contains(int x, int y) => Contains(Coord.Get(x, y));
+		public bool Contains(int x, int y) => Contains(new Coord(x, y));
 
 		/// <summary>
 		/// Returns whether or not the specified rectangle is considered completely contained within
@@ -514,7 +514,7 @@ namespace GoRogue
 		/// <param name="x">X-value for the position of the new Rectangle.</param>
 		/// <param name="y">Y-value for the position of the new Rectangle.</param>
 		/// <returns>A new rectangle with the Position changed to the given value.</returns>
-		public Rectangle Move(int x, int y) => Move(Coord.Get(x, y));
+		public Rectangle Move(int x, int y) => Move(new Coord(x, y));
 
 		/// <summary>
 		/// Creates and returns a new Rectangle that has its Position moved in the given direction.
@@ -550,7 +550,7 @@ namespace GoRogue
 		{
 			for (int y = Y; y <= MaxExtentY; y++)
 				for (int x = X; x <= MaxExtentX; x++)
-					yield return Coord.Get(x, y);
+					yield return new Coord(x, y);
 		}
 
 		/// <summary>
@@ -563,7 +563,7 @@ namespace GoRogue
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
 
-			return Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
+			return new Coord(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
 		}
 
 		/// <summary>
@@ -585,10 +585,10 @@ namespace GoRogue
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
 
-			var c = Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
+			var c = new Coord(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
 
 			while (!selector(c))
-				c = Coord.Get(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
+				c = new Coord(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
 
 			return c;
 		}
@@ -619,7 +619,7 @@ namespace GoRogue
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
 		public Rectangle SetMaxExtent(int x, int y)
-			=> new Rectangle(MinExtent, Coord.Get(x, y));
+			=> new Rectangle(MinExtent, new Coord(x, y));
 
 		/// <summary>
 		/// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
@@ -628,7 +628,7 @@ namespace GoRogue
 		/// <param name="x">The x-coordinate for the maximum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MaxExtentX adjusted to the specified value.</returns>
 		public Rectangle SetMaxExtentX(int x)
-			=> new Rectangle(MinExtent, Coord.Get(x, MaxExtentY));
+			=> new Rectangle(MinExtent, new Coord(x, MaxExtentY));
 
 		/// <summary>
 		/// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
@@ -637,7 +637,7 @@ namespace GoRogue
 		/// <param name="y">The y-coordinate for the maximum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MaxExtentY adjusted to the specified value.</returns>
 		public Rectangle SetMaxExtentY(int y)
-			=> new Rectangle(MinExtent, Coord.Get(MaxExtentX, y));
+			=> new Rectangle(MinExtent, new Coord(MaxExtentX, y));
 
 		/// <summary>
 		/// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
@@ -656,7 +656,7 @@ namespace GoRogue
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
 		public Rectangle SetMinExtent(int x, int y)
-			=> new Rectangle(Coord.Get(x, y), MaxExtent);
+			=> new Rectangle(new Coord(x, y), MaxExtent);
 
 		/// <summary>
 		/// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
@@ -665,7 +665,7 @@ namespace GoRogue
 		/// <param name="x">The x-coordinate for the minimum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MinExtentX adjusted to the specified value.</returns>
 		public Rectangle SetMinExtentX(int x)
-			=> new Rectangle(Coord.Get(x, MinExtentY), MaxExtent);
+			=> new Rectangle(new Coord(x, MinExtentY), MaxExtent);
 
 		/// <summary>
 		/// Creates and returns a new rectangle that has been shrunk/expanded as necessary, such that
@@ -675,7 +675,7 @@ namespace GoRogue
 		/// <returns>A new rectangle, with the MinExtentY adjusted to the specified value.</returns>
 		/// &gt;
 		public Rectangle SetMinExtentY(int y)
-			=> new Rectangle(Coord.Get(MinExtentX, y), MaxExtent);
+			=> new Rectangle(new Coord(MinExtentX, y), MaxExtent);
 
 		/// <summary>
 		/// Creates and returns a new Rectangle whose position is the same as the current one, but

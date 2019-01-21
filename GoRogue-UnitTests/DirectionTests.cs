@@ -25,7 +25,7 @@ namespace GoRogue_UnitTests
 						result = (d == Direction.NONE);
 
 					if (!result)
-						Console.WriteLine($"Failed: We returned: {d} for (x, y) {Coord.Get(x, y)}");
+						Console.WriteLine($"Failed: We returned: {d} for (x, y) {(x, y)}");
 					Assert.AreEqual(true, result);
 				}
 		}

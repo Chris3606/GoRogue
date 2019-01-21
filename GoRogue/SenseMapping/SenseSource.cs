@@ -137,7 +137,7 @@ namespace GoRogue.SenseMapping
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
 		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc)
-			: this(type, Coord.Get(positionX, positionY), radius, distanceCalc) { }
+			: this(type, new Coord(positionX, positionY), radius, distanceCalc) { }
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
@@ -152,10 +152,11 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public bool Enabled { get; set; }
 
+		private Coord _position;
 		/// <summary>
 		/// The position on a map that the source is located at.
 		/// </summary>
-		public Coord Position { get; set; }
+		public ref Coord Position => ref _position;
 
 		/// <summary>
 		/// Whether or not the spreading of values from this source is restricted to an angle and span.
@@ -310,7 +311,7 @@ namespace GoRogue.SenseMapping
 		private void doRippleFOV(int ripple, IMapView<double> map)
 		{
 			LinkedList<Coord> dq = new LinkedList<Coord>();
-			dq.AddLast(Coord.Get(halfSize, halfSize)); // Add starting point
+			dq.AddLast(new Coord(halfSize, halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
 				Coord p = dq.First.Value;
@@ -335,7 +336,7 @@ namespace GoRogue.SenseMapping
 					{
 						light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < 1) // Not a wall (fully blocking)
-							dq.AddLast(Coord.Get(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
+							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
 			}
@@ -344,7 +345,7 @@ namespace GoRogue.SenseMapping
 		private void doRippleFOV(int ripple, IMapView<double> map, double angle, double span)
 		{
 			LinkedList<Coord> dq = new LinkedList<Coord>();
-			dq.AddLast(Coord.Get(halfSize, halfSize)); // Add starting point
+			dq.AddLast(new Coord(halfSize, halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
 				Coord p = dq.First.Value;
@@ -373,7 +374,7 @@ namespace GoRogue.SenseMapping
 					{
 						light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < 1) // Not a wall (fully blocking)
-							dq.AddLast(Coord.Get(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
+							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
 			}
@@ -418,7 +419,7 @@ namespace GoRogue.SenseMapping
 
 						idx++;
 					}
-					neighbors.Insert(idx, Coord.Get(x2, y2));
+					neighbors.Insert(idx, new Coord(x2, y2));
 				}
 			}
 			if (neighbors.Count == 0)

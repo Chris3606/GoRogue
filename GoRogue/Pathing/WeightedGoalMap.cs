@@ -17,7 +17,14 @@ namespace GoRogue.Pathing
 	/// </remarks>
 	public class WeightedGoalMap : IMapView<double?>
 	{
-		private Dictionary<IMapView<double?>, double> _weights = new Dictionary<IMapView<double?>, double>();
+		/// <summary>
+		/// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
+		/// </summary>
+		/// <remarks>
+		/// When adding a new goal map, its Height and Width should be identical to the Height and
+		/// Width of the GoalMapCombiner.
+		/// </remarks>
+		public readonly Dictionary<IMapView<double?>, double> Weights;
 
 		/// <summary>
 		/// Constructor. Takes a single goal map and assigns it a weight of 1.
@@ -25,7 +32,8 @@ namespace GoRogue.Pathing
 		/// <param name="map">The goal map.</param>
 		public WeightedGoalMap(IMapView<double?> map)
 		{
-			_weights.Add(map, 1);
+			Weights = new Dictionary<IMapView<double?>, double>();
+			Weights.Add(map, 1);
 			Width = map.Width;
 			Height = map.Height;
 		}
@@ -36,9 +44,10 @@ namespace GoRogue.Pathing
 		/// <param name="maps">The goal maps. Each one should be of the same size.</param>
 		public WeightedGoalMap(IEnumerable<IMapView<double?>> maps)
 		{
+			Weights = new Dictionary<IMapView<double?>, double>();
 			foreach (var map in maps)
 			{
-				_weights.Add(map, 1);
+				Weights.Add(map, 1);
 				if (Height == 0)
 				{
 					Width = map.Width;
@@ -59,9 +68,10 @@ namespace GoRogue.Pathing
 		/// </param>
 		public WeightedGoalMap(IDictionary<IMapView<double?>, double> maps)
 		{
+			Weights = new Dictionary<IMapView<double?>, double>();
 			foreach (var pair in maps)
 			{
-				_weights.Add(pair.Key, pair.Value);
+				Weights.Add(pair.Key, pair.Value);
 				if (Height == 0)
 				{
 					Width = pair.Key.Width;
@@ -81,18 +91,11 @@ namespace GoRogue.Pathing
 		public int Height { get; }
 
 		/// <summary>
-		/// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
-		/// </summary>
-		/// <remarks>
-		/// When adding a new goal map, its Height and Width should be identical to the Height and
-		/// Width of the GoalMapCombiner.
-		/// </remarks>
-		public Dictionary<IMapView<double?>, double> Weights => _weights;
-
-		/// <summary>
 		/// The width of the goal map, and its underlying maps.
 		/// </summary>
 		public int Width { get; }
+
+		public double? this[int index1D] => this[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
 
 		/// <summary>
 		/// Returns the value of the combined goal maps at any given point.
@@ -103,7 +106,7 @@ namespace GoRogue.Pathing
 			{
 				var result = 0.0;
 				var negResult = 0.0;
-				foreach (var pair in _weights)
+				foreach (var pair in Weights)
 				{
 					var value = pair.Key[x, y];
 					if (!value.HasValue)

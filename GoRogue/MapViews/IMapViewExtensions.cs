@@ -37,7 +37,7 @@ namespace GoRogue.MapViews
 		{
 			for (int y = 0; y < mapView.Height; y++)
 				for (int x = 0; x < mapView.Width; x++)
-					yield return Coord.Get(x, y);
+					yield return new Coord(x, y);
 		}
 
 		/// <summary>
@@ -165,10 +165,10 @@ namespace GoRogue.MapViews
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
 
-			var c = Coord.Get(rng.Next(mapView.Width), rng.Next(mapView.Height));
+			var c = new Coord(rng.Next(mapView.Width), rng.Next(mapView.Height));
 
 			while (!selector(c, mapView[c]))
-				c = Coord.Get(rng.Next(mapView.Width), rng.Next(mapView.Height));
+				c = new Coord(rng.Next(mapView.Width), rng.Next(mapView.Height));
 
 			return c;
 		}
@@ -187,7 +187,7 @@ namespace GoRogue.MapViews
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
 
-			return Coord.Get(rng.Next(mapView.Width), rng.Next(mapView.Height));
+			return new Coord(rng.Next(mapView.Width), rng.Next(mapView.Height));
 		}
 
 		/// <summary>

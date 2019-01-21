@@ -217,7 +217,7 @@ namespace GoRogue
 		public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
-			return new ArrayMap<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+			return new ArrayMap2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
 		}
 
 		/// <summary>
@@ -253,7 +253,7 @@ namespace GoRogue
 		public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
-			return new ArrayMap<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+			return new ArrayMap2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
 		}
 
 		/// <summary>

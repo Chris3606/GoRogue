@@ -12,7 +12,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void CoordToPointConversion()
 		{
-			Coord c = Coord.Get(1, 2);
+			Coord c = (1, 2);
 			Point p = c;
 
 			Assert.AreEqual(c.X, p.X);

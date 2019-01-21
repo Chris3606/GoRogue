@@ -4,47 +4,43 @@ namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Default implementation of the ISettableMapView interface, exposing the interface using a
-	/// 1D array to store data.
+	/// 2D array to store data.
 	/// </summary>
 	/// <typeparam name="T">The type of value being stored.</typeparam>
-	public class ArrayMap<T> : ISettableMapView<T>, ICloneable
+	public class ArrayMap2D<T> : ISettableMapView<T>, ICloneable
 	{
-		private readonly T[] _array;
+		private readonly T[,] _array;
 
 		/// <summary>
 		/// Constructor. Takes width and height of array.
 		/// </summary>
 		/// <param name="width">Width of array.</param>
 		/// <param name="height">Height of array.</param>
-		public ArrayMap(int width, int height)
-			: this(new T[width * height], width, height)
+		public ArrayMap2D(int width, int height)
+			: this(new T[width, height])
 		{ }
 
-		public ArrayMap(T[] existingArray, int width, int height)
-		{
-			if (existingArray.Length != width * height)
-				throw new ArgumentException($"Existing array must have length equal to {nameof(width)}*{nameof(height)}.", nameof(existingArray));
 
+		public ArrayMap2D(T[,] existingArray)
+		{
 			_array = existingArray;
-			Width = width;
-			Height = height;
 		}
 
 		/// <summary>
 		/// The height of the map.
 		/// </summary>
-		public int Height { get; }
+		public int Height => _array.GetLength(1);
 
 		/// <summary>
 		/// The width of the map.
 		/// </summary>
-		public int Width { get; }
+		public int Width => _array.GetLength(0);
 
 
 		public T this[int index1D]
 		{
-			get => _array[index1D];
-			set => _array[index1D] = value;
+			get => _array[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
+			set => _array[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)] = value;
 		}
 
 		/// <summary>
@@ -55,8 +51,8 @@ namespace GoRogue.MapViews
 		/// <returns>The "value" associated with that location.</returns>
 		public T this[int x, int y]
 		{
-			get => _array[Coord.ToIndex(x, y, Width)];
-			set => _array[Coord.ToIndex(x, y, Width)] = value;
+			get => _array[x, y];
+			set => _array[x, y] = value;
 		}
 
 		/// <summary>
@@ -66,32 +62,32 @@ namespace GoRogue.MapViews
 		/// <returns>THe "value" associated with the provided location.</returns>
 		public T this[Coord pos]
 		{
-			get => _array[pos.ToIndex(Width)];
-			set => _array[pos.ToIndex(Width)] = value;
+			get => _array[pos.X, pos.Y];
+			set => _array[pos.X, pos.Y] = value;
 		}
 
 		/// <summary>
 		/// Performs deep copy of array map.
 		/// </summary>
-		/// <returns>The cloned ArrayMap.</returns>
+		/// <returns>The cloned ArrayMap2D.</returns>
 		public object Clone()
 		{
-			var newObj = new ArrayMap<T>(Width, Height);
+			var newObj = new ArrayMap2D<T>(Width, Height);
 
 			for (int x = 0; x < Width; x++)
 				for (int y = 0; y < Height; y++)
-					newObj[x, y] = _array[Coord.ToIndex(x, y, Width)];
+					newObj[x, y] = _array[x, y];
 
 			return newObj;
 		}
 
-		public static implicit operator T[](ArrayMap<T> arrayMap) => arrayMap._array;
+		public static implicit operator T[,] (ArrayMap2D<T> arrayMap) => arrayMap._array;
 
 
 		/// <summary>
 		/// Sets each element in the ArrayMap to the default for type T.
 		/// </summary>
-		public void SetToDefault() => System.Array.Clear(_array, 0, _array.Length);
+		public void SetToDefault() => Array.Clear(_array, 0, _array.Length);
 
 		/// <summary>
 		/// Returns a string representation of the 2D array.
@@ -100,21 +96,21 @@ namespace GoRogue.MapViews
 		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
-		/// Returns a string representation of the map data, using the elementStringifier function
+		/// Returns a string representation of the 2D array, using the elementStringifier function
 		/// given to determine what string represents which value.
 		/// </summary>
 		/// <remarks>
-		/// This could be used, for example, on an ArrayMap of boolean values, to output '#' for
+		/// This could be used, for example, on an ArrayMap2D of boolean values, to output '#' for
 		/// false values, and '.' for true values.
 		/// </remarks>
 		/// <param name="elementStringifier">
 		/// Function determining the string representation of each element.
 		/// </param>
-		/// <returns>A string representation of the map data.</returns>
+		/// <returns>A string representation of the 2D array.</returns>
 		public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
 
 		/// <summary>
-		/// Prints the values in the ArrayMap, using the function specified to turn elements into
+		/// Prints the values in the ArrayMap2D, using the function specified to turn elements into
 		/// strings, and using the "field length" specified. Each element of type T will have spaces
 		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
 		/// than the length of the element's string represention. A positive-number right-aligns the
@@ -125,7 +121,7 @@ namespace GoRogue.MapViews
 		/// Function to use to convert each element to a string. Null defaults to the ToString
 		/// function of type T.
 		/// </param>
-		/// <returns>A string representation of the ArrayMap.</returns>
+		/// <returns>A string representation of the ArrayMap2D.</returns>
 		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 	}
 }

@@ -205,7 +205,7 @@ namespace GoRogue.Pathing
 		/// </param>
 		/// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
 		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
-			=> ShortestPath(Coord.Get(startX, startY), Coord.Get(endX, endY), assumeEndpointsWalkable);
+			=> ShortestPath(new Coord(startX, startY), new Coord(endX, endY), assumeEndpointsWalkable);
 
 		// These neighbor functions are special in that they return (approximately) the closest
 		// directions to the end goal first. This is intended to "prioritize" more direct-looking

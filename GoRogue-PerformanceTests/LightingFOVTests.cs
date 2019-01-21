@@ -33,7 +33,7 @@ namespace GoRogue_PerformanceTests
 			// Start mem test
 			startingMem = GC.GetTotalMemory(true);
 			fov = new SenseMap(map);
-			fov.AddSenseSource(new SenseSource(SourceType.SHADOW, Coord.Get(5, 6), lightRadius, Radius.CIRCLE));
+			fov.AddSenseSource(new SenseSource(SourceType.SHADOW, new Coord(5, 6), lightRadius, Radius.CIRCLE));
 			endingMem = GC.GetTotalMemory(true);
 			return endingMem - startingMem;
 		}
@@ -44,7 +44,7 @@ namespace GoRogue_PerformanceTests
 			var map = rectangleMap(mapWidth, mapHeight);
 			var fov = new SenseMap(map);
 
-			Coord c = Coord.Get(5, 6);
+			Coord c = new Coord(5, 6);
 			for (int i = 0; i < lights; i++)
 			{
 				fov.AddSenseSource(new SenseSource(SourceType.RIPPLE, c, lightRadius, Radius.CIRCLE));
@@ -91,7 +91,7 @@ namespace GoRogue_PerformanceTests
 			Stopwatch s = new Stopwatch();
 			var map = rectangleMap(mapWidth, mapHeight);
 			var fov = new SenseMap(map);
-			fov.AddSenseSource(new SenseSource(sourceType, Coord.Get(5, 6), lightRadius, radiusStrat));
+			fov.AddSenseSource(new SenseSource(sourceType, new Coord(5, 6), lightRadius, radiusStrat));
 			// Warm-up for processor, stabilizes cache performance. Also makes it a fair test against
 			// fov since we have to do this to force the first memory allocation
 			fov.Calculate();

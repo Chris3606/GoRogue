@@ -12,7 +12,7 @@ namespace GoRogue_UnitTests
 		{
 			bool[,] radius = new bool[30, 30]; // Initted to false
 
-			var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.CIRCLE);
+			var radAProv = new RadiusAreaProvider((15, 15), 10, Radius.CIRCLE);
 
 			foreach (var pos in radAProv.CalculatePositions())
 				radius[pos.X, pos.Y] = true;
@@ -35,7 +35,7 @@ namespace GoRogue_UnitTests
 		{
 			bool[,] radius = new bool[30, 30]; // Initted to false
 
-			var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.DIAMOND);
+			var radAProv = new RadiusAreaProvider((15, 15), 10, Radius.DIAMOND);
 
 			foreach (var pos in radAProv.CalculatePositions())
 				radius[pos.X, pos.Y] = true;
@@ -53,7 +53,7 @@ namespace GoRogue_UnitTests
 			double maxDistance = 0;
 			foreach (var pos in radAProv.CalculatePositions())
 			{
-				double distFromCenter = Distance.MANHATTAN.Calculate(Coord.Get(15, 15), pos);
+				double distFromCenter = Distance.MANHATTAN.Calculate((15, 15), pos);
 				if (distFromCenter < maxDistance)
 					Assert.Fail("Square radius area provider isn't returning in distance order, failed on " + pos + "!");
 
@@ -66,7 +66,7 @@ namespace GoRogue_UnitTests
 		{
 			bool[,] radius = new bool[30, 30]; // Initted to false
 
-			var radAProv = new RadiusAreaProvider(Coord.Get(15, 15), 10, Radius.SQUARE);
+			var radAProv = new RadiusAreaProvider((15, 15), 10, Radius.SQUARE);
 
 			foreach (var pos in radAProv.CalculatePositions())
 				radius[pos.X, pos.Y] = true;
@@ -84,7 +84,7 @@ namespace GoRogue_UnitTests
 			double maxDistance = 0;
 			foreach (var pos in radAProv.CalculatePositions())
 			{
-				double distFromCenter = Distance.CHEBYSHEV.Calculate(Coord.Get(15, 15), pos);
+				double distFromCenter = Distance.CHEBYSHEV.Calculate((15, 15), pos);
 				if (distFromCenter < maxDistance)
 					Assert.Fail("Square radius area provider isn't returning in distance order!");
 

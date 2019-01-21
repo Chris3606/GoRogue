@@ -110,6 +110,8 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public int Width => _terrain.Width;
 
+		public IEnumerable<GameObject> this[int index1D] => GetObjects(Coord.ToCoord(index1D, Width));
+
 		/// <summary>
 		/// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
 		/// </summary>

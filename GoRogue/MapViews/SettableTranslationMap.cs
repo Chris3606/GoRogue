@@ -62,6 +62,20 @@ namespace GoRogue.MapViews
 		/// </summary>
 		public int Width { get => BaseMap.Width; }
 
+		public T2 this[int index1D]
+		{
+			get
+			{
+				var pos = Coord.ToCoord(index1D, Width);
+				return TranslateGet(pos, BaseMap[pos]);
+			}
+			set
+			{
+				var pos = Coord.ToCoord(index1D, Width);
+				BaseMap[pos] = TranslateSet(pos, value);
+			}
+		}
+
 		/// <summary>
 		/// Given a Coord, translates and returns/sets the "value" associated with that location.
 		/// this[int x, int y] calls this indexer for its functionality, so overriding this
@@ -84,8 +98,8 @@ namespace GoRogue.MapViews
 		/// <returns>The translated "value" associated with that location.</returns>
 		public T2 this[int x, int y]
 		{
-			get => this[Coord.Get(x, y)];
-			set => this[Coord.Get(x, y)] = value;
+			get => this[new Coord(x, y)];
+			set => this[new Coord(x, y)] = value;
 		}
 
 		/// <summary>

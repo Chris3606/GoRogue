@@ -76,6 +76,8 @@ namespace GoRogue.MapViews
 		/// </summary>
 		public int Width { get => widthGetter(); }
 
+		public T this[int index1D] => valueGetter(Coord.ToCoord(index1D, Width));
+
 		/// <summary>
 		/// Given an X and Y value, returns the "value" associated with that location, by calling the
 		/// valueGetter lambda provided at construction.
@@ -86,7 +88,7 @@ namespace GoRogue.MapViews
 		/// The "value" associated with that location, according to the valueGetter lambda provided
 		/// at construction.
 		/// </returns>
-		public T this[int x, int y] { get => valueGetter(Coord.Get(x, y)); }
+		public T this[int x, int y] { get => valueGetter(new Coord(x, y)); }
 
 		/// <summary>
 		/// Given a Coord, returns the "value" associated with that location, by calling the

@@ -58,6 +58,8 @@ namespace GoRogue.Pathing
 		/// </summary>
 		public int Width => _goalMap.Width;
 
+		public double? this[int index1D] => _goalMap[index1D];
+
 		/// <summary>
 		/// Returns the flee-map value for the given position.
 		/// </summary>

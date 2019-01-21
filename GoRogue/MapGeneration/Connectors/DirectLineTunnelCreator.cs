@@ -35,13 +35,13 @@ namespace GoRogue.MapGeneration.Connectors
 		{
 			var lineAlgorithm = (adjacencyRule == AdjacencyRule.CARDINALS) ? Lines.Algorithm.ORTHO : Lines.Algorithm.BRESENHAM;
 
-			Coord previous = null;
+			Coord previous = Coord.NONE;
 			foreach (var pos in Lines.Get(start, end, lineAlgorithm))
 			{
 				map[pos] = true;
 				// Previous cell, and we're going vertical, go 2 wide so it looks nicer Make sure not
 				// to break rectangles (less than last index)!
-				if (previous != null) // TODO: Make double wide vert an option
+				if (previous != Coord.NONE) // TODO: Make double wide vert an option
 					if (pos.Y != previous.Y)
 						if (pos.X + 1 < map.Width - 1)
 							map[pos.X + 1, pos.Y] = true;
@@ -58,6 +58,6 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="startY">Y-value of the start position of the tunnel.</param>
 		/// <param name="endX">X-value of the end position of the tunnel.</param>
 		/// <param name="endY">Y-value of the end position of the tunnel.</param>
-		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, Coord.Get(startX, startY), Coord.Get(endX, endY));
+		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Coord(startX, startY), new Coord(endX, endY));
 	}
 }

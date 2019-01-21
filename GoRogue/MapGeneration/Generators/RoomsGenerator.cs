@@ -108,7 +108,7 @@ namespace GoRogue.MapGeneration.Generators
 
 					while (tryCounterPlace != 0)
 					{
-						roomInnerRect = roomInnerRect.Move(Coord.Get(rng.Next(3, map.Width - roomInnerRect.Width - 3), rng.Next(3, map.Height - roomInnerRect.Height - 3)));
+						roomInnerRect = roomInnerRect.Move(new Coord(rng.Next(3, map.Width - roomInnerRect.Width - 3), rng.Next(3, map.Height - roomInnerRect.Height - 3)));
 
 						var roomBounds = roomInnerRect.Expand(3, 3);
 						

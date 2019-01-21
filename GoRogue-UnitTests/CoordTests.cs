@@ -9,8 +9,8 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void TestNullEquality()
 		{
-			Coord c1 = Coord.Get(1, 6);
-			Coord c2 = null;
+			Coord c1 = (1, 6);
+			Coord c2 = Coord.NONE;
 
 			bool x = c1 == c2;
 			Assert.AreEqual(false, x);
@@ -22,7 +22,7 @@ namespace GoRogue_UnitTests
 			x = c2 != c1;
 			Assert.AreEqual(true, x);
 
-			c1 = null;
+			c1 = Coord.NONE;
 			x = c1 == c2;
 			Assert.AreEqual(true, x);
 

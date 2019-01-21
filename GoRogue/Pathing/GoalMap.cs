@@ -72,6 +72,8 @@ namespace GoRogue.Pathing
 
 		internal IEnumerable<Coord> Walkable { get { return _walkable; } }
 
+		public double? this[int index1D] => _goalMap[index1D];
+
 		/// <summary>
 		/// Returns the goal-map value for the given position.
 		/// </summary>
@@ -140,7 +142,7 @@ namespace GoRogue.Pathing
 					}
 					else
 					{
-						_walkable.Add(Coord.Get(x, y));
+						_walkable.Add(new Coord(x, y));
 					}
 				}
 			}
