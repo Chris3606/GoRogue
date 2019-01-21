@@ -752,7 +752,21 @@ namespace GoRogue
 		public Rectangle TranslateY(int dy)
 			=> new Rectangle(X, Y + dy, Width, Height);
 
+		#region MonoGame Conversions
 		public static implicit operator XnaRectangle(Rectangle rect) => new XnaRectangle(rect.X, rect.Y, rect.Width, rect.Height);
 		public static implicit operator Rectangle(XnaRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		#endregion
+
+		#region Tuple Compability
+		public static implicit operator (int x, int y, int width, int height)(Rectangle rect) => (rect.X, rect.Y, rect.Width, rect.Height);
+		public static implicit operator Rectangle((int x, int y, int width, int height) tuple) => new Rectangle(tuple.x, tuple.y, tuple.width, tuple.height);
+		public void Deconstruct(out int x, out int y, out int width, out int height)
+		{
+			x = X;
+			y = Y;
+			width = Width;
+			height = Height;
+		}
+		#endregion
 	}
 }

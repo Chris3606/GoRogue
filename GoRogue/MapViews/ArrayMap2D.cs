@@ -7,7 +7,7 @@ namespace GoRogue.MapViews
 	/// 2D array to store data.
 	/// </summary>
 	/// <typeparam name="T">The type of value being stored.</typeparam>
-	public class ArrayMap2D<T> : ISettableMapView<T>, ICloneable
+	public sealed class ArrayMap2D<T> : ISettableMapView<T>, ICloneable
 	{
 		private readonly T[,] _array;
 

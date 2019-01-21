@@ -22,7 +22,7 @@ namespace GoRogue
 	/// collections, this can significantly improve on efficiency. Later, support may be added for
 	/// modifying this range as necessary.
 	/// </remarks>
-	public struct Coord : IEquatable<Coord>, IEquatable<(int x, int y)>
+	public struct Coord : IEquatable<Coord>
 	{
 		public static readonly Coord NONE = new Coord(int.MinValue, int.MinValue);
 
@@ -387,22 +387,8 @@ namespace GoRogue
 			y = Y;
 		}
 
-		public bool Equals((int x, int y) other) => X == other.x && Y == other.y;
-
 		public static implicit operator (int x, int y) (Coord c) => (c.X, c.Y);
 		public static implicit operator Coord((int x, int y) tuple) => new Coord(tuple.x, tuple.y);
-
-		/// <summary>
-		/// True if first tuple value is equal to coord's x, and second tuple value is equal to coord's y.
-		/// </summary>
-		/// <param name="c1">First coodinate to compare.</param>
-		/// <param name="tuple">Second position to compare.</param>
-		/// <returns>True if the two positions are equal, false if not.</returns>
-		public static bool operator ==(Coord c1, (int x, int y) tuple) => c1.X == tuple.x && c1.Y == tuple.y;
-		public static bool operator !=(Coord c1, (int x, int y) tuple) => !(c1 == tuple);
-
-		public static bool operator ==((int x, int y) tuple, Coord c2) => tuple.x == c2.X && tuple.y == c2.Y;
-		public static bool operator !=((int x, int y) tuple, Coord c2) => !(tuple == c2);
 		#endregion
 	}
 }

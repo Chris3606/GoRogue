@@ -1,6 +1,7 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
 using GoRogue.MapGeneration;
+using GoRogue.Random;
 using GoRogue.SenseMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -15,7 +16,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void CircleRadius()
 		{
-			var testResMap = new EmptyResMap(17, 17);
+			var testResMap = EmptyResMap(17, 17);
 			var myFov = new FOV(testResMap);
 			var myLighting = new SenseMap(testResMap);
 			// Circle at 8, 8; radius 7
@@ -37,7 +38,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void EqualLargeMap()
 		{
-			var testResMap = new TestResMap(17, 17);
+			var testResMap = TestResMap(17, 17);
 			testResMap[8, 8] = 0.0; // Make sure start is free
 			var myFov = new FOV(testResMap);
 			var myLighting = new SenseMap(testResMap);
@@ -74,7 +75,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void FOVCurrentHash()
 		{
-			var map = new BoxResMap(50, 50);
+			var map = BoxResMap(50, 50);
 			var fov = new FOV(map);
 
 			fov.Calculate(20, 20, 10);
@@ -95,7 +96,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void FOVNewlySeenUnseen()
 		{
-			var map = new BoxResMap(50, 50);
+			var map = BoxResMap(50, 50);
 			var fov = new FOV(map);
 
 			fov.Calculate(20, 20, 10, Radius.SQUARE);
@@ -131,7 +132,7 @@ namespace GoRogue_UnitTests
 			Radius RAD_TYPE = Radius.CIRCLE;
 			Coord SOURCE_POS = (15, 15);
 
-			BoxResMap resMap = new BoxResMap(MAP_SIZE, MAP_SIZE);
+			var resMap = BoxResMap(MAP_SIZE, MAP_SIZE);
 			SenseMap senseMap = new SenseMap(resMap);
 
 			var source = new SenseSource(SourceType.RIPPLE, SOURCE_POS, RADIUS, RAD_TYPE);
@@ -153,7 +154,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void SenseMapCurrentHash()
 		{
-			var map = new BoxResMap(50, 50);
+			var map = BoxResMap(50, 50);
 			var senseMap = new SenseMap(map);
 			senseMap.AddSenseSource(new SenseSource(SourceType.RIPPLE, (20, 20), 10, Radius.CIRCLE));
 
@@ -269,7 +270,7 @@ namespace GoRogue_UnitTests
 			var map = new ArrayMap<bool>(10, 10);
 			QuickGenerators.GenerateRectangleMap(map);
 
-			var identicalResMap = new BoxResMap(10, 10);
+			var identicalResMap = BoxResMap(10, 10);
 
 			var fov = new FOV(map);
 			var fovDouble = new FOV(identicalResMap);
@@ -299,50 +300,25 @@ namespace GoRogue_UnitTests
 				Assert.AreEqual(inFOV, fov.BooleanFOV[pos]);
 			}
 		}
-	}
 
-	internal class BoxResMap : ArrayMap<double>
-	{
-		public BoxResMap(int width, int height)
-			: base(width, height)
+		private static IMapView<double> BoxResMap(int width, int height)
 		{
-			for (int x = 0; x < width; x++)
-				for (int y = 0; y < height; y++)
-				{
-					if (x == 0 || y == 0 || x == Width - 1 || y == Height - 1)
-						this[x, y] = 1.0;
-					else
-						this[x, y] = 0.0;
-				}
-		}
-	}
+			var map = new ArrayMap<bool>(width, height);
+			QuickGenerators.GenerateRectangleMap(map);
 
-	internal class EmptyResMap : IMapView<double>
-	{
-		public EmptyResMap(int width, int height)
-		{
-			Width = width;
-			Height = height;
+			return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
 		}
 
-		public int Height { get; private set; }
-		public int Width { get; private set; }
-		public double this[int x, int y] { get => 0.0; }
-		public double this[Coord c] { get => 0.0; }
-		public double this[int index1D] => 0.0;
-	}
+		private static IMapView<double> EmptyResMap(int width, int height) => new LambdaMapView<double>(width, height, _ => 0.0);
 
-	internal class TestResMap : ArrayMap<double>
-	{
-		public TestResMap(int width, int height)
-			: base(width, height)
+		private static ISettableMapView<double> TestResMap(int width, int height)
 		{
-			Random rng = new Random();
-			for (int x = 0; x < width; x++)
-				for (int y = 0; y < height; y++)
-				{
-					this[x, y] = rng.NextDouble();
-				}
+			var map = new ArrayMap<double>(width, height);
+
+			foreach (var pos in map.Positions())
+				map[pos] = SingletonRandom.DefaultRNG.NextDouble();
+
+			return map;
 		}
 	}
 }

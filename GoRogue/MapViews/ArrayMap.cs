@@ -7,7 +7,7 @@ namespace GoRogue.MapViews
 	/// 1D array to store data.
 	/// </summary>
 	/// <typeparam name="T">The type of value being stored.</typeparam>
-	public class ArrayMap<T> : ISettableMapView<T>, ICloneable
+	public sealed class ArrayMap<T> : ISettableMapView<T>, ICloneable
 	{
 		private readonly T[] _array;
 
@@ -17,17 +17,17 @@ namespace GoRogue.MapViews
 		/// <param name="width">Width of array.</param>
 		/// <param name="height">Height of array.</param>
 		public ArrayMap(int width, int height)
-			: this(new T[width * height], width, height)
+			: this(new T[width * height], width)
 		{ }
 
-		public ArrayMap(T[] existingArray, int width, int height)
+		public ArrayMap(T[] existingArray, int width)
 		{
-			if (existingArray.Length != width * height)
-				throw new ArgumentException($"Existing array must have length equal to {nameof(width)}*{nameof(height)}.", nameof(existingArray));
+			if (existingArray.Length % width != 0)
+				throw new ArgumentException($"Existing array must have length equal to {nameof(width)}*height.", nameof(existingArray));
 
 			_array = existingArray;
 			Width = width;
-			Height = height;
+			Height = existingArray.Length / width;
 		}
 
 		/// <summary>
