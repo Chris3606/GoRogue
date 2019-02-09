@@ -1,5 +1,7 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
+using System.Drawing;
+using DrawingPoint = System.Drawing.Point;
+using MonoPoint = Microsoft.Xna.Framework.Point;
 
 namespace GoRogue
 {
@@ -376,8 +378,20 @@ namespace GoRogue
 		public bool Equals(Coord other) => X == other.X && Y == other.Y;
 
 		#region MonoGame Conversions
-		public static implicit operator Point(Coord c) => new Point(c.X, c.Y);
-		public static implicit operator Coord(Point p) => new Coord(p.X, p.Y);
+		public static implicit operator MonoPoint(Coord c) => new MonoPoint(c.X, c.Y);
+		public static implicit operator Coord(MonoPoint p) => new Coord(p.X, p.Y);
+		#endregion
+
+		#region System Drawing Conversions
+		public static implicit operator DrawingPoint(Coord c) => new DrawingPoint(c.X, c.Y);
+		public static implicit operator Coord(DrawingPoint p) => new Coord(p.X, p.Y);
+
+		public static implicit operator PointF(Coord c) => new PointF(c.X, c.Y);
+
+		public static implicit operator Size(Coord c) => new Size(c.X, c.Y);
+		public static implicit operator Coord(Size s) => new Coord(s.Width, s.Height);
+
+		public static implicit operator SizeF(Coord c) => new SizeF(c.X, c.Y);
 		#endregion
 
 		#region TupleCompatibility

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using Troschuetz.Random;
 using XnaRectangle = Microsoft.Xna.Framework.Rectangle;
+using DrawingRectangle = System.Drawing.Rectangle;
+using DrawingRectangleF = System.Drawing.RectangleF;
 
 namespace GoRogue
 {
@@ -755,6 +757,13 @@ namespace GoRogue
 		#region MonoGame Conversions
 		public static implicit operator XnaRectangle(Rectangle rect) => new XnaRectangle(rect.X, rect.Y, rect.Width, rect.Height);
 		public static implicit operator Rectangle(XnaRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		#endregion
+
+		#region System Drawing Conversions
+		public static implicit operator DrawingRectangle(Rectangle rect) => new DrawingRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		public static implicit operator Rectangle(DrawingRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+
+		public static implicit operator DrawingRectangleF(Rectangle rect) => new DrawingRectangleF(rect.X, rect.Y, rect.Width, rect.Height);
 		#endregion
 
 		#region Tuple Compability
