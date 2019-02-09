@@ -102,6 +102,43 @@ namespace GoRogue_UnitTests
 			checkViewportBounds(viewport, minVal, maxVal);
 		}
 
+		[TestMethod]
+		public void UnboundedViewportTest()
+		{
+			const int MAP_WIDTH = 100;
+			const int MAP_HEIGHT = 100;
+			var map = new ArrayMap<int>(MAP_WIDTH, MAP_HEIGHT);
+			var unboundedViewport = new UnboundedViewport<int>(map, 1);
+
+			foreach (var pos in map.Positions())
+				Assert.AreEqual(0, unboundedViewport[pos]);
+
+			unboundedViewport.ViewArea = unboundedViewport.ViewArea.Translate(5, 5);
+
+			foreach (var pos in unboundedViewport.Positions())
+			{
+				if (pos.X < MAP_WIDTH - 5 && pos.Y < MAP_HEIGHT - 5)
+					Assert.AreEqual(0, unboundedViewport[pos]);
+				else
+					Assert.AreEqual(1, unboundedViewport[pos]);
+			}
+
+			unboundedViewport.ViewArea = unboundedViewport.ViewArea.SetSize(5, 5);
+
+			foreach (var pos in unboundedViewport.Positions())
+				Assert.AreEqual(0, unboundedViewport[pos]);
+
+			unboundedViewport.ViewArea = unboundedViewport.ViewArea.Move(MAP_WIDTH - 1, MAP_HEIGHT - 1);
+
+			foreach (var pos in unboundedViewport.Positions())
+			{
+				if (pos.X == 0 && pos.Y == 0)
+					Assert.AreEqual(0, unboundedViewport[pos]);
+				else
+					Assert.AreEqual(1, unboundedViewport[pos]);
+				}
+		}
+
 		private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
 		{
 			for (int x = 0; x < genMap.Width; x++)

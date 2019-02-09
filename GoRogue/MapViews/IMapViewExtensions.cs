@@ -44,6 +44,25 @@ namespace GoRogue.MapViews
 		public static Rectangle Bounds<T>(this IMapView<T> mapView) => new Rectangle(0, 0, mapView.Width, mapView.Height);
 
 		/// <summary>
+		/// Returns whether or not the given position has a value in this MapView or not.
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">Map view to get bounds for -- never specified manually as this is an extension method</param>
+		/// <param name="x">X-value of the position to check.</param>
+		/// <param name="y">Y-value of the position to check.</param>
+		/// <returns>True if the given position is valid in this map view, false otherwise.</returns>
+		public static bool Contains<T>(this IMapView<T> mapView, int x, int y) => x >= 0 && y >= 0 && x < mapView.Width && y < mapView.Height;
+
+		/// <summary>
+		/// Returns whether or not the given position has a value in this MapView or not.
+		/// </summary>
+		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
+		/// <param name="mapView">Map view to get bounds for -- never specified manually as this is an extension method</param>
+		/// <param name="position">The position to check.</param>
+		/// <returns>True if the given position is valid in this map view, false otherwise.</returns>
+		public static bool Contains<T>(this IMapView<T> mapView, Coord position)
+			=> position.X >= 0 && position.Y >= 0 && position.X < mapView.Width && position.Y < mapView.Height;
+		/// <summary>
 		/// Extension method for IMapViews allowing printing the contents. Takes characters to
 		/// surround the map printout, and each row, the method used to get the string representation
 		/// of each element (defaulting to the ToString function of type T), and separation
