@@ -132,6 +132,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae9e550e7693f296f35b2c4ed660b9f7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#ae9e550e7693f296f35b2c4ed660b9f7c">Remove</a> (<a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> position)</td></tr>
 <tr class="memdesc:ae9e550e7693f296f35b2c4ed660b9f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given position specified from the <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>. Particularly when the Remove operation changes the bounds, this operation can be expensive, so if you must do multiple Remove operations, it would be best to group them into 1 using Remove(IEnumerable&lt;<a class="el" href="class_go_rogue_1_1_coord.html" title="2d coordinate class. You cannot create instances of this class using a constructor – instead...">Coord</a>&gt;).  <a href="#ae9e550e7693f296f35b2c4ed660b9f7c">More...</a><br /></td></tr>
 <tr class="separator:ae9e550e7693f296f35b2c4ed660b9f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a949a170c7496f0d545984817a90f2ad7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#a949a170c7496f0d545984817a90f2ad7">Remove</a> (Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, bool &gt; predicate)</td></tr>
+<tr class="memdesc:a949a170c7496f0d545984817a90f2ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes positions for which the given predicate returns true from the <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>.  <a href="#a949a170c7496f0d545984817a90f2ad7">More...</a><br /></td></tr>
+<tr class="separator:a949a170c7496f0d545984817a90f2ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfd2956731c02657add8afcd6d154daf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#acfd2956731c02657add8afcd6d154daf">Remove</a> (HashSet&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt; positions)</td></tr>
+<tr class="memdesc:acfd2956731c02657add8afcd6d154daf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given positions from the specified <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>.  <a href="#acfd2956731c02657add8afcd6d154daf">More...</a><br /></td></tr>
+<tr class="separator:acfd2956731c02657add8afcd6d154daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a1537f2e6032a19385ca8ce3783cdb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html#a2a1537f2e6032a19385ca8ce3783cdb6">Remove</a> (IEnumerable&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt; positions)</td></tr>
 <tr class="memdesc:a2a1537f2e6032a19385ca8ce3783cdb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the given positions from the specified <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>.  <a href="#a2a1537f2e6032a19385ca8ce3783cdb6">More...</a><br /></td></tr>
 <tr class="separator:a2a1537f2e6032a19385ca8ce3783cdb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -875,7 +881,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="ae9e550e7693f296f35b2c4ed660b9f7c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9e550e7693f296f35b2c4ed660b9f7c">&sect;&nbsp;</a></span>Remove() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae9e550e7693f296f35b2c4ed660b9f7c">&sect;&nbsp;</a></span>Remove() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -900,8 +906,60 @@ Properties</h2></td></tr>
 
 </div>
 </div>
+<a id="a949a170c7496f0d545984817a90f2ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a949a170c7496f0d545984817a90f2ad7">&sect;&nbsp;</a></span>Remove() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GoRogue.MapGeneration.MapArea.Remove </td>
+          <td>(</td>
+          <td class="paramtype">Func&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a>, bool &gt;&#160;</td>
+          <td class="paramname"><em>predicate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes positions for which the given predicate returns true from the <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">predicate</td><td>Predicate returning true for positions that should be removed.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acfd2956731c02657add8afcd6d154daf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acfd2956731c02657add8afcd6d154daf">&sect;&nbsp;</a></span>Remove() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GoRogue.MapGeneration.MapArea.Remove </td>
+          <td>(</td>
+          <td class="paramtype">HashSet&lt; <a class="el" href="class_go_rogue_1_1_coord.html">Coord</a> &gt;&#160;</td>
+          <td class="paramname"><em>positions</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Removes the given positions from the specified <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html" title="Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each unique p...">MapArea</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">positions</td><td>Positions to remove.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2a1537f2e6032a19385ca8ce3783cdb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a1537f2e6032a19385ca8ce3783cdb6">&sect;&nbsp;</a></span>Remove() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a1537f2e6032a19385ca8ce3783cdb6">&sect;&nbsp;</a></span>Remove() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -927,7 +985,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="ae5ad8af949457c446cd61735128efb06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5ad8af949457c446cd61735128efb06">&sect;&nbsp;</a></span>Remove() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5ad8af949457c446cd61735128efb06">&sect;&nbsp;</a></span>Remove() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -964,7 +1022,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="abc2ae96a11387f5ca93c9917d0e77f88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc2ae96a11387f5ca93c9917d0e77f88">&sect;&nbsp;</a></span>Remove() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#abc2ae96a11387f5ca93c9917d0e77f88">&sect;&nbsp;</a></span>Remove() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -990,7 +1048,7 @@ Properties</h2></td></tr>
 </div>
 </div>
 <a id="ac6bcd2d43fcdd2f6a043e8fd531a0a9c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6bcd2d43fcdd2f6a043e8fd531a0a9c">&sect;&nbsp;</a></span>Remove() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6bcd2d43fcdd2f6a043e8fd531a0a9c">&sect;&nbsp;</a></span>Remove() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

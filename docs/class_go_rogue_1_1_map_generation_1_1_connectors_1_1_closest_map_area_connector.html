@@ -77,15 +77,18 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a0ea6789e993f326e9418aef780b4071a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html#a0ea6789e993f326e9418aef780b4071a">Connect</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null)</td></tr>
-<tr class="memdesc:a0ea6789e993f326e9418aef780b4071a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the map given using the algorithm described in the class description.  <a href="#a0ea6789e993f326e9418aef780b4071a">More...</a><br /></td></tr>
+<tr class="memdesc:a0ea6789e993f326e9418aef780b4071a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the given map using the algorithm described in the class description. Map areas are automatically determined via <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a>  <a href="#a0ea6789e993f326e9418aef780b4071a">More...</a><br /></td></tr>
 <tr class="separator:a0ea6789e993f326e9418aef780b4071a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad51ddfe654fae1553855e0832e8d4b59"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_closest_map_area_connector.html#ad51ddfe654fae1553855e0832e8d4b59">Connect</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IReadOnlyList&lt; <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> &gt; mapAreas, <a class="el" href="class_go_rogue_1_1_distance.html">Distance</a> distanceCalc, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a> areaConnector=null, <a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a> tunnelCreator=null)</td></tr>
+<tr class="memdesc:ad51ddfe654fae1553855e0832e8d4b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Connects the map areas given on the given map using the algorithm described in the class description.  <a href="#ad51ddfe654fae1553855e0832e8d4b59">More...</a><br /></td></tr>
+<tr class="separator:ad51ddfe654fae1553855e0832e8d4b59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a connection algorithm that connects all unique map areas in the given map by connecting each area with the one closest to it. </p>
 <p>The algorithm functions by first finding all unique areas in the map given by using <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html#aaede4f19a725ddeed349d2664310d3e5" title="Calculates the list of map areas, returning each unique map area. ">MapAreaFinder.MapAreas</a>. Then, we iterate through each area, find the closest area that is not already conencted to the current area, and create a tunnel between the two. <a class="el" href="class_go_rogue_1_1_distance.html" title="Class representing a method of calculating distance. You cannot create instances of this class using ...">Distance</a> between to areas is measured as the distance between the center point of the bounding boxes of those areas. /// Points to connect two areas, as well as method used to create a tunnel between those two points, are selected via specified parameters. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0ea6789e993f326e9418aef780b4071a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ea6789e993f326e9418aef780b4071a">&sect;&nbsp;</a></span>Connect()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ea6789e993f326e9418aef780b4071a">&sect;&nbsp;</a></span>Connect() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -130,10 +133,81 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Connects the map given using the algorithm described in the class description. </p>
+<p>Connects the given map using the algorithm described in the class description. Map areas are automatically determined via <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area_finder.html" title="Class designed to calculate and produce a list of MapAreas representing each unique connected area of...">MapAreaFinder</a> </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
+    <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines distance/neighbors.</td></tr>
+    <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details. </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>/// </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tunnelCreator</td><td>The tunnel creation strategy to use. If null is specified, <a class="el" href="class_go_rogue_1_1_map_generation_1_1_connectors_1_1_direct_line_tunnel_creator.html" title="Implements a tunnel creation algorithm that sets as walkable a direct line between the two points...">DirectLineTunnelCreator</a> with the distance calculation specified is used. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad51ddfe654fae1553855e0832e8d4b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad51ddfe654fae1553855e0832e8d4b59">&sect;&nbsp;</a></span>Connect() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt;&#160;</td>
+          <td class="paramname"><em>map</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">IReadOnlyList&lt; <a class="el" href="class_go_rogue_1_1_map_generation_1_1_map_area.html">MapArea</a> &gt;&#160;</td>
+          <td class="paramname"><em>mapAreas</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_go_rogue_1_1_distance.html">Distance</a>&#160;</td>
+          <td class="paramname"><em>distanceCalc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html">IAreaConnectionPointSelector</a>&#160;</td>
+          <td class="paramname"><em>areaConnector</em> = <code>null</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_tunnel_creator.html">ITunnelCreator</a>&#160;</td>
+          <td class="paramname"><em>tunnelCreator</em> = <code>null</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Connects the map areas given on the given map using the algorithm described in the class description. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">map</td><td>The map to connect.</td></tr>
+    <tr><td class="paramname">mapAreas</td><td>The map areas to connect on the given map.</td></tr>
     <tr><td class="paramname">distanceCalc</td><td>The distance calculation that defines distance/neighbors.</td></tr>
     <tr><td class="paramname">areaConnector</td><td>The area connection strategy to use. Not all methods function on maps with concave areas &ndash; see respective class documentation for details. </td></tr>
   </table>

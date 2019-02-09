@@ -21,10 +21,6 @@ namespace GoRogue.MapGeneration.Generators
 		/// Once it changes direction, the chance resets to 0 and increases by this amount. Defaults
 		/// to 10.
 		/// </param>
-		/// <param name="saveDeadEndChance">
-		/// After the crawler finishes, the small dead ends will be trimmed out. This value indicates
-		/// the chance out of 100 that the dead end remains. Defaults to 0.
-		/// </param>
 		/// <returns>A list of mazes that were generated.</returns>
 		public static IEnumerable<MapArea> Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10)
 			=> Generate(map, null, crawlerChangeDirectionImprovement);
