@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>2.0.0-pre3</PackageVersion>
+	<PackageVersion>2.0.0-pre4</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Merged in changes from 1.8.1 and 1.8.2.</PackageReleaseNotes>
+	<PackageReleaseNotes>Added primitive implicit conversions to System.Drawing equivalents.  Modified GameObject system to utilize IGameObject interface at its core.  Added UnboundedViewport implementation.</PackageReleaseNotes>
     <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>
