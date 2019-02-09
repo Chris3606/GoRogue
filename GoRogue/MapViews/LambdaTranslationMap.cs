@@ -19,7 +19,8 @@ namespace GoRogue.MapViews
 		private Func<Coord, T1, T2> _getter;
 
 		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from and a getter function taking only a value of type T1.
+		/// Constructor. Takes an existing map view to create a view from and a getter function
+		/// taking only a value of type T1.
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>
@@ -33,7 +34,8 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from and a getter function taking a value of type T1 and its corresponding position.
+		/// Constructor. Takes an existing map view to create a view from and a getter function
+		/// taking a value of type T1 and its corresponding position.
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>

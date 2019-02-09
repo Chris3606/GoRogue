@@ -768,5 +768,87 @@ namespace GoRogue
 			height = Height;
 		}
 		#endregion
+
+		/// <summary>
+		/// Gets all positions that reside on the inner perimeter of the rectangle.
+		/// </summary>
+		/// <returns>IEnumerable of all positions that reside on the inner perimeter of the rectangle.</returns>
+		public IEnumerable<Coord> PerimeterPositions()
+		{
+			for (int x = MinExtentX; x <= MaxExtentX; x++)
+				yield return new Coord(x, MinExtentY); // Minimum y-side perimeter
+
+			for (int y = MinExtentY + 1; y <= MaxExtentY; y++) // Start offset 1, since last loop returned the corner piece
+				yield return new Coord(MaxExtentX, y);
+
+			for (int x = MaxExtentX - 1; x >= MinExtentX; x--) // Again skip 1 because last loop returned the corner piece
+				yield return new Coord(x, MaxExtentY);
+
+			for (int y = MaxExtentY - 1; y >= MinExtentY + 1; y--) // Skip 1 on both ends, becuase last loop returned one corner, first loop returned the other
+				yield return new Coord(MinExtentX, y);
+		}
+
+		/// <summary>
+		/// Gets all positions that reside on the min-y line of the rectangle.
+		/// </summary>
+		/// <returns>IEnumerable of all positions that lie on the min-y line of the rectangle.</returns>
+		public IEnumerable<Coord> MinYPositions()
+		{
+			for (int x = MinExtentX; x <= MaxExtentX; x++)
+				yield return new Coord(x, MinExtentY);
+		}
+
+		/// <summary>
+		/// Gets all positions that reside on the max-y line of the rectangle.
+		/// </summary>
+		/// <returns>IEnumerable of all positions that lie on the max-y line of the rectangle.</returns>
+		public IEnumerable<Coord> MaxYPositions()
+		{
+			for (int x = MinExtentX; x <= MaxExtentX; x++)
+				yield return new Coord(x, MaxExtentY);
+		}
+
+		/// <summary>
+		/// Gets all positions that reside on the min-x line of the rectangle.
+		/// </summary>
+		/// <returns>IEnumerable of all positions that lie on the min-x line of the rectangle.</returns>
+		public IEnumerable<Coord> MinXPositions()
+		{
+			for (int y = MinExtentY; y <= MaxExtentY; y++)
+				yield return new Coord(MinExtentX, y);
+		}
+
+		/// <summary>
+		/// Gets all positions that reside on the max-x line of the rectangle.
+		/// </summary>
+		/// <returns>IEnumerable of all positions that lie on the max-x line of the rectangle.</returns>
+		public IEnumerable<Coord> MaxXPositions()
+		{
+			for (int y = MinExtentY; y <= MaxExtentY; y++)
+				yield return new Coord(MaxExtentX, y);
+		}
+
+		/// <summary>
+		/// Gets an IEnumerable of all positions that line on the inner perimiter of the rectangle,
+		/// on the given side of the rectangle.
+		/// </summary>
+		/// <param name="side">Side to get positions for.</param>
+		/// <returns>IEnumerable of all positions that line on the inner perimieter of the rectangle on the given side.</returns>
+		public IEnumerable<Coord> PositionsOnSide(Direction side)
+		{
+			switch (side.Type)
+			{
+				case Direction.Types.UP:
+					return (Direction.YIncreasesUpward) ? MaxYPositions() : MinYPositions();
+				case Direction.Types.RIGHT:
+					return MaxXPositions();
+				case Direction.Types.DOWN:
+					return (Direction.YIncreasesUpward) ? MinYPositions() : MaxYPositions();
+				case Direction.Types.LEFT:
+					return MinXPositions();
+				default:
+					throw new Exception("Cannot retrieve positions on a non-cardinal side of a rectangle.");
+			}
+		}
 	}
 }

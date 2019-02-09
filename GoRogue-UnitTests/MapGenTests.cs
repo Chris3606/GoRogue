@@ -25,23 +25,33 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
-		public void ManualTestRandomRoomsGen()
-		{
-			var random = new StandardGenerator();
-			var map = new ArrayMap<bool>(80, 50);
-			QuickGenerators.GenerateRandomRoomsMap(map, random, 10, 4, 15, 5);
-
-			displayMap(map);
-			// TODO: Some assert here
-		}
-
-		[TestMethod]
 		public void ManualTestDungeonMazeGen()
 		{
 			var random = new StandardGenerator(12345);
 
 			var map = new ArrayMap<bool>(80, 50);
-			QuickGenerators.GenerateDungeonMazeMap(map, random, 4, 10, 4, 7);
+			QuickGenerators.GenerateDungeonMazeMap(map, random, minRooms: 4, maxRooms: 10, roomMinSize: 4, roomMaxSize: 7);
+			
+			displayMap(map);
+			// TODO: Some assert here
+		}
+
+		[TestMethod]
+		public void ManualMazeTest()
+		{
+			var map = new ArrayMap<bool>(30, 30);
+
+			GoRogue.MapGeneration.Generators.MazeGenerator.Generate(map);
+
+			displayMap(map);
+		}
+
+		[TestMethod]
+		public void ManualTestRandomRoomsGen()
+		{
+			var random = new StandardGenerator();
+			var map = new ArrayMap<bool>(80, 50);
+			QuickGenerators.GenerateRandomRoomsMap(map, random, 10, 4, 15, 5);
 
 			displayMap(map);
 			// TODO: Some assert here
@@ -78,37 +88,45 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void TestMazeGenConnectivityAndEnclosure()
 		{
-			var random = new StandardGenerator();
 			var map = new ArrayMap<bool>(80, 50);
-
-
-
-			for (int i = 0; i < 500; i++)
+			try
 			{
-				QuickGenerators.GenerateDungeonMazeMap(map, random, 10, 20, 4, 15);
+				var random = new StandardGenerator();
 
-				// Ensure it's connected
-				var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
-				if (areas.Count != 1)
+				for (int i = 0; i < 1500; i++)
 				{
-					Console.WriteLine($"Map attempt {i + 1}/500 failed, had {areas.Count} areas: ");
-					displayMapAreas(map, areas);
-				}
+					QuickGenerators.GenerateDungeonMazeMap(map, random, minRooms: 10, maxRooms: 20, roomMinSize: 4, roomMaxSize: 15);
 
-				Assert.AreEqual(1, areas.Count);
+					// Ensure it's connected
+					var areas = MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList();
+					if (areas.Count != 1)
+					{
+						Console.WriteLine($"Map attempt {i + 1}/500 failed, had {areas.Count} areas: ");
+						displayMapAreas(map, areas);
+					}
 
-				// Ensure it's enclosed
-				for (int x = 0; x < map.Width; x++)
-				{
-					Assert.AreEqual(false, map[x, 0]);
-					Assert.AreEqual(false, map[x, map.Height - 1]);
-				}
-				for (int y = 0; y < map.Height; y++)
-				{
-					Assert.AreEqual(false, map[0, y]);
-					Assert.AreEqual(false, map[map.Width - 1, y]);
+					Assert.AreEqual(1, areas.Count);
+
+					// Ensure it's enclosed
+					for (int x = 0; x < map.Width; x++)
+					{
+						Assert.AreEqual(false, map[x, 0]);
+						Assert.AreEqual(false, map[x, map.Height - 1]);
+					}
+					for (int y = 0; y < map.Height; y++)
+					{
+						Assert.AreEqual(false, map[0, y]);
+						Assert.AreEqual(false, map[map.Width - 1, y]);
+					}
 				}
 			}
+			catch (Exception e)
+			{
+				Console.WriteLine($"Map attempt failed with exception on map: ");
+				displayMapAreas(map, MapAreaFinder.MapAreasFor(map, Distance.MANHATTAN).ToList());
+				throw e;
+			}
+			
 		}
 
 		[TestMethod]
@@ -118,6 +136,16 @@ namespace GoRogue_UnitTests
 			QuickGenerators.GenerateRandomRoomsMap(map, 30, 4, 6, 10);
 
 			Console.WriteLine(map.ToString(b => b ? "." : "#"));
+		}
+
+		private void displayMap(IMapView<bool> map)
+		{
+			for (int y = 0; y < map.Height; y++)
+			{
+				for (int x = 0; x < map.Width; x++)
+					Console.Write((map[x, y] ? '.' : '#'));
+				Console.WriteLine();
+			}
 		}
 
 		private void displayMapAreas(IMapView<bool> map, IEnumerable<MapArea> areas)
@@ -142,16 +170,6 @@ namespace GoRogue_UnitTests
 					else
 						Console.Write('-');
 				}
-				Console.WriteLine();
-			}
-		}
-
-		private void displayMap(IMapView<bool> map)
-		{
-			for (int y = 0; y < map.Height; y++)
-			{
-				for (int x = 0; x < map.Width; x++)
-					Console.Write((map[x, y] ? '.' : '#'));
 				Console.WriteLine();
 			}
 		}

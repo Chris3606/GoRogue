@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GoRogue.MapViews;
+using GoRogue.Random;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using GoRogue.MapViews;
 using Troschuetz.Random;
-using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -18,15 +18,21 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </summary>
 		/// <param name="map">The map to modify.</param>
 		/// <param name="rooms">A collection of rooms to process.</param>
-		/// <param name="minSidesToConnect">Minimum sides of the room to process.  Defaults to 1.</param>
-		/// <param name="maxSidesToConnect">Maximum sides of the room to process.  Defaults to 4.</param>
-		/// <param name="cancelSideConnectionSelectChance">A chance out of 100 to cancel selecting sides to process (per room).  Defaults to 50.</param>
-		/// <param name="cancelConnectionPlacementChance">A chance out of 100 to cancel placing a door on a side after one has been placed (per room).
-		/// Defaults to 70.</param>
-		/// <param name="cancelConnectionPlacementChanceIncrease">Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each time a door
-		/// is placed (per room).  Defaults to 10.</param>
+		/// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
+		/// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
+		/// <param name="cancelSideConnectionSelectChance">
+		/// A chance out of 100 to cancel selecting sides to process (per room). Defaults to 50.
+		/// </param>
+		/// <param name="cancelConnectionPlacementChance">
+		/// A chance out of 100 to cancel placing a door on a side after one has been placed (per
+		/// room). Defaults to 70.
+		/// </param>
+		/// <param name="cancelConnectionPlacementChanceIncrease">
+		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
+		/// time a door is placed (per room). Defaults to 10.
+		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ISettableMapView<bool> map, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 			=> ConnectRooms(map, null, rooms, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
@@ -38,15 +44,21 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="map">The map to modify.</param>
 		/// <param name="rng">The RNG to use.</param>
 		/// <param name="rooms">A collection of rooms to process.</param>
-		/// <param name="minSidesToConnect">Minimum sides of the room to process.  Defaults to 1.</param>
-		/// <param name="maxSidesToConnect">Maximum sides of the room to process.  Defaults to 4.</param>
-		/// <param name="cancelSideConnectionSelectChance">A chance out of 100 to cancel selecting sides to process (per room).  Defaults to 50.</param>
-		/// <param name="cancelConnectionPlacementChance">A chance out of 100 to cancel placing a door on a side after one has been placed (per room).
-		/// Defaults to 70.</param>
-		/// <param name="cancelConnectionPlacementChanceIncrease">Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each time a door
-		/// is placed (per room).  Defaults to 10.</param>
+		/// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
+		/// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
+		/// <param name="cancelSideConnectionSelectChance">
+		/// A chance out of 100 to cancel selecting sides to process (per room). Defaults to 50.
+		/// </param>
+		/// <param name="cancelConnectionPlacementChance">
+		/// A chance out of 100 to cancel placing a door on a side after one has been placed (per
+		/// room). Defaults to 70.
+		/// </param>
+		/// <param name="cancelConnectionPlacementChanceIncrease">
+		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
+		/// time a door is placed (per room). Defaults to 10.
+		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ISettableMapView<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 		{
@@ -86,55 +98,25 @@ namespace GoRogue.MapGeneration.Connectors
 				var outerRect = room.Expand(1, 1);
 				var innerRect = room;
 
-				// Get all points along each side
+				// - Get all points along each side
 				List<Coord>[] validPoints = new List<Coord>[4];
 
-				const int INDEX_UP = 0;
-				const int INDEX_DOWN = 1;
-				const int INDEX_RIGHT = 2;
-				const int INDEX_LEFT = 3;
+				for (int i = 0; i < validPoints.Length; i++)
+					validPoints[i] = new List<Coord>();
 
-				validPoints[INDEX_UP] = new List<Coord>();
-				validPoints[INDEX_DOWN] = new List<Coord>();
-				validPoints[INDEX_RIGHT] = new List<Coord>();
-				validPoints[INDEX_LEFT] = new List<Coord>();
-
-				// Along top/bottom edges
-				for (int x = 1; x < outerRect.Width - 1; x++)
+				int sideIndex = 0;
+				foreach (var side in AdjacencyRule.CARDINALS.DirectionsOfNeighbors())
 				{
-					var point = outerRect.Position.Translate(x, 0);
-					var testPoint = point + Direction.UP;
-
-					// Top
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_UP].Add(point);
-
-					point = outerRect.Position.Translate(x, outerRect.Height - 1);
-					testPoint = point + Direction.DOWN;
-
-					// Bottom
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_DOWN].Add(point);
+					foreach (var innerPoint in innerRect.PositionsOnSide(side))
+					{
+						var point = innerPoint + side; // Calculate the outer point
+						var testPoint = point + side; // Keep going to see where opening this connection point would lead
+						if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint) && IsPointWall(map, point))
+							validPoints[sideIndex].Add(point);
+					}
+					sideIndex++;
 				}
-
-				// Along the left/right edges
-				for (int y = 1; y < outerRect.Height - 1; y++)
-				{
-					var point = outerRect.Position.Translate(0, y);
-					var testPoint = point + Direction.LEFT;
-
-					// Left
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_RIGHT].Add(point);
-
-					point = outerRect.Position.Translate(outerRect.Width - 1, y);
-					testPoint = point + Direction.RIGHT;
-
-					// Right
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_LEFT].Add(point);
-				}
-
+				
 				// - if point count for side is > 0, it's a valid side.
 				bool[] validSides = new bool[4];
 				var sidesTotal = 0;
@@ -146,7 +128,6 @@ namespace GoRogue.MapGeneration.Connectors
 					if (validSides[i])
 						sidesTotal++;
 				}
-
 
 				// - if total sides marked > max
 				if (sidesTotal > maxSidesToConnect)
@@ -204,19 +185,21 @@ namespace GoRogue.MapGeneration.Connectors
 					if (validSides[i])
 					{
 						var currentChance = cancelConnectionPlacementChance;
-						var loopMax = 100;
 
 						// - Loop points
-						while (loopMax != 0 && validPoints[i].Count != 0)
+						while (validPoints[i].Count != 0)
 						{
 							// Get point and pull it out of the list
 							var point = validPoints[i][rng.Next(validPoints[i].Count)];
 							validPoints[i].Remove(point);
 
-							// - If point passes availability (no already chosen point next to point)
+							// If point passes availability (no already chosen point next to point)
+							// In cases where room connectivity is already dealt with by maze connection this
+							// may fail but that's ok, already connection on that side at that point,
+							// so it still guarantees that it is connected.
 							if (IsPointByTwoWalls(map, point))
 							{
-								//     - Add point to list
+								// Add point to list
 								finalConnectionPoints[i].Add(point);
 								map[point] = true;
 							}
@@ -224,33 +207,14 @@ namespace GoRogue.MapGeneration.Connectors
 							// Found a point, so start reducing the chance for another
 							if (finalConnectionPoints[i].Count != 0)
 							{
-
 								if (PercentageCheck(currentChance, rng))
-								{
 									break;
-								}
 
 								currentChance += cancelConnectionPlacementChanceIncrease;
 							}
-
-							loopMax--;
-						}
-
-						// If we went too long in the loop and nothing was selected, force one.
-						if (loopMax == 0 && finalConnectionPoints[i].Count == 0)
-						{
-							var point = validPoints[i][rng.Next(validPoints[i].Count)];
-							finalConnectionPoints[i].Add(point);
-							map[point] = true;
 						}
 					}
 				}
-
-				if (finalConnectionPoints[0].Count == 0
-					&& finalConnectionPoints[1].Count == 0
-					&& finalConnectionPoints[2].Count == 0
-					&& finalConnectionPoints[3].Count == 0)
-					Debugger.Break();
 
 				roomHallwayConnections.Add((room, finalConnectionPoints.Select(l => l.ToArray()).ToArray()));
 			}
@@ -258,9 +222,7 @@ namespace GoRogue.MapGeneration.Connectors
 			return roomHallwayConnections;
 		}
 
-		static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
-
-		static bool IsPointByTwoWalls(IMapView<bool> map, Coord location)
+		private static bool IsPointByTwoWalls(IMapView<bool> map, Coord location)
 		{
 			var points = AdjacencyRule.CARDINALS.Neighbors(location);
 			var area = new Rectangle(0, 0, map.Width, map.Height);
@@ -272,19 +234,21 @@ namespace GoRogue.MapGeneration.Connectors
 					counter++;
 			}
 
-			return counter == 2;
-		}
-		static bool IsPointWall(IMapView<bool> map, Coord location)
-		{
-			return !map[location];
+			return counter >= 2;
 		}
 
-		static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)
+		private static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)
 		{
 			if (onlyEdgeTest)
 				return location.X == 0 || location.X == map.Width - 1 || location.Y == 0 || location.Y == map.Height - 1;
 			return location.X <= 0 || location.X >= map.Width - 1 || location.Y <= 0 || location.Y >= map.Height - 1;
-
 		}
+
+		private static bool IsPointWall(IMapView<bool> map, Coord location)
+		{
+			return !map[location];
+		}
+
+		private static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
 	}
 }

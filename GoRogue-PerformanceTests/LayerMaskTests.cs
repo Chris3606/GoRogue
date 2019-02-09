@@ -1,24 +1,15 @@
-﻿using System;
+﻿using GoRogue;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using GoRogue;
 
 namespace GoRogue_PerformanceTests
 {
 	internal static class LayerMaskTests
 	{
 		private static readonly int[] POSSIBLE_LAYERS = Enumerable.Range(0, 32).ToArray();
-		
-		public static TimeSpan TimeForGetRandomLayers(int iterations, int numLayers)
-		{
-			var layersToCheck = new HashSet<int>();
 
-			while (layersToCheck.Count != numLayers)
-				layersToCheck.Add(POSSIBLE_LAYERS.RandomItem());
-
-			return TimeForGetLayers(iterations, layersToCheck);
-		}
 		public static TimeSpan TimeForGetLayers(int iterations, IEnumerable<int> layersToCheck = null)
 		{
 			var layerMasking = new LayerMasker(POSSIBLE_LAYERS.Length);
@@ -41,6 +32,16 @@ namespace GoRogue_PerformanceTests
 			stopwatch.Stop();
 
 			return stopwatch.Elapsed;
+		}
+
+		public static TimeSpan TimeForGetRandomLayers(int iterations, int numLayers)
+		{
+			var layersToCheck = new HashSet<int>();
+
+			while (layersToCheck.Count != numLayers)
+				layersToCheck.Add(POSSIBLE_LAYERS.RandomItem());
+
+			return TimeForGetLayers(iterations, layersToCheck);
 		}
 	}
 }

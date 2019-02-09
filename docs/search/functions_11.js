@@ -18,5 +18,6 @@ var searchData=
   ['translatey',['TranslateY',['../struct_go_rogue_1_1_rectangle.html#a1234ae7f2bb3450a94943d5a233c4ae3',1,'GoRogue::Rectangle']]],
   ['translationmap',['TranslationMap',['../class_go_rogue_1_1_map_views_1_1_translation_map.html#aed9048dbb8ff3f41d80e6e786050ebe1',1,'GoRogue::MapViews::TranslationMap']]],
   ['trigger',['Trigger',['../class_go_rogue_1_1_effect.html#a07cdde14ca3faf2cfca1a8d87db23c2c',1,'GoRogue::Effect']]],
-  ['triggereffects',['TriggerEffects',['../class_go_rogue_1_1_effect_trigger.html#a79ed0e8bb6bdcfc2c9838f3f44d01feb',1,'GoRogue::EffectTrigger']]]
+  ['triggereffects',['TriggerEffects',['../class_go_rogue_1_1_effect_trigger.html#a79ed0e8bb6bdcfc2c9838f3f44d01feb',1,'GoRogue::EffectTrigger']]],
+  ['trim',['Trim',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_dead_end_trimmer.html#a044c50f8cd39530fdd505243c09f8a66',1,'GoRogue.MapGeneration.Connectors.DeadEndTrimmer.Trim(ISettableMapView&lt; bool &gt; map, int saveDeadEndChance=0, IGenerator rng=null)'],['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_dead_end_trimmer.html#af52faf79fc02af7b879d9d3c643375df',1,'GoRogue.MapGeneration.Connectors.DeadEndTrimmer.Trim(ISettableMapView&lt; bool &gt; map, IEnumerable&lt; MapArea &gt; areas, int saveDeadEndChance=100, IGenerator rng=null)']]]
 ];

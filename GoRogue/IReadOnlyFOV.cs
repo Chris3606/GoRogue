@@ -9,6 +9,12 @@ namespace GoRogue
 	public interface IReadOnlyFOV : IMapView<double>
 	{
 		/// <summary>
+		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and
+		/// false indicates it is not.
+		/// </summary>
+		IMapView<bool> BooleanFOV { get; }
+
+		/// <summary>
 		/// IEnumerable of only positions currently in FOV.
 		/// </summary>
 		IEnumerable<Coord> CurrentFOV { get; }
@@ -24,10 +30,5 @@ namespace GoRogue
 		/// WERE in FOV after the previous time Calculate was called.
 		/// </summary>
 		IEnumerable<Coord> NewlyUnseen { get; }
-
-		/// <summary>
-		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and false indicates it is not.
-		/// </summary>
-		IMapView<bool> BooleanFOV { get; }
 	}
 }

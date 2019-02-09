@@ -90,6 +90,16 @@ namespace GoRogue.Pathing
 		public double? this[Coord pos] => _goalMap[pos];
 
 		/// <summary>
+		/// Gets the direction of the neighbor with the minimum goal-map value from the given position.
+		/// </summary>
+		/// <param name="position">The position to get the minimum value for.</param>
+		/// <returns>
+		/// The direction that has the minimum value in the goal-map, or Direction.NONE if the
+		/// neighbors are all obstacles.
+		/// </returns>
+		public Direction GetDirectionOfMinValue(Coord position) => ((IMapView<double?>)this).GetDirectionOfMinValue(position, DistanceMeasurement);
+
+		/// <summary>
 		/// Returns the goal-map values represented as a 2D grid-style string.
 		/// </summary>
 		/// <returns>A string representing the goal map values.</returns>
@@ -148,13 +158,6 @@ namespace GoRogue.Pathing
 			}
 			return UpdatePathsOnly();
 		}
-
-		/// <summary>
-		/// Gets the direction of the neighbor with the minimum goal-map value from the given position.
-		/// </summary>
-		/// <param name="position">The position to get the minimum value for.</param>
-		/// <returns>The direction that has the minimum value in the goal-map, or Direction.NONE if the neighbors are all obstacles.</returns>
-		public Direction GetDirectionOfMinValue(Coord position) => ((IMapView<double?>)this).GetDirectionOfMinValue(position, DistanceMeasurement);
 
 		/// <summary>
 		/// Re-evaluates the walkable portion of the goal map. Should be called anytime the goals change.

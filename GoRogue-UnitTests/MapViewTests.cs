@@ -9,6 +9,20 @@ namespace GoRogue_UnitTests
 	public class MapViewTests
 	{
 		[TestMethod]
+		public void ApplyOverlayTest()
+		{
+			var map = new ArrayMap<bool>(100, 100);
+			QuickGenerators.GenerateCellularAutomataMap(map);
+
+			var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
+
+			duplicateMap.ApplyOverlay(map);
+
+			foreach (var pos in map.Positions())
+				Assert.AreEqual(map[pos], duplicateMap[pos]);
+		}
+
+		[TestMethod]
 		public void LambaMapViewTest()
 		{
 			ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
@@ -86,20 +100,6 @@ namespace GoRogue_UnitTests
 			Coord minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
 			Coord maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
 			checkViewportBounds(viewport, minVal, maxVal);
-		}
-
-		[TestMethod]
-		public void ApplyOverlayTest()
-		{
-			var map = new ArrayMap<bool>(100, 100);
-			QuickGenerators.GenerateCellularAutomataMap(map);
-
-			var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
-
-			duplicateMap.ApplyOverlay(map);
-
-			foreach (var pos in map.Positions())
-				Assert.AreEqual(map[pos], duplicateMap[pos]);
 		}
 
 		private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)

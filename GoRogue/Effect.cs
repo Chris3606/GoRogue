@@ -36,14 +36,14 @@ namespace GoRogue
 	/// type parameter. If multiple arguments are needed, one should create a class that subclasses
 	/// EffectArgs that contains all the parameters, and the effect subclass should then take an
 	/// instance of that EffectArgs subclass as the single parameter. If no arguments are needed,
-	/// then one may pass null as the parameter to Trigger. The concept of a duration is also
-	/// built in to the interface (see EffectTrigger class for details on Effect durations. The
-	/// duration is to be interpreted as the number of times the effect's Trigger function will be
-	/// called before it will be removed from an EffectTrigger. If the effect is instantaneous,
-	/// eg. it happens only when Trigger is called, on no particular event (such as a simple instant
-	/// physical damage effect), then the duration specified in the constructor should be the static
-	/// class constant INSTANT. Otherwise, one may specify the duration as a positive integer, or the
-	/// INFINITE static class constant. See EffectTrigger class documentation for details on durations.
+	/// then one may pass null as the parameter to Trigger. The concept of a duration is also built
+	/// in to the interface (see EffectTrigger class for details on Effect durations. The duration is
+	/// to be interpreted as the number of times the effect's Trigger function will be called before
+	/// it will be removed from an EffectTrigger. If the effect is instantaneous, eg. it happens only
+	/// when Trigger is called, on no particular event (such as a simple instant physical damage
+	/// effect), then the duration specified in the constructor should be the static class constant
+	/// INSTANT. Otherwise, one may specify the duration as a positive integer, or the INFINITE
+	/// static class constant. See EffectTrigger class documentation for details on durations.
 	/// </remarks>
 	/// <typeparam name="TriggerArgs">
 	/// The type of the parameter that will be specified to the Trigger function when called.
@@ -72,6 +72,7 @@ namespace GoRogue
 		public string Name { get; set; }
 
 		private int _duration;
+
 		/// <summary>
 		/// The duration of the effect. When the duration reaches 0, the Effect will be automatically
 		/// removed from an EffectTrigger. The duration can be changed from a subclass, which can be
@@ -87,14 +88,14 @@ namespace GoRogue
 				{
 					_duration = value;
 					if (Expired != null && _duration == 0)
-					Expired.Invoke(this, EventArgs.Empty);
+						Expired.Invoke(this, EventArgs.Empty);
 				}
 			}
 		}
 
 		/// <summary>
-		/// Fires as soon as the effect is about to expire.  Fires after the OnTrigger has been called that round,
-		/// but before it is removed from any EffectTriggers.
+		/// Fires as soon as the effect is about to expire. Fires after the OnTrigger has been called
+		/// that round, but before it is removed from any EffectTriggers.
 		/// </summary>
 		public event EventHandler Expired;
 

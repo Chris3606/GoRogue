@@ -1,5 +1,5 @@
-﻿using GoRogue.MapViews;
-using GoRogue.MapGeneration;
+﻿using GoRogue.MapGeneration;
+using GoRogue.MapViews;
 using System;
 using System.Diagnostics;
 

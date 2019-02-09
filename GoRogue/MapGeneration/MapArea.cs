@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration
@@ -346,43 +347,55 @@ namespace GoRogue.MapGeneration
 		public void Remove(Coord position) => Remove(position.Yield());
 
 		/// <summary>
+		/// Removes positions for which the given predicate returns true from the MapArea.
+		/// </summary>
+		/// <param name="predicate">Predicate returning true for positions that should be removed.</param>
+		public void Remove(Func<Coord, bool> predicate)
+		{
+			bool recalculateBounds = false;
+
+			foreach (var pos in _positions.Where(predicate))
+			{
+				if (positionsSet.Remove(pos))
+					if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
+						recalculateBounds = true;
+			}
+
+			_positions.RemoveAll(c => predicate(c));
+
+
+			if (recalculateBounds)
+				RecalculateBounds();
+		}
+
+		/// <summary>
+		/// Removes the given positions from the specified MapArea.
+		/// </summary>
+		/// <param name="positions">Positions to remove.</param>
+		public void Remove(HashSet<Coord> positions)
+		{
+			bool recalculateBounds = false;
+			foreach (var pos in positions)
+				if (positionsSet.Remove(pos))
+					if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
+						recalculateBounds = true;
+
+			_positions.RemoveAll(c => positions.Contains(c));
+
+			if (recalculateBounds)
+				RecalculateBounds();
+		}
+
+		/// <summary>
 		/// Removes the given positions from the specified MapArea.
 		/// </summary>
 		/// <param name="positions">Positions to remove.</param>
 		public void Remove(IEnumerable<Coord> positions)
 		{
-			bool recalculateBounds = false;
-
-			foreach (var pos in positions)
-			{
-				if (positionsSet.Remove(pos))
-				{
-					_positions.Remove(pos);
-					// This coordinate was a bound so we'll need to recalculate when we're done.
-					if (pos.X == left || pos.X == right || pos.Y == top || pos.Y == bottom)
-						recalculateBounds = true;
-				}
-			}
-
-			if (recalculateBounds)
-			{
-				int leftLocal = int.MaxValue, topLocal = int.MaxValue;
-				int rightLocal = int.MinValue, bottomLocal = int.MinValue;
-
-				// Find new bounds
-				foreach (var pos in _positions)
-				{
-					if (pos.X > rightLocal) rightLocal = pos.X;
-					if (pos.X < leftLocal) leftLocal = pos.X;
-					if (pos.Y > bottomLocal) bottomLocal = pos.Y;
-					if (pos.Y < topLocal) topLocal = pos.Y;
-				}
-
-				left = leftLocal;
-				right = rightLocal;
-				top = topLocal;
-				bottom = bottomLocal;
-			}
+			if (positions is HashSet<Coord> set)
+				Remove(set);
+			else
+				Remove(new HashSet<Coord>(positions));
 		}
 
 		/// <summary>
@@ -412,5 +425,25 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		/// <returns>A string representation of those coordinates in the MapArea.</returns>
 		public override string ToString() => _positions.ExtendToString();
+
+		private void RecalculateBounds()
+		{
+			int leftLocal = int.MaxValue, topLocal = int.MaxValue;
+			int rightLocal = int.MinValue, bottomLocal = int.MinValue;
+
+			// Find new bounds
+			foreach (var pos in _positions)
+			{
+				if (pos.X > rightLocal) rightLocal = pos.X;
+				if (pos.X < leftLocal) leftLocal = pos.X;
+				if (pos.Y > bottomLocal) bottomLocal = pos.Y;
+				if (pos.Y < topLocal) topLocal = pos.Y;
+			}
+
+			left = leftLocal;
+			right = rightLocal;
+			top = topLocal;
+			bottom = bottomLocal;
+		}
 	}
 }

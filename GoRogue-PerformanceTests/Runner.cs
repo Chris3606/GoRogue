@@ -11,12 +11,12 @@ namespace GoRogue_PerformanceTests
 		public static readonly Coord LINE_START = new Coord(29, 23);
 		public static readonly int MAP_HEIGHT = 100;
 		public static readonly int MAP_WIDTH = 100;
-		public static readonly int NUM_GOALS = 5;
 		public static readonly int NUM_EFFECTS = 1000;
+		public static readonly int NUM_GOALS = 5;
 		public static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;
 		public static readonly int RANDROOMS_MAX_ROOMS = 30;
-		public static readonly int RANDROOMS_MIN_SIZE = 4;
 		public static readonly int RANDROOMS_MAX_SIZE = 15;
+		public static readonly int RANDROOMS_MIN_SIZE = 4;
 		public static readonly SourceType SOURCE_TYPE = SourceType.SHADOW;
 		public static bool Quit = false;
 

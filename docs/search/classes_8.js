@@ -1,7 +1,6 @@
 var searchData=
 [
   ['iareaconnectionpointselector',['IAreaConnectionPointSelector',['../interface_go_rogue_1_1_map_generation_1_1_connectors_1_1_i_area_connection_point_selector.html',1,'GoRogue::MapGeneration::Connectors']]],
-  ['idcomparer',['IDComparer',['../class_go_rogue_1_1_i_d_comparer.html',1,'GoRogue']]],
   ['idgenerator',['IDGenerator',['../class_go_rogue_1_1_i_d_generator.html',1,'GoRogue']]],
   ['idiceexpression',['IDiceExpression',['../interface_go_rogue_1_1_dice_notation_1_1_i_dice_expression.html',1,'GoRogue::DiceNotation']]],
   ['ihasid',['IHasID',['../interface_go_rogue_1_1_i_has_i_d.html',1,'GoRogue']]],

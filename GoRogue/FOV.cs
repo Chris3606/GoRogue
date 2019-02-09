@@ -14,7 +14,7 @@ namespace GoRogue
 	/// also supports both 360 degree FOV and a "field of view" (cone) FOV. One may access this class
 	/// like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where
 	/// 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the
-	/// cooresponding coordinate is outside of FOV entirely (not visible).  Values fall off linearly
+	/// cooresponding coordinate is outside of FOV entirely (not visible). Values fall off linearly
 	/// with respect to radius as distance from the center increases.
 	/// </summary>
 	public class FOV : IReadOnlyFOV, IMapView<double>
@@ -26,12 +26,13 @@ namespace GoRogue
 		private IMapView<double> resMap;
 
 		/// <summary>
-		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and false indicates it is not.
+		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and
+		/// false indicates it is not.
 		/// </summary>
 		public IMapView<bool> BooleanFOV { get; private set; }
 
 		/// <summary>
-		/// Constructor.  Takes SenseMap-style resistance map as input data.
+		/// Constructor. Takes SenseMap-style resistance map as input data.
 		/// </summary>
 		/// <param name="resMap">
 		/// The resistance map to use to calculate FOV. Values of 1.0 are considered blocking to FOV,
@@ -48,8 +49,9 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Constructor.  Takes resistance map as a simple map view of boolean values, where true indicates
-		/// the location is transparent (does NOT block FOV), and false indicates it is not transparent (does block FOV)
+		/// Constructor. Takes resistance map as a simple map view of boolean values, where true
+		/// indicates the location is transparent (does NOT block FOV), and false indicates it is not
+		/// transparent (does block FOV)
 		/// </summary>
 		/// <param name="resMap">The map to use for FOV calculation.</param>
 		public FOV(IMapView<bool> resMap)
@@ -225,7 +227,6 @@ namespace GoRogue
 
 			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
 			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
-
 
 			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
 			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);

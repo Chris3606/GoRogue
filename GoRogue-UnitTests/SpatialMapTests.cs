@@ -6,9 +6,10 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class SpatialMapTests
 	{
+		private Coord newPos;
+
 		// Used to test events
 		private Coord oldPos;
-		private Coord newPos;
 
 		[TestMethod]
 		public void SpatialMapAdd()

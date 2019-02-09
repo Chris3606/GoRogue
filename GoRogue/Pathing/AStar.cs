@@ -174,9 +174,10 @@ namespace GoRogue.Pathing
 					// We found a best path, so record and update
 					neighbor.Parent = current;
 					neighbor.G = newDistance; // (Known) distance to this node via shortest path
-					// Heuristic distance to end (priority in queue).  If it's already in the queue, update priority to new F
-					neighbor.F = newDistance + (float)_distanceMeasurement.Calculate(neighbor.Position, end); 
-																											  
+											  // Heuristic distance to end (priority in queue). If
+											  // it's already in the queue, update priority to new F
+					neighbor.F = newDistance + (float)_distanceMeasurement.Calculate(neighbor.Position, end);
+
 					if (openNodes.Contains(neighbor))
 						openNodes.UpdatePriority(neighbor, neighbor.F);
 					else // Otherwise, add it with proper priority

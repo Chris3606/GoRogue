@@ -5,21 +5,6 @@ using System.Linq;
 
 namespace GoRogue_PerformanceTests
 {
-	internal class MyEffect : Effect<EffectArgs>
-	{
-		public MyEffect(int startingDuration)
-			: base("MyEffect", startingDuration)
-		{ }
-
-		public int CurValue { get; private set; }
-
-		
-
-		protected override void OnTrigger(EffectArgs e)
-		{
-			CurValue++;
-		}
-	}
 	internal static class EffectsTests
 	{
 		private static uint _thingToIncrementOnExpire = 0;
@@ -28,7 +13,6 @@ namespace GoRogue_PerformanceTests
 		{
 			var s = new Stopwatch();
 
-			
 			// For caching
 			var myEffectManager = new EffectTrigger<EffectArgs>();
 			foreach (int i in Enumerable.Range(0, numEffects))
@@ -48,7 +32,6 @@ namespace GoRogue_PerformanceTests
 		{
 			_thingToIncrementOnExpire = 0;
 			var s = new Stopwatch();
-
 
 			// For caching
 			var myEffectManager = new EffectTrigger<EffectArgs>();
@@ -73,5 +56,19 @@ namespace GoRogue_PerformanceTests
 		}
 
 		private static void OnEffectExpired(object s, EventArgs e) => _thingToIncrementOnExpire++;
+	}
+
+	internal class MyEffect : Effect<EffectArgs>
+	{
+		public MyEffect(int startingDuration)
+			: base("MyEffect", startingDuration)
+		{ }
+
+		public int CurValue { get; private set; }
+
+		protected override void OnTrigger(EffectArgs e)
+		{
+			CurValue++;
+		}
 	}
 }

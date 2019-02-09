@@ -19,7 +19,8 @@ namespace GoRogue.MapGeneration.Connectors
 	static public class ClosestMapAreaConnector
 	{
 		/// <summary>
-		/// Connects the map given using the algorithm described in the class description.
+		/// Connects the given map using the algorithm described in the class description.  Map areas
+		/// are automatically determined via MapAreaFinder
 		/// </summary>
 		/// <param name="map">The map to connect.</param>
 		/// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
@@ -34,19 +35,38 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </param>
 		static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
 		{
+			var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
+			Connect(map, areas, distanceCalc, areaConnector, tunnelCreator);
+		}
+
+		/// <summary>
+		/// Connects the map areas given on the given map using the algorithm described in the class description.
+		/// </summary>
+		/// <param name="map">The map to connect.</param>
+		/// <param name="mapAreas">The map areas to connect on the given map.</param>
+		/// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
+		/// <param name="areaConnector">
+		/// The area connection strategy to use. Not all methods function on maps with concave areas
+		/// -- see respective class documentation for details.
+		/// </param>
+		/// ///
+		/// <param name="tunnelCreator">
+		/// The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+		/// the distance calculation specified is used.
+		/// </param>
+		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<MapArea> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
+		{
 			if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 			if (tunnelCreator == null) tunnelCreator = new DirectLineTunnelCreator(distanceCalc);
 
-			var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
-
-			var ds = new DisjointSet(areas.Count);
+			var ds = new DisjointSet(mapAreas.Count);
 			while (ds.Count > 1) // Haven't unioned all sets into one
 			{
-				for (int i = 0; i < areas.Count; i++)
+				for (int i = 0; i < mapAreas.Count; i++)
 				{
-					int iClosest = findNearestMapArea(areas, distanceCalc, i, ds);
+					int iClosest = findNearestMapArea(mapAreas, distanceCalc, i, ds);
 
-					var connectionPoints = areaConnector.SelectConnectionPoints(areas[i], areas[iClosest]);
+					var connectionPoints = areaConnector.SelectConnectionPoints(mapAreas[i], mapAreas[iClosest]);
 
 					tunnelCreator.CreateTunnel(map, connectionPoints.Item1, connectionPoints.Item2);
 					ds.MakeUnion(i, iClosest);

@@ -80,7 +80,7 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4fab1b53b796e03ba718a0ff64f3d31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false.  <a href="#a4fab1b53b796e03ba718a0ff64f3d31b">More...</a><br /></td></tr>
 <tr class="separator:a4fab1b53b796e03ba718a0ff64f3d31b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada1bcaadcf3771bffc8eb135c6547799"><td class="memItemLeft" align="right" valign="top">static IEnumerable&lt; <a class="el" href="struct_go_rogue_1_1_rectangle.html">Rectangle</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_go_rogue_1_1_map_generation_1_1_generators_1_1_rooms_generator.html#ada1bcaadcf3771bffc8eb135c6547799">Generate</a> (<a class="el" href="interface_go_rogue_1_1_map_views_1_1_i_settable_map_view.html">ISettableMapView</a>&lt; bool &gt; map, IGenerator rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX=1f, float roomSizeRatioY=1f, int maxCreationAttempts=10, int maxPlacementAttempts=10)</td></tr>
-<tr class="memdesc:ada1bcaadcf3771bffc8eb135c6547799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false.  <a href="#ada1bcaadcf3771bffc8eb135c6547799">More...</a><br /></td></tr>
+<tr class="memdesc:ada1bcaadcf3771bffc8eb135c6547799"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carves random rectangles out of the map, placing rooms at odd x and y positions, with odd width/height. Sets the interior of the room to true. Does not set the wall of the rooms to false.  <a href="#ada1bcaadcf3771bffc8eb135c6547799">More...</a><br /></td></tr>
 <tr class="separator:ada1bcaadcf3771bffc8eb135c6547799"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -170,10 +170,10 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">maxRooms</td><td>Maximum amount of rooms to generate.</td></tr>
     <tr><td class="paramname">roomMinSize</td><td>The minimum size of the room. Forces an odd number.</td></tr>
     <tr><td class="paramname">roomMaxSize</td><td>The maximum size of the room. Forces an odd number.</td></tr>
-    <tr><td class="paramname">roomSizeRatioX</td><td>The ratio of the room width to the height. Defaults to 1.0.</td></tr>
-    <tr><td class="paramname">roomSizeRatioY</td><td>The ratio of the room height to the width. Defaults to 1.0.</td></tr>
-    <tr><td class="paramname">maxCreationAttempts</td><td>The max times to re-generate a room that cannot be placed before giving up on placing that room. Defaults to 10.</td></tr>
-    <tr><td class="paramname">maxPlacementAttempts</td><td>The max times to attempt to place a room in a map without intersection, before giving up and re-generating that room. Defaults to 10.</td></tr>
+    <tr><td class="paramname">roomSizeRatioX</td><td>The ratio of the room width to the height. Defaults to 1.0. </td></tr>
+    <tr><td class="paramname">roomSizeRatioY</td><td>The ratio of the room height to the width. Defaults to 1.0. </td></tr>
+    <tr><td class="paramname">maxCreationAttempts</td><td>The max times to re-generate a room that cannot be placed before giving up on placing that room. Defaults to 10. </td></tr>
+    <tr><td class="paramname">maxPlacementAttempts</td><td>The max times to attempt to place a room in a map without intersection, before giving up and re-generating that room. Defaults to 10. </td></tr>
   </table>
   </dd>
 </dl>
@@ -263,7 +263,7 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Carves random rectangles out of the map, setting the interior of the room to true. Does not set the wall of the rooms to false. </p>
+<p>Carves random rectangles out of the map, placing rooms at odd x and y positions, with odd width/height. Sets the interior of the room to true. Does not set the wall of the rooms to false. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>The map to modify.</td></tr>
@@ -272,10 +272,10 @@ Static Public Member Functions</h2></td></tr>
     <tr><td class="paramname">maxRooms</td><td>Maximum amount of rooms to generate.</td></tr>
     <tr><td class="paramname">roomMinSize</td><td>The minimum size of the room. Forces an odd number.</td></tr>
     <tr><td class="paramname">roomMaxSize</td><td>The maximum size of the room. Forces an odd number.</td></tr>
-    <tr><td class="paramname">roomSizeRatioX</td><td>The ratio of the room width to the height. Defaults to 1.0.</td></tr>
-    <tr><td class="paramname">roomSizeRatioY</td><td>The ratio of the room height to the width. Defaults to 1.0.</td></tr>
-    <tr><td class="paramname">maxCreationAttempts</td><td>The max times to re-generate a room that cannot be placed before giving up on placing that room. Defaults to 10.</td></tr>
-    <tr><td class="paramname">maxPlacementAttempts</td><td>The max times to attempt to place a room in a map without intersection, before giving up and re-generating that room. Defaults to 10.</td></tr>
+    <tr><td class="paramname">roomSizeRatioX</td><td>The ratio of the room width to the height. Defaults to 1.0. </td></tr>
+    <tr><td class="paramname">roomSizeRatioY</td><td>The ratio of the room height to the width. Defaults to 1.0. </td></tr>
+    <tr><td class="paramname">maxCreationAttempts</td><td>The max times to re-generate a room that cannot be placed before giving up on placing that room. Defaults to 10. </td></tr>
+    <tr><td class="paramname">maxPlacementAttempts</td><td>The max times to attempt to place a room in a map without intersection, before giving up and re-generating that room. Defaults to 10. </td></tr>
   </table>
   </dd>
 </dl>

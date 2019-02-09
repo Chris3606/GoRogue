@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['deadendtrimmer',['DeadEndTrimmer',['../class_go_rogue_1_1_map_generation_1_1_connectors_1_1_dead_end_trimmer.html',1,'GoRogue::MapGeneration::Connectors']]],
   ['dice',['Dice',['../class_go_rogue_1_1_dice_notation_1_1_dice.html',1,'GoRogue::DiceNotation']]],
   ['diceexpression',['DiceExpression',['../class_go_rogue_1_1_dice_notation_1_1_dice_expression.html',1,'GoRogue::DiceNotation']]],
   ['diceterm',['DiceTerm',['../class_go_rogue_1_1_dice_notation_1_1_terms_1_1_dice_term.html',1,'GoRogue::DiceNotation::Terms']]],
