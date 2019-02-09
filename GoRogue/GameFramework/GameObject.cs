@@ -4,20 +4,22 @@ namespace GoRogue.GameFramework
 {
 	/// <summary>
 	/// Base class for any object that has a grid position and can be added to a Map.  Implements basic attributes generally common to all objects
-	/// on a map, as well as properties/methods that the Map class needs to function.
+	/// on a map, as well as properties/methods that the Map class needs to function.  In cases where this class cannot be inherited from, have
+	/// your class implement IGameObject via a private GameObject field.
 	/// </summary>
 	/// <remarks>
 	/// This class is designed to serve as a base class for your own game objects in your game.  It implements basic common functionality such as
 	/// walkability and transparency, and provides some infrastructure that allows it to be added to instances of Map.  It also implements the
 	/// necessary functionality that allows GameObjects to be added to an ISpatialMap implementation.
 	/// 
-	/// Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one (GameObject), and use that as
+	/// Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one (GameObject), or implement
+	/// IGameObject by composition using a private field of this class, and use that as
 	/// the base class for your game's objects.  A Map instance can be used to store these objects efficiently. As well, Map provides functionality
 	/// that will allow you to retrieve your objects as references of their derived type (MyGameObject or MyTerrain, in the example above), meaning
 	/// you can implement any common, game-specific functionality you need and have easy access to that information when objects are retrieved from
 	/// the map.
 	/// </remarks>
-	public class GameObject : IHasID, IHasLayer
+	public class GameObject : IGameObject
 	{
 		private Coord _position;
 		/// <summary>
@@ -39,7 +41,7 @@ namespace GoRogue.GameFramework
 				{
 					var oldPos = _position;
 					_position = value;
-					Moved?.Invoke(this, new ItemMovedEventArgs<GameObject>(this, oldPos, _position));
+					Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldPos, _position));
 				}
 			}
 		}
@@ -48,7 +50,7 @@ namespace GoRogue.GameFramework
 		/// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
 		/// the object is part of a Map.
 		/// </summary>
-		public event EventHandler<ItemMovedEventArgs<GameObject>> Moved;
+		public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved;
 
 		/// <summary>
 		/// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
@@ -85,7 +87,7 @@ namespace GoRogue.GameFramework
 		/// The current Map which this object resides on.  Null if the object has not been assigned an object.
 		/// A GameObject is allowed to reside on only one map.
 		/// </summary>
-		public Map CurrentMap { get; internal set; }
+		public Map CurrentMap { get; private set; }
 
 		/// <summary>
 		/// Constructor.
@@ -136,5 +138,7 @@ namespace GoRogue.GameFramework
 		/// </remarks>
 		/// <returns>An ID to assign to the current object.</returns>
 		protected virtual uint GenerateID() => Random.SingletonRandom.DefaultRNG.NextUInt();
+
+		public void OnMapChanged(Map newMap) => CurrentMap = newMap;
 	}
 }
