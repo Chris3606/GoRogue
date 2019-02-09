@@ -35,8 +35,8 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </returns>
 		public Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
 		{
-			Coord c1 = null;
-			Coord c2 = null;
+			Coord c1 = Coord.NONE;
+			Coord c2 = Coord.NONE;
 			double minDist = double.MaxValue;
 
 			foreach (var point1 in area1.Positions)

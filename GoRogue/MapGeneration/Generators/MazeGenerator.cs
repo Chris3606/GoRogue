@@ -46,7 +46,7 @@ namespace GoRogue.MapGeneration.Generators
 
 			var empty = FindEmptySquare(map, rng);
 
-			while (empty != null)
+			while (empty != Coord.NONE)
 			{
 				Crawler crawler = new Crawler();
 				crawlers.Add(crawler);
@@ -128,13 +128,13 @@ namespace GoRogue.MapGeneration.Generators
 			// Start looping through every single one
 			for (int i = 0; i < map.Width * map.Height; i++)
 			{
-				var location = Coord.Get(i % map.Width, i / map.Width);
+				var location = Coord.ToCoord(i, map.Width);
 
 				if (IsPointConsideredEmpty(map, location))
 					return location;
 			}
 
-			return null;
+			return Coord.NONE;
 		}
 
 		private static int GetDirectionIndex(bool[] valids, IGenerator rng)
@@ -246,7 +246,7 @@ namespace GoRogue.MapGeneration.Generators
 		private class Crawler
 		{
 			public MapArea AllPositions = new MapArea();
-			public Coord CurrentPosition = Coord.Get(0, 0);
+			public Coord CurrentPosition = new Coord(0, 0);
 			public Direction Facing = Direction.UP;
 			public bool IsActive = true;
 			public Stack<Coord> Path = new Stack<Coord>();
