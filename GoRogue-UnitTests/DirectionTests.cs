@@ -46,6 +46,8 @@ namespace GoRogue_UnitTests
 			Direction d = Direction.GetDirection(1, 1); // UP_RIGHT
 			Console.WriteLine(d);
 			Assert.AreEqual(Direction.UP_RIGHT, d);
+
+			Direction.YIncreasesUpward = false; // Reset so this test doesn't affect other tests
 		}
 	}
 }

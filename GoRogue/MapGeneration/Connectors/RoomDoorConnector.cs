@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ISettableMapView<bool> map, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 			=> ConnectRooms(map, null, rooms, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
@@ -58,7 +58,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ISettableMapView<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 		{
@@ -98,55 +98,25 @@ namespace GoRogue.MapGeneration.Connectors
 				var outerRect = room.Expand(1, 1);
 				var innerRect = room;
 
-				// Get all points along each side
+				// - Get all points along each side
 				List<Coord>[] validPoints = new List<Coord>[4];
 
-				const int INDEX_UP = 0;
-				const int INDEX_DOWN = 1;
-				const int INDEX_RIGHT = 2;
-				const int INDEX_LEFT = 3;
+				for (int i = 0; i < validPoints.Length; i++)
+					validPoints[i] = new List<Coord>();
 
-				validPoints[INDEX_UP] = new List<Coord>();
-				validPoints[INDEX_DOWN] = new List<Coord>();
-				validPoints[INDEX_RIGHT] = new List<Coord>();
-				validPoints[INDEX_LEFT] = new List<Coord>();
-
-				// Along top/bottom edges
-				for (int x = 1; x < outerRect.Width - 1; x++)
+				int sideIndex = 0;
+				foreach (var side in AdjacencyRule.CARDINALS.DirectionsOfNeighbors())
 				{
-					var point = outerRect.Position.Translate(x, 0);
-					var testPoint = point + Direction.UP;
-
-					// Top
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_UP].Add(point);
-
-					point = outerRect.Position.Translate(x, outerRect.Height - 1);
-					testPoint = point + Direction.DOWN;
-
-					// Bottom
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_DOWN].Add(point);
+					foreach (var innerPoint in innerRect.PositionsOnSide(side))
+					{
+						var point = innerPoint + side; // Calculate the outer point
+						var testPoint = point + side; // Keep going to see where opening this connection point would lead
+						if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint) && IsPointWall(map, point))
+							validPoints[sideIndex].Add(point);
+					}
+					sideIndex++;
 				}
-
-				// Along the left/right edges
-				for (int y = 1; y < outerRect.Height - 1; y++)
-				{
-					var point = outerRect.Position.Translate(0, y);
-					var testPoint = point + Direction.LEFT;
-
-					// Left
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_RIGHT].Add(point);
-
-					point = outerRect.Position.Translate(outerRect.Width - 1, y);
-					testPoint = point + Direction.RIGHT;
-
-					// Right
-					if (!IsPointMapEdge(map, testPoint) && !IsPointWall(map, testPoint))
-						validPoints[INDEX_LEFT].Add(point);
-				}
-
+				
 				// - if point count for side is > 0, it's a valid side.
 				bool[] validSides = new bool[4];
 				var sidesTotal = 0;
@@ -215,19 +185,21 @@ namespace GoRogue.MapGeneration.Connectors
 					if (validSides[i])
 					{
 						var currentChance = cancelConnectionPlacementChance;
-						var loopMax = 100;
 
 						// - Loop points
-						while (loopMax != 0 && validPoints[i].Count != 0)
+						while (validPoints[i].Count != 0)
 						{
 							// Get point and pull it out of the list
 							var point = validPoints[i][rng.Next(validPoints[i].Count)];
 							validPoints[i].Remove(point);
 
-							// - If point passes availability (no already chosen point next to point)
+							// If point passes availability (no already chosen point next to point)
+							// In cases where room connectivity is already dealt with by maze connection this
+							// may fail but that's ok, already connection on that side at that point,
+							// so it still guarantees that it is connected.
 							if (IsPointByTwoWalls(map, point))
 							{
-								// - Add point to list
+								// Add point to list
 								finalConnectionPoints[i].Add(point);
 								map[point] = true;
 							}
@@ -236,31 +208,13 @@ namespace GoRogue.MapGeneration.Connectors
 							if (finalConnectionPoints[i].Count != 0)
 							{
 								if (PercentageCheck(currentChance, rng))
-								{
 									break;
-								}
 
 								currentChance += cancelConnectionPlacementChanceIncrease;
 							}
-
-							loopMax--;
-						}
-
-						// If we went too long in the loop and nothing was selected, force one.
-						if (loopMax == 0 && finalConnectionPoints[i].Count == 0)
-						{
-							var point = validPoints[i][rng.Next(validPoints[i].Count)];
-							finalConnectionPoints[i].Add(point);
-							map[point] = true;
 						}
 					}
 				}
-
-				if (finalConnectionPoints[0].Count == 0
-					&& finalConnectionPoints[1].Count == 0
-					&& finalConnectionPoints[2].Count == 0
-					&& finalConnectionPoints[3].Count == 0)
-					Debugger.Break();
 
 				roomHallwayConnections.Add((room, finalConnectionPoints.Select(l => l.ToArray()).ToArray()));
 			}
@@ -280,7 +234,7 @@ namespace GoRogue.MapGeneration.Connectors
 					counter++;
 			}
 
-			return counter == 2;
+			return counter >= 2;
 		}
 
 		private static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)

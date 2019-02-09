@@ -25,8 +25,9 @@ namespace GoRogue.MapGeneration.Generators
 		/// After the crawler finishes, the small dead ends will be trimmed out. This value indicates
 		/// the chance out of 100 that the dead end remains. Defaults to 0.
 		/// </param>
-		public static void Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0)
-			=> Generate(map, null, crawlerChangeDirectionImprovement, saveDeadEndChance);
+		/// <returns>A list of mazes that were generated.</returns>
+		public static IEnumerable<MapArea> Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10)
+			=> Generate(map, null, crawlerChangeDirectionImprovement);
 
 		/// <summary>
 		/// Generates a maze in map using crawlers that walk the map carving tunnels.
@@ -38,11 +39,8 @@ namespace GoRogue.MapGeneration.Generators
 		/// Once it changes direction, the chance resets to 0 and increases by this amount. Defaults
 		/// to 10.
 		/// </param>
-		/// <param name="saveDeadEndChance">
-		/// After the crawler finishes, the small dead ends will be trimmed out. This value indicates
-		/// the chance out of 100 that the dead end remains. Defaults to 0.
-		/// </param>
-		public static void Generate(ISettableMapView<bool> map, IGenerator rng = null, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0)
+		/// <returns>A list of mazes that were generated.</returns>
+		public static IEnumerable<MapArea> Generate(ISettableMapView<bool> map, IGenerator rng, int crawlerChangeDirectionImprovement = 10)
 		{
 			// Implemented the logic from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
@@ -117,7 +115,7 @@ namespace GoRogue.MapGeneration.Generators
 				empty = FindEmptySquare(map, rng);
 			}
 
-			TrimDeadPaths(map, crawlers, saveDeadEndChance, rng);
+			return crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0);
 		}
 
 		private static Coord FindEmptySquare(IMapView<bool> map, IGenerator rng)
@@ -175,6 +173,7 @@ namespace GoRogue.MapGeneration.Generators
 			return tempDirectionIndex;
 		}
 
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool IsPointConsideredEmpty(IMapView<bool> map, Coord location)
 		{
 			return !IsPointMapEdge(map, location) &&  // exclude outer ridge of map
@@ -246,103 +245,11 @@ namespace GoRogue.MapGeneration.Generators
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
 
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static bool PercentageCheck(double outOfHundred, IGenerator rng) => outOfHundred > 0d && rng.NextDouble() < outOfHundred;
-
-		private static void TrimDeadPaths(ISettableMapView<bool> map, IEnumerable<Crawler> crawlers, int saveDeadEndChance, IGenerator rng)
-		{
-			foreach (var crawler in crawlers)
-			{
-				List<Coord> safeDeadEnds = new List<Coord>();
-				List<Coord> deadEnds = new List<Coord>();
-
-				while (true)
-				{
-					foreach (var point in crawler.AllPositions)
-					{
-						var points = AdjacencyRule.EIGHT_WAY.NeighborsClockwise(point).ToArray();
-						var directions = AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsClockwise(Direction.NONE).ToList();
-
-						for (int i = 0; i < 8; i += 2)
-						{
-							if (map[points[i]])
-							{
-								var oppDir = directions[i] + 4;
-								bool found = false;
-
-								// If we get here, source direction is a floor, opposite direction
-								// should be wall
-								if (!map[points[(int)oppDir.Type]])
-								{
-									switch (oppDir.Type)
-									{
-										// Check for a wall pattern in the map. In this case
-										// something like where X is a wall XXX X X
-										case Direction.Types.UP:
-											found = !map[points[(int)Direction.Types.UP_LEFT]] &&
-													!map[points[(int)Direction.Types.UP_RIGHT]] &&
-													!map[points[(int)Direction.Types.LEFT]] &&
-													!map[points[(int)Direction.Types.RIGHT]];
-											break;
-
-										case Direction.Types.DOWN:
-											found = !map[points[(int)Direction.Types.DOWN_LEFT]] &&
-													!map[points[(int)Direction.Types.DOWN_RIGHT]] &&
-													!map[points[(int)Direction.Types.LEFT]] &&
-													!map[points[(int)Direction.Types.RIGHT]];
-											break;
-
-										case Direction.Types.RIGHT:
-											found = !map[points[(int)Direction.Types.UP_RIGHT]] &&
-													!map[points[(int)Direction.Types.DOWN_RIGHT]] &&
-													!map[points[(int)Direction.Types.UP]] &&
-													!map[points[(int)Direction.Types.DOWN]];
-											break;
-
-										case Direction.Types.LEFT:
-											found = !map[points[(int)Direction.Types.UP_LEFT]] &&
-													!map[points[(int)Direction.Types.DOWN_LEFT]] &&
-													!map[points[(int)Direction.Types.UP]] &&
-													!map[points[(int)Direction.Types.DOWN]];
-											break;
-									}
-								}
-
-								if (found)
-									deadEnds.Add(point);
-
-								break;
-							}
-						}
-					}
-
-					deadEnds = new List<Coord>(deadEnds.Except(safeDeadEnds));
-					crawler.AllPositions = new List<Coord>(crawler.AllPositions.Except(deadEnds));
-
-					if (deadEnds.Count == 0)
-						break;
-
-					foreach (var point in deadEnds)
-					{
-						if (PercentageCheck(saveDeadEndChance, rng))
-						{
-							safeDeadEnds.Add(point);
-						}
-						else
-							map[point] = false;
-					}
-
-					deadEnds.Clear();
-					break; // For now we only do 1 pass. Have to design this differently
-						   // the sadconsole version didn't need to quit like this, unsure what the
-						   // difference is...
-				}
-			}
-		}
+		
 
 		private class Crawler
 		{
-			public List<Coord> AllPositions = new List<Coord>();
+			public MapArea AllPositions = new MapArea();
 			public Coord CurrentPosition = Coord.Get(0, 0);
 			public Direction Facing = Direction.UP;
 			public bool IsActive = true;

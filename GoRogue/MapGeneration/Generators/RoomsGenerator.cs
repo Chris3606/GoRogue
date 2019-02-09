@@ -42,8 +42,8 @@ namespace GoRogue.MapGeneration.Generators
 			=> Generate(map, null, minRooms, maxRooms, roomMinSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
 
 		/// <summary>
-		/// Carves random rectangles out of the map, setting the interior of the room to true. Does
-		/// not set the wall of the rooms to false.
+		/// Carves random rectangles out of the map, placing rooms at odd x and y positions, with odd width/height.
+		/// Sets the interior of the room to true. Does not set the wall of the rooms to false.
 		/// </summary>
 		/// <param name="map">The map to modify.</param>
 		/// <param name="rng">RNG to use.</param>
@@ -128,7 +128,14 @@ namespace GoRogue.MapGeneration.Generators
 
 					while (tryCounterPlace != 0)
 					{
-						roomInnerRect = roomInnerRect.Move(Coord.Get(rng.Next(3, map.Width - roomInnerRect.Width - 3), rng.Next(3, map.Height - roomInnerRect.Height - 3)));
+						int xPos = 0, yPos = 0;
+
+						while (xPos % 2 == 0) // Generate an odd value
+							xPos = rng.Next(3, map.Width - roomInnerRect.Width - 3);
+						while (yPos % 2 == 0)
+							yPos = rng.Next(3, map.Height - roomInnerRect.Height - 3);
+						
+						roomInnerRect = roomInnerRect.Move(Coord.Get(xPos, yPos));
 
 						var roomBounds = roomInnerRect.Expand(3, 3);
 

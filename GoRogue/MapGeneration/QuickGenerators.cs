@@ -46,8 +46,8 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		/// <remarks>
 		/// First, non-overlapping rooms are randomly placed using RoomGenerator. Then, a maze is
-		/// generated into the remaining space using a MazeGenerator. Finally, the rooms are
-		/// connected to each other using a RoomDoorConnector.
+		/// generated into the remaining space using a MazeGenerator. Those mazes are then connected.  The rooms are
+		/// connected to the maze using a RoomDoorConnector, and finally, small dead ends are trimmed out.
 		/// </remarks>
 		/// <param name="map">The map to set values to.</param>
 		/// <param name="minRooms">Minimum amount of rooms to generate.</param>
@@ -105,8 +105,8 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		/// <remarks>
 		/// First, non-overlapping rooms are randomly placed using RoomGenerator. Then, a maze is
-		/// generated into the remaining space using a MazeGenerator. Finally, the rooms are
-		/// connected to each other using a RoomDoorConnector.
+		/// generated into the remaining space using a MazeGenerator. Those mazes are then connected.  The rooms are
+		/// connected to the maze using a RoomDoorConnector, and finally, small dead ends are trimmed out.
 		/// </remarks>
 		/// <param name="map">The map to set values to.</param>
 		/// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
@@ -133,10 +133,6 @@ namespace GoRogue.MapGeneration
 		/// during maze generation. Once it changes direction, the chance resets to 0 and increases
 		/// by this amount. Defaults to 10.
 		/// </param>
-		/// <param name="saveDeadEndChance">
-		/// After the maze generation finishes, the small dead ends will be trimmed out. This value
-		/// indicates the chance out of 100 that the dead end remains. Defaults to 0.
-		/// </param>
 		/// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
 		/// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
 		/// <param name="cancelSideConnectionSelectChance">
@@ -151,11 +147,15 @@ namespace GoRogue.MapGeneration
 		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
 		/// time a door is placed (per room) during the connection process. Defaults to 10.
 		/// </param>
+		/// <param name="saveDeadEndChance">
+		/// After the connection finishes, the small dead ends will be trimmed out. This value
+		/// indicates the chance out of 100 that a given dead end remains. Defaults to 0.
+		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
 		public static IEnumerable<(Rectangle Room, Coord[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator rng, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
-			int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
-			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10)
+			int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
+			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -170,12 +170,16 @@ namespace GoRogue.MapGeneration
 															  maxCreationAttempts, maxPlacementAttempts);
 
 			// Generate maze
-			Generators.MazeGenerator.Generate(tempMap, rng, crawlerChangeDirectionImprovement, saveDeadEndChance);
+			var mazes = Generators.MazeGenerator.Generate(tempMap, rng, crawlerChangeDirectionImprovement).ToList();
+			// Connect random points in each maze to the next closest one, with a horizontal-vertical tunnel, so we have 1 maze
+			Connectors.ClosestMapAreaConnector.Connect(map, mazes, Distance.MANHATTAN, areaConnector: new Connectors.ClosestConnectionPointSelector(Distance.MANHATTAN), tunnelCreator: new Connectors.HorizontalVerticalTunnelCreator(rng));
 
 			// Connect rooms to maze
 			var connectionResult = Connectors.RoomDoorConnector.ConnectRooms(tempMap, rng, mapRooms, minSidesToConnect, maxSidesToConnect,
 																			 cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
 																			 cancelConnectionPlacementChanceIncrease);
+
+			Connectors.DeadEndTrimmer.Trim(tempMap, mazes, saveDeadEndChance, rng);
 
 			if (!wasArrayMap)
 				map.ApplyOverlay(tempMap);
