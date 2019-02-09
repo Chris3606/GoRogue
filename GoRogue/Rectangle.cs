@@ -80,7 +80,7 @@ namespace GoRogue
 		/// <summary>
 		/// The height of the rectangle.
 		/// </summary>
-		public int Height { get; private set; }
+		public readonly int Height;
 
 		/// <summary>
 		/// Whether or not this rectangle is empty (has width and height of 0).
@@ -150,17 +150,17 @@ namespace GoRogue
 		/// <summary>
 		/// The width of the rectangle.
 		/// </summary>
-		public int Width { get; private set; }
+		public readonly int Width;
 
 		/// <summary>
 		/// X-coordinate of position of the rectangle.
 		/// </summary>
-		public int X { get; private set; }
+		public readonly int X;
 
 		/// <summary>
 		/// Y-coordinate of position of the rectangle.
 		/// </summary>
-		public int Y { get; private set; }
+		public readonly int Y;
 
 		/// <summary>
 		/// Creates a rectangle with the given minimum and maximum extents. Effectively a
