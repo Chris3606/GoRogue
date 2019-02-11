@@ -121,7 +121,8 @@ namespace GoRogue_UnitTests
 
 		private bool testLOS(Radius shape)
 		{
-			var map = rectResMap(MAP_WIDTH, MAP_HEIGHT);
+			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			// Start out at false
 			bool[,] radiusMap = new bool[MAP_WIDTH, MAP_HEIGHT];

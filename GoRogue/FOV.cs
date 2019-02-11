@@ -7,15 +7,13 @@ namespace GoRogue
 {
 	/// <summary>
 	/// Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).
-	/// Effectively a simplified, slightly faster interface compared to SenseMap, that supports only
-	/// a single source and only shadowcasting. This is more conducive to the typical use case for
-	/// FOV. It can calculate the FOV with a finite or infinite max radius, and can use a variety of
-	/// radius types, as specified in Radius class (all the same ones that SenseMap supports). It
-	/// also supports both 360 degree FOV and a "field of view" (cone) FOV. One may access this class
-	/// like a 2D array of doubles (FOV values), wherein the values will range from 0.0 to 1.0, where
-	/// 1.0 means the corresponding map grid coordinate is at maximum visibility, and 0.0 means the
-	/// cooresponding coordinate is outside of FOV entirely (not visible). Values fall off linearly
-	/// with respect to radius as distance from the center increases.
+	/// It can calculate the FOV with a finite or infinite max radius, and can use a variety of
+	/// radius types, as specified in Radius class. It also supports both 360 degree FOV and an
+	/// angle-restricted (directional) FOV. One may access this class like a 2D array of doubles
+	/// (FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the
+	/// corresponding map grid coordinate is at maximum visibility, and 0.0 means the corresponding
+	/// coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect
+	/// to radius as distance from the center increases.
 	/// </summary>
 	public class FOV : IReadOnlyFOV, IMapView<double>
 	{
@@ -23,7 +21,7 @@ namespace GoRogue
 		private double[,] light;
 		private HashSet<Coord> previousFOV;
 
-		private IMapView<double> resMap;
+		private IMapView<bool> fovMap;
 
 		/// <summary>
 		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and
@@ -32,30 +30,22 @@ namespace GoRogue
 		public IMapView<bool> BooleanFOV { get; private set; }
 
 		/// <summary>
-		/// Constructor. Takes SenseMap-style resistance map as input data.
+		/// Constructor. Takes an IMapView of boolean values as input, where true indicates a tile
+		/// is see-through (transparent), and false blocks FOV.
 		/// </summary>
-		/// <param name="resMap">
-		/// The resistance map to use to calculate FOV. Values of 1.0 are considered blocking to FOV,
-		/// while other (lower) values are considered to be not blocking.
+		/// <param name="fovMap">
+		/// The values used to calculate FOV. Values of true are considered non-blocking (transparent)
+		/// to FOV, while false values are considered to be blocking.
 		/// </param>
-		public FOV(IMapView<double> resMap)
+		public FOV(IMapView<bool> fovMap)
 		{
-			this.resMap = resMap;
+			this.fovMap = fovMap;
 			BooleanFOV = new LambdaTranslationMap<double, bool>(this, val => val > 0.0 ? true : false);
 
 			light = null;
 			currentFOV = new HashSet<Coord>();
 			previousFOV = new HashSet<Coord>();
 		}
-
-		/// <summary>
-		/// Constructor. Takes resistance map as a simple map view of boolean values, where true
-		/// indicates the location is transparent (does NOT block FOV), and false indicates it is not
-		/// transparent (does block FOV)
-		/// </summary>
-		/// <param name="resMap">The map to use for FOV calculation.</param>
-		public FOV(IMapView<bool> resMap)
-			: this(new LambdaTranslationMap<bool, double>(resMap, v => v ? 0.0 : 1.0)) { }
 
 		/// <summary>
 		/// IEnumerable of only positions currently in FOV.
@@ -65,7 +55,7 @@ namespace GoRogue
 		/// <summary>
 		/// Height of FOV map.
 		/// </summary>
-		public int Height { get => resMap.Height; }
+		public int Height { get => fovMap.Height; }
 
 		/// <summary>
 		/// IEnumerable of positions that are in FOV as of the most current Calculate call, but were
@@ -82,7 +72,7 @@ namespace GoRogue
 		/// <summary>
 		/// Width of FOV map.
 		/// </summary>
-		public int Width { get => resMap.Width; }
+		public int Width { get => fovMap.Width; }
 
 		public double this[int index1D] => light[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
 
@@ -169,8 +159,8 @@ namespace GoRogue
 
 			foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
 			{
-				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
-				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc);
 			}
 		}
 
@@ -225,17 +215,17 @@ namespace GoRogue
 			light[startX, startY] = 1; // Full power to starting space
 			currentFOV.Add(new Coord(startX, startY));
 
-			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, resMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
 		}
 
 		/// <summary>
@@ -276,9 +266,9 @@ namespace GoRogue
 		{
 			string result = "";
 
-			for (int y = 0; y < resMap.Height; y++)
+			for (int y = 0; y < fovMap.Height; y++)
 			{
-				for (int x = 0; x < resMap.Width; x++)
+				for (int x = 0; x < fovMap.Width; x++)
 				{
 					result += (light[x, y] > 0.0) ? sourceValue : normal;
 					result += " ";
@@ -307,7 +297,7 @@ namespace GoRogue
 
 		private static void shadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
 									 double radius, int startX, int startY, double decay, double[,] lightMap, HashSet<Coord> fovSet,
-									 IMapView<double> map, Distance distanceStrategy)
+									 IMapView<bool> map, Distance distanceStrategy)
 		{
 			double newStart = 0;
 			if (start < end)
@@ -342,7 +332,7 @@ namespace GoRogue
 
 					if (blocked) // Previous cell was blocked
 					{
-						if (map[currentX, currentY] >= 1) // Hit a wall...
+						if (!map[currentX, currentY]) // Hit a wall...
 							newStart = rightSlope;
 						else
 						{
@@ -352,7 +342,7 @@ namespace GoRogue
 					}
 					else
 					{
-						if (map[currentX, currentY] >= 1 && distance < radius) // Wall within sight line
+						if (!map[currentX, currentY] && distance < radius) // Wall within sight line
 						{
 							blocked = true;
 							shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy);
@@ -364,7 +354,7 @@ namespace GoRogue
 		}
 
 		private static void shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, double radius, int startX, int startY, double decay,
-												   double[,] lightMap, HashSet<Coord> fovSet, IMapView<double> map, Distance distanceStrategy, double angle, double span)
+												   double[,] lightMap, HashSet<Coord> fovSet, IMapView<bool> map, Distance distanceStrategy, double angle, double span)
 		{
 			double newStart = 0;
 			if (start < end)
@@ -405,7 +395,7 @@ namespace GoRogue
 
 					if (blocked) // Previous cell was blocking
 					{
-						if (map[currentX, currentY] >= 1) // We hit a wall...
+						if (!map[currentX, currentY]) // We hit a wall...
 							newStart = rightSlope;
 						else
 						{
@@ -415,7 +405,7 @@ namespace GoRogue
 					}
 					else
 					{
-						if (map[currentX, currentY] >= 1 && distance < radius) // Wall within line of sight
+						if (!map[currentX, currentY] && distance < radius) // Wall within line of sight
 						{
 							blocked = true;
 							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy, angle, span);
@@ -428,8 +418,8 @@ namespace GoRogue
 
 		private void initializeLightMap()
 		{
-			if (light == null || light.GetLength(0) != resMap.Width || light.GetLength(1) != resMap.Height)
-				light = new double[resMap.Width, resMap.Height];
+			if (light == null || light.GetLength(0) != fovMap.Width || light.GetLength(1) != fovMap.Height)
+				light = new double[fovMap.Width, fovMap.Height];
 			else
 				Array.Clear(light, 0, light.Length);
 		}

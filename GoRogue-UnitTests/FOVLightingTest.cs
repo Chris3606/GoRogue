@@ -16,8 +16,9 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void CircleRadius()
 		{
-			var testResMap = EmptyResMap(17, 17);
-			var myFov = new FOV(testResMap);
+			var testFOVMap = EmptyFOVMap(17, 17);
+			var testResMap = new LambdaTranslationMap<bool, double>(testFOVMap, b => 0.0);
+			var myFov = new FOV(testFOVMap);
 			var myLighting = new SenseMap(testResMap);
 			// Circle at 8, 8; radius 7
 
@@ -39,8 +40,9 @@ namespace GoRogue_UnitTests
 		public void EqualLargeMap()
 		{
 			var testResMap = TestResMap(17, 17);
+			var testFOVMap = new LambdaTranslationMap<double, bool>(testResMap, d => d >= 1.0 ? false : true);
 			testResMap[8, 8] = 0.0; // Make sure start is free
-			var myFov = new FOV(testResMap);
+			var myFov = new FOV(testFOVMap);
 			var myLighting = new SenseMap(testResMap);
 			// Circle at 8, 8; radius 7
 			myLighting.AddSenseSource(new SenseSource(SourceType.SHADOW, (8, 8), 7, Radius.CIRCLE));
@@ -76,7 +78,8 @@ namespace GoRogue_UnitTests
 		public void FOVCurrentHash()
 		{
 			var map = BoxResMap(50, 50);
-			var fov = new FOV(map);
+			var fovMap = new LambdaTranslationMap<double, bool>(map, d => d >= 1.0 ? false : true);
+			var fov = new FOV(fovMap);
 
 			fov.Calculate(20, 20, 10);
 
@@ -97,7 +100,8 @@ namespace GoRogue_UnitTests
 		public void FOVNewlySeenUnseen()
 		{
 			var map = BoxResMap(50, 50);
-			var fov = new FOV(map);
+			var fovMap = new LambdaTranslationMap<double, bool>(map, d => d >= 1.0 ? false : true);
+			var fov = new FOV(fovMap);
 
 			fov.Calculate(20, 20, 10, Radius.SQUARE);
 			var prevFov = new HashSet<Coord>(fov.CurrentFOV);
@@ -265,24 +269,6 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
-		public void FOVBooleanInput()
-		{
-			var map = new ArrayMap<bool>(10, 10);
-			QuickGenerators.GenerateRectangleMap(map);
-
-			var identicalResMap = BoxResMap(10, 10);
-
-			var fov = new FOV(map);
-			var fovDouble = new FOV(identicalResMap);
-
-			fov.Calculate(5, 5, 3);
-			fovDouble.Calculate(5, 5, 3);
-
-			foreach (var pos in fov.Positions())
-				Assert.AreEqual(fov[pos], fovDouble[pos]);
-		}
-
-		[TestMethod]
 		public void FOVBooleanOutput()
 		{
 			var map = new ArrayMap<bool>(10, 10);
@@ -309,7 +295,7 @@ namespace GoRogue_UnitTests
 			return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
 		}
 
-		private static IMapView<double> EmptyResMap(int width, int height) => new LambdaMapView<double>(width, height, _ => 0.0);
+		private static IMapView<bool> EmptyFOVMap(int width, int height) => new LambdaMapView<bool>(width, height, _ => true);
 
 		private static ISettableMapView<double> TestResMap(int width, int height)
 		{

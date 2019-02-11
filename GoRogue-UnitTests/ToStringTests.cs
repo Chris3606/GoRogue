@@ -80,9 +80,8 @@ namespace GoRogue_UnitTests
 		{
 			var map = new ArrayMap<bool>(10, 10);
 			QuickGenerators.GenerateRectangleMap(map);
-			var resMap = new ResMap(map);
 
-			FOV myFov = new FOV(resMap);
+			FOV myFov = new FOV(map);
 			myFov.Calculate(5, 5, 3);
 
 			Console.WriteLine(myFov);

@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapViews;
+using GoRogue.MapGeneration;
 using GoRogue.SenseMapping;
 using System;
 using System.Diagnostics;
@@ -13,7 +14,8 @@ namespace GoRogue_PerformanceTests
 		{
 			FOV fov;
 			long startingMem, endingMem;
-			ArrayMap<double> map = rectangleMap(mapWidth, mapHeight);
+			var map = new ArrayMap<bool>(mapWidth, mapHeight);
+			QuickGenerators.GenerateRectangleMap(map);
 
 			// Start mem test
 			startingMem = GC.GetTotalMemory(true);
@@ -69,7 +71,8 @@ namespace GoRogue_PerformanceTests
 		public static TimeSpan TimeForSingleLightSourceFOV(int mapWidth, int mapHeight, int lightRadius, int iterations)
 		{
 			Stopwatch s = new Stopwatch();
-			var map = rectangleMap(mapWidth, mapHeight);
+			var map = new ArrayMap<bool>(mapWidth, mapHeight);
+			QuickGenerators.GenerateRectangleMap(map);
 			var fov = new FOV(map);
 			// Warm-up for processor, stabilizes cache performance. Also makes it a fair test against
 			// fov since we have to do this to force the first memory allocation
