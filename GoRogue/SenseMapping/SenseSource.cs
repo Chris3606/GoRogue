@@ -34,9 +34,9 @@ namespace GoRogue.SenseMapping
 
 		/// <summary>
 		/// Uses a Shadowcasting algorithm. All partially resistant grid locations are treated as
-		/// being fully transparent (it's on-off blocking, where 1.0 in the resistance map blocks,
-		/// and all lower values don't). Returns percentage from 1.0 at center of source to 0.0
-		/// outside of range of source.
+		/// being fully transparent (it's on-off blocking, where a value greater than or equal to the
+		/// source's Intensity in the resistance map blocks, and all lower values don't).
+		/// Returns values from Intensity at center of source to 0.0 outside of range of source.
 		/// </summary>
 		SHADOW
 	};
@@ -77,8 +77,15 @@ namespace GoRogue.SenseMapping
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc)
+		/// /// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double intensity = 1.0)
 		{
+			if (radius <= 0)
+				throw new ArgumentOutOfRangeException("SenseMap radius cannot be 0", nameof(radius));
+
+			if (intensity < 0)
+				throw new ArgumentOutOfRangeException("SenseSource intensity cannot be less than 0.0.", nameof(intensity));
+
 			Type = type;
 			Position = position;
 			Radius = radius; // Arrays are initialized by this setter
@@ -88,6 +95,7 @@ namespace GoRogue.SenseMapping
 			Enabled = true;
 
 			IsAngleRestricted = false;
+			Intensity = intensity;
 		}
 
 		/// <summary>
@@ -109,13 +117,41 @@ namespace GoRogue.SenseMapping
 		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
 		/// angle/2 degrees are included on either side of the cone's center line.
 		/// </param>
-		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span)
-			: this(type, position, radius, distanceCalc)
+		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
+			: this(type, position, radius, distanceCalc, intensity)
 		{
+			if (span < 0.0 || span > 360.0)
+				throw new ArgumentOutOfRangeException("Span used to initialize SenseSource must be in range [0, 360]", nameof(span));
+
 			IsAngleRestricted = true;
 			Angle = angle;
 			Span = span;
 		}
+
+		/// <summary>
+		/// Constructor.  Creates a source whose spread is restricted to a certain angle and span.
+		/// </summary>
+		/// <param name="type">The spread mechanics to use for source values.</param>
+		/// <param name="positionX">The x-value for the position on a map that the source is located at.</param>
+		/// <param name="positionY">The y-value for the position on a map that the source is located at.</param>
+		/// <param name="radius">
+		/// The maximum radius of the source -- this is the maximum distance the source values will
+		/// emanate, provided the area is completely unobstructed.
+		/// </param>
+		/// <param name="distanceCalc">
+		/// The distance calculation used to determine what shape the radius has (or a type
+		/// implicitly convertible to Distance, eg. Radius).
+		/// </param>
+		/// <param name="angle">The angle in degrees that specifies the outermost center point of the cone formed
+		/// by the source's values. 0 degrees points right.</param>
+		/// <param name="span">
+		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
+		/// angle/2 degrees are included on either side of the cone's center line.
+		/// </param>
+		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
+			: this(type, new Coord(positionX, positionY), radius, distanceCalc, angle, span, intensity) { }
 
 		/// <summary>
 		/// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
@@ -136,8 +172,9 @@ namespace GoRogue.SenseMapping
 		/// The distance calculation used to determine what shape the radius has (or a type
 		/// implicitly convertible to Distance, eg. Radius).
 		/// </param>
-		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc)
-			: this(type, new Coord(positionX, positionY), radius, distanceCalc) { }
+		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double intensity = 1.0)
+			: this(type, new Coord(positionX, positionY), radius, distanceCalc, intensity) { }
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
@@ -162,6 +199,27 @@ namespace GoRogue.SenseMapping
 		/// Whether or not the spreading of values from this source is restricted to an angle and span.
 		/// </summary>
 		public bool IsAngleRestricted { get; set; }
+
+		private double _intensity;
+		/// <summary>
+		/// The starting value of the source to spread.  Defaults to 1.0.
+		/// </summary>
+		public double Intensity
+		{
+			get => _intensity;
+
+			set
+			{
+				if (value < 0.0)
+					throw new ArgumentOutOfRangeException("Intensity for SenseSource cannot be set to less than 0.0.", nameof(Intensity));
+
+				if (_intensity != value)
+				{
+					_intensity = value;
+					_decay = _intensity / (_radius + 1);
+				}
+			}
+		}
 
 		private double _angle;
 
@@ -191,23 +249,27 @@ namespace GoRogue.SenseMapping
 			get => IsAngleRestricted ? _span : 360.0;
 			set
 			{
+				if (value < 0.0 || value > 360.0)
+					throw new ArgumentOutOfRangeException("SenseSource Span must be in range [0, 360]", nameof(Span));
+
 				if (_span != value)
-					_span = Math.Max(0, Math.Min(360.0, value));
+					_span = value;
 			}
 		}
 
 		/// <summary>
 		/// The maximum radius of the source -- this is the maximum distance the source values will
 		/// emanate, provided the area is completely unobstructed. Changing this will trigger
-		/// resizing (re-allocation) of the underlying arrays. However, data is not copied over --
-		/// there is no need to since Calculate in SenseMap immediately copies values from local
-		/// array to its "master" array.
+		/// resizing (re-allocation) of the underlying arrays.
 		/// </summary>
 		public double Radius
 		{
 			get => _radius;
 			set
 			{
+				if (value <= 0.0)
+					throw new ArgumentOutOfRangeException("Radius for a SenseSource must be greater than 0.", nameof(Radius));
+
 				if (_radius != value)
 				{
 					_radius = Math.Max(1, value);
@@ -219,7 +281,7 @@ namespace GoRogue.SenseMapping
 					light = new double[size, size];
 					nearLight = new bool[size, size]; // ALlocate whether we use shadow or not, just to support.  Could be lazy but its just bools
 
-					_decay = 1.0 / (_radius + 1);
+					_decay = _intensity / (_radius + 1);
 				}
 			}
 		}
@@ -335,7 +397,7 @@ namespace GoRogue.SenseMapping
 					if (light[x2, y2] < surroundingLight)
 					{
 						light[x2, y2] = surroundingLight;
-						if (map[globalX2, globalY2] < 1) // Not a wall (fully blocking)
+						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
 							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
@@ -373,7 +435,7 @@ namespace GoRogue.SenseMapping
 					if (light[x2, y2] < surroundingLight)
 					{
 						light[x2, y2] = surroundingLight;
-						if (map[globalX2, globalY2] < 1) // Not a wall (fully blocking)
+						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
 							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
@@ -384,7 +446,7 @@ namespace GoRogue.SenseMapping
 		private void initArrays() // Prep for lighting calculations
 		{
 			Array.Clear(light, 0, light.Length);
-			light[halfSize, halfSize] = 1; // source light is center, starts out at 1
+			light[halfSize, halfSize] = _intensity; // source light is center, starts out at our intensity
 			if (Type != SourceType.SHADOW) // Only clear if we are using it, since this is called at each calculate
 				Array.Clear(nearLight, 0, nearLight.Length);
 		}
@@ -392,7 +454,7 @@ namespace GoRogue.SenseMapping
 		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, IMapView<double> map)
 		{
 			if (x == halfSize && y == halfSize)
-				return 1;
+				return _intensity;
 
 			List<Coord> neighbors = new List<Coord>();
 			double tmpDistance = 0, testDistance;
@@ -448,7 +510,7 @@ namespace GoRogue.SenseMapping
 				}
 			}
 
-			if (map[globalX, globalY] >= 1 || indirects >= lit)
+			if (map[globalX, globalY] >= _intensity || indirects >= lit)
 				nearLight[x, y] = true;
 
 			return curLight;
@@ -482,13 +544,13 @@ namespace GoRogue.SenseMapping
 					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
 					if (deltaRadius <= _radius)
 					{
-						double bright = 1 - _decay * deltaRadius;
+						double bright = _intensity - _decay * deltaRadius;
 						light[currentX, currentY] = bright;
 					}
 
 					if (blocked) // Previous cell was blocked
 					{
-						if (map[gCurrentX, gCurrentY] >= 1) // Hit a wall...
+						if (map[gCurrentX, gCurrentY] >= _intensity) // Hit a wall...
 							newStart = rightSlope;
 						else
 						{
@@ -498,7 +560,7 @@ namespace GoRogue.SenseMapping
 					}
 					else
 					{
-						if (map[gCurrentX, gCurrentY] >= 1 && distance < _radius) // Wall within FOV
+						if (map[gCurrentX, gCurrentY] >= _intensity && distance < _radius) // Wall within FOV
 						{
 							blocked = true;
 							shadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, map);
@@ -543,13 +605,13 @@ namespace GoRogue.SenseMapping
 					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
 					if (deltaRadius <= _radius)
 					{
-						double bright = 1 - _decay * deltaRadius;
+						double bright = _intensity - _decay * deltaRadius;
 						light[currentX, currentY] = bright;
 					}
 
 					if (blocked) // Previous cell was blocked
 					{
-						if (map[gCurrentX, gCurrentY] >= 1) // Hit a wall...
+						if (map[gCurrentX, gCurrentY] >= _intensity) // Hit a wall...
 							newStart = rightSlope;
 						else
 						{
@@ -559,7 +621,7 @@ namespace GoRogue.SenseMapping
 					}
 					else
 					{
-						if (map[gCurrentX, gCurrentY] >= 1 && distance < _radius) // Wall within FOV
+						if (map[gCurrentX, gCurrentY] >= _intensity && distance < _radius) // Wall within FOV
 						{
 							blocked = true;
 							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, map, angleRadians, spanRadians);
