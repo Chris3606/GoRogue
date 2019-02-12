@@ -86,10 +86,10 @@ namespace GoRogue_UnitTests
 			var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
 			checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-			viewport.ViewArea = viewport.ViewArea.Move((-1, 0)); // Should end up being 0, 0 thanks to bounding
+			viewport.ViewArea = viewport.ViewArea.WithPosition((-1, 0)); // Should end up being 0, 0 thanks to bounding
 			checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
 
-			viewport.ViewArea = viewport.ViewArea.Move((5, 5));
+			viewport.ViewArea = viewport.ViewArea.WithPosition((5, 5));
 			checkViewportBounds(viewport, (5, 5), (VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
 
 			// Move outside x-bounds by 1
@@ -128,7 +128,7 @@ namespace GoRogue_UnitTests
 			foreach (var pos in unboundedViewport.Positions())
 				Assert.AreEqual(0, unboundedViewport[pos]);
 
-			unboundedViewport.ViewArea = unboundedViewport.ViewArea.Move(MAP_WIDTH - 1, MAP_HEIGHT - 1);
+			unboundedViewport.ViewArea = unboundedViewport.ViewArea.WithPosition(MAP_WIDTH - 1, MAP_HEIGHT - 1);
 
 			foreach (var pos in unboundedViewport.Positions())
 			{

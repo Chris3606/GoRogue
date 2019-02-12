@@ -226,7 +226,7 @@ namespace GoRogue
 		/// <param name="height">Height of the rectangle.</param>
 		/// &gt;
 		/// <returns>A new rectangle at the given position with the given width and height.</returns>
-		public static Rectangle WithPositionSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
+		public static Rectangle WithPositionAndSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
 
 		/// <summary>
 		/// Creates a rectangle with the given position and size. Effectively a constructor, but with
@@ -235,7 +235,7 @@ namespace GoRogue
 		/// <param name="position">Minimum (x, y) values that are inside the resulting rectangle.</param>
 		/// <param name="size">The size of the rectangle, in form (width, height).</param>
 		/// <returns>A new rectangle at the given position with the given size.</returns>
-		public static Rectangle WithPostionSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
+		public static Rectangle WithPostionAndSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
 
 		/// <summary>
 		/// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
@@ -507,7 +507,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="position">The Position for the new rectangle.</param>
 		/// <returns>A new rectangle that has its Position changed to the given value.</returns>
-		public Rectangle Move(Coord position)
+		public Rectangle WithPosition(Coord position)
 			=> new Rectangle(position.X, position.Y, Width, Height);
 
 		/// <summary>
@@ -516,14 +516,14 @@ namespace GoRogue
 		/// <param name="x">X-value for the position of the new Rectangle.</param>
 		/// <param name="y">Y-value for the position of the new Rectangle.</param>
 		/// <returns>A new rectangle with the Position changed to the given value.</returns>
-		public Rectangle Move(int x, int y) => Move(new Coord(x, y));
+		public Rectangle WithPosition(int x, int y) => WithPosition(new Coord(x, y));
 
 		/// <summary>
 		/// Creates and returns a new Rectangle that has its Position moved in the given direction.
 		/// </summary>
 		/// <param name="direction">The direction to move the new Rectangle in.</param>
 		/// <returns>A new rectangle that has its position moved in the given direction.</returns>
-		public Rectangle MoveIn(Direction direction)
+		public Rectangle Translate(Direction direction)
 		{
 			var newPos = Position + direction;
 			return new Rectangle(newPos.X, newPos.Y, Width, Height);
@@ -534,14 +534,14 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="x">The X value for the new Rectangle.</param>
 		/// <returns>A new rectangle with X changed to the given value.</returns>
-		public Rectangle MoveX(int x) => new Rectangle(x, Y, Width, Height);
+		public Rectangle WithX(int x) => new Rectangle(x, Y, Width, Height);
 
 		/// <summary>
 		/// Creates and returns a new Rectangle that has its Y value moved to the given y-coordinate.
 		/// </summary>
 		/// <param name="y">The Y value for the new Rectangle.</param>
 		/// <returns>A new rectangle with Y changed to the given value.</returns>
-		public Rectangle MoveY(int y) => new Rectangle(X, y, Width, Height);
+		public Rectangle WithY(int y) => new Rectangle(X, y, Width, Height);
 
 		/// <summary>
 		/// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested
