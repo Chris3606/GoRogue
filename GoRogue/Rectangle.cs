@@ -173,7 +173,7 @@ namespace GoRogue
 		/// <param name="maxX">Maximum x coordinate that is inside the rectangle.</param>
 		/// <param name="maxY">Maximum y coordinate that is inside the rectangle.</param>
 		/// <returns>A new Rectangle with the given minimum and maximum extents.</returns>
-		public static Rectangle CreateWithExtents(int minX, int minY, int maxX, int maxY) => new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
+		public static Rectangle WithExtents(int minX, int minY, int maxX, int maxY) => new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
 
 		/// <summary>
 		/// Creates a rectangle with the given minimum and maximum extents. Effectively a
@@ -182,7 +182,7 @@ namespace GoRogue
 		/// <param name="minExtent">Minimum (x, y) coordinates that are inside the rectangle.</param>
 		/// <param name="maxExtent">Maximum (x, y) coordinates that are inside the rectangle.</param>
 		/// <returns>A new Rectangle with the given minimum and maximum extents.</returns>
-		public static Rectangle CreateWithExtents(Coord minExtent, Coord maxExtent) => new Rectangle(minExtent, maxExtent);
+		public static Rectangle WithExtents(Coord minExtent, Coord maxExtent) => new Rectangle(minExtent, maxExtent);
 
 		/// <summary>
 		/// Creates a rectangle centered on the given position, with the given horizontal and
@@ -198,7 +198,7 @@ namespace GoRogue
 		/// Number of units to the top and bottom of the center point that are included within the rectangle.
 		/// </param>
 		/// <returns>A new rectangle with the given center point and radius values.</returns>
-		public static Rectangle CreateWithRadius(int centerX, int centerY, int horizontalRadius, int verticalRadius)
+		public static Rectangle WithRadius(int centerX, int centerY, int horizontalRadius, int verticalRadius)
 			=> new Rectangle(centerX - horizontalRadius, centerY - verticalRadius, 2 * horizontalRadius + 1, 2 * verticalRadius + 1);
 
 		/// <summary>
@@ -214,7 +214,7 @@ namespace GoRogue
 		/// Number of units to the top and bottom of the center point that are included within the rectangle.
 		/// </param>
 		/// <returns>A new rectangle with the given center point and radius values.</returns>
-		public static Rectangle CreateWithRadius(Coord center, int horizontalRadius, int verticalRadius) => new Rectangle(center, horizontalRadius, verticalRadius);
+		public static Rectangle WithRadius(Coord center, int horizontalRadius, int verticalRadius) => new Rectangle(center, horizontalRadius, verticalRadius);
 
 		/// <summary>
 		/// Creates a rectangle with the given position and size. Effectively a constructor, but with
@@ -226,7 +226,7 @@ namespace GoRogue
 		/// <param name="height">Height of the rectangle.</param>
 		/// &gt;
 		/// <returns>A new rectangle at the given position with the given width and height.</returns>
-		public static Rectangle CreateWithSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
+		public static Rectangle WithPositionSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
 
 		/// <summary>
 		/// Creates a rectangle with the given position and size. Effectively a constructor, but with
@@ -235,7 +235,7 @@ namespace GoRogue
 		/// <param name="position">Minimum (x, y) values that are inside the resulting rectangle.</param>
 		/// <param name="size">The size of the rectangle, in form (width, height).</param>
 		/// <returns>A new rectangle at the given position with the given size.</returns>
-		public static Rectangle CreateWithSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
+		public static Rectangle WithPostionSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
 
 		/// <summary>
 		/// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
@@ -354,7 +354,7 @@ namespace GoRogue
 		/// A new Rectangle that is the same size as the current one, but with the center moved to
 		/// the given location.
 		/// </returns>
-		public Rectangle CenterOn(Coord center)
+		public Rectangle WithCenter(Coord center)
 			=> new Rectangle(center.X - (Width / 2), center.Y - (Height / 2), Width, Height);
 
 		/// <summary>
@@ -367,7 +367,7 @@ namespace GoRogue
 		/// A new Rectangle that is the same size as the current one, but with the center moved to
 		/// the given location.
 		/// </returns>
-		public Rectangle CenterOn(int x, int y) => CenterOn(new Coord(x, y));
+		public Rectangle WithCenter(int x, int y) => WithCenter(new Coord(x, y));
 
 		/// <summary>
 		/// Creates and returns a new Rectangle whose position is the same as the current one, but
@@ -601,7 +601,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="height">The height for the new Rectangle.</param>
 		/// <returns>A new rectangle with the Height changed to the given value.</returns>
-		public Rectangle SetHeight(int height)
+		public Rectangle WithHeight(int height)
 			=> new Rectangle(X, Y, Width, height);
 
 		/// <summary>
@@ -610,7 +610,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="maxExtent">The maximum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
-		public Rectangle SetMaxExtent(Coord maxExtent)
+		public Rectangle WithMaxExtent(Coord maxExtent)
 			=> new Rectangle(MinExtent, maxExtent);
 
 		/// <summary>
@@ -620,7 +620,7 @@ namespace GoRogue
 		/// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
-		public Rectangle SetMaxExtent(int x, int y)
+		public Rectangle WithMaxExtent(int x, int y)
 			=> new Rectangle(MinExtent, new Coord(x, y));
 
 		/// <summary>
@@ -629,7 +629,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="x">The x-coordinate for the maximum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MaxExtentX adjusted to the specified value.</returns>
-		public Rectangle SetMaxExtentX(int x)
+		public Rectangle WithMaxExtentX(int x)
 			=> new Rectangle(MinExtent, new Coord(x, MaxExtentY));
 
 		/// <summary>
@@ -638,7 +638,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="y">The y-coordinate for the maximum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MaxExtentY adjusted to the specified value.</returns>
-		public Rectangle SetMaxExtentY(int y)
+		public Rectangle WithMaxExtentY(int y)
 			=> new Rectangle(MinExtent, new Coord(MaxExtentX, y));
 
 		/// <summary>
@@ -647,7 +647,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="minExtent">The minimum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
-		public Rectangle SetMinExtent(Coord minExtent)
+		public Rectangle WithMinExtent(Coord minExtent)
 			=> new Rectangle(minExtent, MaxExtent);
 
 		/// <summary>
@@ -657,7 +657,7 @@ namespace GoRogue
 		/// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
 		/// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
-		public Rectangle SetMinExtent(int x, int y)
+		public Rectangle WithMinExtent(int x, int y)
 			=> new Rectangle(new Coord(x, y), MaxExtent);
 
 		/// <summary>
@@ -666,7 +666,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="x">The x-coordinate for the minimum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MinExtentX adjusted to the specified value.</returns>
-		public Rectangle SetMinExtentX(int x)
+		public Rectangle WithMinExtentX(int x)
 			=> new Rectangle(new Coord(x, MinExtentY), MaxExtent);
 
 		/// <summary>
@@ -676,7 +676,7 @@ namespace GoRogue
 		/// <param name="y">The y-coordinate for the minimum extent of the new rectangle.</param>
 		/// <returns>A new rectangle, with the MinExtentY adjusted to the specified value.</returns>
 		/// &gt;
-		public Rectangle SetMinExtentY(int y)
+		public Rectangle WithMinExtentY(int y)
 			=> new Rectangle(new Coord(MinExtentX, y), MaxExtent);
 
 		/// <summary>
@@ -686,7 +686,7 @@ namespace GoRogue
 		/// <param name="width">The width for the new rectangle.</param>
 		/// <param name="height">The height for the new rectangle.</param>
 		/// <returns>A new Rectangle with the given width and height.</returns>
-		public Rectangle SetSize(int width, int height)
+		public Rectangle WithSize(int width, int height)
 			=> new Rectangle(X, Y, width, height);
 
 		/// <summary>
@@ -695,7 +695,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="size">Vector (width, height) specifying the width/height of the new rectangle.</param>
 		/// <returns>A new Rectangle with the given width and height.</returns>
-		public Rectangle SetSize(Coord size)
+		public Rectangle WithSize(Coord size)
 			=> new Rectangle(X, Y, size.X, size.Y);
 
 		/// <summary>
@@ -704,7 +704,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="width">The width for the new Rectangle.</param>
 		/// <returns>A new rectangle with the Width changed to the given value.</returns>
-		public Rectangle SetWidth(int width) => new Rectangle(X, Y, width, Height);
+		public Rectangle WithWidth(int width) => new Rectangle(X, Y, width, Height);
 
 		/// <summary>
 		/// Formats as (X, Y) -&gt; (MaxX, MaxY)

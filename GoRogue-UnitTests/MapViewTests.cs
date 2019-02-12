@@ -95,7 +95,7 @@ namespace GoRogue_UnitTests
 			// Move outside x-bounds by 1
 			Coord newCenter = (MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
 			// viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
-			viewport.ViewArea = viewport.ViewArea.CenterOn(newCenter);
+			viewport.ViewArea = viewport.ViewArea.WithCenter(newCenter);
 
 			Coord minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
 			Coord maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
@@ -123,7 +123,7 @@ namespace GoRogue_UnitTests
 					Assert.AreEqual(1, unboundedViewport[pos]);
 			}
 
-			unboundedViewport.ViewArea = unboundedViewport.ViewArea.SetSize(5, 5);
+			unboundedViewport.ViewArea = unboundedViewport.ViewArea.WithSize(5, 5);
 
 			foreach (var pos in unboundedViewport.Positions())
 				Assert.AreEqual(0, unboundedViewport[pos]);

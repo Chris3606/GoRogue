@@ -53,9 +53,9 @@ namespace GoRogue_UnitTests
 			Rectangle myRect = new Rectangle(1, 1, 50, 25);
 			Assert.AreEqual(new Coord(50, 25), myRect.Size);
 
-			myRect = myRect.SetSize(20, 15);
+			myRect = myRect.WithSize(20, 15);
 			Assert.AreEqual(new Coord(20, 15), myRect.Size);
-			myRect = myRect.SetSize((21, 16));
+			myRect = myRect.WithSize((21, 16));
 			Assert.AreEqual(new Coord(21, 16), myRect.Size);
 		}
 
