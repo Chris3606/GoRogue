@@ -102,8 +102,10 @@ namespace GoRogue.MapGeneration.Generators
 					positionAttempts++;
 				}
 
+				// Our rectangles represent the rooms with walls, so we shrink them to match convention of interior
+				// only
 				if (!newRoomIntersects)
-					rooms.Add(newRoom);
+					rooms.Add(newRoom.Expand(-1, -1));  
 			}
 
 			foreach (var room in rooms)

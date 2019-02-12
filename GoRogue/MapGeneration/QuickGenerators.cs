@@ -202,7 +202,7 @@ namespace GoRogue.MapGeneration
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the
 		/// room. Defaults to 10.
 		/// </param>
-		/// <returns>Rectangles representing each room generated.</returns>
+		/// <returns>Rectangles representing the interior of each room generated.</returns>
 		public static IEnumerable<Rectangle> GenerateRandomRoomsMap(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom = 10)
 			=> GenerateRandomRoomsMap(map, null, maxRooms, roomMinSize, roomMaxSize, attemptsPerRoom);
 
@@ -225,7 +225,7 @@ namespace GoRogue.MapGeneration
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the
 		/// room. Defaults to 10.
 		/// </param>
-		/// <returns>Rectangles representing each room generated.</returns>
+		/// <returns>Rectangles representing the interor of each room generated.</returns>
 		public static IEnumerable<Rectangle> GenerateRandomRoomsMap(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize,
 																	  int attemptsPerRoom = 10)
 		{

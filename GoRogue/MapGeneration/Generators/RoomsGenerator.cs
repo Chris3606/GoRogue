@@ -36,7 +36,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// The max times to attempt to place a room in a map without intersection, before giving up
 		/// and re-generating that room. Defaults to 10.
 		/// </param>
-		/// <returns>A collection of room rectangles that were added to the map.</returns>
+		/// <returns>A collection of rectangles representing the interior of the rooms that were added to the map.</returns>
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
 			=> Generate(map, null, minRooms, maxRooms, roomMinSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
@@ -65,7 +65,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// The max times to attempt to place a room in a map without intersection, before giving up
 		/// and re-generating that room. Defaults to 10.
 		/// </param>
-		/// <returns>A collection of room rectangles that were added to the map.</returns>
+		/// <returns>A collection of rectangles representing the interior of the rooms that were added to the map.</returns>
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
 		{
