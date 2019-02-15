@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>2.0.0-pre6</PackageVersion>
+	<PackageVersion>2.0.0-pre7</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Finished refactor of Rectangle functions</PackageReleaseNotes>
+	<PackageReleaseNotes>Added CreateMap helper function.</PackageReleaseNotes>
     <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>

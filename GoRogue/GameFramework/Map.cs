@@ -477,6 +477,38 @@ namespace GoRogue.GameFramework
 		}
 		#endregion
 
+		/// <summary>
+		/// Effectively a helper-constructor.  Constructs a map using an ISettableView&lt;T&gt; for the terrain map that can have its type T
+		/// be of any type that implements IGameObject.  Note that a Map that is constructed using this function will throw an InvalidCastException
+		/// if any IGameObject is given to SetTerrain that cannot be casted to type T.
+		/// </summary>
+		/// <remarks>
+		/// Say you have a class MyTerrain that inherits from BaseClass and implements IGameObject.  This construction function allows things
+		/// like constructing your map from an ISettableView&lt;MyTerrain&gt;, which you cannot do with the regular constructor since
+		/// ISettableMapView&lt;MyTerrain&gt; does not satisfy its type requirement of ISettableMapView&lt;IGameObject&gt;.
+		/// 
+		/// Since this function under the hood creates a SettableTranslationMap that translates to/from IGameObject, any change made either via the SetTerrain
+		/// function or by modifying the original ISettableMapView passed in will be reflected both in the map and in the original ISettableMapView.
+		/// </remarks>
+		/// <typeparam name="T">The type of terrain that will be stored in the created Map.  Can be any type that implements IGameObject.</typeparam>
+		/// <param name="terrainLayer">The ISettableMapView that represents the terrain layer for this map.  It is intended that this be modified
+		/// ONLY via the SetTerrain function -- if it is modified outside of that, the ItemAdded/Removed events are NOT guaranteed to be called!</param>
+		/// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
+		/// <param name="distanceMeasurement">Distance measurement to use for pathing/measuring distance on the map.</param>
+		/// <param name="layersBlockingWalkability">Layer mask containing those layers that should be allowed to have items that block walkability.
+		/// Defaults to all layers.</param>
+		/// <param name="layersBlockingTransparency">Layer mask containing those layers that should be allowed to have items that block FOV.
+		/// Defaults to all layers.</param>
+		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
+		/// location on the same layer.  Defaults to no layers.</param>
+		/// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
+		public static Map CreateMap<T>(ISettableMapView<T> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0) where T : IGameObject
+		{
+			var terrainMap = new LambdaSettableTranslationMap<T, IGameObject>(terrainLayer, t => t, g => (T)g);
+			return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems);
+		}
+
 		private void OnEntityMoved(object s, ItemMovedEventArgs<IGameObject> e)
 		{
 			_entities.Move(e.Item, e.NewPosition);
