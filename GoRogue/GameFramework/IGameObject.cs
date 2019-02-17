@@ -2,7 +2,7 @@
 
 namespace GoRogue.GameFramework
 {
-	public interface IGameObject : IHasID, IHasLayer
+	public interface IGameObject : IHasID, IHasLayer, IHasComponents
 	{
 		Map CurrentMap { get; }
 		bool IsStatic { get; }

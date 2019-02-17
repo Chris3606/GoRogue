@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue.GameFramework
 {
@@ -19,10 +20,12 @@ namespace GoRogue.GameFramework
 	/// you can implement any common, game-specific functionality you need and have easy access to that information when objects are retrieved from
 	/// the map.
 	/// </remarks>
-	public class GameObject : IGameObject
+	public class GameObject : IGameObject, IHasComponents
 	{
 		// Use the value of this variable instead of the "this" keyword from within GameObject
 		private IGameObject _parentObject;
+
+		private IHasComponents _backingComponentContainer;
 
 		private Coord _position;
 		/// <summary>
@@ -113,6 +116,7 @@ namespace GoRogue.GameFramework
 		public GameObject(Coord position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
 		{
 			_parentObject = parentObject ?? this;
+			_backingComponentContainer = new ComponentContainer();
 			_position = position;
 			Layer = layer;
 			IsWalkable = isWalkable;
@@ -175,5 +179,65 @@ namespace GoRogue.GameFramework
 			var name = nameof(_parentObject).Replace("_", "");
 			throw new Exception($"{name} for an object of type {nameof(GameObject)} was set incorrectly when it was constructed.  See API documentation of {nameof(GameObject)} for details on that constructor parameter.");
 		}
+
+		#region Component Functions
+		/// <summary>
+		/// Adds the given object as a component.  Throws an exception if that specific instance is already attached to this GameObject.
+		/// </summary>
+		/// <param name="component">Component to add.</param>
+		public void AddComponent(object component) => _backingComponentContainer.AddComponent(component);
+
+		/// <summary>
+		/// Gets the first component of type T that was attached to the GameObject, or default(T) if no component of that type has
+		/// been attached.
+		/// </summary>
+		/// <typeparam name="T">Type of component to retrieve.</typeparam>
+		/// <returns>The first component of Type T that was added to the GameObject, or default(T) if no
+		/// components of the given type have been added.</returns>
+		public T GetComponent<T>() => _backingComponentContainer.GetComponent<T>();
+
+		/// <summary>
+		/// Gets all components of type T that are attached to the GameObject.
+		/// </summary>
+		/// <typeparam name="T">Type of components to retrieve.</typeparam>
+		/// <returns>All components of Type T that are attached to the GameObject.</returns>
+		public IEnumerable<T> GetComponents<T>() => _backingComponentContainer.GetComponents<T>();
+
+		/// <summary>
+		/// Returns whether or not the GameObject has at least one component of the specified type.  Type may be specified
+		/// by using typeof(MyComponentType).
+		/// </summary>
+		/// <param name="componentType">The type of component to check for.</param>
+		/// <returns>True if the GameObject has at least one component of the specified type, false otherwise.</returns>
+		public bool HasComponent(Type componentType) => _backingComponentContainer.HasComponent(componentType);
+
+		/// <summary>
+		/// Returns whether or not the GameObject has at least one component of type T.
+		/// </summary>
+		/// <typeparam name="T">Type of component to check for.</typeparam>
+		/// <returns>True if the GameObject has at least one component of the specified type, false otherwise.</returns>
+		public bool HasComponent<T>() => _backingComponentContainer.HasComponent<T>();
+
+		/// <summary>
+		/// Returns whether or not the GameObject has all the given types of components.  Types may be specified by
+		/// using typeof(MyComponentType)
+		/// </summary>
+		/// <param name="componentTypes">One or more component types to check for.</param>
+		/// <returns>True if the GameObject has at least one component of each specified type, false otherwise.</returns>
+		public bool HasComponents(params Type[] componentTypes) => _backingComponentContainer.HasComponents(componentTypes);
+
+		/// <summary>
+		/// Removes the given component from the GameObject.  Throws an exception if the component is not attached to the GameObject.
+		/// </summary>
+		/// <param name="component">Component to remove.</param>
+		public void RemoveComponent(object component) => _backingComponentContainer.RemoveComponent(component);
+
+		/// <summary>
+		/// Removes the given component(s) from the GameObject.  Throws an exception if a component given is not attached to
+		/// the GameObject.
+		/// </summary>
+		/// <param name="components">One or more component instances to remove.</param>
+		public void RemoveComponents(params object[] components) => _backingComponentContainer.RemoveComponents(components);
+		#endregion
 	}
 }
