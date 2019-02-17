@@ -169,7 +169,9 @@ namespace GoRogue
 		/// <returns>True if the item was successfully added, false otherwise.</returns>
 		public bool Add(T newItem, int x, int y)
 		{
+			
 			int relativeLayer = newItem.Layer - StartingLayer;
+
 			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
 				return false;
 
@@ -406,6 +408,7 @@ namespace GoRogue
 		public bool Move(T item, int targetX, int targetY)
 		{
 			int relativeLayer = item.Layer - StartingLayer;
+			
 			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
 				return false;
 

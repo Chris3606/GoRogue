@@ -29,6 +29,12 @@
 		/// again (each integer will be unique, per instance of this class).
 		/// </summary>
 		/// <returns>The ID that has been assigned.</returns>
-		public uint UseID() => currentInteger++;
+		public uint UseID()
+		{
+			if (currentInteger == uint.MaxValue)
+				throw new System.Exception("Tried to assign out of range ID using IDGenerator.");
+
+			return currentInteger++;
+		}
 	}
 }

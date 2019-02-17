@@ -21,6 +21,8 @@ namespace GoRogue.GameFramework
 	/// </remarks>
 	public class GameObject : IGameObject
 	{
+		private static IDGenerator _defaultIDGen = new IDGenerator();
+
 		private Coord _position;
 		/// <summary>
 		/// The position of this object on the grid. Any time this value is changed, the Moved event is fired.
@@ -40,6 +42,10 @@ namespace GoRogue.GameFramework
 				if (CurrentMap == null || IsWalkable || CurrentMap.WalkabilityView[value])
 				{
 					var oldPos = _position;
+
+					if (CurrentMap != null && !CurrentMap.AttemptEntityMove(this, value))
+						return; // The spatial map kicked it back, so invalidate the move.  Otherwise, proceed.
+
 					_position = value;
 					Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldPos, _position));
 				}
@@ -131,13 +137,11 @@ namespace GoRogue.GameFramework
 		/// Function used at construction to assign an ID to the object.  
 		/// </summary>
 		/// <remarks>
-		/// The default implementation simply assigns a random number in range of valid uints.  This is sufficiently distinct for the purposes of placing
-		/// the objects in an ISpatialMap, however obviously does NOT guarantee true uniqueness.  If uniqueness or some other implementation is required,
-		/// override this function to return an appropriate ID.  Bear in mind a relatively high degree of uniqueness is necessary for efficient placement
-		/// in an ISpatialMap implementation.
+		/// The default implementation uses an IDGenerator to assign IDs at creation.  The IDs MUST be unique.  The current implementation
+		/// assumes that you do not serialize the ID -- instead, that you let it be generated at creation automatically.
 		/// </remarks>
 		/// <returns>An ID to assign to the current object.</returns>
-		protected virtual uint GenerateID() => Random.SingletonRandom.DefaultRNG.NextUInt();
+		protected virtual uint GenerateID() => _defaultIDGen.UseID();
 
 		public void OnMapChanged(Map newMap) => CurrentMap = newMap;
 	}

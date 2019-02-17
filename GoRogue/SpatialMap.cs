@@ -264,7 +264,7 @@ namespace GoRogue
 			if (!itemMapping.ContainsKey(item))
 				return false;
 
-			if (positionMapping.ContainsKey(target))
+			if (positionMapping.ContainsKey(target))		
 				return false;
 
 			var movingTuple = itemMapping[item];
