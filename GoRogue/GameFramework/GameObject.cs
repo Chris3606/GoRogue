@@ -21,7 +21,8 @@ namespace GoRogue.GameFramework
 	/// </remarks>
 	public class GameObject : IGameObject
 	{
-		private static IDGenerator _defaultIDGen = new IDGenerator();
+		// Use the value of this variable instead of the "this" keyword from within GameObject
+		private IGameObject _parentObject;
 
 		private Coord _position;
 		/// <summary>
@@ -43,11 +44,11 @@ namespace GoRogue.GameFramework
 				{
 					var oldPos = _position;
 
-					if (CurrentMap != null && !CurrentMap.AttemptEntityMove(this, value))
+					if (CurrentMap != null && !CurrentMap.AttemptEntityMove(_parentObject, value))
 						return; // The spatial map kicked it back, so invalidate the move.  Otherwise, proceed.
 
 					_position = value;
-					Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldPos, _position));
+					Moved?.Invoke(_parentObject, new ItemMovedEventArgs<IGameObject>(_parentObject, oldPos, _position));
 				}
 			}
 		}
@@ -100,14 +101,18 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="position">Position to start the object at.</param>
 		/// <param name="layer">The layer of of a Map the object is assigned to.</param>
+		/// <param name="parentObject">Object holding this GameObject instance. If you are inheriting from GameObject,
+		/// or using a backing field of type GameObject to implement IGameObject, for example, you would pass "this" at construction.
+		/// Otherwise, if you are simply instantiating base GameObject instances and adding them to a Map, you would pass null.</param>
 		/// <param name="isStatic">Whether or not the object can be moved (true if the object CANNOT be moved,
 		/// false otherwise).</param>
 		/// <param name="isWalkable">Whether or not the object is considered "transparent", eg. whether or not light passes through it
 		/// for the sake of a Map's FOV.</param>
 		/// <param name="isTransparent">Whether or not the object is considered "transparent", eg. whether or not light passes through it
 		/// for the sake of a Map's FOV.</param>
-		public GameObject(Coord position, int layer, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
+		public GameObject(Coord position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
 		{
+			_parentObject = parentObject ?? this;
 			_position = position;
 			Layer = layer;
 			IsWalkable = isWalkable;
@@ -134,15 +139,41 @@ namespace GoRogue.GameFramework
 		}
 
 		/// <summary>
-		/// Function used at construction to assign an ID to the object.  
+		/// Function used at construction to assign an ID to the object.
 		/// </summary>
 		/// <remarks>
-		/// The default implementation uses an IDGenerator to assign IDs at creation.  The IDs MUST be unique.  The current implementation
-		/// assumes that you do not serialize the ID -- instead, that you let it be generated at creation automatically.
+		/// The default implementation simply assigns a random number in range of valid uints. This
+		/// is sufficiently distinct for the purposes of placing the objects in an ISpatialMap,
+		/// however obviously does NOT guarantee true uniqueness. If uniqueness or some other
+		/// implementation is required, override this function to return an appropriate ID. Bear in
+		/// mind a relatively high degree of uniqueness is necessary for efficient placement in an
+		/// ISpatialMap implementation.
 		/// </remarks>
 		/// <returns>An ID to assign to the current object.</returns>
-		protected virtual uint GenerateID() => _defaultIDGen.UseID();
+		protected virtual uint GenerateID() => Random.SingletonRandom.DefaultRNG.NextUInt();
 
-		public void OnMapChanged(Map newMap) => CurrentMap = newMap;
+		public void OnMapChanged(Map newMap)
+		{
+			if (newMap != null)
+			{
+				// Hack check to make sure the parentObject parameter was set properly.  The only case the add operation could have called
+				// this function, but the object not be "present", is if reference equality of our parent doesn't match what is actually
+				// in the map.  This can only happen if the parentObject isn't what it is supposed to be.
+				if (Layer == 0) // It's terrain
+				{
+					if (newMap.Terrain[Position] != _parentObject)
+						ThrowInvalidParentException();
+				}
+				else if (!newMap.Entities.Contains(_parentObject)) // It's an entity
+					ThrowInvalidParentException();
+			}
+			CurrentMap = newMap;
+		}
+
+		private void ThrowInvalidParentException()
+		{
+			var name = nameof(_parentObject).Replace("_", "");
+			throw new Exception($"{name} for an object of type {nameof(GameObject)} was set incorrectly when it was constructed.  See API documentation of {nameof(GameObject)} for details on that constructor parameter.");
+		}
 	}
 }

@@ -38,7 +38,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public ArrayMap<bool> Explored;
 
-		private AdvancedLayeredSpatialMap<IGameObject> _entities;
+		private LayeredSpatialMap<IGameObject> _entities;
 		/// <summary>
 		/// IReadOnlyLayeredSpatialMap of all entities (non-terrain objects) on the map.
 		/// </summary>
@@ -165,7 +165,7 @@ namespace GoRogue.GameFramework
 			_terrain = terrainLayer;
 			Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
 
-			_entities = new AdvancedLayeredSpatialMap<IGameObject>(new IDEqualityComparer<IGameObject>(), numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
+			_entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, 1, entityLayersSupportingMultipleItems);
 
 			LayersBlockingWalkability = layersBlockingWalkability;
 			LayersBlockingTransparency = layersBlockingTransparency;
@@ -235,6 +235,9 @@ namespace GoRogue.GameFramework
 			if (!terrain.IsStatic)
 				throw new ArgumentException($"Terrain for Map must be marked static via its {nameof(IGameObject.IsStatic)} flag.", nameof(terrain));
 
+			if (terrain.CurrentMap != null)
+				throw new ArgumentException($"Cannot add terrain to more than one {nameof(Map)}.", nameof(terrain));
+
 			if (!terrain.IsWalkable)
 			{
 				foreach (var obj in Entities.GetItems(terrain.Position))
@@ -246,6 +249,8 @@ namespace GoRogue.GameFramework
 				ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
 
 			_terrain[terrain.Position] = terrain;
+
+			terrain.OnMapChanged(this);
 			ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
 		}
 		#endregion
@@ -533,30 +538,5 @@ namespace GoRogue.GameFramework
 
 			return true;
 		}
-	}
-
-	/// <summary>
-	/// Class intended for comparing/hashing objects that implement IHasID, where the ID should be used
-	/// for equality instead of reference equality.
-	/// </summary>
-	/// <typeparam name="T">
-	/// Type of object being compared. Type T must implement IHasID.
-	/// </typeparam>
-	internal class IDEqualityComparer<T> : IEqualityComparer<T> where T : IHasID
-	{
-		/// <summary>
-		/// Equality comparison. Performs comparison via the object's ID.
-		/// </summary>
-		/// <param name="x">First object to compare.</param>
-		/// <param name="y">Second object to compare.</param>
-		/// <returns>True if the objects are considered equal, false otherwise.</returns>
-		public bool Equals(T x, T y) => x.ID == y.ID;
-
-		/// <summary>
-		/// Generates a hash based on the object's ID.GetHashCode() function.
-		/// </summary>
-		/// <param name="obj">Object to generate the hash for.</param>
-		/// <returns>The hash of the object, based on its ID.</returns>
-		public int GetHashCode(T obj) => obj.ID.GetHashCode();
 	}
 }
