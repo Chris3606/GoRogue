@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoRogue.GameFramework.Components;
 
 namespace GoRogue.GameFramework
 {
 	/// <summary>
 	/// Base class for any object that has a grid position and can be added to a Map.  Implements basic attributes generally common to all objects
-	/// on a map, as well as properties/methods that the Map class needs to function.  In cases where this class cannot be inherited from, have
+	/// on a map, as well as properties/methods that the Map class needs to function.  It also implements IHasComponents, which means you can attach
+	/// components to it (see ComponentContainer documentation for details on those functions).  In cases where this class cannot be inherited from, have
 	/// your class implement IGameObject via a private GameObject field.
 	/// </summary>
 	/// <remarks>
 	/// This class is designed to serve as a base class for your own game objects in your game.  It implements basic common functionality such as
-	/// walkability and transparency, and provides some infrastructure that allows it to be added to instances of Map.  It also implements the
-	/// necessary functionality that allows GameObjects to be added to an ISpatialMap implementation.
+	/// walkability and transparency, and provides some infrastructure that allows it to be added to instances of Map, as well as implementing the
+	/// framework for GoRogue's component system.  It also implements the necessary functionality that allows GameObjects to be added to an ISpatialMap
+	/// implementation.
 	/// 
 	/// Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one (GameObject), or implement
 	/// IGameObject by composition using a private field of this class, and use that as
-	/// the base class for your game's objects.  A Map instance can be used to store these objects efficiently. As well, Map provides functionality
-	/// that will allow you to retrieve your objects as references of their derived type (MyGameObject or MyTerrain, in the example above), meaning
-	/// you can implement any common, game-specific functionality you need and have easy access to that information when objects are retrieved from
-	/// the map.
+	/// the base class for your game's objects.  If you utilize the component system, a subclass isn't even strictly necessary,
+	/// as you could just construct basic GameObject instances and add components to them.  In either case, a Map instance can be used to store
+	/// these objects efficiently. As well, Map provides functionality that will allow you to retrieve your objects as references of their derived
+	/// type (MyGameObject or MyTerrain, in the example above), meaning that you can implement any common, game-specific functionality you need and have
+	/// easy access to that information when objects are retrieved from the map (without being forced to make that functionality a component.
+	/// 
+	/// Although the component system will accept items of any type as components, there is an optional IGameObjectComponent class that GoRogue provides,
+	/// that has a field for the parent.  This field is automatically kept up to date as you add/remove components if you use this class as the base for
+	/// your components.
 	/// </remarks>
 	public class GameObject : IGameObject, IHasComponents
 	{
@@ -185,7 +193,19 @@ namespace GoRogue.GameFramework
 		/// Adds the given object as a component.  Throws an exception if that specific instance is already attached to this GameObject.
 		/// </summary>
 		/// <param name="component">Component to add.</param>
-		public void AddComponent(object component) => _backingComponentContainer.AddComponent(component);
+		public void AddComponent(object component)
+		{
+			_backingComponentContainer.AddComponent(component);
+
+			// If no exception was thrown, the above add succeeded.
+			if (component is GameObjectComponent c)
+			{
+				if (c.Parent != null)
+					throw new ArgumentException($"Components of type {nameof(GameObjectComponent)} cannot be added to multiple components at once.");
+
+				c.Parent = _parentObject;
+			}
+		}
 
 		/// <summary>
 		/// Gets the first component of type T that was attached to the GameObject, or default(T) if no component of that type has
@@ -230,14 +250,24 @@ namespace GoRogue.GameFramework
 		/// Removes the given component from the GameObject.  Throws an exception if the component is not attached to the GameObject.
 		/// </summary>
 		/// <param name="component">Component to remove.</param>
-		public void RemoveComponent(object component) => _backingComponentContainer.RemoveComponent(component);
+		public void RemoveComponent(object component) => RemoveComponents(component);
 
 		/// <summary>
 		/// Removes the given component(s) from the GameObject.  Throws an exception if a component given is not attached to
 		/// the GameObject.
 		/// </summary>
 		/// <param name="components">One or more component instances to remove.</param>
-		public void RemoveComponents(params object[] components) => _backingComponentContainer.RemoveComponents(components);
+		public void RemoveComponents(params object[] components)
+		{
+			_backingComponentContainer.RemoveComponents(components);
+
+			foreach (var component in components)
+			{
+				// If no exception was thrown, the above remove succeeded.
+				if (component is GameObjectComponent c)
+					c.Parent = null;
+			}
+		}
 		#endregion
 	}
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace GoRogue
 {
@@ -521,6 +522,32 @@ namespace GoRogue
 			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
 				foreach (var item in _layers[relativeLayerNumber].Remove(x, y))
 					yield return item;
+		}
+
+		/// <summary>
+		/// Returns a string representation of each layer in the LayeredSpatialMap.
+		/// </summary>
+		/// <returns>A string representing each layer of the LayeredSpatialMap</returns>
+		public override string ToString() => ToString(t => t.ToString());
+
+		/// <summary>
+		/// Returns a string representation of each item in the LayeredSpatialMap, with elements
+		/// displayed in the specified way.
+		/// </summary>
+		/// <param name="elementStringifier">A function that takes an element of type T and produces the string that should represent it in the output.</param>
+		/// <returns>A string representing each layer in the LayeredSpatialMap, with each element displayed in the specified way.</returns>
+		public string ToString(Func<T, string> elementStringifier)
+		{
+			int layer = StartingLayer;
+			var sb = new StringBuilder();
+			foreach (var map in _layers)
+			{
+				sb.Append(layer + ": ");
+				sb.Append(map.ToString(elementStringifier) + '\n');
+				layer++;
+			}
+
+			return sb.ToString();
 		}
 	}
 

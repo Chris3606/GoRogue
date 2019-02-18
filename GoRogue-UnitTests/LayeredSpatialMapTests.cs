@@ -20,6 +20,11 @@ namespace GoRogue_UnitTests
 			ID = _idGen.UseID();
 			Layer = layer;
 		}
+
+		public override string ToString()
+		{
+			return $"[{ID}, {Layer}]";
+		}
 	}
 
 	[TestClass]
@@ -80,7 +85,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void TestRemove()
 		{
-			/*
+			
 			var itemsAdded = new List<MySpatialMapItem>();
 			var sm = new LayeredSpatialMap<MySpatialMapItem>(5);
 
@@ -88,7 +93,7 @@ namespace GoRogue_UnitTests
 			{
 				var item = new MySpatialMapItem(i);
 				itemsAdded.Add(item);
-				sm.Add(item, Coord.Get(1, 2));
+				sm.Add(item, (1, 2));
 			}
 
 			bool result;
@@ -106,15 +111,15 @@ namespace GoRogue_UnitTests
 			
 			foreach (var i in itemsAdded)
 			{
-				sm.Add(i, Coord.Get(1, 2));
+				sm.Add(i, (1, 2));
 			}
 
-			List<MySpatialMapItem> itemsRemoved = sm.Remove(Coord.Get(5, 6)).ToList();
+			List<MySpatialMapItem> itemsRemoved = sm.Remove((5, 6)).ToList();
 			Assert.AreEqual(0, itemsRemoved.Count);
 
-			itemsRemoved = sm.Remove(Coord.Get(1, 2)).ToList();
+			itemsRemoved = sm.Remove((1, 2)).ToList();
 			Assert.AreEqual(itemsAdded.Count, itemsRemoved.Count);
-			*/
+			
 		}
 
 		[TestMethod]
@@ -165,6 +170,22 @@ namespace GoRogue_UnitTests
 			foreach (var item in itemsLeft)
 				found = found || item == itemsAdded[2];
 			Assert.AreEqual(true, found);
+		}
+
+		[TestMethod]
+		public void ManualTestPrint()
+		{
+			var map = new LayeredSpatialMap<MySpatialMapItem>(3, 1, LayerMasker.DEFAULT.Mask(2));
+
+			map.Add(new MySpatialMapItem(1), (1, 2));
+			map.Add(new MySpatialMapItem(1), (3, 4));
+			map.Add(new MySpatialMapItem(2), (1, 1));
+			map.Add(new MySpatialMapItem(3), (0, 0));
+
+			Console.WriteLine("SpatialMap: ");
+			Console.WriteLine(map);
+
+			Console.WriteLine("No need to test stringifier, as used by impl of regular ToString()");
 		}
 
 		// TODO: Implement

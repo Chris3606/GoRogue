@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -98,6 +99,14 @@ namespace GoRogue
 		/// if the item does not exist.
 		/// </returns>
 		Coord GetPosition(T item);
+
+		/// <summary>
+		/// Returns a string representation of the IReadOnlySpatialMap, allowing display of the SpatialMap's
+		/// items in a specified way.
+		/// </summary>
+		/// <param name="itemStringifier">Function that turns an item into a string.</param>
+		/// <returns>A string representation of the SpatialMap.</returns>
+		string ToString(Func<T, string> itemStringifier);
 	}
 
 	/// <summary>
