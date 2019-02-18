@@ -24,9 +24,9 @@ namespace GoRogue.GameFramework
 	/// type (MyGameObject or MyTerrain, in the example above), meaning that you can implement any common, game-specific functionality you need and have
 	/// easy access to that information when objects are retrieved from the map (without being forced to make that functionality a component.
 	/// 
-	/// Although the component system will accept items of any type as components, there is an optional IGameObjectComponent class that GoRogue provides,
-	/// that has a field for the parent.  This field is automatically kept up to date as you add/remove components if you use this class as the base for
-	/// your components.
+	/// Although the component system will accept items of any type as components, there is an optional IGameObjectComponent interface that GoRogue provides,
+	/// that has a field for the parent, eg. the IGameObject that it is attached to.  This field is automatically kept up to date as you add/remove components
+	/// if you implement this interface for your components.
 	/// </remarks>
 	public class GameObject : IGameObject, IHasComponents
 	{
@@ -198,10 +198,10 @@ namespace GoRogue.GameFramework
 			_backingComponentContainer.AddComponent(component);
 
 			// If no exception was thrown, the above add succeeded.
-			if (component is GameObjectComponent c)
+			if (component is IGameObjectComponent c)
 			{
 				if (c.Parent != null)
-					throw new ArgumentException($"Components of type {nameof(GameObjectComponent)} cannot be added to multiple components at once.");
+					throw new ArgumentException($"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple components at once.");
 
 				c.Parent = _parentObject;
 			}
@@ -264,7 +264,7 @@ namespace GoRogue.GameFramework
 			foreach (var component in components)
 			{
 				// If no exception was thrown, the above remove succeeded.
-				if (component is GameObjectComponent c)
+				if (component is IGameObjectComponent c)
 					c.Parent = null;
 			}
 		}
