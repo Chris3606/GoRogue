@@ -78,9 +78,9 @@ namespace GoRogue.GameFramework
 		public IReadOnlyFOV FOV => _fov.AsReadOnly();
 
 		/// <summary>
-		/// AStar pathfinder for the map.  Uses WalkabilityView to determine which locations can be reached.
+		/// AStar pathfinder for the map.  By default, uses WalkabilityView to determine which locations can be reached.
 		/// </summary>
-		public AStar AStar { get; }
+		public AStar AStar { get; set;  }
 
 		/// <summary>
 		/// Distance measurement used for pathing and measuring distance on the map.

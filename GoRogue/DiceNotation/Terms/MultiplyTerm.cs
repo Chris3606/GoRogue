@@ -11,7 +11,7 @@ namespace GoRogue.DiceNotation.Terms
 		/// Constructor. Takes the terms that will be multiplied.
 		/// </summary>
 		/// <param name="term1">The first term (left-hand side).</param>
-		/// <param name="term2">The second ter (left-hand side).</param>
+		/// <param name="term2">The second term (left-hand side).</param>
 		public MultiplyTerm(ITerm term1, ITerm term2)
 		{
 			Term1 = term1;

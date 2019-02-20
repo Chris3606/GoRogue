@@ -8,7 +8,7 @@ namespace GoRogue.DiceNotation.Exceptions
 	public class InvalidMultiplicityException : Exception
 	{
 		/// <summary>
-		/// Constructor
+		/// Constructor.
 		/// </summary>
 		public InvalidMultiplicityException()
 		{

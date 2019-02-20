@@ -2,7 +2,8 @@
 {
 	/// <summary>
 	/// Interface for a class that parses a string representing a dice expression into a
-	/// IDiceExpression instance.
+	/// IDiceExpression instance.  You might implement this if you need to implement a custom
+	/// dice parser.
 	/// </summary>
 	public interface IParser
 	{

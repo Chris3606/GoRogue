@@ -5,13 +5,13 @@ namespace GoRogue.DiceNotation
 {
 	/// <summary>
 	/// The most important DiceNotation class -- contains functions to roll dice, and to retrieve an
-	/// IDiceExpression instance representing a given expression (useful and more efficient if a dice
-	/// roll is used multiple times).
+	/// IDiceExpression instance representing a given expression.
 	/// </summary>
 	public static class Dice
 	{
 		/// <summary>
 		/// The parser that will be used to parse dice expressions given to the Parse and Roll functions.
+		/// If you want to use a custom parser, you can assign an instance to this field.
 		/// </summary>
 		public static IParser DiceParser = new Parser();
 
@@ -20,8 +20,10 @@ namespace GoRogue.DiceNotation
 		/// instance representing the given dice expression.
 		/// </summary>
 		/// <remarks>
-		/// Because parsing can add significant time, retrieving an IDiceExpression instance instead
-		/// of using the Roll function can be useful if a given expression will be rolled multiple times.
+		/// Generally speaking, dice-parsing via the standard Roll method is extremely fast.  However, if
+		/// you are repeating a dice roll many times, in a case where maximum performance 
+		/// is absolutely necessary, there is some benefit to retrieving an IDiceExpression instance instead
+		/// of using the Roll function, and calling that expressions's Roll() method whenever a result is required.
 		/// </remarks>
 		/// <param name="expression">The string dice expression to parse.</param>
 		/// <returns>An IDiceExpression instance representing the parsed string.</returns>
@@ -29,11 +31,12 @@ namespace GoRogue.DiceNotation
 
 		/// <summary>
 		/// Uses the IParser specified in the DiceParser variable to parse the given dice expression,
-		/// roll it, and return the result.
+		/// roll it, and return the result.  This is the standard method for rolling dice.
 		/// </summary>
 		/// <remarks>
-		/// While more convenient, parsing is computationally more expensive than evaluation. If a
-		/// dice expression will be rolled many times, it is more efficient to use the Parse method
+		/// This method is convenient and typically very fast, however technically, parsing is computationally
+		/// more expensive than evaluation. If a dice expression will be rolled many times in a situation where
+		/// maximum performance is required, it is more efficient to use the Parse method
 		/// once, and use the resulting IDiceExpression instance to roll the expression each time it
 		/// is needed.
 		/// </remarks>
