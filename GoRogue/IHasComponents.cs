@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GoRogue.GameFramework
+namespace GoRogue
 {
 	/// <summary>
 	/// Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,

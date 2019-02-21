@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GoRogue.GameFramework
+namespace GoRogue
 {
 	/// <summary>
 	/// A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either give your
 	/// object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access components,
-	/// you may have your object implement IHasComponents via a backing field of type ComponentContainer (see GameFramework.GameObject) for 
-	/// an example).
+	/// you may either inherit from ComponentContainer, or have your object implement IHasComponents via a backing field of type
+	/// ComponentContainer.
 	/// </summary>
 	/// <remarks>
 	/// The component system is designed to be as efficient as possible at run-time for accessing components and determining if a
@@ -34,35 +34,33 @@ namespace GoRogue.GameFramework
 	/// </remarks>
 	public class ComponentContainer : IHasComponents
 	{
-		// TODO: Test with Type instead of string for performance, if it becomes an issue.  My suspicion is that string GetHashCode
-		// will prove to yield slightly better performance.
-		private Dictionary<string, List<object>> _components;
+		private Dictionary<Type, List<object>> _components;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public ComponentContainer()
 		{
-			_components = new Dictionary<string, List<object>>();
+			_components = new Dictionary<Type, List<object>>();
 		}
 
 		/// <summary>
 		/// Adds the given object as a component.  Throws an exception if that specific instance is already in this ComponentContainer.
 		/// </summary>
 		/// <param name="component">Component to add.</param>
-		public void AddComponent(object component)
+		public virtual void AddComponent(object component)
 		{
 			var realType = component.GetType();
-			if (_components.ContainsKey(realType.FullName) && _components[realType.FullName].Contains(component))
-				throw new ArgumentException($"Tried to add the same component instance to a {nameof(ComponentContainer)} twice.");
+			if (_components.ContainsKey(realType) && _components[realType].Contains(component))
+				throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
 
 			foreach (var type in GetTree(component))
 			{
 				// Because we remove empty lists in Remove, we can assume that there are no empty lists in the Dictionary
-				if (!_components.ContainsKey(type.FullName))
-					_components[type.FullName] = new List<object>();
+				if (!_components.ContainsKey(type))
+					_components[type] = new List<object>();
 
-				_components[type.FullName].Add(component);
+				_components[type].Add(component);
 			}
 		}
 
@@ -76,25 +74,25 @@ namespace GoRogue.GameFramework
 		/// Removes the given component(s).  Throws an exception if a component given does not exist in the ComponentContainer.
 		/// </summary>
 		/// <param name="components">One or more component instances to remove.</param>
-		public void RemoveComponents(params object[] components)
+		public virtual void RemoveComponents(params object[] components)
 		{
 			foreach (var component in components)
 			{
-				var componentFullName = component.GetType().FullName;
-				if (!_components.ContainsKey(componentFullName))
-					throw new ArgumentException($"Tried to remove a component of type {componentFullName}, that did not exist on the object.", nameof(component));
+				var componentType = component.GetType();
+				if (!_components.ContainsKey(componentType))
+					throw new ArgumentException($"Tried to remove a component of type {componentType}, that did not exist on the object.", nameof(component));
 
 				// Can't be invalid key because above check passed.
-				if (!_components[componentFullName].Contains(component))
-					throw new ArgumentException($"Tried to remove a component of type {componentFullName}, that did not exist on the object.", nameof(component));
+				if (!_components[componentType].Contains(component))
+					throw new ArgumentException($"Tried to remove a component of type {componentType}, that did not exist on the object.", nameof(component));
 
 				foreach (var type in GetTree(component))
 				{
 					// Guaranteed to be a valid key because the above checks passed, so the component does exist.
-					if (_components[type.FullName].Count == 1)
-						_components.Remove(type.FullName);
+					if (_components[type].Count == 1)
+						_components.Remove(type);
 					else
-						_components[type.FullName].Remove(component);
+						_components[type].Remove(component);
 				}
 			}
 		}
@@ -108,7 +106,7 @@ namespace GoRogue.GameFramework
 		public bool HasComponents(params Type[] componentTypes)
 		{
 			foreach (var component in componentTypes)
-				if (!_components.ContainsKey(component.FullName))
+				if (!_components.ContainsKey(component))
 					return false;
 
 			return true;
@@ -140,12 +138,12 @@ namespace GoRogue.GameFramework
 		{
 			Type typeOfT = typeof(T);
 
-			if (!_components.ContainsKey(typeOfT.FullName))
+			if (!_components.ContainsKey(typeOfT))
 				return default(T);
 
 			// We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
 			// Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
-			return (T)(_components[typeOfT.FullName][0]);
+			return (T)(_components[typeOfT][0]);
 		}
 
 		/// <summary>
@@ -157,10 +155,10 @@ namespace GoRogue.GameFramework
 		{
 			Type typeOfT = typeof(T);
 
-			if (_components.ContainsKey(typeOfT.FullName))
+			if (_components.ContainsKey(typeOfT))
 			{
 				// Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
-				foreach (var component in _components[typeOfT.FullName])
+				foreach (var component in _components[typeOfT])
 					yield return (T)component;
 			}
 		}

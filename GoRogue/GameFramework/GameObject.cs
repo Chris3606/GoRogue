@@ -28,7 +28,7 @@ namespace GoRogue.GameFramework
 	/// that has a field for the parent, eg. the IGameObject that it is attached to.  This field is automatically kept up to date as you add/remove components
 	/// if you implement this interface for your components.
 	/// </remarks>
-	public class GameObject : IGameObject, IHasComponents
+	public class GameObject : ComponentContainer, IGameObject
 	{
 		// Use the value of this variable instead of the "this" keyword from within GameObject
 		private IGameObject _parentObject;
@@ -164,6 +164,11 @@ namespace GoRogue.GameFramework
 		/// <returns>An ID to assign to the current object.</returns>
 		protected virtual uint GenerateID() => Random.SingletonRandom.DefaultRNG.NextUInt();
 
+		/// <summary>
+		/// Internal use only, do not call manually!  This function is (and should only be) called by Map to update the
+		/// CurrentMap value when this GameObject switches maps.
+		/// </summary>
+		/// <param name="newMap">New map.</param>
 		public void OnMapChanged(Map newMap)
 		{
 			if (newMap != null)
@@ -193,77 +198,32 @@ namespace GoRogue.GameFramework
 		/// Adds the given object as a component.  Throws an exception if that specific instance is already attached to this GameObject.
 		/// </summary>
 		/// <param name="component">Component to add.</param>
-		public void AddComponent(object component)
+		public override void AddComponent(object component)
 		{
-			_backingComponentContainer.AddComponent(component);
+			base.AddComponent(component);
 
 			// If no exception was thrown, the above add succeeded.
 			if (component is IGameObjectComponent c)
 			{
 				if (c.Parent != null)
-					throw new ArgumentException($"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple components at once.");
+					throw new ArgumentException($"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple objects at once.");
 
 				c.Parent = _parentObject;
 			}
 		}
 
 		/// <summary>
-		/// Gets the first component of type T that was attached to the GameObject, or default(T) if no component of that type has
-		/// been attached.
-		/// </summary>
-		/// <typeparam name="T">Type of component to retrieve.</typeparam>
-		/// <returns>The first component of Type T that was added to the GameObject, or default(T) if no
-		/// components of the given type have been added.</returns>
-		public T GetComponent<T>() => _backingComponentContainer.GetComponent<T>();
-
-		/// <summary>
-		/// Gets all components of type T that are attached to the GameObject.
-		/// </summary>
-		/// <typeparam name="T">Type of components to retrieve.</typeparam>
-		/// <returns>All components of Type T that are attached to the GameObject.</returns>
-		public IEnumerable<T> GetComponents<T>() => _backingComponentContainer.GetComponents<T>();
-
-		/// <summary>
-		/// Returns whether or not the GameObject has at least one component of the specified type.  Type may be specified
-		/// by using typeof(MyComponentType).
-		/// </summary>
-		/// <param name="componentType">The type of component to check for.</param>
-		/// <returns>True if the GameObject has at least one component of the specified type, false otherwise.</returns>
-		public bool HasComponent(Type componentType) => _backingComponentContainer.HasComponent(componentType);
-
-		/// <summary>
-		/// Returns whether or not the GameObject has at least one component of type T.
-		/// </summary>
-		/// <typeparam name="T">Type of component to check for.</typeparam>
-		/// <returns>True if the GameObject has at least one component of the specified type, false otherwise.</returns>
-		public bool HasComponent<T>() => _backingComponentContainer.HasComponent<T>();
-
-		/// <summary>
-		/// Returns whether or not the GameObject has all the given types of components.  Types may be specified by
-		/// using typeof(MyComponentType)
-		/// </summary>
-		/// <param name="componentTypes">One or more component types to check for.</param>
-		/// <returns>True if the GameObject has at least one component of each specified type, false otherwise.</returns>
-		public bool HasComponents(params Type[] componentTypes) => _backingComponentContainer.HasComponents(componentTypes);
-
-		/// <summary>
-		/// Removes the given component from the GameObject.  Throws an exception if the component is not attached to the GameObject.
-		/// </summary>
-		/// <param name="component">Component to remove.</param>
-		public void RemoveComponent(object component) => RemoveComponents(component);
-
-		/// <summary>
 		/// Removes the given component(s) from the GameObject.  Throws an exception if a component given is not attached to
 		/// the GameObject.
 		/// </summary>
 		/// <param name="components">One or more component instances to remove.</param>
-		public void RemoveComponents(params object[] components)
+		public override void RemoveComponents(params object[] components)
 		{
-			_backingComponentContainer.RemoveComponents(components);
+			base.RemoveComponents(components);
 
+			// If no exception was thrown, the above remove succeeded.
 			foreach (var component in components)
 			{
-				// If no exception was thrown, the above remove succeeded.
 				if (component is IGameObjectComponent c)
 					c.Parent = null;
 			}
