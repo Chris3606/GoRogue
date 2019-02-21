@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GoRogue.GameFramework.Components;
 
 namespace GoRogue.GameFramework
@@ -32,8 +31,6 @@ namespace GoRogue.GameFramework
 	{
 		// Use the value of this variable instead of the "this" keyword from within GameObject
 		private IGameObject _parentObject;
-
-		private IHasComponents _backingComponentContainer;
 
 		private Coord _position;
 		/// <summary>
@@ -70,12 +67,28 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved;
 
+		private bool _isWalkable;
 		/// <summary>
 		/// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
 		/// on can be traversed by other, non-walkable objects on the same map.  Effectively, whether or not this
 		/// object collides according to the collision layer.
 		/// </summary>
-		public virtual bool IsWalkable { get; set; }
+		public virtual bool IsWalkable
+		{
+			get => _isWalkable;
+
+			set
+			{
+				if (_isWalkable != value)
+				{
+					// Would violate walkability
+					if (!value && CurrentMap != null && !CurrentMap.WalkabilityView[Position])
+						throw new ArgumentException("Cannot set walkability of object to false; this would violate walkability of the map the object resides on.", nameof(IsWalkable));
+
+					value = _isWalkable;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Whether or not the object is considered "transparent", eg. whether or not light passes through it
@@ -124,7 +137,6 @@ namespace GoRogue.GameFramework
 		public GameObject(Coord position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
 		{
 			_parentObject = parentObject ?? this;
-			_backingComponentContainer = new ComponentContainer();
 			_position = position;
 			Layer = layer;
 			IsWalkable = isWalkable;
