@@ -284,6 +284,53 @@ namespace GoRogue.GameFramework
 			return true;
 		}
 
+		
+		public EntityType GetEntity<EntityType>(Coord position, uint layerMask = uint.MaxValue) where EntityType : IGameObject
+			=> GetEntities<EntityType>(position.X, position.Y, layerMask).FirstOrDefault();
+
+		/// <summary>
+		/// Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
+		/// layer in the layer mask downward. Layer mask defaults to all layers. Null is returned if no entities of the specified type are found, or if
+		/// there are no entities at the location.
+		/// </summary>
+		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <param name="x">X-value of the position to get entity for.</param>
+		/// <param name="y">Y-value of the position to get entity for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an entity.  Defaults to all layers.</param>
+		/// <returns>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
+		/// the specified type are found.</returns>
+		public EntityType GetEntity<EntityType>(int x, int y, uint layerMask = uint.MaxValue) where EntityType : IGameObject
+			=> GetEntities<EntityType>(x, y, layerMask).FirstOrDefault();
+
+		/// <summary>
+		/// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
+		/// in the layer mask downward.  Layer mask defaults to all layers.
+		/// </summary>
+		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <param name="position">Position to get entities for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
+		/// in the mask downward.</returns>
+		public IEnumerable<EntityType> GetEntities<EntityType>(Coord position, uint layerMask = uint.MaxValue) where EntityType : IGameObject
+			=> GetEntities<EntityType>(position.X, position.Y, layerMask);
+
+		/// <summary>
+		/// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
+		/// in the layer mask downward.  Layer mask defaults to all layers.
+		/// </summary>
+		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <param name="x">X-value of the position to get entities for.</param>
+		/// <param name="y">Y-value of the position to get entities for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
+		/// <returns>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
+		/// in the mask downward.</returns>
+		public IEnumerable<EntityType> GetEntities<EntityType>(int x, int y, uint layerMask = uint.MaxValue) where EntityType : IGameObject
+		{
+			foreach (var entity in Entities.GetItems(x, y, layerMask))
+				if (entity is EntityType e)
+					yield return e;
+		}
+
 		/// <summary>
 		/// Removes the given entity (non-terrain object) from the map, returning true if it was successfully removed, false otherwise.
 		/// </summary>

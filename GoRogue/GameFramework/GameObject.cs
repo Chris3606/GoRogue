@@ -85,7 +85,7 @@ namespace GoRogue.GameFramework
 					if (!value && CurrentMap != null && !CurrentMap.WalkabilityView[Position])
 						throw new ArgumentException("Cannot set walkability of object to false; this would violate walkability of the map the object resides on.", nameof(IsWalkable));
 
-					value = _isWalkable;
+					_isWalkable = value;
 				}
 			}
 		}

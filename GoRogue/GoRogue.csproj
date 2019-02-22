@@ -3,13 +3,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 	<PackageId>GoRogue</PackageId>
-	<PackageVersion>2.0.0-pre9</PackageVersion>
+	<PackageVersion>2.0.0-pre10</PackageVersion>
 	<Authors>Christopher Ridley</Authors>
 	<Description>Roguelike/2D game utility library.</Description>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Modified GameObject to properly handle backing fields.  Added Component system.</PackageReleaseNotes>
+	<PackageReleaseNotes>Modified component system to support inheritance.  Added parent-tracking component for IGameObject.  Updated AStar in Map class to be assignable.  Moved component system to root namespace.  Added walkability validation to GameObject setters</PackageReleaseNotes>
     <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
 	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
   </PropertyGroup>
