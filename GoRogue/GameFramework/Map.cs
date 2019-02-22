@@ -284,7 +284,16 @@ namespace GoRogue.GameFramework
 			return true;
 		}
 
-		
+		/// <summary>
+		/// Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
+		/// layer in the layer mask downward. Layer mask defaults to all layers. Null is returned if no entities of the specified type are found, or if
+		/// there are no entities at the location.
+		/// </summary>
+		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <param name="position">Position to check get entity for.</param>
+		/// <param name="layerMask">Layer mask for which layers can return an entity.  Defaults to all layers.</param>
+		/// <returns>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
+		/// the specified type are found.</returns>
 		public EntityType GetEntity<EntityType>(Coord position, uint layerMask = uint.MaxValue) where EntityType : IGameObject
 			=> GetEntities<EntityType>(position.X, position.Y, layerMask).FirstOrDefault();
 
