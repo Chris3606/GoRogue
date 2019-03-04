@@ -9,7 +9,7 @@
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>Modified Map fov calculation functions to be virtual.  Added SourceLink and snuget symbols package.</PackageReleaseNotes>
-    <Copyright>Copyright ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© 2019 Christopher Ridley.  All rights reserved.</Copyright>
+    <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
     <IncludeSymbols>true</IncludeSymbols>
