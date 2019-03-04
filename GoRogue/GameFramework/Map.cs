@@ -477,7 +477,7 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the center point for the new FOV to calculate.</param>
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-		public void CalculateFOV(int x, int y, double radius = double.MaxValue)
+		public virtual void CalculateFOV(int x, int y, double radius = double.MaxValue)
 		{
 			_fov.Calculate(x, y, radius);
 
@@ -502,7 +502,7 @@ namespace GoRogue.GameFramework
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
 		/// <param name="radiusShape">The shape of the FOV to calculate.  Can be specified as either Distance or Radius types (they are implicitly convertible).</param>
-		public void CalculateFOV(int x, int y, double radius, Distance radiusShape)
+		public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape)
 		{
 			_fov.Calculate(x, y, radius, radiusShape);
 
@@ -534,7 +534,7 @@ namespace GoRogue.GameFramework
 		/// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
 		/// <param name="span">The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are included
 		/// in the cone.</param>
-		public void CalculateFOV(int x, int y, double radius, Distance radiusShape, double angle, double span)
+		public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape, double angle, double span)
 		{
 			_fov.Calculate(x, y, radius, radiusShape, angle, span);
 

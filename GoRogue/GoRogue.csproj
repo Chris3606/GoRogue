@@ -1,41 +1,43 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-	<PackageId>GoRogue</PackageId>
-	<PackageVersion>2.0.0-pre10</PackageVersion>
-	<Authors>Christopher Ridley</Authors>
-	<Description>Roguelike/2D game utility library.</Description>
-	<PackageLicenseFile>LICENSE</PackageLicenseFile>
-	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
-	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Modified component system to support inheritance.  Added parent-tracking component for IGameObject.  Updated AStar in Map class to be assignable.  Moved component system to root namespace.  Added walkability validation to GameObject setters</PackageReleaseNotes>
-    <Copyright>Copyright © 2019 Christopher Ridley.  All rights reserved.</Copyright>
-	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
+    <PackageId>GoRogue</PackageId>
+    <PackageVersion>2.0.0-pre11</PackageVersion>
+    <Authors>Christopher Ridley</Authors>
+    <Description>Roguelike/2D game utility library.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Modified Map fov calculation functions to be virtual.  Added SourceLink and snuget symbols package.</PackageReleaseNotes>
+    <Copyright>Copyright ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â© 2019 Christopher Ridley.  All rights reserved.</Copyright>
+    <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
+    <!-- Add symbols package -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <None Include="$(ProjectDir)..\LICENSE" Pack="true" PackagePath="" />
-  </ItemGroup>
-  
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\Release\netstandard2.0\GoRogue.xml</DocumentationFile>
     <OutputPath>bin\Release\</OutputPath>
     <NoWarn>1701;1702;1705;RECS0145;RECS0129</NoWarn>
   </PropertyGroup>
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
     <NoWarn>1701;1702;1705;RECS0145;</NoWarn>
+    <DocumentationFile>bin\Debug\netstandard2.0\GoRogue.xml</DocumentationFile>
   </PropertyGroup>
-  
-	<Target Name="CopyPackage" AfterTargets="Pack">
-		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
-	</Target>
-  
-	<ItemGroup>
-	  <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
-	  <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-	  <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
-	</ItemGroup>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
+  </Target>
+  <ItemGroup>
+    <PackageReference Include="InheritDoc" Version="2.0.2" PrivateAssets="All">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
+    <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="%userprofile%\.nuget\packages\inheritdoc\2.0.2\tools\InheritDoc.exe -b $(OutDir) -o" />
+  </Target>
 </Project>

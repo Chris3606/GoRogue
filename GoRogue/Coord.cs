@@ -377,12 +377,14 @@ namespace GoRogue
 
 		public bool Equals(Coord other) => X == other.X && Y == other.Y;
 
-		#region MonoGame Conversions
+		#region MonoGame Compatibility
 		public static implicit operator MonoPoint(Coord c) => new MonoPoint(c.X, c.Y);
 		public static implicit operator Coord(MonoPoint p) => new Coord(p.X, p.Y);
+		public static MonoPoint operator +(MonoPoint p, Coord c) => new MonoPoint(p.X + c.X, p.Y + c.Y);
+		public static Coord operator +(Coord c, MonoPoint p) => new Coord(c.X + p.X, c.Y + p.Y);
 		#endregion
 
-		#region System Drawing Conversions
+		#region System.Drawing Compatibility
 		public static implicit operator DrawingPoint(Coord c) => new DrawingPoint(c.X, c.Y);
 		public static implicit operator Coord(DrawingPoint p) => new Coord(p.X, p.Y);
 
@@ -392,6 +394,10 @@ namespace GoRogue
 		public static implicit operator Coord(Size s) => new Coord(s.Width, s.Height);
 
 		public static implicit operator SizeF(Coord c) => new SizeF(c.X, c.Y);
+
+		public static DrawingPoint operator +(DrawingPoint p, Coord c) => new DrawingPoint(p.X + c.X, p.Y + c.Y);
+		public static Coord operator +(Coord c, DrawingPoint p) => new Coord(c.X + p.X, c.Y + p.Y);
+		public static PointF operator +(PointF p, Coord c) => new PointF(p.X + c.X, p.Y + c.Y);
 		#endregion
 
 		#region TupleCompatibility
