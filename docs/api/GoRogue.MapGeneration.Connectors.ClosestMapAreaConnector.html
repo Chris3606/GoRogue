@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ClosestMapAreaConnector
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ClosestMapAreaConnector
+   ">
+    <meta name="generator" content="docfx 2.40.11.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector">
+  
+  
+  <h1 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector" class="text-break">Class ClosestMapAreaConnector
+  </h1>
+  <div class="markdown level0 summary"><p>Implements a connection algorithm that connects all unique map areas in the given map by
+connecting each area with the one closest to it.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ClosestMapAreaConnector</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.MapGeneration.Connectors.html">GoRogue.MapGeneration.Connectors</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class ClosestMapAreaConnector</code></pre>
+  </div>
+  <h5 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The algorithm functions by first finding all unique areas in the map given by using
+MapAreaFinder.MapAreas. Then, we iterate through each area, find the closest area that is not
+already conencted to the current area, and create a tunnel between the two. Distance between
+to areas is measured as the distance between the center point of the bounding boxes of those
+areas. /// Points to connect two areas, as well as method used to create a tunnel between
+those two points, are selected via specified parameters.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CGoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector%2CGoRogue.MapGeneration.Connectors.ITunnelCreator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L36">View Source</a>
+  </span>
+  <a id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect*"></a>
+  <h4 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView{System.Boolean},GoRogue.Distance,GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector,GoRogue.MapGeneration.Connectors.ITunnelCreator)">Connect(ISettableMapView&lt;Boolean&gt;, Distance, IAreaConnectionPointSelector, ITunnelCreator)</h4>
+  <div class="markdown level1 summary"><p>Connects the given map using the algorithm described in the class description.  Map areas
+are automatically determined via MapAreaFinder</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Connect(ISettableMapView&lt;bool&gt; map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">map</span></td>
+        <td><p>The map to connect.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceCalc</span></td>
+        <td><p>The distance calculation that defines distance/neighbors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a></td>
+        <td><span class="parametername">areaConnector</span></td>
+        <td><p>The area connection strategy to use. Not all methods function on maps with concave areas
+-- see respective class documentation for details.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
+        <td><span class="parametername">tunnelCreator</span></td>
+        <td><p>The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+the distance calculation specified is used.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Collections_Generic_IReadOnlyList_GoRogue_MapGeneration_MapArea__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CSystem.Collections.Generic.IReadOnlyList%7BGoRogue.MapGeneration.MapArea%7D%2CGoRogue.Distance%2CGoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector%2CGoRogue.MapGeneration.Connectors.ITunnelCreator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L57">View Source</a>
+  </span>
+  <a id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect*"></a>
+  <h4 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Collections_Generic_IReadOnlyList_GoRogue_MapGeneration_MapArea__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView{System.Boolean},System.Collections.Generic.IReadOnlyList{GoRogue.MapGeneration.MapArea},GoRogue.Distance,GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector,GoRogue.MapGeneration.Connectors.ITunnelCreator)">Connect(ISettableMapView&lt;Boolean&gt;, IReadOnlyList&lt;MapArea&gt;, Distance, IAreaConnectionPointSelector, ITunnelCreator)</h4>
+  <div class="markdown level1 summary"><p>Connects the map areas given on the given map using the algorithm described in the class description.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void Connect(ISettableMapView&lt;bool&gt; map, IReadOnlyList&lt;MapArea&gt; mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">map</span></td>
+        <td><p>The map to connect.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a>&gt;</td>
+        <td><span class="parametername">mapAreas</span></td>
+        <td><p>The map areas to connect on the given map.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceCalc</span></td>
+        <td><p>The distance calculation that defines distance/neighbors.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a></td>
+        <td><span class="parametername">areaConnector</span></td>
+        <td><p>The area connection strategy to use. Not all methods function on maps with concave areas
+-- see respective class documentation for details.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
+        <td><span class="parametername">tunnelCreator</span></td>
+        <td><p>The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+the distance calculation specified is used.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L19" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

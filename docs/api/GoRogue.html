@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace GoRogue
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace GoRogue
+   ">
+    <meta name="generator" content="docfx 2.40.11.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue">
+  
+  <h1 id="GoRogue" data-uid="GoRogue" class="text-break">Namespace GoRogue
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></h4>
+      <section><p>Class representing a method for determining which coordinates are adjacent to a given
+coordinate, and in which directions those neighbors are. Cannot be instantiated -- premade
+static instances are provided.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedLayeredSpatialMap-1.html">AdvancedLayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p>Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for
+hashing and comparison of type T. May be useful for cases where one does not want to
+implement IHasID, or if you need to use a value type in a LayeredSpatialMap. For simple
+cases, it is recommended to use LayeredSpatialMap instead.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedMultiSpatialMap-1.html">AdvancedMultiSpatialMap&lt;T&gt;</a></h4>
+      <section><p>Advanced version of MultiSpatialMap that allows for use of a custom IEqualityComparer for
+hashing and comparison of type T. May be useful for cases where one does not want to
+implement IHasID, or if you need to use a value type in a MultiSpatialMap. For simple cases,
+it is recommended to use MultiSpatialMap instead.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedSpatialMap-1.html">AdvancedSpatialMap&lt;T&gt;</a></h4>
+      <section><p>Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing
+and comparison of type T. May be useful for cases where one does not want to implement
+IHasID, or if you need to use a value type in a SpatialMap. For simple cases, it is
+recommended to use SpatialMap instead.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.BoundedRectangle.html">BoundedRectangle</a></h4>
+      <section><p>A class that contains a rectangle Area that is automatically &quot;locked&quot; to being inside the
+BoundingBox. A typical use might be keeping track of a camera view area.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ComponentContainer.html">ComponentContainer</a></h4>
+      <section><p>A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either give your
+object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access components,
+you may either inherit from ComponentContainer, or have your object implement IHasComponents via a backing field of type
+ComponentContainer.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Direction.html">Direction</a></h4>
+      <section><p>Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy
+for that direction, at unit scale.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.DisjointSet.html">DisjointSet</a></h4>
+      <section><p>Basic representation of a Disjoint set data structure. Assumes it is holding integers between
+0 and size - 1.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Distance.html">Distance</a></h4>
+      <section><p>Class representing a method of calculating distance. You cannot create instances of this
+class using a constructor -- instead this class contains static instances representing the
+applicable types of distance calculations.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Effect-1.html">Effect&lt;TriggerArgs&gt;</a></h4>
+      <section><p>Class designed to represent any sort of in-game effect. This could be anything from a simple
+physical damage effect to a heal effect, including area of effects, damage over time effects,
+or even potentially a special effect that simply boosts a stat.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.EffectArgs.html">EffectArgs</a></h4>
+      <section><p>Default argument for any effect. Any class that is used as the template argument for an
+effect must either be this or a class that inherits from this.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a></h4>
+      <section><p>Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically
+instnaces of this class can simply be created, however a subclass may be required for custom
+add/remove actions and ordering.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.FOV.html">FOV</a></h4>
+      <section><p>Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).
+It can calculate the FOV with a finite or infinite max radius, and can use a variety of
+radius types, as specified in Radius class. It also supports both 360 degree FOV and an
+angle-restricted (directional) FOV. One may access this class like a 2D array of doubles
+(FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the
+corresponding map grid coordinate is at maximum visibility, and 0.0 means the corresponding
+coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect
+to radius as distance from the center increases.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IDGenerator.html">IDGenerator</a></h4>
+      <section><p>Class designed as a helper for situations where you need to generate and assign a unique
+integer to each instance of a class, eg. for a class implementing IHasID (see that interface
+documentation for usage example). One may initialize it with a starting unsigned integer, or
+0 if none is specified. Then, every time one wants to use an integer, one should call
+UseID(), and use the one it returns. It is not thread-safe on its own -- if it needs to be,
+one might consider using a lock around any UseID calls.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs&lt;T&gt;</a></h4>
+      <section><p>Event args for spatial map events pertaining to an item (item added, item removed, etc.)</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs&lt;T&gt;</a></h4>
+      <section><p>Event args for SpatialMap's ItemMoved event.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p>ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects,
+with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to
+allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be
+a reference type, and their Layer value MUST NOT change while they are in the data structure.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.LayerMasker.html">LayerMasker</a></h4>
+      <section><p>Allows convenient interpretation and creation of layer masks (bit-masks) mask layers
+represented by integers [0-NumberOfLayers - 1].</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Lines.html">Lines</a></h4>
+      <section><p>Provides implementations of various (line-drawing) algorithms for generating points closest
+to a line between two points on a grid.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MathHelpers.html">MathHelpers</a></h4>
+      <section><p>Static class consisting of mathematical &quot;helper&quot; functions and constants -- things like angle
+unit conversions, and other helpful functions.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MultiSpatialMap-1.html">MultiSpatialMap&lt;T&gt;</a></h4>
+      <section><p>See SpatialMap documentation -- similar in principle. However, this implementation allows
+multiple items to exist at one point in the SpatialMap, in exchange for the loss of the
+convenience functions like GetItem vs GetItems, as well as potential performance differences
+(although unless the number of objects at any given location is large, the performance is
+asymptotically the same).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Radius.html">Radius</a></h4>
+      <section><p>Class representing different radius types. Similar in architecture to Coord in architecture
+-- it cannot be instantiated. Instead it simply has pre-allocated static variables for each
+type of radius, that should be used whenever a variable of type Radius is required.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></h4>
+      <section><p>Class capable of getting all unique positions inside of a given radius and (optional) bounds.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a></h4>
+      <section><p>Designed as an more efficient data structure for recording objects on a map. The simple
+version: if you're about to use a List to store a bunch of objects in your map, consider
+using this or MultiSpatialMap instead!</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Utility.html">Utility</a></h4>
+      <section><p>Static class full of miscellaneous helper methods.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="GoRogue.Coord.html">Coord</a></h4>
+      <section><p>2d coordinate class. You cannot create instances of this class using a constructor --
+instead, use the Get function to create instances. Also provides numerous static functions to
+deal with grid/Coord-related math, operations, etc.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></h4>
+      <section><p>Represents a rectangle in terms of grid squares. Provides numerous functions pertaining to area.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a></h4>
+      <section><p>Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
+you would implement this via a backing field of type ComponentContainer, which implements the logic for these functions.
+See that class's documentation for details of functionality.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IHasID.html">IHasID</a></h4>
+      <section><p>Interface for a class that has an ID, typically used for hashing purposes. The ID should be
+unique or close to unique over all instances of the class (for efficiency). Typical
+implementation could be simply random-genning the ID, or for completely unique IDs can
+involve using an IDGenerator, potentially as follows: <example><p>
+<pre><code>class SomeClass : IHasID
+{
+private static IDGenerator generator = new IDGenerator();
+public int ID { get; private set; }
+/// public SomeClass(...)
+{
+ID = generator.UseID();
+}
+}</code></pre>
+<p></example> A class that wishes to be able to have these IDs serialized and the state resumed
+later might have to do something more advanced than a static variable (say, a &quot;global&quot; array
+of generators whose states are read in from a file at the start of the game), but the
+principle would remain the same. Interface is used for SpatialMap to work correctly, and as
+well in general provides a convenient way to hash entities that implement this interface.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a></h4>
+      <section><p>Interface to be implemented by objects that will be used in LayeredSpatialMap/Map classes.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyDisjointSet.html">IReadOnlyDisjointSet</a></h4>
+      <section><p>Basic read-only representation of a Disjoint set data structure. Assumes it is holding
+integers between 0 and size - 1.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyFOV.html">IReadOnlyFOV</a></h4>
+      <section><p>Read-only interface of the FOV class.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p>Read-only interface for LayeredSpatialMap -- useful for exposing LayeredSpatialMap instances
+as read-only properties.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html">IReadOnlyRadiusAreaProvider</a></h4>
+      <section><p>Read-only interface of a RadiusAreaProvider.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap&lt;T&gt;</a></h4>
+      <section><p>See ISpatialMap documentation. Similar in principle to the C# standard
+IReadOnlyList/IReadOnlyCollection interface. Simply exposes only those functions of the
+ISpatialMap interface that do not allow direct modification of the data (eg.
+adding/moving/removing items). This can allow for direct exposure of an ISpatialMap as a
+property of type IReadOnlySpatialMap, without allowing such an exposure to break data
+encapsulation principles of something like a game map.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a></h4>
+      <section><p>General interface for a data structure that records objects on a map.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ISpatialTuple-1.html">ISpatialTuple&lt;T&gt;</a></h4>
+      <section><p>Interface specifying return type for item-location pairs in a spatial map implementation.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="GoRogue.AdjacencyRule.Types.html">AdjacencyRule.Types</a></h4>
+      <section><p>Enum representing AdjacencyRule types. Useful for easy mapping of AdjacencyRule types to
+a primitive type (for cases like a switch statement).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Direction.Types.html">Direction.Types</a></h4>
+      <section><p>Enum representing Direction types. Useful for easy mapping of Direction types to a
+primitive type (for cases like a switch statement).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Distance.Types.html">Distance.Types</a></h4>
+      <section><p>Enum for types used under the hood in Direction classes -- allows for convenient switch
+statements to be used with respect to directions.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Lines.Algorithm.html">Lines.Algorithm</a></h4>
+      <section><p>Various supported line-drawing algorithms.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Radius.Types.html">Radius.Types</a></h4>
+      <section><p>Enum representing Radius types. Useful for easy mapping of radius types to a primitive
+type (for cases like a switch statement).</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

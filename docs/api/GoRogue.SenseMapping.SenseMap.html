@@ -1,0 +1,954 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class SenseMap
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class SenseMap
+   ">
+    <meta name="generator" content="docfx 2.40.11.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.SenseMapping.SenseMap">
+  
+  
+  <h1 id="GoRogue_SenseMapping_SenseMap" data-uid="GoRogue.SenseMapping.SenseMap" class="text-break">Class SenseMap
+  </h1>
+  <div class="markdown level0 summary"><p>Class responsible for calculating a map for senses (sound, light, etc). Anything that has a
+resistance map, where 1.0 is completely impenetrable, and 0.0 is no resistance at all, can
+use this system. Typically used for FOV, however can also be used for sound maps, etc.
+Supports a few different types of spreading mechanics, including every one in the SourceType
+enum. Included in these is FOV/FOV-style shadowcasting. This will be much faster than ripple
+variations. Once one calls Calculate, one can use Coords, or x and y values, to access this
+class like an array. The double one gets back will be the &quot;sensory value&quot;. This is a number
+between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the
+sources being light, for example), and 0.0 is no intensity at all.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">SenseMap</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="GoRogue.SenseMapping.IReadOnlySenseMap.html">IReadOnlySenseMap</a></div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">System.Double</span>&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+    <div><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Double</span>&gt;</div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.SenseMapping.html">GoRogue.SenseMapping</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_SenseMapping_SenseMap_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SenseMap : IReadOnlySenseMap, IEnumerable&lt;double&gt;, IEnumerable, IMapView&lt;double&gt;</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap__ctor_GoRogue_MapViews_IMapView_System_Double__.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Double%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L43">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap__ctor_" data-uid="GoRogue.SenseMapping.SenseMap.#ctor*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap__ctor_GoRogue_MapViews_IMapView_System_Double__" data-uid="GoRogue.SenseMapping.SenseMap.#ctor(GoRogue.MapViews.IMapView{System.Double})">SenseMap(IMapView&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructor. Takes the resistance map to use for calculations.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public SenseMap(IMapView&lt;double&gt; resMap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">resMap</span></td>
+        <td><p>The resistance map to use for calculations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_CurrentSenseMap.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.CurrentSenseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L60">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_CurrentSenseMap_" data-uid="GoRogue.SenseMapping.SenseMap.CurrentSenseMap*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_CurrentSenseMap" data-uid="GoRogue.SenseMapping.SenseMap.CurrentSenseMap">CurrentSenseMap</h4>
+  <div class="markdown level1 summary"><p>IEnumerable of only positions currently &quot;in&quot; the SenseMap, eg. all positions that have a
+value other than 0.0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; CurrentSenseMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Height.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L65">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Height_" data-uid="GoRogue.SenseMapping.SenseMap.Height*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Height" data-uid="GoRogue.SenseMapping.SenseMap.Height">Height</h4>
+  <div class="markdown level1 summary"><p>Height of sense map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Height { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L101">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Item_" data-uid="GoRogue.SenseMapping.SenseMap.Item*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Item_GoRogue_Coord_" data-uid="GoRogue.SenseMapping.SenseMap.Item(GoRogue.Coord)">Item[Coord]</h4>
+  <div class="markdown level1 summary"><p>Array-style indexer that takes a Coord as the index. Because of this function, given a
+SenseMap called mySenseMap, you may call mySenseMap[Coord.Get(1, 3)] to access the
+&quot;sensory value&quot; at (1, 3).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[Coord pos] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">pos</span></td>
+        <td><p>Position to get the sensory value for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The &quot;sensory value&quot; at the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L92">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Item_" data-uid="GoRogue.SenseMapping.SenseMap.Item*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Item_System_Int32_" data-uid="GoRogue.SenseMapping.SenseMap.Item(System.Int32)">Item[Int32]</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[int index1D] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">index1D</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L113">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Item_" data-uid="GoRogue.SenseMapping.SenseMap.Item*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Item_System_Int32_System_Int32_" data-uid="GoRogue.SenseMapping.SenseMap.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
+  <div class="markdown level1 summary"><p>Array-style indexer that takes an (x, y) value as the index. Similarly to the Coord
+indexer, you may call mySenseMap[1, 3] to get the &quot;sensory value&quot; at 1, 3.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double this[int x, int y] { get; }</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>X-coordinate to retrieve the sensory value for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Y-Coordinate to retrieve the sensory value for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><p>The sensory value at (x, y)</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_NewlyInSenseMap.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.NewlyInSenseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L72">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_NewlyInSenseMap_" data-uid="GoRogue.SenseMapping.SenseMap.NewlyInSenseMap*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_NewlyInSenseMap" data-uid="GoRogue.SenseMapping.SenseMap.NewlyInSenseMap">NewlyInSenseMap</h4>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that DO have a non-zero value in the sense map as of the most
+current Calculate call, but DID NOT have a non-zero value after the previous time
+Calculate was called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NewlyInSenseMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_NewlyOutOfSenseMap.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.NewlyOutOfSenseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L79">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_NewlyOutOfSenseMap_" data-uid="GoRogue.SenseMapping.SenseMap.NewlyOutOfSenseMap*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_NewlyOutOfSenseMap" data-uid="GoRogue.SenseMapping.SenseMap.NewlyOutOfSenseMap">NewlyOutOfSenseMap</h4>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the
+most current Calculate call, but DID have a non-zero value after the previous time
+Calculate was called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NewlyOutOfSenseMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_SenseSources.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.SenseSources%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L85">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_SenseSources_" data-uid="GoRogue.SenseMapping.SenseMap.SenseSources*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_SenseSources" data-uid="GoRogue.SenseMapping.SenseMap.SenseSources">SenseSources</h4>
+  <div class="markdown level1 summary"><p>Read-only list of all sources currently taken into account. Some may have their enabled
+flag set to false, so all of these may or may not be counted when Calculate is called.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;SenseSource&gt; SenseSources { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="GoRogue.SenseMapping.SenseSource.html">SenseSource</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Width.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L90">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Width_" data-uid="GoRogue.SenseMapping.SenseMap.Width*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Width" data-uid="GoRogue.SenseMapping.SenseMap.Width">Width</h4>
+  <div class="markdown level1 summary"><p>Width of sense map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Width { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_AddSenseSource_GoRogue_SenseMapping_SenseSource_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.AddSenseSource(GoRogue.SenseMapping.SenseSource)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L123">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_AddSenseSource_" data-uid="GoRogue.SenseMapping.SenseMap.AddSenseSource*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_AddSenseSource_GoRogue_SenseMapping_SenseSource_" data-uid="GoRogue.SenseMapping.SenseMap.AddSenseSource(GoRogue.SenseMapping.SenseSource)">AddSenseSource(SenseSource)</h4>
+  <div class="markdown level1 summary"><p>Adds the given SenseSource to the list of sources. If the source has its
+SenseSource.Enabled flag set when Calculate is next called, then this will be used as a source.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void AddSenseSource(SenseSource senseSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.SenseMapping.SenseSource.html">SenseSource</a></td>
+        <td><span class="parametername">senseSource</span></td>
+        <td><p>The &quot;source&quot; to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L133">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_AsReadOnly_" data-uid="GoRogue.SenseMapping.SenseMap.AsReadOnly*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_AsReadOnly" data-uid="GoRogue.SenseMapping.SenseMap.AsReadOnly">AsReadOnly()</h4>
+  <div class="markdown level1 summary"><p>Returns a read-only representation of the SenseMap.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlySenseMap AsReadOnly()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.SenseMapping.IReadOnlySenseMap.html">IReadOnlySenseMap</a></td>
+        <td><p>This SenseMap object as IReadOnlySenseMap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_Calculate.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.Calculate%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L140">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_Calculate_" data-uid="GoRogue.SenseMapping.SenseMap.Calculate*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_Calculate" data-uid="GoRogue.SenseMapping.SenseMap.Calculate">Calculate()</h4>
+  <div class="markdown level1 summary"><p>Function to make it do things. For each enabled source in the source list, it calculates
+the sense map, and puts them all together when this function is called. Sensory values
+are capped at 1.0 automatically.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Calculate()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_GetEnumerator.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L174">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_GetEnumerator_" data-uid="GoRogue.SenseMapping.SenseMap.GetEnumerator*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_GetEnumerator" data-uid="GoRogue.SenseMapping.SenseMap.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Enumerator, in case you want to use this as a list of doubles.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;double&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><p>Enumerable of doubles (the sensory values).</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_RemoveSenseSource_GoRogue_SenseMapping_SenseSource_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.RemoveSenseSource(GoRogue.SenseMapping.SenseSource)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L253">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_RemoveSenseSource_" data-uid="GoRogue.SenseMapping.SenseMap.RemoveSenseSource*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_RemoveSenseSource_GoRogue_SenseMapping_SenseSource_" data-uid="GoRogue.SenseMapping.SenseMap.RemoveSenseSource(GoRogue.SenseMapping.SenseSource)">RemoveSenseSource(SenseSource)</h4>
+  <div class="markdown level1 summary"><p>Removes the given source from the list of sources. This would typically be used when the
+source is destroyed, expired, or otherwise removed from the map. For temporary disabling,
+it is better to use the SenseSource.Enabled flag.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveSenseSource(SenseSource senseSource)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.SenseMapping.SenseSource.html">SenseSource</a></td>
+        <td><span class="parametername">senseSource</span></td>
+        <td><p>The SenseSource to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_ToString.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L229">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_ToString_" data-uid="GoRogue.SenseMapping.SenseMap.ToString*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_ToString" data-uid="GoRogue.SenseMapping.SenseMap.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map, where any location not in the SenseMap is
+represented by a '-' character, any position that is the center of some source is
+represented by a 'C' character, and any position that has a non-zero value but is not a
+center is represented by an 'S'.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A (multi-line) string representation of the SenseMap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_ToString_System_Char_System_Char_System_Char_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.ToString(System.Char%2CSystem.Char%2CSystem.Char)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L198">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_ToString_" data-uid="GoRogue.SenseMapping.SenseMap.ToString*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_ToString_System_Char_System_Char_System_Char_" data-uid="GoRogue.SenseMapping.SenseMap.ToString(System.Char,System.Char,System.Char)">ToString(Char, Char, Char)</h4>
+  <div class="markdown level1 summary"><p>ToString that customizes the characters used to represent the map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Char</span></td>
+        <td><span class="parametername">normal</span></td>
+        <td><p>The character used for any location not in the SenseMap.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Char</span></td>
+        <td><span class="parametername">center</span></td>
+        <td><p>The character used for any location that is the center-point of a source.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Char</span></td>
+        <td><span class="parametername">sourceValue</span></td>
+        <td><p>The character used for any location that is in range of a SenseSource, but not a center point.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>The string representation of the SenseMap, using the specified characters.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_ToString_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.ToString(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L239">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_ToString_" data-uid="GoRogue.SenseMapping.SenseMap.ToString*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_ToString_System_Int32_" data-uid="GoRogue.SenseMapping.SenseMap.ToString(System.Int32)">ToString(Int32)</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map, with the actual values in the senseMap,
+rounded to the given number of decimal places.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(int decimalPlaces)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">decimalPlaces</span></td>
+        <td><p>The number of decimal places to round to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of the map, rounded to the given number of decimal places.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap_System_Collections_IEnumerable_GetEnumerator.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap.System%23Collections%23IEnumerable%23GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L245">View Source</a>
+  </span>
+  <a id="GoRogue_SenseMapping_SenseMap_System_Collections_IEnumerable_GetEnumerator_" data-uid="GoRogue.SenseMapping.SenseMap.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="GoRogue_SenseMapping_SenseMap_System_Collections_IEnumerable_GetEnumerator" data-uid="GoRogue.SenseMapping.SenseMap.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Generic enumerator.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerator</span></td>
+        <td><p>Enumerator for looping.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="GoRogue.SenseMapping.IReadOnlySenseMap.html">IReadOnlySenseMap</a>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String_">Utility.ExtendToString&lt;T&gt;(IEnumerable&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Bounds__1_GoRogue_MapViews_IMapView___0__">IMapViewExtensions.Bounds&lt;T&gt;(IMapView&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__System_Int32_System_Int32_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Int32, Int32)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__GoRogue_Coord_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Coord)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_Int32_System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, Int32, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Positions__1_GoRogue_MapViews_IMapView___0__">IMapViewExtensions.Positions&lt;T&gt;(IMapView&lt;T&gt;)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0____0_Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, T, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Collections_Generic_IEnumerable___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IEnumerable&lt;T&gt;, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Collections_Generic_HashSet___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, HashSet&lt;T&gt;, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator___0___">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator, T[])</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseMap.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseMap.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
