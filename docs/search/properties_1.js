@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['basemap',['BaseMap',['../class_go_rogue_1_1_map_views_1_1_settable_translation_map.html#a085f51a15eb7a117194eb3553f03a92c',1,'GoRogue.MapViews.SettableTranslationMap.BaseMap()'],['../class_go_rogue_1_1_map_views_1_1_translation_map.html#ac57d28f13ba43776ca51843f84cd1f83',1,'GoRogue.MapViews.TranslationMap.BaseMap()'],['../class_go_rogue_1_1_pathing_1_1_goal_map.html#ab2a8148dd4ea42a71c10a2b5211a5b69',1,'GoRogue.Pathing.GoalMap.BaseMap()']]],
-  ['booleanfov',['BooleanFOV',['../class_go_rogue_1_1_f_o_v.html#af6db7112e1359592ed78a7ba0027abf3',1,'GoRogue.FOV.BooleanFOV()'],['../interface_go_rogue_1_1_i_read_only_f_o_v.html#a8080d5a17a4a1af28419b451860342d5',1,'GoRogue.IReadOnlyFOV.BooleanFOV()']]],
-  ['boundingbox',['BoundingBox',['../class_go_rogue_1_1_bounded_rectangle.html#a50540411662ca30825e5f429ab7b289d',1,'GoRogue::BoundedRectangle']]],
-  ['bounds',['Bounds',['../interface_go_rogue_1_1_i_read_only_radius_area_provider.html#aa2aff814e6ed2f5355a0a335710fe2b5',1,'GoRogue.IReadOnlyRadiusAreaProvider.Bounds()'],['../interface_go_rogue_1_1_map_generation_1_1_i_read_only_map_area.html#a8c181052b4118539af578e5e97997c12',1,'GoRogue.MapGeneration.IReadOnlyMapArea.Bounds()'],['../class_go_rogue_1_1_map_generation_1_1_map_area.html#a966772940c4271c3d42803262cbcd8eb',1,'GoRogue.MapGeneration.MapArea.Bounds()'],['../class_go_rogue_1_1_radius_area_provider.html#af88f308d99731dfc82fb26e123b4c6d9',1,'GoRogue.RadiusAreaProvider.Bounds()']]]
-];

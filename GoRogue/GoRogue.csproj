@@ -2,13 +2,13 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>GoRogue</PackageId>
-    <PackageVersion>2.0.0-pre11</PackageVersion>
+    <PackageVersion>2.0.0</PackageVersion>
     <Authors>Christopher Ridley</Authors>
     <Description>Roguelike/2D game utility library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Modified Map fov calculation functions to be virtual.  Added SourceLink and snuget symbols package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Numerous breaking changes and new features.  See https://chris3606.github.io/GoRogue/articles/1-to-2-upgrade-guide.html for a full changelog/upgrade guide.</PackageReleaseNotes>
     <Copyright>Copyright 2019 Christopher Ridley.  All rights reserved.</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
@@ -29,6 +29,9 @@
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
 	<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
   </Target>
+  <ItemGroup>
+    <None Include="readme.txt" Pack="true" PackagePath="." />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="InheritDoc" Version="2.0.2" PrivateAssets="All">
       <NoWarn>NU1701</NoWarn>
