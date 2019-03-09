@@ -3,20 +3,20 @@
 namespace GoRogue.MapGeneration.Connectors
 {
 	/// <summary>
-	/// Point selector that selects the two points from the MapAreas that are closest to each other
+	/// Point selector that selects the two points from the <see cref="MapArea"/> instances that are closest to each other,
 	/// according to the given distance calculation.
 	/// </summary>
 	public class ClosestConnectionPointSelector : IAreaConnectionPointSelector
 	{
 		/// <summary>
-		/// Distance calculation to use to determine closeness.
+		/// <see cref="Distance"/> calculation to use to determine closeness.
 		/// </summary>
 		public Distance DistanceCalculation { get; }
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="distanceCalculation">Distance calculation to use to determine closeness.</param>
+		/// <param name="distanceCalculation"><see cref="Distance"/> calculation to use to determine closeness.</param>
 		public ClosestConnectionPointSelector(Distance distanceCalculation)
 		{
 			DistanceCalculation = distanceCalculation;
@@ -24,14 +24,18 @@ namespace GoRogue.MapGeneration.Connectors
 
 		/// <summary>
 		/// Determines the two points in the given map areas that are closest to each other, and returns
-		/// them as a tuple of two Coords.  The first Coord is the position in area1 to use, the second
-		/// Coord is the position in area2 to use.
+		/// them as a tuple of two positions.  The first position is the position in <paramref name="area1"/>to use,
+		/// and the second is the position in <paramref name="area2"/> to use.
 		/// </summary>
-		/// <param name="area1">First MapArea to connect.</param>
-		/// <param name="area2">Second MapArea to connect.</param>
+		/// <remarks>
+		/// This algorithm can be relatively time-complex -- O(m*n) where m is the number of coordinates in area1, and n
+		/// is the number of coordintes in area2.
+		/// </remarks>
+		/// <param name="area1">First <see cref="MapArea"/> to connect.</param>
+		/// <param name="area2">Second <see cref="MapArea"/> to connect.</param>
 		/// <returns>
-		/// A tuple containing the coordinates from each MapArea to connect -- the first item in the
-		/// tuple is the Coord in area1, the second is the Coord in area2.
+		/// A tuple containing the coordinates from each <see cref="MapArea"/> to connect -- the first item in the
+		/// tuple is the position in <paramref name="area1"/>, the second is the position in <paramref name="area2"/>.
 		/// </returns>
 		public Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
 		{

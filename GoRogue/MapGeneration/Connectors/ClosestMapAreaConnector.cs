@@ -6,21 +6,20 @@ namespace GoRogue.MapGeneration.Connectors
 {
 	/// <summary>
 	/// Implements a connection algorithm that connects all unique map areas in the given map by
-	/// connecting each area with the one closest to it.
+	/// connecting each area with the one closest to it, based on closeness of the area's center points.
 	/// </summary>
 	/// <remarks>
 	/// The algorithm functions by first finding all unique areas in the map given by using
-	/// MapAreaFinder.MapAreas. Then, we iterate through each area, find the closest area that is not
-	/// already conencted to the current area, and create a tunnel between the two. Distance between
-	/// to areas is measured as the distance between the center point of the bounding boxes of those
-	/// areas. /// Points to connect two areas, as well as method used to create a tunnel between
-	/// those two points, are selected via specified parameters.
+	/// <see cref="MapAreaFinder.MapAreas"/>. Then, we iterate through each area, find the closest area that is not
+	/// already conencted to the current area.  Distance between to areas is measured as the distance between the
+	/// center point of the bounding boxes of those areas. Points to connect two areas, as well as method used to create
+	/// a tunnel between those two points, are selected via specified parameters.
 	/// </remarks>
 	static public class ClosestMapAreaConnector
 	{
 		/// <summary>
 		/// Connects the given map using the algorithm described in the class description.  Map areas
-		/// are automatically determined via MapAreaFinder
+		/// are automatically determined using a <see cref="MapAreaFinder"/>.
 		/// </summary>
 		/// <param name="map">The map to connect.</param>
 		/// <param name="distanceCalc">The distance calculation that defines distance/neighbors.</param>
@@ -28,9 +27,8 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The area connection strategy to use. Not all methods function on maps with concave areas
 		/// -- see respective class documentation for details.
 		/// </param>
-		/// ///
 		/// <param name="tunnelCreator">
-		/// The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
 		static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
@@ -51,7 +49,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </param>
 		/// ///
 		/// <param name="tunnelCreator">
-		/// The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
 		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<MapArea> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)

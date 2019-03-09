@@ -16,7 +16,7 @@ namespace GoRogue.MapGeneration
 		/// <summary>
 		/// Generates a cave-like map using the cellular automata algorithm here:
 		/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
-		/// See CellularAutomataAreaGenerator for details. This algorithm is identical, except that
+		/// See <see cref="Generators.CellularAutomataAreaGenerator"/> for details. This algorithm is identical, except that
 		/// it connects the areas automatically afterward.
 		/// </summary>
 		/// <param name="map"></param>
@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration
 		/// <param name="fillProbability"></param>
 		/// <param name="totalIterations"></param>
 		/// <param name="cutoffBigAreaFill"></param>
-		/// <returns></returns>
+		/// <returns>List of areas representing the areas of the map before they were connected.</returns>
 		public static IEnumerable<MapArea> GenerateCellularAutomataMap(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40,
 																	   int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
@@ -45,9 +45,10 @@ namespace GoRogue.MapGeneration
 		/// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
 		/// </summary>
 		/// <remarks>
-		/// First, non-overlapping rooms are randomly placed using RoomGenerator. Then, a maze is
-		/// generated into the remaining space using a MazeGenerator. Those mazes are then connected.  The rooms are
-		/// connected to the maze using a RoomDoorConnector, and finally, small dead ends are trimmed out.
+		/// First, non-overlapping rooms are randomly placed using <see cref="Generators.RoomsGenerator"/>. Then, a maze is
+		/// generated into the remaining space using a <see cref="Generators.MazeGenerator"/>. Those mazes are then connected.
+		/// The rooms are connected to the maze using a <see cref="Connectors.RoomDoorConnector"/>, and finally, small dead ends
+		/// are trimmed out.
 		/// </remarks>
 		/// <param name="map">The map to set values to.</param>
 		/// <param name="minRooms">Minimum amount of rooms to generate.</param>
@@ -104,9 +105,10 @@ namespace GoRogue.MapGeneration
 		/// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
 		/// </summary>
 		/// <remarks>
-		/// First, non-overlapping rooms are randomly placed using RoomGenerator. Then, a maze is
-		/// generated into the remaining space using a MazeGenerator. Those mazes are then connected.  The rooms are
-		/// connected to the maze using a RoomDoorConnector, and finally, small dead ends are trimmed out.
+		/// First, non-overlapping rooms are randomly placed using <see cref="Generators.RoomsGenerator"/>. Then, a maze is
+		/// generated into the remaining space using a <see cref="Generators.MazeGenerator"/>. Those mazes are then connected.
+		/// The rooms are connected to the maze using a <see cref="Connectors.RoomDoorConnector"/>, and finally, small dead ends
+		/// are trimmed out.
 		/// </remarks>
 		/// <param name="map">The map to set values to.</param>
 		/// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>

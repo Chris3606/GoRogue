@@ -4,17 +4,17 @@ namespace GoRogue.MapGeneration.Connectors
 {
 	/// <summary>
 	/// Implements a tunnel creation algorithm that sets as walkable a direct line between the two
-	/// points. In the case that MAHNATTAN distance is being used, the line is calculated via the
-	/// Coord.CardinalPositionOnLine function. Otherwise, the line is calculated using
-	/// Coord.PositionsOnLine (brensham's).
+	/// points. In the case that <see cref="Distance.MANHATTAN"/> is being used, the line is calculated via the
+	/// <see cref="Lines.Algorithm.ORTHO"/> algorithm.  Otherwise, the line is calculated using
+	/// <see cref="Lines.Algorithm.BRESENHAM"/>.
 	/// </summary>
 	public class DirectLineTunnelCreator : ITunnelCreator
 	{
 		private AdjacencyRule adjacencyRule;
 
 		/// <summary>
-		/// Constructor. Takes the distance calculation to use, which determines whether brensham's
-		/// or CardinalPositionOnLine is used to create the tunnel.
+		/// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.ORTHO"/>
+		/// or <see cref="Lines.Algorithm.BRESENHAM"/> is used to create the tunnel.
 		/// </summary>
 		/// <param name="adjacencyRule">
 		/// Method of adjacency to respect when creating tunnels. Cannot be diagonal.

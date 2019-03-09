@@ -6,7 +6,7 @@ namespace GoRogue.MapGeneration.Connectors
 {
 	/// <summary>
 	/// Implements a the selection algorithm that simply selects random points from the given
-	/// MapArea's positions lists, using the RNG specified, or the default rng if null is given.
+	/// areas' positions lists, using the RNG specified, or the default rng if null is given.
 	/// </summary>
 	public class RandomConnectionPointSelector : IAreaConnectionPointSelector
 	{
@@ -29,7 +29,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </summary>
 		/// <param name="area1">First map area to connect.</param>
 		/// <param name="area2">Second area to connect</param>
-		/// <returns>A tuple containing the selected Coords.</returns>
+		/// <returns>A tuple containing the selected positions.</returns>
 		public Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2) =>
 			new Tuple<Coord, Coord>(area1.Positions.RandomItem(rng), area2.Positions.RandomItem(rng));
 	}

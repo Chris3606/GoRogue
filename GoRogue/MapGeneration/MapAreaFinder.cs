@@ -9,7 +9,7 @@ namespace GoRogue.MapGeneration
 	/// area of the map.
 	/// </summary>
 	/// <remarks>
-	/// The class takes in an IMapView, where a value of true for a given position indicates it
+	/// The class takes in an <see cref="IMapView{Boolean}"/>, where a value of true for a given position indicates it
 	/// should be part of a map area, and false indicates it should not be part of any map area. In a
 	/// classic roguelike dungeon example, this might be a walkability map where floors return a
 	/// value of true and walls a value of false.
@@ -22,7 +22,7 @@ namespace GoRogue.MapGeneration
 		public AdjacencyRule AdjacencyMethod;
 
 		/// <summary>
-		/// IMapView indicating which cells should be considered part of a map area and which should not.
+		/// Map view indicating which cells should be considered part of a map area and which should not.
 		/// </summary>
 		public IMapView<bool> Map;
 
@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration
 		/// Constructor.
 		/// </summary>
 		/// <param name="map">
-		/// IMapView indicating which cells should be considered part of a map area and which should not.
+		/// Map view indicating which cells should be considered part of a map area and which should not.
 		/// </param>
 		/// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
 		public MapAreaFinder(IMapView<bool> map, AdjacencyRule adjacencyMethod)
@@ -43,12 +43,12 @@ namespace GoRogue.MapGeneration
 		}
 
 		/// <summary>
-		/// Convenience function that creates an MapAreaFinder and returns the result of that
-		/// MapAreaFinder's MapAreas function. Intended to be used for cases in which the area finder
+		/// Convenience function that creates a MapAreaFinder and returns the result of that
+		/// instances <see cref="MapAreas"/> function. Intended to be used for cases in which the area finder
 		/// will never be re-used.
 		/// </summary>
 		/// <param name="map">
-		/// IMapView indicating which cells should be considered part of a map area and which should not.
+		/// Map view indicating which cells should be considered part of a map area and which should not.
 		/// </param>
 		/// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
 		/// <returns>An IEnumerable of each (unique) map area.</returns>

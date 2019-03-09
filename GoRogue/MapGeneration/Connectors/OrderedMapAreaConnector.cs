@@ -7,14 +7,14 @@ using Troschuetz.Random;
 namespace GoRogue.MapGeneration.Connectors
 {
 	/// <summary>
-	/// Same as ClosestMapAreaConnector, but connects random rooms instead of determining the closest
-	/// one, or connects rooms in the order specified if you give it a list of MapAreas.
+	/// Same as <see cref="ClosestMapAreaConnector"/>, but connects random rooms instead of determining the closest
+	/// one, or connects rooms in the order specified if you give it a list of areas.
 	/// </summary>
 	static public class OrderedMapAreaConnector
 	{
 		/// <summary>
-		/// Connects the areas by determining all unique areas on the map given using a
-		/// MapAreaFinder, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that
+		/// Connects the areas by determining all unique areas on the map given using a <see cref="MapAreaFinder"/>,
+		/// and then, if <paramref name="randomizeOrder"/> is true, performing a Fisher Yates shuffle of that
 		/// list of areas found. It then simply connects areas adjacent to each other in that list,
 		/// using the methods specified to determine points within two areas to connect, and how to
 		/// create the tunnel between the two points.
@@ -25,17 +25,17 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </param>
 		/// <param name="areaConnector">
 		/// The method to use to determine the points from two areas to make a tunnel between, in
-		/// order to connect those two areas. If null is specified, a RandomConnectionPointSelector
+		/// order to connect those two areas. If null is specified, a <see cref="RandomConnectionPointSelector"/>
 		/// is used, that uses the RNG passed into this function.
 		/// </param>
 		/// <param name="tunnelCreator">
 		/// The tunnel creation strategy to use. If null is specified,
-		/// HorizontalVerticalTunnelCreator that utilizes the RNG passed into this function is used.
+		/// <see cref="HorizontalVerticalTunnelCreator"/> that utilizes the RNG passed into this function is used.
 		/// </param>
 		/// <param name="rng">The rng to use. If null is specified, the default rng is assumed.</param>
 		/// <param name="randomizeOrder">
 		/// Whether or not to randomize which room is connected to which -- if this is set to false,
-		/// they will be conencted in the exact order they are returned from the MapAreaFinder.
+		/// they will be conencted in the exact order they are returned from the <see cref="MapAreaFinder"/>.
 		/// </param>
 		static public void Connect(ISettableMapView<bool> map, AdjacencyRule adjacencyRule, IAreaConnectionPointSelector areaConnector = null,
 									ITunnelCreator tunnelCreator = null, IGenerator rng = null, bool randomizeOrder = true)
@@ -63,12 +63,12 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </param>
 		/// <param name="areaConnector">
 		/// The method to use to determine the points from two areas to make a tunnel between, in
-		/// order to connect those two areas. If null is specified, a RandomConnectionPointSelector
+		/// order to connect those two areas. If null is specified, a <see cref="RandomConnectionPointSelector"/>
 		/// is used, that uses the default RNG.
 		/// </param>
 		/// <param name="tunnelCreator">
-		/// The tunnel creation strategy to use. If null is specified,
-		/// HorizontalVerticalTunnelCreator that utilizes the default RNG is used.
+		/// The tunnel creation strategy to use. If null is specified, a <see cref="HorizontalVerticalTunnelCreator"/>
+		/// that utilizes the default RNG is used.
 		/// </param>
 		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<IReadOnlyMapArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
 									ITunnelCreator tunnelCreator = null)

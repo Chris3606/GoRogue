@@ -56,11 +56,13 @@ namespace GoRogue.MapGeneration
 		public IReadOnlyList<Coord> Positions { get { return _positions.AsReadOnly(); } }
 
 		/// <summary>
-		/// Gets a MapArea containing all positions in area1, minus those that are in area2.
+		/// Gets a MapArea containing all positions in <paramref name="area1"/>, minus those that are in
+		/// <paramref name="area2"/>.
 		/// </summary>
 		/// <param name="area1">The first MapArea.</param>
 		/// <param name="area2">The second MapArea.</param>
-		/// <returns>A MapArea with exactly those positions in area1 that are NOT in area2.</returns>
+		/// <returns>A MapArea with exactly those positions in <paramref name="area1"/> that are NOT in
+		/// <paramref name="area2"/>.</returns>
 		public static MapArea GetDifference(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
 		{
 			var retVal = new MapArea();
@@ -77,11 +79,11 @@ namespace GoRogue.MapGeneration
 		}
 
 		/// <summary>
-		/// Gets a MapArea containing exactly those positions in both of the given MapAreas.
+		/// Gets a MapArea containing exactly those positions contained in both of the given MapAreas.
 		/// </summary>
 		/// <param name="area1">First MapArea.</param>
 		/// <param name="area2">Second MapArea.</param>
-		/// <returns>A MapArea containing exactly those positions in both of the given MapAreas.</returns>
+		/// <returns>A MapArea containing exactly those positions contained in both of the given MapAreas.</returns>
 		public static MapArea GetIntersection(IReadOnlyMapArea area1, IReadOnlyMapArea area2)
 		{
 			var retVal = new MapArea();
@@ -100,7 +102,7 @@ namespace GoRogue.MapGeneration
 		}
 
 		/// <summary>
-		/// Gets a new MapArea containing exactly every position in one or both given map areas.
+		/// Gets a new MapArea containing every position in one or both given map areas.
 		/// </summary>
 		/// <param name="area1">First MapArea.</param>
 		/// <param name="area2">Second MapArea.</param>
@@ -124,12 +126,12 @@ namespace GoRogue.MapGeneration
 		public static bool operator !=(MapArea lhs, MapArea rhs) => !(lhs == rhs);
 
 		/// <summary>
-		/// Creates a new MapArea with the Coords all shifted by the given vector (Coord).
+		/// Creates a new MapArea with the Coords all shifted by the given vector.
 		/// </summary>
 		/// <param name="lhs">MapArea.</param>
 		/// <param name="rhs">Coord (vector) to add.</param>
 		/// <returns>
-		/// A new MapArea with the Coords all shifted by the given amount in x and y directions.
+		/// A new MapArea with the positions all translated by the given amount in x and y directions.
 		/// </returns>
 		public static MapArea operator +(MapArea lhs, Coord rhs)
 		{
@@ -169,9 +171,12 @@ namespace GoRogue.MapGeneration
 
 		/// <summary>
 		/// Adds the given position to the list of points within the area if it is not already in the
-		/// list, or does nothing otherwise. Because the class uses a hash set internally to
-		/// determine what points have already been added, this is an average case O(1) operation.
+		/// list, or does nothing otherwise.
 		/// </summary>
+		/// <remarks>
+		/// Because the class uses a hash set internally to
+		/// determine what points have already been added, this is an average case O(1) operation.
+		/// </remarks>
 		/// <param name="position">The position to add.</param>
 		public void Add(Coord position)
 		{
@@ -210,9 +215,12 @@ namespace GoRogue.MapGeneration
 
 		/// <summary>
 		/// Adds the given position to the list of points within the area if it is not already in the
-		/// list, or does nothing otherwise. Because the class uses a hash set internally to
-		/// determine what points have already been added, this is an average case O(1) operation.
+		/// list, or does nothing otherwise.
 		/// </summary>
+		/// <remarks>
+		/// Because the class uses a hash set internally to
+		/// determine what points have already been added, this is an average case O(1) operation.
+		/// </remarks>
 		/// <param name="x">X-coordinate of the position to add.</param>
 		/// <param name="y">Y-coordinate of the position to add.</param>
 		public void Add(int x, int y) => Add(new Coord(x, y));
@@ -249,11 +257,11 @@ namespace GoRogue.MapGeneration
 		}
 
 		/// <summary>
-		/// Returns whether or not the given MapArea is completely contained within the current one.
+		/// Returns whether or not the given area is completely contained within the current one.
 		/// </summary>
-		/// <param name="area">MapArea to check.</param>
+		/// <param name="area">Area to check.</param>
 		/// <returns>
-		/// True if the given MapArea is completely contained within the current one, false otherwise.
+		/// True if the given area is completely contained within the current one, false otherwise.
 		/// </returns>
 		public bool Contains(IReadOnlyMapArea area)
 		{
@@ -291,11 +299,11 @@ namespace GoRogue.MapGeneration
 		/// <summary>
 		/// Returns whether or not the given map area intersects the current one. If you intend to
 		/// determine/use the exact intersection based on this return value, it is best to instead
-		/// call the MapArea.GetIntersection, and check the number of positions in the result (0 if
-		/// no intersection).
+		/// call the <see cref="MapArea.GetIntersection(IReadOnlyMapArea, IReadOnlyMapArea)"/>, and
+		/// check the number of positions in the result (0 if no intersection).
 		/// </summary>
-		/// <param name="area">The MapArea to check.</param>
-		/// <returns>True if the given MapArea intersects the current one, false otherwise.</returns>
+		/// <param name="area">The area to check.</param>
+		/// <returns>True if the given map area intersects the current one, false otherwise.</returns>
 		public bool Intersects(IReadOnlyMapArea area)
 		{
 			if (!area.Bounds.Intersects(Bounds))
@@ -320,19 +328,19 @@ namespace GoRogue.MapGeneration
 		/// <summary>
 		/// Gets a random position from the MapArea.
 		/// </summary>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>A random position from within the MapArea.</returns>
 		public Coord RandomPosition(IGenerator rng = null) => _positions.RandomItem(rng);
 
 		/// <summary>
-		/// Gets a random position from the MapArea for which the given selector returns true. Coords
+		/// Gets a random position from the MapArea for which the given selector returns true. Positions
 		/// are repeatedly selected until a valid one is found.
 		/// </summary>
 		/// <param name="selector">
 		/// A function that should return true for any coordinate that is a valid selection, and
 		/// false otherwise.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>
 		/// A random position from within the MapArea for which the selector given returns true.
 		/// </returns>
@@ -341,7 +349,7 @@ namespace GoRogue.MapGeneration
 		/// <summary>
 		/// Removes the given position specified from the MapArea. Particularly when the Remove
 		/// operation changes the bounds, this operation can be expensive, so if you must do multiple
-		/// Remove operations, it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
+		/// Remove operations, it would be best to group them into 1 using <see cref="Remove(IEnumerable{Coord})"/>.
 		/// </summary>
 		/// <param name="position">The position to remove.</param>
 		public void Remove(Coord position) => Remove(position.Yield());
@@ -401,14 +409,14 @@ namespace GoRogue.MapGeneration
 		/// <summary>
 		/// Removes the given position specified from the MapArea. Particularly when the Remove
 		/// operation changes the bounds, this operation can be expensive, so if you must do multiple
-		/// Remove operations, it would be best to group them into 1 using Remove(IEnumerable&lt;Coord&gt;).
+		/// Remove operations, it would be best to group them into 1 using <see cref="Remove(IEnumerable{Coord})"/>.
 		/// </summary>
 		/// <param name="x">X-coordinate of the position to remove.</param>
 		/// <param name="y">Y-coordinate of the position to remove.</param>
 		public void Remove(int x, int y) => Remove(new Coord(x, y));
 
 		/// <summary>
-		/// Removes all positions in the given MapArea from this one.
+		/// Removes all positions in the given map area from this one.
 		/// </summary>
 		/// <param name="area">Area containing positions to remove.</param>
 		public void Remove(IReadOnlyMapArea area) => Remove(area.Positions);

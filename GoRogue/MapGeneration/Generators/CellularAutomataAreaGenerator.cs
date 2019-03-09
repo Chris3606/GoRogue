@@ -8,7 +8,7 @@ namespace GoRogue.MapGeneration.Generators
 	/// <summary>
 	/// Implements a cellular automata genereation algorithm to add cave-like (unconnected) areas to
 	/// a map. A connection algorithm would be needed to connect these areas. For automatic
-	/// connection, see GoRogue.MapGeneration.QuickGenerators.CellularAutomata().
+	/// connection, see <see cref="QuickGenerators.GenerateCellularAutomataMap(ISettableMapView{bool}, IGenerator, int, int, int)"/>.
 	/// </summary>
 	/// <remarks>
 	/// Generates a map by randomly filling the map surface with floor or wall values (true and false
@@ -18,9 +18,8 @@ namespace GoRogue.MapGeneration.Generators
 	/// Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article
 	/// below:
 	/// http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels.
-	/// It is guaranteed that the "set" function of the ISettableMapView passed in will only be
-	/// called once per tile, unless the type is ArrayMap of bool, in which case the operation is
-	/// inexpensive and calling it multiples times costs little extra, and saves an internal allocation.
+	/// It is guaranteed that the "set" function of the map passed in will only be
+	/// called once per tile.
 	/// </remarks>
 	public static class CellularAutomataAreaGenerator
 	{
@@ -30,7 +29,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// </summary>
 		/// <param name="map">The map to fill with values when generate is called.</param>
 		/// <param name="rng">
-		/// The RNG to use to initially fill the map. If null is specified, the default RNG is used.
+		/// The RNG to use to initially fill the map. If null is specified, <see cref="SingletonRandom.DefaultRNG"/> is used.
 		/// </param>
 		/// <param name="fillProbability">
 		/// Represents the percent chance that a given cell will be a floor cell when the map is
