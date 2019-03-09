@@ -25,13 +25,13 @@ namespace GoRogue.DiceNotation
 		/// <summary>
 		/// Returns the maximum possible result of the dice expression.
 		/// </summary>
-		/// <returns>The minimum possible result of the dice expression.</returns>
+		/// <returns>The maximum possible result of the dice expression.</returns>
 		public int MaxRoll() => Roll(new MaxRandom());
 
 		/// <summary>
 		/// Returns the minimum possible result of the dice expression.
 		/// </summary>
-		/// <returns>The maximum possible result of the dice expression.</returns>
+		/// <returns>The minimum possible result of the dice expression.</returns>
 		public int MinRoll() => Roll(new MinRandom());
 
 		/// <summary>

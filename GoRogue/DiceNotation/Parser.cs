@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace GoRogue.DiceNotation
 {
 	/// <summary>
-	/// Default class for parsing a string representing a dice expression into an IDiceExpression instance.
+	/// Default class for parsing a string representing a dice expression into an <see cref="IDiceExpression"/> instance.
 	/// </summary>
 	public class Parser : IParser
 	{
@@ -21,15 +21,15 @@ namespace GoRogue.DiceNotation
 		};
 
 		/// <summary>
-		/// Parses the dice expression spcified into an IDiceExpression instance.
+		/// Parses the dice expression spcified into an <see cref="IDiceExpression"/> instance.
 		/// </summary>
 		/// <remarks>
 		/// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
-		/// degree necessary to produce the appropriate chain of ITerm instances.
+		/// degree necessary to produce the appropriate chain of <see cref="ITerm"/> instances.
 		/// </remarks>
 		/// <param name="expression">The expression to parse.</param>
 		/// <returns>
-		/// An IDiceExpression representing the given expression, that can "roll" the expression on command.
+		/// An <see cref="IDiceExpression"/> representing the given expression, that can "roll" the expression on command.
 		/// </returns>
 		public IDiceExpression Parse(string expression)
 		{

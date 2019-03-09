@@ -35,12 +35,12 @@ namespace GoRogue.DiceNotation.Terms
 		public IEnumerable<int> DiceResults { get => _diceResults; }
 
 		/// <summary>
-		/// The result of evaluating the Multiplicity term that was used during the last call to GetResult.
+		/// The result of evaluating the <see cref="Multiplicity"/> term that was used during the last call to <see cref="GetResult(IGenerator)"/>.
 		/// </summary>
 		public int LastMultiplicity { get; private set; }
 
 		/// <summary>
-		/// The result of evaluating the Sides term that was used during the last call to GetResult.
+		/// The result of evaluating the <see cref="Sides"/> term that was used during the last call to <see cref="GetResult(IGenerator)"/>.
 		/// </summary>
 		public int LastSidedness { get; private set; }
 

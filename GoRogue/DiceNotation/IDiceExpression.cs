@@ -3,7 +3,7 @@
 namespace GoRogue.DiceNotation
 {
 	/// <summary>
-	/// Interface for class representing a parsed dice expression. Returned by IParser implementations.
+	/// Interface for class representing a parsed dice expression. Returned by <see cref="IParser"/> implementations.
 	/// </summary>
 	public interface IDiceExpression
 	{
@@ -11,7 +11,7 @@ namespace GoRogue.DiceNotation
 		/// Returns the maximum possible result of the dice expression (the highest it could be).
 		/// </summary>
 		/// <remarks>
-		/// Typically this can be implemented by calling Roll and passing in a MaxRandom instance.
+		/// Typically this can be implemented by calling <see cref="Roll(IGenerator)"/> and passing in a <see cref="GoRogue.Random.MaxRandom"/> instance.
 		/// </remarks>
 		/// <returns>The maxiumum possible value that could be returned by this dice expression.</returns>
 		int MaxRoll();
@@ -20,7 +20,7 @@ namespace GoRogue.DiceNotation
 		/// Returns the minimum possible result of the dice expression (the lowest it could be).
 		/// </summary>
 		/// <remarks>
-		/// Typically this can be implemented by calling Roll and passing in a MinRandom instance.
+		/// Typically this can be implemented by calling <see cref="Roll(IGenerator)"/> and passing in a <see cref="GoRogue.Random.MinRandom"/> instance.
 		/// </remarks>
 		/// <returns>The miniumum possible value that could be returned by this dice expression.</returns>
 		int MinRoll();

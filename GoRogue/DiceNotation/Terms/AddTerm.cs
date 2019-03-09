@@ -32,7 +32,7 @@ namespace GoRogue.DiceNotation.Terms
 		/// Adds its two terms together, evaluating those two terms as necessary.
 		/// </summary>
 		/// <param name="rng">The rng to use, passed to other terms.</param>
-		/// <returns>The result of adding Term1 and Term2.</returns>
+		/// <returns>The result of adding <see cref="Term1"/> and <see cref="Term2"/>.</returns>
 		public int GetResult(IGenerator rng)
 		{
 			return Term1.GetResult(rng) + Term2.GetResult(rng);

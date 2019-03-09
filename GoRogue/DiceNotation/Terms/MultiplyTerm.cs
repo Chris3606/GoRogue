@@ -3,7 +3,7 @@
 namespace GoRogue.DiceNotation.Terms
 {
 	/// <summary>
-	/// Term representing the division operator -- multiplies Term1 and Term2.
+	/// Term representing the multiplication operator -- multiplies <see cref="Term1"/> and <see cref="Term2"/>.
 	/// </summary>
 	public class MultiplyTerm : ITerm
 	{
@@ -32,7 +32,7 @@ namespace GoRogue.DiceNotation.Terms
 		/// Multiplies the first term by the second, evaluating those two terms as necessary.
 		/// </summary>
 		/// <param name="rng">The rng to used -- passed to other terms.</param>
-		/// <returns>The result of evaluating Term1 * Term2.</returns>
+		/// <returns>The result of evaluating <see cref="Term1"/> * <see cref="Term2"/>.</returns>
 		public int GetResult(IGenerator rng)
 		{
 			return Term1.GetResult(rng) * Term2.GetResult(rng);
