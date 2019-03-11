@@ -10,7 +10,7 @@ namespace GoRogue.Pathing
 	/// (4-way vs. 8-way) used.
 	/// </summary>
 	/// <remarks>
-	/// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing them map. 
+	/// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map. 
 	/// Specifically, it takes an <see cref="IMapView{Boolean}"/>, where true indicates that a tile should be
 	/// considered walkable, and false indicates that a tile should be considered impassable.
 	/// 
