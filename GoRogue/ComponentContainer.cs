@@ -6,14 +6,14 @@ namespace GoRogue
 	/// <summary>
 	/// A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either give your
 	/// object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access components,
-	/// you may either inherit from ComponentContainer, or have your object implement IHasComponents via a backing field of type
-	/// ComponentContainer.
+	/// you may either inherit from ComponentContainer, or have your object implement <see cref="IHasComponents"/>via a backing field of
+	/// type ComponentContainer.
 	/// </summary>
 	/// <remarks>
 	/// The component system is designed to be as efficient as possible at run-time for accessing components and determining if a
 	/// ComponentContainer possesses one or more given types of components, and as well remains flexible and type-safe.
-	/// Components may be of any type, although it is recommended that you _not_ use value-types.  The system also remains type-safe, even when
-	/// the components added implement interfaces or have an inheritance heirarchy.
+	/// Components may be of any type, although it is recommended that you _not_ use value-types.  The system also remains accurate
+	/// with respect to types, even when the components added implement interfaces or have an inheritance heirarchy.
 	/// 
 	/// For example, suppose we have the following structure:
 	/// <code>
@@ -128,8 +128,8 @@ namespace GoRogue
 		public bool HasComponent<T>() => HasComponents(typeof(T));
 
 		/// <summary>
-		/// Gets the first component of type T that was attached to the given object, or default(T) if no component of that type has
-		/// been added.
+		/// Gets the first component of type T found, or default(T) if no component of that type has been added
+		/// to the object.
 		/// </summary>
 		/// <typeparam name="T">Type of component to retrieve.</typeparam>
 		/// <returns>The first component of Type T that was added to the ComponentContainer, or default(T) if no
@@ -147,7 +147,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Gets all components of type T that was attached to the given object.
+		/// Gets all components of type T that are attached to the given object.
 		/// </summary>
 		/// <typeparam name="T">Type of components to retrieve.</typeparam>
 		/// <returns>All components of Type T that are in the ComponentContainer.</returns>
