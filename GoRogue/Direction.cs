@@ -5,16 +5,22 @@ using DrawingPoint = System.Drawing.Point;
 namespace GoRogue
 {
 	/// <summary>
-	/// Utility class to handle Directions on a grid map. The built-in variables hold the dx and dy
-	/// for that direction, at unit scale.
+	/// Represents the concept of a "direction" on a grid, and "defines" the coordinate plane GoRogue
+	/// uses via the <see cref="Direction.YIncreasesUpward"/> flag. Interacts with Coord and other
+	/// supported library's equivalent types to allow easy translation of positions in a direction, and
+	/// contains numerous helper functions for retrieving directions in various orders, getting direction
+	/// closest to a line, etc.
 	/// </summary>
 	/// <remarks>
-	/// It also contains functions to provide ways to iterate over the directions in common orders --
-	/// for example, it contains a function that returns an Enumerable of all the directions in
-	/// clockwise order, as well as a similar function for cardinal directions in a clockwise order,
-	/// among many others. It is also possible to invert the y coordinates (where UP is 0, 1 and DOWN
-	/// is 0, -1, etc). Direction instances can also be added to Coords to produce the coordinate
-	/// directly adjacent in the direction added.
+	/// The static <see cref="Direction.YIncreasesUpward"/> flag defines the way that many GoRogue algorithms
+	/// interpret the coordinate plane.  By default, this flag is false, meaning that the y-value of positions
+	/// is assumed to DECREASE as you proceed in the direction defined by <see cref="Direction.UP"/>, and
+	/// increase as you go downward.  If the coordinate plane is displayed on the screen, the origin would be
+	/// the top left corner.  This default setting matches the typical console/computer graphic definition of the
+	/// coordinate plane.  Setting the flag to true inverts this, so that the y-value of positions INCREASES
+	/// as you proceed in the direction defined by <see cref="Direction.UP"/>.  This places the origin in the bottom
+	/// left corner, and matches a typical mathmatical definition of a euclidean coordinate plane, as well as the scene
+	/// coordinate plane defined by Unity and other game engines.
 	/// </remarks>
 	public class Direction
 	{
@@ -47,53 +53,54 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Enum representing Direction types. Useful for easy mapping of Direction types to a
-		/// primitive type (for cases like a switch statement).
+		/// Enum representing Direction types. Each Direction instance has a <see cref="Type"/> field
+		/// which contains the corresponding value from this enum.  Useful for easy mapping of Direction
+		/// types to a primitive type (for cases like a switch statement).
 		/// </summary>
 		public enum Types
 		{
 			/// <summary>
-			/// Type for Direction.UP.
+			/// Type for <see cref="Direction.UP"/>.
 			/// </summary>
 			UP,
 
 			/// <summary>
-			/// Type for Direction.UP_RIGHT.
+			/// Type for <see cref="Direction.UP_RIGHT"/>.
 			/// </summary>
 			UP_RIGHT,
 
 			/// <summary>
-			/// Type for Direction.RIGHT.
+			/// Type for <see cref="Direction.RIGHT"/>.
 			/// </summary>
 			RIGHT,
 
 			/// <summary>
-			/// Type for Direction.DOWN_RIGHT.
+			/// Type for <see cref="Direction.DOWN_RIGHT"/>.
 			/// </summary>
 			DOWN_RIGHT,
 
 			/// <summary>
-			/// Type for Direction.DOWN.
+			/// Type for <see cref="Direction.DOWN"/>.
 			/// </summary>
 			DOWN,
 
 			/// <summary>
-			/// Type for Direction.DOWN_LEFT.
+			/// Type for <see cref="Direction.DOWN_LEFT"/>.
 			/// </summary>
 			DOWN_LEFT,
 
 			/// <summary>
-			/// Type for Direction.LEFT.
+			/// Type for <see cref="Direction.LEFT"/>.
 			/// </summary>
 			LEFT,
 
 			/// <summary>
-			/// Type for Direction.UP_LEFT.
+			/// Type for <see cref="Direction.UP_LEFT"/>.
 			/// </summary>
 			UP_LEFT,
 
 			/// <summary>
-			/// Type for Direction.NONE.
+			/// Type for <see cref="Direction.NONE"/>.
 			/// </summary>
 			NONE
 		};
@@ -180,9 +187,10 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Whether or not a positive y-value indicates an UP motion. If true, Directions with an UP
-		/// component will have positive y-values, and ones with DOWN components will have negative
-		/// values. Setting this to false (which is the default) inverts this.
+		/// Whether or not a positive y-value indicates an upward change. If true, Directions with an
+		/// upwards component represent a positive change in y-value, and ones with downward components
+		/// represent a negative change in y-value.  Setting this to false (which is the default) inverts
+		/// this.
 		/// </summary>
 		public static bool YIncreasesUpward
 		{
@@ -206,18 +214,17 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Delta X for direction. Right is positive, left is negative.
+		/// Change in x-value represented by this direction.
 		/// </summary>
 		public int DeltaX { get; private set; }
 
 		/// <summary>
-		/// Delta Y for direction. Down is positive, up is negative, since this is how graphics
-		/// coordinates typically work.
+		/// Change in y-value represented by this direction.
 		/// </summary>
 		public int DeltaY { get; private set; }
 
 		/// <summary>
-		/// Enum type corresponding to Direction being represented.
+		/// Enum type corresponding to direction being represented.
 		/// </summary>
 		public Types Type { get; private set; }
 
@@ -226,33 +233,33 @@ namespace GoRogue
 		/// <summary>
 		/// Returns the cardinal direction that most closely matches the degree heading of the given
 		/// line. Rounds clockwise if the heading is exactly on a diagonal direction. Similar to
-		/// GetDirection, except gives only cardinal directions.
+		/// <see cref="GetDirection(Coord, Coord)"/>, except this function returns only cardinal directions.
 		/// </summary>
 		/// <param name="start">Starting coordinate of the line.</param>
 		/// <param name="end">Ending coordinate of the line.</param>
 		/// <returns>
-		/// The cardinal direction that most closely matches the heading formed by the given line.
+		/// The cardinal direction that most closely matches the heading indicated by the given line.
 		/// </returns>
 		public static Direction GetCardinalDirection(Coord start, Coord end) => GetCardinalDirection(end.X - start.X, end.Y - start.Y);
 
 		/// <summary>
 		/// Returns the cardinal direction that most closely matches the degree heading of the given
 		/// line. Rounds clockwise if the heading is exactly on a diagonal direction. Similar to
-		/// GetDirection, except gives only cardinal directions.
+		/// <see cref="GetDirection(int, int, int, int)"/>, except this function returns only cardinal directions.
 		/// </summary>
 		/// <param name="startX">X-coordinate of the starting position of the line.</param>
 		/// <param name="startY">Y-coordinate of the starting position of the line.</param>
 		/// <param name="endX">X-coordinate of the ending position of the line.</param>
 		/// <param name="endY">Y-coordinate of the ending position of the line.</param>
 		/// <returns>
-		/// The cardinal direction that most closely matches the heading formed by the given line.
+		/// The cardinal direction that most closely matches the heading indicated by the given line.
 		/// </returns>
 		public static Direction GetCardinalDirection(int startX, int startY, int endX, int endY) => GetCardinalDirection(endX - startX, endY - startY);
 
 		/// <summary>
 		/// Returns the cardinal direction that most closely matches the degree heading of a line
-		/// with the given dx and dy values. Rounds clockwise if exactly on a diagonal. Similar to
-		/// GetDirection, except gives only cardinal directions.
+		/// with the given delta-change values. Rounds clockwise if exactly on a diagonal. Similar to
+		/// <see cref="GetDirection(Coord)"/>, except this function returns only cardinal directions.
 		/// </summary>
 		/// <param name="deltaChange">
 		/// Vector representing the change in x and change in y across the line (deltaChange.X is the
@@ -266,7 +273,7 @@ namespace GoRogue
 		/// <summary>
 		/// Returns the cardinal direction that most closely matches the degree heading of a line
 		/// with the given dx and dy values. Rounds clockwise if exactly on a diagonal direction.
-		/// Similar to GetDirection, except gives only cardinal directions.
+		/// Similar to <see cref="GetDirection(int, int)"/>, except this function returns only cardinal directions.
 		/// </summary>
 		/// <param name="dx">The change in x-values across the line.</param>
 		/// <param name="dy">The change in x-values across the line.</param>
@@ -304,7 +311,7 @@ namespace GoRogue
 		/// <param name="start">Starting coordinate of the line.</param>
 		/// <param name="end">Ending coordinate of the line.</param>
 		/// <returns>
-		/// The direction that most closely matches the heading formed by the given line.
+		/// The direction that most closely matches the heading indicated by the given line.
 		/// </returns>
 		public static Direction GetDirection(Coord start, Coord end) => GetDirection(end.X - start.X, end.Y - start.Y);
 
@@ -317,31 +324,31 @@ namespace GoRogue
 		/// <param name="endX">X-coordinate of the ending position of the line.</param>
 		/// <param name="endY">Y-coordinate of the ending position of the line.</param>
 		/// <returns>
-		/// The direction that most closely matches the heading formed by the given line.
+		/// The direction that most closely matches the heading indicated by the given line.
 		/// </returns>
 		public static Direction GetDirection(int startX, int startY, int endX, int endY) => GetDirection(endX - startX, endY - startY);
 
 		/// <summary>
 		/// Returns the direction that most closely matches the degree heading of a line with the
-		/// given delta-x and delta-y values. Rounds clockwise if the heading is exactly between two directions.
+		/// given delta-change values. Rounds clockwise if the heading is exactly between two directions.
 		/// </summary>
 		/// <param name="deltaChange">
 		/// Vector representing the change in x and change in y across the line (deltaChange.X is the
 		/// change in x, deltaChange.Y is the change in y).
 		/// </param>
 		/// <returns>
-		/// The direction that most closely matches the heading formed by the given input.
+		/// The direction that most closely matches the heading indicated by the given input.
 		/// </returns>
 		public static Direction GetDirection(Coord deltaChange) => GetDirection(deltaChange.X, deltaChange.Y);
 
 		/// <summary>
 		/// Returns the direction that most closely matches the degree heading of a line with the
-		/// given delta-x and delta-y values. Rounds clockwise if the heading is exactly between two directions.
+		/// given dx and dy values. Rounds clockwise if the heading is exactly between two directions.
 		/// </summary>
 		/// <param name="dx">The change in x-values across the line.</param>
 		/// <param name="dy">The change in y-values across the line.</param>
 		/// <returns>
-		/// The direction that most closely matches the heading formed by the given input.
+		/// The direction that most closely matches the heading indicated by the given input.
 		/// </returns>
 		public static Direction GetDirection(int dx, int dy)
 		{
@@ -374,7 +381,9 @@ namespace GoRogue
 
 			return UP;
 		}
-
+		
+		/* TODO: Resume Documentation proofing here */
+		
 		/// <summary>
 		/// - operator. Returns the direction i directions counterclockwise of the given direction if
 		/// i is positive. If is negative, the direction is moved clockwise. If any amount is added
