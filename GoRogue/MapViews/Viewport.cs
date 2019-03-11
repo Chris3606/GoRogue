@@ -3,21 +3,32 @@
 namespace GoRogue.MapViews
 {
 	/// <summary>
-	/// Since some algorithms that use MapViews can be expensive to run entirely on large maps (such
-	/// as GoalMaps), Viewport is a class that effectively creates and maintains a "viewport" of the
-	/// map. Its indexers perform relative to absolute coordinate translations, and return the proper
-	/// value of type T from the underlying map..
+	/// Viewport is a class that effectively creates and maintains a "viewport", or subsection, of the map.
+	/// Its indexers perform relative to absolute coordinate translations, and return the proper value of
+	/// type T from the underlying map.
 	/// </summary>
-	/// <typeparam name="T">The type being exposed by the MapView.</typeparam>
+	/// <remarks>
+	/// Since some algorithms that use <see cref="IMapView{T}"/> implementations can be expensive to
+	/// run on large maps (GoalMaps, etc), you can use viewports to present only a relevant subsection of the
+	/// map to that algorithm.  It is generally useful for any case where you want an <see cref="IMapView{T}"/>
+	/// that represents a subsection of some other <see cref="IMapView{T}"/>.
+	/// 
+	/// This implementation restricts the subsection of the map that is presented in such a way that no part
+	/// of the viewport can be outside the boundary of its parent map view.  The viewport cannot be bigger than
+	/// the map, and the viewport's position is "locked" to the edge so that it cannot be set in such a way that a portion
+	/// of the viewport lies outside the bounds of the parent map.  If you would rather allow this and return
+	/// a default value for locations outside the parent map, see <see cref="UnboundedViewport{T}"/>.
+	/// </remarks>
+	/// <typeparam name="T">The type being exposed by the Viewport.</typeparam>
 	public class Viewport<T> : IMapView<T>
 	{
 		private BoundedRectangle _boundedRect;
 
 		/// <summary>
-		/// Constructor. Takes the MapView to represent, and the initial ViewArea for that map.
+		/// Constructor. Takes the parent map view, and the initial subsection of that map view to represent.
 		/// </summary>
 		/// <param name="mapView">The map view being represented.</param>
-		/// <param name="viewArea">The initial ViewArea for that map.</param>
+		/// <param name="viewArea">The initial subsection of that map to represent.</param>
 		public Viewport(IMapView<T> mapView, Rectangle viewArea)
 		{
 			MapView = mapView;
@@ -25,14 +36,14 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Constructor. Takes the MapView to represent. Initial ViewArea will be the entire MapView.
+		/// Constructor. Takes the map view to represent. The viewport will represent the entire given map view.
 		/// </summary>
-		/// <param name="mapView">The MapView to represent.</param>
+		/// <param name="mapView">The map view to represent.</param>
 		public Viewport(IMapView<T> mapView)
 			: this(mapView, mapView.Bounds()) { }
 
 		/// <summary>
-		/// The height of the ViewArea.
+		/// The height of the area being represented.
 		/// </summary>
 		public int Height
 		{
@@ -40,12 +51,12 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// The MapView that this Viewport is exposing values from.
+		/// The map view that this Viewport is exposing values from.
 		/// </summary>
 		public IMapView<T> MapView { get; private set; }
 
 		/// <summary>
-		/// The area of the base MapView that this Viewport is exposing. Although this property does
+		/// The area of <see cref="MapView"/> that this Viewport is exposing. Although this property does
 		/// not explicitly expose a set accessor, it is returning a reference and as such may be
 		/// assigned to. When accessed, the rectangle is automatically restricted by the edges of the
 		/// map as necessary.
@@ -56,13 +67,23 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// The width of the ViewArea.
+		/// The width of the area being represented.
 		/// </summary>
 		public int Width
 		{
 			get => ViewArea.Width;
 		}
 
+		/// <summary>
+		/// Given a position in relative 1d-array-index style, returns the "value" associated with that
+		/// location in absolute coordinates.
+		/// </summary>
+		/// <param name="relativeIndex1D">
+		/// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
+		/// </param>
+		/// <returns>
+		/// The "value" associated with the absolute location represented on the underlying map view.
+		/// </returns>
 		public T this[int relativeIndex1D] => MapView[ViewArea.Position + Coord.ToCoord(relativeIndex1D, Width)];
 
 		/// <summary>
@@ -73,7 +94,7 @@ namespace GoRogue.MapViews
 		/// Viewport-relative position of the location to retrieve the value for.
 		/// </param>
 		/// <returns>
-		/// The "value" associated with the absolute location represented on the underlying MapView.
+		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
 		public virtual T this[Coord relativePosition] => MapView[ViewArea.Position + relativePosition];
 
@@ -84,7 +105,7 @@ namespace GoRogue.MapViews
 		/// <param name="relativeX">Viewport-relative X-value of location.</param>
 		/// <param name="relativeY">Viewport-relative Y-value of location.</param>
 		/// <returns>
-		/// The "value" associated with the absolute location represented on the underlying MapView.
+		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
 		public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
 
@@ -95,11 +116,11 @@ namespace GoRogue.MapViews
 		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
-		/// Returns a string representation of the Viewport, using the elementStringifier function
-		/// given to determine what string represents which value.
+		/// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+		/// to determine what string represents each value.
 		/// </summary>
 		/// <remarks>
-		/// This could be used, for example, on an Viewport of boolean values, to output '#' for
+		/// This could be used, for example, on a Viewport of boolean values, to output '#' for
 		/// false values, and '.' for true values.
 		/// </remarks>
 		/// <param name="elementStringifier">
@@ -110,14 +131,19 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Prints the values in the Viewport, using the function specified to turn elements into
-		/// strings, and using the "field length" specified. Each element of type T will have spaces
-		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-		/// than the length of the element's string represention. A positive-number right-aligns the
-		/// text within the field, while a negative number left-aligns the text.
+		/// strings, and using the "field length" specified.
 		/// </summary>
-		/// <param name="fieldSize">The size of the field to give each value.</param>
+		/// <remarks>
+		/// Each element of type T will have spaces added to cause it to take up exactly
+		/// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+		/// is less than the length of the element's string represention.
+		/// </remarks>
+		/// <param name="fieldSize">
+		/// The size of the field to give each value.  A positive-number
+		/// right-aligns the text within the field, while a negative number left-aligns the text.
+		/// </param>
 		/// <param name="elementStringifier">
-		/// Function to use to convert each element to a string. Null defaults to the ToString
+		/// Function to use to convert each element to a string. null defaults to the ToString
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the Viewport.</returns>

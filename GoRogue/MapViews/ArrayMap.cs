@@ -3,9 +3,16 @@
 namespace GoRogue.MapViews
 {
 	/// <summary>
-	/// Default implementation of the ISettableMapView interface, exposing the interface using a
+	/// Implementation of the <see cref="ISettableMapView{T}"/> interface that uses a
 	/// 1D array to store data.
 	/// </summary>
+	/// <remarks>
+	/// An <see cref="ArrayMap{T}"/> can be implicitly converted to its underlying 1D array,
+	/// which allows exposing that array to code that works with 1D arrays.  Modifications in the array
+	/// appear in the map view as well.
+	/// 
+	/// If you need a 2D array instead of 1D, then you should use <see cref="ArrayMap2D{T}"/> instead.
+	/// </remarks>
 	/// <typeparam name="T">The type of value being stored.</typeparam>
 	public sealed class ArrayMap<T> : ISettableMapView<T>, ICloneable
 	{
@@ -20,6 +27,12 @@ namespace GoRogue.MapViews
 			: this(new T[width * height], width)
 		{ }
 
+		/// <summary>
+		/// Constructor.  Takes an existing 1D array to use as the underlying array, and
+		/// the width of the 2D area represented by that array.
+		/// </summary>
+		/// <param name="existingArray">Existing 1D array to use as the underlying array.</param>
+		/// <param name="width">The width of the 2D area represented by <paramref name="existingArray"/>.</param>
 		public ArrayMap(T[] existingArray, int width)
 		{
 			if (existingArray.Length % width != 0)
@@ -40,7 +53,11 @@ namespace GoRogue.MapViews
 		/// </summary>
 		public int Width { get; }
 
-
+		/// <summary>
+		/// Returns/sets the value associated with the given index in the underlying array.
+		/// </summary>
+		/// <param name="index1D">1D index of location to retrieve the "value" for.</param>
+		/// <returns>The "value" associated with the given location.</returns>
 		public T this[int index1D]
 		{
 			get => _array[index1D];
@@ -60,10 +77,10 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Given a Coord, returns/sets the "value" associated with that location.
+		/// Given a position, returns/sets the "value" associated with that location.
 		/// </summary>
 		/// <param name="pos">Location to get/set the value for.</param>
-		/// <returns>THe "value" associated with the provided location.</returns>
+		/// <returns>The "value" associated with the provided location.</returns>
 		public T this[Coord pos]
 		{
 			get => _array[pos.ToIndex(Width)];
@@ -85,6 +102,10 @@ namespace GoRogue.MapViews
 			return newObj;
 		}
 
+		/// <summary>
+		/// Allows implicit conversion to 1D array.
+		/// </summary>
+		/// <param name="arrayMap">ArrayMap to convert.</param>
 		public static implicit operator T[](ArrayMap<T> arrayMap) => arrayMap._array;
 
 
@@ -100,8 +121,8 @@ namespace GoRogue.MapViews
 		public override string ToString() => this.ExtendToString();
 
 		/// <summary>
-		/// Returns a string representation of the map data, using the elementStringifier function
-		/// given to determine what string represents which value.
+		/// Returns a string representation of the map data, using <paramref name="elementStringifier"/>
+		/// to determine what string represents which value.
 		/// </summary>
 		/// <remarks>
 		/// This could be used, for example, on an ArrayMap of boolean values, to output '#' for
@@ -115,14 +136,19 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Prints the values in the ArrayMap, using the function specified to turn elements into
-		/// strings, and using the "field length" specified. Each element of type T will have spaces
-		/// added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-		/// than the length of the element's string represention. A positive-number right-aligns the
-		/// text within the field, while a negative number left-aligns the text.
+		/// strings, and using the "field length" specified.
 		/// </summary>
-		/// <param name="fieldSize">The size of the field to give each value.</param>
+		/// <remarks>
+		/// Each element of type T will have spaces added to cause it to take up exactly
+		/// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+		/// is less than the length of the element's string represention.
+		/// </remarks>
+		/// <param name="fieldSize">
+		/// The size of the field to give each value.  A positive-number
+		/// right-aligns the text within the field, while a negative number left-aligns the text.
+		/// </param>
 		/// <param name="elementStringifier">
-		/// Function to use to convert each element to a string. Null defaults to the ToString
+		/// Function to use to convert each element to a string. null defaults to the ToString
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the ArrayMap.</returns>

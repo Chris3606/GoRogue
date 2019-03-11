@@ -8,18 +8,23 @@ using Troschuetz.Random;
 namespace GoRogue.MapViews
 {
 	/// <summary>
-	/// Extensions for the IMapView class that effectively act as methods with default
-	/// implementations for them.
+	/// Extensions for <see cref="IMapView{T}"/> implementaions that provide basic utility functions
+	/// for them.
 	/// </summary>
+	/// <remarks>
+	/// By providing these as extension methods, they effectively act as interface methods that have implementations
+	/// already defined.  If these were regular interface implemenations, all interface implementers would be forced
+	/// to implement them manually, which is undesireable as the implementation should clearly be the same and is based
+	/// only on functions/properties defined in IMapView.
+	/// </remarks>
 	public static class IMapViewExtensions
 	{
 		/// <summary>
-		/// Extension method that applies values of the overlay to the current one -- effectively
-		/// sets all the values of the current map to be corresponding to the one you pass in.
+		/// Sets all the values of the current map to be equal to the corresponding values from
+		/// the map you pass in.
 		/// </summary>
-		/// <param name="self">
-		/// The current ISettableMapView. Never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="self"/>
 		/// <param name="overlay">
 		/// The data apply to the map. Must have identical dimensions to the current map.
 		/// </param>
@@ -34,48 +39,45 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Gets a rectangle representing the bounds of the MapView.
+		/// Gets a rectangle representing the bounds of the current map view.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to get bounds for -- never specified manually as this is an extension method
-		/// </param>
-		/// <returns>A rectangle representing the MapView's bounds.</returns>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
+		/// <returns>A rectangle representing the map view's bounds.</returns>
 		public static Rectangle Bounds<T>(this IMapView<T> mapView) => new Rectangle(0, 0, mapView.Width, mapView.Height);
 
 		/// <summary>
-		/// Returns whether or not the given position has a value in this MapView or not.
+		/// Returns whether or not the given position is contained withing the current map view or not.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">Map view to get bounds for -- never specified manually as this is an extension method</param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="x">X-value of the position to check.</param>
 		/// <param name="y">Y-value of the position to check.</param>
-		/// <returns>True if the given position is valid in this map view, false otherwise.</returns>
+		/// <returns>True if the given position is contained within this map view, false otherwise.</returns>
 		public static bool Contains<T>(this IMapView<T> mapView, int x, int y) => x >= 0 && y >= 0 && x < mapView.Width && y < mapView.Height;
 
 		/// <summary>
-		/// Returns whether or not the given position has a value in this MapView or not.
+		/// Returns whether or not the given position is contained withing the current map view or not.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">Map view to get bounds for -- never specified manually as this is an extension method</param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="position">The position to check.</param>
-		/// <returns>True if the given position is valid in this map view, false otherwise.</returns>
+		/// <returns>True if the given position is contained within this map view, false otherwise.</returns>
 		public static bool Contains<T>(this IMapView<T> mapView, Coord position)
 			=> position.X >= 0 && position.Y >= 0 && position.X < mapView.Width && position.Y < mapView.Height;
+
 		/// <summary>
-		/// Extension method for IMapViews allowing printing the contents. Takes characters to
+		/// Allows stringifying the contents of a map view. Takes characters to
 		/// surround the map printout, and each row, the method used to get the string representation
 		/// of each element (defaulting to the ToString function of type T), and separation
 		/// characters for each element and row.
 		/// </summary>
-		/// <typeparam name="T">Type of elements in the IMapView.</typeparam>
-		/// <param name="map">
-		/// The IMapView to stringify -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="map"/>
 		/// <param name="begin">Character(s) that should precede the IMapView printout.</param>
 		/// <param name="beginRow">Character(s) that should precede each row.</param>
 		/// <param name="elementStringifier">
-		/// Function to use to get the string representation of each value. Null uses the ToString
+		/// Function to use to get the string representation of each value. null uses the ToString
 		/// function of type T.
 		/// </param>
 		/// <param name="rowSeparator">Character(s) to separate each row from the next.</param>
@@ -109,7 +111,7 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Extension method for IMapViews allowing printing the contents. Takes characters to
+		/// Allows stringifying the contents of a map view. Takes characters to
 		/// surround the map, and each row, the method used to get the string representation of each
 		/// element (defaulting to the ToString function of type T), and separation characters for
 		/// each element and row. Takes the size of the field to give each element, characters to
@@ -117,10 +119,8 @@ namespace GoRogue.MapViews
 		/// representation of each element (defaulting to the ToString function of type T), and
 		/// separation characters for each element and row.
 		/// </summary>
-		/// <typeparam name="T">Type of elements in the 2D array.</typeparam>
-		/// <param name="map">
-		/// The IMapView to stringify -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="map"/>
 		/// <param name="fieldSize">
 		/// The amount of space each element should take up in characters. A positive number aligns
 		/// the text to the right of the space, while a negative number aligns the text to the left.
@@ -165,11 +165,8 @@ namespace GoRogue.MapViews
 		/// Iterates through each position in the map view. Equivalent to nested for loop for (y =
 		/// 0...) for (x = 0...)
 		/// </summary>
-		/// <typeparam name="T">Type of elements in the map view.</typeparam>
-		/// <param name="mapView">
-		/// Map view to iterate over positions for. Never specified manually since this is an
-		/// extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <returns>All positions in the IMapView.</returns>
 		public static IEnumerable<Coord> Positions<T>(this IMapView<T> mapView)
 		{
@@ -179,32 +176,28 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Gets the value at a random position in the MapView.
+		/// Gets the value at a random position in the IMapView.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
-		/// <returns>The item at a random position in the MapView.</returns>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+		/// <returns>The item at a random position in the IMapView.</returns>
 		public static T RandomItem<T>(this IMapView<T> mapView, IGenerator rng = null)
 			=> mapView[RandomPosition(mapView, rng)];
 
 		/// <summary>
-		/// Gets the item at a random position in the map view, for which the selector returns true.
+		/// Gets the item at a random position in the map view for which the selector returns true.
 		/// Random positions will continuously be generated until one that qualifies is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="selector">
-		/// Function that takes a Coord and the value at that Coord, and returns true if it is an
+		/// Function that takes a position, and the value at that position, and returns true if it is an
 		/// acceptable selection, and false if not.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>
-		/// The item at a random position in the MapView for which the selector returns true.
+		/// The item at a random position in the IMapView for which the selector returns true.
 		/// </returns>
 		public static T RandomItem<T>(this IMapView<T> mapView, Func<Coord, T, bool> selector, IGenerator rng = null)
 			=> mapView[RandomPosition(mapView, selector, rng)];
@@ -213,15 +206,13 @@ namespace GoRogue.MapViews
 		/// Gets a random position in the map view, whose value in that map view is the specified
 		/// one. Random positions will continually be generated until one with the specified value is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="validValue">
-		/// A value to look for in the MapView to determine whether or not a generated Coord is valid.
+		/// A value to look for in the IMapView to determine whether or not a generated position is valid.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
-		/// <returns>A random position whose value in this MapView is equal to the one specified.</returns>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+		/// <returns>A random position whose value in the current IMapView is equal to the one specified.</returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator rng = null)
 			=> mapView.RandomPosition((c, i) => i.Equals(validValue), rng);
 
@@ -230,57 +221,51 @@ namespace GoRogue.MapViews
 		/// specified. Random positions will continually be generated until one that has one of the
 		/// specified values is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="validValues">
-		/// A set of values to look for in the MapView to determine whether or not a generated Coord
+		/// A set of values to look for in the IMapView to determine whether or not a generated position
 		/// is valid.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>
-		/// A random position whose value in this MapView is equal to one of the values specified.
+		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator rng = null)
 			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
 		/// <summary>
 		/// Gets a random position in the map view, whose value in map view is one of the ones
-		/// specified in the HashSet. Random positions will continually be generated until one that
+		/// specified in the hash set. Random positions will continually be generated until one that
 		/// has one of the specified values is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="validValues">
-		/// A set of values to look for in the MapView to determine whether or not a generated Coord
+		/// A set of values to look for in the IMapView to determine whether or not a generated position
 		/// is valid.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>
-		/// A random position whose value in this MapView is equal to one of the values specified.
+		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, HashSet<T> validValues, IGenerator rng = null)
 			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
 		/// <summary>
 		/// Gets a random position in the map view, whose value in map view is one of the ones
-		/// specified in validValues. Random positions will continually be generated until one that
+		/// specified in <paramref name="validValues"/>. Random positions will continually be generated until one that
 		/// has one of the specified values is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <param name="validValues">
-		/// A set of values to look for in the MapView to determine whether or not a generated Coord
+		/// A set of values to look for in the IMapView to determine whether or not a generated position
 		/// is valid.
 		/// </param>
 		/// <returns>
-		/// A random position whose value in this MapView is equal to one of the values specified.
+		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null, params T[] validValues)
 			=> RandomPosition(mapView, (IEnumerable<T>)validValues, rng);
@@ -289,16 +274,14 @@ namespace GoRogue.MapViews
 		/// Gets a random position in the map view, for which the selector returns true. Random
 		/// positions will continuously be generated until one that qualifies is found.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
 		/// <param name="selector">
-		/// Function that takes a Coord and the value at that Coord, and returns true if it is an
+		/// Function that takes a position and the value at that position, and returns true if it is an
 		/// acceptable selection, and false if not.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
-		/// <returns>A random position in the MapView for which the selector returns true.</returns>
+		/// <param name="rng">The rng to use. Defaults to<see cref="SingletonRandom.DefaultRNG"/>.</param>
+		/// <returns>A random position in the IMapView for which the selector returns true.</returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, Func<Coord, T, bool> selector, IGenerator rng = null)
 		{
 			if (rng == null)
@@ -313,14 +296,12 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Gets a random position within the MapView.
+		/// Gets a random position within the IMapView.
 		/// </summary>
-		/// <typeparam name="T">Type of items being exposed by the MapView.</typeparam>
-		/// <param name="mapView">
-		/// Map view to select from -- never specified manually as this is an extension method.
-		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
-		/// <returns>A random position within the MapView.</returns>
+		/// <typeparam name="T"/>
+		/// <param name="mapView"/>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+		/// <returns>A random position within the IMapView.</returns>
 		public static Coord RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null)
 		{
 			if (rng == null)

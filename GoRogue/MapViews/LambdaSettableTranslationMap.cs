@@ -3,14 +3,15 @@
 namespace GoRogue.MapViews
 {
 	/// <summary>
-	/// A simple TranslationMap implementation that allows you to provide lambdas for the translation
-	/// functions. For a version offering only "get" functionality, see LambdaTranslationMap.
+	/// A simple <see cref="SettableTranslationMap{T1, T2}"/> implementation that allows you to provide
+	/// functions/lambdas for the translation functions. For a version offering only "get" functionality,
+	/// see <see cref="LambdaTranslationMap{T1, T2}"/>.
 	/// </summary>
 	/// <remarks>
-	/// If you have several views that simply expose a simple property of your underlying data, it
-	/// could get tedious writing a TranslationMap for all of them. This class simplifies that task
-	/// by letting you just provide the translation methods as delegates/lambdas without needing to
-	/// build the rest of the infrastructure.
+	/// If you have a view that simply exposes a property of your underlying data, it
+	/// can be tedious to write a <see cref="SettableTranslationMap{T1, T2}"/> implementation for all of them.
+	/// This class simplifies that task by letting you just provide the translation methods as funtions/lambdas
+	/// without needing to build the rest of the class infrastructure.
 	/// </remarks>
 	/// <typeparam name="T1">The type of your underlying data.</typeparam>
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
@@ -23,6 +24,10 @@ namespace GoRogue.MapViews
 		/// Constructor. Takes an existing map view to create a view from, and getter/setter
 		/// functions taking only a map value.
 		/// </summary>
+		/// <remarks>
+		/// If a position is also needed to perform the translation, an overload is provided taking
+		/// corresponding functions.
+		/// </remarks>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>
 		/// <param name="setter">The TranslateSet implementation.</param>
@@ -57,7 +62,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="overlay">
-		/// The view data to apply to the map. Must have identical dimensions to baseMap.
+		/// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap"/>.
 		/// </param>
 		/// <param name="getter">The TranslateGet implementation.</param>
 		/// <param name="setter">The TranslateSet implementation.</param>
@@ -72,7 +77,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="overlay">
-		/// The view data to apply to the map. Must have identical dimensions to baseMap.
+		/// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap"/>.
 		/// </param>
 		/// <param name="getter">The TranslateGet implementation.</param>
 		/// <param name="setter">The TranslateSet implementation.</param>
@@ -83,7 +88,7 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Translates your map data into the view type by calling the lambda getter specified in the
+		/// Translates your map data into the view type by calling the getter function specified in the
 		/// class constructor.
 		/// </summary>
 		/// <param name="position">Position corresponding to given data value of your map.</param>
@@ -93,7 +98,7 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Translates the view type into the appropriate form for your map data, by calling the
-		/// lambda setter specified in the class constructor.
+		/// setter function specified in the class constructor.
 		/// </summary>
 		/// <param name="position">Position corresponding to the given mapped data type.</param>
 		/// <param name="value">A value of the mapped data type.</param>
