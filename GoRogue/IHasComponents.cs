@@ -5,8 +5,8 @@ namespace GoRogue
 {
 	/// <summary>
 	/// Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
-	/// you would implement this via a backing field of type ComponentContainer, which implements the logic for these functions.
-	/// See that class's documentation for details of functionality.
+	/// you would implement this via a backing field of type <see cref="ComponentContainer"/>, which implements the logic for
+	/// these functions.
 	/// </summary>
 	public interface IHasComponents
 	{
