@@ -6,9 +6,18 @@ using System.Collections.Generic;
 namespace GoRogue.Pathing
 {
 	/// <summary>
-	/// Implements basic AStar pathing. Distance specified determins the heuristic and connectivity
-	/// (4-way vs. 8-way) assumed.
+	/// Implements basic AStar pathing. Distance calculation specified determines the heuristic and connectivity
+	/// (4-way vs. 8-way) used.
 	/// </summary>
+	/// <remarks>
+	/// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView.  Specifically,
+	/// it takes an <see cref="IMapView{Boolean}"/>, where true indicates that a tile should be considered walkable,
+	/// and false indicates that a tile should be considered impassable.
+	/// 
+	/// For details on the map view system in general, see <see cref="IMapView{T}"/>.  As well, there is an article
+	/// explaining the map view system at the GoRogue documentation page
+	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
+	/// </remarks>
 	public class AStar
 	{
 		private Distance _distanceMeasurement;
@@ -25,20 +34,21 @@ namespace GoRogue.Pathing
 		private int nodesWidth;
 
 		// Node objects used under the hood for the priority queue
+		// Priority queue of the open nodes.
 		private FastPriorityQueue<AStarNode> openNodes;
 
-		// Priority queue of the open nodes.
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="walkabilityMap">
-		/// Map used to determine whether or not a given location can be traversed -- true indicates
+		/// Map view used to determine whether or not a given location can be traversed -- true indicates
 		/// walkable, false unwalkable.
 		/// </param>
 		/// <param name="distanceMeasurement">
-		/// Distance measurement used to determine the method of measuring distance between two
+		/// <see cref="Distance"/> measurement used to determine the method of measuring distance between two
 		/// points, the heuristic AStar uses when pathfinding, and whether locations are connected in
-		/// a 4-way or 8-way manner.
+		/// a 4-way or 8-way pattern.
 		/// </param>
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
 		{
@@ -56,9 +66,9 @@ namespace GoRogue.Pathing
 		}
 
 		/// <summary>
-		/// The distance calculation being used to determine distance between points. MANHATTAN
-		/// implies 4-way connectivity, while CHEBYSHEV or EUCLIDEAN imply 8-way connectivity for the
-		/// purpose of determining adjacent coordinates.
+		/// The distance calculation being used to determine distance between points. <see cref="Distance.MANHATTAN"/>
+		/// implies 4-way connectivity, while <see cref="Distance.CHEBYSHEV"/> or <see cref="Distance.EUCLIDEAN"/> imply
+		/// 8-way connectivity for the purpose of determining adjacent coordinates.
 		/// </summary>
 		public Distance DistanceMeasurement
 		{
@@ -74,7 +84,7 @@ namespace GoRogue.Pathing
 		}
 
 		/// <summary>
-		/// The map being used as the source for whether or not each tile is walkable.
+		/// The map view being used to determine whether or not each tile is walkable.
 		/// </summary>
 		public IMapView<bool> WalkabilityMap { get; private set; }
 
@@ -82,16 +92,16 @@ namespace GoRogue.Pathing
 		/// Finds the shortest path between the two specified points.
 		/// </summary>
 		/// <remarks>
-		/// Returns null if there is no path between the specified points. Will still return an
+		/// Returns <see langword="null"/> if there is no path between the specified points. Will still return an
 		/// appropriate path object if the start point is equal to the end point.
 		/// </remarks>
 		/// <param name="start">The starting point of the path.</param>
 		/// <param name="end">The ending point of the path.</param>
 		/// <param name="assumeEndpointsWalkable">
 		/// Whether or not to assume the start and end points are walkable, regardless of what the
-		/// walkability map reports. Defaults to true.
+		/// <see cref="WalkabilityMap"/> reports. Defaults to <see langword="true"/>.
 		/// </param>
-		/// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
+		/// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
 		public Path ShortestPath(Coord start, Coord end, bool assumeEndpointsWalkable = true)
 		{
 			// Don't waste initialization time if there is definately no path
@@ -193,7 +203,7 @@ namespace GoRogue.Pathing
 		/// Finds the shortest path between the two specified points.
 		/// </summary>
 		/// <remarks>
-		/// Returns null if there is no path between the specified points. Will still return an
+		/// Returns <see langword="null"/> if there is no path between the specified points. Will still return an
 		/// appropriate path object if the start point is equal to the end point.
 		/// </remarks>
 		/// <param name="startX">The x-coordinate of the starting point of the path.</param>
@@ -202,9 +212,9 @@ namespace GoRogue.Pathing
 		/// <param name="endY">The y-coordinate of the ending point of the path.</param>
 		/// <param name="assumeEndpointsWalkable">
 		/// Whether or not to assume the start and end points are walkable, regardless of what the
-		/// walkability map reports. Defaults to true.
+		/// <see cref="WalkabilityMap"/> reports. Defaults to <see langword="true"/>.
 		/// </param>
-		/// <returns>The shortest path between the two points, or null if no valid path exists.</returns>
+		/// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
 		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
 			=> ShortestPath(new Coord(startX, startY), new Coord(endX, endY), assumeEndpointsWalkable);
 
@@ -278,7 +288,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <remarks>Reversing is an O(1) operation, since it does not modify the list.</remarks>
 		/// <param name="pathToCopy">The path to copy.</param>
-		/// <param name="reverse">Whether or not to reverse the path. Defaults to false.</param>
+		/// <param name="reverse">Whether or not to reverse the path. Defaults to <see langword="false"/>.</param>
 		public Path(Path pathToCopy, bool reverse = false)
 		{
 			_steps = pathToCopy._steps;

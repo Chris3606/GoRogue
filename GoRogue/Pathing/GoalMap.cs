@@ -6,18 +6,22 @@ using System.Linq;
 namespace GoRogue.Pathing
 {
 	/// <summary>
-	/// Implementation of a goal map system, also known as Dijkstra maps (
-	/// http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps )
+	/// Implementation of a goal map system, also known as Dijkstra maps,
+	/// based on <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">this article</a>
 	/// </summary>
 	/// <remarks>
 	/// This class encapsulates the work of building a goal map from your map level. You provide the
-	/// constructor with a map level exposed as GoalStates (obstacle, a goal, or an open space), and
-	/// GoalMap will compute the goal map for the level. /// When the underlying circumstances of the
-	/// level change, the GoalMap instance will need to be updated. Call Update() if obstacles have
-	/// changed, such as digging through walls or opening or closing a door, or UpdatePathsOnly() if
-	/// the goals have changed but not the obstacles. /// Each cell is a Nullable&lt;double&gt;,
-	/// where a null is an obstacle, and a value indicates a distance from a goal, with 0 being a
-	/// goal tile.
+	/// constructor with a map view representing the map as <see cref="GoalState"/> values, and
+	/// GoalMap will compute the goal map for the level. When the underlying circumstances of the
+	/// level change, the GoalMap instance will need to be updated. Call <see cref="Update"/> if obstacles
+	/// have changed, or <see cref="UpdatePathsOnly"/> if the goals have changed but not the obstacles.
+	/// 
+	/// This class exposes the resulting goal map to you via indexers -- GoalMap implements
+	/// <see cref="IMapView{Double}"/>, where <see langword="null"/> indicates a square is an obstacle,
+	/// and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
+	/// contains a goal.
+	/// 
+	/// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Coord)"/>
 	/// </remarks>
 	public class GoalMap : IMapView<double?>
 	{
@@ -32,9 +36,10 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// Constructor. Takes a base map and a distance measurement to use for calculation.
 		/// </summary>
-		/// <param name="baseMap">The underlying map as GoalStates.</param>
+		/// <param name="baseMap">A map view that represents the map as
+		/// <see cref="IMapView{GoalState}"/>GoalStates.</param>
 		/// <param name="distanceMeasurement">
-		/// The distance measurement (and implicitly the AdjacencyRule) to use for calculation.
+		/// The distance measurement (and implicitly the <see cref="AdjacencyRule"/>) to use for calculation.
 		/// </param>
 		public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
 		{
@@ -51,7 +56,7 @@ namespace GoRogue.Pathing
 		public event Action Updated = () => { };
 
 		/// <summary>
-		/// The underlying map.
+		/// The map view of the underlying map used to determine where obstacles/goals are.
 		/// </summary>
 		public IMapView<GoalState> BaseMap { get; private set; }
 
@@ -72,6 +77,11 @@ namespace GoRogue.Pathing
 
 		internal IEnumerable<Coord> Walkable { get { return _walkable; } }
 
+		/// <summary>
+		/// Returns the goal-map value for the given position.
+		/// </summary>
+		/// <param name="index1D">Position to return the goal-map value for, as a 1d-index-style value.</param>
+		/// <returns>The goal-map value for the given position.</returns>
 		public double? this[int index1D] => _goalMap[index1D];
 
 		/// <summary>
@@ -94,7 +104,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <param name="position">The position to get the minimum value for.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or Direction.NONE if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
 		public Direction GetDirectionOfMinValue(Coord position) => ((IMapView<double?>)this).GetDirectionOfMinValue(position, DistanceMeasurement);
@@ -135,7 +145,7 @@ namespace GoRogue.Pathing
 
 		/// <summary>
 		/// Re-evaluates the entire goal map. Should be called when obstacles change. If the
-		/// obstacles have not changed but the goals have, call UpdatePathsOnly() for better efficiency.
+		/// obstacles have not changed but the goals have, call <see cref="UpdatePathsOnly"/> for better efficiency.
 		/// </summary>
 		/// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
 		public bool Update()
@@ -160,7 +170,8 @@ namespace GoRogue.Pathing
 		}
 
 		/// <summary>
-		/// Re-evaluates the walkable portion of the goal map. Should be called anytime the goals change.
+		/// Re-evaluates the walkable portion of the goal map. Should be called anytime the goals change
+		/// but the obstacles haven't.  If the obstacles have also changed, call <see cref="Update"/> instead.
 		/// </summary>
 		/// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
 		public bool UpdatePathsOnly()

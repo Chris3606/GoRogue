@@ -8,7 +8,7 @@ namespace GoRogue.Pathing
 {
 	/// <summary>
 	/// Implements the concept of a "safety map", also known as "flee map", as described in the
-	/// roguebasin article http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps.
+	/// <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">this article</a>.
 	/// </summary>
 	/// <remarks>
 	/// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically
@@ -58,6 +58,11 @@ namespace GoRogue.Pathing
 		/// </summary>
 		public int Width => _goalMap.Width;
 
+		/// <summary>
+		/// Returns the flee-map value for the given position.
+		/// </summary>
+		/// <param name="index1D">The position to return the value for, as a 1D-array-style index.</param>
+		/// <returns>The flee-map value for the given location.</returns>
 		public double? this[int index1D] => _goalMap[index1D];
 
 		/// <summary>
@@ -80,7 +85,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <param name="position">The position to get the minimum value for.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or Direction.NONE if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
 		public Direction GetDirectionOfMinValue(Coord position) => _baseMap.GetDirectionOfMinValue(position);
