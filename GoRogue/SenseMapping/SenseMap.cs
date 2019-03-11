@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 namespace GoRogue.SenseMapping
 {
 	/// <summary>
-	/// Class responsible for calculating a map for senses (sound, light, etc). Anything that has a
+	/// Class responsible for calculating a map for senses (sound, light, etc), or generally anything
+	/// that can be modeled as sources propegating through a map that has degrees of resistance to spread.
+	/// 
+	/// 
+	/// Anything that has a
 	/// resistance map, where 1.0 is completely impenetrable, and 0.0 is no resistance at all, can
 	/// use this system. Typically used for FOV, however can also be used for sound maps, etc.
 	/// Supports a few different types of spreading mechanics, including every one in the SourceType
@@ -18,6 +22,28 @@ namespace GoRogue.SenseMapping
 	/// between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the
 	/// sources being light, for example), and 0.0 is no intensity at all.
 	/// </summary>
+	/// <remarks>
+	/// Generally, this class can be used to model the result of applying ripple-like or shadowcasting-like
+	/// "spreading" of values from one or more sources through a map.  This can include modeling the spreading
+	/// of light, sound, heat for a heatmap, etc. through a map.  You create one or more <see cref="SenseSource"/>
+	/// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate"/>
+	/// when you wish to re-calculate the SenseMap.
+	/// 
+	/// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IMapView that represents
+	/// the map.  Specifically, it takes an <see cref="IMapView{Double}"/>, where the double value at each location
+	/// represents the "resistance" that location has to the passing of source values through it.  The values must be >= 0.0,
+	/// where 0.0 means that a location has no resistance to spreading of source values, and greater values represent greater
+	/// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="SenseSource.Intensity"/> of
+	/// your sources.  As a source spreads through a given location, a value equal to the resistance value of that location
+	/// is subtracted from the source's value (plus the normal fallof for distance).
+	/// 
+	/// The map can be calculated by calling the <see cref="Calculate"/> function.
+	/// 
+	/// This class exposes the resulting map values to you via indexers -- SenseMap implements
+	/// <see cref="IMapView{Double}"/>, where 0.0 indicates no sources were able to spread to the given location (eg, either it was
+	/// stopped or fell off due to distance), and a value greater than 0.0 indicates the combined intensity of any sources
+	/// that reached the given location.
+	/// </remarks>
 	public class SenseMap : IReadOnlySenseMap, IEnumerable<double>, IMapView<double>
 	{
 		private List<SenseSource> _senseSources;
@@ -293,7 +319,7 @@ namespace GoRogue.SenseMapping
 					Coord gCur = gMin + c;
 					Coord lCur = lMin + c;
 
-					destination[gCur.X, gCur.Y] = Math.Min(destination[gCur.X, gCur.Y] + source.light[lCur.X, lCur.Y], 1); // Add light, cap at 1 for now.  may just uncap this later.
+					destination[gCur.X, gCur.Y] = destination[gCur.X, gCur.Y] + source.light[lCur.X, lCur.Y]; // Add source values,
 					if (destination[gCur.X, gCur.Y] > 0.0)
 						sourceMap.Add(gCur);
 				}
