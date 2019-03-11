@@ -5,7 +5,7 @@ namespace GoRogue
 {
 	/// <summary>
 	/// Class representing a method for determining which coordinates are adjacent to a given
-	/// coordinate, and in which directions those neighbors are. Cannot be instantiated -- premade
+	/// coordinate, and which directions those neighbors are in. Cannot be instantiated -- premade
 	/// static instances are provided.
 	/// </summary>
 	public class AdjacencyRule
@@ -17,8 +17,8 @@ namespace GoRogue
 		public static readonly AdjacencyRule CARDINALS = new AdjacencyRule(Types.CARDINALS);
 
 		/// <summary>
-		/// Represents method of determining adjacency where neighbors are considered adjacent if
-		/// they are in a diagonal direction.
+		/// Represents method of determining adjacency where neighbors are considered adjacent only
+		/// if they are in a diagonal direction.
 		/// </summary>
 		public static readonly AdjacencyRule DIAGONALS = new AdjacencyRule(Types.DIAGONALS);
 
@@ -37,23 +37,24 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Enum representing AdjacencyRule types. Useful for easy mapping of AdjacencyRule types to
-		/// a primitive type (for cases like a switch statement).
+		/// Enum representing AdjacencyRule types. Each AdjacencyRule instance has a <see cref="Type"/> field
+		/// which contains the corresponding value from this enum.  Useful for easy mapping of AdjacencyRule
+		/// types to a primitive type (for cases like a switch statement).
 		/// </summary>
 		public enum Types
 		{
 			/// <summary>
-			/// Type for AdjacencyRule.CARDINALS.
+			/// Type for <see cref="AdjacencyRule.CARDINALS"/>.
 			/// </summary>
 			CARDINALS,
 
 			/// <summary>
-			/// Type for AdjacencyRule.DIAGONALS.
+			/// Type for <see cref="AdjacencyRule.DIAGONALS"/>.
 			/// </summary>
 			DIAGONALS,
 
 			/// <summary>
-			/// Type for AdjacencyRule.EIGHT_WAY.
+			/// Type for <see cref="AdjacencyRule.EIGHT_WAY"/>.
 			/// </summary>
 			EIGHT_WAY
 		}
@@ -125,11 +126,12 @@ namespace GoRogue
 
 		/// <summary>
 		/// Gets directions leading to neighboring locations, according to the current adjacency
-		/// method. Appropriate directions are returned in clockwise order from the given direction.
-		/// Null or Direction.NONE causes the default to be used (UP for CARDINALS or EIGHT_WAY, and
-		/// UP_RIGHT for DIAGONALS).
+		/// method. Appropriate directions are returned in clockwise order from the given starting
+		/// direction.
 		/// </summary>
-		/// <param name="startingDirection">The direction to start with.</param>
+		/// <param name="startingDirection">The direction to start with.  null or <see cref="Direction.NONE"/>
+		/// causes the default starting direction to be used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT
+		/// for diagonals.</param>
 		/// <returns>Directions that lead to neighboring locations.</returns>
 		public IEnumerable<Direction> DirectionsOfNeighborsClockwise(Direction startingDirection = null)
 		{
@@ -177,10 +179,11 @@ namespace GoRogue
 		/// <summary>
 		/// Gets directions leading to neighboring locations, according to the current adjacency
 		/// method. Appropriate directions are returned in counter-clockwise order from the given
-		/// direction. Null or Direction.NONE causes the default to be used (UP for CARDINALS or
-		/// EIGHT_WAY, and UP_RIGHT for DIAGONALS).
+		/// starting direction.
 		/// </summary>
-		/// <param name="startingDirection">The direction to start with.</param>
+		/// <param name="startingDirection">The direction to start with.  null or <see cref="Direction.NONE"/>
+		/// causes the default starting direction to be used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT
+		/// for diagonals.</param>
 		/// <returns>Directions that lead to neighboring locations.</returns>
 		public IEnumerable<Direction> DirectionsOfNeighborsCounterClockwise(Direction startingDirection = null)
 		{
@@ -248,13 +251,14 @@ namespace GoRogue
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
-		/// Neighbors are returned in clockwise order from the given direction. Null or
-		/// Direction.NONE causes the default to be used (UP for CARDINALS or EIGHT_WAY, and UP_RIGHT
-		/// for DIAGONALS).
+		/// Neighbors are returned in clockwise order, starting with the neighbor in the given
+		/// starting direction.
 		/// </summary>
 		/// <param name="startingLocation">Location to return neighbors for.</param>
 		/// <param name="startingDirection">
 		/// The neighbor in this direction will be returned first, proceeding clockwise.
+		/// If null or <see cref="Direction.NONE"/> is specified, the default starting direction
+		/// is used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT for DIAGONALS.
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsClockwise(Coord startingLocation, Direction startingDirection = null)
@@ -265,14 +269,15 @@ namespace GoRogue
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
-		/// Neighbors are returned in clockwise order from the given direction. Null or
-		/// Direction.NONE causes the default to be used (UP for CARDINALS or EIGHT_WAY, and UP_RIGHT
-		/// for DIAGONALS).
+		/// Neighbors are returned in clockwise order, starting with the neighbor in the given
+		/// starting direction.
 		/// </summary>
 		/// <param name="startingX">X-coordinate of location to return neighbors for.</param>
 		/// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
 		/// <param name="startingDirection">
 		/// The neighbor in this direction will be returned first, proceeding clockwise.
+		/// If null or <see cref="Direction.NONE"/> is specified, the default starting direction
+		/// is used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT for DIAGONALS.
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)
@@ -280,13 +285,14 @@ namespace GoRogue
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
-		/// Neighbors are returned in counter-clockwise order from the given direction. Null or
-		/// Direction.NONE causes the default to be used (UP for CARDINALS or EIGHT_WAY, and UP_LEFT
-		/// for DIAGONALS).
+		/// Neighbors are returned in counter-clockwise order, starting with the neighbor in the given
+		/// starting direction.
 		/// </summary>
 		/// <param name="startingLocation">Location to return neighbors for.</param>
 		/// <param name="startingDirection">
 		/// The neighbor in this direction will be returned first, proceeding counter-clockwise.
+		/// If null or <see cref="Direction.NONE"/> is specified, the default starting direction
+		/// is used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT for DIAGONALS.
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)
@@ -297,14 +303,15 @@ namespace GoRogue
 
 		/// <summary>
 		/// Gets all neighbors of the specified location, based on the current adjacency method.
-		/// Neighbors are returned in counter-clockwise order from the given direction. Null or
-		/// Direction.NONE causes the default to be used (UP for CARDINALS or EIGHT_WAY, and UP_LEFT
-		/// for DIAGONALS).
+		/// Neighbors are returned in counter-clockwise order, starting with the neighbor in the given
+		/// starting direction.
 		/// </summary>
 		/// <param name="startingX">X-coordinate of location to return neighbors for.</param>
 		/// <param name="startingY">Y-coordinate of location to return neighbors for.</param>
 		/// <param name="startingDirection">
 		/// The neighbor in this direction will be returned first, proceeding counter-clockwise.
+		/// If null or <see cref="Direction.NONE"/> is specified, the default starting direction
+		/// is used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT for DIAGONALS.
 		/// </param>
 		/// <returns>All neighbors of the given location.</returns>
 		public IEnumerable<Coord> NeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)
