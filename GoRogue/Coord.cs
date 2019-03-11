@@ -426,14 +426,14 @@ namespace GoRogue
 		/// <param name="p" />
 		/// <param name="c" />
 		/// <returns>A MonoGame Point (p.X - c.X, p.Y - c.Y).</returns>
-		public static MonoPoint operator -(MonoPoint p, Coord c) => new MonoPoint(p.X + c.X, p.Y + c.Y);
+		public static MonoPoint operator -(MonoPoint p, Coord c) => new MonoPoint(p.X - c.X, p.Y - c.Y);
 		/// <summary>
 		/// Subtracts the x and y values of a MonoGame Point from a Coord.
 		/// </summary>
 		/// <param name="c" />
 		/// <param name="p" />
 		/// <returns>A Coord (c.X - p.X, c.Y - p.Y).</returns>
-		public static Coord operator -(Coord c, MonoPoint p) => new Coord(c.X + p.X, c.Y + p.Y);
+		public static Coord operator -(Coord c, MonoPoint p) => new Coord(c.X - p.X, c.Y - p.Y);
 		#endregion
 
 		#region System.Drawing Compatibility
@@ -473,38 +473,149 @@ namespace GoRogue
 		/// <param name="c" />
 		/// <returns />
 		public static implicit operator SizeF(Coord c) => new SizeF(c.X, c.Y);
-
+		
+		/// <summary>
+		/// Adds the x and y values of a Coord to a System.Drawing.Point.
+		/// </summary>
+		/// <param name="p" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.Point (p.X + c.X, p.Y + c.Y).</returns>
 		public static DrawingPoint operator +(DrawingPoint p, Coord c) => new DrawingPoint(p.X + c.X, p.Y + c.Y);
+		/// <summary>
+		/// Adds the x and y values of a System.Drawing.Point to a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="p" />
+		/// <returns>A Coord (c.X + p.X, c.Y + p.Y).</returns>
 		public static Coord operator +(Coord c, DrawingPoint p) => new Coord(c.X + p.X, c.Y + p.Y);
+		/// <summary>
+		/// Adds the x and y values of a Coord to a System.Drawing.PointF.
+		/// </summary>
+		/// <param name="p" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.PointF (p.X + c.X, p.Y + c.Y).</returns>
 		public static PointF operator +(PointF p, Coord c) => new PointF(p.X + c.X, p.Y + c.Y);
 		
+		/// <summary>
+		/// Subtracts the x and y values of a Coord from a System.Drawing.Point.
+		/// </summary>
+		/// <param name="p" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.Point (p.X - c.X, p.Y - c.Y).</returns>
 		public static DrawingPoint operator -(DrawingPoint p, Coord c) => new DrawingPoint(p.X - c.X, p.Y - c.Y);
+		/// <summary>
+		/// Subtracts the x and y values of a System.Drawing.Point from a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="p" />
+		/// <returns>A Coord (c.X - p.X, c.Y - p.Y).</returns>
 		public static Coord operator -(Coord c, DrawingPoint p) => new Coord(c.X - p.X, c.Y - p.Y);
+		/// <summary>
+		/// Subtracts the x and y values of a Coord from a System.Drawing.PointF.
+		/// </summary>
+		/// <param name="p" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.PointF (p.X - c.X, p.Y - c.Y).</returns>
 		public static PointF operator -(PointF p, Coord c) => new PointF(p.X - c.X, p.Y - c.Y);
 		
+		/// <summary>
+		/// Adds the x and y values of a Coord to a System.Drawing.Size.
+		/// </summary>
+		/// <param name="s" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.Size (s.Width + c.X, s.Height + c.Y).</returns>
 		public static Size operator +(Size s, Coord c) => new Size(s.Width + c.X, s.Height + c.Y);
+		/// <summary>
+		/// Adds the x and y values of a System.Drawing.Size to a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="s" />
+		/// <returns>A Coord (c.X + s.Width, c.Y + s.Height).</returns>
 		public static Coord operator +(Coord c, Size s) => new Coord(c.X + s.Width, c.Y + s.Height);
+		/// <summary>
+		/// Adds the x and y values of a Coord to a System.Drawing.SizeF.
+		/// </summary>
+		/// <param name="s" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.SizeF (s.Width + c.X, s.Height + c.Y).</returns>
 		public static SizeF operator +(SizeF s, Coord c) => new SizeF(s.Width + c.X, s.Height + c.Y);
 		
+		/// <summary>
+		/// Subtracts the x and y values of a Coord from a System.Drawing.Size.
+		/// </summary>
+		/// <param name="s" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.Size (s.Width - c.X, s.Height - c.Y).</returns>
 		public static Size operator -(Size s, Coord c) => new Size(s.Width - c.X, s.Height - c.Y);
+		/// <summary>
+		/// Subtracts the x and y values of a System.Drawing.Size from a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="s" />
+		/// <returns>A Coord (c.X - s.Width, c.Y - s.Height).</returns>
 		public static Coord operator -(Coord c, Size s) => new Coord(c.X - s.Width, c.Y - s.Height);
+		/// <summary>
+		/// Subtracts the x and y values of a Coord from a System.Drawing.SizeF.
+		/// </summary>
+		/// <param name="s" />
+		/// <param name="c" />
+		/// <returns>A System.Drawing.SizeF (s.Width - c.X, s.Height - c.Y).</returns>
 		public static SizeF operator -(SizeF s, Coord c) => new SizeF(s.Width - c.X, s.Height - c.Y);
 		#endregion
 
 		#region TupleCompatibility
+		/// <summary>
+		/// Adds support for C# Deconstruction syntax.
+		/// </summary>
+		/// <param name="x" />
+		/// <param name="y" />
 		public void Deconstruct(out int x, out int y)
 		{
 			x = X;
 			y = Y;
 		}
 
+		/// <summary>
+		/// Implicitly converts a Coord to an equivalent tuple of two integers.
+		/// </summary>
+		/// <param name="c" />
+		/// <returns />
 		public static implicit operator (int x, int y) (Coord c) => (c.X, c.Y);
+		/// <summary>
+		/// Implicitly converts a tuple of two integers to an equivalent Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <returns />
 		public static implicit operator Coord((int x, int y) tuple) => new Coord(tuple.x, tuple.y);
 		
+		/// <summary>
+		/// Adds the x and y values of a Coord to the corresponding values of a tuple of two integers.
+		/// </summary>
+		/// <param name="tuple" />
+		/// <param name="c" />
+		/// <returns>A tuple (tuple.x + c.X, tuple.y + c.Y).</returns>
 		public static (int x, int y) operator +((int x, int y) tuple, Coord c) => (tuple.x + c.X, tuple.y + c.Y);
+		/// <summary>
+		/// Adds the x and y values of a tuple of two integers to a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="tuple" />
+		/// <returns>A Coord (c.X + tuple.x, c.Y + tuple.y).</returns>
 		public static Coord operator +(Coord c, (int x, int y) tuple) => new Coord(c.X + tuple.x, c.Y + tuple.y);
 		
+		/// <summary>
+		/// Subtracts the x and y values of a Coord from a tuple of two integers.
+		/// </summary>
+		/// <param name="tuple" />
+		/// <param name="c" />
+		/// <returns>A tuple (tuple.x - c.X, tuple.y - c.Y).</returns>
 		public static (int x, int y) operator -((int x, int y) tuple, Coord c) => (tuple.x - c.X, tuple.y - c.Y);
+		/// <summary>
+		/// Subtracts the x and y values of a tuple of two integers from a Coord.
+		/// </summary>
+		/// <param name="c" />
+		/// <param name="tuple" />
+		/// <returns>A Coord (c.X - tuple.x, c.Y - tuple.y).</returns>
 		public static Coord operator -(Coord c, (int x, int y) tuple) => new Coord(c.X - tuple.x, c.Y - tuple.y);
 		#endregion
 	}
