@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace GoRogue.SenseMapping
 {
 	/// <summary>
-	/// Read-only interface of a SenseMap.
+	/// Read-only interface of a <see cref="SenseMap"/>.
 	/// </summary>
 	public interface IReadOnlySenseMap : IEnumerable<double>, IMapView<double>
 	{
@@ -29,8 +29,9 @@ namespace GoRogue.SenseMapping
 		IEnumerable<Coord> NewlyOutOfSenseMap { get; }
 
 		/// <summary>
-		/// Read-only list of all sources currently taken into account. Some may have their enabled
-		/// flag set to false, so all of these may or may not be counted when Calculate is called.
+		/// Read-only list of all sources currently considered part of the sense map. Some may have their
+		/// <see cref="SenseSource.Enabled"/> flag set to false, so all of these may or may not be counted
+		/// when Calculate is called.
 		/// </summary>
 		IReadOnlyList<SenseSource> SenseSources { get; }
 	}

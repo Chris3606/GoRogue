@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace GoRogue.SenseMapping
 {
 	/// <summary>
-	/// Different types of algorithms that model how values spread from the source.
+	/// Different types of algorithms that model how source values spread from their source's location.
 	/// </summary>
 	public enum SourceType
 	{
@@ -16,39 +16,41 @@ namespace GoRogue.SenseMapping
 		RIPPLE,
 
 		/// <summary>
-		/// Similar to RIPPLE but with different spread mechanics. Values spread around edges like
-		/// smoke or water, but maintains a tendency to curl towards the start position as it goes
-		/// around edges.
+		/// Similar to <see cref="RIPPLE"/> but with different spread mechanics. Values spread around edges like
+		/// smoke or water, but maintains a tendency to curl towards the start position as it goes around edges.
 		/// </summary>
 		RIPPLE_LOOSE,
 
 		/// <summary>
-		/// Similar to RIPPLE, but values spread around corners only very slightly.
+		/// Similar to <see cref="RIPPLE"/>, but values spread around corners only very slightly.
 		/// </summary>
 		RIPPLE_TIGHT,
 
 		/// <summary>
-		/// Similar to RIPPLE, but values spread around corners a lot.
+		/// Similar to <see cref="RIPPLE"/>, but values spread around corners a lot.
 		/// </summary>
 		RIPPLE_VERY_LOOSE,
 
 		/// <summary>
 		/// Uses a Shadowcasting algorithm. All partially resistant grid locations are treated as
 		/// being fully transparent (it's on-off blocking, where a value greater than or equal to the
-		/// source's Intensity in the resistance map blocks, and all lower values don't).
-		/// Returns values from Intensity at center of source to 0.0 outside of range of source.
+		/// source's <see cref="SenseSource.Intensity"/> in the resistance map blocks, and all lower
+		/// values don't).
 		/// </summary>
 		SHADOW
 	};
 
 	/// <summary>
-	/// Represents a source location to be used in a SenseMap. One would typically create these and
-	/// call SenseMap.AddSenseSource with them, and perhaps retain a reference for the sake of moving
-	/// it around or toggling it on-off. The player might have one of these that follows it around if
-	/// SenseMap is being used as a lighting map, for instance. Note that changing values such as
-	/// Position and Radius after the source is created is possible, however changes will not be
-	/// reflected in any SenseSources using this source until their next Calculate call.
+	/// Represents a source location to be used in a <see cref="SenseMap"/>. 
 	/// </summary>
+	/// <remarks>
+	/// Typically, you create these, and then call <see cref="SenseMap.AddSenseSource(SenseSource)"/>
+	/// to add them to a sensory map, and perhaps retain a reference for the sake of moving it
+	/// around or toggling it on-off.  Note that changing values such as <see cref="Position"/> and
+	/// <see cref="Radius"/> after the source is created is possible, however changes will not be
+	/// reflected in any <see cref="SenseMap"/> instances using this source until their next call
+	/// to <see cref="SenseMap.Calculate"/>.
+	/// </remarks>
 	public class SenseSource
 	{
 		// Local calculation arrays, internal so SenseMap can easily copy them.
@@ -64,8 +66,7 @@ namespace GoRogue.SenseMapping
 		private int halfSize;
 
 		/// <summary>
-		/// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
-		/// used for calculations.
+		/// Constructor.
 		/// </summary>
 		/// <param name="type">The spread mechanics to use for source values.</param>
 		/// <param name="position">The position on a map that the source is located at.</param>
@@ -75,9 +76,9 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="distanceCalc">
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius).
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
 		/// </param>
-		/// /// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double intensity = 1.0)
 		{
 			if (radius <= 0)
@@ -99,7 +100,7 @@ namespace GoRogue.SenseMapping
 		}
 
 		/// <summary>
-		/// Constructor.  Creates a source whose spread is restricted to a certain angle and span.
+		/// Constructor.  Creates a source whose spreading is restricted to a certain angle and span.
 		/// </summary>
 		/// <param name="type">The spread mechanics to use for source values.</param>
 		/// <param name="position">The position on a map that the source is located at.</param>
@@ -109,13 +110,13 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="distanceCalc">
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius).
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
 		/// </param>
 		/// <param name="angle">The angle in degrees that specifies the outermost center point of the cone formed
 		/// by the source's values. 0 degrees points right.</param>
 		/// <param name="span">
 		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
-		/// angle/2 degrees are included on either side of the cone's center line.
+		/// <paramref name="angle"/> / 2 degrees are included on either side of the cone's center line.
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
@@ -141,21 +142,20 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="distanceCalc">
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius).
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
 		/// </param>
 		/// <param name="angle">The angle in degrees that specifies the outermost center point of the cone formed
 		/// by the source's values. 0 degrees points right.</param>
 		/// <param name="span">
 		/// The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
-		/// angle/2 degrees are included on either side of the cone's center line.
+		/// <paramref name="angle"/> / 2 degrees are included on either side of the cone's center line.
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
 			: this(type, new Coord(positionX, positionY), radius, distanceCalc, angle, span, intensity) { }
 
 		/// <summary>
-		/// Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
-		/// used for calculations.
+		/// Constructor.
 		/// </summary>
 		/// <param name="type">The spread mechanics to use for source values.</param>
 		/// <param name="positionX">
@@ -170,7 +170,7 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="distanceCalc">
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius).
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double intensity = 1.0)
@@ -178,14 +178,13 @@ namespace GoRogue.SenseMapping
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius)
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="GoRogue.Radius"/>).
 		/// </summary>
 		public Distance DistanceCalc { get; set; }
 
 		/// <summary>
-		/// Whether or not this source is enabled. If a source is disabled when its SenseMap's
-		/// Calculate function is called, the source does not calculate values and is effectively
-		/// assumed to be "off".
+		/// Whether or not this source is enabled. If a source is disabled when <see cref="SenseMap.Calculate"/>
+		/// is called, the source does not calculate values and is effectively assumed to be "off".
 		/// </summary>
 		public bool Enabled { get; set; }
 
@@ -224,9 +223,9 @@ namespace GoRogue.SenseMapping
 		private double _angle;
 
 		/// <summary>
-		/// If IsAngleRestricted is true, the angle in degrees that represents a line from the source's start to
+		/// If <see cref="IsAngleRestricted"/> is true, the angle in degrees that represents a line from the source's start to
 		/// the outermost center point of the cone formed by the source's calculated values.  0 degrees points right.
-		/// If IsAngleRestricted is false, this will be 0.0 degrees.
+		/// Otherwise, this will be 0.0 degrees.
 		/// </summary>
 		public double Angle
 		{
@@ -241,8 +240,8 @@ namespace GoRogue.SenseMapping
 		private double _span;
 
 		/// <summary>
-		/// If IsAngleRestricted is true, the angle in degrees that represents the full arc of the cone formed by
-		/// the source's calculated values.  If IsAngleRestricted is false, it will be 360 degrees.
+		/// If <see cref="IsAngleRestricted"/> is true, the angle in degrees that represents the full arc of the cone formed by
+		/// the source's calculated values.  Otherwise, it will be 360 degrees.
 		/// </summary>
 		public double Span
 		{
