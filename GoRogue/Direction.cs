@@ -464,12 +464,16 @@ namespace GoRogue
 		/// <returns>String representation of the direction.</returns>
 		public override string ToString() => writeVals[(int)Type];
 
-        #region MonoGame Compatibility
-        public static MonoPoint operator +(MonoPoint p, Direction d) => new MonoPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
-        #endregion
+		#region MonoGame Compatibility
+		public static MonoPoint operator +(MonoPoint p, Direction d) => new MonoPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
+		#endregion
 
-        #region System.Drawing Compatibility
-        public static DrawingPoint operator +(DrawingPoint p, Direction d) => new DrawingPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
-        #endregion
-    }
+		#region System.Drawing Compatibility
+		public static DrawingPoint operator +(DrawingPoint p, Direction d) => new DrawingPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
+		#endregion
+		
+		#region Tuple Compatibility
+		public static (int x, int y) operator +((int x, int y) tuple, Direction d) => (tuple.x + d.DeltaX, tuple.y + d.DeltaY);
+		#endregion
+	}
 }
