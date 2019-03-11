@@ -4,30 +4,30 @@ using System.Collections.Generic;
 namespace GoRogue
 {
 	/// <summary>
-	/// Read-only interface of the FOV class.
+	/// Read-only interface of the <see cref="FOV"/> class.
 	/// </summary>
 	public interface IReadOnlyFOV : IMapView<double>
 	{
 		/// <summary>
-		/// A view of the FOV results in boolean form, where true indicates a location is in FOV, and
-		/// false indicates it is not.
+		/// A view of the calculation results in boolean form, where true indicates a location is in
+		/// field of view, and false indicates it is not.
 		/// </summary>
 		IMapView<bool> BooleanFOV { get; }
 
 		/// <summary>
-		/// IEnumerable of only positions currently in FOV.
+		/// IEnumerable of only positions currently in the field of view.
 		/// </summary>
 		IEnumerable<Coord> CurrentFOV { get; }
 
 		/// <summary>
-		/// IEnumerable of positions that are in FOV as of the most current Calculate call, but were
-		/// NOT in FOV afterthe previous time Calculate was called.
+		/// IEnumerable of positions that ARE in field of view as of the most current Calculate call, but were
+		/// NOT in field of view after the previous time Calculate was called.
 		/// </summary>
 		IEnumerable<Coord> NewlySeen { get; }
 
 		/// <summary>
-		/// IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but
-		/// WERE in FOV after the previous time Calculate was called.
+		/// IEnumerable of positions that are NOT in field of view as of the most current Calculate call, but
+		/// WERE in field of view after the previous time Calculate was called.
 		/// </summary>
 		IEnumerable<Coord> NewlyUnseen { get; }
 	}
