@@ -5,15 +5,15 @@ namespace GoRogue.Random
 {
 	/// <summary>
 	/// Wraps a continuous distribution and allows it to be used as discrete, by rounding double
-	/// values produced by NextDouble to nearest int. Its minimum, maximum, mean, median, variance,
-	/// and mode(s) are exactly the same as its underlying IContinuousDistribution.
+	/// values produced by <see cref="NextDouble"/> to the nearest int. Its minimum, maximum, mean, median, variance,
+	/// and mode(s) are exactly the same as its underlying <see cref="IContinuousDistribution"/>.
 	/// </summary>
 	/// <remarks>
-	/// Takes a value of type T so that its ContinuousDistribution field can return a value of the
+	/// Takes a value of type T so that its <see cref="ContinuousDistribution"/> can return a value of the
 	/// exact wrapped type, which still enables access to any distribution-specified fields, etc.
 	/// </remarks>
 	/// <typeparam name="T">
-	/// The type of continuous distribution being wrapped. Must implement IContinuousDistribution.
+	/// The type of continuous distribution being wrapped. Must implement <see cref="IContinuousDistribution"/>.
 	/// </typeparam>
 	public class DiscreteConverter<T> : IDiscreteDistribution where T : IContinuousDistribution
 	{
@@ -38,7 +38,7 @@ namespace GoRogue.Random
 		public T ContinuousDistribution { get; private set; }
 
 		/// <summary>
-		/// Gets the IGenerator object that is used as underlying random number generator.
+		/// Gets the <see cref="IGenerator"/> object that is used as underlying random number generator.
 		/// </summary>
 		public IGenerator Generator => ContinuousDistribution.Generator;
 
@@ -73,11 +73,11 @@ namespace GoRogue.Random
 		public double Variance => ContinuousDistribution.Variance;
 
 		/// <summary>
-		/// Returns the result of the underlying continuous distribution's NextDouble function, but
+		/// Returns the result of the underlying continuous distribution's <see cref="NextDouble"/> function, but
 		/// rounded to the nearest integer.
 		/// </summary>
 		/// <returns>
-		/// The result of the underlying continuous distribution's NextDouble function, rounded to
+		/// The result of the underlying continuous distribution's <see cref="NextDouble"/> function, rounded to
 		/// the nearest integer.
 		/// </returns>
 		public int Next() => (int)Math.Round(ContinuousDistribution.NextDouble(), MidpointRounding.AwayFromZero);

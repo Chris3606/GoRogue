@@ -5,7 +5,7 @@ namespace GoRogue.Random
 	/// <summary>
 	/// A "random" number generator that always returns the minValue parameter given, or 0 on the
 	/// Next overload that only takes maxValue. Again, may be useful for testing. Also used in
-	/// DiceExpression for certain minimum roll functions.
+	/// <see cref="DiceNotation.DiceExpression"/> for certain minimum roll functions.
 	/// </summary>
 	public class MinRandom : IGenerator
 	{
@@ -33,7 +33,7 @@ namespace GoRogue.Random
 		public int Next(int maxValue) => 0;
 
 		/// <summary>
-		/// Returns minValue.
+		/// Returns <paramref name="minValue"/>.
 		/// </summary>
 		/// <param name="minValue">
 		/// The minimum value for the returned number (which is always returned by this generator)
@@ -42,7 +42,7 @@ namespace GoRogue.Random
 		/// The maximum value for the returned number (which is unused since this generator always
 		/// returns the minimum.
 		/// </param>
-		/// <returns>minValue</returns>
+		/// <returns><paramref name="minValue"/></returns>
 		public int Next(int minValue, int maxValue) => minValue;
 
 		/// <summary>
@@ -78,14 +78,14 @@ namespace GoRogue.Random
 		public double NextDouble(double maxValue) => 0.0;
 
 		/// <summary>
-		/// Returns minValue.
+		/// Returns <paramref name="minValue"/>.
 		/// </summary>
 		/// <param name="minValue">
 		/// The minimum value for the returned number (always returned since this function always
 		/// returns the minimum).
 		/// </param>
 		/// <param name="maxValue">The maximum vlaue for the returned number (unused).</param>
-		/// <returns>minValue</returns>
+		/// <returns><paramref name="minValue"/></returns>
 		public double NextDouble(double minValue, double maxValue) => minValue;
 
 		/// <summary>
@@ -110,13 +110,13 @@ namespace GoRogue.Random
 		public uint NextUInt(uint maxValue) => 0;
 
 		/// <summary>
-		/// Returns minValue.
+		/// Returns <paramref name="minValue"/>.
 		/// </summary>
 		/// <param name="minValue">
 		/// The minimum value for the returned number (this generator always returns the minimum value).
 		/// </param>
 		/// <param name="maxValue">The maximum value for the returned number (unused).</param>
-		/// <returns>minValue</returns>
+		/// <returns><paramref name="minValue"/></returns>
 		public uint NextUInt(uint minValue, uint maxValue) => minValue;
 
 		/// <summary>

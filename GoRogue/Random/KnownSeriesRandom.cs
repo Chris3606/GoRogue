@@ -73,15 +73,15 @@ namespace GoRogue.Random
 
 		/// <summary>
 		/// Gets the next number in the underlying int series. If the value is less than 0 or greater
-		/// than/equal to maxValue, throws an exception.
+		/// than/equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
 		/// <returns>The appropriate number from the series.</returns>
 		public int Next(int maxValue) => Next(0, maxValue);
 
 		/// <summary>
-		/// Gets the next number in the underlying series. If the value is less than minValue or
-		/// greater than/equal to maxValue, throws an exception.
+		/// Gets the next number in the underlying series. If the value is less than <paramref name="minValue"/> or
+		/// greater than/equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="minValue">Minimum allowable number that can be returned.</param>
 		/// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
@@ -89,7 +89,7 @@ namespace GoRogue.Random
 		public int Next(int minValue, int maxValue) => returnIfRange(minValue, maxValue, intSeries, ref intIndex);
 
 		/// <summary>
-		/// Gets the next integer in the underlying series. If the integer is equal to int.MaxValue,
+		/// Gets the next integer in the underlying series. If the integer is equal to <see cref="int.MaxValue"/>,
 		/// throws an exception.
 		/// </summary>
 		/// <returns>The next integer in the underlying series.</returns>
@@ -120,15 +120,15 @@ namespace GoRogue.Random
 
 		/// <summary>
 		/// Returns the next double in the underlying series. If the double is less than 0.0 or
-		/// greater than/equal to maxValue, throws an exception.
+		/// greater than/equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="maxValue">The maximum value for the returned value, exclusive.</param>
 		/// <returns>The next double in the underlying series.</returns>
 		public double NextDouble(double maxValue) => NextDouble(0, maxValue);
 
 		/// <summary>
-		/// Returns the next double in the underlying series. If the double is less than minValue or
-		/// greater than/equal to maxValue, throws an exception.
+		/// Returns the next double in the underlying series. If the double is less than <paramref name="minValue"/>
+		/// or greater than/equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="minValue">Minimum value for the returned number, inclusive.</param>
 		/// <param name="maxValue">Maximum value for the returned number, exclusive.</param>
@@ -143,14 +143,14 @@ namespace GoRogue.Random
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is equal to
-		/// uint.MaxValue, throws an exception.
+		/// <see cref="uint.MaxValue"/>, throws an exception.
 		/// </summary>
 		/// <returns>The next unsigned integer in the underlying series.</returns>
 		public uint NextUInt() => NextUInt(0, uint.MaxValue);
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is greater than
-		/// or equal to maxValue, throws an exception.
+		/// or equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
 		/// <returns>The next unsigned integer in the underlying series.</returns>
@@ -158,7 +158,7 @@ namespace GoRogue.Random
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is less than
-		/// minValue, or greater than/equal to maxValue, throws an exception.
+		/// <paramref name="minValue"/>, or greater than/equal to <paramref name="maxValue"/>, throws an exception.
 		/// </summary>
 		/// <param name="minValue">The minimum value for the returned number, inclusive.</param>
 		/// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
@@ -167,7 +167,7 @@ namespace GoRogue.Random
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is equal to
-		/// uint.MaxValue, throws an exception.
+		/// <see cref="uint.MaxValue"/>, throws an exception.
 		/// </summary>
 		/// <returns>The next unsigned integer in the underlying series.</returns>
 		public uint NextUIntExclusiveMaxValue() => NextUInt();

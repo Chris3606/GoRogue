@@ -12,8 +12,8 @@ namespace GoRogue.Random
 		/// <summary>
 		/// Creates a normal distribution based on a lower and upper value, and a distance to place
 		/// those points from the mean. The mean is placed precisely in between the upper and lower
-		/// values given, and the upper and lower values will both be exactly deviationsFromMean away
-		/// from the mean.
+		/// values given, and the upper and lower values will both be exactly <paramref name="deviationsFromMean"/>
+		/// deviations away from the mean.
 		/// </summary>
 		/// <param name="lower">Lower value by which to define the distribution.</param>
 		/// <param name="upper">Upper value by which to define the distribution.</param>
@@ -21,7 +21,7 @@ namespace GoRogue.Random
 		/// Number of deviations from the mean at which to place the lower and upper values given.
 		/// </param>
 		/// <returns>
-		/// A NormalDistribution constructed such that the mean is precisely in between the lower and
+		/// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
@@ -31,17 +31,17 @@ namespace GoRogue.Random
 		/// <summary>
 		/// Creates a normal distribution based on a lower and upper value, and a distance to place
 		/// those points from the mean. The mean is placed precisely in between the upper and lower
-		/// values given, and the upper and lower values will both be exactly deviationsFromMean away
-		/// from the mean.
+		/// values given, and the upper and lower values will both be exactly <paramref name="deviationsFromMean"/>
+		/// deviations away from the mean.
 		/// </summary>
-		/// <param name="seed">The seed to pass the default XorShift128Generator that is created.</param>
+		/// <param name="seed">The seed to pass the default <see cref="XorShift128Generator"/> that is created.</param>
 		/// <param name="lower">Lower value by which to define the distribution.</param>
 		/// <param name="upper">Upper value by which to define the distribution.</param>
 		/// <param name="deviationsFromMean">
 		/// Number of deviations from the mean at which to place the lower and upper values given.
 		/// </param>
 		/// <returns>
-		/// A NormalDistribution constructed such that the mean is precisely in between the lower and
+		/// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
@@ -51,11 +51,11 @@ namespace GoRogue.Random
 		/// <summary>
 		/// Creates a normal distribution based on a lower and upper value, and a distance to place
 		/// those points from the mean. The mean is placed precisely in between the upper and lower
-		/// values given, and the upper and lower values will both be exactly deviationsFromMean away
-		/// from the mean.
+		/// values given, and the upper and lower values will both be exactly <paramref name="deviationsFromMean"/>
+		/// deviations away from the mean.
 		/// </summary>
 		/// <param name="generator">
-		/// Generator to use. If null is specified, the default RNG will be used.
+		/// Generator to use. If null is specified, the <see cref="SingletonRandom.DefaultRNG"/> will be used.
 		/// </param>
 		/// <param name="lower">Lower value by which to define the distribution.</param>
 		/// <param name="upper">Upper value by which to define the distribution.</param>
@@ -63,7 +63,7 @@ namespace GoRogue.Random
 		/// Number of deviations from the mean at which to place the lower and upper values given.
 		/// </param>
 		/// <returns>
-		/// A NormalDistribution constructed such that the mean is precisely in between the lower and
+		/// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
