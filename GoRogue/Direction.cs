@@ -385,45 +385,37 @@ namespace GoRogue
 		/* TODO: Resume Documentation proofing here */
 		
 		/// <summary>
-		/// - operator. Returns the direction i directions counterclockwise of the given direction if
-		/// i is positive. If is negative, the direction is moved clockwise. If any amount is added
-		/// to NONE, it returns NONE.
+		/// Moves the direction counter-clockwise <paramref name="i"/> times.
 		/// </summary>
-		/// <param name="d">Direction to "subtract" from.</param>
-		/// <param name="i">Number of directions to "subtract".</param>
+		/// <param name="d"/>
+		/// <param name="i"/>
 		/// <returns>
-		/// The direction i directions counterclockwise of d, if i is positive, or clockwise of d if
-		/// i is negative. NONE is returned if NONE was added to.
+		/// The given direction moved counter-clockwise <paramref name="i"/> times.
 		/// </returns>
 		public static Direction operator -(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type - i, 8)];
 
 		/// <summary>
-		/// -- operator (decrement). Returns the direction directly counterclockwise of the original
-		/// direction. If NONE is decremented, returns NONE.
+		/// Moves the direction counter-clockwise by one.
 		/// </summary>
-		/// <param name="d">Direction to decrement.</param>
-		/// <returns>The direction directly counterclockwise of d, or NONE if none was decremented.</returns>
+		/// <param name="d"/>
+		/// <returns>The direction one unit counterclockwise of <paramref name="d"/>.</returns>
 		public static Direction operator --(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type - 1, 8)];
 
 		/// <summary>
-		/// + operator. Returns the direction i directions clockwise of the given direction if i is
-		/// positive. If is negative, the direction is moved counterclockwise. If any amount is added
-		/// to NONE, it returns NONE.
+		/// Moves the direction clockwise <paramref name="i"/> times.
 		/// </summary>
-		/// <param name="d">Direction to "add" to.</param>
-		/// <param name="i">Number of directions to "add".</param>
+		/// <param name="d"/>
+		/// <param name="i"/>
 		/// <returns>
-		/// The direction i directions clockwise of d, if i is positive, or counterclockwise of d if
-		/// i is negative. NONE is returned if NONE was added to.
+		/// The given direction moved clockwise <paramref name="i"/> times.
 		/// </returns>
 		public static Direction operator +(Direction d, int i) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + i, 8)];
 
 		/// <summary>
-		/// ++ operator (increment). Returns the direction directly clockwise of the original
-		/// direction. If NONE is incremented, returns NONE.
+		/// Moves the direction clockwise by one.
 		/// </summary>
-		/// <param name="d">Direction to increment.</param>
-		/// <returns>The direction directly clockwise of d, or NONE if none is incremented.</returns>
+		/// <param name="d"/>
+		/// <returns>The direction one unit clockwise of <paramref name="d"/>.</returns>
 		public static Direction operator ++(Direction d) => (d == NONE) ? NONE : directions[MathHelpers.WrapAround((int)d.Type + 1, 8)];
 
 		/// <summary>
@@ -468,20 +460,44 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Writes the string ("UP", "UP_RIGHT", etc.) for the direction.
+		/// Writes the string (eg. "UP", "UP_RIGHT", etc.) for the direction.
 		/// </summary>
 		/// <returns>String representation of the direction.</returns>
 		public override string ToString() => writeVals[(int)Type];
 
 		#region MonoGame Compatibility
+		/// <summary>
+		/// Translates the given position by one unit in the given direction.
+		/// </summary>
+		/// <param name="p"/>
+		/// <param name="d"/>
+		/// <returns>
+		/// Position (p.X + d.DeltaX, p.Y + d.DeltaY).
+		/// </returns>
 		public static MonoPoint operator +(MonoPoint p, Direction d) => new MonoPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
 		#endregion
 
 		#region System.Drawing Compatibility
+		/// <summary>
+		/// Translates the given position by one unit in the given direction.
+		/// </summary>
+		/// <param name="p"/>
+		/// <param name="d"/>
+		/// <returns>
+		/// Position (p.X + d.DeltaX, p.Y + d.DeltaY).
+		/// </returns>
 		public static DrawingPoint operator +(DrawingPoint p, Direction d) => new DrawingPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
 		#endregion
 		
 		#region Tuple Compatibility
+		/// <summary>
+		/// Translates the given position by one unit in the given direction.
+		/// </summary>
+		/// <param name="tuple"/>
+		/// <param name="d"/>
+		/// <returns>
+		/// Tuple (tuple.y + d.DeltaX, tuple.y + d.DeltaY).
+		/// </returns>
 		public static (int x, int y) operator +((int x, int y) tuple, Direction d) => (tuple.x + d.DeltaX, tuple.y + d.DeltaY);
 		#endregion
 	}
