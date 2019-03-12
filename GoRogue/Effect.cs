@@ -4,14 +4,17 @@ namespace GoRogue
 {
 	/// <summary>
 	/// Default argument for any effect. Any class that is used as the template argument for an
-	/// effect must either be this or a class that inherits from this.
+	/// effect must inherit from this class.
 	/// </summary>
-	/// <remarks>This allows cancellation of EffectTriggers, as detailed in that class's documentation.</remarks>
+	/// <remarks>
+	/// These arguments allow cancellation of the triggering of a chain of effects when triggered by
+	/// an <see cref="EffectTrigger"/>, as detailed in that class's documentation.
+	/// </remarks>
 	public class EffectArgs
 	{
 		/// <summary>
-		/// Whether or not the EffectTrigger should stop calling all subsequent effect's Trigger
-		/// functions. See that class's documentation for details.
+		/// Whether or not the <see cref="EffectTrigger"/> should stop calling all subsequent effect's
+		/// <see cref="Effect{T}.Trigger(T)"/> functions. See EffectTrigger's documentation for details.
 		/// </summary>
 		public bool CancelTrigger;
 
@@ -23,30 +26,36 @@ namespace GoRogue
 
 	/// <summary>
 	/// Class designed to represent any sort of in-game effect. This could be anything from a simple
-	/// physical damage effect to a heal effect, including area of effects, damage over time effects,
-	/// or even potentially a special effect that simply boosts a stat.
+	/// physical damage effect to a heal effect or permanent effects.  These might include AOE effects,
+	/// damage over time effects, or even potentially a special effect that simply boosts a stat.
 	/// </summary>
 	/// <remarks>
-	/// Effectively, the class is nothing more than an interface for the concept of something that
+	/// Effectively, the class is nothing more than a basis for the concept of something that
 	/// happens, potentially instantaneously or potentially one or more times on a certain event
 	/// (beginning of a turn, end of a turn, on taking damage, etc). The standard way to use the
 	/// Effect class is to create a subclass of Effect, that at the very least implements the
-	/// OnTrigger function, which should accomplish whatever the effect should do when it is
-	/// triggered. The subclass can specify what parameter(s) it needs to take in via the class's
-	/// type parameter. If multiple arguments are needed, one should create a class that subclasses
-	/// EffectArgs that contains all the parameters, and the effect subclass should then take an
-	/// instance of that EffectArgs subclass as the single parameter. If no arguments are needed,
-	/// then one may pass null as the parameter to Trigger. The concept of a duration is also built
-	/// in to the interface (see EffectTrigger class for details on Effect durations. The duration is
-	/// to be interpreted as the number of times the effect's Trigger function will be called before
-	/// it will be removed from an EffectTrigger. If the effect is instantaneous, eg. it happens only
-	/// when Trigger is called, on no particular event (such as a simple instant physical damage
+	/// <see cref="Effect{T}.OnTrigger(T)"/> function, which should accomplish whatever the effect should
+	/// do when it is triggered. The subclass can specify what parameter(s) the OnTrigger function
+	/// needs to take in via the class's type parameter. If multiple arguments are needed, one should create
+	/// a class that subclasses <see cref="EffectArgs"/> that contains all the parameters, and the effect subclass
+	/// should then take an instance of the EffectArgs subclass as the single parameter. If no arguments are needed,
+	/// then one may pass null as the parameter to Trigger.
+	///
+	/// The concept of a duration is also built into the interface, and is considered to be in arbitrary units.  The duration
+	/// concept is designed to be used with <see cref="EffecTrigger{T}"/> instances, and has no effect when an effect is not
+	/// utilized with an EffectTrigger.  The duration is interpreted as simply the number of times the effect's
+	/// <see cref="Effect{T}.Trigger(T)") function will be called before it will be removed from an EffectTrigger. If the effect
+	/// is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant damage
 	/// effect), then the duration specified in the constructor should be the static class constant
-	/// INSTANT. Otherwise, one may specify the duration as a positive integer, or the INFINITE
-	/// static class constant. See EffectTrigger class documentation for details on durations.
+	/// <see cref="Effect{T}.INSTANT"/>. If the effect is meant to have an infinite duration, or the effect wears off on some
+	/// condition other than time passing, the duration may be set to <see cref="Effect{T}.INFINITE"/>, and then manipulated
+	/// appropriately to 0 when the effect has expired.
+	///
+	/// More explanation of Effects and EffectTriggers, and usage examples, can be found at the GoRogue documentation site
+	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>.
 	/// </remarks>
 	/// <typeparam name="TriggerArgs">
-	/// The type of the parameter that will be specified to the Trigger function when called.
+	/// The type of the parameter that will be specified to the <see cref="Effect{T}.Trigger(T)"/> function when called.
 	/// </typeparam>
 	abstract public class Effect<TriggerArgs> where TriggerArgs : EffectArgs
 	{
@@ -54,31 +63,35 @@ namespace GoRogue
 
 		/// <summary>
 		/// The value one should specify as the effect duration for an infinite effect, eg. an effect
-		/// that will never expire and be automatically removed from an EffectTrigger.
+		/// that will never expire or whose expiration time is arbitrary (for example, based on a condition
+		/// other than the passing of time).
 		/// </summary>
 		public static readonly int INFINITE = -1;
 
 		/// <summary>
 		/// The value one should specify as the effect duaration for an instantaneous effect, eg. an
-		/// effect that only occurs when Trigger is manually called, and thus cannot be added to an EffectTrigger.
+		/// effect that only occurs when Trigger is manually called, and thus cannot be added to an 
+		/// <see cref="EffectTrigger"/>.
 		/// </summary>
 		public static readonly int INSTANT = 0;
 
 #pragma warning restore RECS0108
 
 		/// <summary>
-		/// The name of the effect
+		/// The name of the effect.
 		/// </summary>
 		public string Name { get; set; }
 
 		private int _duration;
 
 		/// <summary>
-		/// The duration of the effect. When the duration reaches 0, the Effect will be automatically
-		/// removed from an EffectTrigger. The duration can be changed from a subclass, which can be
-		/// used in OnTrigger to cause an effect to be "cancelled", eg. immediately expire, or to
-		/// extend/reduce its duration.
+		/// The duration of the effect.
 		/// </summary>
+		/// <remarks>
+		/// When the duration reaches 0, the Effect will be automatically removed from an <see cref="EffectTrigger"/>.
+		/// The duration can be changed from a subclass, which can be used in <see cref="OnTrigger(TriggerArgs)"/> to
+		/// cause an effect to be "cancelled", eg. immediately expire, or to extend/reduce its duration.
+		/// </remarks>
 		public int Duration
 		{
 			get => _duration;
@@ -94,15 +107,16 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Fires as soon as the effect is about to expire. Fires after the OnTrigger has been called
-		/// that round, but before it is removed from any EffectTriggers.
+		/// Event that fires as soon as the effect is about to expire. Fires after the
+		/// <see cref="OnTrigger(TriggerArgs)"/> function has been called but before it is
+		/// removed from any <see cref="EffectTrigger"/> instances.
 		/// </summary>
 		public event EventHandler Expired;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="name">Name for the effect</param>
+		/// <param name="name">Name for the effect.</param>
 		/// <param name="startingDuration">Starting duration for the effect.</param>
 		public Effect(string name, int startingDuration)
 		{
@@ -111,15 +125,14 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Should be called on instantaneous effects to Trigger the effect. Can also be called
-		/// manually (not by an EffectTrigger) on non-instantaneous effects, however note that it
-		/// will still cause the duration to decrease.
+		/// Should be called on instantaneous effects to trigger the effect.
 		/// </summary>
 		/// <remarks>
-		/// Any effect that has INSTANT duration (eg. duration 0) will still have OnTrigger called
-		/// when Trigger is called.
+		/// Any effect that has INSTANT duration or duration 0 when this function is called
+		/// will still have its <see cref="OnTrigger(TriggerArgs)"/> function called.
 		/// </remarks>
-		/// <param name="args">Parameters that are passed to OnTrigger. Can be null.</param>
+		/// <param name="args">Parameters that are passed to <see cref="OnTrigger(TriggerArgs)"/>.
+		/// Can be null.</param>
 		public void Trigger(TriggerArgs args)
 		{
 			OnTrigger(args);
@@ -129,14 +142,14 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Should be implemented to take whatever action(s) the effect is supposed to accomplish.
-		/// This function is called automatically when Trigger is called.
+		/// Implement to take whatever action(s) the effect is supposed to accomplish.
+		/// This function is called automatically when <see cref="Trigger"/> is called.
 		/// </summary>
-		/// <param name="e">Class containing all arguments OnTrigger requires to function.</param>
+		/// <param name="e">Class containing all arguments <see cref="OnTrigger"/> requires to function.</param>
 		abstract protected void OnTrigger(TriggerArgs e);
 
 		/// <summary>
-		/// Yields a string of the effect's name and duration.
+		/// Returns a string of the effect's name and duration.
 		/// </summary>
 		/// <returns>String representation of the effect.</returns>
 		public override string ToString()
