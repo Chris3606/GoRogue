@@ -10,8 +10,16 @@ using DrawingRectangleF = System.Drawing.RectangleF;
 namespace GoRogue
 {
 	/// <summary>
-	/// Represents a rectangle in terms of grid squares. Provides numerous functions pertaining to area.
+	/// Represents a rectangle in terms of grid squares. Provides numerous static functions that enable
+	/// creation and common operations involving rectangles, as well as implicit conversion operators that
+	/// enable interoperability with rectangle representations from other libraries.
 	/// </summary>
+	/// <remarks>
+	/// Rectangle is designed to be extremely efficient and interoperable with equivalent representations in other libraries,
+	/// so in general, in an environment where you have multiple rectangle representations defined, it is best to prefer
+	/// Rectangle where possible, as something that accepts or works with Rectangle will generally work with other supported types
+	/// as well.
+	/// </remarks>
 	public struct Rectangle : IEquatable<Rectangle>
 	{
 		/// <summary>
@@ -20,7 +28,7 @@ namespace GoRogue
 		public static readonly Rectangle EMPTY = new Rectangle(0, 0, 0, 0);
 
 		/// <summary>
-		/// Constructor. Takes the minimum x and y values of the rectangle, along with the width and height.
+		/// Constructor.
 		/// </summary>
 		/// <param name="x">Minimum x coordinate that is inside the rectangle.</param>
 		/// <param name="y">Minimum y coordinate that is inside the rectangle.</param>
@@ -35,7 +43,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Constructor. Takes the minimum and maximum points that are considered within the rectangle.
+		/// Constructor.
 		/// </summary>
 		/// <param name="minExtent">Minimum x and y values that are considered inside the rectangle.</param>
 		/// <param name="maxExtent">Maximum x and y values that are considered inside the rectangle.</param>
@@ -48,7 +56,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Constructor. Takes a center point, and horizontal/vertical radius defining the bounds.
+		/// Constructor.
 		/// </summary>
 		/// <param name="center">The center point of the rectangle.</param>
 		/// <param name="horizontalRadius">
@@ -72,7 +80,7 @@ namespace GoRogue
 
 		/// <summary>
 		/// The center coordinate of the rectangle, rounded up if the exact center is between two
-		/// positions. The center of a rectangle with width/height 1 is its Position.
+		/// positions. The center of a rectangle with width/height 1 is its <see cref="Position"/>.
 		/// </summary>
 		public Coord Center
 		{
@@ -115,24 +123,28 @@ namespace GoRogue
 
 		/// <summary>
 		/// Minimum extent of the rectangle (minimum x and y values that are included within it).
-		/// Identical to the Position because we define the rectangle's position by its minimum extent.
+		/// Identical to <see cref="Position"/> because we define the rectangle's position by its
+		/// minimum extent.
 		/// </summary>
 		public Coord MinExtent { get => new Coord(X, Y); }
 
 		/// <summary>
 		/// X-value of the minimum extent of the rectangle (minimum x value that is included within
-		/// it). Identical to the X value because we define the rectangle's position by its minimum extent.
+		/// it). Identical to the <see cref="X"/> value because we define the rectangle's position
+		/// by its minimum extent.
 		/// </summary>
 		public int MinExtentX { get => X; }
 
 		/// <summary>
 		/// Y-value of the minimum extent of the rectangle (minimum y value that is included within
-		/// it). Identical to the Y value because we define the rectangle's position by its minimum extent.
+		/// it). Identical to the <see cref="Y"/> value because we define the rectangle's position
+		/// by its minimum extent.
 		/// </summary>
 		public int MinExtentY { get => Y; }
 
 		/// <summary>
-		/// Calculates the perimeter length of the rectangle.
+		/// Calculates the perimeter length of the rectangle.  This is equal to the mathematical
+		/// perimeter, NOT the number of grid squares around the perimiter.
 		/// </summary>
 		public int Perimeter { get => (2 * Width) + (2 * Height); }
 
@@ -224,7 +236,6 @@ namespace GoRogue
 		/// <param name="y">Minimum y coordinate that is inside the rectangle.</param>
 		/// <param name="width">Width of the rectangle.</param>
 		/// <param name="height">Height of the rectangle.</param>
-		/// &gt;
 		/// <returns>A new rectangle at the given position with the given width and height.</returns>
 		public static Rectangle WithPositionAndSize(int x, int y, int width, int height) => new Rectangle(x, y, width, height);
 
@@ -238,11 +249,13 @@ namespace GoRogue
 		public static Rectangle WithPostionAndSize(Coord position, Coord size) => new Rectangle(position.X, position.Y, size.X, size.Y);
 
 		/// <summary>
-		/// Gets a MapArea representing every cell in rect1 that is NOT in rect2.
+		/// Gets a <see cref="MapArea"/> representing every location in <paramref name="rect1"/> that
+		/// is NOT in <paramref name="rect2"/>.
 		/// </summary>
-		/// <param name="rect1">First operand.</param>
-		/// <param name="rect2">Second operand.</param>
-		/// <returns>A MapArea representing every cell in rect1 that is NOT in rect2.</returns>
+		/// <param name="rect1"/>
+		/// <param name="rect2"/>
+		/// <returns>A <see cref="MapArea"/> representing every location in <paramref name="rect1"/> that
+		/// is NOT in <paramref name="rect2"/>.</returns>
 		public static MapArea GetDifference(Rectangle rect1, Rectangle rect2)
 		{
 			var retVal = new MapArea();
@@ -259,11 +272,12 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Gets a MapArea representing the exact union of the specified rectangles.
+		/// Gets a <see cref="MapArea"/> representing the exact union of the specified rectangles, eg.
+		/// a MapArea containing all locations from either rectangle.
 		/// </summary>
-		/// <param name="r1">First rectangle.</param>
-		/// <param name="r2">Second rectangle.</param>
-		/// <returns>A MapArea containing exactly those positions in one (or both) rectangles.</returns>
+		/// <param name="r1"/>
+		/// <param name="r2"/>
+		/// <returns>A <see cref="MapArea"/> containing every position in either rectangle.</returns>
 		public static MapArea GetExactUnion(Rectangle r1, Rectangle r2)
 		{
 			var retVal = new MapArea();
@@ -283,11 +297,11 @@ namespace GoRogue
 		/// Returns the rectangle that represents the intersection of the two rectangles specified,
 		/// or the empty rectangle if the specified rectangles do not intersect.
 		/// </summary>
-		/// <param name="r1">First rectangle.</param>
-		/// <param name="r2">Second rectangle.</param>
+		/// <param name="r1"/>
+		/// <param name="r2"/>
 		/// <returns>
-		/// Rectangle representing the intersection of r1 and r2, or the empty rectangle if the two
-		/// rectangles do not intersect.
+		/// Rectangle representing the intersection of <paramref name="r1"/> and <paramref name="r2"/>, or
+		/// the empty rectangle if the two rectangles do not intersect.
 		/// </returns>
 		public static Rectangle GetIntersection(Rectangle r1, Rectangle r2)
 		{
@@ -306,12 +320,14 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Gets the smallest possible rectangle that includes the entire area of both r1 and r2.
+		/// Gets the smallest possible rectangle that includes the entire area of both <see cref="r1"/> and
+		/// <see cref="r2"/>.
 		/// </summary>
-		/// <param name="r1">First rectangle.</param>
-		/// <param name="r2">Second rectangle.</param>
+		/// <param name="r1"/>
+		/// <param name="r2"/>
 		/// <returns>
-		/// The smallest possible rectangle that includes the entire area of both r1 and r2.
+		/// The smallest possible rectangle that includes the entire area of both <see cref="r1"/> and
+		/// <see cref="r2"/>.
 		/// </returns>
 		public static Rectangle GetUnion(Rectangle r1, Rectangle r2)
 		{
@@ -322,10 +338,10 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Opposite of !=.
+		/// Returns whether or not the rectangles differ in either their positions or extents.
 		/// </summary>
-		/// <param name="r1">First rectangle.</param>
-		/// <param name="r2">Second rectangle.</param>
+		/// <param name="r1"/>
+		/// <param name="r2"/>
 		/// <returns>true if the rectangles do NOT encompass the same area, false otherwise.</returns>
 		public static bool operator !=(Rectangle r1, Rectangle r2)
 		{
@@ -333,10 +349,10 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See Equals.
+		/// Returns whether or not the rectangles have the same position and extents.
 		/// </summary>
-		/// <param name="r1">First rectangle.</param>
-		/// <param name="r2">Second rectangle.</param>
+		/// <param name="r1"/>
+		/// <param name="r2"/>
 		/// <returns>
 		/// true if the area of the two rectangles encompass the exact same area, false otherwise.
 		/// </returns>
@@ -349,9 +365,9 @@ namespace GoRogue
 		/// Creates and returns a new rectangle that is the same size as the current one, but with
 		/// the center moved to the given position.
 		/// </summary>
-		/// <param name="center">The center-point for the new Rectangle.</param>
+		/// <param name="center">The center-point for the new rectangle.</param>
 		/// <returns>
-		/// A new Rectangle that is the same size as the current one, but with the center moved to
+		/// A new rectangle that is the same size as the current one, but with the center moved to
 		/// the given location.
 		/// </returns>
 		public Rectangle WithCenter(Coord center)
@@ -361,25 +377,25 @@ namespace GoRogue
 		/// Creates and returns a new rectangle that is the same size as the current one, but with
 		/// the center moved to the given position.
 		/// </summary>
-		/// <param name="x">X-value for the center-point of the new Rectangle.</param>
-		/// <param name="y">Y-value for the center-point of the new Rectangle.</param>
+		/// <param name="x">X-value for the center-point of the new rectangle.</param>
+		/// <param name="y">Y-value for the center-point of the new rectangle.</param>
 		/// <returns>
-		/// A new Rectangle that is the same size as the current one, but with the center moved to
+		/// A new rectangle that is the same size as the current one, but with the center moved to
 		/// the given location.
 		/// </returns>
 		public Rectangle WithCenter(int x, int y) => WithCenter(new Coord(x, y));
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has its height changed by the given delta-change value.
 		/// </summary>
-		/// <param name="deltaHeight">Delta-change for the height of the new Rectangle.</param>
-		/// <returns>A new Rectangle whose height is modified by the given delta-change value.</returns>
+		/// <param name="deltaHeight">Delta-change for the height of the new rectangle.</param>
+		/// <returns>A new rectangle whose height is modified by the given delta-change value.</returns>
 		public Rectangle ChangeHeight(int deltaHeight)
 			=> new Rectangle(X, Y, Width, Height + deltaHeight);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has its width and height changed by the given delta-change values.
 		/// </summary>
 		/// <param name="deltaWidth">Delta-change for the width of the new rectangle.</param>
@@ -391,7 +407,7 @@ namespace GoRogue
 			=> new Rectangle(X, Y, Width + deltaWidth, Height + deltaHeight);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has its width and height changed by the given delta-change values.
 		/// </summary>
 		/// <param name="deltaChange">
@@ -405,11 +421,11 @@ namespace GoRogue
 			=> new Rectangle(X, Y, Width + deltaChange.X, Height + deltaChange.Y);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has its width changed by the given delta-change value.
 		/// </summary>
-		/// <param name="deltaWidth">Delta-change for the width of the new Rectangle.</param>
-		/// <returns>A new Rectangle whose width is modified by the given delta-change value.</returns>
+		/// <param name="deltaWidth">Delta-change for the width of the new rectangle.</param>
+		/// <returns>A new rectangle whose width is modified by the given delta-change value.</returns>
 		public Rectangle ChangeWidth(int deltaWidth)
 			=> new Rectangle(X, Y, Width + deltaWidth, Height);
 
@@ -446,9 +462,9 @@ namespace GoRogue
 
 		/// <summary>
 		/// Compares based upon whether or not the areas contained within the rectangle are identical
-		/// in both position and size.
+		/// in both position and extents.
 		/// </summary>
-		/// <param name="other">Rectangle to compare the current one to.</param>
+		/// <param name="other"/>
 		/// <returns>
 		/// true if the area of the two rectangles encompass the exact same area, false otherwise.
 		/// </returns>
@@ -458,11 +474,11 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Compares to arbitray object.
+		/// Compares to an arbitrary object.
 		/// </summary>
-		/// <param name="obj">Object to compare to.</param>
+		/// <param name="obj"/>
 		/// <returns>
-		/// true if the object is a Rectangle instance and encompasses the same area, false otherwise.
+		/// true if the object specified is a rectangle instance and encompasses the same area, false otherwise.
 		/// </returns>
 		public override bool Equals(Object obj)
 		{
@@ -470,7 +486,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Returns a new Rectangle, expanded to include the additional specified number of tiles on
+		/// Returns a new rectangle, expanded to include the additional specified number of tiles on
 		/// the left/right and top/bottom.
 		/// </summary>
 		/// <param name="horizontalChange">
@@ -479,7 +495,7 @@ namespace GoRogue
 		/// <param name="verticalChange">
 		/// Number of additional tiles to include on the top/bottom of the rectangle.
 		/// </param>
-		/// <returns>A new Rectangle, expanded appropriately.</returns>
+		/// <returns>A new rectangle, expanded appropriately.</returns>
 		public Rectangle Expand(int horizontalChange, int verticalChange)
 			=> new Rectangle(X - horizontalChange, Y - verticalChange, Width + (2 * horizontalChange), Height + (2 * verticalChange));
 
@@ -503,25 +519,25 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Creates and returns a new Rectangle that has its Position moved to the given position.
+		/// Creates and returns a new rectangle that has its <see cref="Position"/> moved to the given position.
 		/// </summary>
-		/// <param name="position">The Position for the new rectangle.</param>
-		/// <returns>A new rectangle that has its Position changed to the given value.</returns>
+		/// <param name="position">The position for the new rectangle.</param>
+		/// <returns>A new rectangle that has its position changed to the given value.</returns>
 		public Rectangle WithPosition(Coord position)
 			=> new Rectangle(position.X, position.Y, Width, Height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle that has its Position moved to the given position.
+		/// Creates and returns a new rectangle that has its position moved to the given position.
 		/// </summary>
-		/// <param name="x">X-value for the position of the new Rectangle.</param>
-		/// <param name="y">Y-value for the position of the new Rectangle.</param>
-		/// <returns>A new rectangle with the Position changed to the given value.</returns>
+		/// <param name="x">X-value for the position of the new rectangle.</param>
+		/// <param name="y">Y-value for the position of the new rectangle.</param>
+		/// <returns>A new rectangle with the position changed to the given value.</returns>
 		public Rectangle WithPosition(int x, int y) => WithPosition(new Coord(x, y));
 
 		/// <summary>
-		/// Creates and returns a new Rectangle that has its Position moved in the given direction.
+		/// Creates and returns a new rectangle that has its position moved in the given direction.
 		/// </summary>
-		/// <param name="direction">The direction to move the new Rectangle in.</param>
+		/// <param name="direction">The direction to move the new rectangle in.</param>
 		/// <returns>A new rectangle that has its position moved in the given direction.</returns>
 		public Rectangle Translate(Direction direction)
 		{
@@ -530,22 +546,21 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Creates and returns a new Rectangle that has its X value moved to the given x-coordinate.
+		/// Creates and returns a new rectangle that has its X value moved to the given x-coordinate.
 		/// </summary>
-		/// <param name="x">The X value for the new Rectangle.</param>
+		/// <param name="x">The X value for the new rectangle.</param>
 		/// <returns>A new rectangle with X changed to the given value.</returns>
 		public Rectangle WithX(int x) => new Rectangle(x, Y, Width, Height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle that has its Y value moved to the given y-coordinate.
+		/// Creates and returns a new rectangle that has its Y value moved to the given y-coordinate.
 		/// </summary>
-		/// <param name="y">The Y value for the new Rectangle.</param>
+		/// <param name="y">The Y value for the new rectangle.</param>
 		/// <returns>A new rectangle with Y changed to the given value.</returns>
 		public Rectangle WithY(int y) => new Rectangle(X, y, Width, Height);
 
 		/// <summary>
-		/// Returns all positions in the rectangle, in order of for (y = 0...) for (x = 0...) nested
-		/// for loop.
+		/// Returns all positions in the rectangle.
 		/// </summary>
 		/// <returns>All positions in the rectangle.</returns>
 		public IEnumerable<Coord> Positions()
@@ -558,7 +573,7 @@ namespace GoRogue
 		/// <summary>
 		/// Returns a random position from within this rectangle.
 		/// </summary>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>A random position from within the rectangle.</returns>
 		public Coord RandomPosition(IGenerator rng = null)
 		{
@@ -570,16 +585,16 @@ namespace GoRogue
 
 		/// <summary>
 		/// Returns a random position from within this rectangle, for which the selector function
-		/// specified returns true Random positions will continuously be generated until one that
+		/// specified returns true.  Random positions will continuously be generated until one that
 		/// qualifies is found.
 		/// </summary>
 		/// <param name="selector">
-		/// Selector function that takes a Coord, and returns true if it is an acceptable selection,
+		/// Selector function that takes a position, and returns true if it is an acceptable selection,
 		/// and false otherwise.
 		/// </param>
-		/// <param name="rng">The rng to use. Defaults to SingletonRandom.DefaultRNG.</param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>
-		/// A random position from within the rectangle for which the given selector function
+		/// A random position from within the rectangle, for which the given selector function
 		/// returned true.
 		/// </returns>
 		public Coord RandomPosition(Func<Coord, bool> selector, IGenerator rng = null)
@@ -599,8 +614,8 @@ namespace GoRogue
 		/// Creates and returns a new rectangle that has the same position and width as the current
 		/// one, but with the height changed to the given value.
 		/// </summary>
-		/// <param name="height">The height for the new Rectangle.</param>
-		/// <returns>A new rectangle with the Height changed to the given value.</returns>
+		/// <param name="height">The height for the new rectangle.</param>
+		/// <returns>A new rectangle with its height changed to the given value.</returns>
 		public Rectangle WithHeight(int height)
 			=> new Rectangle(X, Y, Width, height);
 
@@ -609,7 +624,7 @@ namespace GoRogue
 		/// the maximum extent is the specified value.
 		/// </summary>
 		/// <param name="maxExtent">The maximum extent of the new rectangle.</param>
-		/// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
+		/// <returns>A new rectangle that has its maximum extent adjusted to the specified value.</returns>
 		public Rectangle WithMaxExtent(Coord maxExtent)
 			=> new Rectangle(MinExtent, maxExtent);
 
@@ -619,7 +634,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
-		/// <returns>A new Rectangle that has its maximum extent adjusted to the specified value.</returns>
+		/// <returns>A new rectangle that has its maximum extent adjusted to the specified value.</returns>
 		public Rectangle WithMaxExtent(int x, int y)
 			=> new Rectangle(MinExtent, new Coord(x, y));
 
@@ -628,7 +643,7 @@ namespace GoRogue
 		/// the x-value of maximum extent is changed to the specified value.
 		/// </summary>
 		/// <param name="x">The x-coordinate for the maximum extent of the new rectangle.</param>
-		/// <returns>A new rectangle, with the MaxExtentX adjusted to the specified value.</returns>
+		/// <returns>A new rectangle, with its <see cref="MaxExtentX"/> adjusted to the specified value.</returns>
 		public Rectangle WithMaxExtentX(int x)
 			=> new Rectangle(MinExtent, new Coord(x, MaxExtentY));
 
@@ -637,7 +652,7 @@ namespace GoRogue
 		/// the y-value of maximum extent is changed to the specified value.
 		/// </summary>
 		/// <param name="y">The y-coordinate for the maximum extent of the new rectangle.</param>
-		/// <returns>A new rectangle, with the MaxExtentY adjusted to the specified value.</returns>
+		/// <returns>A new rectangle, with its <see cref="MaxExtentY"/> adjusted to the specified value.</returns>
 		public Rectangle WithMaxExtentY(int y)
 			=> new Rectangle(MinExtent, new Coord(MaxExtentX, y));
 
@@ -646,7 +661,7 @@ namespace GoRogue
 		/// the minimum extent is the specified value.
 		/// </summary>
 		/// <param name="minExtent">The minimum extent of the new rectangle.</param>
-		/// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
+		/// <returns>A new rectangle that has its minimum extent adjusted to the specified value.</returns>
 		public Rectangle WithMinExtent(Coord minExtent)
 			=> new Rectangle(minExtent, MaxExtent);
 
@@ -656,7 +671,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="x">The x-value for the minimum extent of the new rectangle.</param>
 		/// <param name="y">The y-value for the minimum extent of the new rectangle.</param>
-		/// <returns>A new Rectangle that has its minimum extent adjusted to the specified value.</returns>
+		/// <returns>A new rectangle that has its minimum extent adjusted to the specified value.</returns>
 		public Rectangle WithMinExtent(int x, int y)
 			=> new Rectangle(new Coord(x, y), MaxExtent);
 
@@ -665,7 +680,7 @@ namespace GoRogue
 		/// the x-value of minimum extent is changed to the specified value.
 		/// </summary>
 		/// <param name="x">The x-coordinate for the minimum extent of the new rectangle.</param>
-		/// <returns>A new rectangle, with the MinExtentX adjusted to the specified value.</returns>
+		/// <returns>A new rectangle, with its <see cref="MinExtentX"/> adjusted to the specified value.</returns>
 		public Rectangle WithMinExtentX(int x)
 			=> new Rectangle(new Coord(x, MinExtentY), MaxExtent);
 
@@ -674,27 +689,27 @@ namespace GoRogue
 		/// the y-value of minimum extent is changed to the specified value.
 		/// </summary>
 		/// <param name="y">The y-coordinate for the minimum extent of the new rectangle.</param>
-		/// <returns>A new rectangle, with the MinExtentY adjusted to the specified value.</returns>
+		/// <returns>A new rectangle, with its <see cref="MinExtentY"/> adjusted to the specified value.</returns>
 		/// &gt;
 		public Rectangle WithMinExtentY(int y)
 			=> new Rectangle(new Coord(MinExtentX, y), MaxExtent);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has the specified width and height.
 		/// </summary>
 		/// <param name="width">The width for the new rectangle.</param>
 		/// <param name="height">The height for the new rectangle.</param>
-		/// <returns>A new Rectangle with the given width and height.</returns>
+		/// <returns>A new rectangle with the given width and height.</returns>
 		public Rectangle WithSize(int width, int height)
 			=> new Rectangle(X, Y, width, height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position is the same as the current one, but
+		/// Creates and returns a new rectangle whose position is the same as the current one, but
 		/// has the specified width and height.
 		/// </summary>
 		/// <param name="size">Vector (width, height) specifying the width/height of the new rectangle.</param>
-		/// <returns>A new Rectangle with the given width and height.</returns>
+		/// <returns>A new rectangle with the given width and height.</returns>
 		public Rectangle WithSize(Coord size)
 			=> new Rectangle(X, Y, size.X, size.Y);
 
@@ -702,12 +717,13 @@ namespace GoRogue
 		/// Creates and returns a new rectangle that is exactly the same as the current one, but with
 		/// the width changed to the given value.
 		/// </summary>
-		/// <param name="width">The width for the new Rectangle.</param>
-		/// <returns>A new rectangle with the Width changed to the given value.</returns>
+		/// <param name="width">The width for the new rectangle.</param>
+		/// <returns>A new rectangle with its <see cref="Width"/> changed to the given value.</returns>
 		public Rectangle WithWidth(int width) => new Rectangle(X, Y, width, Height);
 
 		/// <summary>
-		/// Formats as (X, Y) -&gt; (MaxX, MaxY)
+		/// Returns a string representing the rectangle, formatted as
+		/// (<see cref="X"/>, <see cref="Y"/>) -&gt; (<see cref="MaxX"/>, <see cref="MaxY"/>)
 		/// </summary>
 		/// <returns>String formatted as above.</returns>
 		public override string ToString()
@@ -716,10 +732,10 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position has been moved by the given
+		/// Creates and returns a new rectangle whose position has been moved by the given
 		/// delta-change values.
 		/// </summary>
-		/// <param name="deltaChange">Delta-x and delta-y values by which to move the new Rectangle.</param>
+		/// <param name="deltaChange">Delta-x and delta-y values by which to move the new rectangle.</param>
 		/// <returns>
 		/// A new rectangle, whose position has been moved by the given delta-change values.
 		/// </returns>
@@ -727,11 +743,11 @@ namespace GoRogue
 			=> new Rectangle(X + deltaChange.X, Y + deltaChange.Y, Width, Height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose position has been moved by the given
+		/// Creates and returns a new rectangle whose position has been moved by the given
 		/// delta-change values.
 		/// </summary>
-		/// <param name="dx">Delta-x value by which to move the new Rectangle.</param>
-		/// <param name="dy">Delta-y value by which to move the new Rectangle.</param>
+		/// <param name="dx">Delta-x value by which to move the new rectangle.</param>
+		/// <param name="dy">Delta-y value by which to move the new rectangle.</param>
 		/// <returns>
 		/// A new rectangle, whose position has been moved by the given delta-change values.
 		/// </returns>
@@ -739,17 +755,17 @@ namespace GoRogue
 			=> new Rectangle(X + dx, Y + dy, Width, Height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose x-position has been moved by the given delta value.
+		/// Creates and returns a new rectangle whose x-position has been moved by the given delta value.
 		/// </summary>
-		/// <param name="dx">Value by which to move the new Rectangle's x-position.</param>
+		/// <param name="dx">Value by which to move the new rectangle's x-position.</param>
 		/// <returns>A new rectangle, whose x-position has been moved by the given delta-x value.</returns>
 		public Rectangle TranslateX(int dx)
 			=> new Rectangle(X + dx, Y, Width, Height);
 
 		/// <summary>
-		/// Creates and returns a new Rectangle whose y-position has been moved by the given delta value.
+		/// Creates and returns a new rectangle whose y-position has been moved by the given delta value.
 		/// </summary>
-		/// <param name="dy">Value by which to move the new Rectangle's y-position.</param>
+		/// <param name="dy">Value by which to move the new rectangle's y-position.</param>
 		/// <returns>A new rectangle, whose y-position has been moved by the given delta-y value.</returns>
 		public Rectangle TranslateY(int dy)
 			=> new Rectangle(X, Y + dy, Width, Height);
