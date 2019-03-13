@@ -4,44 +4,45 @@ using System.Collections.Generic;
 namespace GoRogue
 {
 	/// <summary>
-	/// Read-only interface for LayeredSpatialMap -- useful for exposing LayeredSpatialMap instances
-	/// as read-only properties.
+	/// Interface implementing only the read-only functions for <see cref="LayeredSpatialMap{T}"/>/
+	/// <see cref="AdvancedLayeredSpatialMap{T}"/>.
 	/// </summary>
 	/// <typeparam name="T">
-	/// Type of element stored in the layered spatial map -- must implement IHasLayer.
+	/// Type of element stored in the layered spatial map -- must implement <see cref="IHasLayer"/>.
 	/// </typeparam>
 	public interface IReadOnlyLayeredSpatialMap<T> : IReadOnlySpatialMap<T> where T : IHasLayer
 	{
 		/// <summary>
-		/// Object that helps get layer masks as they pertain to this LayeredSpatialMap
+		/// Object used to get layer masks as they pertain to this spatial map.
 		/// </summary>
 		LayerMasker LayerMasker { get; }
 
 		/// <summary>
 		/// Gets read-only spatial maps representing each layer. To access a specific layer, instead
-		/// use GetLayer.
+		/// use <see cref="GetLayer(int)"/>.
 		/// </summary>
 		IEnumerable<IReadOnlySpatialMap<T>> Layers { get; }
 
 		/// <summary>
-		/// Gets the number of layers represented.
+		/// Gets the number of layers contained in the spatial map.
 		/// </summary>
 		int NumberOfLayers { get; }
 
 		/// <summary>
-		/// Starting index for layers included in this structure.
+		/// Starting index for layers contained in this spatial map.
 		/// </summary>
 		int StartingLayer { get; }
 
 		/// <summary>
-		/// Returns a read-only reference to the data structure. Convenient for "safely" exposing the
-		/// structure as a property.
+		/// Returns a read-only reference to the spatial map. Convenient for "safely" exposing the
+		/// spatial map as a property.
 		/// </summary>
-		/// <returns>The current data structure, as a "read-only" reference.</returns>
+		/// <returns>The current spatial map, as a "read-only" reference.</returns>
 		new IReadOnlyLayeredSpatialMap<T> AsReadOnly();
 
+		
 		/// <summary>
-		/// Returns whether or not there is an item in the data structure at the given position that
+		/// Returns whether or not there is an item in the spatial map at the given position that
 		/// is on a layer included in the given layer mask. Defaults to searching on all layers.
 		/// </summary>
 		/// <param name="position">The position to check for.</param>
@@ -101,7 +102,7 @@ namespace GoRogue
 		IEnumerable<T> GetItems(int x, int y, uint layerMask = uint.MaxValue);
 
 		/// <summary>
-		/// Gets a read-only spatial map representing the layer given.
+		/// Gets a read-only spatial map representing the layer specified.
 		/// </summary>
 		/// <param name="layer">The layer to retrieve.</param>
 		/// <returns>The IReadOnlySpatialMap that represents the given layer.</returns>
@@ -114,14 +115,24 @@ namespace GoRogue
 		/// <param name="layerMask">
 		/// Layer mask indicating which layers to return. Defaults to all layers.
 		/// </param>
-		/// <returns></returns>
+		/// <returns>Read-only spatial maps representing each layer in the given layer mask.</returns>
 		IEnumerable<IReadOnlySpatialMap<T>> GetLayers(uint layerMask = uint.MaxValue);
 	}
 
 	/// <summary>
-	/// Allows convenient interpretation and creation of layer masks (bit-masks) mask layers
-	/// represented by integers [0-NumberOfLayers - 1].
+	/// Allows convenient interpretation and creation of layer masks (bit-masks) that can be used
+	/// to interact with <see cref="LayeredSpatialMap{T}"/> and <see cref="GameFramework.Map"/>.
 	/// </summary>
+	/// <remarks>
+	/// A layer mask is simply a list of layers.  It is frequently used in <see cref="LayeredSpatialMap{T}"/>
+	/// and <see cref="GameFramework.Map"/> as an optional parameter that indicates what layers should apply
+	/// to an operation or given set of functionality.
+	/// 
+	/// LayeredSpatialMap and Map both define their own LayerMask variable that should be used to retrieve
+	/// layer masks whenever possible.  For layer masks needed outside of that, or when constructing
+	/// those classes, use <see cref="LayerMasker.DEFAULT"/>.  There are also constants defined in 
+	/// LayerMasker to represent "all layers" and "no layers".
+	/// </remarks>
 	public sealed class LayerMasker
 	{
 		/// <summary>
@@ -156,7 +167,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Maximum number of layers supported by this layer masker. Functions enforce this limit,
+		/// Maximum number of layers supported by this layer masker. Functions using layer masks enforce this limit,
 		/// and will not consider layers outside the range [0, NumberOfLayers - 1]
 		/// </summary>
 		public int NumberOfLayers { get; }

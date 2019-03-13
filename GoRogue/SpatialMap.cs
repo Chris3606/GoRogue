@@ -5,13 +5,16 @@ using System.Collections.Generic;
 namespace GoRogue
 {
 	/// <summary>
-	/// Advanced version of SpatialMap that allows for use of a custom IEqualityComparer for hashing
-	/// and comparison of type T. May be useful for cases where one does not want to implement
-	/// IHasID, or if you need to use a value type in a SpatialMap. For simple cases, it is
-	/// recommended to use SpatialMap instead.
+	/// A more complex version of <see cref="SpatialMap{T}"/> that does not require the items in it to implement
+	/// <see cref="IHasID"/>, instead requiring the specification of a custom <see cref="IEqualityComparer{T}"/>
+	/// to use for hashing and comparison of items.
 	/// </summary>
 	/// <remarks>
-	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer --
+	/// This class is useful for cases where you do not want to implement <see cref="IHasID"/>, or if you need
+	/// to use a value type in a spatial map. For simple cases, it is recommended to use <see cref="SpatialMap{T}"/>
+	/// instead.
+	/// 
+	/// Be mindful of the efficiency of your hashing function specified in the <see cref="IEqualityComparer{T}"/> --
 	/// it will in large part determine the performance of AdvancedSpatialMap!
 	/// </remarks>
 	/// <typeparam name="T">The type of object that will be contained by this AdvancedSpatialMap.</typeparam>
@@ -21,15 +24,15 @@ namespace GoRogue
 		private Dictionary<Coord, SpatialTuple<T>> positionMapping;
 
 		/// <summary>
-		/// Constructor. Creates an empty AdvancedSpatialMap.
+		/// Constructor.
 		/// </summary>
 		/// <param name="comparer">
-		/// Equality comparer to use for comparison and hashing of type T. Be mindful of the
-		/// efficiency of this instances GetHashCode function, as it will determine the efficiency of
-		/// many AdvancedSpatialMap functions.
+		/// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+		/// efficiency of its GetHashCode function, as it will determine the efficiency of many AdvancedSpatialMap
+		/// functions.
 		/// </param>
 		/// <param name="initialCapacity">
-		/// The initial maximum number of elements the SpatialMap can hold before it has to
+		/// The initial maximum number of elements the AdvancedSpatialMap can hold before it has to
 		/// internally resize data structures. Defaults to 32.
 		/// </param>
 		public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
@@ -39,27 +42,27 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See ISpatialMap.ItemAdded.
+		/// See <see cref="ISpatialMap{T}.ItemAdded"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemAdded;
 
 		/// <summary>
-		/// See ISpatialMap.ItemMoved.
+		/// See <see cref="ISpatialMap{T}.ItemMoved"/>.
 		/// </summary>
 		public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
 		/// <summary>
-		/// See ISpatialMap.ItemRemoved.
+		/// See <see cref="ISpatialMap{T}.ItemRemoved"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemRemoved;
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Count.
+		/// See <see cref="IReadOnlySpatialMap{T}.Count"/>.
 		/// </summary>
 		public int Count => itemMapping.Count;
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Items.
+		/// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
 		/// </summary>
 		public IEnumerable<T> Items
 		{
@@ -71,7 +74,7 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Positions.
+		/// See <see cref="IReadOnlySpatialMap{T}.Positions"/>.
 		/// </summary>
 		public IEnumerable<Coord> Positions
 		{
@@ -84,12 +87,12 @@ namespace GoRogue
 
 		/// <summary>
 		/// Adds the given item at the given position, provided the item is not already in the
-		/// SpatialMap and the position is not already filled. If either of those are the case,
+		/// spatial map and the position is not already filled. If either of those are the case,
 		/// returns false. Otherwise (if item was successfully added), returns true.
 		/// </summary>
 		/// <param name="newItem">The item to add.</param>
 		/// <param name="position">The position at which to add the new item.</param>
-		/// <returns>True if the item was added, false if not.</returns>
+		/// <returns>True if the item was added, false if adding the item failed.</returns>
 		public bool Add(T newItem, Coord position)
 		{
 			if (itemMapping.ContainsKey(newItem))
@@ -107,22 +110,22 @@ namespace GoRogue
 
 		/// <summary>
 		/// Adds the given item at the given position, provided the item is not already in the
-		/// SpatialMap and the position is not already filled. If either of those are the case,
+		/// spatial map and the position is not already filled. If either of those are the case,
 		/// returns false. Otherwise (if item was successfully added), returns true.
 		/// </summary>
 		/// <param name="newItem">The item to add.</param>
 		/// <param name="x">X-value of the position to add item to.</param>
 		/// <param name="y">Y-value of the position to add item to.</param>
-		/// <returns>True if the item was added, false if not.</returns>
+		/// <returns>True if the item was added, false if adding the item failed.</returns>
 		public bool Add(T newItem, int x, int y) => Add(newItem, new Coord(x, y));
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.AsReadOnly.
+		/// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
 		/// </summary>
 		public IReadOnlySpatialMap<T> AsReadOnly() => this;
 
 		/// <summary>
-		/// See ISpatialMap.Clear.
+		/// See <see cref="ISpatialMap{T}.Clear"/>.
 		/// </summary>
 		public void Clear()
 		{
@@ -131,17 +134,17 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Contains.
+		/// See <see cref="IReadOnlySpatialMap{T}.Contains(T)"/>.
 		/// </summary>
 		public bool Contains(T item) => itemMapping.ContainsKey(item);
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Contains.
+		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Coord)"/>.
 		/// </summary>
 		public bool Contains(Coord position) => positionMapping.ContainsKey(position);
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.Contains.
+		/// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
 		/// </summary>
 		public bool Contains(int x, int y) => positionMapping.ContainsKey(new Coord(x, y));
 
@@ -149,7 +152,7 @@ namespace GoRogue
 		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
 		/// foreach loop. Generally should never be called explicitly.
 		/// </summary>
-		/// <returns>An enumerator for the SpatialMap</returns>
+		/// <returns>An enumerator for the spatial map</returns>
 		public IEnumerator<ISpatialTuple<T>> GetEnumerator()
 		{
 			foreach (var tuple in itemMapping.Values)
@@ -163,15 +166,15 @@ namespace GoRogue
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		/// <summary>
-		/// Gets the item at the given position, or null/equivalent if no item exists.
+		/// Gets the item at the given position, or default(T) if no item exists.
 		/// </summary>
 		/// <remarks>
-		/// Intended to be a more convenient function as compared to GetItems, for times when you are
-		/// dealing exclusively with SpatialMap instances.
+		/// Intended to be a more convenient function as compared to <see cref="GetItems(Coord)"/>, since
+		/// this spatial map implementation only allows a single item to at any given location at a time.
 		/// </remarks>
 		/// <param name="position">The postiion to return the item for.</param>
 		/// <returns>
-		/// The item at the given position, or null/equivalent if no item exists at that location.
+		/// The item at the given position, or default(T) if no item exists at that location.
 		/// </returns>
 		public T GetItem(Coord position)
 		{
@@ -184,16 +187,16 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Gets the item at the given position, or null/equivalent if no item exists.
+		/// Gets the item at the given position, or default(T) if no item exists.
 		/// </summary>
 		/// <remarks>
-		/// Intended to be a more convenient function as compared to GetItems, for times when you are
-		/// dealing exclusively with SpatialMap instances.
+		/// Intended to be a more convenient function as compared to <see cref="GetItems(int, int)"/>, since
+		/// this spatial map implementation only allows a single item to at any given location at a time.
 		/// </remarks>
 		/// <param name="x">The x-value of the position to return the item for.</param>
 		/// <param name="y">The y-value of the position to return the item for.</param>
 		/// <returns>
-		/// The item at the given position, or null/equivalent if no item exists at that location.
+		/// The item at the given position, or default(T) if no item exists at that location.
 		/// </returns>
 		public T GetItem(int x, int y) => GetItem(new Coord(x, y));
 
@@ -202,11 +205,10 @@ namespace GoRogue
 		/// or nothing if there is nothing at that position.
 		/// </summary>
 		/// <remarks>
-		/// Again, since this implementation guarantees that only one item can be at any given
-		/// location at once, the return value is guaranteed to be at most one element. For times
-		/// when you are know you are dealing exclusively with SpatialMap instances, this specific
-		/// class also provides a GetItem function that returns a more intuitive null if no item was
-		/// found, or the item at the location as applicable.
+		/// Since this implementation guarantees that only one item can be at any given
+		/// location at once, the return value is guaranteed to be at most one element. You may find it
+		/// more convenient to use the <see cref="GetItems(Coord)"/> function when you know you are
+		/// dealing with a SpatialMap/AdvancedSpatialMap instance.
 		/// </remarks>
 		/// <param name="position">The position to return the item for.</param>
 		/// <returns>
@@ -226,11 +228,10 @@ namespace GoRogue
 		/// or nothing if there is nothing at that position.
 		/// </summary>
 		/// <remarks>
-		/// Again, since this implementation guarantees that only one item can be at any given
-		/// location at once, the return value is guaranteed to be at most one element. For times
-		/// when you are know you are dealing exclusively with SpatialMap instances, this specific
-		/// class also provides a GetItem function that returns a more intuitive null if no item was
-		/// found, or the item at the location as applicable.
+		/// Since this implementation guarantees that only one item can be at any given
+		/// location at once, the return value is guaranteed to be at most one element. You may find it
+		/// more convenient to use the <see cref="GetItems(int, int)"/> function when you know you are
+		/// dealing with a SpatialMap/AdvancedSpatialMap instance.
 		/// </remarks>
 		/// <param name="x">The x-value of the position to return the item(s) for.</param>
 		/// <param name="y">The y-value of the position to return the item(s) for.</param>
@@ -241,7 +242,7 @@ namespace GoRogue
 		public IEnumerable<T> GetItems(int x, int y) => GetItems(new Coord(x, y));
 
 		/// <summary>
-		/// See IReadOnlySpatialMap.GetPosition.
+		/// See <see cref="IReadOnlySpatialMap{T}.GetPosition(T)"/>.
 		/// </summary>
 		public Coord GetPosition(T item)
 		{
@@ -252,13 +253,13 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Move the item specified to the position specified. Returns true if successful. If the
-		/// item does not exist in the SpatialMap, or the position is already filled by something,
-		/// does nothing and returns false. Otherwise, returns true.
+		/// Moves the item specified to the position specified. If the item does not exist
+		/// in the spatial map, or the position is already filled by some other item, the
+		/// function does nothing and returns false. Otherwise, returns true.
 		/// </summary>
 		/// <param name="item">The item to move.</param>
 		/// <param name="target">The position to move it to.</param>
-		/// <returns>True if the item was moved, false if not.</returns>
+		/// <returns>True if the item was moved, false if the move operation failed.</returns>
 		public bool Move(T item, Coord target)
 		{
 			if (!itemMapping.ContainsKey(item))
@@ -277,9 +278,9 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Move the item specified to the position specified. Returns true if successful. If the
-		/// item does not exist in the SpatialMap, or the position is already filled by something,
-		/// does nothing and returns false. Otherwise, returns true.
+		/// Moves the item specified to the position specified. If the item does not exist
+		/// in the spatial map, or the position is already filled by some other item, the
+		/// function does nothing and returns false. Otherwise, returns true.
 		/// </summary>
 		/// <param name="item">The item to move.</param>
 		/// <param name="targetX">X-value of the location to move item to.</param>
@@ -288,9 +289,9 @@ namespace GoRogue
 		public bool Move(T item, int targetX, int targetY) => Move(item, new Coord(targetX, targetY));
 
 		/// <summary>
-		/// Moves whatever is at position current, if anything, to postion target. If something was
+		/// Moves whatever is at position current, if anything, to the target position. If something was
 		/// moved, returns what was moved. If nothing was moved, eg. either there was nothing at
-		/// position current or already something at position target, returns nothing.
+		/// <paramref name="current"/> or already something at <paramref name="target"/>, returns nothing.
 		/// </summary>
 		/// <remarks>
 		/// Since this implementation of ISpatialMap guarantees that only one item may be at any
@@ -317,9 +318,9 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Moves whatever is at position current, if anything, to postion target. If something was
+		/// Moves whatever is at the "current" position specified, if anything, to the "target" position. If something was
 		/// moved, returns what was moved. If nothing was moved, eg. either there was nothing at
-		/// position current or already something at position target, returns nothing.
+		/// the "current" position given, or already something at the "target" position given, returns nothing.
 		/// </summary>
 		/// <remarks>
 		/// Since this implementation of ISpatialMap guarantees that only one item may be at any
@@ -337,7 +338,7 @@ namespace GoRogue
 
 		/// <summary>
 		/// Removes the item specified, if it exists, and returns true. Returns false if the item was
-		/// not in the SpatialMap.
+		/// not in the spatial map.
 		/// </summary>
 		/// <param name="item">The item to remove.</param>
 		/// <returns>True if the item was removed, false if the item was not found.</returns>
@@ -358,7 +359,7 @@ namespace GoRogue
 		/// 1-element IEnumerable. Returns nothing if no item was at the position specified.
 		/// </summary>
 		/// <remarks>
-		/// Again, since this implementation guarantees that only one item can be at any given
+		/// Since this implementation of ISpatialMap guarantees that only one item can be at any given
 		/// location at a time, the returned value is guaranteed to be either nothing or a single element.
 		/// </remarks>
 		/// <param name="position">The position of the item to remove.</param>
@@ -384,7 +385,7 @@ namespace GoRogue
 		/// 1-element IEnumerable. Returns nothing if no item was at the position specified.
 		/// </summary>
 		/// <remarks>
-		/// Again, since this implementation guarantees that only one item can be at any given
+		/// Since this implementation guarantees that only one item can be at any given
 		/// location at a time, the returned value is guaranteed to be either nothing or a single element.
 		/// </remarks>
 		/// <param name="x">X-value of the position to remove item from.</param>
@@ -396,52 +397,41 @@ namespace GoRogue
 		public IEnumerable<T> Remove(int x, int y) => Remove(new Coord(x, y));
 
 		/// <summary>
-		/// Returns a string representation of the SpatialMap.
+		/// Returns a string representation of the spatial map.
 		/// </summary>
-		/// <returns>A string representation of the SpatialMap.</returns>
+		/// <returns>A string representation of the spatial map.</returns>
 		public override string ToString() => ToString((T obj) => obj.ToString());
 
 		/// <summary>
-		/// Returns a string representation of the SpatialMap, allowing display of the SpatialMap's
+		/// Returns a string representation of the spatial map, allowing display of the spatial map's
 		/// items in a specified way.
 		/// </summary>
 		/// <param name="itemStringifier">Function that turns an item into a string.</param>
-		/// <returns>A string representation of the SpatialMap.</returns>
+		/// <returns>A string representation of the spatial map.</returns>
 		public string ToString(Func<T, string> itemStringifier)
 			=> positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
 	}
 
 	/// <summary>
-	/// Designed as an more efficient data structure for recording objects on a map. The simple
-	/// version: if you're about to use a List to store a bunch of objects in your map, consider
-	/// using this or MultiSpatialMap instead!
+	/// An implementation of <see cref="ISpatialMap{T}"/> that allows only one item at each position
+	/// at a time.  If you need multiple items to be able to reside at one location at the same time,
+	/// use <see cref="MultiSpatialMap{T}"/> or <see cref="LayeredSpatialMap{T}"/> instead.
 	/// </summary>
 	/// <remarks>
-	/// Typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and
-	/// lists of objects for things like entities, items, etc. This is simple but ultimately not
-	/// efficient; for example, in that implementation, determining if there is an object at a
-	/// location takes an amount of time proportional to the number of objects in this list. However,
-	/// the other simple option is to use an array with size equal to the size of the map (as many do
-	/// for terrain) for all object lists. This is even less ideal, as in that case, the time to
-	/// iterate over all objects becomes proportional to the size of the map (since one has to do
-	/// that for rendering, ouch!), which is typically much larger than the number of objects in a
-	/// list. This is the problem SpatialMap is designed to solve. It provides fast,
-	/// near-constant-time operations for getting the object at a location, adding entities, removing
-	/// entities, and will allow you to iterate through all objects in the SpatialMap in time
-	/// proportional to the number of objects in it (the best possible). Effectively, it is a more
-	/// efficient list for objects that have a position associated with them. This implementation can
-	/// only allow one item at a given location at a time -- for an implementation that allows
-	/// multiple items, see MultiSpatialMap. The objects stored in a SpatialMap must implement the
-	/// IHasID (see that interface's documentation for an easy implementation example). This is used
-	/// internally to keep track of the objects, since uints are easily (efficiently) hashable.
+	/// See the <see cref="ISpatialMap{T}"/> for documentation on the practical purpose of spatial
+	/// maps.
+	/// 
+	/// The objects stored in a SpatialMap must implement <see cref="IHasID"/>. This is used
+	/// internally to keep track of the objects, since uints are easily (and efficiently) hashable.
 	/// </remarks>
 	/// <typeparam name="T">
-	/// The type of object that will be contained by this SpatialMap. Must implement IHasID and be a reference-type.
+	/// The type of object that will be contained by this SpatialMap. Must implement <see cref="IHasID"/>
+	/// and be a reference-type.
 	/// </typeparam>
 	public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
 	{
 		/// <summary>
-		/// Constructor. Creates an empty SpatialMap.
+		/// Constructor.
 		/// </summary>
 		/// <param name="initialCapacity">
 		/// The initial maximum number of elements the SpatialMap can hold before it has to

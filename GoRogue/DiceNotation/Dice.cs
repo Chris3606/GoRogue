@@ -21,7 +21,7 @@ namespace GoRogue.DiceNotation
 		/// </summary>
 		/// <remarks>
 		/// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IGenerator)"/> method is extremely fast.  However, if
-		/// you are repeating a dice roll many times, in a case where maximum performance  is absolutely necessary, there is some benefit to
+		/// you are repeating a dice roll many times, in a case where maximum performance is absolutely necessary, there is some benefit to
 		/// retrieving an <see cref="IDiceExpression"/> instance instead
 		/// of using the Roll function, and calling that expressions's <see cref="IDiceExpression.Roll(IGenerator)"/> method whenever a result
 		/// is required.

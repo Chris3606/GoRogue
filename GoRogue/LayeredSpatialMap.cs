@@ -7,17 +7,19 @@ using System.Text;
 namespace GoRogue
 {
 	/// <summary>
-	/// Advanced version of LayeredSpatialMap that allows for use of a custom IEqualityComparer for
-	/// hashing and comparison of type T. May be useful for cases where one does not want to
-	/// implement IHasID, or if you need to use a value type in a LayeredSpatialMap. For simple
-	/// cases, it is recommended to use LayeredSpatialMap instead.
+	/// A more complex version of <see cref="LayeredSpatialMap{T}"/> that does not require the items in it to implement
+	/// <see cref="IHasID"/>, instead requiring the specification of a custom <see cref="IEqualityComparer{T}"/> to use
+	/// for hashing and comparison of items.
 	/// </summary>
 	/// <remarks>
-	/// Be mindful of the efficiency of your hashing function specified in the IEqualityComparer --
+	/// This class is useful for cases where you do not want to implement <see cref="IHasID"/>. For simple cases, it is
+	/// recommended to use <see cref="LayeredSpatialMap{T}"/> instead.
+	/// 
+	/// Be mindful of the efficiency of your hashing function specified in the <see cref="IEqualityComparer{T}"/> --
 	/// it will in large part determine the performance of AdvancedLayeredSpatialMap!
 	/// </remarks>
 	/// <typeparam name="T">
-	/// Type of items in the layers. Type T must implement IHasLayer, and its IHasLayer.Layer value
+	/// Type of items in the layers. Type T must implement <see cref="IHasLayer"/>, and its <see cref="IHasLayer.Layer"/> value
 	/// MUST NOT change while the item is in the AdvancedLayeredSpatialMap.
 	/// </typeparam>
 	public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasLayer
@@ -30,22 +32,11 @@ namespace GoRogue
 		private HashSet<Coord> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
 
 		/// <summary>
-		/// Constructor. Takes a comparator to use, number of layers to include, as well as a
-		/// starting layer index (defaulting to 0) and a layer mask indicating which layers support
-		/// multiple items at a single position (defaulting to no layers).
+		/// Constructor.
 		/// </summary>
-		/// <remarks>
-		/// This class allows you to specify the starting index in order to make it easy to combine
-		/// with other structures in a map which may represent other layers. For example, if a
-		/// startingLayer of 0 is specified, layers in the spatialMap will have number
-		/// [0-numberOfLayers - 1]. If 1 is specified, layers will have numbers [1-numberOfLayers],
-		/// and anything to do with layer 0 will be ignored. If a layer-mask that includes layers 0,
-		/// 2, and 3 is passed to a function, for example, only layers 2 and 3 are considered (since
-		/// they are the only ones that would be included in the LayeredSpatialMap.
-		/// </remarks>
 		/// <param name="comparer">
-		/// Equality comparer to use for comparison and hashing of type T. Be mindful of the
-		/// efficiency of this instances GetHashCode function, as it will determine the efficiency of
+		/// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+		/// efficiency of its GetHashCode function, as it will determine the efficiency of
 		/// many AdvancedLayeredSpatialMap functions.
 		/// </param>
 		/// <param name="numberOfLayers">Number of layers to include.</param>
@@ -81,28 +72,27 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Fires whenever an item is added to any layer.
+		/// See <see cref="ISpatialMap{T}.ItemAdded"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemAdded;
 
-		//private bool[] _layersSupportMultipleItems;
 		/// <summary>
-		/// Fires whenever an item is moved on any layer.
+		/// See <see cref="ISpatialMap{T}.ItemMoved"/>.
 		/// </summary>
 		public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
 		/// <summary>
-		/// Fires whenever an item is removed from any layer.
+		/// See <see cref="ISpatialMap{T}.ItemRemoved"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemRemoved;
 
 		/// <summary>
-		/// Gets the number of entities on all layers.
+		/// See <see cref="IReadOnlySpatialMap{T}.Count"/>
 		/// </summary>
 		public int Count => _layers.Sum(map => map.Count);
 
 		/// <summary>
-		/// Gets all the items on all layers.
+		/// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
 		/// </summary>
 		public IEnumerable<T> Items
 		{
@@ -115,18 +105,18 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Object that helps get layer masks as they pertain to this LayeredSpatialMap
+		/// Object used to get layer masks as they pertain to this spatial map.
 		/// </summary>
 		public LayerMasker LayerMasker { get; }
 
 		/// <summary>
 		/// Gets read-only spatial maps representing each layer. To access a specific layer, instead
-		/// use GetLayer.
+		/// use <see cref="GetLayer(int)"/>.
 		/// </summary>
 		public IEnumerable<IReadOnlySpatialMap<T>> Layers => _layers;
 
 		/// <summary>
-		/// Gets the number of layers represented.
+		/// Gets the number of layers contained in the spatial map.
 		/// </summary>
 		public int NumberOfLayers => _layers.Length;
 
@@ -148,10 +138,12 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Starting index for layers included in theis LayeredSpatialMap. Specified at construction.
+		/// Starting index for layers contained in this spatial map.
 		/// </summary>
 		public int StartingLayer { get; }
-
+		
+		// TODO: Begin docs parse here!
+		
 		/// <summary>
 		/// Adds the given item at the given position. Item is automatically added to correct layer.
 		/// </summary>
@@ -552,43 +544,43 @@ namespace GoRogue
 	}
 
 	/// <summary>
-	/// ISpatialMap implementation that can be used to efficiently represent "layers" of objects,
-	/// with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to
-	/// allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be
-	/// a reference type, and their Layer value MUST NOT change while they are in the data structure.
+	/// <see cref="ISpatialMap{T}"/> implementation that can be used to efficiently represent multiple
+	/// "layers" of objects, with each layer represented as an <see cref="ISpatialMap{T}"/> instance.
+	/// It provides the regular spatial map functionality, as well as adds layer masking functionality
+	/// that allow functions to operate on specific layers only. 
 	/// </summary>
 	/// <remarks>
-	/// This class is desinged to wrap a bunch of ISpatialMap instances together. At creation,
-	/// whether or not each layer supports multiple items at the same location is specified via a
-	/// layer mask.. One spatial map represents one layer of a map (items, monsters, etc). This class
-	/// provides read-only access to each layer, as well as functions to add/remove/move items, do
-	/// item grabbing based on layers, etc. Will not allow the same item to be added to multiple layers.
+	/// See the <see cref="ISpatialMap{T}"/> for documentation on the practical purpose of spatial
+	/// maps.
+	/// 
+	/// The objects stored in a LayeredSpatialMap must be reference types and implement both <see cref="IHasID"/>
+	/// and <see cref="IHasLayer"/>.  Each object in a spatial map is presumed to have a "layer", which is assumed
+	/// to remain constant once the item is added to the layer mask.
 	/// </remarks>
 	/// <typeparam name="T">
-	/// Type of items in the layers. Type T must implement IHasID and IHasLayer, must be a reference
-	/// type, and its IHasLayer.Layer value MUST NOT change while the item is in the LayeredSpatialMap.
+	/// Type of items stored in the layers. Type T must implement <see cref="IHasID"/> and <see cref="IHasLayer"/>,
+	/// must be a reference type, and its <see cref="IHasLayer.Layer"/> value MUST NOT change while the item is in the
+	/// LayeredSpatialMap.
 	/// </typeparam>
 	public class LayeredSpatialMap<T> : AdvancedLayeredSpatialMap<T> where T : class, IHasLayer, IHasID
 	{
 		/// <summary>
-		/// Constructor. Takes number of layers to include, as well as a starting layer index
-		/// (defaulting to 0) and a layer mask indicating which layers support multiple items at a
-		/// single position (defaulting to no layers).
+		/// Constructor.
 		/// </summary>
 		/// <remarks>
-		/// This class allows you to specify the starting index in order to make it easy to combine
-		/// with other structures in a map which may represent other layers. For example, if a
-		/// startingLayer of 0 is specified, layers in the spatialMap will have number
-		/// [0-numberOfLayers - 1]. If 1 is specified, layers will have numbers [1-numberOfLayers],
-		/// and anything to do with layer 0 will be ignored. If a layer-mask that includes layers 0,
-		/// 2, and 3 is passed to a function, for example, only layers 2 and 3 are considered (since
-		/// they are the only ones that would be included in the LayeredSpatialMap.
+		/// This class allows you to specify the starting index for layers in order to make it easy to
+		/// combine with other structures in a map which may represent other layers. For example, if a
+		/// <paramref name="startingLayer"/> of 0 is specified, layers in the spatial map will have numbers
+		/// in range[0, numberOfLayers - 1]. If 1 is specified, layers will have numbers in range [1-numberOfLayers],
+		/// and anything to do with layer 0 will be ignored. For example, If a layer-mask that includes layers 0,
+		/// 2, and 3 is passed to a function, only layers 2 and 3 are considered (since they are the only ones that would
+		/// be included in the LayeredSpatialMap.
 		/// </remarks>
 		/// <param name="numberOfLayers">Number of layers to include.</param>
 		/// <param name="startingLayer">Index to use for the first layer.</param>
 		/// <param name="layersSupportingMultipleItems">
 		/// A layer mask indicating which layers should support multiple items residing at the same
-		/// location on that layer. Defaults to no layers.
+		/// location on that layer. Defaults to no layers.  Generate this layer mask via <see cref="LayerMasker.DEFAULT"/>.
 		/// </param>
 		public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
 			: base(new IDComparer<T>(), numberOfLayers, startingLayer, layersSupportingMultipleItems)
