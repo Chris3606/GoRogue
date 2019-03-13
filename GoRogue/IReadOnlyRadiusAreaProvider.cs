@@ -3,13 +3,13 @@
 namespace GoRogue
 {
 	/// <summary>
-	/// Read-only interface of a RadiusAreaProvider.
+	/// Read-only interface of <see cref="RadiusAreaProvider"/>.
 	/// </summary>
 	public interface IReadOnlyRadiusAreaProvider
 	{
 		/// <summary>
-		/// The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
-		/// there are no bounds.
+		/// The bounds to constrain the returned locations to. Set to <see cref="Rectangle.EMPTY"/>
+		/// to indicate that there are no bounds.
 		/// </summary>
 		Rectangle Bounds { get; }
 
@@ -20,7 +20,7 @@ namespace GoRogue
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to Distance, eg. Radius).
+		/// implicitly convertible to a distance method, eg. <see cref="Radius"/>).
 		/// </summary>
 		Distance DistanceCalc { get; }
 
@@ -28,15 +28,23 @@ namespace GoRogue
 		/// The length of the radius, eg. the number of tiles from the center point (as defined by
 		/// the distance calculation/radius shape given) to which the radius extends.
 		/// </summary>
+		/// <remarks>
+		/// When this value is changed, reallocation of an underlying array is performed, however overhead should
+		/// be relatively small in most cases.
+		/// </remarks>
 		int Radius { get; }
 
 		/// <summary>
-		/// Calculates the new radius, and returns an IEnumerable of all unique Coords within that
-		/// radius and bounds specified (as applicable). See RadiusAreaProvider class description for
-		/// details on the ordering. Safe to expose in read-only class, since it does not modify the
-		/// public interface of the RadiusAreaProvider.
+		/// Calculates the new radius, and returns an IEnumerable of all unique locations within that
+		/// radius and bounds specified (as applicable).
 		/// </summary>
-		/// <returns>Enumerable of all unique Coords within the radius and bounds specified.</returns>
+		/// <remarks>
+		/// In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE radius shapes
+		/// are specified via <see cref="DistanceCalc"/>, positions returned are guaranteed to be returned
+		/// in order of distance from the center, from least to greatest. This guarantee does NOT hold if
+		/// EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.
+		/// </remarks>
+		/// <returns>Enumerable of all unique positions within the radius and bounds specified.</returns>
 		IEnumerable<Coord> CalculatePositions();
 	}
 }
