@@ -190,7 +190,7 @@ namespace GoRogue
 		public static Coord operator -(Coord c1, Coord c2) => new Coord(c1.X - c2.X, c1.Y - c2.Y);
 
 		/// <summary>
-		/// Subtracts scalar <paramref name="i"/> from the x and y values of <paramref name="c1"/>.
+		/// Subtracts scalar <paramref name="i"/> from the x and y values of <paramref name="c"/>.
 		/// </summary>
 		/// <param name="c"></param>
 		/// <param name="i"></param>
@@ -464,7 +464,7 @@ namespace GoRogue
 		/// <summary>
 		/// Implicitly converts a System.Drawing.Size to an equivalent Coord.
 		/// </summary>
-		/// <param name="p" />
+		/// <param name="s" />
 		/// <returns />
 		public static implicit operator Coord(Size s) => new Coord(s.Width, s.Height);
 		/// <summary>
@@ -584,7 +584,7 @@ namespace GoRogue
 		/// <summary>
 		/// Implicitly converts a tuple of two integers to an equivalent Coord.
 		/// </summary>
-		/// <param name="c" />
+		/// <param name="tuple" />
 		/// <returns />
 		public static implicit operator Coord((int x, int y) tuple) => new Coord(tuple.x, tuple.y);
 		

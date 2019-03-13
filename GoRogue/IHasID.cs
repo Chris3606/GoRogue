@@ -23,7 +23,7 @@
 	/// }
 	/// </code>
 	/// </example>
-	/// </summary>
+	/// </remarks>
 	public interface IHasID
 	{
 		/// <summary>

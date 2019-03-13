@@ -8,12 +8,12 @@ namespace GoRogue
 	/// </summary>
 	/// <remarks>
 	/// These arguments allow cancellation of the triggering of a chain of effects when triggered by
-	/// an <see cref="EffectTrigger"/>, as detailed in that class's documentation.
+	/// an <see cref="EffectTrigger{T}"/>, as detailed in that class's documentation.
 	/// </remarks>
 	public class EffectArgs
 	{
 		/// <summary>
-		/// Whether or not the <see cref="EffectTrigger"/> should stop calling all subsequent effect's
+		/// Whether or not the <see cref="EffectTrigger{T}"/> should stop calling all subsequent effect's
 		/// <see cref="Effect{T}.Trigger(T)"/> functions. See EffectTrigger's documentation for details.
 		/// </summary>
 		public bool CancelTrigger;
@@ -42,9 +42,9 @@ namespace GoRogue
 	/// then one may pass null as the parameter to Trigger.
 	///
 	/// The concept of a duration is also built into the interface, and is considered to be in arbitrary units.  The duration
-	/// concept is designed to be used with <see cref="EffecTrigger{T}"/> instances, and has no effect when an effect is not
+	/// concept is designed to be used with <see cref="EffectTrigger{T}"/> instances, and has no effect when an effect is not
 	/// utilized with an EffectTrigger.  The duration is interpreted as simply the number of times the effect's
-	/// <see cref="Effect{T}.Trigger(T)") function will be called before it will be removed from an EffectTrigger. If the effect
+	/// <see cref="Effect{T}.Trigger(T)"/>) function will be called before it will be removed from an EffectTrigger. If the effect
 	/// is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant damage
 	/// effect), then the duration specified in the constructor should be the static class constant
 	/// <see cref="Effect{T}.INSTANT"/>. If the effect is meant to have an infinite duration, or the effect wears off on some
@@ -71,7 +71,7 @@ namespace GoRogue
 		/// <summary>
 		/// The value one should specify as the effect duaration for an instantaneous effect, eg. an
 		/// effect that only occurs when Trigger is manually called, and thus cannot be added to an 
-		/// <see cref="EffectTrigger"/>.
+		/// <see cref="EffectTrigger{TriggerArgs}"/>.
 		/// </summary>
 		public static readonly int INSTANT = 0;
 
@@ -88,7 +88,7 @@ namespace GoRogue
 		/// The duration of the effect.
 		/// </summary>
 		/// <remarks>
-		/// When the duration reaches 0, the Effect will be automatically removed from an <see cref="EffectTrigger"/>.
+		/// When the duration reaches 0, the Effect will be automatically removed from an <see cref="EffectTrigger{TriggerArgs}"/>.
 		/// The duration can be changed from a subclass, which can be used in <see cref="OnTrigger(TriggerArgs)"/> to
 		/// cause an effect to be "cancelled", eg. immediately expire, or to extend/reduce its duration.
 		/// </remarks>
@@ -109,7 +109,7 @@ namespace GoRogue
 		/// <summary>
 		/// Event that fires as soon as the effect is about to expire. Fires after the
 		/// <see cref="OnTrigger(TriggerArgs)"/> function has been called but before it is
-		/// removed from any <see cref="EffectTrigger"/> instances.
+		/// removed from any <see cref="EffectTrigger{TriggerArgs}"/> instances.
 		/// </summary>
 		public event EventHandler Expired;
 

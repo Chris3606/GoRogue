@@ -89,7 +89,7 @@ namespace GoRogue
 		/// </summary>
 		/// <remarks>
 		/// The argument given is passed along to the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/>
-		/// function of each effect that has Trigger called. If some effect sets the <see cref=EffectArgs.CancelTrigger"/>
+		/// function of each effect that has Trigger called. If some effect sets the <see cref="EffectArgs.CancelTrigger"/>
 		/// flag in the argument to true, the loop will be broken and no subsequent effects in the list will have
 		/// Trigger called. After either this occurs or all effects have had Trigger called, any effect in the list
 		/// that has a duration of 0 is automatically removed from the list.  It is valid to pass null

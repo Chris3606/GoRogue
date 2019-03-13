@@ -101,7 +101,7 @@ namespace GoRogue
 		/// <summary>
 		/// Returns the field of view value for the given position.
 		/// </summary>
-		/// <param name="pos">The position to return the field of view value for.</param>
+		/// <param name="position">The position to return the field of view value for.</param>
 		/// <returns>The field of view value for the given position.</returns>
 		public double this[Coord position]
 		{

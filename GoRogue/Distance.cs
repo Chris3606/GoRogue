@@ -209,7 +209,7 @@ namespace GoRogue
 		/// Returns the distance between two locations, given the change in X and change in Y value
 		/// (specified by the X and Y values of the given vector).
 		/// </summary>
-		/// <param name="end">The delta-x and delta-y between the two locations.</param>
+		/// <param name="deltaChange">The delta-x and delta-y between the two locations.</param>
 		/// ///
 		/// <returns>The distance between two locations withe the given delta-change values.</returns>
 		public double Calculate(Coord deltaChange) => Calculate((double)deltaChange.X, (double)deltaChange.Y);
