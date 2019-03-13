@@ -122,7 +122,7 @@ namespace GoRogue
 		/// The length of the radius, eg. the number of tiles from the center point (as defined by the distance
 		/// calculation/radius shape given) to which the radius extends.
 		/// </summary>
-		///<remarks>
+		/// <remarks>
 		/// When this value is changed, reallocation of an underlying array is performed, however overhead should
 		/// be relatively small in most cases.
 		/// </remarks>
