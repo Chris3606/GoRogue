@@ -5,8 +5,8 @@ using System.Linq;
 namespace GoRogue
 {
 	/// <summary>
-	/// Provides implementations of various (line-drawing) algorithms for generating points closest
-	/// to a line between two points on a grid.
+	/// Provides implementations of various (line-drawing) algorithms which are useful for
+	/// for generating points closest to a line between two points on a grid.
 	/// </summary>
 	public static class Lines
 	{
@@ -25,8 +25,9 @@ namespace GoRogue
 
 			/// <summary>
 			/// Bresenham's line algorithm, with the points guaranteed to be in start to finish
-			/// order. This may be significantly slower than BRESENHAM, so if you really need
-			/// ordering, consider DDA instead, as it is both faster than Bresenham's and implicitly ordered
+			/// order. This may be significantly slower than <see cref="Algorithm.BRESENHAM"/>, so if you really
+			/// need ordering, consider<see cref="Algorithm.DDA"/> instead, as it is both faster than Bresenham's
+			/// and implicitly ordered.
 			/// </summary>
 			BRESENHAM_ORDERED,
 
@@ -34,16 +35,17 @@ namespace GoRogue
 			/// DDA line algorithm -- effectively an optimized algorithm for producing Brensham-like
 			/// lines. There may be slight differences in appearance when compared to lines created
 			/// with Bresenham's, however this algorithm may also be measurably faster. Based on the
-			/// algorithm here:
-			/// https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/, as well as
-			/// the Java library Squidlib's implementation.
+			/// algorithm <a href="https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/">here</a>,
+			/// , as well as the Java library Squidlib's implementation.  Points are guaranteed to be in order from
+			/// start to finish.
 			/// </summary>
 			DDA,
 
 			/// <summary>
 			/// Line algorithm that takes only orthoganal steps (each grid location on the line
 			/// returned is within one cardinal direction of the previous one). Potentially useful
-			/// for LOS in games that use MANHATTAN distance. Based on the algorithm here: http://www.redblobgames.com/grids/line-drawing.html#stepping
+			/// for LOS in games that use MANHATTAN distance. Based on the algorithm
+			/// <a href="http://www.redblobgames.com/grids/line-drawing.html#stepping">here</a>.
 			/// </summary>
 			ORTHO
 		}
