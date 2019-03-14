@@ -91,6 +91,17 @@ namespace GoRogue.Pathing
 		public Direction GetDirectionOfMinValue(Coord position) => _baseMap.GetDirectionOfMinValue(position);
 
 		/// <summary>
+		/// Gets the direction of the neighbor with the minimum flee-map value from the given position.
+		/// </summary>
+		/// <param name="positionX">The x-value of the position to get the minimum value for.</param>
+		/// <param name="positionY">The y-value of the position to get the minimum value for.</param>
+		/// <returns>
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
+		/// neighbors are all obstacles.
+		/// </returns>
+		public Direction GetDirectionOfMinValue(int positionX, int positionY) => _baseMap.GetDirectionOfMinValue(positionX, positionY);
+
+		/// <summary>
 		/// Returns the flee-map values represented as a 2D grid-style string.
 		/// </summary>
 		/// <returns>A string representing the flee map values.</returns>
