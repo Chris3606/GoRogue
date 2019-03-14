@@ -771,20 +771,63 @@ namespace GoRogue
 			=> new Rectangle(X, Y + dy, Width, Height);
 
 		#region MonoGame Conversions
+		/// <summary>
+		/// Implicitly converts a GoRogue Rectangle to an equivalent MonoGame Rectangle.
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator XnaRectangle(Rectangle rect) => new XnaRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		/// <summary>
+		/// Implicitly converts a MonoGame Rectangle to an equivalent GoRogue Rectangle.
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator Rectangle(XnaRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
 		#endregion
 
 		#region System Drawing Conversions
+		/// <summary>
+		/// Implicitly converts a GoRogue Rectangle to an equivalent System.Drawing.Rectangle.
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator DrawingRectangle(Rectangle rect) => new DrawingRectangle(rect.X, rect.Y, rect.Width, rect.Height);
+		/// <summary>
+		/// Implicitly converts a System.Drawing.Rectangle to an equivalent GoRogue Rectangle.
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator Rectangle(DrawingRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
 
+		/// <summary>
+		/// Implicitly converts a GoRogue Rectangle to an equivalent System.Drawing.RectangleF.
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator DrawingRectangleF(Rectangle rect) => new DrawingRectangleF(rect.X, rect.Y, rect.Width, rect.Height);
 		#endregion
 
 		#region Tuple Compability
+		/// <summary>
+		/// Implicitly converts a GoRogue Rectangle to an equivalent tuple of 4 integers (x, y, width, height).
+		/// </summary>
+		/// <param name="rect" />
+		/// <returns />
 		public static implicit operator (int x, int y, int width, int height)(Rectangle rect) => (rect.X, rect.Y, rect.Width, rect.Height);
+		/// <summary>
+		/// Implicitly converts a tuple of 4 integers (x, y, width, height) to an equivalent GoRogue Rectangle.
+		/// </summary>
+		/// <param name="tuple" />
+		/// <returns />
 		public static implicit operator Rectangle((int x, int y, int width, int height) tuple) => new Rectangle(tuple.x, tuple.y, tuple.width, tuple.height);
+
+		/// <summary>
+		/// Adds support for C# Deconstruction syntax.
+		/// </summary>
+		/// <param name="x" />
+		/// <param name="y" />
+		/// <param name="width" />
+		/// <param name="height" />
 		public void Deconstruct(out int x, out int y, out int width, out int height)
 		{
 			x = X;

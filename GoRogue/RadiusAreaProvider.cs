@@ -109,7 +109,13 @@ namespace GoRogue
 			}
 		}
 
+		/// <summary>
+		/// The X-value of the center point of the radius.
+		/// </summary>
 		public int CenterX => _center.X;
+		/// <summary>
+		/// The Y-value of the center point of the radius.
+		/// </summary>
 		public int CenterY => _center.Y;
 
 		/// <summary>
