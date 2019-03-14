@@ -320,14 +320,14 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Gets the smallest possible rectangle that includes the entire area of both <see cref="r1"/> and
-		/// <see cref="r2"/>.
+		/// Gets the smallest possible rectangle that includes the entire area of both <paramref name="r1"/> and
+		/// <paramref name="r2"/>.
 		/// </summary>
 		/// <param name="r1"/>
 		/// <param name="r2"/>
 		/// <returns>
-		/// The smallest possible rectangle that includes the entire area of both <see cref="r1"/> and
-		/// <see cref="r2"/>.
+		/// The smallest possible rectangle that includes the entire area of both <paramref name="r1"/> and
+		/// <paramref name="r2"/>.
 		/// </returns>
 		public static Rectangle GetUnion(Rectangle r1, Rectangle r2)
 		{
@@ -723,7 +723,7 @@ namespace GoRogue
 
 		/// <summary>
 		/// Returns a string representing the rectangle, formatted as
-		/// (<see cref="X"/>, <see cref="Y"/>) -&gt; (<see cref="MaxX"/>, <see cref="MaxY"/>)
+		/// (<see cref="X"/>, <see cref="Y"/>) -&gt; (<see cref="MaxExtentX"/>, <see cref="MaxExtentY"/>)
 		/// </summary>
 		/// <returns>String formatted as above.</returns>
 		public override string ToString()

@@ -47,7 +47,7 @@ namespace GoRogue
 		/// </summary>
 		/// <remarks>
 		/// A modified modulo operator. Returns the result of  the formula
-		/// (<paramref name="num"/> % <paramref name="wrapTo"/> + <paramref name="wrapTo"/>) % <paramref name="wrapTo/>.
+		/// (<paramref name="num"/> % <paramref name="wrapTo"/> + <paramref name="wrapTo"/>) % <paramref name="wrapTo"/>.
 		/// 
 		/// Practically it differs from regular modulo in that the values it returns when negative values for <paramref name="num"/>
 		/// are wrapped around like one would want an array index to (if wrapTo is list.length, -1 wraps to list.length - 1). For example,
@@ -58,7 +58,7 @@ namespace GoRogue
 		/// length of the array and need to ensure that positive numbers greater than or equal to the
 		/// length of the array wrap to the beginning of the array (index 0), AND that negative
 		/// numbers (under 0) wrap around to the end of the array (Length - 1).
-		/// </summary>
+		/// </remarks>
 		/// <param name="num">The number to wrap.</param>
 		/// <param name="wrapTo">
 		/// The number to wrap to -- the result of the function is as outlined in function

@@ -31,6 +31,14 @@ namespace GoRogue
 	/// </remarks>
 	public struct Coord : IEquatable<Coord>
 	{
+		/// <summary>
+		/// Coord value that represents None or no position (since Coord is not a nullable type).
+		/// Typically you would use this constant instead of null.
+		/// </summary>
+		/// <remarks>
+		/// This constant has (x, y) values (int.MinValue, int.MinValue), so a coordinate with those
+		/// x/y values is not considered a valid coordinate by many GoRogue functions.
+		/// </remarks>
 		public static readonly Coord NONE = new Coord(int.MinValue, int.MinValue);
 
 		/// <summary>

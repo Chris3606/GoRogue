@@ -16,8 +16,8 @@ namespace GoRogue
 	public static class Utility
 	{
 		/// <summary>
-		/// Adds an AsReadOnly method to <see cref="IDictionary"/>, similar to the AsReadOnly method of
-		/// <see cref="IList"/>, that returns a read-only reference to the dictionary.
+		/// Adds an AsReadOnly method to <see cref="IDictionary{K, V}"/>, similar to the AsReadOnly method of
+		/// <see cref="IList{T}"/>, that returns a read-only reference to the dictionary.
 		/// </summary>
 		/// <typeparam name="K">Type of keys of the dictionary.</typeparam>
 		/// <typeparam name="V">Type of values of the dictionary.</typeparam>
@@ -96,7 +96,7 @@ namespace GoRogue
 		/// Extension method for dictionaries that allows retrieving a string representing the dictionary's contents.
 		/// </summary>
 		/// <remarks>
-		/// Built-in C# data structures like <see cref="Dictionary{T}"/> implement <see cref="IDictionary{T}"/>,
+		/// Built-in C# data structures like <see cref="Dictionary{T, V}"/> implement <see cref="IDictionary{T, V}"/>,
 		/// and as such this method can be used to stringify the contents of C# built-in dictionary structures.
 		/// 
 		/// When no customization paramters are specified, it defaults to a representation looking something
@@ -187,8 +187,10 @@ namespace GoRogue
 		/// <summary>
 		/// Extension method for 2D arrays that allows retrieving a string representing the contents,
 		/// formatted as if the 2D array represents a coordinate plane/grid.
+		/// </summary>
 		/// <remarks>
-		/// This differs from <see cref="T[,].ExtendToString"/> in that this method prints the array
+		/// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
+		/// in that this method prints the array
 		/// such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
 		/// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
 		/// </remarks>
@@ -216,9 +218,10 @@ namespace GoRogue
 		/// <summary>
 		/// Extension method for 2D arrays that allows retrieving a string representing the contents,
 		/// formatted as if the 2D array represents a coordinate plane/grid.
+		/// </summary>
 		/// <remarks>
-		/// This differs from <see cref="T[,].ExtendToString"/> in that this method prints the array
-		/// such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
+		/// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
+		/// in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
 		/// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
 		/// </remarks>
 		/// <typeparam name="T"/>

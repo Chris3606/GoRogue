@@ -11,7 +11,7 @@ namespace GoRogue
 	/// are used, positions returned are guaranteed to be returned in order of distance from the center,
 	/// from least to greatest. This guarantee does NOT hold if EUCLIDEAN distance, or CIRCLE/SPHERE radius
 	/// shapes are specified. If no bounds are specified, the IEnumerable returned by the
-	/// <see cref="CalculatePositions" function will contain each coordinate within the radius. Otherwise, it
+	/// <see cref="CalculatePositions"/> function will contain each coordinate within the radius. Otherwise, it
 	/// will contain each coordinate in the radius that is also within the bounds of the rectangle. If the same
 	/// radius length is being used multiple times (even from different center points), it is recommended to use
 	/// only one RadiusAreaProvider, as the class allocates measurable memory, and using only one instance
