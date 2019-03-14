@@ -250,14 +250,14 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// Extension method for List that implements a fisher-yates shuffle. Modifies the list it is
+		/// Extension method for <see cref="IList{T}"/> that implements a fisher-yates shuffle. Modifies the list it is
 		/// called on to randomly rearrange the elements therein.
 		/// </summary>
 		/// <typeparam name="T"/>
 		/// <param name="list"/>
-		/// <param name="rng">RNG to use.  Specifying null causes <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>
+		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used</param>
-		static public void FisherYatesShuffle<T>(this List<T> list, IGenerator rng = null)
+		static public void FisherYatesShuffle<T>(this IList<T> list, IGenerator rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -286,7 +286,7 @@ namespace GoRogue
 		/// </summary>
 		/// <typeparam name="T"/>
 		/// <param name="list"/>
-		/// <param name="rng">RNG to use.  Specifying null causes <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>
+		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>The index selected.</returns>
 		static public int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator rng = null)
@@ -309,7 +309,7 @@ namespace GoRogue
 		/// <param name="selector">
 		/// Function that returns true if the given index is valid selection, false otherwise.
 		/// </param>
-		/// <param name="rng">RNG to use.  Specifying null causes <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>
+		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Index selected.</returns>
 		static public int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator rng = null)
@@ -332,7 +332,7 @@ namespace GoRogue
 		/// </summary>
 		/// <typeparam name="T"/>
 		/// <param name="list"/>
-		/// <param name="rng">RNG to use.  Specifying null causes <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>
+		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
 		static public T RandomItem<T>(this IReadOnlyList<T> list, IGenerator rng = null)
@@ -353,7 +353,7 @@ namespace GoRogue
 		/// <typeparam name="T"/>
 		/// <param name="list"/>
 		/// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
-		/// <param name="rng">RNG to use.  Specifying null causes <see cref="GoRogue.Random.SingletonRandom.DefaultRNG"/>
+		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
 		static public T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator rng = null)
