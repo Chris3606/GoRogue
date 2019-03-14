@@ -73,8 +73,9 @@
   
   <h1 id="GoRogue_MapViews_LambdaTranslationMap_2" data-uid="GoRogue.MapViews.LambdaTranslationMap`2" class="text-break">Class LambdaTranslationMap&lt;T1, T2&gt;
   </h1>
-  <div class="markdown level0 summary"><p>A simple TranslationMap implementation that allows you to provide a lambda for the
-translation function. For a version offering &quot;set&quot; functionality, see SettableLambdaTranslationMap.</p>
+  <div class="markdown level0 summary"><p>A simple <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide a function/lambda
+at construction to use as the TranslateGet implementation. For a version offering &quot;set&quot; functionality,
+see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -172,10 +173,11 @@ translation function. For a version offering &quot;set&quot; functionality, see 
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_LambdaTranslationMap_2_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>If you have several views that simply expose a simple property of your underlying data, it
-could get tedious writing a TranslationMap for all of them. This class simplifies that task
-by letting you just provide the translation method as a delegate/lambda, without needing to
-build the rest of the infrastructure.</p>
+  <div class="markdown level0 remarks"><p>If you have a view that simply exposes a simple property of your underlying data, it
+can be tedious to write a <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a> implementation for
+all of them. This class simplifies that task by letting you just provide the
+translation method as a function/lambda, without needing to build the rest of the
+class infrastructure.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -184,7 +186,7 @@ build the rest of the infrastructure.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L27">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L33">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor*"></a>
   <h4 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1__" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor(GoRogue.MapViews.IMapView{`0},System.Func{`0,`1})">LambdaTranslationMap(IMapView&lt;T1&gt;, Func&lt;T1, T2&gt;)</h4>
@@ -220,12 +222,16 @@ taking only a value of type T1.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>If a position is also needed to perform the translation, an overload is provided taking a
+corresponding function.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_GoRogue_Coord__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7BGoRogue.Coord%2C%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L42">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor*"></a>
   <h4 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_GoRogue_Coord__0__1__" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor(GoRogue.MapViews.IMapView{`0},System.Func{GoRogue.Coord,`0,`1})">LambdaTranslationMap(IMapView&lt;T1&gt;, Func&lt;Coord, T1, T2&gt;)</h4>
@@ -268,11 +274,11 @@ taking a value of type T1 and its corresponding position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.TranslateGet(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L54">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L60">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet*"></a>
   <h4 id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet__0_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(`0)">TranslateGet(T1)</h4>
-  <div class="markdown level1 summary"><p>Translates your map data into the view type by calling the lambda getter specified in the
+  <div class="markdown level1 summary"><p>Translates your map data into the view type by calling the getter function specified in the
 class constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -377,7 +383,7 @@ class constructor.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L17" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L19" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

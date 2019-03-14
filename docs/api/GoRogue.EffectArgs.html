@@ -74,7 +74,7 @@
   <h1 id="GoRogue_EffectArgs" data-uid="GoRogue.EffectArgs" class="text-break">Class EffectArgs
   </h1>
   <div class="markdown level0 summary"><p>Default argument for any effect. Any class that is used as the template argument for an
-effect must either be this or a class that inherits from this.</p>
+effect must inherit from this class.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -113,7 +113,8 @@ effect must either be this or a class that inherits from this.</p>
     <pre><code class="lang-csharp hljs">public class EffectArgs</code></pre>
   </div>
   <h5 id="GoRogue_EffectArgs_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>This allows cancellation of EffectTriggers, as detailed in that class's documentation.</p>
+  <div class="markdown level0 remarks"><p>These arguments allow cancellation of the triggering of a chain of effects when triggered by
+an <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a>, as detailed in that class's documentation.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -122,7 +123,7 @@ effect must either be this or a class that inherits from this.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectArgs__ctor.md&amp;value=---%0Auid%3A%20GoRogue.EffectArgs.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L21">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L24">View Source</a>
   </span>
   <a id="GoRogue_EffectArgs__ctor_" data-uid="GoRogue.EffectArgs.#ctor*"></a>
   <h4 id="GoRogue_EffectArgs__ctor" data-uid="GoRogue.EffectArgs.#ctor">EffectArgs()</h4>
@@ -140,11 +141,11 @@ effect must either be this or a class that inherits from this.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectArgs_CancelTrigger.md&amp;value=---%0Auid%3A%20GoRogue.EffectArgs.CancelTrigger%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L16">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L19">View Source</a>
   </span>
   <h4 id="GoRogue_EffectArgs_CancelTrigger" data-uid="GoRogue.EffectArgs.CancelTrigger">CancelTrigger</h4>
-  <div class="markdown level1 summary"><p>Whether or not the EffectTrigger should stop calling all subsequent effect's Trigger
-functions. See that class's documentation for details.</p>
+  <div class="markdown level1 summary"><p>Whether or not the <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a> should stop calling all subsequent effect's
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> functions. See EffectTrigger's documentation for details.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -181,7 +182,7 @@ functions. See that class's documentation for details.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectArgs.md&amp;value=---%0Auid%3A%20GoRogue.EffectArgs%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L10" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L13" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

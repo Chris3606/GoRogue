@@ -73,8 +73,8 @@
   
   <h1 id="GoRogue_Pathing_AStar" data-uid="GoRogue.Pathing.AStar" class="text-break">Class AStar
   </h1>
-  <div class="markdown level0 summary"><p>Implements basic AStar pathing. Distance specified determins the heuristic and connectivity
-(4-way vs. 8-way) assumed.</p>
+  <div class="markdown level0 summary"><p>Implements basic AStar pathing. Distance calculation specified determines the heuristic and connectivity
+(4-way vs. 8-way) used.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -112,6 +112,14 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class AStar</code></pre>
   </div>
+  <h5 id="GoRogue_Pathing_AStar_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map.
+Specifically, it takes an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where true indicates that a tile should be
+considered walkable, and false indicates that a tile should be considered impassable.</p>
+<p>For details on the map view system in general, see <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>.  As well, there is an article
+explaining the map view system at the GoRogue documentation page
+<a href="https://chris3606.github.io/GoRogue/articles">here</a></p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -119,7 +127,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L43">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L53">View Source</a>
   </span>
   <a id="GoRogue_Pathing_AStar__ctor_" data-uid="GoRogue.Pathing.AStar.#ctor*"></a>
   <h4 id="GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_" data-uid="GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)">AStar(IMapView&lt;Boolean&gt;, Distance)</h4>
@@ -143,16 +151,16 @@
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
         <td><span class="parametername">walkabilityMap</span></td>
-        <td><p>Map used to determine whether or not a given location can be traversed -- true indicates
+        <td><p>Map view used to determine whether or not a given location can be traversed -- true indicates
 walkable, false unwalkable.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceMeasurement</span></td>
-        <td><p>Distance measurement used to determine the method of measuring distance between two
+        <td><p><a class="xref" href="GoRogue.Distance.html">Distance</a> measurement used to determine the method of measuring distance between two
 points, the heuristic AStar uses when pathfinding, and whether locations are connected in
-a 4-way or 8-way manner.</p>
+a 4-way or 8-way pattern.</p>
 </td>
       </tr>
     </tbody>
@@ -164,13 +172,13 @@ a 4-way or 8-way manner.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L63">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L73">View Source</a>
   </span>
   <a id="GoRogue_Pathing_AStar_DistanceMeasurement_" data-uid="GoRogue.Pathing.AStar.DistanceMeasurement*"></a>
   <h4 id="GoRogue_Pathing_AStar_DistanceMeasurement" data-uid="GoRogue.Pathing.AStar.DistanceMeasurement">DistanceMeasurement</h4>
-  <div class="markdown level1 summary"><p>The distance calculation being used to determine distance between points. MANHATTAN
-implies 4-way connectivity, while CHEBYSHEV or EUCLIDEAN imply 8-way connectivity for the
-purpose of determining adjacent coordinates.</p>
+  <div class="markdown level1 summary"><p>The distance calculation being used to determine distance between points. <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_MANHATTAN">MANHATTAN</a>
+implies 4-way connectivity, while <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_CHEBYSHEV">CHEBYSHEV</a> or <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_EUCLIDEAN">EUCLIDEAN</a> imply
+8-way connectivity for the purpose of determining adjacent coordinates.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -197,11 +205,11 @@ purpose of determining adjacent coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar_WalkabilityMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.WalkabilityMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L79">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L89">View Source</a>
   </span>
   <a id="GoRogue_Pathing_AStar_WalkabilityMap_" data-uid="GoRogue.Pathing.AStar.WalkabilityMap*"></a>
   <h4 id="GoRogue_Pathing_AStar_WalkabilityMap" data-uid="GoRogue.Pathing.AStar.WalkabilityMap">WalkabilityMap</h4>
-  <div class="markdown level1 summary"><p>The map being used as the source for whether or not each tile is walkable.</p>
+  <div class="markdown level1 summary"><p>The map view being used to determine whether or not each tile is walkable.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -230,7 +238,7 @@ purpose of determining adjacent coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.ShortestPath(GoRogue.Coord%2CGoRogue.Coord%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L95">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L105">View Source</a>
   </span>
   <a id="GoRogue_Pathing_AStar_ShortestPath_" data-uid="GoRogue.Pathing.AStar.ShortestPath*"></a>
   <h4 id="GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_" data-uid="GoRogue.Pathing.AStar.ShortestPath(GoRogue.Coord,GoRogue.Coord,System.Boolean)">ShortestPath(Coord, Coord, Boolean)</h4>
@@ -267,7 +275,7 @@ purpose of determining adjacent coordinates.</p>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">assumeEndpointsWalkable</span></td>
         <td><p>Whether or not to assume the start and end points are walkable, regardless of what the
-walkability map reports. Defaults to true.</p>
+<a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_WalkabilityMap">WalkabilityMap</a> reports. Defaults to <span class="xref">true</span>.</p>
 </td>
       </tr>
     </tbody>
@@ -283,13 +291,13 @@ walkability map reports. Defaults to true.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Pathing.Path.html">Path</a></td>
-        <td><p>The shortest path between the two points, or null if no valid path exists.</p>
+        <td><p>The shortest path between the two points, or <span class="xref">null</span> if no valid path exists.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Returns null if there is no path between the specified points. Will still return an
+  <div class="markdown level1 remarks"><p>Returns <span class="xref">null</span> if there is no path between the specified points. Will still return an
 appropriate path object if the start point is equal to the end point.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -297,7 +305,7 @@ appropriate path object if the start point is equal to the end point.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.ShortestPath(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L208">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L218">View Source</a>
   </span>
   <a id="GoRogue_Pathing_AStar_ShortestPath_" data-uid="GoRogue.Pathing.AStar.ShortestPath*"></a>
   <h4 id="GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_" data-uid="GoRogue.Pathing.AStar.ShortestPath(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">ShortestPath(Int32, Int32, Int32, Int32, Boolean)</h4>
@@ -346,7 +354,7 @@ appropriate path object if the start point is equal to the end point.</p>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">assumeEndpointsWalkable</span></td>
         <td><p>Whether or not to assume the start and end points are walkable, regardless of what the
-walkability map reports. Defaults to true.</p>
+<a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_WalkabilityMap">WalkabilityMap</a> reports. Defaults to <span class="xref">true</span>.</p>
 </td>
       </tr>
     </tbody>
@@ -362,13 +370,13 @@ walkability map reports. Defaults to true.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Pathing.Path.html">Path</a></td>
-        <td><p>The shortest path between the two points, or null if no valid path exists.</p>
+        <td><p>The shortest path between the two points, or <span class="xref">null</span> if no valid path exists.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Returns null if there is no path between the specified points. Will still return an
+  <div class="markdown level1 remarks"><p>Returns <span class="xref">null</span> if there is no path between the specified points. Will still return an
 appropriate path object if the start point is equal to the end point.</p>
 </div>
   <h3 id="extensionmethods">Extension Methods</h3>
@@ -386,7 +394,7 @@ appropriate path object if the start point is equal to the end point.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_AStar.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/AStar.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

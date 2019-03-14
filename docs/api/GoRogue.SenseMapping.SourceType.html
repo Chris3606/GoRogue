@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_SenseMapping_SourceType" data-uid="GoRogue.SenseMapping.SourceType" class="text-break">Enum SourceType
   </h1>
-  <div class="markdown level0 summary"><p>Different types of algorithms that model how values spread from the source.</p>
+  <div class="markdown level0 summary"><p>Different types of algorithms that model how source values spread from their source's location.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.SenseMapping.html">GoRogue.SenseMapping</a></h6>
@@ -100,27 +100,26 @@ around corners a bit.</p>
       </tr>
       <tr>
         <td id="GoRogue_SenseMapping_SourceType_RIPPLE_LOOSE">RIPPLE_LOOSE</td>
-        <td><p>Similar to RIPPLE but with different spread mechanics. Values spread around edges like
-smoke or water, but maintains a tendency to curl towards the start position as it goes
-around edges.</p>
+        <td><p>Similar to <a class="xref" href="GoRogue.SenseMapping.SourceType.html#GoRogue_SenseMapping_SourceType_RIPPLE">RIPPLE</a> but with different spread mechanics. Values spread around edges like
+smoke or water, but maintains a tendency to curl towards the start position as it goes around edges.</p>
 </td>
       </tr>
       <tr>
         <td id="GoRogue_SenseMapping_SourceType_RIPPLE_TIGHT">RIPPLE_TIGHT</td>
-        <td><p>Similar to RIPPLE, but values spread around corners only very slightly.</p>
+        <td><p>Similar to <a class="xref" href="GoRogue.SenseMapping.SourceType.html#GoRogue_SenseMapping_SourceType_RIPPLE">RIPPLE</a>, but values spread around corners only very slightly.</p>
 </td>
       </tr>
       <tr>
         <td id="GoRogue_SenseMapping_SourceType_RIPPLE_VERY_LOOSE">RIPPLE_VERY_LOOSE</td>
-        <td><p>Similar to RIPPLE, but values spread around corners a lot.</p>
+        <td><p>Similar to <a class="xref" href="GoRogue.SenseMapping.SourceType.html#GoRogue_SenseMapping_SourceType_RIPPLE">RIPPLE</a>, but values spread around corners a lot.</p>
 </td>
       </tr>
       <tr>
         <td id="GoRogue_SenseMapping_SourceType_SHADOW">SHADOW</td>
         <td><p>Uses a Shadowcasting algorithm. All partially resistant grid locations are treated as
 being fully transparent (it's on-off blocking, where a value greater than or equal to the
-source's Intensity in the resistance map blocks, and all lower values don't).
-Returns values from Intensity at center of source to 0.0 outside of range of source.</p>
+source's <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Intensity">Intensity</a> in the resistance map blocks, and all lower
+values don't).</p>
 </td>
       </tr>
     </tbody>

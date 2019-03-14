@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_IReadOnlyRadiusAreaProvider" data-uid="GoRogue.IReadOnlyRadiusAreaProvider" class="text-break">Interface IReadOnlyRadiusAreaProvider
   </h1>
-  <div class="markdown level0 summary"><p>Read-only interface of a RadiusAreaProvider.</p>
+  <div class="markdown level0 summary"><p>Read-only interface of <a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
@@ -93,8 +93,8 @@
   </span>
   <a id="GoRogue_IReadOnlyRadiusAreaProvider_Bounds_" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.Bounds*"></a>
   <h4 id="GoRogue_IReadOnlyRadiusAreaProvider_Bounds" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.Bounds">Bounds</h4>
-  <div class="markdown level1 summary"><p>The bounds to constrain the returned Coords to. Set to Rectangle.EMPTY to indicate that
-there are no bounds.</p>
+  <div class="markdown level1 summary"><p>The bounds to constrain the returned locations to. Set to <a class="xref" href="GoRogue.Rectangle.html#GoRogue_Rectangle_EMPTY">EMPTY</a>
+to indicate that there are no bounds.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -157,7 +157,7 @@ there are no bounds.</p>
   <a id="GoRogue_IReadOnlyRadiusAreaProvider_DistanceCalc_" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.DistanceCalc*"></a>
   <h4 id="GoRogue_IReadOnlyRadiusAreaProvider_DistanceCalc" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.DistanceCalc">DistanceCalc</h4>
   <div class="markdown level1 summary"><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html#GoRogue_IReadOnlyRadiusAreaProvider_Radius">Radius</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -184,7 +184,7 @@ implicitly convertible to Distance, eg. Radius).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyRadiusAreaProvider_Radius.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyRadiusAreaProvider.Radius%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyRadiusAreaProvider.cs/#L31">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyRadiusAreaProvider.cs/#L35">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyRadiusAreaProvider_Radius_" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.Radius*"></a>
   <h4 id="GoRogue_IReadOnlyRadiusAreaProvider_Radius" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.Radius">Radius</h4>
@@ -211,6 +211,10 @@ the distance calculation/radius shape given) to which the radius extends.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_IReadOnlyRadiusAreaProvider_Radius_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When this value is changed, reallocation of an underlying array is performed, however overhead should
+be relatively small in most cases.</p>
+</div>
   <h3 id="methods">Methods
   </h3>
   <span class="small pull-right mobile-hide">
@@ -218,14 +222,12 @@ the distance calculation/radius shape given) to which the radius extends.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyRadiusAreaProvider_CalculatePositions.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyRadiusAreaProvider.CalculatePositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyRadiusAreaProvider.cs/#L40">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyRadiusAreaProvider.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyRadiusAreaProvider_CalculatePositions_" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.CalculatePositions*"></a>
   <h4 id="GoRogue_IReadOnlyRadiusAreaProvider_CalculatePositions" data-uid="GoRogue.IReadOnlyRadiusAreaProvider.CalculatePositions">CalculatePositions()</h4>
-  <div class="markdown level1 summary"><p>Calculates the new radius, and returns an IEnumerable of all unique Coords within that
-radius and bounds specified (as applicable). See RadiusAreaProvider class description for
-details on the ordering. Safe to expose in read-only class, since it does not modify the
-public interface of the RadiusAreaProvider.</p>
+  <div class="markdown level1 summary"><p>Calculates the new radius, and returns an IEnumerable of all unique locations within that
+radius and bounds specified (as applicable).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -243,11 +245,17 @@ public interface of the RadiusAreaProvider.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
-        <td><p>Enumerable of all unique Coords within the radius and bounds specified.</p>
+        <td><p>Enumerable of all unique positions within the radius and bounds specified.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_IReadOnlyRadiusAreaProvider_CalculatePositions_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE radius shapes
+are specified via <a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html#GoRogue_IReadOnlyRadiusAreaProvider_DistanceCalc">DistanceCalc</a>, positions returned are guaranteed to be returned
+in order of distance from the center, from least to greatest. This guarantee does NOT hold if
+EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.</p>
+</div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>

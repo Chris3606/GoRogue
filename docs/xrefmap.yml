@@ -1918,12 +1918,27 @@ references:
   commentId: M:GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Point)
   fullName: GoRogue.Coord.Addition(GoRogue.Coord, System.Drawing.Point)
   nameWithType: Coord.Addition(Coord, Point)
+- uid: GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Size)
+  name: Addition(Coord, Size)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Size_
+  commentId: M:GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Size)
+  fullName: GoRogue.Coord.Addition(GoRogue.Coord, System.Drawing.Size)
+  nameWithType: Coord.Addition(Coord, Size)
 - uid: GoRogue.Coord.op_Addition(GoRogue.Coord,System.Int32)
   name: Addition(Coord, Int32)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_GoRogue_Coord_System_Int32_
   commentId: M:GoRogue.Coord.op_Addition(GoRogue.Coord,System.Int32)
   fullName: GoRogue.Coord.Addition(GoRogue.Coord, System.Int32)
   nameWithType: Coord.Addition(Coord, Int32)
+- uid: GoRogue.Coord.op_Addition(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name: Addition(Coord, (Int32 x, Int32 y))
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__
+  commentId: M:GoRogue.Coord.op_Addition(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name.vb: Addition(Coord, (x As Int32, y As Int32))
+  fullName: GoRogue.Coord.Addition(GoRogue.Coord, System.ValueTuple<System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Coord.Addition(GoRogue.Coord, System.ValueTuple(Of System.Int32, System.Int32))
+  nameWithType: Coord.Addition(Coord, (Int32 x, Int32 y))
+  nameWithType.vb: Coord.Addition(Coord, (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Coord)
   name: Addition(Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_Microsoft_Xna_Framework_Point_GoRogue_Coord_
@@ -1942,6 +1957,27 @@ references:
   commentId: M:GoRogue.Coord.op_Addition(System.Drawing.PointF,GoRogue.Coord)
   fullName: GoRogue.Coord.Addition(System.Drawing.PointF, GoRogue.Coord)
   nameWithType: Coord.Addition(PointF, Coord)
+- uid: GoRogue.Coord.op_Addition(System.Drawing.Size,GoRogue.Coord)
+  name: Addition(Size, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_System_Drawing_Size_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Addition(System.Drawing.Size,GoRogue.Coord)
+  fullName: GoRogue.Coord.Addition(System.Drawing.Size, GoRogue.Coord)
+  nameWithType: Coord.Addition(Size, Coord)
+- uid: GoRogue.Coord.op_Addition(System.Drawing.SizeF,GoRogue.Coord)
+  name: Addition(SizeF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_System_Drawing_SizeF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Addition(System.Drawing.SizeF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Addition(System.Drawing.SizeF, GoRogue.Coord)
+  nameWithType: Coord.Addition(SizeF, Coord)
+- uid: GoRogue.Coord.op_Addition(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name: Addition((Int32 x, Int32 y), Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Addition(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name.vb: Addition((x As Int32, y As Int32), Coord)
+  fullName: GoRogue.Coord.Addition(System.ValueTuple<System.Int32, System.Int32>, GoRogue.Coord)
+  fullName.vb: GoRogue.Coord.Addition(System.ValueTuple(Of System.Int32, System.Int32), GoRogue.Coord)
+  nameWithType: Coord.Addition((Int32 x, Int32 y), Coord)
+  nameWithType.vb: Coord.Addition((x As Int32, y As Int32), Coord)
 - uid: GoRogue.Coord.op_Addition*
   name: Addition
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_
@@ -2119,12 +2155,78 @@ references:
   commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,GoRogue.Coord)
   fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Subtraction(Coord, Coord)
+- uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  name: Subtraction(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_Microsoft_Xna_Framework_Point_
+  commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, Microsoft.Xna.Framework.Point)
+  nameWithType: Coord.Subtraction(Coord, Point)
+- uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Point)
+  name: Subtraction(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Point_
+  commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Point)
+  fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, System.Drawing.Point)
+  nameWithType: Coord.Subtraction(Coord, Point)
+- uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Size)
+  name: Subtraction(Coord, Size)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Size_
+  commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Size)
+  fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, System.Drawing.Size)
+  nameWithType: Coord.Subtraction(Coord, Size)
 - uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Int32)
   name: Subtraction(Coord, Int32)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Int32_
   commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Int32)
   fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, System.Int32)
   nameWithType: Coord.Subtraction(Coord, Int32)
+- uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name: Subtraction(Coord, (Int32 x, Int32 y))
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__
+  commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name.vb: Subtraction(Coord, (x As Int32, y As Int32))
+  fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, System.ValueTuple<System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Coord.Subtraction(GoRogue.Coord, System.ValueTuple(Of System.Int32, System.Int32))
+  nameWithType: Coord.Subtraction(Coord, (Int32 x, Int32 y))
+  nameWithType.vb: Coord.Subtraction(Coord, (x As Int32, y As Int32))
+- uid: GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  name: Subtraction(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_Microsoft_Xna_Framework_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Subtraction(Microsoft.Xna.Framework.Point, GoRogue.Coord)
+  nameWithType: Coord.Subtraction(Point, Coord)
+- uid: GoRogue.Coord.op_Subtraction(System.Drawing.Point,GoRogue.Coord)
+  name: Subtraction(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_Drawing_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(System.Drawing.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Subtraction(System.Drawing.Point, GoRogue.Coord)
+  nameWithType: Coord.Subtraction(Point, Coord)
+- uid: GoRogue.Coord.op_Subtraction(System.Drawing.PointF,GoRogue.Coord)
+  name: Subtraction(PointF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_Drawing_PointF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(System.Drawing.PointF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Subtraction(System.Drawing.PointF, GoRogue.Coord)
+  nameWithType: Coord.Subtraction(PointF, Coord)
+- uid: GoRogue.Coord.op_Subtraction(System.Drawing.Size,GoRogue.Coord)
+  name: Subtraction(Size, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_Drawing_Size_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(System.Drawing.Size,GoRogue.Coord)
+  fullName: GoRogue.Coord.Subtraction(System.Drawing.Size, GoRogue.Coord)
+  nameWithType: Coord.Subtraction(Size, Coord)
+- uid: GoRogue.Coord.op_Subtraction(System.Drawing.SizeF,GoRogue.Coord)
+  name: Subtraction(SizeF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_Drawing_SizeF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(System.Drawing.SizeF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Subtraction(System.Drawing.SizeF, GoRogue.Coord)
+  nameWithType: Coord.Subtraction(SizeF, Coord)
+- uid: GoRogue.Coord.op_Subtraction(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name: Subtraction((Int32 x, Int32 y), Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Subtraction(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name.vb: Subtraction((x As Int32, y As Int32), Coord)
+  fullName: GoRogue.Coord.Subtraction(System.ValueTuple<System.Int32, System.Int32>, GoRogue.Coord)
+  fullName.vb: GoRogue.Coord.Subtraction(System.ValueTuple(Of System.Int32, System.Int32), GoRogue.Coord)
+  nameWithType: Coord.Subtraction((Int32 x, Int32 y), Coord)
+  nameWithType.vb: Coord.Subtraction((x As Int32, y As Int32), Coord)
 - uid: GoRogue.Coord.op_Subtraction*
   name: Subtraction
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_
@@ -3248,6 +3350,15 @@ references:
   commentId: M:GoRogue.Direction.op_Addition(System.Drawing.Point,GoRogue.Direction)
   fullName: GoRogue.Direction.Addition(System.Drawing.Point, GoRogue.Direction)
   nameWithType: Direction.Addition(Point, Direction)
+- uid: GoRogue.Direction.op_Addition(System.ValueTuple{System.Int32,System.Int32},GoRogue.Direction)
+  name: Addition((Int32 x, Int32 y), Direction)
+  href: api/GoRogue.Direction.html#GoRogue_Direction_op_Addition_System_ValueTuple_System_Int32_System_Int32__GoRogue_Direction_
+  commentId: M:GoRogue.Direction.op_Addition(System.ValueTuple{System.Int32,System.Int32},GoRogue.Direction)
+  name.vb: Addition((x As Int32, y As Int32), Direction)
+  fullName: GoRogue.Direction.Addition(System.ValueTuple<System.Int32, System.Int32>, GoRogue.Direction)
+  fullName.vb: GoRogue.Direction.Addition(System.ValueTuple(Of System.Int32, System.Int32), GoRogue.Direction)
+  nameWithType: Direction.Addition((Int32 x, Int32 y), Direction)
+  nameWithType.vb: Direction.Addition((x As Int32, y As Int32), Direction)
 - uid: GoRogue.Direction.op_Addition*
   name: Addition
   href: api/GoRogue.Direction.html#GoRogue_Direction_op_Addition_
@@ -5705,6 +5816,30 @@ references:
   fullName.vb: GoRogue.IReadOnlySpatialMap(Of T).GetPosition
   nameWithType: IReadOnlySpatialMap<T>.GetPosition
   nameWithType.vb: IReadOnlySpatialMap(Of T).GetPosition
+- uid: GoRogue.IReadOnlySpatialMap`1.ItemAdded
+  name: ItemAdded
+  href: api/GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemAdded
+  commentId: E:GoRogue.IReadOnlySpatialMap`1.ItemAdded
+  fullName: GoRogue.IReadOnlySpatialMap<T>.ItemAdded
+  fullName.vb: GoRogue.IReadOnlySpatialMap(Of T).ItemAdded
+  nameWithType: IReadOnlySpatialMap<T>.ItemAdded
+  nameWithType.vb: IReadOnlySpatialMap(Of T).ItemAdded
+- uid: GoRogue.IReadOnlySpatialMap`1.ItemMoved
+  name: ItemMoved
+  href: api/GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemMoved
+  commentId: E:GoRogue.IReadOnlySpatialMap`1.ItemMoved
+  fullName: GoRogue.IReadOnlySpatialMap<T>.ItemMoved
+  fullName.vb: GoRogue.IReadOnlySpatialMap(Of T).ItemMoved
+  nameWithType: IReadOnlySpatialMap<T>.ItemMoved
+  nameWithType.vb: IReadOnlySpatialMap(Of T).ItemMoved
+- uid: GoRogue.IReadOnlySpatialMap`1.ItemRemoved
+  name: ItemRemoved
+  href: api/GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemRemoved
+  commentId: E:GoRogue.IReadOnlySpatialMap`1.ItemRemoved
+  fullName: GoRogue.IReadOnlySpatialMap<T>.ItemRemoved
+  fullName.vb: GoRogue.IReadOnlySpatialMap(Of T).ItemRemoved
+  nameWithType: IReadOnlySpatialMap<T>.ItemRemoved
+  nameWithType.vb: IReadOnlySpatialMap(Of T).ItemRemoved
 - uid: GoRogue.IReadOnlySpatialMap`1.Items
   name: Items
   href: api/GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Items
@@ -5808,30 +5943,6 @@ references:
   fullName.vb: GoRogue.ISpatialMap(Of T).Clear
   nameWithType: ISpatialMap<T>.Clear
   nameWithType.vb: ISpatialMap(Of T).Clear
-- uid: GoRogue.ISpatialMap`1.ItemAdded
-  name: ItemAdded
-  href: api/GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_ItemAdded
-  commentId: E:GoRogue.ISpatialMap`1.ItemAdded
-  fullName: GoRogue.ISpatialMap<T>.ItemAdded
-  fullName.vb: GoRogue.ISpatialMap(Of T).ItemAdded
-  nameWithType: ISpatialMap<T>.ItemAdded
-  nameWithType.vb: ISpatialMap(Of T).ItemAdded
-- uid: GoRogue.ISpatialMap`1.ItemMoved
-  name: ItemMoved
-  href: api/GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_ItemMoved
-  commentId: E:GoRogue.ISpatialMap`1.ItemMoved
-  fullName: GoRogue.ISpatialMap<T>.ItemMoved
-  fullName.vb: GoRogue.ISpatialMap(Of T).ItemMoved
-  nameWithType: ISpatialMap<T>.ItemMoved
-  nameWithType.vb: ISpatialMap(Of T).ItemMoved
-- uid: GoRogue.ISpatialMap`1.ItemRemoved
-  name: ItemRemoved
-  href: api/GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_ItemRemoved
-  commentId: E:GoRogue.ISpatialMap`1.ItemRemoved
-  fullName: GoRogue.ISpatialMap<T>.ItemRemoved
-  fullName.vb: GoRogue.ISpatialMap(Of T).ItemRemoved
-  nameWithType: ISpatialMap<T>.ItemRemoved
-  nameWithType.vb: ISpatialMap(Of T).ItemRemoved
 - uid: GoRogue.ISpatialMap`1.Move(`0,GoRogue.Coord)
   name: Move(T, Coord)
   href: api/GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_Move__0_GoRogue_Coord_
@@ -9587,6 +9698,12 @@ references:
   commentId: M:GoRogue.Pathing.FleeMap.GetDirectionOfMinValue(GoRogue.Coord)
   fullName: GoRogue.Pathing.FleeMap.GetDirectionOfMinValue(GoRogue.Coord)
   nameWithType: FleeMap.GetDirectionOfMinValue(Coord)
+- uid: GoRogue.Pathing.FleeMap.GetDirectionOfMinValue(System.Int32,System.Int32)
+  name: GetDirectionOfMinValue(Int32, Int32)
+  href: api/GoRogue.Pathing.FleeMap.html#GoRogue_Pathing_FleeMap_GetDirectionOfMinValue_System_Int32_System_Int32_
+  commentId: M:GoRogue.Pathing.FleeMap.GetDirectionOfMinValue(System.Int32,System.Int32)
+  fullName: GoRogue.Pathing.FleeMap.GetDirectionOfMinValue(System.Int32, System.Int32)
+  nameWithType: FleeMap.GetDirectionOfMinValue(Int32, Int32)
 - uid: GoRogue.Pathing.FleeMap.GetDirectionOfMinValue*
   name: GetDirectionOfMinValue
   href: api/GoRogue.Pathing.FleeMap.html#GoRogue_Pathing_FleeMap_GetDirectionOfMinValue_
@@ -9752,6 +9869,12 @@ references:
   commentId: M:GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(GoRogue.Coord)
   fullName: GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(GoRogue.Coord)
   nameWithType: GoalMap.GetDirectionOfMinValue(Coord)
+- uid: GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32,System.Int32)
+  name: GetDirectionOfMinValue(Int32, Int32)
+  href: api/GoRogue.Pathing.GoalMap.html#GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_System_Int32_System_Int32_
+  commentId: M:GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32,System.Int32)
+  fullName: GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32, System.Int32)
+  nameWithType: GoalMap.GetDirectionOfMinValue(Int32, Int32)
 - uid: GoRogue.Pathing.GoalMap.GetDirectionOfMinValue*
   name: GetDirectionOfMinValue
   href: api/GoRogue.Pathing.GoalMap.html#GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_
@@ -9897,6 +10020,15 @@ references:
   fullName.vb: GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView(Of System.Nullable(Of System.Double)), GoRogue.Coord, GoRogue.AdjacencyRule)
   nameWithType: GoalMapExtensions.GetDirectionOfMinValue(IMapView<Nullable<Double>>, Coord, AdjacencyRule)
   nameWithType.vb: GoalMapExtensions.GetDirectionOfMinValue(IMapView(Of Nullable(Of Double)), Coord, AdjacencyRule)
+- uid: GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView{System.Nullable{System.Double}},System.Int32,System.Int32,GoRogue.AdjacencyRule)
+  name: GetDirectionOfMinValue(IMapView<Nullable<Double>>, Int32, Int32, AdjacencyRule)
+  href: api/GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___System_Int32_System_Int32_GoRogue_AdjacencyRule_
+  commentId: M:GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView{System.Nullable{System.Double}},System.Int32,System.Int32,GoRogue.AdjacencyRule)
+  name.vb: GetDirectionOfMinValue(IMapView(Of Nullable(Of Double)), Int32, Int32, AdjacencyRule)
+  fullName: GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView<System.Nullable<System.Double>>, System.Int32, System.Int32, GoRogue.AdjacencyRule)
+  fullName.vb: GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView(Of System.Nullable(Of System.Double)), System.Int32, System.Int32, GoRogue.AdjacencyRule)
+  nameWithType: GoalMapExtensions.GetDirectionOfMinValue(IMapView<Nullable<Double>>, Int32, Int32, AdjacencyRule)
+  nameWithType.vb: GoalMapExtensions.GetDirectionOfMinValue(IMapView(Of Nullable(Of Double)), Int32, Int32, AdjacencyRule)
 - uid: GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue*
   name: GetDirectionOfMinValue
   href: api/GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_
@@ -12954,15 +13086,15 @@ references:
   isSpec: "True"
   fullName: GoRogue.Utility.FisherYatesShuffle
   nameWithType: Utility.FisherYatesShuffle
-- uid: GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.List{``0},Troschuetz.Random.IGenerator)
-  name: FisherYatesShuffle<T>(List<T>, IGenerator)
-  href: api/GoRogue.Utility.html#GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_List___0__Troschuetz_Random_IGenerator_
-  commentId: M:GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.List{``0},Troschuetz.Random.IGenerator)
-  name.vb: FisherYatesShuffle(Of T)(List(Of T), IGenerator)
-  fullName: GoRogue.Utility.FisherYatesShuffle<T>(System.Collections.Generic.List<T>, Troschuetz.Random.IGenerator)
-  fullName.vb: GoRogue.Utility.FisherYatesShuffle(Of T)(System.Collections.Generic.List(Of T), Troschuetz.Random.IGenerator)
-  nameWithType: Utility.FisherYatesShuffle<T>(List<T>, IGenerator)
-  nameWithType.vb: Utility.FisherYatesShuffle(Of T)(List(Of T), IGenerator)
+- uid: GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.IList{``0},Troschuetz.Random.IGenerator)
+  name: FisherYatesShuffle<T>(IList<T>, IGenerator)
+  href: api/GoRogue.Utility.html#GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_IList___0__Troschuetz_Random_IGenerator_
+  commentId: M:GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.IList{``0},Troschuetz.Random.IGenerator)
+  name.vb: FisherYatesShuffle(Of T)(IList(Of T), IGenerator)
+  fullName: GoRogue.Utility.FisherYatesShuffle<T>(System.Collections.Generic.IList<T>, Troschuetz.Random.IGenerator)
+  fullName.vb: GoRogue.Utility.FisherYatesShuffle(Of T)(System.Collections.Generic.IList(Of T), Troschuetz.Random.IGenerator)
+  nameWithType: Utility.FisherYatesShuffle<T>(IList<T>, IGenerator)
+  nameWithType.vb: Utility.FisherYatesShuffle(Of T)(IList(Of T), IGenerator)
 - uid: GoRogue.Utility.Multiply(System.String,System.Int32)
   name: Multiply(String, Int32)
   href: api/GoRogue.Utility.html#GoRogue_Utility_Multiply_System_String_System_Int32_

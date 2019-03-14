@@ -73,24 +73,8 @@
   
   <h1 id="GoRogue_IHasID" data-uid="GoRogue.IHasID" class="text-break">Interface IHasID
   </h1>
-  <div class="markdown level0 summary"><p>Interface for a class that has an ID, typically used for hashing purposes. The ID should be
-unique or close to unique over all instances of the class (for efficiency). Typical
-implementation could be simply random-genning the ID, or for completely unique IDs can
-involve using an IDGenerator, potentially as follows: <example><p>
-<pre><code>class SomeClass : IHasID
-{
-private static IDGenerator generator = new IDGenerator();
-public int ID { get; private set; }
-/// public SomeClass(...)
-{
-ID = generator.UseID();
-}
-}</code></pre>
-<p></example> A class that wishes to be able to have these IDs serialized and the state resumed
-later might have to do something more advanced than a static variable (say, a &quot;global&quot; array
-of generators whose states are read in from a file at the start of the game), but the
-principle would remain the same. Interface is used for SpatialMap to work correctly, and as
-well in general provides a convenient way to hash entities that implement this interface.</p>
+  <div class="markdown level0 summary"><p>Interface for a class that has an ID value, typically used for items in a spatial map, or generally
+for purposes of hashing.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
@@ -99,6 +83,24 @@ well in general provides a convenient way to hash entities that implement this i
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public interface IHasID</code></pre>
   </div>
+  <h5 id="GoRogue_IHasID_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The ID assigned should be unique or close to unique over all instances of the class (to avoid hash collisions).
+A typical implementation could be simply randomly generating the ID value.  To assign completely unique IDs, an
+<a class="xref" href="GoRogue.IDGenerator.html">IDGenerator</a> can be used:
+<example><p>
+<pre><code>class SomeClass : IHasID
+{
+    // Static instance used to assign IDs to ANY new SomeClass instance
+    private static IDGenerator generator = new IDGenerator();
+    public uint ID { get; }
+
+    public SomeClass(...)
+    {
+        ID = generator.UseID();
+    }
+}</code></pre>
+</example>
+</div>
   <h3 id="properties">Properties
   </h3>
   <span class="small pull-right mobile-hide">
@@ -106,11 +108,11 @@ well in general provides a convenient way to hash entities that implement this i
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IHasID_ID.md&amp;value=---%0Auid%3A%20GoRogue.IHasID.ID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasID.cs/#L30">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasID.cs/#L32">View Source</a>
   </span>
   <a id="GoRogue_IHasID_ID_" data-uid="GoRogue.IHasID.ID*"></a>
   <h4 id="GoRogue_IHasID_ID" data-uid="GoRogue.IHasID.ID">ID</h4>
-  <div class="markdown level1 summary"><p>ID assigned to this entity.</p>
+  <div class="markdown level1 summary"><p>ID assigned to this object.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -147,7 +149,7 @@ well in general provides a convenient way to hash entities that implement this i
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IHasID.md&amp;value=---%0Auid%3A%20GoRogue.IHasID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasID.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasID.cs/#L27" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -74,8 +74,8 @@
   <h1 id="GoRogue_Random_DiscreteConverter_1" data-uid="GoRogue.Random.DiscreteConverter`1" class="text-break">Class DiscreteConverter&lt;T&gt;
   </h1>
   <div class="markdown level0 summary"><p>Wraps a continuous distribution and allows it to be used as discrete, by rounding double
-values produced by NextDouble to nearest int. Its minimum, maximum, mean, median, variance,
-and mode(s) are exactly the same as its underlying IContinuousDistribution.</p>
+values produced by <a class="xref" href="GoRogue.Random.DiscreteConverter-1.html#GoRogue_Random_DiscreteConverter_1_NextDouble">NextDouble()</a> to the nearest int. Its minimum, maximum, mean, median, variance,
+and mode(s) are exactly the same as its underlying <span class="xref">Troschuetz.Random.IContinuousDistribution</span>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -129,13 +129,13 @@ and mode(s) are exactly the same as its underlying IContinuousDistribution.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>The type of continuous distribution being wrapped. Must implement IContinuousDistribution.</p>
+        <td><p>The type of continuous distribution being wrapped. Must implement <span class="xref">Troschuetz.Random.IContinuousDistribution</span>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Random_DiscreteConverter_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Takes a value of type T so that its ContinuousDistribution field can return a value of the
+  <div class="markdown level0 remarks"><p>Takes a value of type T so that its <a class="xref" href="GoRogue.Random.DiscreteConverter-1.html#GoRogue_Random_DiscreteConverter_1_ContinuousDistribution">ContinuousDistribution</a> can return a value of the
 exact wrapped type, which still enables access to any distribution-specified fields, etc.</p>
 </div>
   <h3 id="constructors">Constructors
@@ -248,7 +248,7 @@ so that it produces the same random number sequence again.</p>
   </span>
   <a id="GoRogue_Random_DiscreteConverter_1_Generator_" data-uid="GoRogue.Random.DiscreteConverter`1.Generator*"></a>
   <h4 id="GoRogue_Random_DiscreteConverter_1_Generator" data-uid="GoRogue.Random.DiscreteConverter`1.Generator">Generator</h4>
-  <div class="markdown level1 summary"><p>Gets the IGenerator object that is used as underlying random number generator.</p>
+  <div class="markdown level1 summary"><p>Gets the <span class="xref">Troschuetz.Random.IGenerator</span> object that is used as underlying random number generator.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -467,7 +467,7 @@ so that it produces the same random number sequence again.</p>
   </span>
   <a id="GoRogue_Random_DiscreteConverter_1_Next_" data-uid="GoRogue.Random.DiscreteConverter`1.Next*"></a>
   <h4 id="GoRogue_Random_DiscreteConverter_1_Next" data-uid="GoRogue.Random.DiscreteConverter`1.Next">Next()</h4>
-  <div class="markdown level1 summary"><p>Returns the result of the underlying continuous distribution's NextDouble function, but
+  <div class="markdown level1 summary"><p>Returns the result of the underlying continuous distribution's <a class="xref" href="GoRogue.Random.DiscreteConverter-1.html#GoRogue_Random_DiscreteConverter_1_NextDouble">NextDouble()</a> function, but
 rounded to the nearest integer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -486,7 +486,7 @@ rounded to the nearest integer.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td><p>The result of the underlying continuous distribution's NextDouble function, rounded to
+        <td><p>The result of the underlying continuous distribution's <a class="xref" href="GoRogue.Random.DiscreteConverter-1.html#GoRogue_Random_DiscreteConverter_1_NextDouble">NextDouble()</a> function, rounded to
 the nearest integer.</p>
 </td>
       </tr>

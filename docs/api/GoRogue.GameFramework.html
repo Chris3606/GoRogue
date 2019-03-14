@@ -78,20 +78,22 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GoRogue.GameFramework.GameObject.html">GameObject</a></h4>
-      <section><p>Base class for any object that has a grid position and can be added to a Map.  Implements basic attributes generally common to all objects
-on a map, as well as properties/methods that the Map class needs to function.  It also implements IHasComponents, which means you can attach
-components to it (see ComponentContainer documentation for details on those functions).  In cases where this class cannot be inherited from, have
-your class implement IGameObject via a private GameObject field.</p>
+      <section><p>Base class for any object that has a grid position and can be added to a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.  Implements basic attributes generally common to all objects
+on a map, as well as properties/methods that the Map class needs to function.  It also implements <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>, which means you can attach
+components to it.  In cases where this class cannot be inherited from, have your class implement <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a> via a private GameObject field.</p>
 </section>
       <h4><a class="xref" href="GoRogue.GameFramework.Map.html">Map</a></h4>
-      <section><p>Base class for a map that consists of one or more objects of base type IGameObject.  It implements basic functionality to manage and access these objects, as well as
-commonly needed functinonality like tile exploration, FOV, and pathfinding.  It also provides methods to easily access these objects as instances of some derived
-type, that can be used to access functionality you've implemented in a subclass.</p>
+      <section><p>Base class for a map that consists of one or more objects of base type <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  It implements basic functionality to manage and access these
+objects, as well as commonly needed functionality like tile exploration, FOV, and pathfinding.  It also provides methods to easily access these objects as
+instances of some derived type, that can be used to access functionality you've implemented in a subclass.</p>
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a></h4>
-      <section></section>
+      <section><p>An interface that defines the entire public interface of <a class="xref" href="GoRogue.GameFramework.GameObject.html">GameObject</a>.  Generally, you should NOT implement these functions
+yourself, however it can be used in conjunction with a private, backing field of type GameObject to store items in a map, where that
+object cannot directly inherit from GameObject.</p>
+</section>
 </article>
           </div>
           

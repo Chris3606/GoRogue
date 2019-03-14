@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector" data-uid="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector" class="text-break">Class ClosestConnectionPointSelector
   </h1>
-  <div class="markdown level0 summary"><p>Point selector that selects the two points from the MapAreas that are closest to each other
+  <div class="markdown level0 summary"><p>Point selector that selects the two points from the <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> instances that are closest to each other,
 according to the given distance calculation.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -147,7 +147,7 @@ according to the given distance calculation.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalculation</span></td>
-        <td><p>Distance calculation to use to determine closeness.</p>
+        <td><p><a class="xref" href="GoRogue.Distance.html">Distance</a> calculation to use to determine closeness.</p>
 </td>
       </tr>
     </tbody>
@@ -163,7 +163,7 @@ according to the given distance calculation.</p>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_DistanceCalculation_" data-uid="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.DistanceCalculation*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_DistanceCalculation" data-uid="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.DistanceCalculation">DistanceCalculation</h4>
-  <div class="markdown level1 summary"><p>Distance calculation to use to determine closeness.</p>
+  <div class="markdown level1 summary"><p><a class="xref" href="GoRogue.Distance.html">Distance</a> calculation to use to determine closeness.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -192,13 +192,13 @@ according to the given distance calculation.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_SelectConnectionPoints_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.SelectConnectionPoints(GoRogue.MapGeneration.IReadOnlyMapArea%2CGoRogue.MapGeneration.IReadOnlyMapArea)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestConnectionPointSelector.cs/#L36">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestConnectionPointSelector.cs/#L40">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_SelectConnectionPoints_" data-uid="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.SelectConnectionPoints*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_SelectConnectionPoints_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea_" data-uid="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.SelectConnectionPoints(GoRogue.MapGeneration.IReadOnlyMapArea,GoRogue.MapGeneration.IReadOnlyMapArea)">SelectConnectionPoints(IReadOnlyMapArea, IReadOnlyMapArea)</h4>
   <div class="markdown level1 summary"><p>Determines the two points in the given map areas that are closest to each other, and returns
-them as a tuple of two Coords.  The first Coord is the position in area1 to use, the second
-Coord is the position in area2 to use.</p>
+them as a tuple of two positions.  The first position is the position in <code data-dev-comment-type="paramref" class="paramref">area1</code>to use,
+and the second is the position in <code data-dev-comment-type="paramref" class="paramref">area2</code> to use.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -218,13 +218,13 @@ Coord is the position in area2 to use.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area1</span></td>
-        <td><p>First MapArea to connect.</p>
+        <td><p>First <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area2</span></td>
-        <td><p>Second MapArea to connect.</p>
+        <td><p>Second <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect.</p>
 </td>
       </tr>
     </tbody>
@@ -240,12 +240,16 @@ Coord is the position in area2 to use.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Tuple</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, <a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
-        <td><p>A tuple containing the coordinates from each MapArea to connect -- the first item in the
-tuple is the Coord in area1, the second is the Coord in area2.</p>
+        <td><p>A tuple containing the coordinates from each <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect -- the first item in the
+tuple is the position in <code data-dev-comment-type="paramref" class="paramref">area1</code>, the second is the position in <code data-dev-comment-type="paramref" class="paramref">area2</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapGeneration_Connectors_ClosestConnectionPointSelector_SelectConnectionPoints_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This algorithm can be relatively time-complex -- O(m*n) where m is the number of coordinates in area1, and n
+is the number of coordintes in area2.</p>
+</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a>

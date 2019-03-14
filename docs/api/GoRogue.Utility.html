@@ -73,7 +73,8 @@
   
   <h1 id="GoRogue_Utility" data-uid="GoRogue.Utility" class="text-break">Class Utility
   </h1>
-  <div class="markdown level0 summary"><p>Static class full of miscellaneous helper methods.</p>
+  <div class="markdown level0 summary"><p>Static class containing extension helper methods for various built-in C# classes, as well as a
+static helper method for &quot;swapping&quot; references.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -118,12 +119,12 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_AsReadOnly__2_System_Collections_Generic_IDictionary___0___1__.md&amp;value=---%0Auid%3A%20GoRogue.Utility.AsReadOnly%60%602(System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L28">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L26">View Source</a>
   </span>
   <a id="GoRogue_Utility_AsReadOnly_" data-uid="GoRogue.Utility.AsReadOnly*"></a>
   <h4 id="GoRogue_Utility_AsReadOnly__2_System_Collections_Generic_IDictionary___0___1__" data-uid="GoRogue.Utility.AsReadOnly``2(System.Collections.Generic.IDictionary{``0,``1})">AsReadOnly&lt;K, V&gt;(IDictionary&lt;K, V&gt;)</h4>
-  <div class="markdown level1 summary"><p>Adds an AsReadOnly method to IDictionary, similar to the AsReadOnly method of IList, that
-returns a read-only reference to the dictionary.</p>
+  <div class="markdown level1 summary"><p>Adds an AsReadOnly method to <span class="xref">System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;</span>, similar to the AsReadOnly method of
+<span class="xref">System.Collections.Generic.IList&lt;T&gt;</span>, that returns a read-only reference to the dictionary.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -143,9 +144,7 @@ returns a read-only reference to the dictionary.</p>
       <tr>
         <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;K, V&gt;</td>
         <td><span class="parametername">dictionary</span></td>
-        <td><p>Dictionary to create a read-only reference to -- never specified manually as this is an
-extension method.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -191,14 +190,11 @@ extension method.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_ExtendToString__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.ExtendToString%60%601(%60%600%5B0%3A%2C0%3A%5D%2CSystem.String%2CSystem.String%2CSystem.Func%7B%60%600%2CSystem.String%7D%2CSystem.String%2CSystem.String%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L167">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L163">View Source</a>
   </span>
   <a id="GoRogue_Utility_ExtendToString_" data-uid="GoRogue.Utility.ExtendToString*"></a>
   <h4 id="GoRogue_Utility_ExtendToString__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_" data-uid="GoRogue.Utility.ExtendToString``1(``0[0:,0:],System.String,System.String,System.Func{``0,System.String},System.String,System.String,System.String,System.String)">ExtendToString&lt;T&gt;(T[,], String, String, Func&lt;T, String&gt;, String, String, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for 2D arrays allowing printing the contents. Takes characters to
-surround the array, and each row, the method used to get the string representation of
-each element (defaulting to the ToString function of type T), and separation characters
-for each element and row.</p>
+  <div class="markdown level1 summary"><p>Extension method for 2D arrays that allows retrieving a string representing the contents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -218,50 +214,49 @@ for each element and row.</p>
       <tr>
         <td>T[,]</td>
         <td><span class="parametername">array</span></td>
-        <td><p>The array to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the array.</p>
+        <td><p>Character(s) that should precede the string representation of the 2D array.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">beginRow</span></td>
-        <td><p>Character(s) that should precede each row.</p>
+        <td><p>Character(s) that should precede the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to get the string representation of each value. Null uses the ToString
+        <td><p>Function to use to get the string representation of each value. Specifying null uses the ToString
 function of type T.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">rowSeparator</span></td>
-        <td><p>Character(s) to separate each row from the next.</p>
+        <td><p>Character(s) used to separate each row from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">elementSeparator</span></td>
-        <td><p>Character(s) to separate each element from the next.</p>
+        <td><p>Character(s) used to separate each element from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">endRow</span></td>
-        <td><p>Character(s) that should follow each row.</p>
+        <td><p>Character(s) that should follow the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the array.</p>
+        <td><p>Character(s) that should follow the string representation of the 2D array.</p>
 </td>
       </tr>
     </tbody>
@@ -293,8 +288,7 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the 2D array.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -307,10 +301,8 @@ function of type T.</p>
   </span>
   <a id="GoRogue_Utility_ExtendToString_" data-uid="GoRogue.Utility.ExtendToString*"></a>
   <h4 id="GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String_" data-uid="GoRogue.Utility.ExtendToString``1(System.Collections.Generic.IEnumerable{``0},System.String,System.Func{``0,System.String},System.String,System.String)">ExtendToString&lt;T&gt;(IEnumerable&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for generic IEnumerable/List collection allowing printing the contents.
-Takes the characters to surround the list in, the method to use to get the string
-representation of each element (defaulting to the ToString function of type T), and the
-characters to use to separate the list elements.</p>
+  <div class="markdown level1 summary"><p>Extension method for <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span> that allows retrieving a string
+representing the contents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -330,32 +322,31 @@ characters to use to separate the list elements.</p>
       <tr>
         <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
         <td><span class="parametername">enumerable</span></td>
-        <td><p>IEnumerable to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the list elements.</p>
+        <td><p>Character(s) that should precede the string representation of the IEnumerable's elements.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to get the string representation of each element. Null uses the ToString
+        <td><p>Function to use to get the string representation of each element. Specifying null uses the ToString
 function of type T.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">separator</span></td>
-        <td><p>Characters to separate the list by.</p>
+        <td><p>Characters to separate the IEnumerable's elements by.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the list elements.</p>
+        <td><p>Character(s) that should follow the string representation of the IEnumerable's elements.</p>
 </td>
       </tr>
     </tbody>
@@ -387,27 +378,27 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the IEnumerable.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Defaults to a representation looking something like [elem1, elem2, elem3].</p>
+  <div class="markdown level1 remarks"><p>Built-in C# data structures like <span class="xref">System.Collections.Generic.List`1</span> implement <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>,
+and as such this method can be used to stringify the contents of C# built-in data structures.</p>
+<p>When no customization paramters are specified, it defaults to a representation looking something
+like [elem1, elem2, elem3].</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_ExtendToString__1_System_Collections_Generic_ISet___0__System_String_System_Func___0_System_String__System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.ExtendToString%60%601(System.Collections.Generic.ISet%7B%60%600%7D%2CSystem.String%2CSystem.Func%7B%60%600%2CSystem.String%7D%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L90">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L92">View Source</a>
   </span>
   <a id="GoRogue_Utility_ExtendToString_" data-uid="GoRogue.Utility.ExtendToString*"></a>
   <h4 id="GoRogue_Utility_ExtendToString__1_System_Collections_Generic_ISet___0__System_String_System_Func___0_System_String__System_String_System_String_" data-uid="GoRogue.Utility.ExtendToString``1(System.Collections.Generic.ISet{``0},System.String,System.Func{``0,System.String},System.String,System.String)">ExtendToString&lt;T&gt;(ISet&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for sets allowing printing the contents. Takes the characters to
-surround the set elements in, the method to use to get the string representation of each
-element (defaulting to the ToString function of type T), and the characters to use to
-separate the set elements.</p>
+  <div class="markdown level1 summary"><p>Extension method for <span class="xref">System.Collections.Generic.ISet&lt;T&gt;</span> that allows retrieving a string representing the
+contents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -427,32 +418,31 @@ separate the set elements.</p>
       <tr>
         <td><span class="xref">System.Collections.Generic.ISet</span>&lt;T&gt;</td>
         <td><span class="parametername">set</span></td>
-        <td><p>Set to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the set elements.</p>
+        <td><p>Character(s) that should precede the string representation of the set's elements.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to get the string representation of each element. Null uses the ToString
+        <td><p>Function to use to get the string representation of each element. Specifying null uses the ToString
 function of type T.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">separator</span></td>
-        <td><p>Characters to separate the list by.</p>
+        <td><p>Characters to separate the set's items by.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the list elements.</p>
+        <td><p>Character(s) that should follow the string representation of the set's elements.</p>
 </td>
       </tr>
     </tbody>
@@ -484,27 +474,26 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the IEnumerable.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Utility_ExtendToString__1_System_Collections_Generic_ISet___0__System_String_System_Func___0_System_String__System_String_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Defaults to a representation looking something like set(elem1, elem2, elem3).</p>
+  <div class="markdown level1 remarks"><p>Built-in C# data structures like <span class="xref">System.Collections.Generic.HashSet&lt;T&gt;</span> implement <span class="xref">System.Collections.Generic.ISet&lt;T&gt;</span>,
+and as such this method can be used to stringify the contents of C# built-in set structures.</p>
+<p>When no customization paramters are specified, it defaults to a representation looking something
+like set(elem1, elem2, elem3).</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_ExtendToString__2_System_Collections_Generic_IDictionary___0___1__System_String_System_Func___0_System_String__System_Func___1_System_String__System_String_System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.ExtendToString%60%602(System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2CSystem.String%2CSystem.Func%7B%60%600%2CSystem.String%7D%2CSystem.Func%7B%60%601%2CSystem.String%7D%2CSystem.String%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L120">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L121">View Source</a>
   </span>
   <a id="GoRogue_Utility_ExtendToString_" data-uid="GoRogue.Utility.ExtendToString*"></a>
   <h4 id="GoRogue_Utility_ExtendToString__2_System_Collections_Generic_IDictionary___0___1__System_String_System_Func___0_System_String__System_Func___1_System_String__System_String_System_String_System_String_" data-uid="GoRogue.Utility.ExtendToString``2(System.Collections.Generic.IDictionary{``0,``1},System.String,System.Func{``0,System.String},System.Func{``1,System.String},System.String,System.String,System.String)">ExtendToString&lt;K, V&gt;(IDictionary&lt;K, V&gt;, String, Func&lt;K, String&gt;, Func&lt;V, String&gt;, String, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for dictionaries allowing printing the contents. Takes the characters to
-surround the dictionary elements in, the method to use to get the string representation
-of each key and value (defaulting to the ToString function of the types), and the
-characters to use to separate the value from keys, and the key-value pairs.</p>
+  <div class="markdown level1 summary"><p>Extension method for dictionaries that allows retrieving a string representing the dictionary's contents.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -524,45 +513,44 @@ characters to use to separate the value from keys, and the key-value pairs.</p>
       <tr>
         <td><span class="xref">System.Collections.Generic.IDictionary</span>&lt;K, V&gt;</td>
         <td><span class="parametername">dictionary</span></td>
-        <td><p>Dictionary to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the dictionary elements.</p>
+        <td><p>Character(s) that should precede the string representation of the dictionary's elements.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;K, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">keyStringifier</span></td>
-        <td><p>Function to use to get the string representation of each key. Null uses the ToString
+        <td><p>Function to use to get the string representation of each key. Specifying null uses the ToString
 function of type K.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;V, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">valueStringifier</span></td>
-        <td><p>Function to use to get the string representation of each value. Null uses the ToString
+        <td><p>Function to use to get the string representation of each value. Specifying null uses the ToString
 function of type V.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">kvSeparator</span></td>
-        <td><p>Characters to separate each value from its key.</p>
+        <td><p>Characters used to separate each value from its key.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">pairSeparator</span></td>
-        <td><p>Characters to separate each key-value pair from the next.</p>
+        <td><p>Characters used to separate each key-value pair from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the dictionary elements.</p>
+        <td><p>Character(s) that should follow the string representation of the dictionary's elements.</p>
 </td>
       </tr>
     </tbody>
@@ -594,35 +582,31 @@ function of type V.</p>
     <tbody>
       <tr>
         <td><span class="parametername">K</span></td>
-        <td><p>Type of keys of the dictionary.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="parametername">V</span></td>
-        <td><p>Type of values of the dictionary.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Utility_ExtendToString__2_System_Collections_Generic_IDictionary___0___1__System_String_System_Func___0_System_String__System_Func___1_System_String__System_String_System_String_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Defaults to a representation looking something like {key : value, key : value}.</p>
+  <div class="markdown level1 remarks"><p>Built-in C# data structures like <span class="xref">System.Collections.Generic.Dictionary&lt;TKey, TValue&gt;</span> implement <span class="xref">System.Collections.Generic.IDictionary&lt;TKey, TValue&gt;</span>,
+and as such this method can be used to stringify the contents of C# built-in dictionary structures.</p>
+<p>When no customization paramters are specified, it defaults to a representation looking something
+like {key1 : value, key2 : value}.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_Int32_System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.ExtendToStringGrid%60%601(%60%600%5B0%3A%2C0%3A%5D%2CSystem.Int32%2CSystem.String%2CSystem.String%2CSystem.Func%7B%60%600%2CSystem.String%7D%2CSystem.String%2CSystem.String%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L253">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L246">View Source</a>
   </span>
   <a id="GoRogue_Utility_ExtendToStringGrid_" data-uid="GoRogue.Utility.ExtendToStringGrid*"></a>
   <h4 id="GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_Int32_System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_" data-uid="GoRogue.Utility.ExtendToStringGrid``1(``0[0:,0:],System.Int32,System.String,System.String,System.Func{``0,System.String},System.String,System.String,System.String,System.String)">ExtendToStringGrid&lt;T&gt;(T[,], Int32, String, String, Func&lt;T, String&gt;, String, String, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for 2D arrays allowing printing the contents, as if the array represents
-a grid-map. This differs from ExtendToString in that this method prints the grid where
-array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it. Effectively
-it assumes the indexes being used are grid/coordinate plane coordinates. Takes the size
-of the field to give each element, characters to surround the array, and each row, the
-method used to get the string representation of each element (defaulting to the ToString
-function of type T), and separation characters for each element and row.</p>
+  <div class="markdown level1 summary"><p>Extension method for 2D arrays that allows retrieving a string representing the contents,
+formatted as if the 2D array represents a coordinate plane/grid.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -642,8 +626,7 @@ function of type T), and separation characters for each element and row.</p>
       <tr>
         <td>T[,]</td>
         <td><span class="parametername">array</span></td>
-        <td><p>The array to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
@@ -655,44 +638,44 @@ the text to the right of the space, while a negative number aligns the text to t
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the array.</p>
+        <td><p>Character(s) that should precede the string representation of the 2D array.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">beginRow</span></td>
-        <td><p>Character(s) that should precede each row.</p>
+        <td><p>Character(s) that should precede the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to get the string representation of each value. Null uses the ToString
+        <td><p>Function to use to get the string representation of each value. Specifying null uses the ToString
 function of type T.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">rowSeparator</span></td>
-        <td><p>Character(s) to separate each row from the next.</p>
+        <td><p>Character(s) used to separate each row from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">elementSeparator</span></td>
-        <td><p>Character(s) to separate each element from the next.</p>
+        <td><p>Character(s) used to separate each element from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">endRow</span></td>
-        <td><p>Character(s) that should follow each row.</p>
+        <td><p>Character(s) that should follow the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the array.</p>
+        <td><p>Character(s) that should follow the string representation of the 2D array.</p>
 </td>
       </tr>
     </tbody>
@@ -708,7 +691,7 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the 2D array, as if the array is a 2D grid-based map.</p>
+        <td><p>A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.</p>
 </td>
       </tr>
     </tbody>
@@ -724,27 +707,26 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the 2D array.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_Int32_System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This differs from <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">ExtendToString&lt;T&gt;(T[,], String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
+in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
+Effectively it assumes the indexes being used are grid/coordinate plane coordinates.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.ExtendToStringGrid%60%601(%60%600%5B0%3A%2C0%3A%5D%2CSystem.String%2CSystem.String%2CSystem.Func%7B%60%600%2CSystem.String%7D%2CSystem.String%2CSystem.String%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L217">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L212">View Source</a>
   </span>
   <a id="GoRogue_Utility_ExtendToStringGrid_" data-uid="GoRogue.Utility.ExtendToStringGrid*"></a>
   <h4 id="GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_" data-uid="GoRogue.Utility.ExtendToStringGrid``1(``0[0:,0:],System.String,System.String,System.Func{``0,System.String},System.String,System.String,System.String,System.String)">ExtendToStringGrid&lt;T&gt;(T[,], String, String, Func&lt;T, String&gt;, String, String, String, String)</h4>
-  <div class="markdown level1 summary"><p>Extension method for 2D arrays allowing printing the contents, as if the array represents
-a grid-map. This differs from ExtendToString in that this method prints the grid where
-array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it. Effectively
-it assumes the indexes being used are grid/coordinate plane coordinates. Takes characters
-to surround the array, and each row, the method used to get the string representation of
-each element (defaulting to the ToString function of type T), and separation characters
-for each element and row.</p>
+  <div class="markdown level1 summary"><p>Extension method for 2D arrays that allows retrieving a string representing the contents,
+formatted as if the 2D array represents a coordinate plane/grid.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -764,50 +746,49 @@ for each element and row.</p>
       <tr>
         <td>T[,]</td>
         <td><span class="parametername">array</span></td>
-        <td><p>The array to stringify -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">begin</span></td>
-        <td><p>Character(s) that should precede the array.</p>
+        <td><p>Character(s) that should precede the string representation of the 2D array.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">beginRow</span></td>
-        <td><p>Character(s) that should precede each row.</p>
+        <td><p>Character(s) that should precede the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to get the string representation of each value. Null uses the ToString
+        <td><p>Function to use to get the string representation of each value. Specifying null uses the ToString
 function of type T.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">rowSeparator</span></td>
-        <td><p>Character(s) to separate each row from the next.</p>
+        <td><p>Character(s) used to separate each row from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">elementSeparator</span></td>
-        <td><p>Character(s) to separate each element from the next.</p>
+        <td><p>Character(s) used to separate each element from the next.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">endRow</span></td>
-        <td><p>Character(s) that should follow each row.</p>
+        <td><p>Character(s) that should follow the string representation of each row.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">end</span></td>
-        <td><p>Character(s) that should follow the array.</p>
+        <td><p>Character(s) that should follow the string representation of the 2D array.</p>
 </td>
       </tr>
     </tbody>
@@ -823,7 +804,7 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the 2D array, as if the array is a 2D grid-based map.</p>
+        <td><p>A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.</p>
 </td>
       </tr>
     </tbody>
@@ -839,27 +820,32 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the 2D array.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_Utility_ExtendToStringGrid__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This differs from <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1___0_0__0___System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">ExtendToString&lt;T&gt;(T[,], String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
+in that this method prints the array
+such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
+Effectively it assumes the indexes being used are grid/coordinate plane coordinates.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_List___0__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.FisherYatesShuffle%60%601(System.Collections.Generic.List%7B%60%600%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_IList___0__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.FisherYatesShuffle%60%601(System.Collections.Generic.IList%7B%60%600%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L274">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L260">View Source</a>
   </span>
   <a id="GoRogue_Utility_FisherYatesShuffle_" data-uid="GoRogue.Utility.FisherYatesShuffle*"></a>
-  <h4 id="GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_List___0__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.List{``0},Troschuetz.Random.IGenerator)">FisherYatesShuffle&lt;T&gt;(List&lt;T&gt;, IGenerator)</h4>
-  <div class="markdown level1 summary"><p>Extension method for List that implements a fisher-yates shuffle. Modifies the list it is
+  <h4 id="GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_IList___0__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.FisherYatesShuffle``1(System.Collections.Generic.IList{``0},Troschuetz.Random.IGenerator)">FisherYatesShuffle&lt;T&gt;(IList&lt;T&gt;, IGenerator)</h4>
+  <div class="markdown level1 summary"><p>Extension method for <span class="xref">System.Collections.Generic.IList&lt;T&gt;</span> that implements a fisher-yates shuffle. Modifies the list it is
 called on to randomly rearrange the elements therein.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static void FisherYatesShuffle&lt;T&gt;(this List&lt;T&gt; list, IGenerator rng = null)</code></pre>
+    <pre><code class="lang-csharp hljs">public static void FisherYatesShuffle&lt;T&gt;(this IList&lt;T&gt; list, IGenerator rng = null)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -872,15 +858,15 @@ called on to randomly rearrange the elements therein.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.List</span>&lt;T&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IList</span>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
-        <td><p>List being operated on -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>RNG to use.</p>
+        <td><p>RNG to use.  Specifying null causes <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>
+to be used</p>
 </td>
       </tr>
     </tbody>
@@ -896,27 +882,20 @@ called on to randomly rearrange the elements therein.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the list.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
-  <h5 id="GoRogue_Utility_FisherYatesShuffle__1_System_Collections_Generic_List___0__Troschuetz_Random_IGenerator__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Since this is an extension method, if we have a List&lt;T&gt; myList, we can simply call
-myList.FisherYatesShuffle(rng). However, do note that for the method to be detected
-properly, the namespace GoRogue (the namespace the Utility class is in) must be in a
-using statement.</p>
-</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_Multiply_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.Multiply(System.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L297">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L281">View Source</a>
   </span>
   <a id="GoRogue_Utility_Multiply_" data-uid="GoRogue.Utility.Multiply*"></a>
   <h4 id="GoRogue_Utility_Multiply_System_String_System_Int32_" data-uid="GoRogue.Utility.Multiply(System.String,System.Int32)">Multiply(String, Int32)</h4>
-  <div class="markdown level1 summary"><p>&quot;Multiplies&quot;, aka repeats, a given string the given number of times.</p>
+  <div class="markdown level1 summary"><p>&quot;Multiplies&quot;, aka repeats, a string the given number of times.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -936,8 +915,7 @@ using statement.</p>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">str</span></td>
-        <td><p>String to repeat. Never specified manually since this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
@@ -958,7 +936,7 @@ using statement.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>The string str repeated numTimes times.</p>
+        <td><p>The current string repeated <code data-dev-comment-type="paramref" class="paramref">numTimes</code> times.</p>
 </td>
       </tr>
     </tbody>
@@ -968,14 +946,13 @@ using statement.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_RandomIndex__1_System_Collections_Generic_IReadOnlyList___0__System_Func_System_Int32_System_Boolean__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.RandomIndex%60%601(System.Collections.Generic.IReadOnlyList%7B%60%600%7D%2CSystem.Func%7BSystem.Int32%2CSystem.Boolean%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L336">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L315">View Source</a>
   </span>
   <a id="GoRogue_Utility_RandomIndex_" data-uid="GoRogue.Utility.RandomIndex*"></a>
   <h4 id="GoRogue_Utility_RandomIndex__1_System_Collections_Generic_IReadOnlyList___0__System_Func_System_Int32_System_Boolean__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.RandomIndex``1(System.Collections.Generic.IReadOnlyList{``0},System.Func{System.Int32,System.Boolean},Troschuetz.Random.IGenerator)">RandomIndex&lt;T&gt;(IReadOnlyList&lt;T&gt;, Func&lt;Int32, Boolean&gt;, IGenerator)</h4>
   <div class="markdown level1 summary"><p>Extension method that selects and returns a random valid index from the list for which
 the selector function given returns true, using the rng specified. Indices are repeatedly
-selected until a qualifying index is found.
--1 is returned if the list is empty.</p>
+selected until a qualifying index is found. -1 is returned if the list is empty.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -995,8 +972,7 @@ selected until a qualifying index is found.
       <tr>
         <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
-        <td><p>List being operated on -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Boolean</span>&gt;</td>
@@ -1007,7 +983,8 @@ selected until a qualifying index is found.
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>RNG to use.</p>
+        <td><p>RNG to use.  Specifying null causes <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>
+to be used.</p>
 </td>
       </tr>
     </tbody>
@@ -1039,8 +1016,7 @@ selected until a qualifying index is found.
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the list.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1049,13 +1025,12 @@ selected until a qualifying index is found.
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_RandomIndex__1_System_Collections_Generic_IReadOnlyList___0__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.RandomIndex%60%601(System.Collections.Generic.IReadOnlyList%7B%60%600%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L310">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L292">View Source</a>
   </span>
   <a id="GoRogue_Utility_RandomIndex_" data-uid="GoRogue.Utility.RandomIndex*"></a>
   <h4 id="GoRogue_Utility_RandomIndex__1_System_Collections_Generic_IReadOnlyList___0__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.RandomIndex``1(System.Collections.Generic.IReadOnlyList{``0},Troschuetz.Random.IGenerator)">RandomIndex&lt;T&gt;(IReadOnlyList&lt;T&gt;, IGenerator)</h4>
   <div class="markdown level1 summary"><p>Extension method that selects and returns a random valid index from the list, using the
-rng specified.
--1 is returned if the list is empty.</p>
+rng specified. -1 is returned if the list is empty.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1075,13 +1050,13 @@ rng specified.
       <tr>
         <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
-        <td><p>List being operated on -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>RNG to use.</p>
+        <td><p>RNG to use.  Specifying null causes <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>
+to be used.</p>
 </td>
       </tr>
     </tbody>
@@ -1097,7 +1072,7 @@ rng specified.
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td><p>Index selected.</p>
+        <td><p>The index selected.</p>
 </td>
       </tr>
     </tbody>
@@ -1113,8 +1088,7 @@ rng specified.
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the list.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1123,13 +1097,13 @@ rng specified.
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_RandomItem__1_System_Collections_Generic_IReadOnlyList___0__System_Func___0_System_Boolean__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.RandomItem%60%601(System.Collections.Generic.IReadOnlyList%7B%60%600%7D%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L384">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L359">View Source</a>
   </span>
   <a id="GoRogue_Utility_RandomItem_" data-uid="GoRogue.Utility.RandomItem*"></a>
   <h4 id="GoRogue_Utility_RandomItem__1_System_Collections_Generic_IReadOnlyList___0__System_Func___0_System_Boolean__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.RandomItem``1(System.Collections.Generic.IReadOnlyList{``0},System.Func{``0,System.Boolean},Troschuetz.Random.IGenerator)">RandomItem&lt;T&gt;(IReadOnlyList&lt;T&gt;, Func&lt;T, Boolean&gt;, IGenerator)</h4>
   <div class="markdown level1 summary"><p>Extension method that selects and returns a random item from the list for which the given
 selector returns true, using the rng specified. Items are repeatedly selected until a
-qualifying item is found. Default for type T is returned if the list is empty.</p>
+qualifying item is found. default(T) is returned if the list is empty.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1149,8 +1123,7 @@ qualifying item is found. Default for type T is returned if the list is empty.</
       <tr>
         <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
-        <td><p>List being operated on -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.Boolean</span>&gt;</td>
@@ -1161,7 +1134,8 @@ qualifying item is found. Default for type T is returned if the list is empty.</
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>RNG to use.</p>
+        <td><p>RNG to use.  Specifying null causes <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>
+to be used.</p>
 </td>
       </tr>
     </tbody>
@@ -1193,8 +1167,7 @@ qualifying item is found. Default for type T is returned if the list is empty.</
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the list.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1203,12 +1176,12 @@ qualifying item is found. Default for type T is returned if the list is empty.</
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_RandomItem__1_System_Collections_Generic_IReadOnlyList___0__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.RandomItem%60%601(System.Collections.Generic.IReadOnlyList%7B%60%600%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L360">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L338">View Source</a>
   </span>
   <a id="GoRogue_Utility_RandomItem_" data-uid="GoRogue.Utility.RandomItem*"></a>
   <h4 id="GoRogue_Utility_RandomItem__1_System_Collections_Generic_IReadOnlyList___0__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Utility.RandomItem``1(System.Collections.Generic.IReadOnlyList{``0},Troschuetz.Random.IGenerator)">RandomItem&lt;T&gt;(IReadOnlyList&lt;T&gt;, IGenerator)</h4>
   <div class="markdown level1 summary"><p>Extension method that selects and returns a random item from the list, using the rng
-specified. Default for type T is returned if the list is empty.</p>
+specified. default(T) is returned if the list is empty.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1228,13 +1201,13 @@ specified. Default for type T is returned if the list is empty.</p>
       <tr>
         <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;T&gt;</td>
         <td><span class="parametername">list</span></td>
-        <td><p>List being operated on -- never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>RNG to use.</p>
+        <td><p>RNG to use.  Specifying null causes <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>
+to be used.</p>
 </td>
       </tr>
     </tbody>
@@ -1266,8 +1239,7 @@ specified. Default for type T is returned if the list is empty.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of elements in the list.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1276,11 +1248,11 @@ specified. Default for type T is returned if the list is empty.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_Swap__1___0____0__.md&amp;value=---%0Auid%3A%20GoRogue.Utility.Swap%60%601(%60%600%40%2C%60%600%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L406">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L379">View Source</a>
   </span>
   <a id="GoRogue_Utility_Swap_" data-uid="GoRogue.Utility.Swap*"></a>
   <h4 id="GoRogue_Utility_Swap__1___0____0__" data-uid="GoRogue.Utility.Swap``1(``0@,``0@)">Swap&lt;T&gt;(ref T, ref T)</h4>
-  <div class="markdown level1 summary"><p>Convenience function that swaps the values pointed to by x and y.</p>
+  <div class="markdown level1 summary"><p>Swaps the values pointed to by <code data-dev-comment-type="paramref" class="paramref">lhs</code> and <code data-dev-comment-type="paramref" class="paramref">rhs</code>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1300,14 +1272,12 @@ specified. Default for type T is returned if the list is empty.</p>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">lhs</span></td>
-        <td><p>Left-hand value.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">rhs</span></td>
-        <td><p>Right-hand value.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1322,8 +1292,7 @@ specified. Default for type T is returned if the list is empty.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of values being swapped -- generally determinable implicitly by the compiler.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1332,7 +1301,7 @@ specified. Default for type T is returned if the list is empty.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_Yield__1___0_.md&amp;value=---%0Auid%3A%20GoRogue.Utility.Yield%60%601(%60%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L423">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L392">View Source</a>
   </span>
   <a id="GoRogue_Utility_Yield_" data-uid="GoRogue.Utility.Yield*"></a>
   <h4 id="GoRogue_Utility_Yield__1___0_" data-uid="GoRogue.Utility.Yield``1(``0)">Yield&lt;T&gt;(T)</h4>
@@ -1356,8 +1325,7 @@ specified. Default for type T is returned if the list is empty.</p>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">item</span></td>
-        <td><p>The item to yield. Never specified manually as this is an extension method.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1388,8 +1356,7 @@ specified. Default for type T is returned if the list is empty.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of the item. Generally the compiler determines this since it is an extension method.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1398,11 +1365,11 @@ specified. Default for type T is returned if the list is empty.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility_Yield__1___0___.md&amp;value=---%0Auid%3A%20GoRogue.Utility.Yield%60%601(%60%600%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L436">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L405">View Source</a>
   </span>
   <a id="GoRogue_Utility_Yield_" data-uid="GoRogue.Utility.Yield*"></a>
   <h4 id="GoRogue_Utility_Yield__1___0___" data-uid="GoRogue.Utility.Yield``1(``0[])">Yield&lt;T&gt;(T[])</h4>
-  <div class="markdown level1 summary"><p>Convenience function that takes multiple parameters and converts them to an IEnumerable.</p>
+  <div class="markdown level1 summary"><p>Takes multiple parameters and converts them to an IEnumerable.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1422,7 +1389,7 @@ specified. Default for type T is returned if the list is empty.</p>
       <tr>
         <td>T[]</td>
         <td><span class="parametername">values</span></td>
-        <td><p>Parameters (specified as multiple parameters to the function)</p>
+        <td><p>Parameters (specified as multiple parameters to the function).</p>
 </td>
       </tr>
     </tbody>
@@ -1454,8 +1421,7 @@ specified. Default for type T is returned if the list is empty.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of the parameters.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -1470,7 +1436,7 @@ specified. Default for type T is returned if the list is empty.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Utility.md&amp;value=---%0Auid%3A%20GoRogue.Utility%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L15" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Utility.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

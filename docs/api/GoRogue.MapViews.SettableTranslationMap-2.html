@@ -74,7 +74,7 @@
   <h1 id="GoRogue_MapViews_SettableTranslationMap_2" data-uid="GoRogue.MapViews.SettableTranslationMap`2" class="text-break">Class SettableTranslationMap&lt;T1, T2&gt;
   </h1>
   <div class="markdown level0 summary"><p>Settable map view class capable of taking complex data and providing a simpler view of it.
-For a version that provides only &quot;get&quot; functionality, see TranslationMap.</p>
+For a version that provides only &quot;get&quot; functionality, see <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -137,15 +137,9 @@ For a version that provides only &quot;get&quot; functionality, see TranslationM
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_SettableTranslationMap_2_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
-poor match for your game's actual map data. For example, map generation works with bools, and
-FOV calculation with doubles, while your map data may model each map cell as a class or
-struct containing many different member values. This class allows you to build descendant
-classes that override the TranslateGet and TranslateSet method(s) for simple mapping, or the
-this[Coord] properties if you need full access to the underlying data for context, in order
-to present a simplified view of your data to an algorithm without having to create the large
-amount of duplicate code associated with multiple ISettableMapView instances that all extract
-data from a Cell or Tile class.</p>
+  <div class="markdown level0 remarks"><p>See <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a>.  The use case is the same, except that this class
+implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> instead, and thus also allows you to specify
+set-translations via TranslateSet.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -154,7 +148,7 @@ data from a Cell or Tile class.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2__ctor_GoRogue_MapViews_ISettableMapView__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.%23ctor(GoRogue.MapViews.ISettableMapView%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L28">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L22">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.#ctor*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2__ctor_GoRogue_MapViews_ISettableMapView__0__" data-uid="GoRogue.MapViews.SettableTranslationMap`2.#ctor(GoRogue.MapViews.ISettableMapView{`0})">SettableTranslationMap(ISettableMapView&lt;T1&gt;)</h4>
@@ -188,7 +182,7 @@ data from a Cell or Tile class.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2__ctor_GoRogue_MapViews_ISettableMapView__0__GoRogue_MapViews_ISettableMapView__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.%23ctor(GoRogue.MapViews.ISettableMapView%7B%600%7D%2CGoRogue.MapViews.ISettableMapView%7B%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L45">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L39">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.#ctor*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2__ctor_GoRogue_MapViews_ISettableMapView__0__GoRogue_MapViews_ISettableMapView__1__" data-uid="GoRogue.MapViews.SettableTranslationMap`2.#ctor(GoRogue.MapViews.ISettableMapView{`0},GoRogue.MapViews.ISettableMapView{`1})">SettableTranslationMap(ISettableMapView&lt;T1&gt;, ISettableMapView&lt;T2&gt;)</h4>
@@ -218,15 +212,15 @@ data from a Cell or Tile class.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView</a>&lt;T2&gt;</td>
         <td><span class="parametername">overlay</span></td>
-        <td><p>The view data to apply to the map. Must have identical dimensions. to baseMap.</p>
+        <td><p>The view data to apply to the map. Must have identical dimensions to <code data-dev-comment-type="paramref" class="paramref">baseMap</code>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_SettableTranslationMap_2__ctor_GoRogue_MapViews_ISettableMapView__0__GoRogue_MapViews_ISettableMapView__1___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Since this constructor must call TranslateSet to do so, do NOT call this constructor if
-the TranslateSet implementation depends on the derived class's constructor being
-completed to function properly.</p>
+  <div class="markdown level1 remarks"><p>Since this constructor must call TranslateSet to perform its function, do NOT
+call this constructor if the TranslateSet implementation depends on the derived
+class's constructor being completed to function properly.</p>
 </div>
   <h3 id="properties">Properties
   </h3>
@@ -235,7 +229,7 @@ completed to function properly.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_BaseMap.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.BaseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L53">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L47">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_BaseMap_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.BaseMap*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_BaseMap" data-uid="GoRogue.MapViews.SettableTranslationMap`2.BaseMap">BaseMap</h4>
@@ -266,7 +260,7 @@ completed to function properly.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L58">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L52">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_Height_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Height*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_Height" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Height">Height</h4>
@@ -297,13 +291,13 @@ completed to function properly.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L86">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L89">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_Item_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item(GoRogue.Coord)">Item[Coord]</h4>
-  <div class="markdown level1 summary"><p>Given a Coord, translates and returns/sets the &quot;value&quot; associated with that location.
-this[int x, int y] calls this indexer for its functionality, so overriding this
-functionality also changes that overload.</p>
+  <div class="markdown level1 summary"><p>Given a position, translates and returns/sets the &quot;value&quot; associated with that position.
+The  other indexers call this indexer for its functionality, so overriding this
+functionality also changes those overloads.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -349,11 +343,14 @@ functionality also changes that overload.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L65">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L68">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_Item_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_Item_System_Int32_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given an 1D-array-style index, determines the position associated with that index, and
+returns/sets the &quot;value&quot; associated with that location.  This function calls
+<a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_Item_GoRogue_Coord_">Item[Coord]</a>, so override that indexer to change functionality.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -372,7 +369,8 @@ functionality also changes that overload.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">index1D</span></td>
-        <td></td>
+        <td><p>1D-array-style index for location to retrieve/set value for.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -387,7 +385,8 @@ functionality also changes that overload.</p>
     <tbody>
       <tr>
         <td><span class="xref">T2</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the given location, according to the translation function.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -396,12 +395,13 @@ functionality also changes that overload.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L99">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L103">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_Item_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
   <div class="markdown level1 summary"><p>Given an X and Y value, translates and returns/sets the &quot;value&quot; associated with that
-location. This function calls this[Coord pos], so override that indexer to change functionality.</p>
+location. This function calls <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_Item_GoRogue_Coord_">Item[Coord]</a>, so override that indexer to
+change functionality.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -453,7 +453,7 @@ location. This function calls this[Coord pos], so override that indexer to chang
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L63">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L57">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_Width_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Width*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_Width" data-uid="GoRogue.MapViews.SettableTranslationMap`2.Width">Width</h4>
@@ -486,7 +486,7 @@ location. This function calls this[Coord pos], so override that indexer to chang
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L109">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L113">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_ToString_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_ToString" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString">ToString()</h4>
@@ -520,12 +520,12 @@ location. This function calls this[Coord pos], so override that indexer to chang
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Func__1_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.ToString(System.Func%7B%601%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L123">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L127">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_ToString_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Func__1_System_String__" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString(System.Func{`1,System.String})">ToString(Func&lt;T2, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the SettableTranslationMap, using the
-elementStringifier function given to determine what string represents which value.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map view, using <code data-dev-comment-type="paramref" class="paramref">elementStringifier</code>
+to determine what string represents each value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -567,23 +567,20 @@ elementStringifier function given to determine what string represents which valu
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Func__1_System_String___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This could be used, for example, on an SettableTranslationMap of boolean values, to
-output '#' for false values, and '.' for true values.</p>
+  <div class="markdown level1 remarks"><p>This could be used, for example, on an SettableTranslationMap of boolean values, to output '#' for
+false values, and '.' for true values.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Int32_System_Func__1_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.ToString(System.Int32%2CSystem.Func%7B%601%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L138">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L147">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_ToString_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Int32_System_Func__1_System_String__" data-uid="GoRogue.MapViews.SettableTranslationMap`2.ToString(System.Int32,System.Func{`1,System.String})">ToString(Int32, Func&lt;T2, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Prints the values in the SettableTranslationMap, using the function specified to turn
-elements into strings, and using the &quot;field length&quot; specified. Each element of type T
-will have spaces added to cause it to take up exactly fieldSize characters, provided
-fieldSize is less than the length of the element's string represention. A positive-number
-right-aligns the text within the field, while a negative number left-aligns the text.</p>
+  <div class="markdown level1 summary"><p>Prints the values in the map view, using the function specified to turn elements into
+strings, and using the &quot;field length&quot; specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -603,13 +600,14 @@ right-aligns the text within the field, while a negative number left-aligns the 
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">fieldSize</span></td>
-        <td><p>The size of the field to give each value.</p>
+        <td><p>The size of the field to give each value.  A positive-number
+right-aligns the text within the field, while a negative number left-aligns the text.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T2, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to convert each element to a string. Null defaults to the ToString
+        <td><p>Function to use to convert each element to a string. null defaults to the ToString
 function of type T.</p>
 </td>
       </tr>
@@ -631,17 +629,23 @@ function of type T.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_SettableTranslationMap_2_ToString_System_Int32_System_Func__1_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of type T will have spaces added to cause it to take up exactly
+<code data-dev-comment-type="paramref" class="paramref">fieldSize</code> characters, provided <code data-dev-comment-type="paramref" class="paramref">fieldSize</code>
+is less than the length of the element's string represention.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_TranslateGet__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.TranslateGet(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L146">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L156">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_TranslateGet_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateGet*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_TranslateGet__0_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateGet(`0)">TranslateGet(T1)</h4>
   <div class="markdown level1 summary"><p>Translates your map data into the view type. Takes only a value from the underlying map.
-If a position is also needed to perform the translation, use TranslateGet(Coord, T1) instead.</p>
+If a position is also needed to perform the translation, use <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_TranslateGet_GoRogue_Coord__0_">TranslateGet(Coord, T1)</a>
+instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -687,13 +691,13 @@ If a position is also needed to perform the translation, use TranslateGet(Coord,
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_TranslateGet_GoRogue_Coord__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.TranslateGet(GoRogue.Coord%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L157">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L167">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_TranslateGet_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateGet*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_TranslateGet_GoRogue_Coord__0_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateGet(GoRogue.Coord,`0)">TranslateGet(Coord, T1)</h4>
   <div class="markdown level1 summary"><p>Translates your map data into the view type. Takes a value from the underlying map and
 the corresponding position for that value. If a position is not needed to perform the
-translation, use TranslateGet(T1) instead.</p>
+translation, use <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_TranslateGet__0_">TranslateGet(T1)</a> instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -745,13 +749,13 @@ translation, use TranslateGet(T1) instead.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_TranslateSet__1_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.TranslateSet(%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L166">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L176">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_TranslateSet_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateSet*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_TranslateSet__1_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateSet(`1)">TranslateSet(T2)</h4>
   <div class="markdown level1 summary"><p>Translates the view type into the appropriate form for your map data. Takes only a value
 from the underlying map. If a position is also needed to perform the translation, use
-TranslateSet(Coord, T2) instead.</p>
+<a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_TranslateSet_GoRogue_Coord__1_">TranslateSet(Coord, T2)</a> instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -797,13 +801,13 @@ TranslateSet(Coord, T2) instead.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2_TranslateSet_GoRogue_Coord__1_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602.TranslateSet(GoRogue.Coord%2C%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L177">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L187">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableTranslationMap_2_TranslateSet_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateSet*"></a>
   <h4 id="GoRogue_MapViews_SettableTranslationMap_2_TranslateSet_GoRogue_Coord__1_" data-uid="GoRogue.MapViews.SettableTranslationMap`2.TranslateSet(GoRogue.Coord,`1)">TranslateSet(Coord, T2)</h4>
   <div class="markdown level1 summary"><p>Translates the view type into the appropriate form for your map data. Takes a value from
 the underlying map, and it corresponding position. If a position is not needed to perform
-the translation, use TranslateSet(T2) instead.</p>
+the translation, use <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html#GoRogue_MapViews_SettableTranslationMap_2_TranslateSet__1_">TranslateSet(T2)</a> instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -917,7 +921,7 @@ the translation, use TranslateSet(T2) instead.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableTranslationMap_2.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableTranslationMap%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L22" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableTranslationMap.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

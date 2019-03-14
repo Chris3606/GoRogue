@@ -73,14 +73,7 @@
   
   <h1 id="GoRogue_FOV" data-uid="GoRogue.FOV" class="text-break">Class FOV
   </h1>
-  <div class="markdown level0 summary"><p>Class responsible for caculating basic FOV (see SenseMap for more advanced lighting).
-It can calculate the FOV with a finite or infinite max radius, and can use a variety of
-radius types, as specified in Radius class. It also supports both 360 degree FOV and an
-angle-restricted (directional) FOV. One may access this class like a 2D array of doubles
-(FOV values), wherein the values will range from 0.0 to 1.0, where 1.0 means the
-corresponding map grid coordinate is at maximum visibility, and 0.0 means the corresponding
-coordinate is outside of FOV entirely (not visible). Values fall off linearly with respect
-to radius as distance from the center increases.</p>
+  <div class="markdown level0 summary"><p>Implements the capability to calculate a grid-based field of view for a map.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -120,6 +113,26 @@ to radius as distance from the center increases.</p>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class FOV : IReadOnlyFOV, IMapView&lt;double&gt;</code></pre>
   </div>
+  <h5 id="GoRogue_FOV_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Generally, this class can be used to calculate and expose the results of a field of view
+calculation for a map.  In includes many options pertaining to the shape and size of the
+field of view (including options for an infinite-radius field of view).  As well, for
+non-infinite size fields of view, the result contains built-in linear distance falloff for
+the sake of creating lighting/color/fidelity differences based on distance from the center.</p>
+<p>Like most GoRogue algorithms, FOV takes as a construction parameter an IMapView representing the map.
+Specifically, it takes an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where true indicates that a tile should be
+considered transparent, eg. not blocking to line of sight, and false indicates that a tile should be
+considered opaque, eg. blocking to line of sight.</p>
+<p>The field of view can then be calculated by calling one of the various Calculate overloads.</p>
+<p>The result of the calculation is exposed in two different forms.  First, the values are exposed to you
+via indexers -- the FOV class itself implements <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where a value of 1.0
+represents the center of the field of view calculation, and 0.0 indicates a location that is not inside
+the resulting field of view at all.  Values in between are representative of linear falloff based on
+distance from the source.</p>
+<p>Alternatievly, if the distance from the source is irrelevant, FOV also provides the result of the calculation
+via <a class="xref" href="GoRogue.FOV.html#GoRogue_FOV_BooleanFOV">BooleanFOV</a>, which is an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> where a value of true indicates
+that a location is within field of view, and a value of false indicates it is ouside of the field of view.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -127,12 +140,11 @@ to radius as distance from the center increases.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV__ctor_GoRogue_MapViews_IMapView_System_Boolean__.md&amp;value=---%0Auid%3A%20GoRogue.FOV.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L40">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L57">View Source</a>
   </span>
   <a id="GoRogue_FOV__ctor_" data-uid="GoRogue.FOV.#ctor*"></a>
   <h4 id="GoRogue_FOV__ctor_GoRogue_MapViews_IMapView_System_Boolean__" data-uid="GoRogue.FOV.#ctor(GoRogue.MapViews.IMapView{System.Boolean})">FOV(IMapView&lt;Boolean&gt;)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes an IMapView of boolean values as input, where true indicates a tile
-is see-through (transparent), and false blocks FOV.</p>
+  <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -152,8 +164,9 @@ is see-through (transparent), and false blocks FOV.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
         <td><span class="parametername">fovMap</span></td>
-        <td><p>The values used to calculate FOV. Values of true are considered non-blocking (transparent)
-to FOV, while false values are considered to be blocking.</p>
+        <td><p>The values used to calculate field of view. Values of true are considered
+non-blocking (transparent) to line of sight, while false values are considered
+to be blocking.</p>
 </td>
       </tr>
     </tbody>
@@ -165,12 +178,12 @@ to FOV, while false values are considered to be blocking.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_BooleanFOV.md&amp;value=---%0Auid%3A%20GoRogue.FOV.BooleanFOV%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L30">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L47">View Source</a>
   </span>
   <a id="GoRogue_FOV_BooleanFOV_" data-uid="GoRogue.FOV.BooleanFOV*"></a>
   <h4 id="GoRogue_FOV_BooleanFOV" data-uid="GoRogue.FOV.BooleanFOV">BooleanFOV</h4>
-  <div class="markdown level1 summary"><p>A view of the FOV results in boolean form, where true indicates a location is in FOV, and
-false indicates it is not.</p>
+  <div class="markdown level1 summary"><p>A view of the calculation results in boolean form, where true indicates a location is inside
+field of view, and false indicates it is not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -197,11 +210,11 @@ false indicates it is not.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_CurrentFOV.md&amp;value=---%0Auid%3A%20GoRogue.FOV.CurrentFOV%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L53">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L70">View Source</a>
   </span>
   <a id="GoRogue_FOV_CurrentFOV_" data-uid="GoRogue.FOV.CurrentFOV*"></a>
   <h4 id="GoRogue_FOV_CurrentFOV" data-uid="GoRogue.FOV.CurrentFOV">CurrentFOV</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of only positions currently in FOV.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of only positions that are currently inside field of view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -228,11 +241,11 @@ false indicates it is not.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Height.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L58">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L75">View Source</a>
   </span>
   <a id="GoRogue_FOV_Height_" data-uid="GoRogue.FOV.Height*"></a>
   <h4 id="GoRogue_FOV_Height" data-uid="GoRogue.FOV.Height">Height</h4>
-  <div class="markdown level1 summary"><p>Height of FOV map.</p>
+  <div class="markdown level1 summary"><p>Height of the map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -259,12 +272,11 @@ false indicates it is not.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L85">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L106">View Source</a>
   </span>
   <a id="GoRogue_FOV_Item_" data-uid="GoRogue.FOV.Item*"></a>
   <h4 id="GoRogue_FOV_Item_GoRogue_Coord_" data-uid="GoRogue.FOV.Item(GoRogue.Coord)">Item[Coord]</h4>
-  <div class="markdown level1 summary"><p>Array-style indexer that takes a Coord as the index, and retrieves the FOV value at the
-given location.</p>
+  <div class="markdown level1 summary"><p>Returns the field of view value for the given position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -284,7 +296,7 @@ given location.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
         <td><span class="parametername">position</span></td>
-        <td><p>The position to retrieve the FOV value for.</p>
+        <td><p>The position to return the field of view value for.</p>
 </td>
       </tr>
     </tbody>
@@ -300,7 +312,7 @@ given location.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Double</span></td>
-        <td><p>The FOV value at the given location.</p>
+        <td><p>The field of view value for the given position.</p>
 </td>
       </tr>
     </tbody>
@@ -310,11 +322,12 @@ given location.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L77">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L99">View Source</a>
   </span>
   <a id="GoRogue_FOV_Item_" data-uid="GoRogue.FOV.Item*"></a>
   <h4 id="GoRogue_FOV_Item_System_Int32_" data-uid="GoRogue.FOV.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns the field of view value for the given position.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -333,7 +346,8 @@ given location.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">index1D</span></td>
-        <td></td>
+        <td><p>Position to return the field of view value for, as a 1D-index-style value.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -348,7 +362,8 @@ given location.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Double</span></td>
-        <td></td>
+        <td><p>The field of view value for the given position.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -357,12 +372,11 @@ given location.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L97">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L117">View Source</a>
   </span>
   <a id="GoRogue_FOV_Item_" data-uid="GoRogue.FOV.Item*"></a>
   <h4 id="GoRogue_FOV_Item_System_Int32_System_Int32_" data-uid="GoRogue.FOV.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
-  <div class="markdown level1 summary"><p>Array-style indexer that takes an x and y value as the index, and retrieves the FOV value
-at the given location.</p>
+  <div class="markdown level1 summary"><p>Returns the field of view value for the given position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -382,13 +396,13 @@ at the given location.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">x</span></td>
-        <td><p>The x-coordinate of the position to retrieve the FOV value for.</p>
+        <td><p>X-coordinate of the position to return the FOV value for.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">y</span></td>
-        <td><p>The y-coordinate of the position to retrieve the FOV value for.</p>
+        <td><p>Y-coordinate of the position to return the FOV value for.</p>
 </td>
       </tr>
     </tbody>
@@ -404,7 +418,7 @@ at the given location.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Double</span></td>
-        <td><p>The FOV value at (x, y).</p>
+        <td><p>The field of view value for the given position.</p>
 </td>
       </tr>
     </tbody>
@@ -414,12 +428,12 @@ at the given location.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_NewlySeen.md&amp;value=---%0Auid%3A%20GoRogue.FOV.NewlySeen%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L64">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L81">View Source</a>
   </span>
   <a id="GoRogue_FOV_NewlySeen_" data-uid="GoRogue.FOV.NewlySeen*"></a>
   <h4 id="GoRogue_FOV_NewlySeen" data-uid="GoRogue.FOV.NewlySeen">NewlySeen</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of positions that are in FOV as of the most current Calculate call, but were
-NOT in FOV afterthe previous time Calculate was called.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that ARE in field of view as of the most current Calculate
+call, but were NOT in field of view after the previous time Calculate was called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -446,12 +460,12 @@ NOT in FOV afterthe previous time Calculate was called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_NewlyUnseen.md&amp;value=---%0Auid%3A%20GoRogue.FOV.NewlyUnseen%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L70">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L87">View Source</a>
   </span>
   <a id="GoRogue_FOV_NewlyUnseen_" data-uid="GoRogue.FOV.NewlyUnseen*"></a>
   <h4 id="GoRogue_FOV_NewlyUnseen" data-uid="GoRogue.FOV.NewlyUnseen">NewlyUnseen</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but
-WERE in FOV after the previous time Calculate was called.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that are NOT in field of view as of the most current Calculate call,
+but WERE in field of view after the previous time Calculate was called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -478,11 +492,11 @@ WERE in FOV after the previous time Calculate was called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Width.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L75">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L92">View Source</a>
   </span>
   <a id="GoRogue_FOV_Width_" data-uid="GoRogue.FOV.Width*"></a>
   <h4 id="GoRogue_FOV_Width" data-uid="GoRogue.FOV.Width">Width</h4>
-  <div class="markdown level1 summary"><p>Width of FOV map.</p>
+  <div class="markdown level1 summary"><p>Width of map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -511,11 +525,11 @@ WERE in FOV after the previous time Calculate was called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.FOV.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L106">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L126">View Source</a>
   </span>
   <a id="GoRogue_FOV_AsReadOnly_" data-uid="GoRogue.FOV.AsReadOnly*"></a>
   <h4 id="GoRogue_FOV_AsReadOnly" data-uid="GoRogue.FOV.AsReadOnly">AsReadOnly()</h4>
-  <div class="markdown level1 summary"><p>Returns a read-only representation of the fov.</p>
+  <div class="markdown level1 summary"><p>Returns a read-only representation of the field of view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -533,7 +547,7 @@ WERE in FOV after the previous time Calculate was called.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.IReadOnlyFOV.html">IReadOnlyFOV</a></td>
-        <td><p>This fov object, exposed as an IReadOnlyFOV.</p>
+        <td><p>This FOV object, as an <a class="xref" href="GoRogue.IReadOnlyFOV.html">IReadOnlyFOV</a> instance.</p>
 </td>
       </tr>
     </tbody>
@@ -543,13 +557,13 @@ WERE in FOV after the previous time Calculate was called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(GoRogue.Coord%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L133">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L154">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_" data-uid="GoRogue.FOV.Calculate(GoRogue.Coord,System.Double)">Calculate(Coord, Double)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point, with a given radius. If no radius is specified,
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point and a radius. If no radius is specified,
 simply calculates with a radius of maximum integer value, which is effectively infinite.
-Radius is computed as a circle around the source (type Radius.CIRCLE).</p>
+Radius is computed as a circle around the source (type <a class="xref" href="GoRogue.Radius.html#GoRogue_Radius_CIRCLE">CIRCLE</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -569,13 +583,13 @@ Radius is computed as a circle around the source (type Radius.CIRCLE).</p>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
         <td><span class="parametername">start</span></td>
-        <td><p>Position of FOV origin.</p>
+        <td><p>Position of origin.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
 If no radius is specified, it is effectively infinite.</p>
 </td>
       </tr>
@@ -586,11 +600,11 @@ If no radius is specified, it is effectively infinite.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(GoRogue.Coord%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L178">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L198">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_GoRogue_Distance_" data-uid="GoRogue.FOV.Calculate(GoRogue.Coord,System.Double,GoRogue.Distance)">Calculate(Coord, Double, Distance)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point, with the given radius and radius calculation strategy.</p>
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point, a radius, and a radius shape.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -616,14 +630,14 @@ If no radius is specified, it is effectively infinite.</p>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</p>
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, eg. <a class="xref" href="GoRogue.Radius.html">Radius</a>).</p>
 </td>
       </tr>
     </tbody>
@@ -633,14 +647,13 @@ implicitly convertible to Distance, eg. Radius).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(GoRogue.Coord%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L253">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L271">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.FOV.Calculate(GoRogue.Coord,System.Double,GoRogue.Distance,System.Double,System.Double)">Calculate(Coord, Double, Distance, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point of (startX, startY), with the given radius and
-radius calculation strategy, and assuming FOV is restricted to the area specified by the
-given angle and span, in degrees. Provided that span is greater than 0, a conical section
-of the regular FOV radius will be actually in FOV.</p>
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
+restrictions <code data-dev-comment-type="paramref" class="paramref">angle</code> and <code data-dev-comment-type="paramref" class="paramref">span</code>.  The resulting field of view,
+if unobstructed, will be a cone defined by the angle and span given.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -666,28 +679,28 @@ of the regular FOV radius will be actually in FOV.</p>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</p>
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, eg. <a class="xref" href="GoRogue.Radius.html">Radius</a>).</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">angle</span></td>
-        <td><p>The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
+        <td><p>The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
 points right.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">span</span></td>
-        <td><p>The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
-degrees are included on either side of the span line.</p>
+        <td><p>The angle, in degrees, that specifies the full arc contained in the field of view cone --
+<code data-dev-comment-type="paramref" class="paramref">angle</code> / 2 degrees are included on either side of the span line.</p>
 </td>
       </tr>
     </tbody>
@@ -697,13 +710,13 @@ degrees are included on either side of the span line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(System.Int32%2CSystem.Int32%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L121">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L142">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_" data-uid="GoRogue.FOV.Calculate(System.Int32,System.Int32,System.Double)">Calculate(Int32, Int32, Double)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point of (startX, startY), with a given radius. If no
-radius is specified, simply calculates with a radius of maximum integer value, which is
-effectively infinite. Radius is computed as a circle around the source (type Radius.CIRCLE).</p>
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point and a radius. If no radius is specified, simply
+calculates with a radius of maximum integer value, which is effectively infinite. Radius
+is computed as a circle around the source (type <a class="xref" href="GoRogue.Radius.html#GoRogue_Radius_CIRCLE">CIRCLE</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -735,7 +748,7 @@ effectively infinite. Radius is computed as a circle around the source (type Rad
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
 If no radius is specified, it is effectively infinite.</p>
 </td>
       </tr>
@@ -746,12 +759,11 @@ If no radius is specified, it is effectively infinite.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L148">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L168">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_GoRogue_Distance_" data-uid="GoRogue.FOV.Calculate(System.Int32,System.Int32,System.Double,GoRogue.Distance)">Calculate(Int32, Int32, Double, Distance)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point of (startX, startY), with the given radius and
-radius calculation strategy.</p>
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point, a radius, and radius shape.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -783,14 +795,14 @@ radius calculation strategy.</p>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</p>
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, eg. <a class="xref" href="GoRogue.Radius.html">Radius</a>).</p>
 </td>
       </tr>
     </tbody>
@@ -800,14 +812,13 @@ implicitly convertible to Distance, eg. Radius).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.Calculate(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L203">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L222">View Source</a>
   </span>
   <a id="GoRogue_FOV_Calculate_" data-uid="GoRogue.FOV.Calculate*"></a>
   <h4 id="GoRogue_FOV_Calculate_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.FOV.Calculate(System.Int32,System.Int32,System.Double,GoRogue.Distance,System.Double,System.Double)">Calculate(Int32, Int32, Double, Distance, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Calculates FOV, given an origin point of (startX, startY), with the given radius and
-radius calculation strategy, and assuming FOV is restricted to the area specified by the
-given angle and span, in degrees. Provided that span is greater than 0, a conical section
-of the regular FOV radius will be actually in FOV.</p>
+  <div class="markdown level1 summary"><p>Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
+restrictions <code data-dev-comment-type="paramref" class="paramref">angle</code> and <code data-dev-comment-type="paramref" class="paramref">span</code>.  The resulting field of view,
+if unobstructed, will be a cone defined by the angle and span given.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -839,28 +850,28 @@ of the regular FOV radius will be actually in FOV.</p>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">radius</span></td>
-        <td><p>The maximum radius -- basically the maximum distance of FOV if completely unobstructed.</p>
+        <td><p>The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, eg. <a class="xref" href="GoRogue.Radius.html">Radius</a>).</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">angle</span></td>
-        <td><p>The angle in degrees that specifies the outermost center point of the FOV cone. 0 degrees
+        <td><p>The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
 points right.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">span</span></td>
-        <td><p>The angle, in degrees, that specifies the full arc contained in the FOV cone -- angle/2
-degrees are included on either side of the cone's center line.</p>
+        <td><p>The angle, in degrees, that specifies the full arc contained in the field of view cone --
+<code data-dev-comment-type="paramref" class="paramref">angle</code> / 2 degrees are included on either side of the cone's center line.</p>
 </td>
       </tr>
     </tbody>
@@ -870,7 +881,7 @@ degrees are included on either side of the cone's center line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_ToString.md&amp;value=---%0Auid%3A%20GoRogue.FOV.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L296">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L314">View Source</a>
   </span>
   <a id="GoRogue_FOV_ToString_" data-uid="GoRogue.FOV.ToString*"></a>
   <h4 id="GoRogue_FOV_ToString" data-uid="GoRogue.FOV.ToString">ToString()</h4>
@@ -905,7 +916,7 @@ by a '-' character, and any position in FOV is represented by a '+'.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_ToString_System_Char_System_Char_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.ToString(System.Char%2CSystem.Char)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L264">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L282">View Source</a>
   </span>
   <a id="GoRogue_FOV_ToString_" data-uid="GoRogue.FOV.ToString*"></a>
   <h4 id="GoRogue_FOV_ToString_System_Char_System_Char_" data-uid="GoRogue.FOV.ToString(System.Char,System.Char)">ToString(Char, Char)</h4>
@@ -961,7 +972,7 @@ by a '-' character, and any position in FOV is represented by a '+'.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV_ToString_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.FOV.ToString(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L289">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L307">View Source</a>
   </span>
   <a id="GoRogue_FOV_ToString_" data-uid="GoRogue.FOV.ToString*"></a>
   <h4 id="GoRogue_FOV_ToString_System_Int32_" data-uid="GoRogue.FOV.ToString(System.Int32)">ToString(Int32)</h4>
@@ -1071,7 +1082,7 @@ the given number of decimal places.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_FOV.md&amp;value=---%0Auid%3A%20GoRogue.FOV%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L18" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/FOV.cs/#L35" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

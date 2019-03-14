@@ -124,7 +124,7 @@
   </span>
   <a id="GoRogue_MapGeneration_IReadOnlyMapArea_Count_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.Count*"></a>
   <h4 id="GoRogue_MapGeneration_IReadOnlyMapArea_Count" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.Count">Count</h4>
-  <div class="markdown level1 summary"><p>Number of (unique) positions in the currently stored list.</p>
+  <div class="markdown level1 summary"><p>Number of (unique) positions in the currently stored list of positions.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -238,7 +238,7 @@
   </span>
   <a id="GoRogue_MapGeneration_IReadOnlyMapArea_Contains_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.Contains*"></a>
   <h4 id="GoRogue_MapGeneration_IReadOnlyMapArea_Contains_GoRogue_MapGeneration_IReadOnlyMapArea_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.Contains(GoRogue.MapGeneration.IReadOnlyMapArea)">Contains(IReadOnlyMapArea)</h4>
-  <div class="markdown level1 summary"><p>Returns whether or not the given MapArea is completely contained within the current one.</p>
+  <div class="markdown level1 summary"><p>Returns whether or not the given map area is completely contained within the current one.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -258,7 +258,7 @@
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area</span></td>
-        <td><p>MapArea to check.</p>
+        <td><p>Area to check.</p>
 </td>
       </tr>
     </tbody>
@@ -274,7 +274,7 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p>True if the given MapArea is completely contained within the current one, false otherwise.</p>
+        <td><p>True if the given area is completely contained within the current one, false otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -346,7 +346,7 @@
   <h4 id="GoRogue_MapGeneration_IReadOnlyMapArea_Intersects_GoRogue_MapGeneration_IReadOnlyMapArea_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.Intersects(GoRogue.MapGeneration.IReadOnlyMapArea)">Intersects(IReadOnlyMapArea)</h4>
   <div class="markdown level1 summary"><p>Returns whether or not the given map area intersects the current one. If you intend to
 determine/use the exact intersection based on this return value, it is best to instead
-call the MapArea.GetIntersection, and check the number of positions in the result (0 if
+call <a class="xref" href="GoRogue.MapGeneration.MapArea.html#GoRogue_MapGeneration_MapArea_GetIntersection_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea_">GetIntersection(IReadOnlyMapArea, IReadOnlyMapArea)</a>, and check the number of positions in the result (0 if
 no intersection).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -367,7 +367,7 @@ no intersection).</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area</span></td>
-        <td><p>The MapArea to check.</p>
+        <td><p>The area to check.</p>
 </td>
       </tr>
     </tbody>
@@ -383,7 +383,7 @@ no intersection).</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p>True if the given MapArea intersects the current one, false otherwise.</p>
+        <td><p>True if the given area intersects the current one, false otherwise.</p>
 </td>
       </tr>
     </tbody>
@@ -397,7 +397,7 @@ no intersection).</p>
   </span>
   <a id="GoRogue_MapGeneration_IReadOnlyMapArea_RandomPosition_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.RandomPosition*"></a>
   <h4 id="GoRogue_MapGeneration_IReadOnlyMapArea_RandomPosition_System_Func_GoRogue_Coord_System_Boolean__Troschuetz_Random_IGenerator_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.RandomPosition(System.Func{GoRogue.Coord,System.Boolean},Troschuetz.Random.IGenerator)">RandomPosition(Func&lt;Coord, Boolean&gt;, IGenerator)</h4>
-  <div class="markdown level1 summary"><p>Gets a random position from the MapArea for which the given selector returns true. Coords
+  <div class="markdown level1 summary"><p>Gets a random position from the map area for which the given selector returns true. Positions
 are repeatedly selected until a valid one is found.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -425,7 +425,7 @@ false otherwise.</p>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>The rng to use. Defaults to SingletonRandom.DefaultRNG.</p>
+        <td><p>The rng to use. Defaults to <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -441,7 +441,7 @@ false otherwise.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
-        <td><p>A random position from within the MapArea for which the selector given returns true.</p>
+        <td><p>A random position from within the map area for which the selector given returns true.</p>
 </td>
       </tr>
     </tbody>
@@ -455,7 +455,7 @@ false otherwise.</p>
   </span>
   <a id="GoRogue_MapGeneration_IReadOnlyMapArea_RandomPosition_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.RandomPosition*"></a>
   <h4 id="GoRogue_MapGeneration_IReadOnlyMapArea_RandomPosition_Troschuetz_Random_IGenerator_" data-uid="GoRogue.MapGeneration.IReadOnlyMapArea.RandomPosition(Troschuetz.Random.IGenerator)">RandomPosition(IGenerator)</h4>
-  <div class="markdown level1 summary"><p>Gets a random position from the MapArea.</p>
+  <div class="markdown level1 summary"><p>Gets a random position from the area.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -475,7 +475,7 @@ false otherwise.</p>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>The rng to use. Defaults to SingletonRandom.DefaultRNG.</p>
+        <td><p>The rng to use. Defaults to <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -491,7 +491,7 @@ false otherwise.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
-        <td><p>A random position from within the MapArea.</p>
+        <td><p>A random position from within the map area.</p>
 </td>
       </tr>
     </tbody>

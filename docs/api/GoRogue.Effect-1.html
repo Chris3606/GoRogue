@@ -74,8 +74,8 @@
   <h1 id="GoRogue_Effect_1" data-uid="GoRogue.Effect`1" class="text-break">Class Effect&lt;TriggerArgs&gt;
   </h1>
   <div class="markdown level0 summary"><p>Class designed to represent any sort of in-game effect. This could be anything from a simple
-physical damage effect to a heal effect, including area of effects, damage over time effects,
-or even potentially a special effect that simply boosts a stat.</p>
+physical damage effect to a heal effect or permanent effects.  These might include AOE effects,
+damage over time effects, or even potentially a special effect that simply boosts a stat.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -122,29 +122,33 @@ or even potentially a special effect that simply boosts a stat.</p>
     <tbody>
       <tr>
         <td><span class="parametername">TriggerArgs</span></td>
-        <td><p>The type of the parameter that will be specified to the Trigger function when called.</p>
+        <td><p>The type of the parameter that will be specified to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function when called.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Effect_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Effectively, the class is nothing more than an interface for the concept of something that
+  <div class="markdown level0 remarks"><p>Effectively, the class is nothing more than a basis for the concept of something that
 happens, potentially instantaneously or potentially one or more times on a certain event
 (beginning of a turn, end of a turn, on taking damage, etc). The standard way to use the
 Effect class is to create a subclass of Effect, that at the very least implements the
-OnTrigger function, which should accomplish whatever the effect should do when it is
-triggered. The subclass can specify what parameter(s) it needs to take in via the class's
-type parameter. If multiple arguments are needed, one should create a class that subclasses
-EffectArgs that contains all the parameters, and the effect subclass should then take an
-instance of that EffectArgs subclass as the single parameter. If no arguments are needed,
-then one may pass null as the parameter to Trigger. The concept of a duration is also built
-in to the interface (see EffectTrigger class for details on Effect durations. The duration is
-to be interpreted as the number of times the effect's Trigger function will be called before
-it will be removed from an EffectTrigger. If the effect is instantaneous, eg. it happens only
-when Trigger is called, on no particular event (such as a simple instant physical damage
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function, which should accomplish whatever the effect should
+do when it is triggered. The subclass can specify what parameter(s) the OnTrigger function
+needs to take in via the class's type parameter. If multiple arguments are needed, one should create
+a class that subclasses <a class="xref" href="GoRogue.EffectArgs.html">EffectArgs</a> that contains all the parameters, and the effect subclass
+should then take an instance of the EffectArgs subclass as the single parameter. If no arguments are needed,
+then one may pass null as the parameter to Trigger.</p>
+<p>The concept of a duration is also built into the interface, and is considered to be in arbitrary units.  The duration
+concept is designed to be used with <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a> instances, and has no effect when an effect is not
+utilized with an EffectTrigger.  The duration is interpreted as simply the number of times the effect's
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>) function will be called before it will be removed from an EffectTrigger. If the effect
+is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant damage
 effect), then the duration specified in the constructor should be the static class constant
-INSTANT. Otherwise, one may specify the duration as a positive integer, or the INFINITE
-static class constant. See EffectTrigger class documentation for details on durations.</p>
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_INSTANT">INSTANT</a>. If the effect is meant to have an infinite duration, or the effect wears off on some
+condition other than time passing, the duration may be set to <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_INFINITE">INFINITE</a>, and then manipulated
+appropriately to 0 when the effect has expired.</p>
+<p>More explanation of Effects and EffectTriggers, and usage examples, can be found at the GoRogue documentation site
+<a href="https://chris3606.github.io/GoRogue/articles">here</a>.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -153,7 +157,7 @@ static class constant. See EffectTrigger class documentation for details on dura
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1__ctor_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.%23ctor(System.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L107">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L121">View Source</a>
   </span>
   <a id="GoRogue_Effect_1__ctor_" data-uid="GoRogue.Effect`1.#ctor*"></a>
   <h4 id="GoRogue_Effect_1__ctor_System_String_System_Int32_" data-uid="GoRogue.Effect`1.#ctor(System.String,System.Int32)">Effect(String, Int32)</h4>
@@ -177,7 +181,7 @@ static class constant. See EffectTrigger class documentation for details on dura
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">name</span></td>
-        <td><p>Name for the effect</p>
+        <td><p>Name for the effect.</p>
 </td>
       </tr>
       <tr>
@@ -195,11 +199,12 @@ static class constant. See EffectTrigger class documentation for details on dura
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_INFINITE.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INFINITE%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L59">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L69">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_INFINITE" data-uid="GoRogue.Effect`1.INFINITE">INFINITE</h4>
   <div class="markdown level1 summary"><p>The value one should specify as the effect duration for an infinite effect, eg. an effect
-that will never expire and be automatically removed from an EffectTrigger.</p>
+that will never expire or whose expiration time is arbitrary (for example, based on a condition
+other than the passing of time).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -226,11 +231,12 @@ that will never expire and be automatically removed from an EffectTrigger.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_INSTANT.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INSTANT%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L65">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L76">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_INSTANT" data-uid="GoRogue.Effect`1.INSTANT">INSTANT</h4>
   <div class="markdown level1 summary"><p>The value one should specify as the effect duaration for an instantaneous effect, eg. an
-effect that only occurs when Trigger is manually called, and thus cannot be added to an EffectTrigger.</p>
+effect that only occurs when Trigger is manually called, and thus cannot be added to an
+<a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -259,14 +265,11 @@ effect that only occurs when Trigger is manually called, and thus cannot be adde
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_Duration.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Duration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L82">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L95">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Duration_" data-uid="GoRogue.Effect`1.Duration*"></a>
   <h4 id="GoRogue_Effect_1_Duration" data-uid="GoRogue.Effect`1.Duration">Duration</h4>
-  <div class="markdown level1 summary"><p>The duration of the effect. When the duration reaches 0, the Effect will be automatically
-removed from an EffectTrigger. The duration can be changed from a subclass, which can be
-used in OnTrigger to cause an effect to be &quot;cancelled&quot;, eg. immediately expire, or to
-extend/reduce its duration.</p>
+  <div class="markdown level1 summary"><p>The duration of the effect.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -288,16 +291,21 @@ extend/reduce its duration.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_Effect_1_Duration_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>When the duration reaches 0, the Effect will be automatically removed from an <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a>.
+The duration can be changed from a subclass, which can be used in <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> to
+cause an effect to be &quot;cancelled&quot;, eg. immediately expire, or to extend/reduce its duration.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_Name.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L72">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L83">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Name_" data-uid="GoRogue.Effect`1.Name*"></a>
   <h4 id="GoRogue_Effect_1_Name" data-uid="GoRogue.Effect`1.Name">Name</h4>
-  <div class="markdown level1 summary"><p>The name of the effect</p>
+  <div class="markdown level1 summary"><p>The name of the effect.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -326,12 +334,12 @@ extend/reduce its duration.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_OnTrigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.OnTrigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L136">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L149">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_OnTrigger_" data-uid="GoRogue.Effect`1.OnTrigger*"></a>
   <h4 id="GoRogue_Effect_1_OnTrigger__0_" data-uid="GoRogue.Effect`1.OnTrigger(`0)">OnTrigger(TriggerArgs)</h4>
-  <div class="markdown level1 summary"><p>Should be implemented to take whatever action(s) the effect is supposed to accomplish.
-This function is called automatically when Trigger is called.</p>
+  <div class="markdown level1 summary"><p>Implement to take whatever action(s) the effect is supposed to accomplish.
+This function is called automatically when <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> is called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -351,7 +359,7 @@ This function is called automatically when Trigger is called.</p>
       <tr>
         <td><span class="xref">TriggerArgs</span></td>
         <td><span class="parametername">e</span></td>
-        <td><p>Class containing all arguments OnTrigger requires to function.</p>
+        <td><p>Class containing all arguments <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> requires to function.</p>
 </td>
       </tr>
     </tbody>
@@ -361,11 +369,11 @@ This function is called automatically when Trigger is called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L142">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L155">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_ToString_" data-uid="GoRogue.Effect`1.ToString*"></a>
   <h4 id="GoRogue_Effect_1_ToString" data-uid="GoRogue.Effect`1.ToString">ToString()</h4>
-  <div class="markdown level1 summary"><p>Yields a string of the effect's name and duration.</p>
+  <div class="markdown level1 summary"><p>Returns a string of the effect's name and duration.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -395,13 +403,11 @@ This function is called automatically when Trigger is called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_Trigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Trigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L123">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L136">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Trigger_" data-uid="GoRogue.Effect`1.Trigger*"></a>
   <h4 id="GoRogue_Effect_1_Trigger__0_" data-uid="GoRogue.Effect`1.Trigger(`0)">Trigger(TriggerArgs)</h4>
-  <div class="markdown level1 summary"><p>Should be called on instantaneous effects to Trigger the effect. Can also be called
-manually (not by an EffectTrigger) on non-instantaneous effects, however note that it
-will still cause the duration to decrease.</p>
+  <div class="markdown level1 summary"><p>Should be called on instantaneous effects to trigger the effect.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -421,14 +427,15 @@ will still cause the duration to decrease.</p>
       <tr>
         <td><span class="xref">TriggerArgs</span></td>
         <td><span class="parametername">args</span></td>
-        <td><p>Parameters that are passed to OnTrigger. Can be null.</p>
+        <td><p>Parameters that are passed to <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a>.
+Can be null.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_Effect_1_Trigger__0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Any effect that has INSTANT duration (eg. duration 0) will still have OnTrigger called
-when Trigger is called.</p>
+  <div class="markdown level1 remarks"><p>Any effect that has INSTANT duration or duration 0 when this function is called
+will still have its <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function called.</p>
 </div>
   <h3 id="events">Events
   </h3>
@@ -437,11 +444,12 @@ when Trigger is called.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1_Expired.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Expired%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L100">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L114">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_Expired" data-uid="GoRogue.Effect`1.Expired">Expired</h4>
-  <div class="markdown level1 summary"><p>Fires as soon as the effect is about to expire. Fires after the OnTrigger has been called
-that round, but before it is removed from any EffectTriggers.</p>
+  <div class="markdown level1 summary"><p>Event that fires as soon as the effect is about to expire. Fires after the
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function has been called but before it is
+removed from any <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a> instances.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -478,7 +486,7 @@ that round, but before it is removed from any EffectTriggers.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Effect_1.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L51" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Effect.cs/#L60" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

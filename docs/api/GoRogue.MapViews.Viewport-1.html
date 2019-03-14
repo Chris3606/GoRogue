@@ -73,10 +73,9 @@
   
   <h1 id="GoRogue_MapViews_Viewport_1" data-uid="GoRogue.MapViews.Viewport`1" class="text-break">Class Viewport&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Since some algorithms that use MapViews can be expensive to run entirely on large maps (such
-as GoalMaps), Viewport is a class that effectively creates and maintains a &quot;viewport&quot; of the
-map. Its indexers perform relative to absolute coordinate translations, and return the proper
-value of type T from the underlying map..</p>
+  <div class="markdown level0 summary"><p>Viewport is a class that effectively creates and maintains a &quot;viewport&quot;, or subsection, of the map.
+Its indexers perform relative to absolute coordinate translations, and return the proper value of
+type T from the underlying map.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -127,11 +126,22 @@ value of type T from the underlying map..</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>The type being exposed by the MapView.</p>
+        <td><p>The type being exposed by the Viewport.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_Viewport_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Since some algorithms that use <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> implementations can be expensive to
+run on large maps (GoalMaps, etc), you can use viewports to present only a relevant subsection of the
+map to that algorithm.  It is generally useful for any case where you want an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
+that represents a subsection of some other <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>.</p>
+<p>This implementation restricts the subsection of the map that is presented in such a way that no part
+of the viewport can be outside the boundary of its parent map view.  The viewport cannot be bigger than
+the map, and the viewport's position is &quot;locked&quot; to the edge so that it cannot be set in such a way that a portion
+of the viewport lies outside the bounds of the parent map.  If you would rather allow this and return
+a default value for locations outside the parent map, see <a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html">UnboundedViewport&lt;T&gt;</a>.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -139,11 +149,11 @@ value of type T from the underlying map..</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1__ctor_GoRogue_MapViews_IMapView__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L31">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L42">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1__ctor_" data-uid="GoRogue.MapViews.Viewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1__ctor_GoRogue_MapViews_IMapView__0__" data-uid="GoRogue.MapViews.Viewport`1.#ctor(GoRogue.MapViews.IMapView{`0})">Viewport(IMapView&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent. Initial ViewArea will be the entire MapView.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the map view to represent. The viewport will represent the entire given map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -163,7 +173,7 @@ value of type T from the underlying map..</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;T&gt;</td>
         <td><span class="parametername">mapView</span></td>
-        <td><p>The MapView to represent.</p>
+        <td><p>The map view to represent.</p>
 </td>
       </tr>
     </tbody>
@@ -173,11 +183,11 @@ value of type T from the underlying map..</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1__ctor_GoRogue_MapViews_IMapView__0__GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L21">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L32">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1__ctor_" data-uid="GoRogue.MapViews.Viewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1__ctor_GoRogue_MapViews_IMapView__0__GoRogue_Rectangle_" data-uid="GoRogue.MapViews.Viewport`1.#ctor(GoRogue.MapViews.IMapView{`0},GoRogue.Rectangle)">Viewport(IMapView&lt;T&gt;, Rectangle)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent, and the initial ViewArea for that map.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the parent map view, and the initial subsection of that map view to represent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -203,7 +213,7 @@ value of type T from the underlying map..</p>
       <tr>
         <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
         <td><span class="parametername">viewArea</span></td>
-        <td><p>The initial ViewArea for that map.</p>
+        <td><p>The initial subsection of that map to represent.</p>
 </td>
       </tr>
     </tbody>
@@ -215,11 +225,11 @@ value of type T from the underlying map..</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L37">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_Height_" data-uid="GoRogue.MapViews.Viewport`1.Height*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_Height" data-uid="GoRogue.MapViews.Viewport`1.Height">Height</h4>
-  <div class="markdown level1 summary"><p>The height of the ViewArea.</p>
+  <div class="markdown level1 summary"><p>The height of the area being represented.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -246,7 +256,7 @@ value of type T from the underlying map..</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L78">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L99">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_Item_" data-uid="GoRogue.MapViews.Viewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.Viewport`1.Item(GoRogue.Coord)">Item[Coord]</h4>
@@ -287,7 +297,7 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -297,11 +307,13 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L66">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L87">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_Item_" data-uid="GoRogue.MapViews.Viewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_Item_System_Int32_" data-uid="GoRogue.MapViews.Viewport`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given a position in relative 1d-array-index style, returns the &quot;value&quot; associated with that
+location in absolute coordinates.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -320,7 +332,8 @@ location in absolute coordinates.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">relativeIndex1D</span></td>
-        <td></td>
+        <td><p>Viewport-relative position of the location to retrieve the value for, as a 1D array index.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -335,7 +348,8 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -344,7 +358,7 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L89">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L110">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_Item_" data-uid="GoRogue.MapViews.Viewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.Viewport`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -391,7 +405,7 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -401,11 +415,11 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_MapView.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.MapView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L45">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L56">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_MapView_" data-uid="GoRogue.MapViews.Viewport`1.MapView*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_MapView" data-uid="GoRogue.MapViews.Viewport`1.MapView">MapView</h4>
-  <div class="markdown level1 summary"><p>The MapView that this Viewport is exposing values from.</p>
+  <div class="markdown level1 summary"><p>The map view that this Viewport is exposing values from.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -432,11 +446,11 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_ViewArea.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.ViewArea%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L53">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L64">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_ViewArea_" data-uid="GoRogue.MapViews.Viewport`1.ViewArea*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_ViewArea" data-uid="GoRogue.MapViews.Viewport`1.ViewArea">ViewArea</h4>
-  <div class="markdown level1 summary"><p>The area of the base MapView that this Viewport is exposing. Although this property does
+  <div class="markdown level1 summary"><p>The area of <a class="xref" href="GoRogue.MapViews.Viewport-1.html#GoRogue_MapViews_Viewport_1_MapView">MapView</a> that this Viewport is exposing. Although this property does
 not explicitly expose a set accessor, it is returning a reference and as such may be
 assigned to. When accessed, the rectangle is automatically restricted by the edges of the
 map as necessary.</p>
@@ -466,11 +480,11 @@ map as necessary.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L61">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L72">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_Width_" data-uid="GoRogue.MapViews.Viewport`1.Width*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_Width" data-uid="GoRogue.MapViews.Viewport`1.Width">Width</h4>
-  <div class="markdown level1 summary"><p>The width of the ViewArea.</p>
+  <div class="markdown level1 summary"><p>The width of the area being represented.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -499,7 +513,7 @@ map as necessary.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L95">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L116">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_ToString_" data-uid="GoRogue.MapViews.Viewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_ToString" data-uid="GoRogue.MapViews.Viewport`1.ToString">ToString()</h4>
@@ -533,12 +547,12 @@ map as necessary.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L109">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L130">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_ToString_" data-uid="GoRogue.MapViews.Viewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.MapViews.Viewport`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the Viewport, using the elementStringifier function
-given to determine what string represents which value.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map view, using <code data-dev-comment-type="paramref" class="paramref">elementStringifier</code>
+to determine what string represents each value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -580,7 +594,7 @@ given to determine what string represents which value.</p>
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_Viewport_1_ToString_System_Func__0_System_String___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This could be used, for example, on an Viewport of boolean values, to output '#' for
+  <div class="markdown level1 remarks"><p>This could be used, for example, on a Viewport of boolean values, to output '#' for
 false values, and '.' for true values.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -588,15 +602,12 @@ false values, and '.' for true values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1_ToString_System_Int32_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601.ToString(System.Int32%2CSystem.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L124">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L150">View Source</a>
   </span>
   <a id="GoRogue_MapViews_Viewport_1_ToString_" data-uid="GoRogue.MapViews.Viewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_Viewport_1_ToString_System_Int32_System_Func__0_System_String__" data-uid="GoRogue.MapViews.Viewport`1.ToString(System.Int32,System.Func{`0,System.String})">ToString(Int32, Func&lt;T, String&gt;)</h4>
   <div class="markdown level1 summary"><p>Prints the values in the Viewport, using the function specified to turn elements into
-strings, and using the &quot;field length&quot; specified. Each element of type T will have spaces
-added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-than the length of the element's string represention. A positive-number right-aligns the
-text within the field, while a negative number left-aligns the text.</p>
+strings, and using the &quot;field length&quot; specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -616,13 +627,14 @@ text within the field, while a negative number left-aligns the text.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">fieldSize</span></td>
-        <td><p>The size of the field to give each value.</p>
+        <td><p>The size of the field to give each value.  A positive-number
+right-aligns the text within the field, while a negative number left-aligns the text.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to convert each element to a string. Null defaults to the ToString
+        <td><p>Function to use to convert each element to a string. null defaults to the ToString
 function of type T.</p>
 </td>
       </tr>
@@ -644,6 +656,11 @@ function of type T.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_Viewport_1_ToString_System_Int32_System_Func__0_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of type T will have spaces added to cause it to take up exactly
+<code data-dev-comment-type="paramref" class="paramref">fieldSize</code> characters, provided <code data-dev-comment-type="paramref" class="paramref">fieldSize</code>
+is less than the length of the element's string represention.</p>
+</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
@@ -705,7 +722,7 @@ function of type T.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_Viewport_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.Viewport%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L12" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/Viewport.cs/#L23" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

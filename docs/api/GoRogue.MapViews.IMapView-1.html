@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_MapViews_IMapView_1" data-uid="GoRogue.MapViews.IMapView`1" class="text-break">Interface IMapView&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Interface designed to act as a standardized input/output for algorithms.</p>
+  <div class="markdown level0 summary"><p>Interface designed to act as a standardized input/output interpretation for algorithms.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.MapViews.html">GoRogue.MapViews</a></h6>
@@ -102,18 +102,22 @@
   <div class="markdown level0 remarks"><p>Many roguelike/2D grid algorithms, such as pathfinding, FOV, and map generation, view a map
 as simply a 2D array of some type. In many games, however, the &quot;value&quot; associated with each
 2D position may be dependent upon many different things. For example, pathfinding, as input,
-often needs a &quot;walkability map&quot; -- in common terms, a 2D array of bools where the boolean
-value at each position represents whether or not that tile is passable with respect to
+often needs a &quot;walkability map&quot; -- in common terms, a 2D array of boolean values, where the
+boolean value at each position represents whether or not that tile is passable with respect to
 pathing. This boolean value might be determined by a number of things - terrain type, monster
 positions, etc. Thus, in practice, maintaining an actual 2D array of boolean values that such
-an algorithm could take as input can be significant work. IMapView solves this problem by
+an algorithm could take as input can be difficult. IMapView solves this problem by
 providing an interface that all such algorithms can take as input -- pathfinding, for
-instance, would take an IMapView&lt;bool&gt; instance, rather than a 2D array of booleans. A
+instance, would take an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>; instance, rather than a 2D array of booleans. A
 user of that algorithm might create a class that implements the indexers below to check the
 terrain type, if there is a monster at the position, etc., and returns the correct value.
 This prevents the need to maintain an actual 2D array in code that pathfinding can use, if
-such an array does not fit with your game architecture. If an actual 2D array is desired,
-a class ArrayMap is provided that implements IMapView, and acts much like an actual 2D array.</p>
+such an array does not fit with your game architecture. If you do want to store the data in an actual 2D
+array, IMapView works similarly -- the indexers can simply retrieve values in the array.</p>
+<p>Although manually implementing a custom IMapView may be necessary in some cases, GoRogue provides many
+implementations that cater to common cases -- for example, <a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap&lt;T&gt;</a> is an implementation
+that uses an actual array, while <a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a> is a built-in implementation that uses a
+function to retrieve values.</p>
 </div>
   <h3 id="properties">Properties
   </h3>
@@ -122,7 +126,7 @@ a class ArrayMap is provided that implements IMapView, and acts much like an act
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L29">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L34">View Source</a>
   </span>
   <a id="GoRogue_MapViews_IMapView_1_Height_" data-uid="GoRogue.MapViews.IMapView`1.Height*"></a>
   <h4 id="GoRogue_MapViews_IMapView_1_Height" data-uid="GoRogue.MapViews.IMapView`1.Height">Height</h4>
@@ -153,11 +157,11 @@ a class ArrayMap is provided that implements IMapView, and acts much like an act
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L49">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L54">View Source</a>
   </span>
   <a id="GoRogue_MapViews_IMapView_1_Item_" data-uid="GoRogue.MapViews.IMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_IMapView_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.IMapView`1.Item(GoRogue.Coord)">Item[Coord]</h4>
-  <div class="markdown level1 summary"><p>Given a Coord, should return the &quot;value&quot; associated with that location.</p>
+  <div class="markdown level1 summary"><p>Given a position, returns the &quot;value&quot; associated with that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -203,12 +207,12 @@ a class ArrayMap is provided that implements IMapView, and acts much like an act
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L57">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L68">View Source</a>
   </span>
   <a id="GoRogue_MapViews_IMapView_1_Item_" data-uid="GoRogue.MapViews.IMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_IMapView_1_Item_System_Int32_" data-uid="GoRogue.MapViews.IMapView`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"><p>Given an 1-dimensional index, should use Coord.ToIndex to calculate the 2D position
-represented by that 1D index, and return the value.</p>
+  <div class="markdown level1 summary"><p>Given an 1-dimensional index, returns the value associated with the corresponding position
+in the map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -244,21 +248,27 @@ represented by that 1D index, and return the value.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;Value&quot; associated with the given location.</p>
+        <td><p>The &quot;value&quot; associated with the given location.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_IMapView_1_Item_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Typically, this may be implemented in terms of <a class="xref" href="GoRogue.MapViews.IMapView-1.html#GoRogue_MapViews_IMapView_1_Item_GoRogue_Coord_">Item[Coord]</a> by using
+<a class="xref" href="GoRogue.Coord.html#GoRogue_Coord_ToCoord_System_Int32_System_Int32_">ToCoord(Int32, Int32)</a> to calculate the 2D position represented by that
+1D index, and passing that position to the <a class="xref" href="GoRogue.MapViews.IMapView-1.html#GoRogue_MapViews_IMapView_1_Item_GoRogue_Coord_">Item[Coord]</a> indexer to determine
+the value associated with the position.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L42">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L47">View Source</a>
   </span>
   <a id="GoRogue_MapViews_IMapView_1_Item_" data-uid="GoRogue.MapViews.IMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_IMapView_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.IMapView`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
-  <div class="markdown level1 summary"><p>Given an X and Y value, should return the &quot;value&quot; associated with that location.</p>
+  <div class="markdown level1 summary"><p>Given an X and Y value, returns the &quot;value&quot; associated with that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -310,7 +320,7 @@ represented by that 1D index, and return the value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L34">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L39">View Source</a>
   </span>
   <a id="GoRogue_MapViews_IMapView_1_Width_" data-uid="GoRogue.MapViews.IMapView`1.Width*"></a>
   <h4 id="GoRogue_MapViews_IMapView_1_Width" data-uid="GoRogue.MapViews.IMapView`1.Width">Width</h4>
@@ -393,7 +403,7 @@ represented by that 1D index, and return the value.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_IMapView_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.IMapView%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L24" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/IMapView.cs/#L29" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

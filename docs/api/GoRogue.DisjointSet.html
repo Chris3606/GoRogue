@@ -73,8 +73,7 @@
   
   <h1 id="GoRogue_DisjointSet" data-uid="GoRogue.DisjointSet" class="text-break">Class DisjointSet
   </h1>
-  <div class="markdown level0 summary"><p>Basic representation of a Disjoint set data structure. Assumes it is holding integers between
-0 and size - 1.</p>
+  <div class="markdown level0 summary"><p>Basic representation of a disjoint set data structure.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -113,6 +112,12 @@
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class DisjointSet : IReadOnlyDisjointSet</code></pre>
   </div>
+  <h5 id="GoRogue_DisjointSet_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>For reasons pertaining to optimization, this disjoint set implementation does not use
+generics, and instead holds integer values, which MUST be exactly all integer values in range
+[0, num_items_in_set - 1].  Thus, you will need to assign appropriate IDs to objects you intend
+to add and map them appropriately.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -120,11 +125,11 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet__ctor_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.%23ctor(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L19">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L24">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet__ctor_" data-uid="GoRogue.DisjointSet.#ctor*"></a>
   <h4 id="GoRogue_DisjointSet__ctor_System_Int32_" data-uid="GoRogue.DisjointSet.#ctor(System.Int32)">DisjointSet(Int32)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Size of disjoint set is specified -- it holds values between 0 and size - 1.</p>
+  <div class="markdown level1 summary"><p>Constructor. The disjoint set will contain all values in range [0, <code data-dev-comment-type="paramref" class="paramref">size</code> - 1].</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -156,7 +161,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_Count.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L35">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L40">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_Count_" data-uid="GoRogue.DisjointSet.Count*"></a>
   <h4 id="GoRogue_DisjointSet_Count" data-uid="GoRogue.DisjointSet.Count">Count</h4>
@@ -189,7 +194,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L41">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L46">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_AsReadOnly_" data-uid="GoRogue.DisjointSet.AsReadOnly*"></a>
   <h4 id="GoRogue_DisjointSet_AsReadOnly" data-uid="GoRogue.DisjointSet.AsReadOnly">AsReadOnly()</h4>
@@ -221,11 +226,12 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_Find_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.Find(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L48">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L54">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_Find_" data-uid="GoRogue.DisjointSet.Find*"></a>
   <h4 id="GoRogue_DisjointSet_Find_System_Int32_" data-uid="GoRogue.DisjointSet.Find(System.Int32)">Find(Int32)</h4>
-  <div class="markdown level1 summary"><p>Returns the parent of the set containing obj, performing path compression as search is completed.</p>
+  <div class="markdown level1 summary"><p>Returns the parent of the set containing <code data-dev-comment-type="paramref" class="paramref">obj</code>, performing path compression
+as the search is completed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -261,7 +267,7 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td><p>The parent of the obj given.</p>
+        <td><p>The parent of the object given.</p>
 </td>
       </tr>
     </tbody>
@@ -271,7 +277,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_InSameSet_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.InSameSet(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L63">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L69">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_InSameSet_" data-uid="GoRogue.DisjointSet.InSameSet*"></a>
   <h4 id="GoRogue_DisjointSet_InSameSet_System_Int32_System_Int32_" data-uid="GoRogue.DisjointSet.InSameSet(System.Int32,System.Int32)">InSameSet(Int32, Int32)</h4>
@@ -295,14 +301,12 @@
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">obj1</span></td>
-        <td><p>First object.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">obj2</span></td>
-        <td><p>Second object.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -327,7 +331,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_MakeUnion_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.MakeUnion(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L75">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L81">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_MakeUnion_" data-uid="GoRogue.DisjointSet.MakeUnion*"></a>
   <h4 id="GoRogue_DisjointSet_MakeUnion_System_Int32_System_Int32_" data-uid="GoRogue.DisjointSet.MakeUnion(System.Int32,System.Int32)">MakeUnion(Int32, Int32)</h4>
@@ -352,14 +356,12 @@ every element in the sets containing the two objects specified will be part of o
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">obj1</span></td>
-        <td><p>First object.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">obj2</span></td>
-        <td><p>Second object.</p>
-</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -371,7 +373,7 @@ every element in the sets containing the two objects specified will be part of o
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet_ToString.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L101">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L107">View Source</a>
   </span>
   <a id="GoRogue_DisjointSet_ToString_" data-uid="GoRogue.DisjointSet.ToString*"></a>
   <h4 id="GoRogue_DisjointSet_ToString" data-uid="GoRogue.DisjointSet.ToString">ToString()</h4>
@@ -420,7 +422,7 @@ their set.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DisjointSet.md&amp;value=---%0Auid%3A%20GoRogue.DisjointSet%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DisjointSet.cs/#L14" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

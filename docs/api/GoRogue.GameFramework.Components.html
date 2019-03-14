@@ -78,9 +78,10 @@
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="GoRogue.GameFramework.Components.IGameObjectComponent.html">IGameObjectComponent</a></h4>
-      <section><p>Optional interface for components that are attached to IGameObject.  While the implementation of this inteerface is not required for
-IGameObject components, if GameObject's implementation of IHasComponents is used, the Parent field is automatically kept up to date as
-you call AddComponent/RemoveComponent on objects that implement this interface.  This component cannot be added to multiple GameObjects
+      <section><p>Optional interface for components that are attached to an <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  While the implementation of this inteerface is not
+required for IGameObject components, if <a class="xref" href="GoRogue.GameFramework.GameObject.html">GameObject</a>'s implementation of IHasComponents is used, the <a class="xref" href="GoRogue.GameFramework.Components.IGameObjectComponent.html#GoRogue_GameFramework_Components_IGameObjectComponent_Parent">Parent</a> field
+is automatically kept up to date as you call <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_AddComponent_System_Object_">AddComponent(Object)</a>/<a class="xref" href="GoRogue.IHasComponents.html#GoRogue_IHasComponents_RemoveComponent_System_Object_">RemoveComponent(Object)</a>
+on objects that implement this interface.  A component implmenting this interface cannot be added to multiple GameObjects
 at once.</p>
 </section>
 </article>

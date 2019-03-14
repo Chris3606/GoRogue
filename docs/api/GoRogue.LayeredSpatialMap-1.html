@@ -73,10 +73,10 @@
   
   <h1 id="GoRogue_LayeredSpatialMap_1" data-uid="GoRogue.LayeredSpatialMap`1" class="text-break">Class LayeredSpatialMap&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>ISpatialMap implementation that can be used to efficiently represent &quot;layers&quot; of objects,
-with each layer represented as a SpatialMap. It uses layer masking (bit-masking per layer) to
-allow functions to operate on specific layers. Items must implement IHasID and IHasLayer, be
-a reference type, and their Layer value MUST NOT change while they are in the data structure.</p>
+  <div class="markdown level0 summary"><p><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> implementation that can be used to efficiently represent multiple
+&quot;layers&quot; of objects, with each layer represented as an <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> instance.
+It provides the regular spatial map functionality, as well as adds layer masking functionality
+that allow functions to operate on specific layers only.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -257,18 +257,19 @@ a reference type, and their Layer value MUST NOT change while they are in the da
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of items in the layers. Type T must implement IHasID and IHasLayer, must be a reference
-type, and its IHasLayer.Layer value MUST NOT change while the item is in the LayeredSpatialMap.</p>
+        <td><p>Type of items stored in the layers. Type T must implement <a class="xref" href="GoRogue.IHasID.html">IHasID</a> and <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>,
+must be a reference type, and its <a class="xref" href="GoRogue.IHasLayer.html#GoRogue_IHasLayer_Layer">Layer</a> value MUST NOT change while the item is in the
+spatial map.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_LayeredSpatialMap_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>This class is desinged to wrap a bunch of ISpatialMap instances together. At creation,
-whether or not each layer supports multiple items at the same location is specified via a
-layer mask.. One spatial map represents one layer of a map (items, monsters, etc). This class
-provides read-only access to each layer, as well as functions to add/remove/move items, do
-item grabbing based on layers, etc. Will not allow the same item to be added to multiple layers.</p>
+  <div class="markdown level0 remarks"><p>See the <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> for documentation on the practical purpose of spatial
+maps.</p>
+<p>The objects stored in a LayeredSpatialMap must be reference types and implement both <a class="xref" href="GoRogue.IHasID.html">IHasID</a>
+and <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>.  Each object in a spatial map is presumed to have a &quot;layer&quot;, which is assumed
+to remain constant once the item is added to the layer mask.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -277,13 +278,11 @@ item grabbing based on layers, etc. Will not allow the same item to be added to 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.LayeredSpatialMap%601.%23ctor(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/LayeredSpatialMap.cs/#L593">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/LayeredSpatialMap.cs/#L510">View Source</a>
   </span>
   <a id="GoRogue_LayeredSpatialMap_1__ctor_" data-uid="GoRogue.LayeredSpatialMap`1.#ctor*"></a>
   <h4 id="GoRogue_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.LayeredSpatialMap`1.#ctor(System.Int32,System.Int32,System.UInt32)">LayeredSpatialMap(Int32, Int32, UInt32)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes number of layers to include, as well as a starting layer index
-(defaulting to 0) and a layer mask indicating which layers support multiple items at a
-single position (defaulting to no layers).</p>
+  <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -316,19 +315,19 @@ single position (defaulting to no layers).</p>
         <td><span class="xref">System.UInt32</span></td>
         <td><span class="parametername">layersSupportingMultipleItems</span></td>
         <td><p>A layer mask indicating which layers should support multiple items residing at the same
-location on that layer. Defaults to no layers.</p>
+location on that layer. Defaults to no layers.  Generate this layer mask via <a class="xref" href="GoRogue.LayerMasker.html#GoRogue_LayerMasker_DEFAULT">DEFAULT</a>.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This class allows you to specify the starting index in order to make it easy to combine
-with other structures in a map which may represent other layers. For example, if a
-startingLayer of 0 is specified, layers in the spatialMap will have number
-[0-numberOfLayers - 1]. If 1 is specified, layers will have numbers [1-numberOfLayers],
-and anything to do with layer 0 will be ignored. If a layer-mask that includes layers 0,
-2, and 3 is passed to a function, for example, only layers 2 and 3 are considered (since
-they are the only ones that would be included in the LayeredSpatialMap.</p>
+  <div class="markdown level1 remarks"><p>This class allows you to specify the starting index for layers in order to make it easy to
+combine with other structures in a map which may represent other layers. For example, if a
+<code data-dev-comment-type="paramref" class="paramref">startingLayer</code> of 0 is specified, layers in the spatial map will have numbers
+in range[0, numberOfLayers - 1]. If 1 is specified, layers will have numbers in range [1-numberOfLayers],
+and anything to do with layer 0 will be ignored. For example, If a layer-mask that includes layers 0,
+2, and 3 is passed to a function, only layers 2 and 3 are considered (since they are the only ones that would
+be included in the spatial map.</p>
 </div>
   <h3 id="implements">Implements</h3>
   <div>
@@ -364,7 +363,7 @@ they are the only ones that would be included in the LayeredSpatialMap.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayeredSpatialMap_1.md&amp;value=---%0Auid%3A%20GoRogue.LayeredSpatialMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/LayeredSpatialMap.cs/#L571" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/LayeredSpatialMap.cs/#L490" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -73,8 +73,9 @@
   
   <h1 id="GoRogue_BoundedRectangle" data-uid="GoRogue.BoundedRectangle" class="text-break">Class BoundedRectangle
   </h1>
-  <div class="markdown level0 summary"><p>A class that contains a rectangle Area that is automatically &quot;locked&quot; to being inside the
-BoundingBox. A typical use might be keeping track of a camera view area.</p>
+  <div class="markdown level0 summary"><p>This class defines a rectanglar area, whose position is automatically &quot;locked&quot; to
+being inside a rectangular bounding box as it is changed. A typical use might be
+keeping track of a camera's view area.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -119,11 +120,11 @@ BoundingBox. A typical use might be keeping track of a camera view area.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_BoundedRectangle__ctor_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.BoundedRectangle.%23ctor(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/BoundedRectangle.cs/#L17">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/BoundedRectangle.cs/#L18">View Source</a>
   </span>
   <a id="GoRogue_BoundedRectangle__ctor_" data-uid="GoRogue.BoundedRectangle.#ctor*"></a>
   <h4 id="GoRogue_BoundedRectangle__ctor_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.BoundedRectangle.#ctor(GoRogue.Rectangle,GoRogue.Rectangle)">BoundedRectangle(Rectangle, Rectangle)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the initial area and bounding box.</p>
+  <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -143,13 +144,13 @@ BoundingBox. A typical use might be keeping track of a camera view area.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
         <td><span class="parametername">area</span></td>
-        <td><p>Initial value for Area.</p>
+        <td><p>Initial area for the rectangle.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
         <td><span class="parametername">boundingBox</span></td>
-        <td><p>Initial bounding box for Area.</p>
+        <td><p>Initial bounding box by which to bound the rectangle.</p>
 </td>
       </tr>
     </tbody>
@@ -165,10 +166,9 @@ BoundingBox. A typical use might be keeping track of a camera view area.</p>
   </span>
   <a id="GoRogue_BoundedRectangle_Area_" data-uid="GoRogue.BoundedRectangle.Area*"></a>
   <h4 id="GoRogue_BoundedRectangle_Area" data-uid="GoRogue.BoundedRectangle.Area">Area</h4>
-  <div class="markdown level1 summary"><p>The rectangle that is guaranteed to be contained within the BoundingBox. Although it does
-not specifically provide a set accessor, this property is returning a reference and as
-such may be assigned to. Whenever the rectangle is retrieved, if it is not contained
-within BoundingBox it will be modified as necessary to keep it within those bounds.</p>
+  <div class="markdown level1 summary"><p>The rectangle that is guaranteed to be contained completely within <a class="xref" href="GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_BoundingBox">BoundingBox</a>.
+Although it does not specifically provide a set accessor, this property is returning a
+reference and as such may be assigned to.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -199,9 +199,9 @@ within BoundingBox it will be modified as necessary to keep it within those boun
   </span>
   <a id="GoRogue_BoundedRectangle_BoundingBox_" data-uid="GoRogue.BoundedRectangle.BoundingBox*"></a>
   <h4 id="GoRogue_BoundedRectangle_BoundingBox" data-uid="GoRogue.BoundedRectangle.BoundingBox">BoundingBox</h4>
-  <div class="markdown level1 summary"><p>The rectangle which Area is automatically bounded to. Similar to area, although this
-property does not explicitly provide a set accessor, it is returning a reference so the
-property may be assigned to.</p>
+  <div class="markdown level1 summary"><p>The rectangle which <a class="xref" href="GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_Area">Area</a> is automatically bounded to be within.  Although this
+property does not explicitly provide a set accessor, it is returning a reference so therefore
+the property may be assigned to.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -238,7 +238,7 @@ property may be assigned to.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_BoundedRectangle.md&amp;value=---%0Auid%3A%20GoRogue.BoundedRectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/BoundedRectangle.cs/#L7" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/BoundedRectangle.cs/#L8" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

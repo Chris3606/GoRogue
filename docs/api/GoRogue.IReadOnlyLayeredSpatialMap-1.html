@@ -73,12 +73,21 @@
   
   <h1 id="GoRogue_IReadOnlyLayeredSpatialMap_1" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1" class="text-break">Interface IReadOnlyLayeredSpatialMap&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Read-only interface for LayeredSpatialMap -- useful for exposing LayeredSpatialMap instances
-as read-only properties.</p>
+  <div class="markdown level0 summary"><p>Interface implementing only the read-only functions for <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>/
+<a class="xref" href="GoRogue.AdvancedLayeredSpatialMap-1.html">AdvancedLayeredSpatialMap&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemAdded">IReadOnlySpatialMap&lt;T&gt;.ItemAdded</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemMoved">IReadOnlySpatialMap&lt;T&gt;.ItemMoved</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemRemoved">IReadOnlySpatialMap&lt;T&gt;.ItemRemoved</a>
+    </div>
     <div>
       <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Count">IReadOnlySpatialMap&lt;T&gt;.Count</a>
     </div>
@@ -130,7 +139,7 @@ as read-only properties.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type of element stored in the layered spatial map -- must implement IHasLayer.</p>
+        <td><p>Type of element stored in the layered spatial map -- must implement <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -146,7 +155,7 @@ as read-only properties.</p>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_LayerMasker_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.LayerMasker*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_LayerMasker" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.LayerMasker">LayerMasker</h4>
-  <div class="markdown level1 summary"><p>Object that helps get layer masks as they pertain to this LayeredSpatialMap</p>
+  <div class="markdown level1 summary"><p>Object used to get layer masks as they pertain to this spatial map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -178,7 +187,7 @@ as read-only properties.</p>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_Layers_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Layers*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_Layers" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Layers">Layers</h4>
   <div class="markdown level1 summary"><p>Gets read-only spatial maps representing each layer. To access a specific layer, instead
-use GetLayer.</p>
+use <a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html#GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayer_System_Int32_">GetLayer(Int32)</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -209,7 +218,7 @@ use GetLayer.</p>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_NumberOfLayers_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.NumberOfLayers*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_NumberOfLayers" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.NumberOfLayers">NumberOfLayers</h4>
-  <div class="markdown level1 summary"><p>Gets the number of layers represented.</p>
+  <div class="markdown level1 summary"><p>Gets the number of layers contained in the spatial map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -240,7 +249,7 @@ use GetLayer.</p>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_StartingLayer_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.StartingLayer*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_StartingLayer" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.StartingLayer">StartingLayer</h4>
-  <div class="markdown level1 summary"><p>Starting index for layers included in this structure.</p>
+  <div class="markdown level1 summary"><p>Starting index for layers contained in this spatial map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -273,8 +282,8 @@ use GetLayer.</p>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_AsReadOnly_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.AsReadOnly*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_AsReadOnly" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.AsReadOnly">AsReadOnly()</h4>
-  <div class="markdown level1 summary"><p>Returns a read-only reference to the data structure. Convenient for &quot;safely&quot; exposing the
-structure as a property.</p>
+  <div class="markdown level1 summary"><p>Returns a read-only reference to the spatial map. Convenient for &quot;safely&quot; exposing the
+spatial map as a property.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -292,7 +301,7 @@ structure as a property.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap</a>&lt;T&gt;</td>
-        <td><p>The current data structure, as a &quot;read-only&quot; reference.</p>
+        <td><p>The current spatial map, as a &quot;read-only&quot; reference.</p>
 </td>
       </tr>
     </tbody>
@@ -302,11 +311,11 @@ structure as a property.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.Contains(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L55">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L56">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Contains*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Contains(GoRogue.Coord,System.UInt32)">Contains(Coord, UInt32)</h4>
-  <div class="markdown level1 summary"><p>Returns whether or not there is an item in the data structure at the given position that
+  <div class="markdown level1 summary"><p>Returns whether or not there is an item in the spatial map at the given position that
 is on a layer included in the given layer mask. Defaults to searching on all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -360,7 +369,7 @@ mask, false if not.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.Contains(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L70">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L71">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Contains*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_Contains_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.Contains(System.Int32,System.Int32,System.UInt32)">Contains(Int32, Int32, UInt32)</h4>
@@ -424,7 +433,7 @@ mask, false if not.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.GetItems(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L85">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L86">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetItems*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetItems(GoRogue.Coord,System.UInt32)">GetItems(Coord, UInt32)</h4>
@@ -483,7 +492,7 @@ there are any items, or nothing if there is nothing at that position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.GetItems(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L101">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L102">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetItems*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetItems_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetItems(System.Int32,System.Int32,System.UInt32)">GetItems(Int32, Int32, UInt32)</h4>
@@ -548,11 +557,11 @@ there are any items, or nothing if there is nothing at that position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayer_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.GetLayer(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L108">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L109">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayer_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetLayer*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayer_System_Int32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetLayer(System.Int32)">GetLayer(Int32)</h4>
-  <div class="markdown level1 summary"><p>Gets a read-only spatial map representing the layer given.</p>
+  <div class="markdown level1 summary"><p>Gets a read-only spatial map representing the layer specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -598,7 +607,7 @@ there are any items, or nothing if there is nothing at that position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayers_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlyLayeredSpatialMap%601.GetLayers(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L118">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L119">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayers_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetLayers*"></a>
   <h4 id="GoRogue_IReadOnlyLayeredSpatialMap_1_GetLayers_System_UInt32_" data-uid="GoRogue.IReadOnlyLayeredSpatialMap`1.GetLayers(System.UInt32)">GetLayers(UInt32)</h4>
@@ -639,7 +648,8 @@ mask. Defaults to all layers.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap</a>&lt;T&gt;&gt;</td>
-        <td></td>
+        <td><p>Read-only spatial maps representing each layer in the given layer mask.</p>
+</td>
       </tr>
     </tbody>
   </table>

@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_IHasLayer" data-uid="GoRogue.IHasLayer" class="text-break">Interface IHasLayer
   </h1>
-  <div class="markdown level0 summary"><p>Interface to be implemented by objects that will be used in LayeredSpatialMap/Map classes.</p>
+  <div class="markdown level0 summary"><p>Interface to be implemented by objects that will be added to a <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
@@ -89,13 +89,12 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IHasLayer_Layer.md&amp;value=---%0Auid%3A%20GoRogue.IHasLayer.Layer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasLayer.cs/#L13">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IHasLayer.cs/#L16">View Source</a>
   </span>
   <a id="GoRogue_IHasLayer_Layer_" data-uid="GoRogue.IHasLayer.Layer*"></a>
   <h4 id="GoRogue_IHasLayer_Layer" data-uid="GoRogue.IHasLayer.Layer">Layer</h4>
   <div class="markdown level1 summary"><p>The layer on which the object should reside. Higher numbers indicate layers closer to the
-&quot;top&quot;. This is assumed to remain constant while the object is within a data structure
-that uses this interface, if it is modified, that data structure will become out of sync.</p>
+&quot;top&quot;.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -117,6 +116,10 @@ that uses this interface, if it is modified, that data structure will become out
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_IHasLayer_Layer_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This value is assumed to remain constant while the object is within a data structure
+that uses this interface -- if it is modified, that data structure will become out of sync.</p>
+</div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>

@@ -78,65 +78,69 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap&lt;T&gt;</a></h4>
-      <section><p>Default implementation of the ISettableMapView interface, exposing the interface using a
+      <section><p>Implementation of the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> interface that uses a
 1D array to store data.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D&lt;T&gt;</a></h4>
-      <section><p>Default implementation of the ISettableMapView interface, exposing the interface using a
+      <section><p>Implementation of the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> interface that uses a
 2D array to store data.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html">IMapViewExtensions</a></h4>
-      <section><p>Extensions for the IMapView class that effectively act as methods with default
-implementations for them.</p>
+      <section><p>Extensions for <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> implementaions that provide basic utility functions
+for them.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a></h4>
       <section><p>Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot;
-functionality via a lambda function. For a version that implements ISettableMapView as
-opposed to IMapView, see LambdaSettableMapView.</p>
+functionality via a function that is passed in at construction. For a version that
+implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> as opposed to <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, see
+<a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html">LambdaSettableMapView&lt;T&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html">LambdaSettableMapView&lt;T&gt;</a></h4>
-      <section><p>Class designed to make implementing simple ISettableMapViews more convenient, by providing
-the &quot;get&quot; and &quot;set&quot; functionality via lambda functions. For a version that implements
-IMapView as opposed to ISettableMapView, see LambdaMapView.</p>
+      <section><p>Class designed to make implementing simple ISettableMapViews more convenient, by providing the
+get/set functionality via a function that is passed in at construction. For a version that
+implements <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> as opposed to <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>, see
+<a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a></h4>
-      <section><p>A simple TranslationMap implementation that allows you to provide lambdas for the translation
-functions. For a version offering only &quot;get&quot; functionality, see LambdaTranslationMap.</p>
+      <section><p>A simple <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide
+functions/lambdas for the translation functions. For a version offering only &quot;get&quot; functionality,
+see <a class="xref" href="GoRogue.MapViews.LambdaTranslationMap-2.html">LambdaTranslationMap&lt;T1, T2&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.LambdaTranslationMap-2.html">LambdaTranslationMap&lt;T1, T2&gt;</a></h4>
-      <section><p>A simple TranslationMap implementation that allows you to provide a lambda for the
-translation function. For a version offering &quot;set&quot; functionality, see SettableLambdaTranslationMap.</p>
+      <section><p>A simple <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide a function/lambda
+at construction to use as the TranslateGet implementation. For a version offering &quot;set&quot; functionality,
+see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a></h4>
       <section><p>Settable map view class capable of taking complex data and providing a simpler view of it.
-For a version that provides only &quot;get&quot; functionality, see TranslationMap.</p>
+For a version that provides only &quot;get&quot; functionality, see <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.SettableViewport-1.html">SettableViewport&lt;T&gt;</a></h4>
-      <section><p>Similar to Viewport, but implements ISettableMapView and thus implements set functionality
-via relative coordinates.</p>
+      <section><p>Similar to <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, but implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>and thus implements
+&quot;set&quot; functionality via relative coordinates.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a></h4>
       <section><p>Map view class capable of taking complex data and providing a simpler view of it. For a
-version that provides &quot;set&quot; functionality, see SettableTranslationMap.</p>
+version that provides &quot;set&quot; functionality, see <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html">UnboundedViewport&lt;T&gt;</a></h4>
-      <section><p>Class like Viewport&lt;T&gt;, however teh view area is in no way bounded to the edges of the underlying map.
-Instead, if you access a position that cannot map to any valid position in the underlying map view, a default is returned.</p>
+      <section><p>Class like <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, however the view area is in no way bounded to the edges of the underlying map.
+Instead, if you access a position that cannot map to any valid position in the underlying map view, a (specified)
+default value is returned.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a></h4>
-      <section><p>Since some algorithms that use MapViews can be expensive to run entirely on large maps (such
-as GoalMaps), Viewport is a class that effectively creates and maintains a &quot;viewport&quot; of the
-map. Its indexers perform relative to absolute coordinate translations, and return the proper
-value of type T from the underlying map..</p>
+      <section><p>Viewport is a class that effectively creates and maintains a &quot;viewport&quot;, or subsection, of the map.
+Its indexers perform relative to absolute coordinate translations, and return the proper value of
+type T from the underlying map.</p>
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a></h4>
-      <section><p>Interface designed to act as a standardized input/output for algorithms.</p>
+      <section><p>Interface designed to act as a standardized input/output interpretation for algorithms.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a></h4>
-      <section><p>Interface designed to act as a standardized input/output for algorithms that need to make
-modifications to data.</p>
+      <section><p>Interface designed to act as a standardized input/output interpretation for algorithms that need to make
+modifications to data on a map.</p>
 </section>
 </article>
           </div>

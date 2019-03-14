@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_Pathing_GoalMapExtensions" data-uid="GoRogue.Pathing.GoalMapExtensions" class="text-break">Class GoalMapExtensions
   </h1>
-  <div class="markdown level0 summary"><p>Contains extensions for IMapView of nullable double values, that pertain generally to goal maps.</p>
+  <div class="markdown level0 summary"><p>Contains extensions for <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, that pertain generally to goal maps.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -118,7 +118,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___GoRogue_Coord_GoRogue_AdjacencyRule_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView%7BSystem.Nullable%7BSystem.Double%7D%7D%2CGoRogue.Coord%2CGoRogue.AdjacencyRule)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/GoalMapExtensions.cs/#L23">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/GoalMapExtensions.cs/#L20">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_" data-uid="GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue*"></a>
   <h4 id="GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___GoRogue_Coord_GoRogue_AdjacencyRule_" data-uid="GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView{System.Nullable{System.Double}},GoRogue.Coord,GoRogue.AdjacencyRule)">GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Coord, AdjacencyRule)</h4>
@@ -142,9 +142,7 @@
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;&gt;</td>
         <td><span class="parametername">goalMap</span></td>
-        <td><p>The IMapView of nullable double values to operate on. Never specified manually since this
-is an extension method.</p>
-</td>
+        <td></td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
@@ -171,7 +169,75 @@ is an extension method.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
-        <td><p>The direction that has the minimum value in the goal-map, or Direction.NONE if the
+        <td><p>The direction that has the minimum value in the goal-map, or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> if the
+neighbors are all obstacles.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___System_Int32_System_Int32_GoRogue_AdjacencyRule_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView%7BSystem.Nullable%7BSystem.Double%7D%7D%2CSystem.Int32%2CSystem.Int32%2CGoRogue.AdjacencyRule)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Pathing/GoalMapExtensions.cs/#L52">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_" data-uid="GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue*"></a>
+  <h4 id="GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___System_Int32_System_Int32_GoRogue_AdjacencyRule_" data-uid="GoRogue.Pathing.GoalMapExtensions.GetDirectionOfMinValue(GoRogue.MapViews.IMapView{System.Nullable{System.Double}},System.Int32,System.Int32,GoRogue.AdjacencyRule)">GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Int32, Int32, AdjacencyRule)</h4>
+  <div class="markdown level1 summary"><p>Gets the direction of the neighbor with the minimum goal-map value from the given position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Direction GetDirectionOfMinValue(this IMapView&lt;double? &gt; goalMap, int positionX, int positionY, AdjacencyRule adjacencyRule)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Nullable</span>&lt;<span class="xref">System.Double</span>&gt;&gt;</td>
+        <td><span class="parametername">goalMap</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">positionX</span></td>
+        <td><p>The x-value of the position to get the minimum value for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">positionY</span></td>
+        <td><p>The y-value of the position to get the minimum value for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></td>
+        <td><span class="parametername">adjacencyRule</span></td>
+        <td><p>The adjacency rule to use to determine neighbors.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><p>The direction that has the minimum value in the goal-map, or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> if the
 neighbors are all obstacles.</p>
 </td>
       </tr>

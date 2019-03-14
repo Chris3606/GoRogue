@@ -73,9 +73,9 @@
   
   <h1 id="GoRogue_Radius" data-uid="GoRogue.Radius" class="text-break">Class Radius
   </h1>
-  <div class="markdown level0 summary"><p>Class representing different radius types. Similar in architecture to Coord in architecture
--- it cannot be instantiated. Instead it simply has pre-allocated static variables for each
-type of radius, that should be used whenever a variable of type Radius is required.</p>
+  <div class="markdown level0 summary"><p>Class representing different shapes that define the concept of a radius on a grid. You cannot
+create instances of this class using a constructor -- instead, this class contains static instances
+representing the various radius shapes.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -111,8 +111,10 @@ type of radius, that should be used whenever a variable of type Radius is requir
     <pre><code class="lang-csharp hljs">public class Radius</code></pre>
   </div>
   <h5 id="GoRogue_Radius_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Also contains utility functions to work with radius types, and is also implicitly convertible
-to the Distance class.</p>
+  <div class="markdown level0 remarks"><p>Contains utility functions to work with radius shapes.  Instances of Radius are also implicitly
+convertible to both <a class="xref" href="GoRogue.Distance.html">Distance</a> and <a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a> (since both a method
+of determining adjacent locations and a method of calculating distance are implied by a radius
+shape).</p>
 </div>
   <h3 id="fields">Fields
   </h3>
@@ -124,8 +126,8 @@ to the Distance class.</p>
     <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L22">View Source</a>
   </span>
   <h4 id="GoRogue_Radius_CIRCLE" data-uid="GoRogue.Radius.CIRCLE">CIRCLE</h4>
-  <div class="markdown level1 summary"><p>Radius is a circle around the center point. Shape that would represent movement radius in
-an 8-way movement scheme, with all movement cost the same based upon distance from the source.</p>
+  <div class="markdown level1 summary"><p>Radius is a circle around the center point. CIRCLE would represent movement radius in
+an 8-way movement scheme with a ~1.41 cost multiplier for diagonal movement.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -185,7 +187,7 @@ an 8-way movement scheme, with all movement cost the same based upon distance fr
     <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L33">View Source</a>
   </span>
   <h4 id="GoRogue_Radius_DIAMOND" data-uid="GoRogue.Radius.DIAMOND">DIAMOND</h4>
-  <div class="markdown level1 summary"><p>Radius is a diamond around the center point. Shape that would represent movement radius
+  <div class="markdown level1 summary"><p>Radius is a diamond around the center point. DIAMOND would represent movement radius
 in a 4-way movement scheme.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -273,11 +275,12 @@ in a 4-way movement scheme.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_SQUARE.md&amp;value=---%0Auid%3A%20GoRogue.Radius.SQUARE%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L49">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L50">View Source</a>
   </span>
   <h4 id="GoRogue_Radius_SQUARE" data-uid="GoRogue.Radius.SQUARE">SQUARE</h4>
-  <div class="markdown level1 summary"><p>Radius is a square around the center point. Shape that would represent movement radius in
-an 8-way movement scheme, with no additional cost on diagonal movement.</p>
+  <div class="markdown level1 summary"><p>Radius is a square around the center point. SQUARE would represent movement radius in
+an 8-way movement scheme, where all 8 squares around an item are considered equal distance
+away.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -304,10 +307,11 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_Type.md&amp;value=---%0Auid%3A%20GoRogue.Radius.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L54">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L56">View Source</a>
   </span>
   <h4 id="GoRogue_Radius_Type" data-uid="GoRogue.Radius.Type">Type</h4>
-  <div class="markdown level1 summary"><p>Enum type corresponding to radius type being represented.</p>
+  <div class="markdown level1 summary"><p>Enum value representing the radius shape -- useful for using Radius types in switch
+statements.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -336,11 +340,11 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_ToRadius_GoRogue_Radius_Types_.md&amp;value=---%0Auid%3A%20GoRogue.Radius.ToRadius(GoRogue.Radius.Types)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L155">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L164">View Source</a>
   </span>
   <a id="GoRogue_Radius_ToRadius_" data-uid="GoRogue.Radius.ToRadius*"></a>
   <h4 id="GoRogue_Radius_ToRadius_GoRogue_Radius_Types_" data-uid="GoRogue.Radius.ToRadius(GoRogue.Radius.Types)">ToRadius(Radius.Types)</h4>
-  <div class="markdown level1 summary"><p>Gets the Radius class instance representing the distance type specified.</p>
+  <div class="markdown level1 summary"><p>Gets the Radius class instance representing the radius type specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -360,7 +364,7 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Radius.Types.html">Radius.Types</a></td>
         <td><span class="parametername">radiusType</span></td>
-        <td><p>The enum value for the distance method.</p>
+        <td><p>The enum value for the radius shape.</p>
 </td>
       </tr>
     </tbody>
@@ -376,7 +380,7 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Radius.html">Radius</a></td>
-        <td><p>The radius class representing the given distance calculation.</p>
+        <td><p>The radius class representing the given radius shape.</p>
 </td>
       </tr>
     </tbody>
@@ -386,7 +390,7 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Radius.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L186">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L195">View Source</a>
   </span>
   <a id="GoRogue_Radius_ToString_" data-uid="GoRogue.Radius.ToString*"></a>
   <h4 id="GoRogue_Radius_ToString" data-uid="GoRogue.Radius.ToString">ToString()</h4>
@@ -422,12 +426,11 @@ an 8-way movement scheme, with no additional cost on diagonal movement.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_AdjacencyRule.md&amp;value=---%0Auid%3A%20GoRogue.Radius.op_Implicit(GoRogue.Radius)~GoRogue.AdjacencyRule%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L105">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L111">View Source</a>
   </span>
   <a id="GoRogue_Radius_op_Implicit_" data-uid="GoRogue.Radius.op_Implicit*"></a>
   <h4 id="GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_AdjacencyRule" data-uid="GoRogue.Radius.op_Implicit(GoRogue.Radius)~GoRogue.AdjacencyRule">Implicit(Radius to AdjacencyRule)</h4>
-  <div class="markdown level1 summary"><p>Allows implicit casting to AdjacencyRule type. The rule corresponding to the proper
-definition of distance to create the Radius casted will be retrieved.</p>
+  <div class="markdown level1 summary"><p>Allows implicit casting to the <a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a> type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -467,17 +470,20 @@ definition of distance to create the Radius casted will be retrieved.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_AdjacencyRule_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The rule corresponding to the proper definition of distance that creates the
+radius shape casted will be returned.</p>
+</div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_Distance.md&amp;value=---%0Auid%3A%20GoRogue.Radius.op_Implicit(GoRogue.Radius)~GoRogue.Distance%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L129">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Radius.cs/#L138">View Source</a>
   </span>
   <a id="GoRogue_Radius_op_Implicit_" data-uid="GoRogue.Radius.op_Implicit*"></a>
   <h4 id="GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_Distance" data-uid="GoRogue.Radius.op_Implicit(GoRogue.Radius)~GoRogue.Distance">Implicit(Radius to Distance)</h4>
-  <div class="markdown level1 summary"><p>Allows implicit casting to Distance type. The distance corresponding to the proper
-definition of distance to create the Radius casted will be retrieved.</p>
+  <div class="markdown level1 summary"><p>Allows implicit casting to the <a class="xref" href="GoRogue.Distance.html">Distance</a> type.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -517,6 +523,10 @@ definition of distance to create the Radius casted will be retrieved.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_Distance_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The <a class="xref" href="GoRogue.Distance.html">Distance</a> instance corresponding to the proper definition of
+distance that creates the radius shape casted will be returned.</p>
+</div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>

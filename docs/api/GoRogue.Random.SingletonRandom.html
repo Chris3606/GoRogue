@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_Random_SingletonRandom" data-uid="GoRogue.Random.SingletonRandom" class="text-break">Class SingletonRandom
   </h1>
-  <div class="markdown level0 summary"><p>Static class that contains 1 variable, which is a DefaultRNG instance. Used as the default
+  <div class="markdown level0 summary"><p>Static class that contains 1 variable, which is a an RNG instance that is used as the default
 rng by other features (dice, etc) wherever needed, and can also be used if you need a random
 number generator for your own code.</p>
 </div>
@@ -123,8 +123,8 @@ number generator for your own code.</p>
     <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Random/SingletonRandom.cs/#L17">View Source</a>
   </span>
   <h4 id="GoRogue_Random_SingletonRandom_DefaultRNG" data-uid="GoRogue.Random.SingletonRandom.DefaultRNG">DefaultRNG</h4>
-  <div class="markdown level1 summary"><p>Settable field that specifies what IGenerator instance should be considered the default
-RNG. Defaults to an XorShift128Generator with a time-dependent value used as a seed.</p>
+  <div class="markdown level1 summary"><p>Settable field that specifies what <span class="xref">Troschuetz.Random.IGenerator</span> instance should be considered the default
+RNG. Defaults to an <span class="xref">Troschuetz.Random.Generators.XorShift128Generator</span> with a time-dependent value used as a seed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

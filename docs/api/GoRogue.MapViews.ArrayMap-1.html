@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_MapViews_ArrayMap_1" data-uid="GoRogue.MapViews.ArrayMap`1" class="text-break">Class ArrayMap&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Default implementation of the ISettableMapView interface, exposing the interface using a
+  <div class="markdown level0 summary"><p>Implementation of the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> interface that uses a
 1D array to store data.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -131,6 +131,12 @@
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_ArrayMap_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>An <a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap&lt;T&gt;</a> can be implicitly converted to its underlying 1D array,
+which allows exposing that array to code that works with 1D arrays.  Modifications in the array
+appear in the map view as well.</p>
+<p>If you need a 2D array instead of 1D, then you should use <a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D&lt;T&gt;</a> instead.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -138,11 +144,13 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1__ctor__0___System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.%23ctor(%600%5B%5D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L23">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L36">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1__ctor_" data-uid="GoRogue.MapViews.ArrayMap`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1__ctor__0___System_Int32_" data-uid="GoRogue.MapViews.ArrayMap`1.#ctor(`0[],System.Int32)">ArrayMap(T[], Int32)</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Constructor.  Takes an existing 1D array to use as the underlying array, and
+the width of the 2D area represented by that array.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -161,12 +169,14 @@
       <tr>
         <td>T[]</td>
         <td><span class="parametername">existingArray</span></td>
-        <td></td>
+        <td><p>Existing 1D array to use as the underlying array.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">width</span></td>
-        <td></td>
+        <td><p>The width of the 2D area represented by <code data-dev-comment-type="paramref" class="paramref">existingArray</code>.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -175,7 +185,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1__ctor_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.%23ctor(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L19">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L26">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1__ctor_" data-uid="GoRogue.MapViews.ArrayMap`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1__ctor_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap`1.#ctor(System.Int32,System.Int32)">ArrayMap(Int32, Int32)</h4>
@@ -217,7 +227,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L36">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L49">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Height_" data-uid="GoRogue.MapViews.ArrayMap`1.Height*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Height" data-uid="GoRogue.MapViews.ArrayMap`1.Height">Height</h4>
@@ -248,11 +258,11 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L67">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L84">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Item_" data-uid="GoRogue.MapViews.ArrayMap`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.ArrayMap`1.Item(GoRogue.Coord)">Item[Coord]</h4>
-  <div class="markdown level1 summary"><p>Given a Coord, returns/sets the &quot;value&quot; associated with that location.</p>
+  <div class="markdown level1 summary"><p>Given a position, returns/sets the &quot;value&quot; associated with that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -288,7 +298,7 @@
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>THe &quot;value&quot; associated with the provided location.</p>
+        <td><p>The &quot;value&quot; associated with the provided location.</p>
 </td>
       </tr>
     </tbody>
@@ -298,11 +308,12 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L44">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L61">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Item_" data-uid="GoRogue.MapViews.ArrayMap`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Item_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Returns/sets the value associated with the given index in the underlying array.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -321,7 +332,8 @@
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">index1D</span></td>
-        <td></td>
+        <td><p>1D index of location to retrieve the &quot;value&quot; for.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -336,7 +348,8 @@
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the given location.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -345,7 +358,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L56">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L73">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Item_" data-uid="GoRogue.MapViews.ArrayMap`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -401,7 +414,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L41">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L54">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Width_" data-uid="GoRogue.MapViews.ArrayMap`1.Width*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Width" data-uid="GoRogue.MapViews.ArrayMap`1.Width">Width</h4>
@@ -434,7 +447,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_Clone.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.Clone%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L77">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L94">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_Clone_" data-uid="GoRogue.MapViews.ArrayMap`1.Clone*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_Clone" data-uid="GoRogue.MapViews.ArrayMap`1.Clone">Clone()</h4>
@@ -466,7 +479,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_SetToDefault.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.SetToDefault%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L94">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L115">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_SetToDefault_" data-uid="GoRogue.MapViews.ArrayMap`1.SetToDefault*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_SetToDefault" data-uid="GoRogue.MapViews.ArrayMap`1.SetToDefault">SetToDefault()</h4>
@@ -482,7 +495,7 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L100">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L121">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_ToString" data-uid="GoRogue.MapViews.ArrayMap`1.ToString">ToString()</h4>
@@ -516,12 +529,12 @@
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L114">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L135">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.MapViews.ArrayMap`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the map data, using the elementStringifier function
-given to determine what string represents which value.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map data, using <code data-dev-comment-type="paramref" class="paramref">elementStringifier</code>
+to determine what string represents which value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -571,15 +584,12 @@ false values, and '.' for true values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_ToString_System_Int32_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.ToString(System.Int32%2CSystem.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L129">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L155">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_ToString_System_Int32_System_Func__0_System_String__" data-uid="GoRogue.MapViews.ArrayMap`1.ToString(System.Int32,System.Func{`0,System.String})">ToString(Int32, Func&lt;T, String&gt;)</h4>
   <div class="markdown level1 summary"><p>Prints the values in the ArrayMap, using the function specified to turn elements into
-strings, and using the &quot;field length&quot; specified. Each element of type T will have spaces
-added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-than the length of the element's string represention. A positive-number right-aligns the
-text within the field, while a negative number left-aligns the text.</p>
+strings, and using the &quot;field length&quot; specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -599,13 +609,14 @@ text within the field, while a negative number left-aligns the text.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">fieldSize</span></td>
-        <td><p>The size of the field to give each value.</p>
+        <td><p>The size of the field to give each value.  A positive-number
+right-aligns the text within the field, while a negative number left-aligns the text.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to convert each element to a string. Null defaults to the ToString
+        <td><p>Function to use to convert each element to a string. null defaults to the ToString
 function of type T.</p>
 </td>
       </tr>
@@ -627,6 +638,11 @@ function of type T.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_ArrayMap_1_ToString_System_Int32_System_Func__0_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of type T will have spaces added to cause it to take up exactly
+<code data-dev-comment-type="paramref" class="paramref">fieldSize</code> characters, provided <code data-dev-comment-type="paramref" class="paramref">fieldSize</code>
+is less than the length of the element's string represention.</p>
+</div>
   <h3 id="operators">Operators
   </h3>
   <span class="small pull-right mobile-hide">
@@ -634,11 +650,12 @@ function of type T.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1_op_Implicit_GoRogue_MapViews_ArrayMap__0____0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601.op_Implicit(GoRogue.MapViews.ArrayMap%7B%600%7D)~%600%5B%5D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L88">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L109">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap_1_op_Implicit_" data-uid="GoRogue.MapViews.ArrayMap`1.op_Implicit*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap_1_op_Implicit_GoRogue_MapViews_ArrayMap__0____0__" data-uid="GoRogue.MapViews.ArrayMap`1.op_Implicit(GoRogue.MapViews.ArrayMap{`0})~`0[]">Implicit(ArrayMap&lt;T&gt; to T[])</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Allows implicit conversion to 1D array.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -657,7 +674,8 @@ function of type T.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap</a>&lt;T&gt;</td>
         <td><span class="parametername">arrayMap</span></td>
-        <td></td>
+        <td><p>ArrayMap to convert.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -746,7 +764,7 @@ function of type T.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L10" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap.cs/#L17" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

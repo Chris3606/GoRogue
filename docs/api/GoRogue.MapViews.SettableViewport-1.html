@@ -73,8 +73,8 @@
   
   <h1 id="GoRogue_MapViews_SettableViewport_1" data-uid="GoRogue.MapViews.SettableViewport`1" class="text-break">Class SettableViewport&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Similar to Viewport, but implements ISettableMapView and thus implements set functionality
-via relative coordinates.</p>
+  <div class="markdown level0 summary"><p>Similar to <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, but implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>and thus implements
+&quot;set&quot; functionality via relative coordinates.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -144,7 +144,7 @@ via relative coordinates.</p>
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>Type being exposed by MapView.</p>
+        <td><p>Type being exposed by map view.</p>
 </td>
       </tr>
     </tbody>
@@ -160,7 +160,7 @@ via relative coordinates.</p>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1__ctor_" data-uid="GoRogue.MapViews.SettableViewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1__ctor_GoRogue_MapViews_ISettableMapView__0__" data-uid="GoRogue.MapViews.SettableViewport`1.#ctor(GoRogue.MapViews.ISettableMapView{`0})">SettableViewport(ISettableMapView&lt;T&gt;)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent. Initial ViewArea will be the entire MapView.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the map view to represent. The viewport will represent the entire given map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -180,7 +180,7 @@ via relative coordinates.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView</a>&lt;T&gt;</td>
         <td><span class="parametername">mapView</span></td>
-        <td><p>The MapView to represent.</p>
+        <td><p>The map view to represent.</p>
 </td>
       </tr>
     </tbody>
@@ -194,7 +194,7 @@ via relative coordinates.</p>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1__ctor_" data-uid="GoRogue.MapViews.SettableViewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1__ctor_GoRogue_MapViews_ISettableMapView__0__GoRogue_Rectangle_" data-uid="GoRogue.MapViews.SettableViewport`1.#ctor(GoRogue.MapViews.ISettableMapView{`0},GoRogue.Rectangle)">SettableViewport(ISettableMapView&lt;T&gt;, Rectangle)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent, and the initial ViewArea for that map.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the parent map view, and the initial subsection of that map view to represent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -220,7 +220,7 @@ via relative coordinates.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
         <td><span class="parametername">viewArea</span></td>
-        <td><p>The initial ViewArea for that map.</p>
+        <td><p>The initial subsection of that map to represent.</p>
 </td>
       </tr>
     </tbody>
@@ -232,7 +232,7 @@ via relative coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableViewport_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableViewport%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L48">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L58">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1_Item_" data-uid="GoRogue.MapViews.SettableViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.SettableViewport`1.Item(GoRogue.Coord)">Item[Coord]</h4>
@@ -273,7 +273,7 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -283,11 +283,13 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableViewport_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableViewport%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L32">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L42">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1_Item_" data-uid="GoRogue.MapViews.SettableViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1_Item_System_Int32_" data-uid="GoRogue.MapViews.SettableViewport`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given a position in relative 1d-array-index style, returns/sets the &quot;value&quot; associated with that
+location in absolute coordinates.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -306,7 +308,8 @@ location in absolute coordinates.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">relativeIndex1D</span></td>
-        <td></td>
+        <td><p>Viewport-relative position of the location to retrieve/set the value for, as a 1D array index.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -321,7 +324,8 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -330,7 +334,7 @@ location in absolute coordinates.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_SettableViewport_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.SettableViewport%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L64">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/SettableViewport.cs/#L74">View Source</a>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1_Item_" data-uid="GoRogue.MapViews.SettableViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.SettableViewport`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -377,7 +381,7 @@ that location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -391,7 +395,7 @@ that location in absolute coordinates.</p>
   </span>
   <a id="GoRogue_MapViews_SettableViewport_1_MapView_" data-uid="GoRogue.MapViews.SettableViewport`1.MapView*"></a>
   <h4 id="GoRogue_MapViews_SettableViewport_1_MapView" data-uid="GoRogue.MapViews.SettableViewport`1.MapView">MapView</h4>
-  <div class="markdown level1 summary"><p>The MapView that this Viewport is exposing values from.</p>
+  <div class="markdown level1 summary"><p>The map view that this viewport is exposing values from.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

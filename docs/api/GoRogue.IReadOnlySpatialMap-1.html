@@ -73,12 +73,7 @@
   
   <h1 id="GoRogue_IReadOnlySpatialMap_1" data-uid="GoRogue.IReadOnlySpatialMap`1" class="text-break">Interface IReadOnlySpatialMap&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>See ISpatialMap documentation. Similar in principle to the C# standard
-IReadOnlyList/IReadOnlyCollection interface. Simply exposes only those functions of the
-ISpatialMap interface that do not allow direct modification of the data (eg.
-adding/moving/removing items). This can allow for direct exposure of an ISpatialMap as a
-property of type IReadOnlySpatialMap, without allowing such an exposure to break data
-encapsulation principles of something like a game map.</p>
+  <div class="markdown level0 summary"><p>Implements the read-only interface of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritedMembers">
@@ -108,6 +103,12 @@ encapsulation principles of something like a game map.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_IReadOnlySpatialMap_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Simply exposes only those functions of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> that do not allow direct modification
+of the data (eg. adding/moving/removing items). This can allow for direct exposure of an ISpatialMap as a
+property of type IReadOnlySpatialMap, without allowing such an exposure to break data
+encapsulation principles of something like a game map.</p>
+</div>
   <h3 id="properties">Properties
   </h3>
   <span class="small pull-right mobile-hide">
@@ -115,11 +116,11 @@ encapsulation principles of something like a game map.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Count.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L19">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L35">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Count_" data-uid="GoRogue.IReadOnlySpatialMap`1.Count*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Count" data-uid="GoRogue.IReadOnlySpatialMap`1.Count">Count</h4>
-  <div class="markdown level1 summary"><p>The number of items in the data structure.</p>
+  <div class="markdown level1 summary"><p>The number of items in the spatial map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -146,15 +147,11 @@ encapsulation principles of something like a game map.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Items.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Items%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L30">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L40">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Items_" data-uid="GoRogue.IReadOnlySpatialMap`1.Items*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Items" data-uid="GoRogue.IReadOnlySpatialMap`1.Items">Items</h4>
-  <div class="markdown level1 summary"><p>Enumerable of the items stored in the data structure: for use to iterate over all items,
-eg: <example><p>
-<pre><code>foreach (var item in mySpatialMap.Items)
-// Do stuff</code></pre>
-</example>
+  <div class="markdown level1 summary"><p>Enumerable of the items stored in the spatial map: for use to iterate over all items with a foreach loop.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -181,14 +178,11 @@ eg: <example><p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Positions.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Positions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L38">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L45">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Positions_" data-uid="GoRogue.IReadOnlySpatialMap`1.Positions*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Positions" data-uid="GoRogue.IReadOnlySpatialMap`1.Positions">Positions</h4>
-  <div class="markdown level1 summary"><p>Enumerable of all positions that contain items. Likely this won't be used as much, since
-most objects that are contained in a spatial map implementation will record their
-position as a member, however in case that is not the case for a particular use, or just
-as a convenience if you only care about the coordinates, this is provided.</p>
+  <div class="markdown level1 summary"><p>Enumerable of all positions that contain items.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -217,12 +211,12 @@ as a convenience if you only care about the coordinates, this is provided.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L45">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L52">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_AsReadOnly_" data-uid="GoRogue.IReadOnlySpatialMap`1.AsReadOnly*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_AsReadOnly" data-uid="GoRogue.IReadOnlySpatialMap`1.AsReadOnly">AsReadOnly()</h4>
-  <div class="markdown level1 summary"><p>Returns a read-only reference to the data structure. Convenient for &quot;safely&quot; exposing the
-structure as a property.</p>
+  <div class="markdown level1 summary"><p>Returns a read-only reference to the spatial map. Convenient for &quot;safely&quot; exposing the
+spatial as a property, without allowing direct modification.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -240,7 +234,7 @@ structure as a property.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap</a>&lt;T&gt;</td>
-        <td><p>The current data structure, as a &quot;read-only&quot; reference.</p>
+        <td><p>The current spatial map, as a &quot;read-only&quot; reference.</p>
 </td>
       </tr>
     </tbody>
@@ -250,11 +244,11 @@ structure as a property.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Contains__0_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Contains(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L52">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L59">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Contains_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Contains__0_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains(`0)">Contains(T)</h4>
-  <div class="markdown level1 summary"><p>Returns whether or not the data structure contains the given item.</p>
+  <div class="markdown level1 summary"><p>Returns whether or not the spatial map contains the given item.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -290,7 +284,7 @@ structure as a property.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td><p>True if the given item is in the data structure, false if not.</p>
+        <td><p>True if the given item is contained in the spatial map, false if not.</p>
 </td>
       </tr>
     </tbody>
@@ -300,11 +294,11 @@ structure as a property.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Contains_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Contains(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L59">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L66">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Contains_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Contains_GoRogue_Coord_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains(GoRogue.Coord)">Contains(Coord)</h4>
-  <div class="markdown level1 summary"><p>Returns if there is an item in the data structure at the given position or not.</p>
+  <div class="markdown level1 summary"><p>Returns if there is an item in the spatial map at the given position or not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -350,11 +344,11 @@ structure as a property.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_Contains_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.Contains(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L67">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L74">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_Contains_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_Contains_System_Int32_System_Int32_" data-uid="GoRogue.IReadOnlySpatialMap`1.Contains(System.Int32,System.Int32)">Contains(Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Returns if there is an item in the data structure at the given position or not.</p>
+  <div class="markdown level1 summary"><p>Returns if there is an item in the spatial map at the given position or not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -406,11 +400,11 @@ structure as a property.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_GetItems_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.GetItems(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L78">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L85">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_GetItems_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetItems*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_GetItems_GoRogue_Coord_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetItems(GoRogue.Coord)">GetItems(Coord)</h4>
-  <div class="markdown level1 summary"><p>Gets the item(s) associated with the given position if there are any items, or returns
+  <div class="markdown level1 summary"><p>Gets the item(s) at the given position if there are any items, or returns
 nothing if there is nothing at that position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -458,11 +452,11 @@ at that position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_GetItems_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.GetItems(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L90">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L97">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_GetItems_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetItems*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_GetItems_System_Int32_System_Int32_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetItems(System.Int32,System.Int32)">GetItems(Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Gets the item(s) associated with the given position if there are any items, or returns
+  <div class="markdown level1 summary"><p>Gets the item(s) at the given position if there are any items, or returns
 nothing if there is nothing at that position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -516,11 +510,11 @@ at that position.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_GetPosition__0_.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.GetPosition(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L101">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L108">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_GetPosition_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetPosition*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_GetPosition__0_" data-uid="GoRogue.IReadOnlySpatialMap`1.GetPosition(`0)">GetPosition(T)</h4>
-  <div class="markdown level1 summary"><p>Gets the position associated with the item in the data structure, or null if that item is
+  <div class="markdown level1 summary"><p>Gets the position associated with the given item in the spatial map, or null if that item is
 not found.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -557,7 +551,7 @@ not found.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
-        <td><p>The position associated with the given item, if it exists in the data structure, or null
+        <td><p>The position associated with the given item, if it exists in the spatial map, or <a class="xref" href="GoRogue.Coord.html#GoRogue_Coord_NONE">NONE</a>
 if the item does not exist.</p>
 </td>
       </tr>
@@ -568,11 +562,11 @@ if the item does not exist.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L109">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L116">View Source</a>
   </span>
   <a id="GoRogue_IReadOnlySpatialMap_1_ToString_" data-uid="GoRogue.IReadOnlySpatialMap`1.ToString*"></a>
   <h4 id="GoRogue_IReadOnlySpatialMap_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.IReadOnlySpatialMap`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the IReadOnlySpatialMap, allowing display of the SpatialMap's
+  <div class="markdown level1 summary"><p>Returns a string representation of the IReadOnlySpatialMap, allowing display of the spatial map's
 items in a specified way.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -609,8 +603,100 @@ items in a specified way.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the SpatialMap.</p>
+        <td><p>A string representation of the spatial map.</p>
 </td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_ItemAdded.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.ItemAdded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L20">View Source</a>
+  </span>
+  <h4 id="GoRogue_IReadOnlySpatialMap_1_ItemAdded" data-uid="GoRogue.IReadOnlySpatialMap`1.ItemAdded">ItemAdded</h4>
+  <div class="markdown level1 summary"><p>Event that is fired directly after an item has been added to the spatial map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemAdded</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_ItemMoved.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.ItemMoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L25">View Source</a>
+  </span>
+  <h4 id="GoRogue_IReadOnlySpatialMap_1_ItemMoved" data-uid="GoRogue.IReadOnlySpatialMap`1.ItemMoved">ItemMoved</h4>
+  <div class="markdown level1 summary"><p>Event that is fired directly after an item in the sptial map has been moved.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemMovedEventArgs&lt;T&gt;&gt; ItemMoved</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1_ItemRemoved.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601.ItemRemoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L30">View Source</a>
+  </span>
+  <h4 id="GoRogue_IReadOnlySpatialMap_1_ItemRemoved" data-uid="GoRogue.IReadOnlySpatialMap`1.ItemRemoved">ItemRemoved</h4>
+  <div class="markdown level1 summary"><p>Event that is fired directly after an item has been removed from the spatial map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemRemoved</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
       </tr>
     </tbody>
   </table>
@@ -632,7 +718,7 @@ items in a specified way.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IReadOnlySpatialMap_1.md&amp;value=---%0Auid%3A%20GoRogue.IReadOnlySpatialMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L14" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlySpatialMap.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

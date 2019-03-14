@@ -73,11 +73,23 @@
   
   <h1 id="GoRogue_ISpatialMap_1" data-uid="GoRogue.ISpatialMap`1" class="text-break">Interface ISpatialMap&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>General interface for a data structure that records objects on a map.</p>
+  <div class="markdown level0 summary"><p>Interface common to spatial map implementations provided with GoRogue, which are designed
+to be a convenient way to store items that reside on a map.  TLDR; If you're about
+to use a List to store all the objects on a map, consider using a (GoRogue-provided) ISpatialMap
+implementation instead.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemAdded">IReadOnlySpatialMap&lt;T&gt;.ItemAdded</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemMoved">IReadOnlySpatialMap&lt;T&gt;.ItemMoved</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemRemoved">IReadOnlySpatialMap&lt;T&gt;.ItemRemoved</a>
+    </div>
     <div>
       <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Count">IReadOnlySpatialMap&lt;T&gt;.Count</a>
     </div>
@@ -132,16 +144,37 @@
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td><p>The type of object that will be contained by the data structure.</p>
+        <td><p>The type of object that will be contained by the spatial map.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_ISpatialMap_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Different implementations of this interface are provided by to the library, each providing
-somewhat different implementations and constraints, however generally they provide more
-efficient implementations of many of these operations than the standard &quot;list of monsters&quot;
-that is often used in roguelike map design.</p>
+  <div class="markdown level0 remarks"><p>Typical roguelikes will use a 2D array (or 1D array accessed as a 2D array), for terrain, and
+lists of objects for things like entities, items, etc. This is simple but ultimately not
+efficient; for example, in that implementation, determining if there is an object at a
+location takes an amount of time proportional to the number of objects in this list. However,
+the other simple option is to use an array with size equal to the size of the map (as many do
+for terrain) for all object lists. This is even less ideal, as in that case, the time to
+iterate over all objects becomes proportional to the size of the map (since one has to do
+that for rendering, that's bad!), which is typically much larger than the number of objects in a
+list. This is the problem spatial map implementions are designed to solve. They provide fast,
+near-constant-time operations for getting the item(s) at a location, adding items, and removing
+items.  As well, they allow you to iterate through all objects in the spatial map in time
+proportional to the number of objects in it (the best possible). Effectively, it is a more efficient
+list for objects that have a position associated with them.  Spatial maps also provide events for when
+things are added, removed, etc., to allow you to conveniently respond to those types of actions.</p>
+<p>Spatial maps have to keep track of the position of each item in them in order to provide
+their fast-lookup functionality.  Spatial maps can be used as the primary authority for what an item's
+position is in some cases -- however, in many cases, this may be undesireable, particularly when interfacing
+with more traditional infrastructures from other libraries, which likely record each item's position as a field
+or property of the item itself.  In these cases, where the item itself records its position, you will need to
+call the <a class="xref" href="GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_Move__0_GoRogue_Coord_">Move(T, Coord)</a> function (or a similar overload) whenever an object moves, to keep the
+spatial map's position for that item in sync with its actual position.</p>
+<p>It is also worthy of note, that some implementations of ISpatialMap (such as <a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a>) have implemented
+<a class="xref" href="GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_Move__0_GoRogue_Coord_">Move(T, Coord)</a> in such a way that it could fail in some cases.  Move will return false in cases where it
+fails, so if you are using an implementation where that may happen, you may need to check this to avoid desync issues.
+The Move function documentation for each implementation clearly states in what cases a call to Move can fail.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
@@ -150,7 +183,7 @@ that is often used in roguelike map design.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Add__0_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Add(%600%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L40">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L51">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Add_" data-uid="GoRogue.ISpatialMap`1.Add*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Add__0_GoRogue_Coord_" data-uid="GoRogue.ISpatialMap`1.Add(`0,GoRogue.Coord)">Add(T, Coord)</h4>
@@ -207,7 +240,7 @@ added. If the item could not be added, returns false.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Add__0_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Add(%600%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L50">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L61">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Add_" data-uid="GoRogue.ISpatialMap`1.Add*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Add__0_System_Int32_System_Int32_" data-uid="GoRogue.ISpatialMap`1.Add(`0,System.Int32,System.Int32)">Add(T, Int32, Int32)</h4>
@@ -270,11 +303,11 @@ added. If the item could not be added, returns false.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Clear.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L55">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L66">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Clear_" data-uid="GoRogue.ISpatialMap`1.Clear*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Clear" data-uid="GoRogue.ISpatialMap`1.Clear">Clear()</h4>
-  <div class="markdown level1 summary"><p>Clears all items out of the data structure.</p>
+  <div class="markdown level1 summary"><p>Clears all items out of the spatial map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -286,7 +319,7 @@ added. If the item could not be added, returns false.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Move__0_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Move(%600%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L64">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L75">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Move_" data-uid="GoRogue.ISpatialMap`1.Move*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Move__0_GoRogue_Coord_" data-uid="GoRogue.ISpatialMap`1.Move(`0,GoRogue.Coord)">Move(T, Coord)</h4>
@@ -311,7 +344,7 @@ item was successfully moved, false otherwise.</p>
       <tr>
         <td><span class="xref">T</span></td>
         <td><span class="parametername">item</span></td>
-        <td><p>Item to move</p>
+        <td><p>Item to move.</p>
 </td>
       </tr>
       <tr>
@@ -343,7 +376,7 @@ item was successfully moved, false otherwise.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Move__0_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Move(%600%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L74">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L85">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Move_" data-uid="GoRogue.ISpatialMap`1.Move*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Move__0_System_Int32_System_Int32_" data-uid="GoRogue.ISpatialMap`1.Move(`0,System.Int32,System.Int32)">Move(T, Int32, Int32)</h4>
@@ -406,7 +439,7 @@ item was successfully moved, false otherwise.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Move_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Move(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L82">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L93">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Move_" data-uid="GoRogue.ISpatialMap`1.Move*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Move_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.ISpatialMap`1.Move(GoRogue.Coord,GoRogue.Coord)">Move(Coord, Coord)</h4>
@@ -452,7 +485,7 @@ item was successfully moved, false otherwise.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
-        <td><p>Any items that were moved, nothing if no items were moved.</p>
+        <td><p>Any items that were moved, or nothing if no items were moved.</p>
 </td>
       </tr>
     </tbody>
@@ -462,7 +495,7 @@ item was successfully moved, false otherwise.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Move_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Move(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L92">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L103">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Move_" data-uid="GoRogue.ISpatialMap`1.Move*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Move_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.ISpatialMap`1.Move(System.Int32,System.Int32,System.Int32,System.Int32)">Move(Int32, Int32, Int32, Int32)</h4>
@@ -520,7 +553,7 @@ item was successfully moved, false otherwise.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
-        <td><p>Any items that were moved, nothing if no items were moved.</p>
+        <td><p>Any items that were moved, or nothing if no items were moved.</p>
 </td>
       </tr>
     </tbody>
@@ -530,12 +563,12 @@ item was successfully moved, false otherwise.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Remove__0_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Remove(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L100">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L111">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Remove_" data-uid="GoRogue.ISpatialMap`1.Remove*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Remove__0_" data-uid="GoRogue.ISpatialMap`1.Remove(`0)">Remove(T)</h4>
-  <div class="markdown level1 summary"><p>Removes the given item from the data structure, returning true if the item was removed or
-false otherwise.</p>
+  <div class="markdown level1 summary"><p>Removes the given item from the spatial map, returning true if the item was removed, false
+otherwise.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -581,11 +614,11 @@ false otherwise.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Remove_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Remove(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L108">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L119">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Remove_" data-uid="GoRogue.ISpatialMap`1.Remove*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Remove_GoRogue_Coord_" data-uid="GoRogue.ISpatialMap`1.Remove(GoRogue.Coord)">Remove(Coord)</h4>
-  <div class="markdown level1 summary"><p>Removes any items at the specified location from the data structure. Returns any items
+  <div class="markdown level1 summary"><p>Removes any items at the specified location from the spatial map. Returns any items
 that were removed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -632,11 +665,11 @@ that were removed.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_Remove_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.Remove(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L117">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L128">View Source</a>
   </span>
   <a id="GoRogue_ISpatialMap_1_Remove_" data-uid="GoRogue.ISpatialMap`1.Remove*"></a>
   <h4 id="GoRogue_ISpatialMap_1_Remove_System_Int32_System_Int32_" data-uid="GoRogue.ISpatialMap`1.Remove(System.Int32,System.Int32)">Remove(Int32, Int32)</h4>
-  <div class="markdown level1 summary"><p>Removes any items at the specified location from the data structure. Returns any items
+  <div class="markdown level1 summary"><p>Removes any items at the specified location from the spatial map. Returns any items
 that were removed.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -684,98 +717,6 @@ that were removed.</p>
       </tr>
     </tbody>
   </table>
-  <h3 id="events">Events
-  </h3>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_ItemAdded.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.ItemAdded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L21">View Source</a>
-  </span>
-  <h4 id="GoRogue_ISpatialMap_1_ItemAdded" data-uid="GoRogue.ISpatialMap`1.ItemAdded">ItemAdded</h4>
-  <div class="markdown level1 summary"><p>Fired directly after an item has been added to the data structure.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemAdded</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_ItemMoved.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.ItemMoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L26">View Source</a>
-  </span>
-  <h4 id="GoRogue_ISpatialMap_1_ItemMoved" data-uid="GoRogue.ISpatialMap`1.ItemMoved">ItemMoved</h4>
-  <div class="markdown level1 summary"><p>Fired directly after an item in the data structure has been moved.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemMovedEventArgs&lt;T&gt;&gt; ItemMoved</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;T&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1_ItemRemoved.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601.ItemRemoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L31">View Source</a>
-  </span>
-  <h4 id="GoRogue_ISpatialMap_1_ItemRemoved" data-uid="GoRogue.ISpatialMap`1.ItemRemoved">ItemRemoved</h4>
-  <div class="markdown level1 summary"><p>Fired directly after an item has been removed from the data structure.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemRemoved</code></pre>
-  </div>
-  <h5 class="eventType">Event Type</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
       <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String_">Utility.ExtendToString&lt;T&gt;(IEnumerable&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</a>
@@ -794,7 +735,7 @@ that were removed.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_ISpatialMap_1.md&amp;value=---%0Auid%3A%20GoRogue.ISpatialMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L16" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/ISpatialMap.cs/#L42" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

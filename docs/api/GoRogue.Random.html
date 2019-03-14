@@ -79,8 +79,8 @@
   </h3>
       <h4><a class="xref" href="GoRogue.Random.DiscreteConverter-1.html">DiscreteConverter&lt;T&gt;</a></h4>
       <section><p>Wraps a continuous distribution and allows it to be used as discrete, by rounding double
-values produced by NextDouble to nearest int. Its minimum, maximum, mean, median, variance,
-and mode(s) are exactly the same as its underlying IContinuousDistribution.</p>
+values produced by <a class="xref" href="GoRogue.Random.DiscreteConverter-1.html#GoRogue_Random_DiscreteConverter_1_NextDouble">NextDouble()</a> to the nearest int. Its minimum, maximum, mean, median, variance,
+and mode(s) are exactly the same as its underlying <span class="xref">Troschuetz.Random.IContinuousDistribution</span>.</p>
 </section>
       <h4><a class="xref" href="GoRogue.Random.DistributionHelpers.html">DistributionHelpers</a></h4>
       <section><p>Defines functions that assist in dealing with RNG distributions.</p>
@@ -92,15 +92,15 @@ sequentially when RNG functions are called.</p>
       <h4><a class="xref" href="GoRogue.Random.MaxRandom.html">MaxRandom</a></h4>
       <section><p>A &quot;random&quot; number generator that always returns the maxValue parameter given. Again this may
 be useful in testing, testing the upper range or repeatedly returning a value. Also used in
-DiceExpressions for certain max roll functions.</p>
+<a class="xref" href="GoRogue.DiceNotation.DiceExpression.html">DiceExpression</a> instances for certain max roll functions.</p>
 </section>
       <h4><a class="xref" href="GoRogue.Random.MinRandom.html">MinRandom</a></h4>
       <section><p>A &quot;random&quot; number generator that always returns the minValue parameter given, or 0 on the
 Next overload that only takes maxValue. Again, may be useful for testing. Also used in
-DiceExpression for certain minimum roll functions.</p>
+<a class="xref" href="GoRogue.DiceNotation.DiceExpression.html">DiceExpression</a> for certain minimum roll functions.</p>
 </section>
       <h4><a class="xref" href="GoRogue.Random.SingletonRandom.html">SingletonRandom</a></h4>
-      <section><p>Static class that contains 1 variable, which is a DefaultRNG instance. Used as the default
+      <section><p>Static class that contains 1 variable, which is a an RNG instance that is used as the default
 rng by other features (dice, etc) wherever needed, and can also be used if you need a random
 number generator for your own code.</p>
 </section>

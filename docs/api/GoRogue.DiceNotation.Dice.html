@@ -73,8 +73,8 @@
   
   <h1 id="GoRogue_DiceNotation_Dice" data-uid="GoRogue.DiceNotation.Dice" class="text-break">Class Dice
   </h1>
-  <div class="markdown level0 summary"><p>The most important DiceNotation class -- contains functions to roll dice, and to retrieve an
-IDiceExpression instance representing a given expression.</p>
+  <div class="markdown level0 summary"><p>The most important <a class="xref" href="GoRogue.DiceNotation.html">GoRogue.DiceNotation</a> class -- contains functions to roll dice, and to retrieve an
+<a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a> instance representing a given expression.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -122,8 +122,8 @@ IDiceExpression instance representing a given expression.</p>
     <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DiceNotation/Dice.cs/#L16">View Source</a>
   </span>
   <h4 id="GoRogue_DiceNotation_Dice_DiceParser" data-uid="GoRogue.DiceNotation.Dice.DiceParser">DiceParser</h4>
-  <div class="markdown level1 summary"><p>The parser that will be used to parse dice expressions given to the Parse and Roll functions.
-If you want to use a custom parser, you can assign an instance to this field.</p>
+  <div class="markdown level1 summary"><p>The parser that will be used to parse dice expressions given to the <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_Parse_System_String_">Parse(String)</a> and <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_Roll_System_String_Troschuetz_Random_IGenerator_">Roll(String, IGenerator)</a>
+functions. If you want to use a custom parser, you can assign an instance to this field.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -152,11 +152,11 @@ If you want to use a custom parser, you can assign an instance to this field.</p
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DiceNotation_Dice_Parse_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.DiceNotation.Dice.Parse(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DiceNotation/Dice.cs/#L30">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DiceNotation/Dice.cs/#L31">View Source</a>
   </span>
   <a id="GoRogue_DiceNotation_Dice_Parse_" data-uid="GoRogue.DiceNotation.Dice.Parse*"></a>
   <h4 id="GoRogue_DiceNotation_Dice_Parse_System_String_" data-uid="GoRogue.DiceNotation.Dice.Parse(System.String)">Parse(String)</h4>
-  <div class="markdown level1 summary"><p>Uses the IParser specified in the DiceParser variable to produce a IDiceExpression
+  <div class="markdown level1 summary"><p>Uses the <a class="xref" href="GoRogue.DiceNotation.IParser.html">IParser</a> specified in the <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_DiceParser">DiceParser</a> variable to produce an <a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a>
 instance representing the given dice expression.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -193,27 +193,28 @@ instance representing the given dice expression.</p>
     <tbody>
       <tr>
         <td><a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a></td>
-        <td><p>An IDiceExpression instance representing the parsed string.</p>
+        <td><p>An <a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a> instance representing the parsed string.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_DiceNotation_Dice_Parse_System_String__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Generally speaking, dice-parsing via the standard Roll method is extremely fast.  However, if
-you are repeating a dice roll many times, in a case where maximum performance
-is absolutely necessary, there is some benefit to retrieving an IDiceExpression instance instead
-of using the Roll function, and calling that expressions's Roll() method whenever a result is required.</p>
+  <div class="markdown level1 remarks"><p>Generally speaking, dice-parsing via the standard <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_Roll_System_String_Troschuetz_Random_IGenerator_">Roll(String, IGenerator)</a> method is extremely fast.  However, if
+you are repeating a dice roll many times, in a case where maximum performance is absolutely necessary, there is some benefit to
+retrieving an <a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a> instance instead
+of using the Roll function, and calling that expressions's <a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html#GoRogue_DiceNotation_IDiceExpression_Roll_Troschuetz_Random_IGenerator_">Roll(IGenerator)</a> method whenever a result
+is required.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_DiceNotation_Dice_Roll_System_String_Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.DiceNotation.Dice.Roll(System.String%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DiceNotation/Dice.cs/#L48">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/DiceNotation/Dice.cs/#L49">View Source</a>
   </span>
   <a id="GoRogue_DiceNotation_Dice_Roll_" data-uid="GoRogue.DiceNotation.Dice.Roll*"></a>
   <h4 id="GoRogue_DiceNotation_Dice_Roll_System_String_Troschuetz_Random_IGenerator_" data-uid="GoRogue.DiceNotation.Dice.Roll(System.String,Troschuetz.Random.IGenerator)">Roll(String, IGenerator)</h4>
-  <div class="markdown level1 summary"><p>Uses the IParser specified in the DiceParser variable to parse the given dice expression,
+  <div class="markdown level1 summary"><p>Uses the <a class="xref" href="GoRogue.DiceNotation.IParser.html">IParser</a> specified in the <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_DiceParser">DiceParser</a> variable to parse the given dice expression,
 roll it, and return the result.  This is the standard method for rolling dice.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -264,8 +265,8 @@ roll it, and return the result.  This is the standard method for rolling dice.</
   <h5 id="GoRogue_DiceNotation_Dice_Roll_System_String_Troschuetz_Random_IGenerator__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This method is convenient and typically very fast, however technically, parsing is computationally
 more expensive than evaluation. If a dice expression will be rolled many times in a situation where
-maximum performance is required, it is more efficient to use the Parse method
-once, and use the resulting IDiceExpression instance to roll the expression each time it
+maximum performance is required, it is more efficient to use the <a class="xref" href="GoRogue.DiceNotation.Dice.html#GoRogue_DiceNotation_Dice_Parse_System_String_">Parse(String)</a> method
+once, and use the resulting <a class="xref" href="GoRogue.DiceNotation.IDiceExpression.html">IDiceExpression</a> instance to roll the expression each time it
 is needed.</p>
 </div>
 </article>

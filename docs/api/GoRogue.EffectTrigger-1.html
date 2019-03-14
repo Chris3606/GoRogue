@@ -73,9 +73,9 @@
   
   <h1 id="GoRogue_EffectTrigger_1" data-uid="GoRogue.EffectTrigger`1" class="text-break">Class EffectTrigger&lt;TriggerArgs&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Represents an &quot;event&quot; that can trigger one or more Effects of the appropriate type. Typically
-instnaces of this class can simply be created, however a subclass may be required for custom
-add/remove actions and ordering.</p>
+  <div class="markdown level0 summary"><p>Represents an &quot;event&quot; that can automatically trigger and manage one or more
+<a class="xref" href="GoRogue.Effect-1.html">Effect&lt;TriggerArgs&gt;</a> instances, and acts as part of the implementation of
+duration in Effect.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -122,33 +122,35 @@ add/remove actions and ordering.</p>
     <tbody>
       <tr>
         <td><span class="parametername">TriggerArgs</span></td>
-        <td><p>The type of argument that must be accepted by the Trigger function of any Effect added to
-this EffectTrigger.</p>
+        <td><p>The type of argument that must be accepted by the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function of any Effect added to this EffectTrigger.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_EffectTrigger_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>EffectTrigger's primary purpose is to represent an event that can trigger one or more effects
-automatically, and manage the automatic removal of those effects when their duration reaches
-0. /// Each EffectTrigger instance can have one or more non-instantaneous effects added to
-it. All Effects must take the same type of argument to their Trigger function, as specified
-by this class's TriggerArgs type parameter. /// Each time the EffectTrigger's TriggerEffects
-function is called, every added Effect has its Trigger function called (provided its duration
-is not 0). Each Effect may, via the TriggerArgs CancelTrigger member, stop the effect from
-being sent to subsequent Effects in the EffectTrigger's list. /// Once all effects have had
-Trigger called as applicable, or some effect has cancelled the trigger, any effect whose
-duration has reached 0 is removed from the EffectTrigger automatically. /// Typically, one
-instance of this class is created per &quot;event&quot; that can trigger effects, and then the
+  <div class="markdown level0 remarks"><p>EffectTrigger's primary purpose is to represent an event that can trigger one or more effects, and
+automatically remove those effects from the list when their duration reaches 0.  Each EffectTrigger
+instance can have one or more (non-instantaneous) effects added to it. All Effects must take the same
+type of argument to their <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function, as specified by this class's type parameter.</p>
+<p>Each time the <a class="xref" href="GoRogue.EffectTrigger-1.html#GoRogue_EffectTrigger_1_TriggerEffects__0_">TriggerEffects(TriggerArgs)</a> function is called, every Effect has its
+Trigger function called (provided its duration is not 0). Each Effect may, via the TriggerArgs
+<a class="xref" href="GoRogue.EffectArgs.html#GoRogue_EffectArgs_CancelTrigger">CancelTrigger</a> member, stop the effect from
+being sent to subsequent effects in the EffectTrigger's list. Once either all effects in the list
+have had their Trigger function called, or some effect has cancelled the triggering, any effect
+whose duration has reached 0 is removed from the EffectTrigger automatically.</p>
+<p>Typically, one instance of this class is created per &quot;event&quot; that can trigger effects, and then the
 instance's TriggerEffects function is called whenever that event happens. For example, in a
 typical roguelike, all damageable creatures might have an instance of this class called
-OnDamageTaken. Any effect that should trigger when that creature takes damage would then be
-added to that creature's OnDamageTaken EffectTrigger. The TakeDamage function of that
-creature would then need to call OnDamageTaken.TriggerEffects(...). In this way, all effects
-added to the OnDamageTaken EffectTrigger would be triggered automatically whenever the
-creature takes damage. /// For some complex game mechanics, it may be desireable to control
-how effects stack, the order they appear in the Effects list of EffectTriggers, etc. In these
-cases, subclassing EffectTrigger and overriding add/remove can allow this functionality.</p>
+OnDamageTakenEffects. Any effect that should trigger when that creature takes damage would then be
+added to that creature's OnDamageTakenEffects EffectTrigger. The TakeDamage function of that
+creature would then need to call OnDamageTakenEffects.TriggerEffects(...). In this way, all effects
+added to the OnDamageTakenEffects EffectTrigger would be triggered automatically whenever the
+creature takes damage.</p>
+<p>For some complex game mechanics, it may be desireable to control how effects stack, the order they appear
+in the effects list of EffectTriggers, etc. In these cases, subclassing EffectTrigger and overriding the
+add and remove functions can allow this functionality.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -157,7 +159,7 @@ cases, subclassing EffectTrigger and overriding add/remove can allow this functi
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1__ctor.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L43">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1__ctor_" data-uid="GoRogue.EffectTrigger`1.#ctor*"></a>
   <h4 id="GoRogue_EffectTrigger_1__ctor" data-uid="GoRogue.EffectTrigger`1.#ctor">EffectTrigger()</h4>
@@ -175,7 +177,7 @@ cases, subclassing EffectTrigger and overriding add/remove can allow this functi
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1_Effects.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Effects%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L51">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L56">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1_Effects_" data-uid="GoRogue.EffectTrigger`1.Effects*"></a>
   <h4 id="GoRogue_EffectTrigger_1_Effects" data-uid="GoRogue.EffectTrigger`1.Effects">Effects</h4>
@@ -208,7 +210,7 @@ cases, subclassing EffectTrigger and overriding add/remove can allow this functi
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1_Add_GoRogue_Effect__0__.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Add(GoRogue.Effect%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L58">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L63">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1_Add_" data-uid="GoRogue.EffectTrigger`1.Add*"></a>
   <h4 id="GoRogue_EffectTrigger_1_Add_GoRogue_Effect__0__" data-uid="GoRogue.EffectTrigger`1.Add(GoRogue.Effect{`0})">Add(Effect&lt;TriggerArgs&gt;)</h4>
@@ -243,7 +245,7 @@ the effect's duration is 0, an ArgumentException is thrown.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1_Remove_GoRogue_Effect__0__.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Remove(GoRogue.Effect%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L70">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L75">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1_Remove_" data-uid="GoRogue.EffectTrigger`1.Remove*"></a>
   <h4 id="GoRogue_EffectTrigger_1_Remove_GoRogue_Effect__0__" data-uid="GoRogue.EffectTrigger`1.Remove(GoRogue.Effect{`0})">Remove(Effect&lt;TriggerArgs&gt;)</h4>
@@ -277,7 +279,7 @@ the effect's duration is 0, an ArgumentException is thrown.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L78">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L83">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1_ToString_" data-uid="GoRogue.EffectTrigger`1.ToString*"></a>
   <h4 id="GoRogue_EffectTrigger_1_ToString" data-uid="GoRogue.EffectTrigger`1.ToString">ToString()</h4>
@@ -311,12 +313,13 @@ the effect's duration is 0, an ArgumentException is thrown.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1_TriggerEffects__0_.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.TriggerEffects(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L93">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L100">View Source</a>
   </span>
   <a id="GoRogue_EffectTrigger_1_TriggerEffects_" data-uid="GoRogue.EffectTrigger`1.TriggerEffects*"></a>
   <h4 id="GoRogue_EffectTrigger_1_TriggerEffects__0_" data-uid="GoRogue.EffectTrigger`1.TriggerEffects(`0)">TriggerEffects(TriggerArgs)</h4>
-  <div class="markdown level1 summary"><p>For each effect in the list, calls its Trigger function if its duration is not 0, then
-remvoes any effect that has duration 0.</p>
+  <div class="markdown level1 summary"><p>Calls the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function of each effect
+in the <a class="xref" href="GoRogue.EffectTrigger-1.html#GoRogue_EffectTrigger_1_Effects">Effects</a> list (as long as its duration is not 0), then
+removes any effect that has duration 0.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -336,17 +339,18 @@ remvoes any effect that has duration 0.</p>
       <tr>
         <td><span class="xref">TriggerArgs</span></td>
         <td><span class="parametername">args</span></td>
-        <td><p>Argument to pass to the Trigger function of each effect.</p>
+        <td><p>Argument to pass to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function
+of each effect.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_EffectTrigger_1_TriggerEffects__0__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>The argument given is passed along to the Trigger function of each effect that has
-Trigger called. If some effect sets the CancelTrigger flag in the argument to true, the
-loop will be broken and no subsequent effects in the list will have Trigger called. After
-either this occurs or all effects have had Trigger called, any effect in the list that
-has a duration of 0 is automatically removed from the list. /// It is valid to pass null
+  <div class="markdown level1 remarks"><p>The argument given is passed along to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function of each effect that has Trigger called. If some effect sets the <a class="xref" href="GoRogue.EffectArgs.html#GoRogue_EffectArgs_CancelTrigger">CancelTrigger</a>
+flag in the argument to true, the loop will be broken and no subsequent effects in the list will have
+Trigger called. After either this occurs or all effects have had Trigger called, any effect in the list
+that has a duration of 0 is automatically removed from the list.  It is valid to pass null
 as the argument to this function, if the effects need no actual parameters.</p>
 </div>
   <h3 id="extensionmethods">Extension Methods</h3>
@@ -364,7 +368,7 @@ as the argument to this function, if the effects need no actual parameters.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_EffectTrigger_1.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L36" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/EffectTrigger.cs/#L41" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

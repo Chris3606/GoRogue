@@ -73,8 +73,8 @@
   
   <h1 id="GoRogue_LayerMasker" data-uid="GoRogue.LayerMasker" class="text-break">Class LayerMasker
   </h1>
-  <div class="markdown level0 summary"><p>Allows convenient interpretation and creation of layer masks (bit-masks) mask layers
-represented by integers [0-NumberOfLayers - 1].</p>
+  <div class="markdown level0 summary"><p>Allows convenient interpretation and creation of layer masks (bit-masks) that can be used
+to interact with <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a> and <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -112,6 +112,15 @@ represented by integers [0-NumberOfLayers - 1].</p>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public sealed class LayerMasker</code></pre>
   </div>
+  <h5 id="GoRogue_LayerMasker_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>A layer mask is simply a list of layers.  It is frequently used in <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>
+and <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a> as an optional parameter that indicates what layers should apply
+to an operation or given set of functionality.</p>
+<p>LayeredSpatialMap and Map both define their own LayerMask variable that should be used to retrieve
+layer masks whenever possible.  For layer masks needed outside of that, or when constructing
+those classes, use <a class="xref" href="GoRogue.LayerMasker.html#GoRogue_LayerMasker_DEFAULT">DEFAULT</a>.  There are also constants defined in
+LayerMasker to represent &quot;all layers&quot; and &quot;no layers&quot;.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -119,7 +128,7 @@ represented by integers [0-NumberOfLayers - 1].</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker__ctor_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.%23ctor(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L147">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L158">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker__ctor_" data-uid="GoRogue.LayerMasker.#ctor*"></a>
   <h4 id="GoRogue_LayerMasker__ctor_System_Int32_" data-uid="GoRogue.LayerMasker.#ctor(System.Int32)">LayerMasker(Int32)</h4>
@@ -156,7 +165,7 @@ or equal to 32.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_ALL_LAYERS.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.ALL_LAYERS%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L135">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L146">View Source</a>
   </span>
   <h4 id="GoRogue_LayerMasker_ALL_LAYERS" data-uid="GoRogue.LayerMasker.ALL_LAYERS">ALL_LAYERS</h4>
   <div class="markdown level1 summary"><p>Layer-mask representing all layers.</p>
@@ -186,7 +195,7 @@ or equal to 32.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_DEFAULT.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.DEFAULT%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L130">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L141">View Source</a>
   </span>
   <h4 id="GoRogue_LayerMasker_DEFAULT" data-uid="GoRogue.LayerMasker.DEFAULT">DEFAULT</h4>
   <div class="markdown level1 summary"><p>Default layer masker, that excludes no possible layers from its results.</p>
@@ -216,7 +225,7 @@ or equal to 32.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_NO_LAYERS.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.NO_LAYERS%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L140">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L151">View Source</a>
   </span>
   <h4 id="GoRogue_LayerMasker_NO_LAYERS" data-uid="GoRogue.LayerMasker.NO_LAYERS">NO_LAYERS</h4>
   <div class="markdown level1 summary"><p>Layer mask representing no layers.</p>
@@ -248,11 +257,11 @@ or equal to 32.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_NumberOfLayers.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.NumberOfLayers%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L162">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L173">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_NumberOfLayers_" data-uid="GoRogue.LayerMasker.NumberOfLayers*"></a>
   <h4 id="GoRogue_LayerMasker_NumberOfLayers" data-uid="GoRogue.LayerMasker.NumberOfLayers">NumberOfLayers</h4>
-  <div class="markdown level1 summary"><p>Maximum number of layers supported by this layer masker. Functions enforce this limit,
+  <div class="markdown level1 summary"><p>Maximum number of layers supported by this layer masker. Functions using layer masks enforce this limit,
 and will not consider layers outside the range [0, NumberOfLayers - 1]</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -282,7 +291,7 @@ and will not consider layers outside the range [0, NumberOfLayers - 1]</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_AddLayers_System_UInt32_System_Collections_Generic_IEnumerable_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.AddLayers(System.UInt32%2CSystem.Collections.Generic.IEnumerable%7BSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L188">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L199">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_AddLayers_" data-uid="GoRogue.LayerMasker.AddLayers*"></a>
   <h4 id="GoRogue_LayerMasker_AddLayers_System_UInt32_System_Collections_Generic_IEnumerable_System_Int32__" data-uid="GoRogue.LayerMasker.AddLayers(System.UInt32,System.Collections.Generic.IEnumerable{System.Int32})">AddLayers(UInt32, IEnumerable&lt;Int32&gt;)</h4>
@@ -341,7 +350,7 @@ provided (provided they are within the supported number of layers).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_AddLayers_System_UInt32_System_Int32___.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.AddLayers(System.UInt32%2CSystem.Int32%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L175">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L186">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_AddLayers_" data-uid="GoRogue.LayerMasker.AddLayers*"></a>
   <h4 id="GoRogue_LayerMasker_AddLayers_System_UInt32_System_Int32___" data-uid="GoRogue.LayerMasker.AddLayers(System.UInt32,System.Int32[])">AddLayers(UInt32, Int32[])</h4>
@@ -400,7 +409,7 @@ provided (provided they are within the supported number of layers).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_HasLayer_System_UInt32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.HasLayer(System.UInt32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L208">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L219">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_HasLayer_" data-uid="GoRogue.LayerMasker.HasLayer*"></a>
   <h4 id="GoRogue_LayerMasker_HasLayer_System_UInt32_System_Int32_" data-uid="GoRogue.LayerMasker.HasLayer(System.UInt32,System.Int32)">HasLayer(UInt32, Int32)</h4>
@@ -458,7 +467,7 @@ layer is outside the supported number of layers for this LayerMasker.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_Layers_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.Layers(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L219">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L230">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_Layers_" data-uid="GoRogue.LayerMasker.Layers*"></a>
   <h4 id="GoRogue_LayerMasker_Layers_System_UInt32_" data-uid="GoRogue.LayerMasker.Layers(System.UInt32)">Layers(UInt32)</h4>
@@ -510,7 +519,7 @@ layers for this LayerMasker.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_Mask_System_Collections_Generic_IEnumerable_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.Mask(System.Collections.Generic.IEnumerable%7BSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L248">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L259">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_Mask_" data-uid="GoRogue.LayerMasker.Mask*"></a>
   <h4 id="GoRogue_LayerMasker_Mask_System_Collections_Generic_IEnumerable_System_Int32__" data-uid="GoRogue.LayerMasker.Mask(System.Collections.Generic.IEnumerable{System.Int32})">Mask(IEnumerable&lt;Int32&gt;)</h4>
@@ -562,7 +571,7 @@ number of layers.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_Mask_System_Int32___.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.Mask(System.Int32%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L237">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L248">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_Mask_" data-uid="GoRogue.LayerMasker.Mask*"></a>
   <h4 id="GoRogue_LayerMasker_Mask_System_Int32___" data-uid="GoRogue.LayerMasker.Mask(System.Int32[])">Mask(Int32[])</h4>
@@ -614,7 +623,7 @@ number of layers.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_MaskAllAbove_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.MaskAllAbove(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L268">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L279">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_MaskAllAbove_" data-uid="GoRogue.LayerMasker.MaskAllAbove*"></a>
   <h4 id="GoRogue_LayerMasker_MaskAllAbove_System_Int32_" data-uid="GoRogue.LayerMasker.MaskAllAbove(System.Int32)">MaskAllAbove(Int32)</h4>
@@ -667,7 +676,7 @@ fall within the supported number of layers.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker_MaskAllBelow_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker.MaskAllBelow(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L288">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L299">View Source</a>
   </span>
   <a id="GoRogue_LayerMasker_MaskAllBelow_" data-uid="GoRogue.LayerMasker.MaskAllBelow*"></a>
   <h4 id="GoRogue_LayerMasker_MaskAllBelow_System_Int32_" data-uid="GoRogue.LayerMasker.MaskAllBelow(System.Int32)">MaskAllBelow(Int32)</h4>
@@ -730,7 +739,7 @@ fall within the supported number of layers.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_LayerMasker.md&amp;value=---%0Auid%3A%20GoRogue.LayerMasker%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L125" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IReadOnlyLayeredSpatialMap.cs/#L136" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

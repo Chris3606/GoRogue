@@ -73,8 +73,8 @@
   
   <h1 id="GoRogue_MapGeneration_Connectors_OrderedMapAreaConnector" data-uid="GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector" class="text-break">Class OrderedMapAreaConnector
   </h1>
-  <div class="markdown level0 summary"><p>Same as ClosestMapAreaConnector, but connects random rooms instead of determining the closest
-one, or connects rooms in the order specified if you give it a list of MapAreas.</p>
+  <div class="markdown level0 summary"><p>Same as <a class="xref" href="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.html">ClosestMapAreaConnector</a>, but connects random rooms instead of determining the closest
+one, or connects rooms in the order specified if you give it a list of areas.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -123,8 +123,8 @@ one, or connects rooms in the order specified if you give it a list of MapAreas.
   </span>
   <a id="GoRogue_MapGeneration_Connectors_OrderedMapAreaConnector_Connect_" data-uid="GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.Connect*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_OrderedMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__GoRogue_AdjacencyRule_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_Troschuetz_Random_IGenerator_System_Boolean_" data-uid="GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView{System.Boolean},GoRogue.AdjacencyRule,GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector,GoRogue.MapGeneration.Connectors.ITunnelCreator,Troschuetz.Random.IGenerator,System.Boolean)">Connect(ISettableMapView&lt;Boolean&gt;, AdjacencyRule, IAreaConnectionPointSelector, ITunnelCreator, IGenerator, Boolean)</h4>
-  <div class="markdown level1 summary"><p>Connects the areas by determining all unique areas on the map given using a
-MapAreaFinder, then, if randomizeOrder is true, performing a Fisher Yates shuffle of that
+  <div class="markdown level1 summary"><p>Connects the areas by determining all unique areas on the map given using a <a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html">MapAreaFinder</a>,
+and then, if <code data-dev-comment-type="paramref" class="paramref">randomizeOrder</code> is true, performing a Fisher Yates shuffle of that
 list of areas found. It then simply connects areas adjacent to each other in that list,
 using the methods specified to determine points within two areas to connect, and how to
 create the tunnel between the two points.</p>
@@ -160,7 +160,7 @@ create the tunnel between the two points.</p>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a></td>
         <td><span class="parametername">areaConnector</span></td>
         <td><p>The method to use to determine the points from two areas to make a tunnel between, in
-order to connect those two areas. If null is specified, a RandomConnectionPointSelector
+order to connect those two areas. If null is specified, a <a class="xref" href="GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.html">RandomConnectionPointSelector</a>
 is used, that uses the RNG passed into this function.</p>
 </td>
       </tr>
@@ -168,7 +168,7 @@ is used, that uses the RNG passed into this function.</p>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
         <td><span class="parametername">tunnelCreator</span></td>
         <td><p>The tunnel creation strategy to use. If null is specified,
-HorizontalVerticalTunnelCreator that utilizes the RNG passed into this function is used.</p>
+<a class="xref" href="GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.html">HorizontalVerticalTunnelCreator</a> that utilizes the RNG passed into this function is used.</p>
 </td>
       </tr>
       <tr>
@@ -181,7 +181,7 @@ HorizontalVerticalTunnelCreator that utilizes the RNG passed into this function 
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">randomizeOrder</span></td>
         <td><p>Whether or not to randomize which room is connected to which -- if this is set to false,
-they will be conencted in the exact order they are returned from the MapAreaFinder.</p>
+they will be conencted in the exact order they are returned from the <a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html">MapAreaFinder</a>.</p>
 </td>
       </tr>
     </tbody>
@@ -230,15 +230,15 @@ connect, and how to create the tunnel between the two points.</p>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a></td>
         <td><span class="parametername">areaConnector</span></td>
         <td><p>The method to use to determine the points from two areas to make a tunnel between, in
-order to connect those two areas. If null is specified, a RandomConnectionPointSelector
+order to connect those two areas. If null is specified, a <a class="xref" href="GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.html">RandomConnectionPointSelector</a>
 is used, that uses the default RNG.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
         <td><span class="parametername">tunnelCreator</span></td>
-        <td><p>The tunnel creation strategy to use. If null is specified,
-HorizontalVerticalTunnelCreator that utilizes the default RNG is used.</p>
+        <td><p>The tunnel creation strategy to use. If null is specified, a <a class="xref" href="GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.html">HorizontalVerticalTunnelCreator</a>
+that utilizes the default RNG is used.</p>
 </td>
       </tr>
     </tbody>

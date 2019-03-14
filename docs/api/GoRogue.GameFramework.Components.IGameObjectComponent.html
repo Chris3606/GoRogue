@@ -73,9 +73,10 @@
   
   <h1 id="GoRogue_GameFramework_Components_IGameObjectComponent" data-uid="GoRogue.GameFramework.Components.IGameObjectComponent" class="text-break">Interface IGameObjectComponent
   </h1>
-  <div class="markdown level0 summary"><p>Optional interface for components that are attached to IGameObject.  While the implementation of this inteerface is not required for
-IGameObject components, if GameObject's implementation of IHasComponents is used, the Parent field is automatically kept up to date as
-you call AddComponent/RemoveComponent on objects that implement this interface.  This component cannot be added to multiple GameObjects
+  <div class="markdown level0 summary"><p>Optional interface for components that are attached to an <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  While the implementation of this inteerface is not
+required for IGameObject components, if <a class="xref" href="GoRogue.GameFramework.GameObject.html">GameObject</a>'s implementation of IHasComponents is used, the <a class="xref" href="GoRogue.GameFramework.Components.IGameObjectComponent.html#GoRogue_GameFramework_Components_IGameObjectComponent_Parent">Parent</a> field
+is automatically kept up to date as you call <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_AddComponent_System_Object_">AddComponent(Object)</a>/<a class="xref" href="GoRogue.IHasComponents.html#GoRogue_IHasComponents_RemoveComponent_System_Object_">RemoveComponent(Object)</a>
+on objects that implement this interface.  A component implmenting this interface cannot be added to multiple GameObjects
 at once.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -92,12 +93,12 @@ at once.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Components_IGameObjectComponent_Parent.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Components.IGameObjectComponent.Parent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Components/IGameObjectComponent.cs/#L15">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Components/IGameObjectComponent.cs/#L16">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Components_IGameObjectComponent_Parent_" data-uid="GoRogue.GameFramework.Components.IGameObjectComponent.Parent*"></a>
   <h4 id="GoRogue_GameFramework_Components_IGameObjectComponent_Parent" data-uid="GoRogue.GameFramework.Components.IGameObjectComponent.Parent">Parent</h4>
   <div class="markdown level1 summary"><p>The object to which this component is attached, or null if it is not attached.  Should not be set manually, as this is taken
-care of by GameObject.AddComponent/RemoveComponent(s)</p>
+care of by <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_AddComponent_System_Object_">AddComponent(Object)</a>/<a class="xref" href="GoRogue.IHasComponents.html#GoRogue_IHasComponents_RemoveComponent_System_Object_">RemoveComponent(Object)</a></p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -134,7 +135,7 @@ care of by GameObject.AddComponent/RemoveComponent(s)</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Components_IGameObjectComponent.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Components.IGameObjectComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Components/IGameObjectComponent.cs/#L9" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Components/IGameObjectComponent.cs/#L10" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

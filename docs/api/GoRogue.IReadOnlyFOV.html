@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_IReadOnlyFOV" data-uid="GoRogue.IReadOnlyFOV" class="text-break">Interface IReadOnlyFOV
   </h1>
-  <div class="markdown level0 summary"><p>Read-only interface of the FOV class.</p>
+  <div class="markdown level0 summary"><p>Read-only interface of the <a class="xref" href="GoRogue.FOV.html">FOV</a> class.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritedMembers">
@@ -111,8 +111,8 @@
   </span>
   <a id="GoRogue_IReadOnlyFOV_BooleanFOV_" data-uid="GoRogue.IReadOnlyFOV.BooleanFOV*"></a>
   <h4 id="GoRogue_IReadOnlyFOV_BooleanFOV" data-uid="GoRogue.IReadOnlyFOV.BooleanFOV">BooleanFOV</h4>
-  <div class="markdown level1 summary"><p>A view of the FOV results in boolean form, where true indicates a location is in FOV, and
-false indicates it is not.</p>
+  <div class="markdown level1 summary"><p>A view of the calculation results in boolean form, where true indicates a location is in
+field of view, and false indicates it is not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -143,7 +143,7 @@ false indicates it is not.</p>
   </span>
   <a id="GoRogue_IReadOnlyFOV_CurrentFOV_" data-uid="GoRogue.IReadOnlyFOV.CurrentFOV*"></a>
   <h4 id="GoRogue_IReadOnlyFOV_CurrentFOV" data-uid="GoRogue.IReadOnlyFOV.CurrentFOV">CurrentFOV</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of only positions currently in FOV.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of only positions currently in the field of view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -174,8 +174,8 @@ false indicates it is not.</p>
   </span>
   <a id="GoRogue_IReadOnlyFOV_NewlySeen_" data-uid="GoRogue.IReadOnlyFOV.NewlySeen*"></a>
   <h4 id="GoRogue_IReadOnlyFOV_NewlySeen" data-uid="GoRogue.IReadOnlyFOV.NewlySeen">NewlySeen</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of positions that are in FOV as of the most current Calculate call, but were
-NOT in FOV afterthe previous time Calculate was called.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that ARE in field of view as of the most current Calculate call, but were
+NOT in field of view after the previous time Calculate was called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -206,8 +206,8 @@ NOT in FOV afterthe previous time Calculate was called.</p>
   </span>
   <a id="GoRogue_IReadOnlyFOV_NewlyUnseen_" data-uid="GoRogue.IReadOnlyFOV.NewlyUnseen*"></a>
   <h4 id="GoRogue_IReadOnlyFOV_NewlyUnseen" data-uid="GoRogue.IReadOnlyFOV.NewlyUnseen">NewlyUnseen</h4>
-  <div class="markdown level1 summary"><p>IEnumerable of positions that are NOT in FOV as of the most current Calculate call, but
-WERE in FOV after the previous time Calculate was called.</p>
+  <div class="markdown level1 summary"><p>IEnumerable of positions that are NOT in field of view as of the most current Calculate call, but
+WERE in field of view after the previous time Calculate was called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>

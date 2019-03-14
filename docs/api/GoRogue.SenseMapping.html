@@ -78,33 +78,21 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GoRogue.SenseMapping.SenseMap.html">SenseMap</a></h4>
-      <section><p>Class responsible for calculating a map for senses (sound, light, etc). Anything that has a
-resistance map, where 1.0 is completely impenetrable, and 0.0 is no resistance at all, can
-use this system. Typically used for FOV, however can also be used for sound maps, etc.
-Supports a few different types of spreading mechanics, including every one in the SourceType
-enum. Included in these is FOV/FOV-style shadowcasting. This will be much faster than ripple
-variations. Once one calls Calculate, one can use Coords, or x and y values, to access this
-class like an array. The double one gets back will be the &quot;sensory value&quot;. This is a number
-between 1.0 and 0.0, where 1.0 is maximum intensity (max brightness in the case of the
-sources being light, for example), and 0.0 is no intensity at all.</p>
+      <section><p>Class responsible for calculating a map for senses (sound, light, etc), or generally anything
+that can be modeled as sources propegating through a map that has degrees of resistance to spread.</p>
 </section>
       <h4><a class="xref" href="GoRogue.SenseMapping.SenseSource.html">SenseSource</a></h4>
-      <section><p>Represents a source location to be used in a SenseMap. One would typically create these and
-call SenseMap.AddSenseSource with them, and perhaps retain a reference for the sake of moving
-it around or toggling it on-off. The player might have one of these that follows it around if
-SenseMap is being used as a lighting map, for instance. Note that changing values such as
-Position and Radius after the source is created is possible, however changes will not be
-reflected in any SenseSources using this source until their next Calculate call.</p>
+      <section><p>Represents a source location to be used in a <a class="xref" href="GoRogue.SenseMapping.SenseMap.html">SenseMap</a>.</p>
 </section>
     <h3 id="interfaces">Interfaces
   </h3>
       <h4><a class="xref" href="GoRogue.SenseMapping.IReadOnlySenseMap.html">IReadOnlySenseMap</a></h4>
-      <section><p>Read-only interface of a SenseMap.</p>
+      <section><p>Read-only interface of a <a class="xref" href="GoRogue.SenseMapping.SenseMap.html">SenseMap</a>.</p>
 </section>
     <h3 id="enums">Enums
   </h3>
       <h4><a class="xref" href="GoRogue.SenseMapping.SourceType.html">SourceType</a></h4>
-      <section><p>Different types of algorithms that model how values spread from the source.</p>
+      <section><p>Different types of algorithms that model how source values spread from their source's location.</p>
 </section>
 </article>
           </div>

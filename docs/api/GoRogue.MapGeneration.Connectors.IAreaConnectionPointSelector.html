@@ -73,7 +73,7 @@
   
   <h1 id="GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector" data-uid="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector" class="text-break">Interface IAreaConnectionPointSelector
   </h1>
-  <div class="markdown level0 summary"><p>Interface for implementing an algorithm for selecting the Coords to connect in order to
+  <div class="markdown level0 summary"><p>Interface for implementing an algorithm for selecting the positions to connect in order to
 connect two given map areas.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -90,12 +90,13 @@ connect two given map areas.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_SelectConnectionPoints_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.SelectConnectionPoints(GoRogue.MapGeneration.IReadOnlyMapArea%2CGoRogue.MapGeneration.IReadOnlyMapArea)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/IAreaConnectionPointSelector.cs/#L21">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/IAreaConnectionPointSelector.cs/#L22">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_SelectConnectionPoints_" data-uid="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.SelectConnectionPoints*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_SelectConnectionPoints_GoRogue_MapGeneration_IReadOnlyMapArea_GoRogue_MapGeneration_IReadOnlyMapArea_" data-uid="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.SelectConnectionPoints(GoRogue.MapGeneration.IReadOnlyMapArea,GoRogue.MapGeneration.IReadOnlyMapArea)">SelectConnectionPoints(IReadOnlyMapArea, IReadOnlyMapArea)</h4>
-  <div class="markdown level1 summary"><p>Implements the algorithm. Returns a tuple of two Coords -- the first Coord is the
-position in area1 to use, the second Coord is the position in area2 to use.</p>
+  <div class="markdown level1 summary"><p>Implements the algorithm. Returns a tuple of two positions -- the first position is the
+position in <code data-dev-comment-type="paramref" class="paramref">area1</code> to use, the second position is the position in
+<code data-dev-comment-type="paramref" class="paramref">area2</code> to use.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -115,13 +116,13 @@ position in area1 to use, the second Coord is the position in area2 to use.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area1</span></td>
-        <td><p>First MapArea to connect.</p>
+        <td><p>First <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect.</p>
 </td>
       </tr>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></td>
         <td><span class="parametername">area2</span></td>
-        <td><p>Second MapArea to connect.</p>
+        <td><p>Second <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect.</p>
 </td>
       </tr>
     </tbody>
@@ -137,8 +138,8 @@ position in area1 to use, the second Coord is the position in area2 to use.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.Tuple</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, <a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
-        <td><p>A tuple containing the coordinates from each MapArea to connect -- the first item in the
-tuple is the Coord in area1, the second is the Coord in area2.</p>
+        <td><p>A tuple containing the coordinates from each <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> to connect -- the first
+item in the tuple is the position in area1, the second is the position in area2.</p>
 </td>
       </tr>
     </tbody>

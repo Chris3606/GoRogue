@@ -100,8 +100,9 @@
       <tr>
         <td id="GoRogue_Lines_Algorithm_BRESENHAM_ORDERED">BRESENHAM_ORDERED</td>
         <td><p>Bresenham's line algorithm, with the points guaranteed to be in start to finish
-order. This may be significantly slower than BRESENHAM, so if you really need
-ordering, consider DDA instead, as it is both faster than Bresenham's and implicitly ordered</p>
+order. This may be significantly slower than <a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_BRESENHAM">BRESENHAM</a>, so if you really
+need ordering, consider<a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_DDA">DDA</a> instead, as it is both faster than Bresenham's
+and implicitly ordered.</p>
 </td>
       </tr>
       <tr>
@@ -109,16 +110,17 @@ ordering, consider DDA instead, as it is both faster than Bresenham's and implic
         <td><p>DDA line algorithm -- effectively an optimized algorithm for producing Brensham-like
 lines. There may be slight differences in appearance when compared to lines created
 with Bresenham's, however this algorithm may also be measurably faster. Based on the
-algorithm here:
-<a href="https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/">https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/</a>, as well as
-the Java library Squidlib's implementation.</p>
+algorithm <a href="https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/">here</a>,
+, as well as the Java library Squidlib's implementation.  Points are guaranteed to be in order from
+start to finish.</p>
 </td>
       </tr>
       <tr>
         <td id="GoRogue_Lines_Algorithm_ORTHO">ORTHO</td>
         <td><p>Line algorithm that takes only orthoganal steps (each grid location on the line
 returned is within one cardinal direction of the previous one). Potentially useful
-for LOS in games that use MANHATTAN distance. Based on the algorithm here: <a href="http://www.redblobgames.com/grids/line-drawing.html#stepping">http://www.redblobgames.com/grids/line-drawing.html#stepping</a></p>
+for LOS in games that use MANHATTAN distance. Based on the algorithm
+<a href="http://www.redblobgames.com/grids/line-drawing.html#stepping">here</a>.</p>
 </td>
       </tr>
     </tbody>

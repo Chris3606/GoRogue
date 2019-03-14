@@ -75,7 +75,7 @@
   </h1>
   <div class="markdown level0 summary"><p>Implements a cellular automata genereation algorithm to add cave-like (unconnected) areas to
 a map. A connection algorithm would be needed to connect these areas. For automatic
-connection, see GoRogue.MapGeneration.QuickGenerators.CellularAutomata().</p>
+connection, see <a class="xref" href="GoRogue.MapGeneration.QuickGenerators.html#GoRogue_MapGeneration_QuickGenerators_GenerateCellularAutomataMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_">GenerateCellularAutomataMap(ISettableMapView&lt;Boolean&gt;, IGenerator, Int32, Int32, Int32)</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -121,9 +121,8 @@ have had a value of true set to all floor tiles, and a value of false set to all
 Based on the C# roguelike library RogueSharp's implementation, and the roguebasin article
 below:
 <a href="http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels">http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels</a>.
-It is guaranteed that the &quot;set&quot; function of the ISettableMapView passed in will only be
-called once per tile, unless the type is ArrayMap of bool, in which case the operation is
-inexpensive and calling it multiples times costs little extra, and saves an internal allocation.</p>
+It is guaranteed that the &quot;set&quot; function of the map passed in will only be
+called once per tile.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
@@ -132,7 +131,7 @@ inexpensive and calling it multiples times costs little extra, and saves an inte
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Generators_CellularAutomataAreaGenerator_Generate_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.Generate(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CTroschuetz.Random.IGenerator%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Generators/CellularAutomataAreaGenerator.cs/#L49">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Generators/CellularAutomataAreaGenerator.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_Generators_CellularAutomataAreaGenerator_Generate_" data-uid="GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.Generate*"></a>
   <h4 id="GoRogue_MapGeneration_Generators_CellularAutomataAreaGenerator_Generate_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.Generate(GoRogue.MapViews.ISettableMapView{System.Boolean},Troschuetz.Random.IGenerator,System.Int32,System.Int32,System.Int32)">Generate(ISettableMapView&lt;Boolean&gt;, IGenerator, Int32, Int32, Int32)</h4>
@@ -163,7 +162,7 @@ will be set to false.</p>
       <tr>
         <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
         <td><span class="parametername">rng</span></td>
-        <td><p>The RNG to use to initially fill the map. If null is specified, the default RNG is used.</p>
+        <td><p>The RNG to use to initially fill the map. If null is specified, <a class="xref" href="GoRogue.Random.SingletonRandom.html#GoRogue_Random_SingletonRandom_DefaultRNG">DefaultRNG</a> is used.</p>
 </td>
       </tr>
       <tr>
@@ -202,7 +201,7 @@ nearest neighbors version. Recommended to be in range [2, 7] (4 is used in rogue
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Generators_CellularAutomataAreaGenerator.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Generators/CellularAutomataAreaGenerator.cs/#L25" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Generators/CellularAutomataAreaGenerator.cs/#L24" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

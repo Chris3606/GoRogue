@@ -73,12 +73,7 @@
   
   <h1 id="GoRogue_SenseMapping_SenseSource" data-uid="GoRogue.SenseMapping.SenseSource" class="text-break">Class SenseSource
   </h1>
-  <div class="markdown level0 summary"><p>Represents a source location to be used in a SenseMap. One would typically create these and
-call SenseMap.AddSenseSource with them, and perhaps retain a reference for the sake of moving
-it around or toggling it on-off. The player might have one of these that follows it around if
-SenseMap is being used as a lighting map, for instance. Note that changing values such as
-Position and Radius after the source is created is possible, however changes will not be
-reflected in any SenseSources using this source until their next Calculate call.</p>
+  <div class="markdown level0 summary"><p>Represents a source location to be used in a <a class="xref" href="GoRogue.SenseMapping.SenseMap.html">SenseMap</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -113,6 +108,14 @@ reflected in any SenseSources using this source until their next Calculate call.
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class SenseSource</code></pre>
   </div>
+  <h5 id="GoRogue_SenseMapping_SenseSource_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Typically, you create these, and then call <a class="xref" href="GoRogue.SenseMapping.SenseMap.html#GoRogue_SenseMapping_SenseMap_AddSenseSource_GoRogue_SenseMapping_SenseSource_">AddSenseSource(SenseSource)</a>
+to add them to a sensory map, and perhaps retain a reference for the sake of moving it
+around or toggling it on-off.  Note that changing values such as <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Position">Position</a> and
+<a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Radius">Radius</a> after the source is created is possible, however changes will not be
+reflected in any <a class="xref" href="GoRogue.SenseMapping.SenseMap.html">SenseMap</a> instances using this source until their next call
+to <a class="xref" href="GoRogue.SenseMapping.SenseMap.html#GoRogue_SenseMapping_SenseMap_Calculate">Calculate()</a>.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -120,12 +123,11 @@ reflected in any SenseSources using this source until their next Calculate call.
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.%23ctor(GoRogue.SenseMapping.SourceType%2CGoRogue.Coord%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L81">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L82">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource__ctor_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor(GoRogue.SenseMapping.SourceType,GoRogue.Coord,System.Double,GoRogue.Distance,System.Double)">SenseSource(SourceType, Coord, Double, Distance, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
-used for calculations.</p>
+  <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -165,7 +167,7 @@ emanate, provided the area is completely unobstructed.</p>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, such as <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Radius">Radius</a>).</p>
 </td>
       </tr>
       <tr>
@@ -181,11 +183,11 @@ implicitly convertible to Distance, eg. Radius).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.%23ctor(GoRogue.SenseMapping.SourceType%2CGoRogue.Coord%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L121">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L122">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource__ctor_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_System_Double_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor(GoRogue.SenseMapping.SourceType,GoRogue.Coord,System.Double,GoRogue.Distance,System.Double,System.Double,System.Double)">SenseSource(SourceType, Coord, Double, Distance, Double, Double, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructor.  Creates a source whose spread is restricted to a certain angle and span.</p>
+  <div class="markdown level1 summary"><p>Constructor.  Creates a source whose spreading is restricted to a certain angle and span.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -225,7 +227,7 @@ emanate, provided the area is completely unobstructed.</p>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, such as <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Radius">Radius</a>).</p>
 </td>
       </tr>
       <tr>
@@ -239,7 +241,7 @@ by the source's values. 0 degrees points right.</p>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">span</span></td>
         <td><p>The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
-angle/2 degrees are included on either side of the cone's center line.</p>
+<code data-dev-comment-type="paramref" class="paramref">angle</code> / 2 degrees are included on either side of the cone's center line.</p>
 </td>
       </tr>
       <tr>
@@ -259,8 +261,7 @@ angle/2 degrees are included on either side of the cone's center line.</p>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource__ctor_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor(GoRogue.SenseMapping.SourceType,System.Int32,System.Int32,System.Double,GoRogue.Distance,System.Double)">SenseSource(SourceType, Int32, Int32, Double, Distance, Double)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes all initial parameters, and allocates the necessary underlying arrays
-used for calculations.</p>
+  <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -306,7 +307,7 @@ emanate, provided the area is completely unobstructed.</p>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, such as <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Radius">Radius</a>).</p>
 </td>
       </tr>
       <tr>
@@ -322,7 +323,7 @@ implicitly convertible to Distance, eg. Radius).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.%23ctor(GoRogue.SenseMapping.SourceType%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L153">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L154">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource__ctor_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource__ctor_GoRogue_SenseMapping_SourceType_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_System_Double_" data-uid="GoRogue.SenseMapping.SenseSource.#ctor(GoRogue.SenseMapping.SourceType,System.Int32,System.Int32,System.Double,GoRogue.Distance,System.Double,System.Double,System.Double)">SenseSource(SourceType, Int32, Int32, Double, Distance, Double, Double, Double)</h4>
@@ -372,7 +373,7 @@ emanate, provided the area is completely unobstructed.</p>
         <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
         <td><span class="parametername">distanceCalc</span></td>
         <td><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius).</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, such as <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_Radius">Radius</a>).</p>
 </td>
       </tr>
       <tr>
@@ -386,7 +387,7 @@ by the source's values. 0 degrees points right.</p>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">span</span></td>
         <td><p>The angle, in degrees, that specifies the full arc contained in the cone formed by the source's values --
-angle/2 degrees are included on either side of the cone's center line.</p>
+<code data-dev-comment-type="paramref" class="paramref">angle</code> / 2 degrees are included on either side of the cone's center line.</p>
 </td>
       </tr>
       <tr>
@@ -404,13 +405,13 @@ angle/2 degrees are included on either side of the cone's center line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Angle.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Angle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L231">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L230">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Angle_" data-uid="GoRogue.SenseMapping.SenseSource.Angle*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Angle" data-uid="GoRogue.SenseMapping.SenseSource.Angle">Angle</h4>
-  <div class="markdown level1 summary"><p>If IsAngleRestricted is true, the angle in degrees that represents a line from the source's start to
+  <div class="markdown level1 summary"><p>If <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_IsAngleRestricted">IsAngleRestricted</a> is true, the angle in degrees that represents a line from the source's start to
 the outermost center point of the cone formed by the source's calculated values.  0 degrees points right.
-If IsAngleRestricted is false, this will be 0.0 degrees.</p>
+Otherwise, this will be 0.0 degrees.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -442,7 +443,7 @@ If IsAngleRestricted is false, this will be 0.0 degrees.</p>
   <a id="GoRogue_SenseMapping_SenseSource_DistanceCalc_" data-uid="GoRogue.SenseMapping.SenseSource.DistanceCalc*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_DistanceCalc" data-uid="GoRogue.SenseMapping.SenseSource.DistanceCalc">DistanceCalc</h4>
   <div class="markdown level1 summary"><p>The distance calculation used to determine what shape the radius has (or a type
-implicitly convertible to Distance, eg. Radius)</p>
+implicitly convertible to <a class="xref" href="GoRogue.Distance.html">Distance</a>, such as <a class="xref" href="GoRogue.Radius.html">Radius</a>).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -469,13 +470,12 @@ implicitly convertible to Distance, eg. Radius)</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Enabled.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Enabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L190">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L189">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Enabled_" data-uid="GoRogue.SenseMapping.SenseSource.Enabled*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Enabled" data-uid="GoRogue.SenseMapping.SenseSource.Enabled">Enabled</h4>
-  <div class="markdown level1 summary"><p>Whether or not this source is enabled. If a source is disabled when its SenseMap's
-Calculate function is called, the source does not calculate values and is effectively
-assumed to be &quot;off&quot;.</p>
+  <div class="markdown level1 summary"><p>Whether or not this source is enabled. If a source is disabled when <a class="xref" href="GoRogue.SenseMapping.SenseMap.html#GoRogue_SenseMapping_SenseMap_Calculate">Calculate()</a>
+is called, the source does not calculate values and is effectively assumed to be &quot;off&quot;.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -502,7 +502,7 @@ assumed to be &quot;off&quot;.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Intensity.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Intensity%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L207">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L206">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Intensity_" data-uid="GoRogue.SenseMapping.SenseSource.Intensity*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Intensity" data-uid="GoRogue.SenseMapping.SenseSource.Intensity">Intensity</h4>
@@ -533,7 +533,7 @@ assumed to be &quot;off&quot;.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_IsAngleRestricted.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.IsAngleRestricted%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L201">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L200">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_IsAngleRestricted_" data-uid="GoRogue.SenseMapping.SenseSource.IsAngleRestricted*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_IsAngleRestricted" data-uid="GoRogue.SenseMapping.SenseSource.IsAngleRestricted">IsAngleRestricted</h4>
@@ -564,7 +564,7 @@ assumed to be &quot;off&quot;.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Position.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L196">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L195">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Position_" data-uid="GoRogue.SenseMapping.SenseSource.Position*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Position" data-uid="GoRogue.SenseMapping.SenseSource.Position">Position</h4>
@@ -595,7 +595,7 @@ assumed to be &quot;off&quot;.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Radius.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Radius%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L265">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L264">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Radius_" data-uid="GoRogue.SenseMapping.SenseSource.Radius*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Radius" data-uid="GoRogue.SenseMapping.SenseSource.Radius">Radius</h4>
@@ -628,12 +628,12 @@ resizing (re-allocation) of the underlying arrays.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Span.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Span%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L247">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L246">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Span_" data-uid="GoRogue.SenseMapping.SenseSource.Span*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Span" data-uid="GoRogue.SenseMapping.SenseSource.Span">Span</h4>
-  <div class="markdown level1 summary"><p>If IsAngleRestricted is true, the angle in degrees that represents the full arc of the cone formed by
-the source's calculated values.  If IsAngleRestricted is false, it will be 360 degrees.</p>
+  <div class="markdown level1 summary"><p>If <a class="xref" href="GoRogue.SenseMapping.SenseSource.html#GoRogue_SenseMapping_SenseSource_IsAngleRestricted">IsAngleRestricted</a> is true, the angle in degrees that represents the full arc of the cone formed by
+the source's calculated values.  Otherwise, it will be 360 degrees.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -660,7 +660,7 @@ the source's calculated values.  If IsAngleRestricted is false, it will be 360 d
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_Type.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L292">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L291">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_Type_" data-uid="GoRogue.SenseMapping.SenseSource.Type*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_Type" data-uid="GoRogue.SenseMapping.SenseSource.Type">Type</h4>
@@ -693,7 +693,7 @@ the source's calculated values.  If IsAngleRestricted is false, it will be 360 d
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource_ToString.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L298">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L297">View Source</a>
   </span>
   <a id="GoRogue_SenseMapping_SenseSource_ToString_" data-uid="GoRogue.SenseMapping.SenseSource.ToString*"></a>
   <h4 id="GoRogue_SenseMapping_SenseSource_ToString" data-uid="GoRogue.SenseMapping.SenseSource.ToString">ToString()</h4>
@@ -737,7 +737,7 @@ the source's calculated values.  If IsAngleRestricted is false, it will be 360 d
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_SenseMapping_SenseSource.md&amp;value=---%0Auid%3A%20GoRogue.SenseMapping.SenseSource%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L52" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SenseMapping/SenseSource.cs/#L54" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

@@ -73,9 +73,10 @@
   
   <h1 id="GoRogue_MapViews_LambdaSettableMapView_1" data-uid="GoRogue.MapViews.LambdaSettableMapView`1" class="text-break">Class LambdaSettableMapView&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Class designed to make implementing simple ISettableMapViews more convenient, by providing
-the &quot;get&quot; and &quot;set&quot; functionality via lambda functions. For a version that implements
-IMapView as opposed to ISettableMapView, see LambdaMapView.</p>
+  <div class="markdown level0 summary"><p>Class designed to make implementing simple ISettableMapViews more convenient, by providing the
+get/set functionality via a function that is passed in at construction. For a version that
+implements <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> as opposed to <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>, see
+<a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -132,15 +133,8 @@ IMapView as opposed to ISettableMapView, see LambdaMapView.</p>
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_LambdaSettableMapView_1_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>Despite actual game map representations often consisting of complex types, exposing certain
-properties as primitive types (via ISettableMapView implementations) for GoRogue algorithms
-to use is often fairly simple (simply exposing/translating to a property in the actual map
-class, or similar). If your map consists of Cells of some sort, where there exists an
-instance of some class/struct per location that contains information about that location,
-TranslationMap/LambdaTranslationMap provide convenient ways to implement simple
-ISettableMapViews. In the case that no such single type exists, however, a more generic
-IMapView implementation is needed. This class takes the &quot;get&quot; and &quot;set&quot; functions as lambdas
-to shorten the process of creating such an implementation.</p>
+  <div class="markdown level0 remarks"><p>See <a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a>.  Identical in nature, but takes both get and set functionality
+via functions.</p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -149,7 +143,7 @@ to shorten the process of creating such an implementation.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1__ctor_System_Func_System_Int32__System_Func_System_Int32__System_Func_GoRogue_Coord__0__System_Action_GoRogue_Coord__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.%23ctor(System.Func%7BSystem.Int32%7D%2CSystem.Func%7BSystem.Int32%7D%2CSystem.Func%7BGoRogue.Coord%2C%600%7D%2CSystem.Action%7BGoRogue.Coord%2C%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L72">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L66">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1__ctor_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1__ctor_System_Func_System_Int32__System_Func_System_Int32__System_Func_GoRogue_Coord__0__System_Action_GoRogue_Coord__0__" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.#ctor(System.Func{System.Int32},System.Func{System.Int32},System.Func{GoRogue.Coord,`0},System.Action{GoRogue.Coord,`0})">LambdaSettableMapView(Func&lt;Int32&gt;, Func&lt;Int32&gt;, Func&lt;Coord, T&gt;, Action&lt;Coord, T&gt;)</h4>
@@ -174,25 +168,25 @@ functions used to retrieve/set the value for a location.</p>
       <tr>
         <td><span class="xref">System.Func</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
         <td><span class="parametername">widthGetter</span></td>
-        <td><p>A delegate/lambda that retrieves the width of the map being represented.</p>
+        <td><p>A function/lambda that retrieves the width of the map being represented.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;<span class="xref">System.Int32</span>&gt;</td>
         <td><span class="parametername">heightGetter</span></td>
-        <td><p>A delegate/lambda that retrieves the height of the map being represented.</p>
+        <td><p>A function/lambda that retrieves the height of the map being represented.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T&gt;</td>
         <td><span class="parametername">valueGetter</span></td>
-        <td><p>A delegate/lambda that returns the value of type T associated with the location it is given.</p>
+        <td><p>A function/lambda that returns the value of type T associated with the location it is given.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Action</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T&gt;</td>
         <td><span class="parametername">valueSetter</span></td>
-        <td><p>A delegate/lambda that updates the map being represented accordingly, given a type T and
+        <td><p>A function/lambda that updates the map being represented accordingly, given a type T and
 position to which it was set.</p>
 </td>
       </tr>
@@ -200,16 +194,16 @@ position to which it was set.</p>
   </table>
   <h5 id="GoRogue_MapViews_LambdaSettableMapView_1__ctor_System_Func_System_Int32__System_Func_System_Int32__System_Func_GoRogue_Coord__0__System_Action_GoRogue_Coord__0___remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>This constructor is useful if the width and height of the map being represented may
-change -- one can provide lambdas that retrieve the width and height of the map being
-represented, and these lambdas will be called any time the Width and Height properties of
-this class are retrieved.</p>
+change -- one can provide functions that retrieve the width and height of the map being
+represented, and these functions will be called any time the <a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html#GoRogue_MapViews_LambdaSettableMapView_1_Width">Width</a> and <a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html#GoRogue_MapViews_LambdaSettableMapView_1_Height">Height</a>
+properties are retrieved.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1__ctor_System_Int32_System_Int32_System_Func_GoRogue_Coord__0__System_Action_GoRogue_Coord__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Func%7BGoRogue.Coord%2C%600%7D%2CSystem.Action%7BGoRogue.Coord%2C%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L46">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L40">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1__ctor_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1__ctor_System_Int32_System_Int32_System_Func_GoRogue_Coord__0__System_Action_GoRogue_Coord__0__" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.#ctor(System.Int32,System.Int32,System.Func{GoRogue.Coord,`0},System.Action{GoRogue.Coord,`0})">LambdaSettableMapView(Int32, Int32, Func&lt;Coord, T&gt;, Action&lt;Coord, T&gt;)</h4>
@@ -246,13 +240,13 @@ retrieve/set the value for a location.</p>
       <tr>
         <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T&gt;</td>
         <td><span class="parametername">valueGetter</span></td>
-        <td><p>A delegate/lambda that returns the value of type T associated with the location it is given.</p>
+        <td><p>A function/lambda that returns the value of type T associated with the location it is given.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Action</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T&gt;</td>
         <td><span class="parametername">valueSetter</span></td>
-        <td><p>A delegate/lambda that updates the map being represented accordingly, given a type T and
+        <td><p>A function/lambda that updates the map being represented accordingly, given a type T and
 position to which it was set.</p>
 </td>
       </tr>
@@ -269,7 +263,7 @@ not change, so they can safely be passed in as constants.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L83">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L77">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_Height_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Height*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_Height" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Height">Height</h4>
@@ -300,12 +294,12 @@ not change, so they can safely be passed in as constants.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L121">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L125">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_Item_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item(GoRogue.Coord)">Item[Coord]</h4>
-  <div class="markdown level1 summary"><p>Given a Coord, returns/sets the &quot;value&quot; associated with that location, by calling the
-valueGetter/valueSetter lambda provided at construction.</p>
+  <div class="markdown level1 summary"><p>Given a position, returns/sets the &quot;value&quot; associated with that location, by calling the
+valueGetter/valueSetter functions provided at construction.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -325,7 +319,7 @@ valueGetter/valueSetter lambda provided at construction.</p>
       <tr>
         <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
         <td><span class="parametername">pos</span></td>
-        <td><p>Location to retrieve the value for.</p>
+        <td><p>Location to retrieve/set the value for.</p>
 </td>
       </tr>
     </tbody>
@@ -341,7 +335,7 @@ valueGetter/valueSetter lambda provided at construction.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the provided location, according to the valueGetter lambda
+        <td><p>The &quot;value&quot; associated with the provided location, according to the valueGetter function
 provided at construction.</p>
 </td>
       </tr>
@@ -352,11 +346,14 @@ provided at construction.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L90">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L94">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_Item_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_Item_System_Int32_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given an 1D-array-style index, determines the position associated with that index, and
+returns/sets the &quot;value&quot; associated with that location, by calling the valueGetter/valueSetter
+function passed in at construction.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -375,7 +372,8 @@ provided at construction.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">index1D</span></td>
-        <td></td>
+        <td><p>1D-array-style index for location to get/set the value for.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -390,7 +388,9 @@ provided at construction.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the given location, according to the valueGetter function provided
+at construction.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -399,12 +399,12 @@ provided at construction.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L106">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L110">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_Item_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
-  <div class="markdown level1 summary"><p>Given an X and Y value, sets/returns the &quot;value&quot; associated with that location, by
-calling the valueGetter/valueSetter lambda provided at construction.</p>
+  <div class="markdown level1 summary"><p>Given an X and Y value, returns/sets the &quot;value&quot; associated with that location, by
+calling the valueGetter/valueSetter functions provided at construction.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -446,7 +446,7 @@ calling the valueGetter/valueSetter lambda provided at construction.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with that location, according to the valueGetter lambda provided
+        <td><p>The &quot;value&quot; associated with that location, according to the valueGetter function provided
 at construction.</p>
 </td>
       </tr>
@@ -457,7 +457,7 @@ at construction.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L88">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L82">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_Width_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Width*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_Width" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.Width">Width</h4>
@@ -490,7 +490,7 @@ at construction.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L131">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L135">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_ToString" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString">ToString()</h4>
@@ -524,12 +524,12 @@ at construction.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L145">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L149">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the LambdaSettableMapView, using the
-elementStringifier function given to determine what string represents which value.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map view, using <code data-dev-comment-type="paramref" class="paramref">elementStringifier</code>
+to determine what string represents each value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -571,23 +571,20 @@ elementStringifier function given to determine what string represents which valu
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Func__0_System_String___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This could be used, for example, on an LambdaSettableMapView of boolean values, to output
-'#' for false values, and '.' for true values.</p>
+  <div class="markdown level1 remarks"><p>This could be used, for example, on an LambdaSettableMapView of boolean values, to output '#' for
+false values, and '.' for true values.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Int32_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601.ToString(System.Int32%2CSystem.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L160">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L169">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Int32_System_Func__0_System_String__" data-uid="GoRogue.MapViews.LambdaSettableMapView`1.ToString(System.Int32,System.Func{`0,System.String})">ToString(Int32, Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Prints the values in the LambdaSettableMapView, using the function specified to turn
-elements into strings, and using the &quot;field length&quot; specified. Each element of type T
-will have spaces added to cause it to take up exactly fieldSize characters, provided
-fieldSize is less than the length of the element's string represention. A positive-number
-right-aligns the text within the field, while a negative number left-aligns the text.</p>
+  <div class="markdown level1 summary"><p>Prints the values in the LambdaSettableMapView, using the function specified to turn elements into
+strings, and using the &quot;field length&quot; specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -607,13 +604,14 @@ right-aligns the text within the field, while a negative number left-aligns the 
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">fieldSize</span></td>
-        <td><p>The size of the field to give each value.</p>
+        <td><p>The size of the field to give each value.  A positive-number
+right-aligns the text within the field, while a negative number left-aligns the text.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to convert each element to a string. Null defaults to the ToString
+        <td><p>Function to use to convert each element to a string. null defaults to the ToString
 function of type T.</p>
 </td>
       </tr>
@@ -635,6 +633,11 @@ function of type T.</p>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_LambdaSettableMapView_1_ToString_System_Int32_System_Func__0_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of type T will have spaces added to cause it to take up exactly
+<code data-dev-comment-type="paramref" class="paramref">fieldSize</code> characters, provided <code data-dev-comment-type="paramref" class="paramref">fieldSize</code>
+is less than the length of the element's string represention.</p>
+</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>
@@ -702,7 +705,7 @@ function of type T.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaSettableMapView_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaSettableMapView%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L22" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaSettableMapView.cs/#L16" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

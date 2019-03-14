@@ -74,11 +74,7 @@
   <h1 id="GoRogue_IDGenerator" data-uid="GoRogue.IDGenerator" class="text-break">Class IDGenerator
   </h1>
   <div class="markdown level0 summary"><p>Class designed as a helper for situations where you need to generate and assign a unique
-integer to each instance of a class, eg. for a class implementing IHasID (see that interface
-documentation for usage example). One may initialize it with a starting unsigned integer, or
-0 if none is specified. Then, every time one wants to use an integer, one should call
-UseID(), and use the one it returns. It is not thread-safe on its own -- if it needs to be,
-one might consider using a lock around any UseID calls.</p>
+integer to each instance of a class, eg. for a class implementing <a class="xref" href="GoRogue.IHasID.html">IHasID</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -116,6 +112,12 @@ one might consider using a lock around any UseID calls.</p>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public class IDGenerator</code></pre>
   </div>
+  <h5 id="GoRogue_IDGenerator_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The class may be initialized with a starting unsigned integer -- if none is given, 0 is the default
+starting point. To assign an ID, call <a class="xref" href="GoRogue.IDGenerator.html#GoRogue_IDGenerator_UseID">UseID()</a>, and assign the value that it returns.
+This class is NOT thread-safe on its own -- if it needs to be, you can simply use a lock to wrap
+any calls to UseID.</p>
+</div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
@@ -123,7 +125,7 @@ one might consider using a lock around any UseID calls.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IDGenerator__ctor_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.IDGenerator.%23ctor(System.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L24">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L26">View Source</a>
   </span>
   <a id="GoRogue_IDGenerator__ctor_" data-uid="GoRogue.IDGenerator.#ctor*"></a>
   <h4 id="GoRogue_IDGenerator__ctor_System_UInt32_" data-uid="GoRogue.IDGenerator.#ctor(System.UInt32)">IDGenerator(UInt32)</h4>
@@ -147,8 +149,8 @@ one might consider using a lock around any UseID calls.</p>
       <tr>
         <td><span class="xref">System.UInt32</span></td>
         <td><span class="parametername">startingInt</span></td>
-        <td><p>Unsigned integer to start at (one that will be returned first time UseID is called).
-Default 0.</p>
+        <td><p>Unsigned integer to start at (one that will be returned first time <a class="xref" href="GoRogue.IDGenerator.html#GoRogue_IDGenerator_UseID">UseID()</a> is called).
+Defaults to 0.</p>
 </td>
       </tr>
     </tbody>
@@ -160,12 +162,12 @@ Default 0.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IDGenerator_UseID.md&amp;value=---%0Auid%3A%20GoRogue.IDGenerator.UseID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L35">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L37">View Source</a>
   </span>
   <a id="GoRogue_IDGenerator_UseID_" data-uid="GoRogue.IDGenerator.UseID*"></a>
   <h4 id="GoRogue_IDGenerator_UseID" data-uid="GoRogue.IDGenerator.UseID">UseID()</h4>
   <div class="markdown level1 summary"><p>Call every time you wish to &quot;assign&quot; an ID. The integer returned will never be returned
-again (each integer will be unique, per instance of this class).</p>
+again (each integer returned by this function will be unique).</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -203,7 +205,7 @@ again (each integer will be unique, per instance of this class).</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_IDGenerator.md&amp;value=---%0Auid%3A%20GoRogue.IDGenerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L11" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/IDGenerator.cs/#L13" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

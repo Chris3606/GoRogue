@@ -73,8 +73,9 @@
   
   <h1 id="GoRogue_MapViews_UnboundedViewport_1" data-uid="GoRogue.MapViews.UnboundedViewport`1" class="text-break">Class UnboundedViewport&lt;T&gt;
   </h1>
-  <div class="markdown level0 summary"><p>Class like Viewport&lt;T&gt;, however teh view area is in no way bounded to the edges of the underlying map.
-Instead, if you access a position that cannot map to any valid position in the underlying map view, a default is returned.</p>
+  <div class="markdown level0 summary"><p>Class like <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, however the view area is in no way bounded to the edges of the underlying map.
+Instead, if you access a position that cannot map to any valid position in the underlying map view, a (specified)
+default value is returned.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -124,7 +125,8 @@ Instead, if you access a position that cannot map to any valid position in the u
     <tbody>
       <tr>
         <td><span class="parametername">T</span></td>
-        <td></td>
+        <td><p>The type being exposed by the UnboundedViewport.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -135,11 +137,11 @@ Instead, if you access a position that cannot map to any valid position in the u
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1__ctor_GoRogue_MapViews_IMapView__0___0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L31">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L32">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1__ctor_" data-uid="GoRogue.MapViews.UnboundedViewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1__ctor_GoRogue_MapViews_IMapView__0___0_" data-uid="GoRogue.MapViews.UnboundedViewport`1.#ctor(GoRogue.MapViews.IMapView{`0},`0)">UnboundedViewport(IMapView&lt;T&gt;, T)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent. Initial ViewArea will be the entire MapView.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the map view to represent. The viewport will represent the entire given map view.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -159,7 +161,7 @@ Instead, if you access a position that cannot map to any valid position in the u
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;T&gt;</td>
         <td><span class="parametername">mapView</span></td>
-        <td><p>The MapView to represent.</p>
+        <td><p>The map view to represent.</p>
 </td>
       </tr>
       <tr>
@@ -175,11 +177,11 @@ Instead, if you access a position that cannot map to any valid position in the u
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1__ctor_GoRogue_MapViews_IMapView__0__GoRogue_Rectangle__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CGoRogue.Rectangle%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L18">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L19">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1__ctor_" data-uid="GoRogue.MapViews.UnboundedViewport`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1__ctor_GoRogue_MapViews_IMapView__0__GoRogue_Rectangle__0_" data-uid="GoRogue.MapViews.UnboundedViewport`1.#ctor(GoRogue.MapViews.IMapView{`0},GoRogue.Rectangle,`0)">UnboundedViewport(IMapView&lt;T&gt;, Rectangle, T)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the MapView to represent, and the initial ViewArea for that map.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the parent map view, and the initial subsection of that map view to represent.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -205,7 +207,7 @@ Instead, if you access a position that cannot map to any valid position in the u
       <tr>
         <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
         <td><span class="parametername">viewArea</span></td>
-        <td><p>The initial ViewArea for that map.</p>
+        <td><p>The initial subsection of that map to represent.</p>
 </td>
       </tr>
       <tr>
@@ -223,7 +225,7 @@ Instead, if you access a position that cannot map to any valid position in the u
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_DefaultValue.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.DefaultValue%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L69">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L70">View Source</a>
   </span>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_DefaultValue" data-uid="GoRogue.MapViews.UnboundedViewport`1.DefaultValue">DefaultValue</h4>
   <div class="markdown level1 summary"><p>The value to return if a position is accessed that is outside the actual underlying map view.</p>
@@ -255,11 +257,11 @@ Instead, if you access a position that cannot map to any valid position in the u
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L37">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L38">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_Height_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Height*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_Height" data-uid="GoRogue.MapViews.UnboundedViewport`1.Height">Height</h4>
-  <div class="markdown level1 summary"><p>The height of the ViewArea.</p>
+  <div class="markdown level1 summary"><p>The height of the area being represented.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -286,7 +288,7 @@ Instead, if you access a position that cannot map to any valid position in the u
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L84">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L96">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_Item_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item(GoRogue.Coord)">Item[Coord]</h4>
@@ -327,8 +329,8 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView, or DefaultValue if the absolute position does not exist
-in the underlying map view.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view,
+or <a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html#GoRogue_MapViews_UnboundedViewport_1_DefaultValue">DefaultValue</a> if the absolute position does not exist in the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -338,11 +340,13 @@ in the underlying map view.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L71">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L83">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_Item_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_Item_System_Int32_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item(System.Int32)">Item[Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Given a position in relative 1d-array-index style, returns the &quot;value&quot; associated with that
+location in absolute coordinates.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -361,7 +365,8 @@ in the underlying map view.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">relativeIndex1D</span></td>
-        <td></td>
+        <td><p>Viewport-relative position of the location to retrieve the value for, as a 1D array index.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -376,7 +381,9 @@ in the underlying map view.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td></td>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view,
+or <a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html#GoRogue_MapViews_UnboundedViewport_1_DefaultValue">DefaultValue</a> if the absolute position does not exist in the underlying map view.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -385,7 +392,7 @@ in the underlying map view.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L107">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L119">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_Item_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -432,8 +439,8 @@ location in absolute coordinates.</p>
     <tbody>
       <tr>
         <td><span class="xref">T</span></td>
-        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying MapView, or DefaultValue if the absolute
-position does not exist in the underlying MapView.</p>
+        <td><p>The &quot;value&quot; associated with the absolute location represented on the underlying map view,
+or <a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html#GoRogue_MapViews_UnboundedViewport_1_DefaultValue">DefaultValue</a> if the absolute position does not exist in the underlying map view.</p>
 </td>
       </tr>
     </tbody>
@@ -443,11 +450,11 @@ position does not exist in the underlying MapView.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_MapView.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.MapView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L45">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L46">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_MapView_" data-uid="GoRogue.MapViews.UnboundedViewport`1.MapView*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_MapView" data-uid="GoRogue.MapViews.UnboundedViewport`1.MapView">MapView</h4>
-  <div class="markdown level1 summary"><p>The MapView that this Viewport is exposing values from.</p>
+  <div class="markdown level1 summary"><p>The map view that this UnboundedViewport is exposing values from.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -474,13 +481,13 @@ position does not exist in the underlying MapView.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_ViewArea.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.ViewArea%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L53">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L54">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_ViewArea_" data-uid="GoRogue.MapViews.UnboundedViewport`1.ViewArea*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_ViewArea" data-uid="GoRogue.MapViews.UnboundedViewport`1.ViewArea">ViewArea</h4>
   <div class="markdown level1 summary"><p>The area of the base MapView that this Viewport is exposing. Although this property does
 not explicitly expose a set accessor, it is returning a reference and as such may be
-assigned to. This viewport is NOT bounded to base map edges -- for this functionality, see the Viewport&lt;T&gt; class.</p>
+assigned to. This viewport is NOT bounded to base map edges -- for this functionality, see the <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -507,11 +514,11 @@ assigned to. This viewport is NOT bounded to base map edges -- for this function
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L61">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L62">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_Width_" data-uid="GoRogue.MapViews.UnboundedViewport`1.Width*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_Width" data-uid="GoRogue.MapViews.UnboundedViewport`1.Width">Width</h4>
-  <div class="markdown level1 summary"><p>The width of the ViewArea.</p>
+  <div class="markdown level1 summary"><p>The height of the area being represented.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -540,11 +547,11 @@ assigned to. This viewport is NOT bounded to base map edges -- for this function
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L125">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L137">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_ToString_" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_ToString" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString">ToString()</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the Viewport.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the UnboundedViewport.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -562,7 +569,7 @@ assigned to. This viewport is NOT bounded to base map edges -- for this function
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the Viewport.</p>
+        <td><p>A string representation of the UnboundedViewport.</p>
 </td>
       </tr>
     </tbody>
@@ -574,12 +581,12 @@ assigned to. This viewport is NOT bounded to base map edges -- for this function
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L139">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L151">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_ToString_" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Returns a string representation of the Viewport, using the elementStringifier function
-given to determine what string represents which value.</p>
+  <div class="markdown level1 summary"><p>Returns a string representation of the map view, using <code data-dev-comment-type="paramref" class="paramref">elementStringifier</code>
+to determine what string represents each value.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -615,13 +622,13 @@ given to determine what string represents which value.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the Viewport.</p>
+        <td><p>A string representation of the UnboundedViewport.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_UnboundedViewport_1_ToString_System_Func__0_System_String___remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>This could be used, for example, on an Viewport of boolean values, to output '#' for
+  <div class="markdown level1 remarks"><p>This could be used, for example, on an UnboundedViewport of boolean values, to output '#' for
 false values, and '.' for true values.</p>
 </div>
   <span class="small pull-right mobile-hide">
@@ -629,15 +636,12 @@ false values, and '.' for true values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1_ToString_System_Int32_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601.ToString(System.Int32%2CSystem.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L154">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L171">View Source</a>
   </span>
   <a id="GoRogue_MapViews_UnboundedViewport_1_ToString_" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_UnboundedViewport_1_ToString_System_Int32_System_Func__0_System_String__" data-uid="GoRogue.MapViews.UnboundedViewport`1.ToString(System.Int32,System.Func{`0,System.String})">ToString(Int32, Func&lt;T, String&gt;)</h4>
-  <div class="markdown level1 summary"><p>Prints the values in the Viewport, using the function specified to turn elements into
-strings, and using the &quot;field length&quot; specified. Each element of type T will have spaces
-added to cause it to take up exactly fieldSize characters, provided fieldSize is less
-than the length of the element's string represention. A positive-number right-aligns the
-text within the field, while a negative number left-aligns the text.</p>
+  <div class="markdown level1 summary"><p>Prints the values in the UnboundedViewport, using the function specified to turn elements into
+strings, and using the &quot;field length&quot; specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -657,13 +661,14 @@ text within the field, while a negative number left-aligns the text.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">fieldSize</span></td>
-        <td><p>The size of the field to give each value.</p>
+        <td><p>The size of the field to give each value.  A positive-number
+right-aligns the text within the field, while a negative number left-aligns the text.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
         <td><span class="parametername">elementStringifier</span></td>
-        <td><p>Function to use to convert each element to a string. Null defaults to the ToString
+        <td><p>Function to use to convert each element to a string. null defaults to the ToString
 function of type T.</p>
 </td>
       </tr>
@@ -680,11 +685,16 @@ function of type T.</p>
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td><p>A string representation of the Viewport.</p>
+        <td><p>A string representation of the UnboundedViewport.</p>
 </td>
       </tr>
     </tbody>
   </table>
+  <h5 id="GoRogue_MapViews_UnboundedViewport_1_ToString_System_Int32_System_Func__0_System_String___remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Each element of type T will have spaces added to cause it to take up exactly
+<code data-dev-comment-type="paramref" class="paramref">fieldSize</code> characters, provided <code data-dev-comment-type="paramref" class="paramref">fieldSize</code>
+is less than the length of the element's string represention.</p>
+</div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
@@ -746,7 +756,7 @@ function of type T.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_UnboundedViewport_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.UnboundedViewport%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L10" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/UnboundedViewport.cs/#L11" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

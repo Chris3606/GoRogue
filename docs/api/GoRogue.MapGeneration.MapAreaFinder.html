@@ -113,7 +113,7 @@ area of the map.</p>
     <pre><code class="lang-csharp hljs">public class MapAreaFinder</code></pre>
   </div>
   <h5 id="GoRogue_MapGeneration_MapAreaFinder_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>The class takes in an IMapView, where a value of true for a given position indicates it
+  <div class="markdown level0 remarks"><p>The class takes in an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where a value of true for a given position indicates it
 should be part of a map area, and false indicates it should not be part of any map area. In a
 classic roguelike dungeon example, this might be a walkability map where floors return a
 value of true and walls a value of false.</p>
@@ -149,7 +149,7 @@ value of true and walls a value of false.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
         <td><span class="parametername">map</span></td>
-        <td><p>IMapView indicating which cells should be considered part of a map area and which should not.</p>
+        <td><p>Map view indicating which cells should be considered part of a map area and which should not.</p>
 </td>
       </tr>
       <tr>
@@ -200,7 +200,7 @@ value of true and walls a value of false.</p>
     <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/MapAreaFinder.cs/#L27">View Source</a>
   </span>
   <h4 id="GoRogue_MapGeneration_MapAreaFinder_Map" data-uid="GoRogue.MapGeneration.MapAreaFinder.Map">Map</h4>
-  <div class="markdown level1 summary"><p>IMapView indicating which cells should be considered part of a map area and which should not.</p>
+  <div class="markdown level1 summary"><p>Map view indicating which cells should be considered part of a map area and which should not.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -265,8 +265,8 @@ value of true and walls a value of false.</p>
   </span>
   <a id="GoRogue_MapGeneration_MapAreaFinder_MapAreasFor_" data-uid="GoRogue.MapGeneration.MapAreaFinder.MapAreasFor*"></a>
   <h4 id="GoRogue_MapGeneration_MapAreaFinder_MapAreasFor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_AdjacencyRule_" data-uid="GoRogue.MapGeneration.MapAreaFinder.MapAreasFor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.AdjacencyRule)">MapAreasFor(IMapView&lt;Boolean&gt;, AdjacencyRule)</h4>
-  <div class="markdown level1 summary"><p>Convenience function that creates an MapAreaFinder and returns the result of that
-MapAreaFinder's MapAreas function. Intended to be used for cases in which the area finder
+  <div class="markdown level1 summary"><p>Convenience function that creates a MapAreaFinder and returns the result of that
+instances <a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html#GoRogue_MapGeneration_MapAreaFinder_MapAreas">MapAreas()</a> function. Intended to be used for cases in which the area finder
 will never be re-used.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -287,7 +287,7 @@ will never be re-used.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
         <td><span class="parametername">map</span></td>
-        <td><p>IMapView indicating which cells should be considered part of a map area and which should not.</p>
+        <td><p>Map view indicating which cells should be considered part of a map area and which should not.</p>
 </td>
       </tr>
       <tr>

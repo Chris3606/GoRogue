@@ -74,7 +74,7 @@
   <h1 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector" class="text-break">Class ClosestMapAreaConnector
   </h1>
   <div class="markdown level0 summary"><p>Implements a connection algorithm that connects all unique map areas in the given map by
-connecting each area with the one closest to it.</p>
+connecting each area with the one closest to it, based on closeness of the area's center points.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -114,11 +114,10 @@ connecting each area with the one closest to it.</p>
   </div>
   <h5 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>The algorithm functions by first finding all unique areas in the map given by using
-MapAreaFinder.MapAreas. Then, we iterate through each area, find the closest area that is not
-already conencted to the current area, and create a tunnel between the two. Distance between
-to areas is measured as the distance between the center point of the bounding boxes of those
-areas. /// Points to connect two areas, as well as method used to create a tunnel between
-those two points, are selected via specified parameters.</p>
+<a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html#GoRogue_MapGeneration_MapAreaFinder_MapAreas">MapAreas()</a>. Then, we iterate through each area, find the closest area that is not
+already conencted to the current area.  Distance between to areas is measured as the distance between the
+center point of the bounding boxes of those areas. Points to connect two areas, as well as method used to create
+a tunnel between those two points, are selected via specified parameters.</p>
 </div>
   <h3 id="methods">Methods
   </h3>
@@ -127,12 +126,12 @@ those two points, are selected via specified parameters.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CGoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector%2CGoRogue.MapGeneration.Connectors.ITunnelCreator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L36">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L34">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView{System.Boolean},GoRogue.Distance,GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector,GoRogue.MapGeneration.Connectors.ITunnelCreator)">Connect(ISettableMapView&lt;Boolean&gt;, Distance, IAreaConnectionPointSelector, ITunnelCreator)</h4>
   <div class="markdown level1 summary"><p>Connects the given map using the algorithm described in the class description.  Map areas
-are automatically determined via MapAreaFinder</p>
+are automatically determined using a <a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html">MapAreaFinder</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -171,7 +170,7 @@ are automatically determined via MapAreaFinder</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
         <td><span class="parametername">tunnelCreator</span></td>
-        <td><p>The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+        <td><p>The tunnel creation strategy to use. If null is specified, <a class="xref" href="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html">DirectLineTunnelCreator</a> with
 the distance calculation specified is used.</p>
 </td>
       </tr>
@@ -182,7 +181,7 @@ the distance calculation specified is used.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Collections_Generic_IReadOnlyList_GoRogue_MapGeneration_MapArea__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CSystem.Collections.Generic.IReadOnlyList%7BGoRogue.MapGeneration.MapArea%7D%2CGoRogue.Distance%2CGoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector%2CGoRogue.MapGeneration.Connectors.ITunnelCreator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L57">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L55">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector_Connect_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Collections_Generic_IReadOnlyList_GoRogue_MapGeneration_MapArea__GoRogue_Distance_GoRogue_MapGeneration_Connectors_IAreaConnectionPointSelector_GoRogue_MapGeneration_Connectors_ITunnelCreator_" data-uid="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.Connect(GoRogue.MapViews.ISettableMapView{System.Boolean},System.Collections.Generic.IReadOnlyList{GoRogue.MapGeneration.MapArea},GoRogue.Distance,GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector,GoRogue.MapGeneration.Connectors.ITunnelCreator)">Connect(ISettableMapView&lt;Boolean&gt;, IReadOnlyList&lt;MapArea&gt;, Distance, IAreaConnectionPointSelector, ITunnelCreator)</h4>
@@ -231,7 +230,7 @@ the distance calculation specified is used.</p>
       <tr>
         <td><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></td>
         <td><span class="parametername">tunnelCreator</span></td>
-        <td><p>The tunnel creation strategy to use. If null is specified, DirectLineTunnelCreator with
+        <td><p>The tunnel creation strategy to use. If null is specified, <a class="xref" href="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html">DirectLineTunnelCreator</a> with
 the distance calculation specified is used.</p>
 </td>
       </tr>
@@ -248,7 +247,7 @@ the distance calculation specified is used.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapGeneration_Connectors_ClosestMapAreaConnector.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L19" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapGeneration/Connectors/ClosestMapAreaConnector.cs/#L18" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

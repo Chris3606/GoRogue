@@ -74,9 +74,9 @@
   <h1 id="GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator" data-uid="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator" class="text-break">Class DirectLineTunnelCreator
   </h1>
   <div class="markdown level0 summary"><p>Implements a tunnel creation algorithm that sets as walkable a direct line between the two
-points. In the case that MAHNATTAN distance is being used, the line is calculated via the
-Coord.CardinalPositionOnLine function. Otherwise, the line is calculated using
-Coord.PositionsOnLine (brensham's).</p>
+points. In the case that <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_MANHATTAN">MANHATTAN</a> is being used, the line is calculated via the
+<a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_ORTHO">ORTHO</a> algorithm.  Otherwise, the line is calculated using
+<a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_BRESENHAM">BRESENHAM</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
@@ -129,8 +129,8 @@ Coord.PositionsOnLine (brensham's).</p>
   </span>
   <a id="GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator__ctor_" data-uid="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor*"></a>
   <h4 id="GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator__ctor_GoRogue_AdjacencyRule_" data-uid="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor(GoRogue.AdjacencyRule)">DirectLineTunnelCreator(AdjacencyRule)</h4>
-  <div class="markdown level1 summary"><p>Constructor. Takes the distance calculation to use, which determines whether brensham's
-or CardinalPositionOnLine is used to create the tunnel.</p>
+  <div class="markdown level1 summary"><p>Constructor. Takes the distance calculation to use, which determines whether <a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_ORTHO">ORTHO</a>
+or <a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_BRESENHAM">BRESENHAM</a> is used to create the tunnel.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
