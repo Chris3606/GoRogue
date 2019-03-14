@@ -15,6 +15,21 @@ namespace GoRogue
 	public interface IReadOnlySpatialMap<T> : IEnumerable<ISpatialTuple<T>>
 	{
 		/// <summary>
+		/// Event that is fired directly after an item has been added to the spatial map.
+		/// </summary>
+		event EventHandler<ItemEventArgs<T>> ItemAdded;
+
+		/// <summary>
+		/// Event that is fired directly after an item in the sptial map has been moved.
+		/// </summary>
+		event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
+
+		/// <summary>
+		/// Event that is fired directly after an item has been removed from the spatial map.
+		/// </summary>
+		event EventHandler<ItemEventArgs<T>> ItemRemoved;
+
+		/// <summary>
 		/// The number of items in the spatial map.
 		/// </summary>
 		int Count { get; }

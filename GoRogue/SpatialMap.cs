@@ -42,17 +42,17 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See <see cref="ISpatialMap{T}.ItemAdded"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.ItemAdded"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemAdded;
 
 		/// <summary>
-		/// See <see cref="ISpatialMap{T}.ItemMoved"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.ItemMoved"/>.
 		/// </summary>
 		public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
 		/// <summary>
-		/// See <see cref="ISpatialMap{T}.ItemRemoved"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>.
 		/// </summary>
 		public event EventHandler<ItemEventArgs<T>> ItemRemoved;
 

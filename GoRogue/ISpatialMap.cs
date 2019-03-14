@@ -42,21 +42,6 @@ namespace GoRogue
 	public interface ISpatialMap<T> : IReadOnlySpatialMap<T>
 	{
 		/// <summary>
-		/// Event that is fired directly after an item has been added to the spatial map.
-		/// </summary>
-		event EventHandler<ItemEventArgs<T>> ItemAdded;
-
-		/// <summary>
-		/// Event that is fired directly after an item in the sptial map has been moved.
-		/// </summary>
-		event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
-
-		/// <summary>
-		/// Event that is fired directly after an item has been removed from the spatial map.
-		/// </summary>
-		event EventHandler<ItemEventArgs<T>> ItemRemoved;
-
-		/// <summary>
 		/// Adds the given item at the given position, and returns true if the item was successfully
 		/// added. If the item could not be added, returns false.
 		/// </summary>
@@ -144,8 +129,8 @@ namespace GoRogue
 	}
 
 	/// <summary>
-	/// Event arguments for spatial map events pertaining to an item (<see cref="ISpatialMap{T}.ItemAdded"/>,
-	/// <see cref="ISpatialMap{T}.ItemRemoved"/>, etc.)
+	/// Event arguments for spatial map events pertaining to an item (<see cref="IReadOnlySpatialMap{T}.ItemAdded"/>,
+	/// <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>, etc.)
 	/// </summary>
 	/// <typeparam name="T">Type of item.</typeparam>
 	public class ItemEventArgs<T> : EventArgs
@@ -182,7 +167,7 @@ namespace GoRogue
 	}
 
 	/// <summary>
-	/// Event arguments for spatial maps <see cref="ISpatialMap{T}.ItemMoved"/> event.
+	/// Event arguments for spatial maps <see cref="IReadOnlySpatialMap{T}.ItemMoved"/> event.
 	/// </summary>
 	/// <typeparam name="T">Type of item being stored.</typeparam>
 	public class ItemMovedEventArgs<T> : EventArgs
