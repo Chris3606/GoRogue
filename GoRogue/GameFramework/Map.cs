@@ -484,30 +484,27 @@ namespace GoRogue.GameFramework
 		#region FOV
 		/// <summary>
 		/// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <see cref="FOV"/> property.  All tiles
-		/// that are in the resulting FOV are marked as explored.
+		/// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+		/// <see cref="CalculateFOV(int, int, double, Distance)"/>, so if you need to override this functionality, override that overload instead.
 		/// </summary>
 		/// <param name="position">The center point of the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-		public void CalculateFOV(Coord position, double radius = double.MaxValue) => CalculateFOV(position.X, position.Y, radius);
+		public void CalculateFOV(Coord position, double radius = double.MaxValue) => CalculateFOV(position.X, position.Y, radius, Radius.CIRCLE);
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <see cref="FOV"/> property.  All tiles
-		/// that are in the resulting FOV are marked as explored.
+		/// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+		/// <see cref="CalculateFOV(int, int, double, Distance)"/>, so if you need to override this functionality, override that overload instead.
 		/// </summary>
 		/// <param name="x">X-value of the center point for the new FOV to calculate.</param>
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-		public virtual void CalculateFOV(int x, int y, double radius = double.MaxValue)
-		{
-			_fov.Calculate(x, y, radius);
-
-			foreach (var pos in _fov.NewlySeen)
-				Explored[pos] = true;
-		}
+		public void CalculateFOV(int x, int y, double radius = double.MaxValue) => CalculateFOV(x, y, radius, Radius.CIRCLE);
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV"/> property.  All tiles that are in the
-		/// resulting FOV are marked as explored.
+		/// resulting FOV are marked as explored.  This function calls the virtual overload
+		/// <see cref="CalculateFOV(int, int, double, Distance)"/>, so if you need to override this functionality, override that overload instead.
 		/// </summary>
 		/// <param name="position">The center point of the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
@@ -517,7 +514,8 @@ namespace GoRogue.GameFramework
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV"/> property.  All tiles that are in the
-		/// resulting FOV are marked as explored.
+		/// resulting FOV are marked as explored.  Other non-angle-based overloads call this one, so if you need to override functionality, override
+		/// this function.
 		/// </summary>
 		/// <param name="x">X-value of the center point for the new FOV to calculate.</param>
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
@@ -534,7 +532,9 @@ namespace GoRogue.GameFramework
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <see cref="FOV"/>
-		/// property. All tiles that are in the resulting FOV are marked as explored.
+		/// property. All tiles that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+		/// <see cref="CalculateFOV(int, int, double, Distance, double, double)"/>, so if you need to override this functionality, override that
+		/// overload instead.
 		/// </summary>
 		/// <param name="position">The center point of the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
@@ -548,7 +548,8 @@ namespace GoRogue.GameFramework
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <see cref="FOV"/>
-		/// property.  All tiles that are in the resulting FOV are marked as explored.
+		/// property.  All tiles that are in the resulting FOV are marked as explored.  Other angle-based overloads call this one, so if you need to
+		/// override functionality, override this function.
 		/// </summary>
 		/// <param name="x">X-value of the center point for the new FOV to calculate.</param>
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>

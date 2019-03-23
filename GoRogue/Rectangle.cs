@@ -20,7 +20,8 @@ namespace GoRogue
 	/// Rectangle where possible, as something that accepts or works with Rectangle will generally work with other supported types
 	/// as well.
 	/// </remarks>
-	public struct Rectangle : IEquatable<Rectangle>
+	public struct Rectangle : IEquatable<Rectangle>, IEquatable<XnaRectangle>, IEquatable<DrawingRectangle>, IEquatable<DrawingRectangleF>,
+								IEquatable<(int x, int y, int width, int height)>
 	{
 		/// <summary>
 		/// The empty rectangle. Has origin of (0, 0) with 0 width and height.
@@ -783,6 +784,55 @@ namespace GoRogue
 		/// <param name="rect" />
 		/// <returns />
 		public static implicit operator Rectangle(XnaRectangle rect) => new Rectangle(rect.X, rect.Y, rect.Width, rect.Height);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(Rectangle r1, XnaRectangle r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(Rectangle r1, XnaRectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(XnaRectangle r1, Rectangle r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(XnaRectangle r1, Rectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the given position has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public bool Equals(XnaRectangle other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 		#endregion
 
 		#region System Drawing Conversions
@@ -805,6 +855,104 @@ namespace GoRogue
 		/// <param name="rect" />
 		/// <returns />
 		public static implicit operator DrawingRectangleF(Rectangle rect) => new DrawingRectangleF(rect.X, rect.Y, rect.Width, rect.Height);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(Rectangle r1, DrawingRectangle r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(Rectangle r1, DrawingRectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(DrawingRectangle r1, Rectangle r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(DrawingRectangle r1, Rectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the given position has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public bool Equals(DrawingRectangle other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(Rectangle r1, DrawingRectangleF r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(Rectangle r1, DrawingRectangleF r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(DrawingRectangleF r1, Rectangle r2)
+		{
+			return r1.X == r2.X && r1.Y == r2.Y && r1.Width == r2.Width && r1.Height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(DrawingRectangleF r1, Rectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the given position has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public bool Equals(DrawingRectangleF other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 		#endregion
 
 		#region Tuple Compability
@@ -835,6 +983,56 @@ namespace GoRogue
 			width = Width;
 			height = Height;
 		}
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==(Rectangle r1, (int x, int y, int width, int height) r2)
+		{
+			return r1.X == r2.x && r1.Y == r2.y && r1.Width == r2.width && r1.Height == r2.height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=(Rectangle r1, (int x, int y, int width, int height) r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the two rectangles represent the same area.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>True if the two rectangles are equal, false if not.</returns>
+		public static bool operator ==((int x, int y, int width, int height) r1, Rectangle r2)
+		{
+			return r1.x == r2.X && r1.y == r2.Y && r1.width == r2.Width && r1.height == r2.Height;
+		}
+
+		/// <summary>
+		/// True if any of the rectangles' x/y/width/height values are not equal.
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns>
+		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
+		/// </returns>
+		public static bool operator !=((int x, int y, int width, int height) r1, Rectangle r2) => !(r1 == r2);
+
+		/// <summary>
+		/// True if the given position has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public bool Equals((int x, int y, int width, int height) other)
+		=> X == other.x && Y == other.y && Width == other.width && Height == other.height;
 		#endregion
 
 		/// <summary>

@@ -29,7 +29,8 @@ namespace GoRogue
 	/// Coord where possible, as something that accepts or works with Coord will generally work with other supported types
 	/// as well.
 	/// </remarks>
-	public struct Coord : IEquatable<Coord>
+	public struct Coord : IEquatable<Coord>, IEquatable<MonoPoint>, IEquatable<DrawingPoint>, IEquatable<PointF>, IEquatable<Size>, IEquatable<SizeF>,
+						   IEquatable<(int x, int y)>
 	{
 		/// <summary>
 		/// Coord value that represents None or no position (since Coord is not a nullable type).
@@ -442,6 +443,55 @@ namespace GoRogue
 		/// <param name="p" />
 		/// <returns>A Coord (c.X - p.X, c.Y - p.Y).</returns>
 		public static Coord operator -(Coord c, MonoPoint p) => new Coord(c.X - p.X, c.Y - p.Y);
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(Coord c1, MonoPoint p2)
+		{
+			return c1.X == p2.X && c1.Y == p2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c1, MonoPoint p2) => !(c1 == p2);
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(MonoPoint p1, Coord c2)
+		{
+			return p1.X == c2.X && p1.Y == c2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(MonoPoint p1, Coord c2) => !(p1 == c2);
+
+		/// <summary>
+		/// True if the given coordinate has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public bool Equals(MonoPoint other) => X == other.X && Y == other.Y;
 		#endregion
 
 		#region System.Drawing Compatibility
@@ -569,6 +619,202 @@ namespace GoRogue
 		/// <param name="c" />
 		/// <returns>A System.Drawing.SizeF (s.Width - c.X, s.Height - c.Y).</returns>
 		public static SizeF operator -(SizeF s, Coord c) => new SizeF(s.Width - c.X, s.Height - c.Y);
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(Coord c1, DrawingPoint p2)
+		{
+			return c1.X == p2.X && c1.Y == p2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c1, DrawingPoint p2) => !(c1 == p2);
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(DrawingPoint p1, Coord c2)
+		{
+			return p1.X == c2.X && p1.Y == c2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(DrawingPoint p1, Coord c2) => !(p1 == c2);
+
+		/// <summary>
+		/// True if the given coordinate has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public bool Equals(DrawingPoint other) => X == other.X && Y == other.Y;
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(Coord c1, PointF p2)
+		{
+			return c1.X == p2.X && c1.Y == p2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="c1"></param>
+		/// <param name="p2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c1, PointF p2) => !(c1 == p2);
+
+		/// <summary>
+		/// True if the two point's X and Y values are equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public static bool operator ==(PointF p1, Coord c2)
+		{
+			return p1.X == c2.X && p1.Y == c2.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="p1"></param>
+		/// <param name="c2"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(PointF p1, Coord c2) => !(p1 == c2);
+
+		/// <summary>
+		/// True if the given coordinate has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two coordinates are equal, false if not.</returns>
+		public bool Equals(PointF other) => X == other.X && Y == other.Y;
+
+		/// <summary>
+		/// True if the point's x/y values equal the size's width/height values.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="size"></param>
+		/// <returns>True if the given Coord and Size are equivalent, false if not.</returns>
+		public static bool operator ==(Coord c, Size size)
+		{
+			return c.X == size.Width && c.Y == size.Height;
+		}
+
+		/// <summary>
+		/// True if either the x/Width values or the y/Height values do not match.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="size"></param>
+		/// <returns>
+		/// True if either the x/Width values or the y/Height values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c, Size size) => !(c == size);
+
+		/// <summary>
+		/// True if the size's width/height values equal the point's x/y values.
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="c"></param>
+		/// <returns>True if the given Size and Coord are equivalent, false if not.</returns>
+		public static bool operator ==(Size size, Coord c)
+		{
+			return size.Width == c.X && size.Height == c.Y;
+		}
+
+		/// <summary>
+		/// True if either the Width/x values or the Height/y values do not match.
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="c"></param>
+		/// <returns>
+		/// True if either the Width/x values or the Height/y values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Size size, Coord c) => !(size == c);
+
+		/// <summary>
+		/// True if the current coordinate has equal x and y values to the given size's Width/Height values.
+		/// </summary>
+		/// <param name="other">Size to compare.</param>
+		/// <returns>True if the size and coordinate are equivalent, false if not.</returns>
+		public bool Equals(Size other) => X == other.Width && Y == other.Height;
+
+		/// <summary>
+		/// True if the point's x/y values equal the size's width/height values.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="size"></param>
+		/// <returns>True if the given Coord and SizeF are equivalent, false if not.</returns>
+		public static bool operator ==(Coord c, SizeF size)
+		{
+			return c.X == size.Width && c.Y == size.Height;
+		}
+
+		/// <summary>
+		/// True if either the x/Width values or the y/Height values do not match.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="size"></param>
+		/// <returns>
+		/// True if either the x/Width values or the y/Height values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c, SizeF size) => !(c == size);
+
+		/// <summary>
+		/// True if the size's width/height values equal the point's x/y values.
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="c"></param>
+		/// <returns>True if the given SizeF and Coord are equivalent, false if not.</returns>
+		public static bool operator ==(SizeF size, Coord c)
+		{
+			return size.Width == c.X && size.Height == c.Y;
+		}
+
+		/// <summary>
+		/// True if either the Width/x values or the Height/y values do not match.
+		/// </summary>
+		/// <param name="size"></param>
+		/// <param name="c"></param>
+		/// <returns>
+		/// True if either the Width/x values or the Height/y values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(SizeF size, Coord c) => !(size == c);
+
+		/// <summary>
+		/// True if the current coordinate has equal x and y values to the given size's Width/Height values.
+		/// </summary>
+		/// <param name="other">SizeF to compare.</param>
+		/// <returns>True if the size and coordinate are equivalent, false if not.</returns>
+		public bool Equals(SizeF other) => X == other.Width && Y == other.Height;
 		#endregion
 
 		#region TupleCompatibility
@@ -625,6 +871,55 @@ namespace GoRogue
 		/// <param name="tuple" />
 		/// <returns>A Coord (c.X - tuple.x, c.Y - tuple.y).</returns>
 		public static Coord operator -(Coord c, (int x, int y) tuple) => new Coord(c.X - tuple.x, c.Y - tuple.y);
+
+		/// <summary>
+		/// True if the two point's x and y values are equal.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="tuple"></param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public static bool operator ==(Coord c, (int x, int y) tuple)
+		{
+			return c.X == tuple.x && c.Y == tuple.y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="tuple"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=(Coord c, (int x, int y) tuple) => !(c == tuple);
+
+		/// <summary>
+		/// True if the two point's x and y values are equal.
+		/// </summary>
+		/// <param name="tuple"></param>
+		/// <param name="c"></param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public static bool operator ==((int x, int y) tuple, Coord c)
+		{
+			return tuple.x == c.X && tuple.y == c.Y;
+		}
+
+		/// <summary>
+		/// True if either the x-values or y-values are not equal.
+		/// </summary>
+		/// <param name="tuple"></param>
+		/// <param name="c"></param>
+		/// <returns>
+		/// True if either the x-values or y-values are not equal, false if they are both equal.
+		/// </returns>
+		public static bool operator !=((int x, int y) tuple, Coord c) => !(tuple == c);
+
+		/// <summary>
+		/// True if the given position has equal x and y values to the current one.
+		/// </summary>
+		/// <param name="other">Point to compare.</param>
+		/// <returns>True if the two positions are equal, false if not.</returns>
+		public bool Equals((int x, int y) other) => X == other.x && Y == other.y;
 		#endregion
 	}
 }
