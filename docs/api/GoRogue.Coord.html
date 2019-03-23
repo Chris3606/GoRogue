@@ -81,6 +81,12 @@ as well as enable interoperability with position representations from other libr
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">Microsoft.Xna.Framework.Point</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.Point</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.PointF</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.Size</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.SizeF</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -98,7 +104,7 @@ as well as enable interoperability with position representations from other libr
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_Coord_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Coord : IEquatable&lt;Coord&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public struct Coord : IEquatable&lt;Coord&gt;, IEquatable&lt;Point&gt;, IEquatable&lt;Point&gt;, IEquatable&lt;PointF&gt;, IEquatable&lt;Size&gt;, IEquatable&lt;SizeF&gt;, IEquatable&lt;(int x, int y)&gt;</code></pre>
   </div>
   <h5 id="GoRogue_Coord_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Coord instances can be created using the standard Coord c = new Coord(x, y) syntax.  In addition,
@@ -124,7 +130,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord__ctor_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.%23ctor(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L59">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L60">View Source</a>
   </span>
   <a id="GoRogue_Coord__ctor_" data-uid="GoRogue.Coord.#ctor*"></a>
   <h4 id="GoRogue_Coord__ctor_System_Int32_System_Int32_" data-uid="GoRogue.Coord.#ctor(System.Int32,System.Int32)">Coord(Int32, Int32)</h4>
@@ -166,7 +172,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_NONE.md&amp;value=---%0Auid%3A%20GoRogue.Coord.NONE%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L42">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L43">View Source</a>
   </span>
   <h4 id="GoRogue_Coord_NONE" data-uid="GoRogue.Coord.NONE">NONE</h4>
   <div class="markdown level1 summary"><p>Coord value that represents None or no position (since Coord is not a nullable type).
@@ -201,7 +207,7 @@ x/y values is not considered a valid coordinate by many GoRogue functions.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_X.md&amp;value=---%0Auid%3A%20GoRogue.Coord.X%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L47">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L48">View Source</a>
   </span>
   <h4 id="GoRogue_Coord_X" data-uid="GoRogue.Coord.X">X</h4>
   <div class="markdown level1 summary"><p>X-value of the coordinate.</p>
@@ -231,7 +237,7 @@ x/y values is not considered a valid coordinate by many GoRogue functions.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Y.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Y%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L52">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L53">View Source</a>
   </span>
   <h4 id="GoRogue_Coord_Y" data-uid="GoRogue.Coord.Y">Y</h4>
   <div class="markdown level1 summary"><p>Y-value of the coordinate.</p>
@@ -263,7 +269,7 @@ x/y values is not considered a valid coordinate by many GoRogue functions.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_BearingOfLine_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.BearingOfLine(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L93">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L94">View Source</a>
   </span>
   <a id="GoRogue_Coord_BearingOfLine_" data-uid="GoRogue.Coord.BearingOfLine*"></a>
   <h4 id="GoRogue_Coord_BearingOfLine_GoRogue_Coord_" data-uid="GoRogue.Coord.BearingOfLine(GoRogue.Coord)">BearingOfLine(Coord)</h4>
@@ -315,7 +321,7 @@ is the change in y-values across the line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_BearingOfLine_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.BearingOfLine(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L71">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L72">View Source</a>
   </span>
   <a id="GoRogue_Coord_BearingOfLine_" data-uid="GoRogue.Coord.BearingOfLine*"></a>
   <h4 id="GoRogue_Coord_BearingOfLine_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.BearingOfLine(GoRogue.Coord,GoRogue.Coord)">BearingOfLine(Coord, Coord)</h4>
@@ -371,7 +377,7 @@ is the change in y-values across the line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_BearingOfLine_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.BearingOfLine(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L102">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L103">View Source</a>
   </span>
   <a id="GoRogue_Coord_BearingOfLine_" data-uid="GoRogue.Coord.BearingOfLine*"></a>
   <h4 id="GoRogue_Coord_BearingOfLine_System_Int32_System_Int32_" data-uid="GoRogue.Coord.BearingOfLine(System.Int32,System.Int32)">BearingOfLine(Int32, Int32)</h4>
@@ -428,7 +434,7 @@ is the change in y-values across the line.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_BearingOfLine_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.BearingOfLine(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L82">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L83">View Source</a>
   </span>
   <a id="GoRogue_Coord_BearingOfLine_" data-uid="GoRogue.Coord.BearingOfLine*"></a>
   <h4 id="GoRogue_Coord_BearingOfLine_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Coord.BearingOfLine(System.Int32,System.Int32,System.Int32,System.Int32)">BearingOfLine(Int32, Int32, Int32, Int32)</h4>
@@ -497,7 +503,7 @@ in the direction <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Deconstruct_System_Int32__System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Deconstruct(System.Int32%40%2CSystem.Int32%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L580">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L826">View Source</a>
   </span>
   <a id="GoRogue_Coord_Deconstruct_" data-uid="GoRogue.Coord.Deconstruct*"></a>
   <h4 id="GoRogue_Coord_Deconstruct_System_Int32__System_Int32__" data-uid="GoRogue.Coord.Deconstruct(System.Int32@,System.Int32@)">Deconstruct(out Int32, out Int32)</h4>
@@ -535,7 +541,7 @@ in the direction <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L401">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L402">View Source</a>
   </span>
   <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
   <h4 id="GoRogue_Coord_Equals_GoRogue_Coord_" data-uid="GoRogue.Coord.Equals(GoRogue.Coord)">Equals(Coord)</h4>
@@ -582,10 +588,260 @@ in the direction <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_Microsoft_Xna_Framework_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L494">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_Microsoft_Xna_Framework_Point_" data-uid="GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)">Equals(Point)</h4>
+  <div class="markdown level1 summary"><p>True if the given coordinate has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Point other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Point</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_Drawing_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.Drawing.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L670">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_System_Drawing_Point_" data-uid="GoRogue.Coord.Equals(System.Drawing.Point)">Equals(Point)</h4>
+  <div class="markdown level1 summary"><p>True if the given coordinate has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Point other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Point</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_Drawing_PointF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.Drawing.PointF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L719">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_System_Drawing_PointF_" data-uid="GoRogue.Coord.Equals(System.Drawing.PointF)">Equals(PointF)</h4>
+  <div class="markdown level1 summary"><p>True if the given coordinate has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(PointF other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.PointF</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_Drawing_Size_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.Drawing.Size)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L768">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_System_Drawing_Size_" data-uid="GoRogue.Coord.Equals(System.Drawing.Size)">Equals(Size)</h4>
+  <div class="markdown level1 summary"><p>True if the current coordinate has equal x and y values to the given size's Width/Height values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Size other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Size</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Size to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the size and coordinate are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_Drawing_SizeF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.Drawing.SizeF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L817">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_System_Drawing_SizeF_" data-uid="GoRogue.Coord.Equals(System.Drawing.SizeF)">Equals(SizeF)</h4>
+  <div class="markdown level1 summary"><p>True if the current coordinate has equal x and y values to the given size's Width/Height values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(SizeF other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.SizeF</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>SizeF to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the size and coordinate are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L342">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L343">View Source</a>
   </span>
   <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
   <h4 id="GoRogue_Coord_Equals_System_Object_" data-uid="GoRogue.Coord.Equals(System.Object)">Equals(Object)</h4>
@@ -634,10 +890,60 @@ in the direction <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_
   <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Equals_System_ValueTuple_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Equals(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L922">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_Equals_" data-uid="GoRogue.Coord.Equals*"></a>
+  <h4 id="GoRogue_Coord_Equals_System_ValueTuple_System_Int32_System_Int32__" data-uid="GoRogue.Coord.Equals(System.ValueTuple{System.Int32,System.Int32})">Equals((Int32 x, Int32 y))</h4>
+  <div class="markdown level1 summary"><p>True if the given position has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals((int x, int y)other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_EuclideanDistanceMagnitude_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.EuclideanDistanceMagnitude(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L156">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L157">View Source</a>
   </span>
   <a id="GoRogue_Coord_EuclideanDistanceMagnitude_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude*"></a>
   <h4 id="GoRogue_Coord_EuclideanDistanceMagnitude_GoRogue_Coord_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude(GoRogue.Coord)">EuclideanDistanceMagnitude(Coord)</h4>
@@ -694,7 +1000,7 @@ values -- basically the distance formula without the square root.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_EuclideanDistanceMagnitude_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.EuclideanDistanceMagnitude(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L124">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L125">View Source</a>
   </span>
   <a id="GoRogue_Coord_EuclideanDistanceMagnitude_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude*"></a>
   <h4 id="GoRogue_Coord_EuclideanDistanceMagnitude_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude(GoRogue.Coord,GoRogue.Coord)">EuclideanDistanceMagnitude(Coord, Coord)</h4>
@@ -754,7 +1060,7 @@ distance formula without the square root.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_EuclideanDistanceMagnitude_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.EuclideanDistanceMagnitude(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L170">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L171">View Source</a>
   </span>
   <a id="GoRogue_Coord_EuclideanDistanceMagnitude_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude*"></a>
   <h4 id="GoRogue_Coord_EuclideanDistanceMagnitude_System_Int32_System_Int32_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude(System.Int32,System.Int32)">EuclideanDistanceMagnitude(Int32, Int32)</h4>
@@ -814,7 +1120,7 @@ values -- basically the distance formula without the square root.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_EuclideanDistanceMagnitude_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.EuclideanDistanceMagnitude(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L140">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L141">View Source</a>
   </span>
   <a id="GoRogue_Coord_EuclideanDistanceMagnitude_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude*"></a>
   <h4 id="GoRogue_Coord_EuclideanDistanceMagnitude_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Coord.EuclideanDistanceMagnitude(System.Int32,System.Int32,System.Int32,System.Int32)">EuclideanDistanceMagnitude(Int32, Int32, Int32, Int32)</h4>
@@ -888,7 +1194,7 @@ distance formula without the square root.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_GetHashCode.md&amp;value=---%0Auid%3A%20GoRogue.Coord.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L356">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L357">View Source</a>
   </span>
   <a id="GoRogue_Coord_GetHashCode_" data-uid="GoRogue.Coord.GetHashCode*"></a>
   <h4 id="GoRogue_Coord_GetHashCode" data-uid="GoRogue.Coord.GetHashCode">GetHashCode()</h4>
@@ -930,7 +1236,7 @@ coordinates between (0, 0) and (255, 255).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Midpoint_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Midpoint(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L179">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L180">View Source</a>
   </span>
   <a id="GoRogue_Coord_Midpoint_" data-uid="GoRogue.Coord.Midpoint*"></a>
   <h4 id="GoRogue_Coord_Midpoint_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.Midpoint(GoRogue.Coord,GoRogue.Coord)">Midpoint(Coord, Coord)</h4>
@@ -986,7 +1292,7 @@ coordinates between (0, 0) and (255, 255).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Midpoint_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Midpoint(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L190">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L191">View Source</a>
   </span>
   <a id="GoRogue_Coord_Midpoint_" data-uid="GoRogue.Coord.Midpoint*"></a>
   <h4 id="GoRogue_Coord_Midpoint_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Coord.Midpoint(System.Int32,System.Int32,System.Int32,System.Int32)">Midpoint(Int32, Int32, Int32, Int32)</h4>
@@ -1054,7 +1360,7 @@ coordinates between (0, 0) and (255, 255).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToCoord_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToCoord(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L308">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L309">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToCoord_" data-uid="GoRogue.Coord.ToCoord*"></a>
   <h4 id="GoRogue_Coord_ToCoord_System_Int32_System_Int32_" data-uid="GoRogue.Coord.ToCoord(System.Int32,System.Int32)">ToCoord(Int32, Int32)</h4>
@@ -1110,7 +1416,7 @@ coordinates between (0, 0) and (255, 255).</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToIndex_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToIndex(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L369">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L370">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToIndex_" data-uid="GoRogue.Coord.ToIndex*"></a>
   <h4 id="GoRogue_Coord_ToIndex_System_Int32_" data-uid="GoRogue.Coord.ToIndex(System.Int32)">ToIndex(Int32)</h4>
@@ -1161,7 +1467,7 @@ used to do the math to calculate index.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToIndex_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToIndex(System.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L317">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L318">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToIndex_" data-uid="GoRogue.Coord.ToIndex*"></a>
   <h4 id="GoRogue_Coord_ToIndex_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Coord.ToIndex(System.Int32,System.Int32,System.Int32)">ToIndex(Int32, Int32, Int32)</h4>
@@ -1223,7 +1529,7 @@ used to do the math to calculate index.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L375">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L376">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToString_" data-uid="GoRogue.Coord.ToString*"></a>
   <h4 id="GoRogue_Coord_ToString" data-uid="GoRogue.Coord.ToString">ToString()</h4>
@@ -1257,7 +1563,7 @@ used to do the math to calculate index.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToXValue_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToXValue(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L325">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L326">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToXValue_" data-uid="GoRogue.Coord.ToXValue*"></a>
   <h4 id="GoRogue_Coord_ToXValue_System_Int32_System_Int32_" data-uid="GoRogue.Coord.ToXValue(System.Int32,System.Int32)">ToXValue(Int32, Int32)</h4>
@@ -1313,7 +1619,7 @@ used to do the math to calculate index.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_ToYValue_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.ToYValue(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L333">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L334">View Source</a>
   </span>
   <a id="GoRogue_Coord_ToYValue_" data-uid="GoRogue.Coord.ToYValue*"></a>
   <h4 id="GoRogue_Coord_ToYValue_System_Int32_System_Int32_" data-uid="GoRogue.Coord.ToYValue(System.Int32,System.Int32)">ToYValue(Int32, Int32)</h4>
@@ -1369,7 +1675,7 @@ used to do the math to calculate index.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Translate_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Translate(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L394">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L395">View Source</a>
   </span>
   <a id="GoRogue_Coord_Translate_" data-uid="GoRogue.Coord.Translate*"></a>
   <h4 id="GoRogue_Coord_Translate_GoRogue_Coord_" data-uid="GoRogue.Coord.Translate(GoRogue.Coord)">Translate(Coord)</h4>
@@ -1421,7 +1727,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_Translate_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.Translate(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L383">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L384">View Source</a>
   </span>
   <a id="GoRogue_Coord_Translate_" data-uid="GoRogue.Coord.Translate*"></a>
   <h4 id="GoRogue_Coord_Translate_System_Int32_System_Int32_" data-uid="GoRogue.Coord.Translate(System.Int32,System.Int32)">Translate(Int32, Int32)</h4>
@@ -1479,7 +1785,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L265">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L266">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,GoRogue.Coord)">Addition(Coord, Coord)</h4>
@@ -1533,7 +1839,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CGoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L283">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L284">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_GoRogue_Direction_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,GoRogue.Direction)">Addition(Coord, Direction)</h4>
@@ -1587,7 +1893,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_Microsoft_Xna_Framework_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CMicrosoft.Xna.Framework.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L429">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L430">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_Microsoft_Xna_Framework_Point_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,Microsoft.Xna.Framework.Point)">Addition(Coord, Point)</h4>
@@ -1641,7 +1947,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CSystem.Drawing.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L498">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L548">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Point_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Point)">Addition(Coord, Point)</h4>
@@ -1695,7 +2001,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Size_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CSystem.Drawing.Size)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L542">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L592">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Size_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Size)">Addition(Coord, Size)</h4>
@@ -1749,7 +2055,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L273">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L274">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_System_Int32_" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,System.Int32)">Addition(Coord, Int32)</h4>
@@ -1803,7 +2109,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(GoRogue.Coord%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L612">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L858">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__" data-uid="GoRogue.Coord.op_Addition(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})">Addition(Coord, (Int32 x, Int32 y))</h4>
@@ -1857,7 +2163,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_Microsoft_Xna_Framework_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(Microsoft.Xna.Framework.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L422">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L423">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_Microsoft_Xna_Framework_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Coord)">Addition(Point, Coord)</h4>
@@ -1911,7 +2217,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_System_Drawing_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(System.Drawing.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L491">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L541">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_System_Drawing_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(System.Drawing.Point,GoRogue.Coord)">Addition(Point, Coord)</h4>
@@ -1965,7 +2271,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_System_Drawing_PointF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(System.Drawing.PointF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L505">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L555">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_System_Drawing_PointF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(System.Drawing.PointF,GoRogue.Coord)">Addition(PointF, Coord)</h4>
@@ -2019,7 +2325,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_System_Drawing_Size_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(System.Drawing.Size%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L535">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L585">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_System_Drawing_Size_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(System.Drawing.Size,GoRogue.Coord)">Addition(Size, Coord)</h4>
@@ -2073,7 +2379,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_System_Drawing_SizeF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(System.Drawing.SizeF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L549">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L599">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_System_Drawing_SizeF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(System.Drawing.SizeF,GoRogue.Coord)">Addition(SizeF, Coord)</h4>
@@ -2127,7 +2433,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Addition_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Addition(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L605">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L851">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Addition_" data-uid="GoRogue.Coord.op_Addition*"></a>
   <h4 id="GoRogue_Coord_op_Addition_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_" data-uid="GoRogue.Coord.op_Addition(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)">Addition((Int32 x, Int32 y), Coord)</h4>
@@ -2181,7 +2487,7 @@ delta-y value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Division_GoRogue_Coord_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Division(GoRogue.Coord%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L256">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L257">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Division_" data-uid="GoRogue.Coord.op_Division*"></a>
   <h4 id="GoRogue_Coord_op_Division_GoRogue_Coord_System_Double_" data-uid="GoRogue.Coord.op_Division(GoRogue.Coord,System.Double)">Division(Coord, Double)</h4>
@@ -2236,7 +2542,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Division_GoRogue_Coord_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Division(GoRogue.Coord%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L246">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L247">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Division_" data-uid="GoRogue.Coord.op_Division*"></a>
   <h4 id="GoRogue_Coord_op_Division_GoRogue_Coord_System_Int32_" data-uid="GoRogue.Coord.op_Division(GoRogue.Coord,System.Int32)">Division(Coord, Int32)</h4>
@@ -2291,7 +2597,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L291">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L292">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
   <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,GoRogue.Coord)">Equality(Coord, Coord)</h4>
@@ -2342,10 +2648,658 @@ to the nearest integer.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_Microsoft_Xna_Framework_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CMicrosoft.Xna.Framework.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L453">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_Microsoft_Xna_Framework_Point_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,Microsoft.Xna.Framework.Point)">Equality(Coord, Point)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c1, Point p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Point</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CSystem.Drawing.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L629">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Point_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Point)">Equality(Coord, Point)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c1, Point p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Point</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_PointF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CSystem.Drawing.PointF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L678">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_PointF_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.PointF)">Equality(Coord, PointF)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c1, PointF p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.PointF</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Size_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CSystem.Drawing.Size)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L727">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Size_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Size)">Equality(Coord, Size)</h4>
+  <div class="markdown level1 summary"><p>True if the point's x/y values equal the size's width/height values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c, Size size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Size</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given Coord and Size are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_SizeF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CSystem.Drawing.SizeF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L776">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_SizeF_" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.SizeF)">Equality(Coord, SizeF)</h4>
+  <div class="markdown level1 summary"><p>True if the point's x/y values equal the size's width/height values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c, SizeF size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.SizeF</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given Coord and SizeF are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(GoRogue.Coord%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L881">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__" data-uid="GoRogue.Coord.op_Equality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})">Equality(Coord, (Int32 x, Int32 y))</h4>
+  <div class="markdown level1 summary"><p>True if the two point's x and y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Coord c, (int x, int y)tuple)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">tuple</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_Microsoft_Xna_Framework_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L474">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_Microsoft_Xna_Framework_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point,GoRogue.Coord)">Equality(Point, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Point p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Point</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_System_Drawing_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(System.Drawing.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L650">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_System_Drawing_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(System.Drawing.Point,GoRogue.Coord)">Equality(Point, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Point p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Point</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_System_Drawing_PointF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(System.Drawing.PointF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L699">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_System_Drawing_PointF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(System.Drawing.PointF,GoRogue.Coord)">Equality(PointF, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's X and Y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(PointF p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.PointF</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two coordinates are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_System_Drawing_Size_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(System.Drawing.Size%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L748">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_System_Drawing_Size_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(System.Drawing.Size,GoRogue.Coord)">Equality(Size, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the size's width/height values equal the point's x/y values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Size size, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Size</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given Size and Coord are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_System_Drawing_SizeF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(System.Drawing.SizeF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L797">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_System_Drawing_SizeF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(System.Drawing.SizeF,GoRogue.Coord)">Equality(SizeF, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the size's width/height values equal the point's x/y values.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(SizeF size, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.SizeF</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given SizeF and Coord are equivalent, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Equality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Equality(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L902">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Equality_" data-uid="GoRogue.Coord.op_Equality*"></a>
+  <h4 id="GoRogue_Coord_op_Equality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_" data-uid="GoRogue.Coord.op_Equality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)">Equality((Int32 x, Int32 y), Coord)</h4>
+  <div class="markdown level1 summary"><p>True if the two point's x and y values are equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==((int x, int y)tuple, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">tuple</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__Microsoft_Xna_Framework_Point.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~Microsoft.Xna.Framework.Point%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L409">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L410">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__Microsoft_Xna_Framework_Point" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~Microsoft.Xna.Framework.Point">Implicit(Coord to Point)</h4>
@@ -2393,7 +3347,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_Point.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.Point%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L453">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L503">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_Point" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.Point">Implicit(Coord to Point)</h4>
@@ -2441,7 +3395,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_PointF.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.PointF%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L465">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L515">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_PointF" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.PointF">Implicit(Coord to PointF)</h4>
@@ -2489,7 +3443,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_Size.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.Size%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L471">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L521">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_Size" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.Size">Implicit(Coord to Size)</h4>
@@ -2537,7 +3491,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_SizeF.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.SizeF%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L483">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L533">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_SizeF" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.SizeF">Implicit(Coord to SizeF)</h4>
@@ -2585,7 +3539,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_GoRogue_Coord__System_ValueTuple_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L591">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L837">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_GoRogue_Coord__System_ValueTuple_System_Int32_System_Int32_" data-uid="GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.ValueTuple{System.Int32,System.Int32}">Implicit(Coord to (Int32 x, Int32 y))</h4>
@@ -2633,7 +3587,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_Microsoft_Xna_Framework_Point__GoRogue_Coord.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(Microsoft.Xna.Framework.Point)~GoRogue.Coord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L415">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L416">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_Microsoft_Xna_Framework_Point__GoRogue_Coord" data-uid="GoRogue.Coord.op_Implicit(Microsoft.Xna.Framework.Point)~GoRogue.Coord">Implicit(Point to Coord)</h4>
@@ -2681,7 +3635,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_System_Drawing_Point__GoRogue_Coord.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(System.Drawing.Point)~GoRogue.Coord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L459">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L509">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_System_Drawing_Point__GoRogue_Coord" data-uid="GoRogue.Coord.op_Implicit(System.Drawing.Point)~GoRogue.Coord">Implicit(Point to Coord)</h4>
@@ -2729,7 +3683,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_System_Drawing_Size__GoRogue_Coord.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(System.Drawing.Size)~GoRogue.Coord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L477">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L527">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_System_Drawing_Size__GoRogue_Coord" data-uid="GoRogue.Coord.op_Implicit(System.Drawing.Size)~GoRogue.Coord">Implicit(Size to Coord)</h4>
@@ -2777,7 +3731,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Implicit_System_ValueTuple_System_Int32_System_Int32___GoRogue_Coord.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Implicit(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)~GoRogue.Coord%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L597">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L843">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Implicit_" data-uid="GoRogue.Coord.op_Implicit*"></a>
   <h4 id="GoRogue_Coord_op_Implicit_System_ValueTuple_System_Int32_System_Int32___GoRogue_Coord" data-uid="GoRogue.Coord.op_Implicit(System.ValueTuple{System.Int32,System.Int32})~GoRogue.Coord">Implicit((Int32 x, Int32 y) to Coord)</h4>
@@ -2825,7 +3779,7 @@ to the nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L216">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L217">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
   <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,GoRogue.Coord)">Inequality(Coord, Coord)</h4>
@@ -2876,10 +3830,658 @@ to the nearest integer.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_Microsoft_Xna_Framework_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CMicrosoft.Xna.Framework.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L466">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_Microsoft_Xna_Framework_Point_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,Microsoft.Xna.Framework.Point)">Inequality(Coord, Point)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c1, Point p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Point</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CSystem.Drawing.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L642">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Point_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Point)">Inequality(Coord, Point)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c1, Point p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Point</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_PointF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CSystem.Drawing.PointF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L691">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_PointF_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.PointF)">Inequality(Coord, PointF)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c1, PointF p2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.PointF</span></td>
+        <td><span class="parametername">p2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Size_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CSystem.Drawing.Size)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L740">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Size_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Size)">Inequality(Coord, Size)</h4>
+  <div class="markdown level1 summary"><p>True if either the x/Width values or the y/Height values do not match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c, Size size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Size</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x/Width values or the y/Height values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_SizeF_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CSystem.Drawing.SizeF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L789">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_SizeF_" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.SizeF)">Inequality(Coord, SizeF)</h4>
+  <div class="markdown level1 summary"><p>True if either the x/Width values or the y/Height values do not match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c, SizeF size)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.SizeF</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x/Width values or the y/Height values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(GoRogue.Coord%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L894">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__" data-uid="GoRogue.Coord.op_Inequality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})">Inequality(Coord, (Int32 x, Int32 y))</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Coord c, (int x, int y)tuple)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">tuple</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_Microsoft_Xna_Framework_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L487">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_Microsoft_Xna_Framework_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point,GoRogue.Coord)">Inequality(Point, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Point p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Point</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_System_Drawing_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(System.Drawing.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L663">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_System_Drawing_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(System.Drawing.Point,GoRogue.Coord)">Inequality(Point, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Point p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Point</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_System_Drawing_PointF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(System.Drawing.PointF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L712">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_System_Drawing_PointF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(System.Drawing.PointF,GoRogue.Coord)">Inequality(PointF, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(PointF p1, Coord c2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.PointF</span></td>
+        <td><span class="parametername">p1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_System_Drawing_Size_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(System.Drawing.Size%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L761">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_System_Drawing_Size_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(System.Drawing.Size,GoRogue.Coord)">Inequality(Size, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the Width/x values or the Height/y values do not match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Size size, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Size</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the Width/x values or the Height/y values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_System_Drawing_SizeF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(System.Drawing.SizeF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L810">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_System_Drawing_SizeF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(System.Drawing.SizeF,GoRogue.Coord)">Inequality(SizeF, Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the Width/x values or the Height/y values do not match.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(SizeF size, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.SizeF</span></td>
+        <td><span class="parametername">size</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the Width/x values or the Height/y values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Inequality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Inequality(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L915">View Source</a>
+  </span>
+  <a id="GoRogue_Coord_op_Inequality_" data-uid="GoRogue.Coord.op_Inequality*"></a>
+  <h4 id="GoRogue_Coord_op_Inequality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_" data-uid="GoRogue.Coord.op_Inequality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)">Inequality((Int32 x, Int32 y), Coord)</h4>
+  <div class="markdown level1 summary"><p>True if either the x-values or y-values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=((int x, int y)tuple, Coord c)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">tuple</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">c</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if either the x-values or y-values are not equal, false if they are both equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Multiply_GoRogue_Coord_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Multiply(GoRogue.Coord%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L236">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L237">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Multiply_" data-uid="GoRogue.Coord.op_Multiply*"></a>
   <h4 id="GoRogue_Coord_op_Multiply_GoRogue_Coord_System_Double_" data-uid="GoRogue.Coord.op_Multiply(GoRogue.Coord,System.Double)">Multiply(Coord, Double)</h4>
@@ -2935,7 +4537,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Multiply_GoRogue_Coord_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Multiply(GoRogue.Coord%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L224">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L225">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Multiply_" data-uid="GoRogue.Coord.op_Multiply*"></a>
   <h4 id="GoRogue_Coord_op_Multiply_GoRogue_Coord_System_Int32_" data-uid="GoRogue.Coord.op_Multiply(GoRogue.Coord,System.Int32)">Multiply(Coord, Int32)</h4>
@@ -2989,7 +4591,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L198">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L199">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,GoRogue.Coord)">Subtraction(Coord, Coord)</h4>
@@ -3043,7 +4645,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_Microsoft_Xna_Framework_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CMicrosoft.Xna.Framework.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L444">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L445">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_Microsoft_Xna_Framework_Point_" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)">Subtraction(Coord, Point)</h4>
@@ -3097,7 +4699,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CSystem.Drawing.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L520">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L570">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Point_" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Point)">Subtraction(Coord, Point)</h4>
@@ -3151,7 +4753,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Size_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CSystem.Drawing.Size)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L564">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L614">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Size_" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Size)">Subtraction(Coord, Size)</h4>
@@ -3205,7 +4807,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L206">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L207">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Int32_" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Int32)">Subtraction(Coord, Int32)</h4>
@@ -3259,7 +4861,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(GoRogue.Coord%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L627">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L873">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__" data-uid="GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})">Subtraction(Coord, (Int32 x, Int32 y))</h4>
@@ -3313,7 +4915,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_Microsoft_Xna_Framework_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L437">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L438">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_Microsoft_Xna_Framework_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point,GoRogue.Coord)">Subtraction(Point, Coord)</h4>
@@ -3367,7 +4969,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_System_Drawing_Point_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(System.Drawing.Point%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L513">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L563">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_System_Drawing_Point_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(System.Drawing.Point,GoRogue.Coord)">Subtraction(Point, Coord)</h4>
@@ -3421,7 +5023,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_System_Drawing_PointF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(System.Drawing.PointF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L527">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L577">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_System_Drawing_PointF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(System.Drawing.PointF,GoRogue.Coord)">Subtraction(PointF, Coord)</h4>
@@ -3475,7 +5077,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_System_Drawing_Size_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(System.Drawing.Size%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L557">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L607">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_System_Drawing_Size_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(System.Drawing.Size,GoRogue.Coord)">Subtraction(Size, Coord)</h4>
@@ -3529,7 +5131,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_System_Drawing_SizeF_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(System.Drawing.SizeF%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L571">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L621">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_System_Drawing_SizeF_GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(System.Drawing.SizeF,GoRogue.Coord)">Subtraction(SizeF, Coord)</h4>
@@ -3583,7 +5185,7 @@ rounded to nearest integer.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Coord_op_Subtraction_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Coord.op_Subtraction(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L620">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Coord.cs/#L866">View Source</a>
   </span>
   <a id="GoRogue_Coord_op_Subtraction_" data-uid="GoRogue.Coord.op_Subtraction*"></a>
   <h4 id="GoRogue_Coord_op_Subtraction_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_" data-uid="GoRogue.Coord.op_Subtraction(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)">Subtraction((Int32 x, Int32 y), Coord)</h4>
@@ -3633,6 +5235,24 @@ rounded to nearest integer.</p>
     </tbody>
   </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
   <div>
       <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>

@@ -906,12 +906,13 @@ entity was added, and false otherwise (eg., collision detection would not allow 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L491">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L492">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double)">CalculateFOV(Coord, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles
-that are in the resulting FOV are marked as explored.</p>
+that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -947,12 +948,13 @@ that are in the resulting FOV are marked as explored.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L516">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L513">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double,GoRogue.Distance)">CalculateFOV(Coord, Double, Distance)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles that are in the
-resulting FOV are marked as explored.</p>
+resulting FOV are marked as explored.  This function calls the virtual overload
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1000,7 +1002,9 @@ resulting FOV are marked as explored.</p>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double,GoRogue.Distance,System.Double,System.Double)">CalculateFOV(Coord, Double, Distance, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a>
-property. All tiles that are in the resulting FOV are marked as explored.</p>
+property. All tiles that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</a>, so if you need to override this functionality, override that
+overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1056,17 +1060,18 @@ in the cone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L500">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L502">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double)">CalculateFOV(Int32, Int32, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles
-that are in the resulting FOV are marked as explored.</p>
+that are in the resulting FOV are marked as explored.  This function calls the virtual overload
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public virtual void CalculateFOV(int x, int y, double radius = 1.7976931348623157E+308)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CalculateFOV(int x, int y, double radius = 1.7976931348623157E+308)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1103,12 +1108,13 @@ that are in the resulting FOV are marked as explored.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L527">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L525">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,GoRogue.Distance)">CalculateFOV(Int32, Int32, Double, Distance)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles that are in the
-resulting FOV are marked as explored.</p>
+resulting FOV are marked as explored.  Other non-angle-based overloads call this one, so if you need to override functionality, override
+this function.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1157,12 +1163,13 @@ resulting FOV are marked as explored.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L561">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L562">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,GoRogue.Distance,System.Double,System.Double)">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a>
-property.  All tiles that are in the resulting FOV are marked as explored.</p>
+property.  All tiles that are in the resulting FOV are marked as explored.  Other angle-based overloads call this one, so if you need to
+override functionality, override this function.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1224,7 +1231,7 @@ in the cone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CreateMap%60%601(GoRogue.MapViews.ISettableMapView%7B%60%600%7D%2CSystem.Int32%2CGoRogue.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L600">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/GameFramework/Map.cs/#L601">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CreateMap_" data-uid="GoRogue.GameFramework.Map.CreateMap*"></a>
   <h4 id="GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.CreateMap``1(GoRogue.MapViews.ISettableMapView{``0},System.Int32,GoRogue.Distance,System.UInt32,System.UInt32,System.UInt32)">CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt;, Int32, Distance, UInt32, UInt32, UInt32)</h4>

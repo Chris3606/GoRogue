@@ -81,6 +81,10 @@ enable interoperability with rectangle representations from other libraries.</p>
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="GoRogue.Rectangle.html">Rectangle</a>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">Microsoft.Xna.Framework.Rectangle</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.Rectangle</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.Drawing.RectangleF</span>&gt;</div>
+    <div><span class="xref">System.IEquatable</span>&lt;<span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -98,7 +102,7 @@ enable interoperability with rectangle representations from other libraries.</p>
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_Rectangle_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public struct Rectangle : IEquatable&lt;Rectangle&gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public struct Rectangle : IEquatable&lt;Rectangle&gt;, IEquatable&lt;Rectangle&gt;, IEquatable&lt;Rectangle&gt;, IEquatable&lt;RectangleF&gt;, IEquatable&lt;(int x, int y, int width, int height)&gt;</code></pre>
   </div>
   <h5 id="GoRogue_Rectangle_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>Rectangle is designed to be extremely efficient and interoperable with equivalent representations in other libraries,
@@ -113,7 +117,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle__ctor_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.%23ctor(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L50">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L51">View Source</a>
   </span>
   <a id="GoRogue_Rectangle__ctor_" data-uid="GoRogue.Rectangle.#ctor*"></a>
   <h4 id="GoRogue_Rectangle__ctor_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Rectangle.#ctor(GoRogue.Coord,GoRogue.Coord)">Rectangle(Coord, Coord)</h4>
@@ -153,7 +157,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle__ctor_GoRogue_Coord_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.%23ctor(GoRogue.Coord%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L68">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L69">View Source</a>
   </span>
   <a id="GoRogue_Rectangle__ctor_" data-uid="GoRogue.Rectangle.#ctor*"></a>
   <h4 id="GoRogue_Rectangle__ctor_GoRogue_Coord_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.#ctor(GoRogue.Coord,System.Int32,System.Int32)">Rectangle(Coord, Int32, Int32)</h4>
@@ -199,7 +203,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle__ctor_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L37">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L38">View Source</a>
   </span>
   <a id="GoRogue_Rectangle__ctor_" data-uid="GoRogue.Rectangle.#ctor*"></a>
   <h4 id="GoRogue_Rectangle__ctor_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">Rectangle(Int32, Int32, Int32, Int32)</h4>
@@ -253,7 +257,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_EMPTY.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.EMPTY%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L28">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L29">View Source</a>
   </span>
   <h4 id="GoRogue_Rectangle_EMPTY" data-uid="GoRogue.Rectangle.EMPTY">EMPTY</h4>
   <div class="markdown level1 summary"><p>The empty rectangle. Has origin of (0, 0) with 0 width and height.</p>
@@ -283,7 +287,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Height.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L93">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L94">View Source</a>
   </span>
   <h4 id="GoRogue_Rectangle_Height" data-uid="GoRogue.Rectangle.Height">Height</h4>
   <div class="markdown level1 summary"><p>The height of the rectangle.</p>
@@ -313,7 +317,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Width.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L167">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L168">View Source</a>
   </span>
   <h4 id="GoRogue_Rectangle_Width" data-uid="GoRogue.Rectangle.Width">Width</h4>
   <div class="markdown level1 summary"><p>The width of the rectangle.</p>
@@ -343,7 +347,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_X.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.X%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L172">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L173">View Source</a>
   </span>
   <h4 id="GoRogue_Rectangle_X" data-uid="GoRogue.Rectangle.X">X</h4>
   <div class="markdown level1 summary"><p>X-coordinate of position of the rectangle.</p>
@@ -373,7 +377,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Y.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Y%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L177">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L178">View Source</a>
   </span>
   <h4 id="GoRogue_Rectangle_Y" data-uid="GoRogue.Rectangle.Y">Y</h4>
   <div class="markdown level1 summary"><p>Y-coordinate of position of the rectangle.</p>
@@ -405,7 +409,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Area.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Area%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L79">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L80">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Area_" data-uid="GoRogue.Rectangle.Area*"></a>
   <h4 id="GoRogue_Rectangle_Area" data-uid="GoRogue.Rectangle.Area">Area</h4>
@@ -436,7 +440,7 @@ as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Center.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Center%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L85">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L86">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Center_" data-uid="GoRogue.Rectangle.Center*"></a>
   <h4 id="GoRogue_Rectangle_Center" data-uid="GoRogue.Rectangle.Center">Center</h4>
@@ -468,7 +472,7 @@ positions. The center of a rectangle with width/height 1 is its <a class="xref" 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_IsEmpty.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.IsEmpty%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L98">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L99">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_IsEmpty_" data-uid="GoRogue.Rectangle.IsEmpty*"></a>
   <h4 id="GoRogue_Rectangle_IsEmpty" data-uid="GoRogue.Rectangle.IsEmpty">IsEmpty</h4>
@@ -499,7 +503,7 @@ positions. The center of a rectangle with width/height 1 is its <a class="xref" 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MaxExtent.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MaxExtent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L103">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L104">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MaxExtent_" data-uid="GoRogue.Rectangle.MaxExtent*"></a>
   <h4 id="GoRogue_Rectangle_MaxExtent" data-uid="GoRogue.Rectangle.MaxExtent">MaxExtent</h4>
@@ -530,7 +534,7 @@ positions. The center of a rectangle with width/height 1 is its <a class="xref" 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MaxExtentX.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MaxExtentX%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L111">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L112">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MaxExtentX_" data-uid="GoRogue.Rectangle.MaxExtentX*"></a>
   <h4 id="GoRogue_Rectangle_MaxExtentX" data-uid="GoRogue.Rectangle.MaxExtentX">MaxExtentX</h4>
@@ -561,7 +565,7 @@ positions. The center of a rectangle with width/height 1 is its <a class="xref" 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MaxExtentY.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MaxExtentY%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L119">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L120">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MaxExtentY_" data-uid="GoRogue.Rectangle.MaxExtentY*"></a>
   <h4 id="GoRogue_Rectangle_MaxExtentY" data-uid="GoRogue.Rectangle.MaxExtentY">MaxExtentY</h4>
@@ -592,7 +596,7 @@ positions. The center of a rectangle with width/height 1 is its <a class="xref" 
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MinExtent.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MinExtent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L129">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L130">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MinExtent_" data-uid="GoRogue.Rectangle.MinExtent*"></a>
   <h4 id="GoRogue_Rectangle_MinExtent" data-uid="GoRogue.Rectangle.MinExtent">MinExtent</h4>
@@ -625,7 +629,7 @@ minimum extent.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MinExtentX.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MinExtentX%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L136">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L137">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MinExtentX_" data-uid="GoRogue.Rectangle.MinExtentX*"></a>
   <h4 id="GoRogue_Rectangle_MinExtentX" data-uid="GoRogue.Rectangle.MinExtentX">MinExtentX</h4>
@@ -658,7 +662,7 @@ by its minimum extent.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MinExtentY.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MinExtentY%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L143">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L144">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MinExtentY_" data-uid="GoRogue.Rectangle.MinExtentY*"></a>
   <h4 id="GoRogue_Rectangle_MinExtentY" data-uid="GoRogue.Rectangle.MinExtentY">MinExtentY</h4>
@@ -691,7 +695,7 @@ by its minimum extent.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Perimeter.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Perimeter%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L149">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L150">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Perimeter_" data-uid="GoRogue.Rectangle.Perimeter*"></a>
   <h4 id="GoRogue_Rectangle_Perimeter" data-uid="GoRogue.Rectangle.Perimeter">Perimeter</h4>
@@ -723,7 +727,7 @@ perimeter, NOT the number of grid squares around the perimiter.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Position.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L154">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L155">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Position_" data-uid="GoRogue.Rectangle.Position*"></a>
   <h4 id="GoRogue_Rectangle_Position" data-uid="GoRogue.Rectangle.Position">Position</h4>
@@ -754,7 +758,7 @@ perimeter, NOT the number of grid squares around the perimiter.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Size.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Size%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L162">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L163">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Size_" data-uid="GoRogue.Rectangle.Size*"></a>
   <h4 id="GoRogue_Rectangle_Size" data-uid="GoRogue.Rectangle.Size">Size</h4>
@@ -787,7 +791,7 @@ perimeter, NOT the number of grid squares around the perimiter.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_ChangeHeight_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.ChangeHeight(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L394">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L395">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_ChangeHeight_" data-uid="GoRogue.Rectangle.ChangeHeight*"></a>
   <h4 id="GoRogue_Rectangle_ChangeHeight_System_Int32_" data-uid="GoRogue.Rectangle.ChangeHeight(System.Int32)">ChangeHeight(Int32)</h4>
@@ -838,7 +842,7 @@ has its height changed by the given delta-change value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_ChangeSize_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.ChangeSize(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L420">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L421">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_ChangeSize_" data-uid="GoRogue.Rectangle.ChangeSize*"></a>
   <h4 id="GoRogue_Rectangle_ChangeSize_GoRogue_Coord_" data-uid="GoRogue.Rectangle.ChangeSize(GoRogue.Coord)">ChangeSize(Coord)</h4>
@@ -890,7 +894,7 @@ of the new Rectangle.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_ChangeSize_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.ChangeSize(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L406">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L407">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_ChangeSize_" data-uid="GoRogue.Rectangle.ChangeSize*"></a>
   <h4 id="GoRogue_Rectangle_ChangeSize_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.ChangeSize(System.Int32,System.Int32)">ChangeSize(Int32, Int32)</h4>
@@ -947,7 +951,7 @@ has its width and height changed by the given delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_ChangeWidth_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.ChangeWidth(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L429">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L430">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_ChangeWidth_" data-uid="GoRogue.Rectangle.ChangeWidth*"></a>
   <h4 id="GoRogue_Rectangle_ChangeWidth_System_Int32_" data-uid="GoRogue.Rectangle.ChangeWidth(System.Int32)">ChangeWidth(Int32)</h4>
@@ -998,7 +1002,7 @@ has its width changed by the given delta-change value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Contains_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Contains(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L437">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L438">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Contains_" data-uid="GoRogue.Rectangle.Contains*"></a>
   <h4 id="GoRogue_Rectangle_Contains_GoRogue_Coord_" data-uid="GoRogue.Rectangle.Contains(GoRogue.Coord)">Contains(Coord)</h4>
@@ -1048,7 +1052,7 @@ has its width changed by the given delta-change value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Contains_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Contains(GoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L458">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L459">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Contains_" data-uid="GoRogue.Rectangle.Contains*"></a>
   <h4 id="GoRogue_Rectangle_Contains_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.Contains(GoRogue.Rectangle)">Contains(Rectangle)</h4>
@@ -1099,7 +1103,7 @@ the current one.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Contains_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Contains(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L448">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L449">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Contains_" data-uid="GoRogue.Rectangle.Contains*"></a>
   <h4 id="GoRogue_Rectangle_Contains_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.Contains(System.Int32,System.Int32)">Contains(Int32, Int32)</h4>
@@ -1155,7 +1159,7 @@ the current one.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Deconstruct_System_Int32__System_Int32__System_Int32__System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Deconstruct(System.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40%2CSystem.Int32%40)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L831">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L979">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Deconstruct_" data-uid="GoRogue.Rectangle.Deconstruct*"></a>
   <h4 id="GoRogue_Rectangle_Deconstruct_System_Int32__System_Int32__System_Int32__System_Int32__" data-uid="GoRogue.Rectangle.Deconstruct(System.Int32@,System.Int32@,System.Int32@,System.Int32@)">Deconstruct(out Int32, out Int32, out Int32, out Int32)</h4>
@@ -1203,7 +1207,7 @@ the current one.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(GoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L471">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L472">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
   <h4 id="GoRogue_Rectangle_Equals_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.Equals(GoRogue.Rectangle)">Equals(Rectangle)</h4>
@@ -1250,10 +1254,160 @@ in both position and extents.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_Microsoft_Xna_Framework_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L835">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
+  <h4 id="GoRogue_Rectangle_Equals_Microsoft_Xna_Framework_Rectangle_" data-uid="GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)">Equals(Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the given position has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Rectangle other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Rectangle</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_System_Drawing_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(System.Drawing.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L906">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
+  <h4 id="GoRogue_Rectangle_Equals_System_Drawing_Rectangle_" data-uid="GoRogue.Rectangle.Equals(System.Drawing.Rectangle)">Equals(Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the given position has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(Rectangle other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_System_Drawing_RectangleF_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(System.Drawing.RectangleF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L955">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
+  <h4 id="GoRogue_Rectangle_Equals_System_Drawing_RectangleF_" data-uid="GoRogue.Rectangle.Equals(System.Drawing.RectangleF)">Equals(RectangleF)</h4>
+  <div class="markdown level1 summary"><p>True if the given position has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(RectangleF other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.RectangleF</span></td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L483">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L484">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
   <h4 id="GoRogue_Rectangle_Equals_System_Object_" data-uid="GoRogue.Rectangle.Equals(System.Object)">Equals(Object)</h4>
@@ -1301,10 +1455,60 @@ in both position and extents.</p>
   <div><span class="xref">System.ValueType.Equals(System.Object)</span></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Equals_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Equals(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1034">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_Equals_" data-uid="GoRogue.Rectangle.Equals*"></a>
+  <h4 id="GoRogue_Rectangle_Equals_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__" data-uid="GoRogue.Rectangle.Equals(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">Equals((Int32 x, Int32 y, Int32 width, Int32 height))</h4>
+  <div class="markdown level1 summary"><p>True if the given position has equal x and y values to the current one.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals((int x, int y, int width, int height)other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td><p>Point to compare.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two positions are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Expand_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Expand(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L499">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L500">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Expand_" data-uid="GoRogue.Rectangle.Expand*"></a>
   <h4 id="GoRogue_Rectangle_Expand_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.Expand(System.Int32,System.Int32)">Expand(Int32, Int32)</h4>
@@ -1361,7 +1565,7 @@ the left/right and top/bottom.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_GetDifference_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.GetDifference(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L259">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L260">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_GetDifference_" data-uid="GoRogue.Rectangle.GetDifference*"></a>
   <h4 id="GoRogue_Rectangle_GetDifference_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.GetDifference(GoRogue.Rectangle,GoRogue.Rectangle)">GetDifference(Rectangle, Rectangle)</h4>
@@ -1417,7 +1621,7 @@ is NOT in <code data-dev-comment-type="paramref" class="paramref">rect2</code>.<
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_GetExactUnion_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.GetExactUnion(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L281">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L282">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_GetExactUnion_" data-uid="GoRogue.Rectangle.GetExactUnion*"></a>
   <h4 id="GoRogue_Rectangle_GetExactUnion_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.GetExactUnion(GoRogue.Rectangle,GoRogue.Rectangle)">GetExactUnion(Rectangle, Rectangle)</h4>
@@ -1472,7 +1676,7 @@ a MapArea containing all locations from either rectangle.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_GetHashCode.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L506">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L507">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_GetHashCode_" data-uid="GoRogue.Rectangle.GetHashCode*"></a>
   <h4 id="GoRogue_Rectangle_GetHashCode" data-uid="GoRogue.Rectangle.GetHashCode">GetHashCode()</h4>
@@ -1506,7 +1710,7 @@ a MapArea containing all locations from either rectangle.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_GetIntersection_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.GetIntersection(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L306">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L307">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_GetIntersection_" data-uid="GoRogue.Rectangle.GetIntersection*"></a>
   <h4 id="GoRogue_Rectangle_GetIntersection_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.GetIntersection(GoRogue.Rectangle,GoRogue.Rectangle)">GetIntersection(Rectangle, Rectangle)</h4>
@@ -1562,7 +1766,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_GetUnion_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.GetUnion(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L332">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L333">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_GetUnion_" data-uid="GoRogue.Rectangle.GetUnion*"></a>
   <h4 id="GoRogue_Rectangle_GetUnion_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.GetUnion(GoRogue.Rectangle,GoRogue.Rectangle)">GetUnion(Rectangle, Rectangle)</h4>
@@ -1618,7 +1822,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Intersects_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Intersects(GoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L516">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L517">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Intersects_" data-uid="GoRogue.Rectangle.Intersects*"></a>
   <h4 id="GoRogue_Rectangle_Intersects_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.Intersects(GoRogue.Rectangle)">Intersects(Rectangle)</h4>
@@ -1668,7 +1872,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MaxXPositions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MaxXPositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L893">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1091">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MaxXPositions_" data-uid="GoRogue.Rectangle.MaxXPositions*"></a>
   <h4 id="GoRogue_Rectangle_MaxXPositions" data-uid="GoRogue.Rectangle.MaxXPositions">MaxXPositions()</h4>
@@ -1700,7 +1904,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MaxYPositions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MaxYPositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L873">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1071">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MaxYPositions_" data-uid="GoRogue.Rectangle.MaxYPositions*"></a>
   <h4 id="GoRogue_Rectangle_MaxYPositions" data-uid="GoRogue.Rectangle.MaxYPositions">MaxYPositions()</h4>
@@ -1732,7 +1936,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MinXPositions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MinXPositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L883">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1081">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MinXPositions_" data-uid="GoRogue.Rectangle.MinXPositions*"></a>
   <h4 id="GoRogue_Rectangle_MinXPositions" data-uid="GoRogue.Rectangle.MinXPositions">MinXPositions()</h4>
@@ -1764,7 +1968,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_MinYPositions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.MinYPositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L863">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1061">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_MinYPositions_" data-uid="GoRogue.Rectangle.MinYPositions*"></a>
   <h4 id="GoRogue_Rectangle_MinYPositions" data-uid="GoRogue.Rectangle.MinYPositions">MinYPositions()</h4>
@@ -1796,7 +2000,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_PerimeterPositions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.PerimeterPositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L844">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1042">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_PerimeterPositions_" data-uid="GoRogue.Rectangle.PerimeterPositions*"></a>
   <h4 id="GoRogue_Rectangle_PerimeterPositions" data-uid="GoRogue.Rectangle.PerimeterPositions">PerimeterPositions()</h4>
@@ -1828,7 +2032,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Positions.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Positions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L566">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L567">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Positions_" data-uid="GoRogue.Rectangle.Positions*"></a>
   <h4 id="GoRogue_Rectangle_Positions" data-uid="GoRogue.Rectangle.Positions">Positions()</h4>
@@ -1860,7 +2064,7 @@ the empty rectangle if the two rectangles do not intersect.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_PositionsOnSide_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.PositionsOnSide(GoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L905">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1103">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_PositionsOnSide_" data-uid="GoRogue.Rectangle.PositionsOnSide*"></a>
   <h4 id="GoRogue_Rectangle_PositionsOnSide_GoRogue_Direction_" data-uid="GoRogue.Rectangle.PositionsOnSide(GoRogue.Direction)">PositionsOnSide(Direction)</h4>
@@ -1911,7 +2115,7 @@ on the given side of the rectangle.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_RandomPosition_System_Func_GoRogue_Coord_System_Boolean__Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.RandomPosition(System.Func%7BGoRogue.Coord%2CSystem.Boolean%7D%2CTroschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L600">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L601">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_RandomPosition_" data-uid="GoRogue.Rectangle.RandomPosition*"></a>
   <h4 id="GoRogue_Rectangle_RandomPosition_System_Func_GoRogue_Coord_System_Boolean__Troschuetz_Random_IGenerator_" data-uid="GoRogue.Rectangle.RandomPosition(System.Func{GoRogue.Coord,System.Boolean},Troschuetz.Random.IGenerator)">RandomPosition(Func&lt;Coord, Boolean&gt;, IGenerator)</h4>
@@ -1971,7 +2175,7 @@ returned true.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_RandomPosition_Troschuetz_Random_IGenerator_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.RandomPosition(Troschuetz.Random.IGenerator)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L578">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L579">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_RandomPosition_" data-uid="GoRogue.Rectangle.RandomPosition*"></a>
   <h4 id="GoRogue_Rectangle_RandomPosition_Troschuetz_Random_IGenerator_" data-uid="GoRogue.Rectangle.RandomPosition(Troschuetz.Random.IGenerator)">RandomPosition(IGenerator)</h4>
@@ -2021,7 +2225,7 @@ returned true.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L729">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L730">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_ToString_" data-uid="GoRogue.Rectangle.ToString*"></a>
   <h4 id="GoRogue_Rectangle_ToString" data-uid="GoRogue.Rectangle.ToString">ToString()</h4>
@@ -2056,7 +2260,7 @@ returned true.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Translate_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Translate(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L742">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L743">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Translate_" data-uid="GoRogue.Rectangle.Translate*"></a>
   <h4 id="GoRogue_Rectangle_Translate_GoRogue_Coord_" data-uid="GoRogue.Rectangle.Translate(GoRogue.Coord)">Translate(Coord)</h4>
@@ -2107,7 +2311,7 @@ delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Translate_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Translate(GoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L542">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L543">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Translate_" data-uid="GoRogue.Rectangle.Translate*"></a>
   <h4 id="GoRogue_Rectangle_Translate_GoRogue_Direction_" data-uid="GoRogue.Rectangle.Translate(GoRogue.Direction)">Translate(Direction)</h4>
@@ -2157,7 +2361,7 @@ delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_Translate_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.Translate(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L754">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L755">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_Translate_" data-uid="GoRogue.Rectangle.Translate*"></a>
   <h4 id="GoRogue_Rectangle_Translate_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.Translate(System.Int32,System.Int32)">Translate(Int32, Int32)</h4>
@@ -2214,7 +2418,7 @@ delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_TranslateX_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.TranslateX(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L762">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L763">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_TranslateX_" data-uid="GoRogue.Rectangle.TranslateX*"></a>
   <h4 id="GoRogue_Rectangle_TranslateX_System_Int32_" data-uid="GoRogue.Rectangle.TranslateX(System.Int32)">TranslateX(Int32)</h4>
@@ -2264,7 +2468,7 @@ delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_TranslateY_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.TranslateY(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L770">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L771">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_TranslateY_" data-uid="GoRogue.Rectangle.TranslateY*"></a>
   <h4 id="GoRogue_Rectangle_TranslateY_System_Int32_" data-uid="GoRogue.Rectangle.TranslateY(System.Int32)">TranslateY(Int32)</h4>
@@ -2314,7 +2518,7 @@ delta-change values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithCenter_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithCenter(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L373">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L374">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithCenter_" data-uid="GoRogue.Rectangle.WithCenter*"></a>
   <h4 id="GoRogue_Rectangle_WithCenter_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithCenter(GoRogue.Coord)">WithCenter(Coord)</h4>
@@ -2366,7 +2570,7 @@ the given location.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithCenter_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithCenter(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L386">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L387">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithCenter_" data-uid="GoRogue.Rectangle.WithCenter*"></a>
   <h4 id="GoRogue_Rectangle_WithCenter_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithCenter(System.Int32,System.Int32)">WithCenter(Int32, Int32)</h4>
@@ -2424,7 +2628,7 @@ the given location.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithExtents_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithExtents(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L197">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L198">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithExtents_" data-uid="GoRogue.Rectangle.WithExtents*"></a>
   <h4 id="GoRogue_Rectangle_WithExtents_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithExtents(GoRogue.Coord,GoRogue.Coord)">WithExtents(Coord, Coord)</h4>
@@ -2481,7 +2685,7 @@ constructor, but with extra overloads not possible to provide in constructors al
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithExtents_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithExtents(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L188">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L189">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithExtents_" data-uid="GoRogue.Rectangle.WithExtents*"></a>
   <h4 id="GoRogue_Rectangle_WithExtents_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithExtents(System.Int32,System.Int32,System.Int32,System.Int32)">WithExtents(Int32, Int32, Int32, Int32)</h4>
@@ -2550,7 +2754,7 @@ constructor, but with extra overloads not possible to provide in constructors al
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithHeight_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithHeight(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L619">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L620">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithHeight_" data-uid="GoRogue.Rectangle.WithHeight*"></a>
   <h4 id="GoRogue_Rectangle_WithHeight_System_Int32_" data-uid="GoRogue.Rectangle.WithHeight(System.Int32)">WithHeight(Int32)</h4>
@@ -2601,7 +2805,7 @@ one, but with the height changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMaxExtent_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMaxExtent(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L628">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L629">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMaxExtent_" data-uid="GoRogue.Rectangle.WithMaxExtent*"></a>
   <h4 id="GoRogue_Rectangle_WithMaxExtent_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithMaxExtent(GoRogue.Coord)">WithMaxExtent(Coord)</h4>
@@ -2652,7 +2856,7 @@ the maximum extent is the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMaxExtent_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMaxExtent(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L638">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L639">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMaxExtent_" data-uid="GoRogue.Rectangle.WithMaxExtent*"></a>
   <h4 id="GoRogue_Rectangle_WithMaxExtent_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithMaxExtent(System.Int32,System.Int32)">WithMaxExtent(Int32, Int32)</h4>
@@ -2709,7 +2913,7 @@ the maximum extent is the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMaxExtentX_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMaxExtentX(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L647">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L648">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMaxExtentX_" data-uid="GoRogue.Rectangle.WithMaxExtentX*"></a>
   <h4 id="GoRogue_Rectangle_WithMaxExtentX_System_Int32_" data-uid="GoRogue.Rectangle.WithMaxExtentX(System.Int32)">WithMaxExtentX(Int32)</h4>
@@ -2760,7 +2964,7 @@ the x-value of maximum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMaxExtentY_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMaxExtentY(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L656">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L657">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMaxExtentY_" data-uid="GoRogue.Rectangle.WithMaxExtentY*"></a>
   <h4 id="GoRogue_Rectangle_WithMaxExtentY_System_Int32_" data-uid="GoRogue.Rectangle.WithMaxExtentY(System.Int32)">WithMaxExtentY(Int32)</h4>
@@ -2811,7 +3015,7 @@ the y-value of maximum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMinExtent_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMinExtent(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L665">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L666">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMinExtent_" data-uid="GoRogue.Rectangle.WithMinExtent*"></a>
   <h4 id="GoRogue_Rectangle_WithMinExtent_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithMinExtent(GoRogue.Coord)">WithMinExtent(Coord)</h4>
@@ -2862,7 +3066,7 @@ the minimum extent is the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMinExtent_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMinExtent(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L675">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L676">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMinExtent_" data-uid="GoRogue.Rectangle.WithMinExtent*"></a>
   <h4 id="GoRogue_Rectangle_WithMinExtent_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithMinExtent(System.Int32,System.Int32)">WithMinExtent(Int32, Int32)</h4>
@@ -2919,7 +3123,7 @@ the minimum extent is the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMinExtentX_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMinExtentX(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L684">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L685">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMinExtentX_" data-uid="GoRogue.Rectangle.WithMinExtentX*"></a>
   <h4 id="GoRogue_Rectangle_WithMinExtentX_System_Int32_" data-uid="GoRogue.Rectangle.WithMinExtentX(System.Int32)">WithMinExtentX(Int32)</h4>
@@ -2970,7 +3174,7 @@ the x-value of minimum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithMinExtentY_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithMinExtentY(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L694">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L695">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithMinExtentY_" data-uid="GoRogue.Rectangle.WithMinExtentY*"></a>
   <h4 id="GoRogue_Rectangle_WithMinExtentY_System_Int32_" data-uid="GoRogue.Rectangle.WithMinExtentY(System.Int32)">WithMinExtentY(Int32)</h4>
@@ -3021,7 +3225,7 @@ the y-value of minimum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithPosition_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithPosition(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L526">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L527">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithPosition_" data-uid="GoRogue.Rectangle.WithPosition*"></a>
   <h4 id="GoRogue_Rectangle_WithPosition_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithPosition(GoRogue.Coord)">WithPosition(Coord)</h4>
@@ -3071,7 +3275,7 @@ the y-value of minimum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithPosition_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithPosition(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L535">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L536">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithPosition_" data-uid="GoRogue.Rectangle.WithPosition*"></a>
   <h4 id="GoRogue_Rectangle_WithPosition_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithPosition(System.Int32,System.Int32)">WithPosition(Int32, Int32)</h4>
@@ -3127,7 +3331,7 @@ the y-value of minimum extent is changed to the specified value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithPositionAndSize_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithPositionAndSize(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L240">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L241">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithPositionAndSize_" data-uid="GoRogue.Rectangle.WithPositionAndSize*"></a>
   <h4 id="GoRogue_Rectangle_WithPositionAndSize_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithPositionAndSize(System.Int32,System.Int32,System.Int32,System.Int32)">WithPositionAndSize(Int32, Int32, Int32, Int32)</h4>
@@ -3196,7 +3400,7 @@ extra overloads not possible to provide in constructors alone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithPostionAndSize_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithPostionAndSize(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L249">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L250">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithPostionAndSize_" data-uid="GoRogue.Rectangle.WithPostionAndSize*"></a>
   <h4 id="GoRogue_Rectangle_WithPostionAndSize_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithPostionAndSize(GoRogue.Coord,GoRogue.Coord)">WithPostionAndSize(Coord, Coord)</h4>
@@ -3253,7 +3457,7 @@ extra overloads not possible to provide in constructors alone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithRadius_GoRogue_Coord_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithRadius(GoRogue.Coord%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L229">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L230">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithRadius_" data-uid="GoRogue.Rectangle.WithRadius*"></a>
   <h4 id="GoRogue_Rectangle_WithRadius_GoRogue_Coord_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithRadius(GoRogue.Coord,System.Int32,System.Int32)">WithRadius(Coord, Int32, Int32)</h4>
@@ -3317,7 +3521,7 @@ to provide in constructors alone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithRadius_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithRadius(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L213">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L214">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithRadius_" data-uid="GoRogue.Rectangle.WithRadius*"></a>
   <h4 id="GoRogue_Rectangle_WithRadius_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithRadius(System.Int32,System.Int32,System.Int32,System.Int32)">WithRadius(Int32, Int32, Int32, Int32)</h4>
@@ -3387,7 +3591,7 @@ to provide in constructors alone.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithSize_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithSize(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L713">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L714">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithSize_" data-uid="GoRogue.Rectangle.WithSize*"></a>
   <h4 id="GoRogue_Rectangle_WithSize_GoRogue_Coord_" data-uid="GoRogue.Rectangle.WithSize(GoRogue.Coord)">WithSize(Coord)</h4>
@@ -3438,7 +3642,7 @@ has the specified width and height.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithSize_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithSize(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L704">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L705">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithSize_" data-uid="GoRogue.Rectangle.WithSize*"></a>
   <h4 id="GoRogue_Rectangle_WithSize_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.WithSize(System.Int32,System.Int32)">WithSize(Int32, Int32)</h4>
@@ -3495,7 +3699,7 @@ has the specified width and height.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithWidth_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithWidth(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L722">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L723">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithWidth_" data-uid="GoRogue.Rectangle.WithWidth*"></a>
   <h4 id="GoRogue_Rectangle_WithWidth_System_Int32_" data-uid="GoRogue.Rectangle.WithWidth(System.Int32)">WithWidth(Int32)</h4>
@@ -3546,7 +3750,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithX_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithX(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L553">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L554">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithX_" data-uid="GoRogue.Rectangle.WithX*"></a>
   <h4 id="GoRogue_Rectangle_WithX_System_Int32_" data-uid="GoRogue.Rectangle.WithX(System.Int32)">WithX(Int32)</h4>
@@ -3596,7 +3800,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_WithY_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.WithY(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L560">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L561">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_WithY_" data-uid="GoRogue.Rectangle.WithY*"></a>
   <h4 id="GoRogue_Rectangle_WithY_System_Int32_" data-uid="GoRogue.Rectangle.WithY(System.Int32)">WithY(Int32)</h4>
@@ -3648,7 +3852,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L359">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L360">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
   <h4 id="GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,GoRogue.Rectangle)">Equality(Rectangle, Rectangle)</h4>
@@ -3699,10 +3903,442 @@ the width changed to the given value.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(GoRogue.Rectangle%2CMicrosoft.Xna.Framework.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L794">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)">Equality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Rectangle</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(GoRogue.Rectangle%2CSystem.Drawing.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L865">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.Rectangle)">Equality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_RectangleF_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(GoRogue.Rectangle%2CSystem.Drawing.RectangleF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L914">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_RectangleF_" data-uid="GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.RectangleF)">Equality(Rectangle, RectangleF)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, RectangleF r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.RectangleF</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(GoRogue.Rectangle%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L993">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__" data-uid="GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">Equality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, (int x, int y, int width, int height)r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L815">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)">Equality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Rectangle</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_System_Drawing_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(System.Drawing.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L886">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_System_Drawing_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(System.Drawing.Rectangle,GoRogue.Rectangle)">Equality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_System_Drawing_RectangleF_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(System.Drawing.RectangleF%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L935">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_System_Drawing_RectangleF_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(System.Drawing.RectangleF,GoRogue.Rectangle)">Equality(RectangleF, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(RectangleF r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.RectangleF</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Equality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Equality(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1014">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Equality_" data-uid="GoRogue.Rectangle.op_Equality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Equality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Equality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)">Equality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if the two rectangles represent the same area.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==((int x, int y, int width, int height)r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two rectangles are equal, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__Microsoft_Xna_Framework_Rectangle.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~Microsoft.Xna.Framework.Rectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L779">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L780">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__Microsoft_Xna_Framework_Rectangle" data-uid="GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~Microsoft.Xna.Framework.Rectangle">Implicit(Rectangle to Rectangle)</h4>
@@ -3750,7 +4386,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_Drawing_Rectangle.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.Drawing.Rectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L794">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L844">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_Drawing_Rectangle" data-uid="GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.Drawing.Rectangle">Implicit(Rectangle to Rectangle)</h4>
@@ -3798,7 +4434,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_Drawing_RectangleF.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.Drawing.RectangleF%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L807">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L857">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_Drawing_RectangleF" data-uid="GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.Drawing.RectangleF">Implicit(Rectangle to RectangleF)</h4>
@@ -3846,7 +4482,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L816">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L964">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32}">Implicit(Rectangle to (Int32 x, Int32 y, Int32 width, Int32 height))</h4>
@@ -3894,7 +4530,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_Microsoft_Xna_Framework_Rectangle__GoRogue_Rectangle.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(Microsoft.Xna.Framework.Rectangle)~GoRogue.Rectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L785">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L786">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_Microsoft_Xna_Framework_Rectangle__GoRogue_Rectangle" data-uid="GoRogue.Rectangle.op_Implicit(Microsoft.Xna.Framework.Rectangle)~GoRogue.Rectangle">Implicit(Rectangle to Rectangle)</h4>
@@ -3942,7 +4578,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_System_Drawing_Rectangle__GoRogue_Rectangle.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(System.Drawing.Rectangle)~GoRogue.Rectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L800">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L850">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_System_Drawing_Rectangle__GoRogue_Rectangle" data-uid="GoRogue.Rectangle.op_Implicit(System.Drawing.Rectangle)~GoRogue.Rectangle">Implicit(Rectangle to Rectangle)</h4>
@@ -3990,7 +4626,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Implicit_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32___GoRogue_Rectangle.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Implicit(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D)~GoRogue.Rectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L822">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L970">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Implicit_" data-uid="GoRogue.Rectangle.op_Implicit*"></a>
   <h4 id="GoRogue_Rectangle_op_Implicit_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32___GoRogue_Rectangle" data-uid="GoRogue.Rectangle.op_Implicit(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})~GoRogue.Rectangle">Implicit((Int32 x, Int32 y, Int32 width, Int32 height) to Rectangle)</h4>
@@ -4038,7 +4674,7 @@ the width changed to the given value.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L346">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L347">View Source</a>
   </span>
   <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
   <h4 id="GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,GoRogue.Rectangle)">Inequality(Rectangle, Rectangle)</h4>
@@ -4087,7 +4723,451 @@ the width changed to the given value.</p>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle%2CMicrosoft.Xna.Framework.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L807">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)">Inequality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Rectangle</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle%2CSystem.Drawing.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L878">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.Rectangle)">Inequality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_RectangleF_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle%2CSystem.Drawing.RectangleF)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L927">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_RectangleF_" data-uid="GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.RectangleF)">Inequality(Rectangle, RectangleF)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, RectangleF r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Drawing.RectangleF</span></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle%2CSystem.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1006">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__" data-uid="GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})">Inequality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, (int x, int y, int width, int height)r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L828">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)">Inequality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Xna.Framework.Rectangle</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_System_Drawing_Rectangle_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(System.Drawing.Rectangle%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L899">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_System_Drawing_Rectangle_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(System.Drawing.Rectangle,GoRogue.Rectangle)">Inequality(Rectangle, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(Rectangle r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_System_Drawing_RectangleF_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(System.Drawing.RectangleF%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L948">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_System_Drawing_RectangleF_GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(System.Drawing.RectangleF,GoRogue.Rectangle)">Inequality(RectangleF, Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(RectangleF r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.RectangleF</span></td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_Rectangle_op_Inequality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.Rectangle.op_Inequality(System.ValueTuple%7BSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%7D%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/Rectangle.cs/#L1027">View Source</a>
+  </span>
+  <a id="GoRogue_Rectangle_op_Inequality_" data-uid="GoRogue.Rectangle.op_Inequality*"></a>
+  <h4 id="GoRogue_Rectangle_op_Inequality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_" data-uid="GoRogue.Rectangle.op_Inequality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)">Inequality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)</h4>
+  <div class="markdown level1 summary"><p>True if any of the rectangles' x/y/width/height values are not equal.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=((int x, int y, int width, int height)r1, Rectangle r2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td><span class="parametername">r1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></td>
+        <td><span class="parametername">r2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if any of the x/y/width/height values are not equal, false if they are all equal.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
+  </div>
   <div>
       <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>

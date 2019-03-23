@@ -1812,12 +1812,51 @@ references:
   commentId: M:GoRogue.Coord.Equals(GoRogue.Coord)
   fullName: GoRogue.Coord.Equals(GoRogue.Coord)
   nameWithType: Coord.Equals(Coord)
+- uid: GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
+  name: Equals(Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_Microsoft_Xna_Framework_Point_
+  commentId: M:GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
+  fullName: GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
+  nameWithType: Coord.Equals(Point)
+- uid: GoRogue.Coord.Equals(System.Drawing.Point)
+  name: Equals(Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_Point_
+  commentId: M:GoRogue.Coord.Equals(System.Drawing.Point)
+  fullName: GoRogue.Coord.Equals(System.Drawing.Point)
+  nameWithType: Coord.Equals(Point)
+- uid: GoRogue.Coord.Equals(System.Drawing.PointF)
+  name: Equals(PointF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_PointF_
+  commentId: M:GoRogue.Coord.Equals(System.Drawing.PointF)
+  fullName: GoRogue.Coord.Equals(System.Drawing.PointF)
+  nameWithType: Coord.Equals(PointF)
+- uid: GoRogue.Coord.Equals(System.Drawing.Size)
+  name: Equals(Size)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_Size_
+  commentId: M:GoRogue.Coord.Equals(System.Drawing.Size)
+  fullName: GoRogue.Coord.Equals(System.Drawing.Size)
+  nameWithType: Coord.Equals(Size)
+- uid: GoRogue.Coord.Equals(System.Drawing.SizeF)
+  name: Equals(SizeF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_SizeF_
+  commentId: M:GoRogue.Coord.Equals(System.Drawing.SizeF)
+  fullName: GoRogue.Coord.Equals(System.Drawing.SizeF)
+  nameWithType: Coord.Equals(SizeF)
 - uid: GoRogue.Coord.Equals(System.Object)
   name: Equals(Object)
   href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Object_
   commentId: M:GoRogue.Coord.Equals(System.Object)
   fullName: GoRogue.Coord.Equals(System.Object)
   nameWithType: Coord.Equals(Object)
+- uid: GoRogue.Coord.Equals(System.ValueTuple{System.Int32,System.Int32})
+  name: Equals((Int32 x, Int32 y))
+  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_ValueTuple_System_Int32_System_Int32__
+  commentId: M:GoRogue.Coord.Equals(System.ValueTuple{System.Int32,System.Int32})
+  name.vb: Equals((x As Int32, y As Int32))
+  fullName: GoRogue.Coord.Equals(System.ValueTuple<System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Coord.Equals(System.ValueTuple(Of System.Int32, System.Int32))
+  nameWithType: Coord.Equals((Int32 x, Int32 y))
+  nameWithType.vb: Coord.Equals((x As Int32, y As Int32))
 - uid: GoRogue.Coord.Equals*
   name: Equals
   href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_
@@ -2010,6 +2049,84 @@ references:
   commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,GoRogue.Coord)
   fullName: GoRogue.Coord.Equality(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Equality(Coord, Coord)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  name: Equality(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_Microsoft_Xna_Framework_Point_
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, Microsoft.Xna.Framework.Point)
+  nameWithType: Coord.Equality(Coord, Point)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Point)
+  name: Equality(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Point_
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Point)
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, System.Drawing.Point)
+  nameWithType: Coord.Equality(Coord, Point)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.PointF)
+  name: Equality(Coord, PointF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_PointF_
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.PointF)
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, System.Drawing.PointF)
+  nameWithType: Coord.Equality(Coord, PointF)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Size)
+  name: Equality(Coord, Size)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Size_
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Size)
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, System.Drawing.Size)
+  nameWithType: Coord.Equality(Coord, Size)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.SizeF)
+  name: Equality(Coord, SizeF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_SizeF_
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.SizeF)
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, System.Drawing.SizeF)
+  nameWithType: Coord.Equality(Coord, SizeF)
+- uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name: Equality(Coord, (Int32 x, Int32 y))
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__
+  commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name.vb: Equality(Coord, (x As Int32, y As Int32))
+  fullName: GoRogue.Coord.Equality(GoRogue.Coord, System.ValueTuple<System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Coord.Equality(GoRogue.Coord, System.ValueTuple(Of System.Int32, System.Int32))
+  nameWithType: Coord.Equality(Coord, (Int32 x, Int32 y))
+  nameWithType.vb: Coord.Equality(Coord, (x As Int32, y As Int32))
+- uid: GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  name: Equality(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_Microsoft_Xna_Framework_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Equality(Microsoft.Xna.Framework.Point, GoRogue.Coord)
+  nameWithType: Coord.Equality(Point, Coord)
+- uid: GoRogue.Coord.op_Equality(System.Drawing.Point,GoRogue.Coord)
+  name: Equality(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_Drawing_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(System.Drawing.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Equality(System.Drawing.Point, GoRogue.Coord)
+  nameWithType: Coord.Equality(Point, Coord)
+- uid: GoRogue.Coord.op_Equality(System.Drawing.PointF,GoRogue.Coord)
+  name: Equality(PointF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_Drawing_PointF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(System.Drawing.PointF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Equality(System.Drawing.PointF, GoRogue.Coord)
+  nameWithType: Coord.Equality(PointF, Coord)
+- uid: GoRogue.Coord.op_Equality(System.Drawing.Size,GoRogue.Coord)
+  name: Equality(Size, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_Drawing_Size_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(System.Drawing.Size,GoRogue.Coord)
+  fullName: GoRogue.Coord.Equality(System.Drawing.Size, GoRogue.Coord)
+  nameWithType: Coord.Equality(Size, Coord)
+- uid: GoRogue.Coord.op_Equality(System.Drawing.SizeF,GoRogue.Coord)
+  name: Equality(SizeF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_Drawing_SizeF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(System.Drawing.SizeF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Equality(System.Drawing.SizeF, GoRogue.Coord)
+  nameWithType: Coord.Equality(SizeF, Coord)
+- uid: GoRogue.Coord.op_Equality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name: Equality((Int32 x, Int32 y), Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Equality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name.vb: Equality((x As Int32, y As Int32), Coord)
+  fullName: GoRogue.Coord.Equality(System.ValueTuple<System.Int32, System.Int32>, GoRogue.Coord)
+  fullName.vb: GoRogue.Coord.Equality(System.ValueTuple(Of System.Int32, System.Int32), GoRogue.Coord)
+  nameWithType: Coord.Equality((Int32 x, Int32 y), Coord)
+  nameWithType.vb: Coord.Equality((x As Int32, y As Int32), Coord)
 - uid: GoRogue.Coord.op_Equality*
   name: Equality
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_
@@ -2123,6 +2240,84 @@ references:
   commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,GoRogue.Coord)
   fullName: GoRogue.Coord.Inequality(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Inequality(Coord, Coord)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  name: Inequality(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_Microsoft_Xna_Framework_Point_
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, Microsoft.Xna.Framework.Point)
+  nameWithType: Coord.Inequality(Coord, Point)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Point)
+  name: Inequality(Coord, Point)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Point_
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Point)
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, System.Drawing.Point)
+  nameWithType: Coord.Inequality(Coord, Point)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.PointF)
+  name: Inequality(Coord, PointF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_PointF_
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.PointF)
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, System.Drawing.PointF)
+  nameWithType: Coord.Inequality(Coord, PointF)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Size)
+  name: Inequality(Coord, Size)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Size_
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Size)
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, System.Drawing.Size)
+  nameWithType: Coord.Inequality(Coord, Size)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.SizeF)
+  name: Inequality(Coord, SizeF)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_SizeF_
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.SizeF)
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, System.Drawing.SizeF)
+  nameWithType: Coord.Inequality(Coord, SizeF)
+- uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name: Inequality(Coord, (Int32 x, Int32 y))
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_ValueTuple_System_Int32_System_Int32__
+  commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,System.ValueTuple{System.Int32,System.Int32})
+  name.vb: Inequality(Coord, (x As Int32, y As Int32))
+  fullName: GoRogue.Coord.Inequality(GoRogue.Coord, System.ValueTuple<System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Coord.Inequality(GoRogue.Coord, System.ValueTuple(Of System.Int32, System.Int32))
+  nameWithType: Coord.Inequality(Coord, (Int32 x, Int32 y))
+  nameWithType.vb: Coord.Inequality(Coord, (x As Int32, y As Int32))
+- uid: GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  name: Inequality(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_Microsoft_Xna_Framework_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Inequality(Microsoft.Xna.Framework.Point, GoRogue.Coord)
+  nameWithType: Coord.Inequality(Point, Coord)
+- uid: GoRogue.Coord.op_Inequality(System.Drawing.Point,GoRogue.Coord)
+  name: Inequality(Point, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_Drawing_Point_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(System.Drawing.Point,GoRogue.Coord)
+  fullName: GoRogue.Coord.Inequality(System.Drawing.Point, GoRogue.Coord)
+  nameWithType: Coord.Inequality(Point, Coord)
+- uid: GoRogue.Coord.op_Inequality(System.Drawing.PointF,GoRogue.Coord)
+  name: Inequality(PointF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_Drawing_PointF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(System.Drawing.PointF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Inequality(System.Drawing.PointF, GoRogue.Coord)
+  nameWithType: Coord.Inequality(PointF, Coord)
+- uid: GoRogue.Coord.op_Inequality(System.Drawing.Size,GoRogue.Coord)
+  name: Inequality(Size, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_Drawing_Size_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(System.Drawing.Size,GoRogue.Coord)
+  fullName: GoRogue.Coord.Inequality(System.Drawing.Size, GoRogue.Coord)
+  nameWithType: Coord.Inequality(Size, Coord)
+- uid: GoRogue.Coord.op_Inequality(System.Drawing.SizeF,GoRogue.Coord)
+  name: Inequality(SizeF, Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_Drawing_SizeF_GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(System.Drawing.SizeF,GoRogue.Coord)
+  fullName: GoRogue.Coord.Inequality(System.Drawing.SizeF, GoRogue.Coord)
+  nameWithType: Coord.Inequality(SizeF, Coord)
+- uid: GoRogue.Coord.op_Inequality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name: Inequality((Int32 x, Int32 y), Coord)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_ValueTuple_System_Int32_System_Int32__GoRogue_Coord_
+  commentId: M:GoRogue.Coord.op_Inequality(System.ValueTuple{System.Int32,System.Int32},GoRogue.Coord)
+  name.vb: Inequality((x As Int32, y As Int32), Coord)
+  fullName: GoRogue.Coord.Inequality(System.ValueTuple<System.Int32, System.Int32>, GoRogue.Coord)
+  fullName.vb: GoRogue.Coord.Inequality(System.ValueTuple(Of System.Int32, System.Int32), GoRogue.Coord)
+  nameWithType: Coord.Inequality((Int32 x, Int32 y), Coord)
+  nameWithType.vb: Coord.Inequality((x As Int32, y As Int32), Coord)
 - uid: GoRogue.Coord.op_Inequality*
   name: Inequality
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_
@@ -11658,12 +11853,39 @@ references:
   commentId: M:GoRogue.Rectangle.Equals(GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Equals(GoRogue.Rectangle)
   nameWithType: Rectangle.Equals(Rectangle)
+- uid: GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
+  name: Equals(Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_Microsoft_Xna_Framework_Rectangle_
+  commentId: M:GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
+  fullName: GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
+  nameWithType: Rectangle.Equals(Rectangle)
+- uid: GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
+  name: Equals(Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Drawing_Rectangle_
+  commentId: M:GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
+  fullName: GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
+  nameWithType: Rectangle.Equals(Rectangle)
+- uid: GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
+  name: Equals(RectangleF)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Drawing_RectangleF_
+  commentId: M:GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
+  fullName: GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
+  nameWithType: Rectangle.Equals(RectangleF)
 - uid: GoRogue.Rectangle.Equals(System.Object)
   name: Equals(Object)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Object_
   commentId: M:GoRogue.Rectangle.Equals(System.Object)
   fullName: GoRogue.Rectangle.Equals(System.Object)
   nameWithType: Rectangle.Equals(Object)
+- uid: GoRogue.Rectangle.Equals(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name: Equals((Int32 x, Int32 y, Int32 width, Int32 height))
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__
+  commentId: M:GoRogue.Rectangle.Equals(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name.vb: Equals((x As Int32, y As Int32, width As Int32, height As Int32))
+  fullName: GoRogue.Rectangle.Equals(System.ValueTuple<System.Int32, System.Int32, System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Rectangle.Equals(System.ValueTuple(Of System.Int32, System.Int32, System.Int32, System.Int32))
+  nameWithType: Rectangle.Equals((Int32 x, Int32 y, Int32 width, Int32 height))
+  nameWithType.vb: Rectangle.Equals((x As Int32, y As Int32, width As Int32, height As Int32))
 - uid: GoRogue.Rectangle.Equals*
   name: Equals
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_
@@ -11917,6 +12139,60 @@ references:
   commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, GoRogue.Rectangle)
   nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
+  name: Equality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
+  fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, Microsoft.Xna.Framework.Rectangle)
+  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.Rectangle)
+  name: Equality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.Rectangle)
+  fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, System.Drawing.Rectangle)
+  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.RectangleF)
+  name: Equality(Rectangle, RectangleF)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_RectangleF_
+  commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.RectangleF)
+  fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, System.Drawing.RectangleF)
+  nameWithType: Rectangle.Equality(Rectangle, RectangleF)
+- uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name: Equality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__
+  commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name.vb: Equality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
+  fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, System.ValueTuple<System.Int32, System.Int32, System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Rectangle.Equality(GoRogue.Rectangle, System.ValueTuple(Of System.Int32, System.Int32, System.Int32, System.Int32))
+  nameWithType: Rectangle.Equality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
+  nameWithType.vb: Rectangle.Equality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
+- uid: GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
+  name: Equality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Equality(Microsoft.Xna.Framework.Rectangle, GoRogue.Rectangle)
+  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(System.Drawing.Rectangle,GoRogue.Rectangle)
+  name: Equality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_System_Drawing_Rectangle_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(System.Drawing.Rectangle,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Equality(System.Drawing.Rectangle, GoRogue.Rectangle)
+  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(System.Drawing.RectangleF,GoRogue.Rectangle)
+  name: Equality(RectangleF, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_System_Drawing_RectangleF_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(System.Drawing.RectangleF,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Equality(System.Drawing.RectangleF, GoRogue.Rectangle)
+  nameWithType: Rectangle.Equality(RectangleF, Rectangle)
+- uid: GoRogue.Rectangle.op_Equality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)
+  name: Equality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Equality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)
+  name.vb: Equality((x As Int32, y As Int32, width As Int32, height As Int32), Rectangle)
+  fullName: GoRogue.Rectangle.Equality(System.ValueTuple<System.Int32, System.Int32, System.Int32, System.Int32>, GoRogue.Rectangle)
+  fullName.vb: GoRogue.Rectangle.Equality(System.ValueTuple(Of System.Int32, System.Int32, System.Int32, System.Int32), GoRogue.Rectangle)
+  nameWithType: Rectangle.Equality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)
+  nameWithType.vb: Rectangle.Equality((x As Int32, y As Int32, width As Int32, height As Int32), Rectangle)
 - uid: GoRogue.Rectangle.op_Equality*
   name: Equality
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_
@@ -12003,6 +12279,60 @@ references:
   commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, GoRogue.Rectangle)
   nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
+  name: Inequality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, Microsoft.Xna.Framework.Rectangle)
+  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.Rectangle)
+  name: Inequality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, System.Drawing.Rectangle)
+  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.RectangleF)
+  name: Inequality(Rectangle, RectangleF)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_RectangleF_
+  commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.RectangleF)
+  fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, System.Drawing.RectangleF)
+  nameWithType: Rectangle.Inequality(Rectangle, RectangleF)
+- uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name: Inequality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__
+  commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32})
+  name.vb: Inequality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
+  fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, System.ValueTuple<System.Int32, System.Int32, System.Int32, System.Int32>)
+  fullName.vb: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, System.ValueTuple(Of System.Int32, System.Int32, System.Int32, System.Int32))
+  nameWithType: Rectangle.Inequality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
+  nameWithType.vb: Rectangle.Inequality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
+- uid: GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
+  name: Inequality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(Microsoft.Xna.Framework.Rectangle, GoRogue.Rectangle)
+  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(System.Drawing.Rectangle,GoRogue.Rectangle)
+  name: Inequality(Rectangle, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_System_Drawing_Rectangle_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(System.Drawing.Rectangle,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(System.Drawing.Rectangle, GoRogue.Rectangle)
+  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(System.Drawing.RectangleF,GoRogue.Rectangle)
+  name: Inequality(RectangleF, Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_System_Drawing_RectangleF_GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(System.Drawing.RectangleF,GoRogue.Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(System.Drawing.RectangleF, GoRogue.Rectangle)
+  nameWithType: Rectangle.Inequality(RectangleF, Rectangle)
+- uid: GoRogue.Rectangle.op_Inequality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)
+  name: Inequality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_System_ValueTuple_System_Int32_System_Int32_System_Int32_System_Int32__GoRogue_Rectangle_
+  commentId: M:GoRogue.Rectangle.op_Inequality(System.ValueTuple{System.Int32,System.Int32,System.Int32,System.Int32},GoRogue.Rectangle)
+  name.vb: Inequality((x As Int32, y As Int32, width As Int32, height As Int32), Rectangle)
+  fullName: GoRogue.Rectangle.Inequality(System.ValueTuple<System.Int32, System.Int32, System.Int32, System.Int32>, GoRogue.Rectangle)
+  fullName.vb: GoRogue.Rectangle.Inequality(System.ValueTuple(Of System.Int32, System.Int32, System.Int32, System.Int32), GoRogue.Rectangle)
+  nameWithType: Rectangle.Inequality((Int32 x, Int32 y, Int32 width, Int32 height), Rectangle)
+  nameWithType.vb: Rectangle.Inequality((x As Int32, y As Int32, width As Int32, height As Int32), Rectangle)
 - uid: GoRogue.Rectangle.op_Inequality*
   name: Inequality
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_
