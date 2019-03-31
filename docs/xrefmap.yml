@@ -1812,36 +1812,6 @@ references:
   commentId: M:GoRogue.Coord.Equals(GoRogue.Coord)
   fullName: GoRogue.Coord.Equals(GoRogue.Coord)
   nameWithType: Coord.Equals(Coord)
-- uid: GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
-  name: Equals(Point)
-  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_Microsoft_Xna_Framework_Point_
-  commentId: M:GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
-  fullName: GoRogue.Coord.Equals(Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Equals(Point)
-- uid: GoRogue.Coord.Equals(System.Drawing.Point)
-  name: Equals(Point)
-  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_Point_
-  commentId: M:GoRogue.Coord.Equals(System.Drawing.Point)
-  fullName: GoRogue.Coord.Equals(System.Drawing.Point)
-  nameWithType: Coord.Equals(Point)
-- uid: GoRogue.Coord.Equals(System.Drawing.PointF)
-  name: Equals(PointF)
-  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_PointF_
-  commentId: M:GoRogue.Coord.Equals(System.Drawing.PointF)
-  fullName: GoRogue.Coord.Equals(System.Drawing.PointF)
-  nameWithType: Coord.Equals(PointF)
-- uid: GoRogue.Coord.Equals(System.Drawing.Size)
-  name: Equals(Size)
-  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_Size_
-  commentId: M:GoRogue.Coord.Equals(System.Drawing.Size)
-  fullName: GoRogue.Coord.Equals(System.Drawing.Size)
-  nameWithType: Coord.Equals(Size)
-- uid: GoRogue.Coord.Equals(System.Drawing.SizeF)
-  name: Equals(SizeF)
-  href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Drawing_SizeF_
-  commentId: M:GoRogue.Coord.Equals(System.Drawing.SizeF)
-  fullName: GoRogue.Coord.Equals(System.Drawing.SizeF)
-  nameWithType: Coord.Equals(SizeF)
 - uid: GoRogue.Coord.Equals(System.Object)
   name: Equals(Object)
   href: api/GoRogue.Coord.html#GoRogue_Coord_Equals_System_Object_
@@ -11853,24 +11823,6 @@ references:
   commentId: M:GoRogue.Rectangle.Equals(GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Equals(GoRogue.Rectangle)
   nameWithType: Rectangle.Equals(Rectangle)
-- uid: GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
-  name: Equals(Rectangle)
-  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_Microsoft_Xna_Framework_Rectangle_
-  commentId: M:GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
-  fullName: GoRogue.Rectangle.Equals(Microsoft.Xna.Framework.Rectangle)
-  nameWithType: Rectangle.Equals(Rectangle)
-- uid: GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
-  name: Equals(Rectangle)
-  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Drawing_Rectangle_
-  commentId: M:GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
-  fullName: GoRogue.Rectangle.Equals(System.Drawing.Rectangle)
-  nameWithType: Rectangle.Equals(Rectangle)
-- uid: GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
-  name: Equals(RectangleF)
-  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Drawing_RectangleF_
-  commentId: M:GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
-  fullName: GoRogue.Rectangle.Equals(System.Drawing.RectangleF)
-  nameWithType: Rectangle.Equals(RectangleF)
 - uid: GoRogue.Rectangle.Equals(System.Object)
   name: Equals(Object)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_Equals_System_Object_
