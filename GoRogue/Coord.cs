@@ -29,8 +29,7 @@ namespace GoRogue
 	/// Coord where possible, as something that accepts or works with Coord will generally work with other supported types
 	/// as well.
 	/// </remarks>
-	public struct Coord : IEquatable<Coord>, IEquatable<MonoPoint>, IEquatable<DrawingPoint>, IEquatable<PointF>, IEquatable<Size>, IEquatable<SizeF>,
-						   IEquatable<(int x, int y)>
+	public struct Coord : IEquatable<Coord>, IEquatable<(int x, int y)>
 	{
 		/// <summary>
 		/// Coord value that represents None or no position (since Coord is not a nullable type).
@@ -485,13 +484,6 @@ namespace GoRogue
 		/// True if either the x-values or y-values are not equal, false if they are both equal.
 		/// </returns>
 		public static bool operator !=(MonoPoint p1, Coord c2) => !(p1 == c2);
-
-		/// <summary>
-		/// True if the given coordinate has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two coordinates are equal, false if not.</returns>
-		public bool Equals(MonoPoint other) => X == other.X && Y == other.Y;
 		#endregion
 
 		#region System.Drawing Compatibility
@@ -663,13 +655,6 @@ namespace GoRogue
 		public static bool operator !=(DrawingPoint p1, Coord c2) => !(p1 == c2);
 
 		/// <summary>
-		/// True if the given coordinate has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two coordinates are equal, false if not.</returns>
-		public bool Equals(DrawingPoint other) => X == other.X && Y == other.Y;
-
-		/// <summary>
 		/// True if the two point's X and Y values are equal.
 		/// </summary>
 		/// <param name="c1"></param>
@@ -710,13 +695,6 @@ namespace GoRogue
 		/// True if either the x-values or y-values are not equal, false if they are both equal.
 		/// </returns>
 		public static bool operator !=(PointF p1, Coord c2) => !(p1 == c2);
-
-		/// <summary>
-		/// True if the given coordinate has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two coordinates are equal, false if not.</returns>
-		public bool Equals(PointF other) => X == other.X && Y == other.Y;
 
 		/// <summary>
 		/// True if the point's x/y values equal the size's width/height values.
@@ -761,13 +739,6 @@ namespace GoRogue
 		public static bool operator !=(Size size, Coord c) => !(size == c);
 
 		/// <summary>
-		/// True if the current coordinate has equal x and y values to the given size's Width/Height values.
-		/// </summary>
-		/// <param name="other">Size to compare.</param>
-		/// <returns>True if the size and coordinate are equivalent, false if not.</returns>
-		public bool Equals(Size other) => X == other.Width && Y == other.Height;
-
-		/// <summary>
 		/// True if the point's x/y values equal the size's width/height values.
 		/// </summary>
 		/// <param name="c"></param>
@@ -808,13 +779,6 @@ namespace GoRogue
 		/// True if either the Width/x values or the Height/y values are not equal, false if they are both equal.
 		/// </returns>
 		public static bool operator !=(SizeF size, Coord c) => !(size == c);
-
-		/// <summary>
-		/// True if the current coordinate has equal x and y values to the given size's Width/Height values.
-		/// </summary>
-		/// <param name="other">SizeF to compare.</param>
-		/// <returns>True if the size and coordinate are equivalent, false if not.</returns>
-		public bool Equals(SizeF other) => X == other.Width && Y == other.Height;
 		#endregion
 
 		#region TupleCompatibility

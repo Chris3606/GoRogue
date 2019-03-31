@@ -20,8 +20,7 @@ namespace GoRogue
 	/// Rectangle where possible, as something that accepts or works with Rectangle will generally work with other supported types
 	/// as well.
 	/// </remarks>
-	public struct Rectangle : IEquatable<Rectangle>, IEquatable<XnaRectangle>, IEquatable<DrawingRectangle>, IEquatable<DrawingRectangleF>,
-								IEquatable<(int x, int y, int width, int height)>
+	public struct Rectangle : IEquatable<Rectangle>, IEquatable<(int x, int y, int width, int height)>
 	{
 		/// <summary>
 		/// The empty rectangle. Has origin of (0, 0) with 0 width and height.
@@ -826,13 +825,6 @@ namespace GoRogue
 		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
 		/// </returns>
 		public static bool operator !=(XnaRectangle r1, Rectangle r2) => !(r1 == r2);
-
-		/// <summary>
-		/// True if the given position has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two positions are equal, false if not.</returns>
-		public bool Equals(XnaRectangle other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 		#endregion
 
 		#region System Drawing Conversions
@@ -899,13 +891,6 @@ namespace GoRogue
 		public static bool operator !=(DrawingRectangle r1, Rectangle r2) => !(r1 == r2);
 
 		/// <summary>
-		/// True if the given position has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two positions are equal, false if not.</returns>
-		public bool Equals(DrawingRectangle other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
-
-		/// <summary>
 		/// True if the two rectangles represent the same area.
 		/// </summary>
 		/// <param name="r1"></param>
@@ -946,13 +931,6 @@ namespace GoRogue
 		/// True if any of the x/y/width/height values are not equal, false if they are all equal.
 		/// </returns>
 		public static bool operator !=(DrawingRectangleF r1, Rectangle r2) => !(r1 == r2);
-
-		/// <summary>
-		/// True if the given position has equal x and y values to the current one.
-		/// </summary>
-		/// <param name="other">Point to compare.</param>
-		/// <returns>True if the two positions are equal, false if not.</returns>
-		public bool Equals(DrawingRectangleF other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 		#endregion
 
 		#region Tuple Compability
