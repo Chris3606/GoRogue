@@ -3,7 +3,7 @@ using GoRogue.Random;
 using System;
 using System.Collections.Generic;
 using Troschuetz.Random;
-using XnaRectangle = Microsoft.Xna.Framework.Rectangle;
+//using XnaRectangle = Microsoft.Xna.Framework.Rectangle;
 using DrawingRectangle = System.Drawing.Rectangle;
 using DrawingRectangleF = System.Drawing.RectangleF;
 
@@ -770,6 +770,7 @@ namespace GoRogue
 		public Rectangle TranslateY(int dy)
 			=> new Rectangle(X, Y + dy, Width, Height);
 
+		/*
 		#region MonoGame Conversions
 		/// <summary>
 		/// Implicitly converts a GoRogue Rectangle to an equivalent MonoGame Rectangle.
@@ -826,7 +827,7 @@ namespace GoRogue
 		/// </returns>
 		public static bool operator !=(XnaRectangle r1, Rectangle r2) => !(r1 == r2);
 		#endregion
-
+		*/
 		#region System Drawing Conversions
 		/// <summary>
 		/// Implicitly converts a GoRogue Rectangle to an equivalent System.Drawing.Rectangle.

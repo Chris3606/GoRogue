@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using DrawingPoint = System.Drawing.Point;
-using MonoPoint = Microsoft.Xna.Framework.Point;
+//using MonoPoint = Microsoft.Xna.Framework.Point;
 
 namespace GoRogue
 {
@@ -399,7 +399,7 @@ namespace GoRogue
 		/// <param name="other">Coordinate to compare.</param>
 		/// <returns>True if the two coordinates are equal, false if not.</returns>
 		public bool Equals(Coord other) => X == other.X && Y == other.Y;
-
+		/*
 		#region MonoGame Compatibility
 		/// <summary>
 		/// Implicitly converts a Coord to an equivalent MonoGame point.
@@ -485,7 +485,7 @@ namespace GoRogue
 		/// </returns>
 		public static bool operator !=(MonoPoint p1, Coord c2) => !(p1 == c2);
 		#endregion
-
+		*/
 		#region System.Drawing Compatibility
 		/// <summary>
 		/// Implicitly converts a Coord to an equivalent System.Drawing.Point.

@@ -1,5 +1,5 @@
 ﻿using System;
-using MonoPoint = Microsoft.Xna.Framework.Point;
+//using MonoPoint = Microsoft.Xna.Framework.Point;
 using DrawingPoint = System.Drawing.Point;
 
 namespace GoRogue
@@ -464,7 +464,7 @@ namespace GoRogue
 		/// </summary>
 		/// <returns>String representation of the direction.</returns>
 		public override string ToString() => writeVals[(int)Type];
-
+		/*
 		#region MonoGame Compatibility
 		/// <summary>
 		/// Translates the given position by one unit in the given direction.
@@ -476,7 +476,7 @@ namespace GoRogue
 		/// </returns>
 		public static MonoPoint operator +(MonoPoint p, Direction d) => new MonoPoint(p.X + d.DeltaX, p.Y + d.DeltaY);
 		#endregion
-
+		*/
 		#region System.Drawing Compatibility
 		/// <summary>
 		/// Translates the given position by one unit in the given direction.

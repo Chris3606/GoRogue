@@ -6,6 +6,7 @@ using XnaRect = Microsoft.Xna.Framework.Rectangle;
 
 namespace GoRogue_UnitTests
 {
+/*
 	[TestClass]
 	public class MonoGameConversionTests
 	{
@@ -53,4 +54,5 @@ namespace GoRogue_UnitTests
 			Assert.AreEqual(m.Height, g.Height);
 		}
 	}
+	*/
 }
