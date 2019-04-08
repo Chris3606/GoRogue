@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using DrawingPoint = System.Drawing.Point;
+#if ALLCONVERSIONS
 using MonoPoint = Microsoft.Xna.Framework.Point;
+#endif
 
 namespace GoRogue
 {
@@ -288,16 +290,7 @@ namespace GoRogue
 		/// <param name="c1"></param>
 		/// <param name="c2"></param>
 		/// <returns>True if the two coordinates are equal, false if not.</returns>
-		public static bool operator ==(Coord c1, Coord c2)
-		{
-			if (ReferenceEquals(c1, c2))
-				return true;
-
-			if (ReferenceEquals(null, c1) || ReferenceEquals(null, c2))
-				return false;
-
-			return c1.X == c2.X && c1.Y == c2.Y;
-		}
+		public static bool operator ==(Coord c1, Coord c2) => c1.X == c2.X && c1.Y == c2.Y;
 
 		/// <summary>
 		/// Reverses the ToIndex functions, returning the position represented by a given index.
@@ -339,7 +332,7 @@ namespace GoRogue
 		/// <returns>
 		/// True if <paramref name="obj"/> is a Coord instance, and the two coordinates are equal, false otherwise.
 		/// </returns>
-		public override bool Equals(object obj) => obj is Coord c && Equals(c); // If cast is null, operator== will take care of it.
+		public override bool Equals(object obj) => obj is Coord c && Equals(c);
 
 		/// <summary>
 		/// Returns a hash code for the Coord. The important parts: it should be fairly fast and it
@@ -399,7 +392,8 @@ namespace GoRogue
 		/// <param name="other">Coordinate to compare.</param>
 		/// <returns>True if the two coordinates are equal, false if not.</returns>
 		public bool Equals(Coord other) => X == other.X && Y == other.Y;
-
+		
+		#if ALLCONVERSIONS
 		#region MonoGame Compatibility
 		/// <summary>
 		/// Implicitly converts a Coord to an equivalent MonoGame point.
@@ -485,6 +479,7 @@ namespace GoRogue
 		/// </returns>
 		public static bool operator !=(MonoPoint p1, Coord c2) => !(p1 == c2);
 		#endregion
+		#endif
 
 		#region System.Drawing Compatibility
 		/// <summary>
