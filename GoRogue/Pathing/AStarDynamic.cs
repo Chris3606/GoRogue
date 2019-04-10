@@ -5,30 +5,21 @@ using System.Collections.Generic;
 namespace GoRogue.Pathing
 {
 	/// <summary>
-	/// Implements an optimized AStar pathfinding algorithm. Optionally supports custom heuristics, and custom weights for each tile.  If the map view
-	/// you give to the algorithm must change size frequently, consider <see cref="AStarDynamic"/> or <see cref="FastAStarDynamic"/>.
+	/// A version of <see cref="AStar"/> that will perform better than AStar when the map view's size is changing frequently.  If you map view size
+	/// does not change frequently, use <see cref="AStar"/>.
 	/// </summary>
 	/// <remarks>
-	/// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map. 
-	/// Specifically, it takes an <see cref="IMapView{Boolean}"/>, where true indicates that a tile should be
-	/// considered walkable, and false indicates that a tile should be considered impassable.
-	/// 
-	/// For details on the map view system in general, see <see cref="IMapView{T}"/>.  As well, there is an article
-	/// explaining the map view system at the GoRogue documentation page
-	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
-	/// 
-	/// This algorithm performs the best when the map view it is given does not change size frequently, and generally, in cases where maximum performance
-	/// is needed, it is recommended that the map view _not_ change size frequently (regardless of whether the underlying map is actually changing size).
-	/// However, in cases where the map view size must change size frequently, you may get better performance out of <see cref="AStarDynamic"/> or
-	/// its fast variant, <see cref="FastAStarDynamic"/>.
+	/// This algorithm performs the best when the map view it is given is changing size frequently relative to the number of calls to shortest path.
+	/// Generally, in cases where maximum performance is needed, it is recommended that the map view _not_ change size frequently (regardless of whether
+	/// the underlying map is actually changing size), and to use <see cref="AStar"/> instead (or its faster variant <see cref="FastAStar"/>).  However,
+	/// in cases where the map view size must change size frequently, you will get better performance out of this or its fast variant, <see cref="FastAStarDynamic"/>.
 	/// </remarks>
-	public class AStar
+	public class AStarDynamic
 	{
 		private Func<int, int, IEnumerable<Direction>> neighborFunc;
+
 		private double[] costSoFar;
 		private Coord[] cameFrom;
-		private bool[] opened;
-		private bool[] closed;
 		private int _cachedWidth;
 		private int _cachedHeight;
 
@@ -51,9 +42,9 @@ namespace GoRogue.Pathing
 			{
 				_distanceMeasurement = value;
 				if (_distanceMeasurement == Distance.MANHATTAN)
-					neighborFunc = cardinalNeighbors;
+					neighborFunc = AStar.cardinalNeighbors;
 				else
-					neighborFunc = neighbors;
+					neighborFunc = AStar.neighbors;
 			}
 		}
 
@@ -79,10 +70,10 @@ namespace GoRogue.Pathing
 		/// <param name="heuristic">Function used to estimate the distance between two given points.  If unspecified, a distance calculation corresponding
 		/// to <paramref name="distanceMeasurement"/> is used, which will produce guranteed shortest paths.</param>
 		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.  If unspecified, each location will default to having a weight of 1.</param>
-		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null,
+		public AStarDynamic(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null,
 						 IMapView<double> weights = null)
 		{
-			Heuristic = heuristic ?? distanceMeasurement.Calculate;
+			Heuristic = heuristic ?? Distance.MANHATTAN.Calculate;
 			if (weights == null)
 			{
 				var weightsMap = new ArrayMap<double>(walkabilityMap.Width, walkabilityMap.Height);
@@ -96,7 +87,7 @@ namespace GoRogue.Pathing
 			WalkabilityMap = walkabilityMap;
 			DistanceMeasurement = distanceMeasurement;
 
-			InitializeArrays(out costSoFar, out cameFrom, out opened, out closed, WalkabilityMap.Width * WalkabilityMap.Height);
+			InitializeArrays(out costSoFar, out cameFrom, WalkabilityMap.Width * WalkabilityMap.Height);
 		}
 
 		/// <summary>
@@ -125,22 +116,20 @@ namespace GoRogue.Pathing
 
 			if (_cachedWidth != WalkabilityMap.Width || _cachedHeight != WalkabilityMap.Height)
 			{
-				InitializeArrays(out costSoFar, out cameFrom, out opened, out closed, WalkabilityMap.Width * WalkabilityMap.Height);
+				InitializeArrays(out costSoFar, out cameFrom, WalkabilityMap.Width * WalkabilityMap.Height);
 				_cachedWidth = WalkabilityMap.Width;
 				_cachedHeight = WalkabilityMap.Height;
 			}
-			else // Clear only opened and closed -- cameFrom is never accessed until path found, and opened controls access to costSoFar
+			else
 			{
-				int length = closed.Length;
-				Array.Clear(closed, 0, length);
-				Array.Clear(opened, 0, length);
+				int length = costSoFar.Length;
+				Array.Clear(costSoFar, 0, length); // cameFrom isn't accessed until path found so don't need to clear it
 			}
 
 			// Calculate path
 			var head = new LinkedListPriorityQueueNode<Coord>(start, Heuristic(start, end));
 			var open = new LinkedListPriorityQueue<Coord>();
 			open.Push(head);
-			opened[start.ToIndex(WalkabilityMap.Width)] = true;
 
 			
 			while (!open.IsEmpty())
@@ -164,8 +153,6 @@ namespace GoRogue.Pathing
 				var currentIndex = current.ToIndex(WalkabilityMap.Width);
 				var initialCost = costSoFar[currentIndex];
 
-				closed[currentIndex] = true;
-
 				// Go through neighbors based on distance calculation
 				foreach (var neighborDir in neighborFunc(current.X - end.X, current.Y - end.Y))
 				{
@@ -176,20 +163,14 @@ namespace GoRogue.Pathing
 						continue;
 
 					var neighborIndex = neighbor.ToIndex(WalkabilityMap.Width);
-
-					if (closed[neighborIndex])
-						continue;
-
 					
 					// Real cost of getting to neighbor via path passing through current
 					var newCost = initialCost + _distanceMeasurement.Calculate(current, neighbor) * Weights[neighbor];
 					
 					var oldCost = costSoFar[neighborIndex];
 					// Compare to best path to neighbor we have; 0 means no path found yet to neighbor
-					if (opened[neighborIndex] && !(newCost < oldCost))
+					if (!(oldCost <= 0) && !(newCost < oldCost))
 						continue;
-
-					opened[neighborIndex] = true;
 
 					// We've found a better path, so update parent and known cost
 					costSoFar[neighborIndex] = newCost;
@@ -224,202 +205,10 @@ namespace GoRogue.Pathing
 		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
 			=> ShortestPath(new Coord(startX, startY), new Coord(endX, endY), assumeEndpointsWalkable);
 
-		// These neighbor functions are special in that they return (approximately) the closest
-		// directions to the end goal first. This is intended to "prioritize" more direct-looking
-		// paths, in the case that one or more paths are equally short
-		internal static IEnumerable<Direction> cardinalNeighbors(int dx, int dy)
-		{
-			Direction left, right;
-
-			left = right = Direction.GetCardinalDirection(dx, dy);
-			yield return right; // Return first direction
-
-			left -= 2;
-			right += 2;
-			yield return left;
-			yield return right;
-
-			// Return last direction
-			right += 2;
-			yield return right;
-		}
-
-		internal static IEnumerable<Direction> neighbors(int dx, int dy)
-		{
-			Direction left, right;
-
-			left = right = Direction.GetDirection(dx, dy);
-			yield return right; // Return first direction
-
-			for (int i = 0; i < 3; i++)
-			{
-				left--;
-				right++;
-
-				yield return left;
-				yield return right;
-			}
-
-			// Return last direction
-			right++;
-			yield return right;
-		}
-
-		private static void InitializeArrays(out double[] costSoFar, out Coord[] cameFrom, out bool[] opened, out bool[] closed, int length)
+		private static void InitializeArrays(out double[] costSoFar, out Coord[] cameFrom, int length)
 		{
 			costSoFar = new double[length];
 			cameFrom = new Coord[length];
-			opened = new bool[length];
-			closed = new bool[length];
 		}
-	}
-
-	/// <summary>
-	/// Encapsulates a path as returned by pathfinding algorithms like AStar.
-	/// </summary>
-	/// <remarks>
-	/// Provides various functions to iterate through/access steps of the path, as well as
-	/// constant-time reversing functionality.
-	/// </remarks>
-	public class Path
-	{
-		private IReadOnlyList<Coord> _steps;
-		private bool inOriginalOrder;
-
-		/// <summary>
-		/// Creates a copy of the path, optionally reversing the path as it does so.
-		/// </summary>
-		/// <remarks>Reversing is an O(1) operation, since it does not modify the list.</remarks>
-		/// <param name="pathToCopy">The path to copy.</param>
-		/// <param name="reverse">Whether or not to reverse the path. Defaults to <see langword="false"/>.</param>
-		public Path(Path pathToCopy, bool reverse = false)
-		{
-			_steps = pathToCopy._steps;
-			inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
-		}
-
-		// Create based on internal list
-		internal Path(IReadOnlyList<Coord> steps)
-		{
-			_steps = steps;
-			inOriginalOrder = true;
-		}
-
-		/// <summary>
-		/// Ending point of the path.
-		/// </summary>
-		public Coord End
-		{
-			get
-			{
-				if (inOriginalOrder)
-					return _steps[0];
-
-				return _steps[_steps.Count - 1];
-			}
-		}
-
-		/// <summary>
-		/// The length of the path, NOT including the starting point.
-		/// </summary>
-		public int Length { get => _steps.Count - 1; }
-
-		/// <summary>
-		/// The length of the path, INCLUDING the starting point.
-		/// </summary>
-		public int LengthWithStart { get => _steps.Count; }
-
-		/// <summary>
-		/// Starting point of the path.
-		/// </summary>
-		public Coord Start
-		{
-			get
-			{
-				if (inOriginalOrder)
-					return _steps[_steps.Count - 1];
-
-				return _steps[0];
-			}
-		}
-
-		/// <summary>
-		/// The coordinates that constitute the path (in order), NOT including the starting point.
-		/// These are the coordinates something might walk along to follow a path.
-		/// </summary>
-		public IEnumerable<Coord> Steps
-		{
-			get
-			{
-				if (inOriginalOrder)
-				{
-					for (int i = _steps.Count - 2; i >= 0; i--)
-						yield return _steps[i];
-				}
-				else
-				{
-					for (int i = 1; i < _steps.Count; i++)
-						yield return _steps[i];
-				}
-			}
-		}
-
-		/// <summary>
-		/// The coordinates that constitute the path (in order), INCLUDING the starting point.
-		/// </summary>
-		public IEnumerable<Coord> StepsWithStart
-		{
-			get
-			{
-				if (inOriginalOrder)
-				{
-					for (int i = _steps.Count - 1; i >= 0; i--)
-						yield return _steps[i];
-				}
-				else
-				{
-					for (int i = 0; i < _steps.Count; i++)
-						yield return _steps[i];
-				}
-			}
-		}
-
-		/// <summary>
-		/// Gets the nth step along the path, where 0 is the step AFTER the starting point.
-		/// </summary>
-		/// <param name="stepNum">The (array-like index) of the step to get.</param>
-		/// <returns>The coordinate consituting the step specified.</returns>
-		public Coord GetStep(int stepNum)
-		{
-			if (inOriginalOrder)
-				return _steps[(_steps.Count - 2) - stepNum];
-
-			return _steps[stepNum + 1];
-		}
-
-		/// <summary>
-		/// Gets the nth step along the path, where 0 IS the starting point.
-		/// </summary>
-		/// <param name="stepNum">The (array-like index) of the step to get.</param>
-		/// <returns>The coordinate consituting the step specified.</returns>
-		public Coord GetStepWithStart(int stepNum)
-		{
-			if (inOriginalOrder)
-				return _steps[(_steps.Count - 1) - stepNum];
-
-			return _steps[stepNum];
-		}
-
-		/// <summary>
-		/// Reverses the path, in constant time.
-		/// </summary>
-		public void Reverse() => inOriginalOrder = !inOriginalOrder;
-
-		/// <summary>
-		/// Returns a string representation of all the steps in the path, including the start point,
-		/// eg. [(1, 2), (3, 4), (5, 6)].
-		/// </summary>
-		/// <returns>A string representation of all steps in the path, including the start.</returns>
-		public override string ToString() => StepsWithStart.ExtendToString();
 	}
 }
