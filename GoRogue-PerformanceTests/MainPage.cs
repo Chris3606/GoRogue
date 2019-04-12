@@ -145,8 +145,10 @@ namespace GoRogue_PerformanceTests
 		{
 			/* AStar */
 			var timeAStar = PathingTests.TimeForAStar(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING);
+			var timeFastAStar = PathingTests.TimeForFastAStar(Runner.MAP_WIDTH, Runner.MAP_HEIGHT, Runner.ITERATIONS_FOR_TIMING);
 			Console.WriteLine($"Time for {Runner.ITERATIONS_FOR_TIMING} paths, on {Runner.MAP_WIDTH}x{Runner.MAP_HEIGHT} map:");
-			Console.WriteLine($"\tAStar: {timeAStar}");
+			Console.WriteLine($"\tAStar    : {timeAStar}");
+			Console.WriteLine($"\tFastAStar: {timeFastAStar}");
 
 			/* Single-Goal GoalMap */
 			var map = new ArrayMap<bool>(Runner.MAP_WIDTH, Runner.MAP_HEIGHT);

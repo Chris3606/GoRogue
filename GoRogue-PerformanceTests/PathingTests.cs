@@ -10,8 +10,9 @@ namespace GoRogue_PerformanceTests
 {
 	public static class PathingTests
 	{
-		private static Coord END = new Coord(17, 14);
+		//private static Coord END = new Coord(17, 14);
 		private static Coord START = new Coord(1, 2);
+		private static Coord END = new Coord(490,490);
 
 		public static TimeSpan TimeForAStar(int mapWidth, int mapHeight, int iterations)
 		{
@@ -21,6 +22,24 @@ namespace GoRogue_PerformanceTests
 			QuickGenerators.GenerateRectangleMap(map);
 
 			var pather = new AStar(map, Distance.CHEBYSHEV);
+			var path = pather.ShortestPath(START, END); // Cache warmup
+
+			s.Start();
+			for (int i = 0; i < iterations; i++)
+				path = pather.ShortestPath(START, END);
+			s.Stop();
+
+			return s.Elapsed;
+		}
+
+		public static TimeSpan TimeForFastAStar(int mapWidth, int mapHeight, int iterations)
+		{
+			var s = new Stopwatch();
+
+			var map = new ArrayMap<bool>(mapWidth, mapHeight);
+			QuickGenerators.GenerateRectangleMap(map);
+
+			var pather = new FastAStar(map, Distance.CHEBYSHEV);
 			var path = pather.ShortestPath(START, END); // Cache warmup
 
 			s.Start();

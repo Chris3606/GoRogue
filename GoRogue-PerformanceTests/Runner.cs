@@ -9,8 +9,8 @@ namespace GoRogue_PerformanceTests
 		public static readonly int LIGHT_RADIUS = 10;
 		public static readonly Coord LINE_END = new Coord(3, 5);
 		public static readonly Coord LINE_START = new Coord(29, 23);
-		public static readonly int MAP_HEIGHT = 100;
-		public static readonly int MAP_WIDTH = 100;
+		public static readonly int MAP_HEIGHT = 500;
+		public static readonly int MAP_WIDTH = 500;
 		public static readonly int NUM_EFFECTS = 1000;
 		public static readonly int NUM_GOALS = 5;
 		public static readonly Radius RADIUS_STRATEGY = Radius.CIRCLE;

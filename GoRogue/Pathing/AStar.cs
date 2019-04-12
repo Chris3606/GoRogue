@@ -5,8 +5,7 @@ using System.Collections.Generic;
 namespace GoRogue.Pathing
 {
 	/// <summary>
-	/// Implements an optimized AStar pathfinding algorithm. Optionally supports custom heuristics, and custom weights for each tile.  If the map view
-	/// you give to the algorithm must change size frequently, consider <see cref="AStarDynamic"/> or <see cref="FastAStarDynamic"/>.
+	/// Implements an optimized AStar pathfinding algorithm. Optionally supports custom heuristics, and custom weights for each tile.
 	/// </summary>
 	/// <remarks>
 	/// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map. 
@@ -17,51 +16,47 @@ namespace GoRogue.Pathing
 	/// explaining the map view system at the GoRogue documentation page
 	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
 	/// 
-	/// This algorithm performs the best when the map view it is given does not change size frequently, and generally, in cases where maximum performance
-	/// is needed, it is recommended that the map view _not_ change size frequently (regardless of whether the underlying map is actually changing size).
-	/// However, in cases where the map view size must change size frequently, you may get better performance out of <see cref="AStarDynamic"/> or
-	/// its fast variant, <see cref="FastAStarDynamic"/>.
+	/// If truly shortest paths are not necessary, you may want to consider <see cref="FastAStar"/> instead.
 	/// </remarks>
 	public class AStar
 	{
-		private Func<int, int, IEnumerable<Direction>> neighborFunc;
+		// Used to record the best known cost so far to each of the locations
 		private double[] costSoFar;
+
+		// Used to record the parent of the known best path to each location
 		private Coord[] cameFrom;
+
+		// Records which nodes are opened and which are closed.
 		private bool[] opened;
 		private bool[] closed;
+
+		// Used to cache map view width/height so we know when a resize happened
 		private int _cachedWidth;
 		private int _cachedHeight;
 
 		/// <summary>
+		/// Multiplier that is multiplied by the distance heuristic calculation, and is calculated
+		/// based on the length of the longest possible path.
+		/// </summary>
+		protected double MaxPathMultiplier;
+
+		/// <summary>
 		/// The map view being used to determine whether or not each tile is walkable.
 		/// </summary>
-		public IMapView<bool> WalkabilityMap { get; }
-
-		private Distance _distanceMeasurement;
+		public readonly IMapView<bool> WalkabilityMap;
 
 		/// <summary>
 		/// The distance calculation being used to determine distance between points. <see cref="Distance.MANHATTAN"/>
 		/// implies 4-way connectivity, while <see cref="Distance.CHEBYSHEV"/> or <see cref="Distance.EUCLIDEAN"/> imply
 		/// 8-way connectivity for the purpose of determining adjacent coordinates.
 		/// </summary>
-		public Distance DistanceMeasurement
-		{
-			get => _distanceMeasurement;
-			set
-			{
-				_distanceMeasurement = value;
-				if (_distanceMeasurement == Distance.MANHATTAN)
-					neighborFunc = cardinalNeighbors;
-				else
-					neighborFunc = neighbors;
-			}
-		}
+		public Distance DistanceMeasurement;
 
 		/// <summary>
 		/// The heuristic used to estimate distance from nodes to the end point.  If unspecified, defaults to using the distance
-		/// calculation specified by <see cref="DistanceMeasurement"/>.
+		/// calculation specified by <see cref="DistanceMeasurement"/>, with a safe tie-breaking element.
 		/// </summary>
-		public Func<Coord, Coord, double> Heuristic { get; }
+		public Func<Coord, Coord, double> Heuristic { get; set; }
 
 		/// <summary>
 		/// Weights given to each tile.  The weight is multiplied by the cost of a tile, so a tile with weight  is twice as hard to enter
@@ -77,12 +72,14 @@ namespace GoRogue.Pathing
 		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
 		/// how to calculate the distance between points.  If <paramref name="heuristic"/> is unspecified, also determines the estimation heuristic used.</param>
 		/// <param name="heuristic">Function used to estimate the distance between two given points.  If unspecified, a distance calculation corresponding
-		/// to <paramref name="distanceMeasurement"/> is used, which will produce guranteed shortest paths.</param>
-		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.  If unspecified, each location will default to having a weight of 1.</param>
+		/// to <paramref name="distanceMeasurement"/> is used along with a safe tiebreaking element, which will produce guranteed shortest paths.</param>
+		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.  If unspecified, each location will default
+		/// to having a weight of 1.</param>
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null,
 						 IMapView<double> weights = null)
 		{
-			Heuristic = heuristic ?? distanceMeasurement.Calculate;
+			Heuristic = heuristic ?? ((c1, c2) => DistanceMeasurement.Calculate(c1, c2) * MaxPathMultiplier);
+
 			if (weights == null)
 			{
 				var weightsMap = new ArrayMap<double>(walkabilityMap.Width, walkabilityMap.Height);
@@ -96,7 +93,9 @@ namespace GoRogue.Pathing
 			WalkabilityMap = walkabilityMap;
 			DistanceMeasurement = distanceMeasurement;
 
-			InitializeArrays(out costSoFar, out cameFrom, out opened, out closed, WalkabilityMap.Width * WalkabilityMap.Height);
+			InitializeCacheData(out costSoFar, out cameFrom, out opened, out closed, out MaxPathMultiplier, WalkabilityMap.Width * WalkabilityMap.Height);
+			_cachedWidth = WalkabilityMap.Width;
+			_cachedHeight = WalkabilityMap.Height;
 		}
 
 		/// <summary>
@@ -125,7 +124,7 @@ namespace GoRogue.Pathing
 
 			if (_cachedWidth != WalkabilityMap.Width || _cachedHeight != WalkabilityMap.Height)
 			{
-				InitializeArrays(out costSoFar, out cameFrom, out opened, out closed, WalkabilityMap.Width * WalkabilityMap.Height);
+				InitializeCacheData(out costSoFar, out cameFrom, out opened, out closed, out MaxPathMultiplier, WalkabilityMap.Width * WalkabilityMap.Height);
 				_cachedWidth = WalkabilityMap.Width;
 				_cachedHeight = WalkabilityMap.Height;
 			}
@@ -167,7 +166,7 @@ namespace GoRogue.Pathing
 				closed[currentIndex] = true;
 
 				// Go through neighbors based on distance calculation
-				foreach (var neighborDir in neighborFunc(current.X - end.X, current.Y - end.Y))
+				foreach (var neighborDir in ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors()/*neighborFunc(current.X - end.X, current.Y - end.Y)*/)
 				{
 					var neighbor = current + neighborDir;
 					// Ignore if out of bounds or location unwalkable
@@ -182,7 +181,7 @@ namespace GoRogue.Pathing
 
 					
 					// Real cost of getting to neighbor via path passing through current
-					var newCost = initialCost + _distanceMeasurement.Calculate(current, neighbor) * Weights[neighbor];
+					var newCost = initialCost + DistanceMeasurement.Calculate(current, neighbor) * Weights[neighbor];
 					
 					var oldCost = costSoFar[neighborIndex];
 					// Compare to best path to neighbor we have; 0 means no path found yet to neighbor
@@ -224,53 +223,14 @@ namespace GoRogue.Pathing
 		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
 			=> ShortestPath(new Coord(startX, startY), new Coord(endX, endY), assumeEndpointsWalkable);
 
-		// These neighbor functions are special in that they return (approximately) the closest
-		// directions to the end goal first. This is intended to "prioritize" more direct-looking
-		// paths, in the case that one or more paths are equally short
-		internal static IEnumerable<Direction> cardinalNeighbors(int dx, int dy)
-		{
-			Direction left, right;
-
-			left = right = Direction.GetCardinalDirection(dx, dy);
-			yield return right; // Return first direction
-
-			left -= 2;
-			right += 2;
-			yield return left;
-			yield return right;
-
-			// Return last direction
-			right += 2;
-			yield return right;
-		}
-
-		internal static IEnumerable<Direction> neighbors(int dx, int dy)
-		{
-			Direction left, right;
-
-			left = right = Direction.GetDirection(dx, dy);
-			yield return right; // Return first direction
-
-			for (int i = 0; i < 3; i++)
-			{
-				left--;
-				right++;
-
-				yield return left;
-				yield return right;
-			}
-
-			// Return last direction
-			right++;
-			yield return right;
-		}
-
-		private static void InitializeArrays(out double[] costSoFar, out Coord[] cameFrom, out bool[] opened, out bool[] closed, int length)
+		private static void InitializeCacheData(out double[] costSoFar, out Coord[] cameFrom, out bool[] opened, out bool[] closed,
+												  out double maxPathMultiplier, int length)
 		{
 			costSoFar = new double[length];
 			cameFrom = new Coord[length];
 			opened = new bool[length];
 			closed = new bool[length];
+			maxPathMultiplier = 1.0 + (1.0 / (length + 1));
 		}
 	}
 
