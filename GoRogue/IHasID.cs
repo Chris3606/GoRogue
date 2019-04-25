@@ -1,30 +1,34 @@
 ﻿namespace GoRogue
 {
-    /// <summary>
-    /// Interface for a class that has an ID unique to all other instnaces of that class. Typical
-    /// implementation should involve using an IDGenerator, potentially as follows: <example>
-    /// <code>
-    /// class SomeClass : IHasID
-    /// {
-    /// private static IDGenerator generator = new IDGenerator();
-    /// public int ID { get; private set; }
-    /// /// public SomeClass(...)
-    /// {
-    /// ID = generator.UseID();
-    /// }
-    /// }
-    /// </code>
-    /// </example> A class that wishes to be able to have these IDs serialized and the state resumed
-    /// later might have to do something more advanced than a static variable (say, a "global" array
-    /// of generators whose states are read in from a file at the start of the game), but the
-    /// principle would remain the same. /// Interface is used for SpatialMap to work correctly, and
-    /// as well in general provides a convenient way to hash entities that implement this interface.
-    /// </summary>
-    public interface IHasID
-    {
-        /// <summary>
-        /// The unique integer that identifies this entity.
-        /// </summary>
-        uint ID { get; }
-    }
+	/// <summary>
+	/// Interface for a class that has an ID value, typically used for items in a spatial map, or generally
+	/// for purposes of hashing.
+	/// </summary>
+	/// <remarks>
+	/// The ID assigned should be unique or close to unique over all instances of the class (to avoid hash collisions).
+	/// A typical implementation could be simply randomly generating the ID value.  To assign completely unique IDs, an
+	/// <see cref="IDGenerator"/> can be used:
+	/// <example>
+	/// <code>
+	/// class SomeClass : IHasID
+	/// {
+	///     // Static instance used to assign IDs to ANY new SomeClass instance
+	///     private static IDGenerator generator = new IDGenerator();
+	///     public uint ID { get; }
+	///
+	///     public SomeClass(...)
+	///     {
+	///         ID = generator.UseID();
+	///     }
+	/// }
+	/// </code>
+	/// </example>
+	/// </remarks>
+	public interface IHasID
+	{
+		/// <summary>
+		/// ID assigned to this object.
+		/// </summary>
+		uint ID { get; }
+	}
 }

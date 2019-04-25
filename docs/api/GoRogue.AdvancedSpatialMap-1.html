@@ -1,0 +1,1622 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AdvancedSpatialMap&lt;T&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AdvancedSpatialMap&lt;T&gt;
+   ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.AdvancedSpatialMap`1">
+  
+  
+  <h1 id="GoRogue_AdvancedSpatialMap_1" data-uid="GoRogue.AdvancedSpatialMap`1" class="text-break">Class AdvancedSpatialMap&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>A more complex version of <a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a> that does not require the items in it to implement
+<a class="xref" href="GoRogue.IHasID.html">IHasID</a>, instead requiring the specification of a custom <span class="xref">System.Collections.Generic.IEqualityComparer&lt;T&gt;</span>
+to use for hashing and comparison of items.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">AdvancedSpatialMap&lt;T&gt;</span></div>
+      <div class="level2"><a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap</a>&lt;T&gt;</div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap</a>&lt;T&gt;</div>
+    <div><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap</a>&lt;T&gt;</div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.ISpatialTuple-1.html">ISpatialTuple</a>&lt;T&gt;&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AdvancedSpatialMap&lt;T&gt; : ISpatialMap&lt;T&gt;, IReadOnlySpatialMap&lt;T&gt;, IEnumerable&lt;ISpatialTuple&lt;T&gt;&gt;, IEnumerable</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>The type of object that will be contained by this AdvancedSpatialMap.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class is useful for cases where you do not want to implement <a class="xref" href="GoRogue.IHasID.html">IHasID</a>, or if you need
+to use a value type in a spatial map. For simple cases, it is recommended to use <a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a>
+instead.</p>
+<p>Be mindful of the efficiency of your hashing function specified in the <span class="xref">System.Collections.Generic.IEqualityComparer&lt;T&gt;</span> --
+it will in large part determine the performance of AdvancedSpatialMap!</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1__ctor_System_Collections_Generic_IEqualityComparer__0__System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.%23ctor(System.Collections.Generic.IEqualityComparer%7B%600%7D%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L38">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1__ctor_" data-uid="GoRogue.AdvancedSpatialMap`1.#ctor*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1__ctor_System_Collections_Generic_IEqualityComparer__0__System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.#ctor(System.Collections.Generic.IEqualityComparer{`0},System.Int32)">AdvancedSpatialMap(IEqualityComparer&lt;T&gt;, Int32)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AdvancedSpatialMap(IEqualityComparer&lt;T&gt; comparer, int initialCapacity = 32)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEqualityComparer</span>&lt;T&gt;</td>
+        <td><span class="parametername">comparer</span></td>
+        <td><p>Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+efficiency of its GetHashCode function, as it will determine the efficiency of many AdvancedSpatialMap
+functions.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">initialCapacity</span></td>
+        <td><p>The initial maximum number of elements the AdvancedSpatialMap can hold before it has to
+internally resize data structures. Defaults to 32.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Count.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Count%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L62">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Count_" data-uid="GoRogue.AdvancedSpatialMap`1.Count*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Count" data-uid="GoRogue.AdvancedSpatialMap`1.Count">Count</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Count">Count</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Count { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Items.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Items%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L67">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Items_" data-uid="GoRogue.AdvancedSpatialMap`1.Items*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Items" data-uid="GoRogue.AdvancedSpatialMap`1.Items">Items</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Items">Items</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Items { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Positions.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Positions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L79">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Positions_" data-uid="GoRogue.AdvancedSpatialMap`1.Positions*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Positions" data-uid="GoRogue.AdvancedSpatialMap`1.Positions">Positions</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Positions">Positions</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; Positions { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Add__0_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Add(%600%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L96">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Add_" data-uid="GoRogue.AdvancedSpatialMap`1.Add*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Add__0_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.Add(`0,GoRogue.Coord)">Add(T, Coord)</h4>
+  <div class="markdown level1 summary"><p>Adds the given item at the given position, provided the item is not already in the
+spatial map and the position is not already filled. If either of those are the case,
+returns false. Otherwise (if item was successfully added), returns true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Add(T newItem, Coord position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">newItem</span></td>
+        <td><p>The item to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The position at which to add the new item.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the item was added, false if adding the item failed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Add__0_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Add(%600%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L120">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Add_" data-uid="GoRogue.AdvancedSpatialMap`1.Add*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Add__0_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.Add(`0,System.Int32,System.Int32)">Add(T, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Adds the given item at the given position, provided the item is not already in the
+spatial map and the position is not already filled. If either of those are the case,
+returns false. Otherwise (if item was successfully added), returns true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Add(T newItem, int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">newItem</span></td>
+        <td><p>The item to add.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>X-value of the position to add item to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Y-value of the position to add item to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the item was added, false if adding the item failed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L125">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_AsReadOnly_" data-uid="GoRogue.AdvancedSpatialMap`1.AsReadOnly*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_AsReadOnly" data-uid="GoRogue.AdvancedSpatialMap`1.AsReadOnly">AsReadOnly()</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_AsReadOnly">AsReadOnly()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlySpatialMap&lt;T&gt; AsReadOnly()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap</a>&lt;T&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Clear.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Clear%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L130">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Clear_" data-uid="GoRogue.AdvancedSpatialMap`1.Clear*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Clear" data-uid="GoRogue.AdvancedSpatialMap`1.Clear">Clear()</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.ISpatialMap-1.html#GoRogue_ISpatialMap_1_Clear">Clear()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Clear()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Contains__0_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Contains(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L139">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Contains_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Contains__0_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains(`0)">Contains(T)</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Contains__0_">Contains(T)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(T item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Contains_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Contains(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L144">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Contains_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Contains_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains(GoRogue.Coord)">Contains(Coord)</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Contains_GoRogue_Coord_">Contains(Coord)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(Coord position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Contains_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Contains(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L149">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Contains_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Contains_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.Contains(System.Int32,System.Int32)">Contains(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_Contains_System_Int32_System_Int32_">Contains(Int32, Int32)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Contains(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetEnumerator.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L156">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetEnumerator_" data-uid="GoRogue.AdvancedSpatialMap`1.GetEnumerator*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetEnumerator" data-uid="GoRogue.AdvancedSpatialMap`1.GetEnumerator">GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
+foreach loop. Generally should never be called explicitly.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerator&lt;ISpatialTuple&lt;T&gt;&gt; GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerator</span>&lt;<a class="xref" href="GoRogue.ISpatialTuple-1.html">ISpatialTuple</a>&lt;T&gt;&gt;</td>
+        <td><p>An enumerator for the spatial map</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetItem_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetItem(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L179">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetItem_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItem*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetItem_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItem(GoRogue.Coord)">GetItem(Coord)</h4>
+  <div class="markdown level1 summary"><p>Gets the item at the given position, or default(T) if no item exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetItem(Coord position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The postiion to return the item for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The item at the given position, or default(T) if no item exists at that location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_GetItem_GoRogue_Coord__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Intended to be a more convenient function as compared to <a class="xref" href="GoRogue.AdvancedSpatialMap-1.html#GoRogue_AdvancedSpatialMap_1_GetItems_GoRogue_Coord_">GetItems(Coord)</a>, since
+this spatial map implementation only allows a single item to at any given location at a time.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetItem_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetItem(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L201">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetItem_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItem*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetItem_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItem(System.Int32,System.Int32)">GetItem(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the item at the given position, or default(T) if no item exists.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetItem(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The x-value of the position to return the item for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>The y-value of the position to return the item for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The item at the given position, or default(T) if no item exists at that location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_GetItem_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Intended to be a more convenient function as compared to <a class="xref" href="GoRogue.AdvancedSpatialMap-1.html#GoRogue_AdvancedSpatialMap_1_GetItems_System_Int32_System_Int32_">GetItems(Int32, Int32)</a>, since
+this spatial map implementation only allows a single item to at any given location at a time.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetItems_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetItems(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L218">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetItems_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItems*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetItems_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItems(GoRogue.Coord)">GetItems(Coord)</h4>
+  <div class="markdown level1 summary"><p>Gets the item at the given position as a 1-element enumerable if there is any item there,
+or nothing if there is nothing at that position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; GetItems(Coord position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The position to return the item for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item at the given position as a 1-element enumerable, if there is an item there, or
+nothing if there is no item there.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_GetItems_GoRogue_Coord__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation guarantees that only one item can be at any given
+location at once, the return value is guaranteed to be at most one element. You may find it
+more convenient to use the <a class="xref" href="GoRogue.AdvancedSpatialMap-1.html#GoRogue_AdvancedSpatialMap_1_GetItems_GoRogue_Coord_">GetItems(Coord)</a> function when you know you are
+dealing with a SpatialMap/AdvancedSpatialMap instance.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetItems_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetItems(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L242">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetItems_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItems*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetItems_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.GetItems(System.Int32,System.Int32)">GetItems(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets the item at the given position as a 1-element enumerable if there is any item there,
+or nothing if there is nothing at that position.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; GetItems(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>The x-value of the position to return the item(s) for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>The y-value of the position to return the item(s) for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item at the given position as a 1-element enumerable, if there is an item there, or
+nothing if there is no item there.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_GetItems_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation guarantees that only one item can be at any given
+location at once, the return value is guaranteed to be at most one element. You may find it
+more convenient to use the <a class="xref" href="GoRogue.AdvancedSpatialMap-1.html#GoRogue_AdvancedSpatialMap_1_GetItems_System_Int32_System_Int32_">GetItems(Int32, Int32)</a> function when you know you are
+dealing with a SpatialMap/AdvancedSpatialMap instance.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_GetPosition__0_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.GetPosition(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L247">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_GetPosition_" data-uid="GoRogue.AdvancedSpatialMap`1.GetPosition*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_GetPosition__0_" data-uid="GoRogue.AdvancedSpatialMap`1.GetPosition(`0)">GetPosition(T)</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_GetPosition__0_">GetPosition(T)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Coord GetPosition(T item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Move__0_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Move(%600%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L263">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Move_" data-uid="GoRogue.AdvancedSpatialMap`1.Move*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Move__0_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.Move(`0,GoRogue.Coord)">Move(T, Coord)</h4>
+  <div class="markdown level1 summary"><p>Moves the item specified to the position specified. If the item does not exist
+in the spatial map, or the position is already filled by some other item, the
+function does nothing and returns false. Otherwise, returns true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Move(T item, Coord target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item to move.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The position to move it to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the item was moved, false if the move operation failed.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Move__0_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Move(%600%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L289">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Move_" data-uid="GoRogue.AdvancedSpatialMap`1.Move*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Move__0_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.Move(`0,System.Int32,System.Int32)">Move(T, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Moves the item specified to the position specified. If the item does not exist
+in the spatial map, or the position is already filled by some other item, the
+function does nothing and returns false. Otherwise, returns true.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Move(T item, int targetX, int targetY)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item to move.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">targetX</span></td>
+        <td><p>X-value of the location to move item to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">targetY</span></td>
+        <td><p>Y-value of the location to move item to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the item was moved, false if not.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Move_GoRogue_Coord_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Move(GoRogue.Coord%2CGoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L306">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Move_" data-uid="GoRogue.AdvancedSpatialMap`1.Move*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Move_GoRogue_Coord_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.Move(GoRogue.Coord,GoRogue.Coord)">Move(Coord, Coord)</h4>
+  <div class="markdown level1 summary"><p>Moves whatever is at position current, if anything, to the target position. If something was
+moved, returns what was moved. If nothing was moved, eg. either there was nothing at
+<code data-dev-comment-type="paramref" class="paramref">current</code> or already something at <code data-dev-comment-type="paramref" class="paramref">target</code>, returns nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Move(Coord current, Coord target)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">current</span></td>
+        <td><p>The position of the item to move.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">target</span></td>
+        <td><p>The position to move the item to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
+was moved.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_Move_GoRogue_Coord_GoRogue_Coord__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation of ISpatialMap guarantees that only one item may be at any
+given location at a time, the returned values will either be none, or a single value.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Move_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Move(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L337">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Move_" data-uid="GoRogue.AdvancedSpatialMap`1.Move*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Move_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.Move(System.Int32,System.Int32,System.Int32,System.Int32)">Move(Int32, Int32, Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Moves whatever is at the &quot;current&quot; position specified, if anything, to the &quot;target&quot; position. If something was
+moved, returns what was moved. If nothing was moved, eg. either there was nothing at
+the &quot;current&quot; position given, or already something at the &quot;target&quot; position given, returns nothing.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Move(int currentX, int currentY, int targetX, int targetY)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">currentX</span></td>
+        <td><p>X-value of the location to move item from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">currentY</span></td>
+        <td><p>Y-value of the location to move item from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">targetX</span></td>
+        <td><p>X-value of the location to move item to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">targetY</span></td>
+        <td><p>Y-value of the location to move item to.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
+was moved.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_Move_System_Int32_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation of ISpatialMap guarantees that only one item may be at any
+given location at a time, the returned values will either be none, or a single value.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Remove__0_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Remove(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L345">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Remove_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Remove__0_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove(`0)">Remove(T)</h4>
+  <div class="markdown level1 summary"><p>Removes the item specified, if it exists, and returns true. Returns false if the item was
+not in the spatial map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Remove(T item)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><span class="parametername">item</span></td>
+        <td><p>The item to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the item was removed, false if the item was not found.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Remove_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Remove(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L370">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Remove_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Remove_GoRogue_Coord_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove(GoRogue.Coord)">Remove(Coord)</h4>
+  <div class="markdown level1 summary"><p>Removes whatever is at the given position, if anything, and returns the item removed as a
+1-element IEnumerable. Returns nothing if no item was at the position specified.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Remove(Coord position)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>The position of the item to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
+was found at that position.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_Remove_GoRogue_Coord__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation of ISpatialMap guarantees that only one item can be at any given
+location at a time, the returned value is guaranteed to be either nothing or a single element.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_Remove_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.Remove(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L397">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_Remove_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_Remove_System_Int32_System_Int32_" data-uid="GoRogue.AdvancedSpatialMap`1.Remove(System.Int32,System.Int32)">Remove(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Removes whatever is at the given position, if anything, and returns the item removed as a
+1-element IEnumerable. Returns nothing if no item was at the position specified.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; Remove(int x, int y)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">x</span></td>
+        <td><p>X-value of the position to remove item from.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">y</span></td>
+        <td><p>Y-value of the position to remove item from.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
+was found at that position.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_AdvancedSpatialMap_1_Remove_System_Int32_System_Int32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Since this implementation guarantees that only one item can be at any given
+location at a time, the returned value is guaranteed to be either nothing or a single element.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L403">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_ToString_" data-uid="GoRogue.AdvancedSpatialMap`1.ToString*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_ToString" data-uid="GoRogue.AdvancedSpatialMap`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the spatial map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of the spatial map.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L411">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_ToString_" data-uid="GoRogue.AdvancedSpatialMap`1.ToString*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.AdvancedSpatialMap`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the spatial map, allowing display of the spatial map's
+items in a specified way.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ToString(Func&lt;T, string&gt; itemStringifier)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;T, <span class="xref">System.String</span>&gt;</td>
+        <td><span class="parametername">itemStringifier</span></td>
+        <td><p>Function that turns an item into a string.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of the spatial map.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_ItemAdded.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.ItemAdded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L47">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_ItemAdded" data-uid="GoRogue.AdvancedSpatialMap`1.ItemAdded">ItemAdded</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemAdded">ItemAdded</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemAdded</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_ItemMoved.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.ItemMoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L52">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_ItemMoved" data-uid="GoRogue.AdvancedSpatialMap`1.ItemMoved">ItemMoved</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemMoved">ItemMoved</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ItemMovedEventArgs&lt;T&gt;&gt; ItemMoved</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_ItemRemoved.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.ItemRemoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L57">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_ItemRemoved" data-uid="GoRogue.AdvancedSpatialMap`1.ItemRemoved">ItemRemoved</h4>
+  <div class="markdown level1 summary"><p>See <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemRemoved">ItemRemoved</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ItemEventArgs&lt;T&gt;&gt; ItemRemoved</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;T&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1_System_Collections_IEnumerable_GetEnumerator.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601.System%23Collections%23IEnumerable%23GetEnumerator%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L166">View Source</a>
+  </span>
+  <a id="GoRogue_AdvancedSpatialMap_1_System_Collections_IEnumerable_GetEnumerator_" data-uid="GoRogue.AdvancedSpatialMap`1.System#Collections#IEnumerable#GetEnumerator*"></a>
+  <h4 id="GoRogue_AdvancedSpatialMap_1_System_Collections_IEnumerable_GetEnumerator" data-uid="GoRogue.AdvancedSpatialMap`1.System#Collections#IEnumerable#GetEnumerator">IEnumerable.GetEnumerator()</h4>
+  <div class="markdown level1 summary"><p>Generic iterator used internally by foreach loops.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IEnumerator IEnumerable.GetEnumerator()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.IEnumerator</span></td>
+        <td><p>Enumerator to ISpatialTuple instances.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String_">Utility.ExtendToString&lt;T&gt;(IEnumerable&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdvancedSpatialMap_1.md&amp;value=---%0Auid%3A%20GoRogue.AdvancedSpatialMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/SpatialMap.cs/#L21" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

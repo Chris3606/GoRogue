@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>GoRogue Conceptual Documentation </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="GoRogue Conceptual Documentation ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="gorogue-conceptual-documentation">GoRogue Conceptual Documentation</h1>
+
+<p>Welcome to the GoRogue conceptual documentation!  These articles are designed to get you started using GoRogue.  <a href="getting-started.html">Getting started</a> instructions are provided, as well as articles that outline various GoRogue features and some usage examples.  While these articles do not comprehensively cover every aspect of a given feature (the <a href="../api/index.html">API Documentation</a> is helpful in this regard), the pages are generally meant to provide you with a basic understanding of the feature they cover, and some examples that will help you get started using it.</p>
+<h1 id="upgrading-from-1x">Upgrading from 1.x</h1>
+<p>If you are a GoRogue 1.x user looking to upgrade to 2.0, a wiki page detailing the changes and upgrade process can be found <a href="1-to-2-upgrade-guide.html">here</a>.</p>
+<h1 id="library-design-concepts">Library Design Concepts</h1>
+<p>Generally, GoRogue is designed to provide a set of tools that are minimally intrusive upon your own architecture.  More specifically, there are two basic categories of GoRogue features -- &quot;core&quot; features, and &quot;game framework&quot; features.</p>
+<h2 id="core-features">Core Features</h2>
+<p>The majority of the library falls under the core category.  This category is composed of the root <code>GoRogue</code> namespace and all sub-namespaces except <code>GoRogue.GameFramework</code>.  These core features are designed to provide generic data structures and algorithm implementations that may assist you in creating your game.  These features, by design, work without asserting much of anything about what your game is or how it works, or what your code architecture looks like.  While some data structures, like <code>ISpatialMap</code> implementations, can be used to hold data related to a map or game, they purposefully avoid relying on concrete data structures for maps, objects on maps, or even game data.  This ensures that these features can be used in the widest possible array of use cases, without the library needing to &quot;specify&quot; what your game architecture must be and how your data is stored.  These core features still have conceptual articles that are designed to help you understand how they work, as well as complete API documentation.</p>
+<h2 id="game-framework-features">Game Framework Features</h2>
+<p>The second category of features is the game framework category. These features are all contained within the <code>GoRogue.GameFramework</code> namespace. Unlike the core features, their purpose is to combine GoRogue core features into a coherent, concrete structure that can be used as a framework for your game, and build upon those features to create functionality that may apply to many use cases. These features are detailed in the <a href="game-framework.html">corresponding article</a>.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue.Docs/articles/intro.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

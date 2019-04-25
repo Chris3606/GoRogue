@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace GoRogue.MapViews
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace GoRogue.MapViews
+   ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.MapViews">
+  
+  <h1 id="GoRogue_MapViews" data-uid="GoRogue.MapViews" class="text-break">Namespace GoRogue.MapViews
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap&lt;T&gt;</a></h4>
+      <section><p>Implementation of the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> interface that uses a
+1D array to store data.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D&lt;T&gt;</a></h4>
+      <section><p>Implementation of the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> interface that uses a
+2D array to store data.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html">IMapViewExtensions</a></h4>
+      <section><p>Extensions for <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> implementaions that provide basic utility functions
+for them.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a></h4>
+      <section><p>Class designed to make implementing simple IMapViews more convenient, by providing the &quot;get&quot;
+functionality via a function that is passed in at construction. For a version that
+implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> as opposed to <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, see
+<a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html">LambdaSettableMapView&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.LambdaSettableMapView-1.html">LambdaSettableMapView&lt;T&gt;</a></h4>
+      <section><p>Class designed to make implementing simple ISettableMapViews more convenient, by providing the
+get/set functionality via a function that is passed in at construction. For a version that
+implements <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a> as opposed to <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>, see
+<a class="xref" href="GoRogue.MapViews.LambdaMapView-1.html">LambdaMapView&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a></h4>
+      <section><p>A simple <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide
+functions/lambdas for the translation functions. For a version offering only &quot;get&quot; functionality,
+see <a class="xref" href="GoRogue.MapViews.LambdaTranslationMap-2.html">LambdaTranslationMap&lt;T1, T2&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.LambdaTranslationMap-2.html">LambdaTranslationMap&lt;T1, T2&gt;</a></h4>
+      <section><p>A simple <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide a function/lambda
+at construction to use as the TranslateGet implementation. For a version offering &quot;set&quot; functionality,
+see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a></h4>
+      <section><p>Settable map view class capable of taking complex data and providing a simpler view of it.
+For a version that provides only &quot;get&quot; functionality, see <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.SettableViewport-1.html">SettableViewport&lt;T&gt;</a></h4>
+      <section><p>Similar to <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, but implements <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>and thus implements
+&quot;set&quot; functionality via relative coordinates.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a></h4>
+      <section><p>Map view class capable of taking complex data and providing a simpler view of it. For a
+version that provides &quot;set&quot; functionality, see <a class="xref" href="GoRogue.MapViews.SettableTranslationMap-2.html">SettableTranslationMap&lt;T1, T2&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.UnboundedViewport-1.html">UnboundedViewport&lt;T&gt;</a></h4>
+      <section><p>Class like <a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a>, however the view area is in no way bounded to the edges of the underlying map.
+Instead, if you access a position that cannot map to any valid position in the underlying map view, a (specified)
+default value is returned.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.Viewport-1.html">Viewport&lt;T&gt;</a></h4>
+      <section><p>Viewport is a class that effectively creates and maintains a &quot;viewport&quot;, or subsection, of the map.
+Its indexers perform relative to absolute coordinate translations, and return the proper value of
+type T from the underlying map.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a></h4>
+      <section><p>Interface designed to act as a standardized input/output interpretation for algorithms.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a></h4>
+      <section><p>Interface designed to act as a standardized input/output interpretation for algorithms that need to make
+modifications to data on a map.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

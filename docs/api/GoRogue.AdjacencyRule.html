@@ -1,0 +1,874 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AdjacencyRule
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AdjacencyRule
+   ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.AdjacencyRule">
+  
+  
+  <h1 id="GoRogue_AdjacencyRule" data-uid="GoRogue.AdjacencyRule" class="text-break">Class AdjacencyRule
+  </h1>
+  <div class="markdown level0 summary"><p>Class representing a method for determining which coordinates are adjacent to a given
+coordinate, and which directions those neighbors are in. Cannot be instantiated -- premade
+static instances are provided.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">AdjacencyRule</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_AdjacencyRule_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AdjacencyRule</code></pre>
+  </div>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_CARDINALS.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.CARDINALS%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L17">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdjacencyRule_CARDINALS" data-uid="GoRogue.AdjacencyRule.CARDINALS">CARDINALS</h4>
+  <div class="markdown level1 summary"><p>Represents method of determining adjacency where neighbors are considered adjacent if
+they are in a cardinal direction, eg. 4-way (manhattan-based) connectivity.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly AdjacencyRule CARDINALS</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_DIAGONALS.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.DIAGONALS%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L23">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdjacencyRule_DIAGONALS" data-uid="GoRogue.AdjacencyRule.DIAGONALS">DIAGONALS</h4>
+  <div class="markdown level1 summary"><p>Represents method of determining adjacency where neighbors are considered adjacent only
+if they are in a diagonal direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly AdjacencyRule DIAGONALS</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_EIGHT_WAY.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.EIGHT_WAY%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L29">View Source</a>
+  </span>
+  <h4 id="GoRogue_AdjacencyRule_EIGHT_WAY" data-uid="GoRogue.AdjacencyRule.EIGHT_WAY">EIGHT_WAY</h4>
+  <div class="markdown level1 summary"><p>Represents method of determining adjacency where all 8 possible neighbors are considered
+adjacent (eg. 8-way connectivity).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static readonly AdjacencyRule EIGHT_WAY</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_Type.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.Type%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L66">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_Type_" data-uid="GoRogue.AdjacencyRule.Type*"></a>
+  <h4 id="GoRogue_AdjacencyRule_Type" data-uid="GoRogue.AdjacencyRule.Type">Type</h4>
+  <div class="markdown level1 summary"><p>Enum value representing the method of determining adjacency -- useful for using
+AdjacencyRule types in switch statements.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AdjacencyRule.Types Type { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.Types.html">AdjacencyRule.Types</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_DirectionsOfNeighbors.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.DirectionsOfNeighbors%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L96">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_DirectionsOfNeighbors_" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighbors*"></a>
+  <h4 id="GoRogue_AdjacencyRule_DirectionsOfNeighbors" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighbors">DirectionsOfNeighbors()</h4>
+  <div class="markdown level1 summary"><p>Gets directions leading to neighboring locations, according to the current adjacency
+method. Cardinals are returned before any diagonals.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Direction&gt; DirectionsOfNeighbors()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Direction.html">Direction</a>&gt;</td>
+        <td><p>Directions that lead to neighboring locations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_DirectionsOfNeighborsClockwise_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.DirectionsOfNeighborsClockwise(GoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L136">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_DirectionsOfNeighborsClockwise_" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighborsClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_DirectionsOfNeighborsClockwise_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighborsClockwise(GoRogue.Direction)">DirectionsOfNeighborsClockwise(Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets directions leading to neighboring locations, according to the current adjacency
+method. Appropriate directions are returned in clockwise order from the given starting
+direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Direction&gt; DirectionsOfNeighborsClockwise(Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The direction to start with.  null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a>
+causes the default starting direction to be used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT
+for diagonals.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Direction.html">Direction</a>&gt;</td>
+        <td><p>Directions that lead to neighboring locations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_DirectionsOfNeighborsCounterClockwise_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.DirectionsOfNeighborsCounterClockwise(GoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L188">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_DirectionsOfNeighborsCounterClockwise_" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighborsCounterClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_DirectionsOfNeighborsCounterClockwise_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.DirectionsOfNeighborsCounterClockwise(GoRogue.Direction)">DirectionsOfNeighborsCounterClockwise(Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets directions leading to neighboring locations, according to the current adjacency
+method. Appropriate directions are returned in counter-clockwise order from the given
+starting direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Direction&gt; DirectionsOfNeighborsCounterClockwise(Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The direction to start with.  null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a>
+causes the default starting direction to be used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT
+for diagonals.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Direction.html">Direction</a>&gt;</td>
+        <td><p>Directions that lead to neighboring locations.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_Neighbors_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.Neighbors(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L237">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_Neighbors_" data-uid="GoRogue.AdjacencyRule.Neighbors*"></a>
+  <h4 id="GoRogue_AdjacencyRule_Neighbors_GoRogue_Coord_" data-uid="GoRogue.AdjacencyRule.Neighbors(GoRogue.Coord)">Neighbors(Coord)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Cardinals are returned before any diagonals.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; Neighbors(Coord startingLocation)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">startingLocation</span></td>
+        <td><p>Location to return neighbors for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_Neighbors_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.Neighbors(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L250">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_Neighbors_" data-uid="GoRogue.AdjacencyRule.Neighbors*"></a>
+  <h4 id="GoRogue_AdjacencyRule_Neighbors_System_Int32_System_Int32_" data-uid="GoRogue.AdjacencyRule.Neighbors(System.Int32,System.Int32)">Neighbors(Int32, Int32)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Cardinals are returned before any diagonals.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; Neighbors(int startingX, int startingY)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingX</span></td>
+        <td><p>X-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingY</span></td>
+        <td><p>Y-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_NeighborsClockwise_GoRogue_Coord_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.NeighborsClockwise(GoRogue.Coord%2CGoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L264">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_NeighborsClockwise_" data-uid="GoRogue.AdjacencyRule.NeighborsClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_NeighborsClockwise_GoRogue_Coord_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.NeighborsClockwise(GoRogue.Coord,GoRogue.Direction)">NeighborsClockwise(Coord, Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Neighbors are returned in clockwise order, starting with the neighbor in the given
+starting direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NeighborsClockwise(Coord startingLocation, Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">startingLocation</span></td>
+        <td><p>Location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The neighbor in this direction will be returned first, proceeding clockwise.
+If null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> is specified, the default starting direction
+is used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT for DIAGONALS.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_NeighborsClockwise_System_Int32_System_Int32_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.NeighborsClockwise(System.Int32%2CSystem.Int32%2CGoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L283">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_NeighborsClockwise_" data-uid="GoRogue.AdjacencyRule.NeighborsClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_NeighborsClockwise_System_Int32_System_Int32_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.NeighborsClockwise(System.Int32,System.Int32,GoRogue.Direction)">NeighborsClockwise(Int32, Int32, Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Neighbors are returned in clockwise order, starting with the neighbor in the given
+starting direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NeighborsClockwise(int startingX, int startingY, Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingX</span></td>
+        <td><p>X-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingY</span></td>
+        <td><p>Y-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The neighbor in this direction will be returned first, proceeding clockwise.
+If null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> is specified, the default starting direction
+is used, which is UP for CARDINALS/EIGHT_WAY, and UP_RIGHT for DIAGONALS.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_NeighborsCounterClockwise_GoRogue_Coord_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.NeighborsCounterClockwise(GoRogue.Coord%2CGoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L298">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_NeighborsCounterClockwise_" data-uid="GoRogue.AdjacencyRule.NeighborsCounterClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_NeighborsCounterClockwise_GoRogue_Coord_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.NeighborsCounterClockwise(GoRogue.Coord,GoRogue.Direction)">NeighborsCounterClockwise(Coord, Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Neighbors are returned in counter-clockwise order, starting with the neighbor in the given
+starting direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NeighborsCounterClockwise(Coord startingLocation, Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">startingLocation</span></td>
+        <td><p>Location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The neighbor in this direction will be returned first, proceeding counter-clockwise.
+If null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> is specified, the default starting direction
+is used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT for DIAGONALS.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_NeighborsCounterClockwise_System_Int32_System_Int32_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.NeighborsCounterClockwise(System.Int32%2CSystem.Int32%2CGoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L317">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_NeighborsCounterClockwise_" data-uid="GoRogue.AdjacencyRule.NeighborsCounterClockwise*"></a>
+  <h4 id="GoRogue_AdjacencyRule_NeighborsCounterClockwise_System_Int32_System_Int32_GoRogue_Direction_" data-uid="GoRogue.AdjacencyRule.NeighborsCounterClockwise(System.Int32,System.Int32,GoRogue.Direction)">NeighborsCounterClockwise(Int32, Int32, Direction)</h4>
+  <div class="markdown level1 summary"><p>Gets all neighbors of the specified location, based on the current adjacency method.
+Neighbors are returned in counter-clockwise order, starting with the neighbor in the given
+starting direction.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;Coord&gt; NeighborsCounterClockwise(int startingX, int startingY, Direction startingDirection = null)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingX</span></td>
+        <td><p>X-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingY</span></td>
+        <td><p>Y-coordinate of location to return neighbors for.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">startingDirection</span></td>
+        <td><p>The neighbor in this direction will be returned first, proceeding counter-clockwise.
+If null or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> is specified, the default starting direction
+is used, which is UP for CARDINALS/EIGHT_WAY, and UP_LEFT for DIAGONALS.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><p>All neighbors of the given location.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_ToAdjacencyRule_GoRogue_AdjacencyRule_Types_.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.ToAdjacencyRule(GoRogue.AdjacencyRule.Types)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L73">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_ToAdjacencyRule_" data-uid="GoRogue.AdjacencyRule.ToAdjacencyRule*"></a>
+  <h4 id="GoRogue_AdjacencyRule_ToAdjacencyRule_GoRogue_AdjacencyRule_Types_" data-uid="GoRogue.AdjacencyRule.ToAdjacencyRule(GoRogue.AdjacencyRule.Types)">ToAdjacencyRule(AdjacencyRule.Types)</h4>
+  <div class="markdown level1 summary"><p>Gets the AdjacencyRule class instance representing the adjacency type specified.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static AdjacencyRule ToAdjacencyRule(AdjacencyRule.Types adjacencyRuleType)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.Types.html">AdjacencyRule.Types</a></td>
+        <td><span class="parametername">adjacencyRuleType</span></td>
+        <td><p>The enum value for the adjacency method.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></td>
+        <td><p>The AdjacencyRule class representing the given adjacency method type.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule_ToString.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L324">View Source</a>
+  </span>
+  <a id="GoRogue_AdjacencyRule_ToString_" data-uid="GoRogue.AdjacencyRule.ToString*"></a>
+  <h4 id="GoRogue_AdjacencyRule_ToString" data-uid="GoRogue.AdjacencyRule.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Returns a string representation of the AdjacencyRule.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of the AdjacencyRule.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_AdjacencyRule.md&amp;value=---%0Auid%3A%20GoRogue.AdjacencyRule%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/AdjacencyRule.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

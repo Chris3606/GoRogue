@@ -1,36 +1,70 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <!-- Basic package info -->
     <TargetFramework>netstandard2.0</TargetFramework>
-	<PackageId>GoRogue</PackageId>
-	<PackageVersion>1.4.4</PackageVersion>
-	<Authors>Christopher Ridley</Authors>
-	<Description>Roguelike/2D game utility library.</Description>
-	<PackageLicenseUrl>https://github.com/Chris3606/GoRogue/blob/master/LICENSE</PackageLicenseUrl>
-	<PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
-	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-	<PackageReleaseNotes>Bugfix release. See https://github.com/Chris3606/GoRogue/releases/tag/v1.4.4 for release notes.</PackageReleaseNotes>
-    <Copyright>Copyright ©  2017 Christopher Ridley.  All rights reserved.</Copyright>
-	<PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
+    <PackageId>GoRogue</PackageId>
+    <PackageVersion>2.1.2</PackageVersion>
+    <Authors>Christopher Ridley</Authors>
+    <Description>Roguelike/2D game utility library.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>HOTFIX: See https://github.com/Chris3606/GoRogue/releases/tag/2.1.2 for details.</PackageReleaseNotes>
+    <Copyright>Copyright 2019 Christopher Ridley.  All rights reserved.</Copyright>
+    <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
+    <!-- Add symbols package -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    
+    <!-- Configurations for nuget (where MonoGame private asset doesn't require monogame to be present), and minimal versions for DLL builds where that doesn't work properly -->
+    <Configurations>Debug;Release;Debug Minimal Dependencies;Release Minimal Dependencies</Configurations>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard2.0\GoRogue.xml</DocumentationFile>
-    <OutputPath>bin\Release\</OutputPath>
+  
+  <!-- Release warning disables and configuration -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Release Minimal Dependencies'">
+    <DocumentationFile>bin\$(Configuration)\netstandard2.0\GoRogue.xml</DocumentationFile>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <NoWarn>1701;1702;1705;RECS0145;RECS0129</NoWarn>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>bin\Debug\</OutputPath>
+  
+  <!-- Debug warning disables and configuration -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Debug Minimal Dependencies'">
+    <OutputPath>bin\$(Configuration)\</OutputPath>
     <NoWarn>1701;1702;1705;RECS0145;</NoWarn>
+    <DocumentationFile>bin\$(Configuration)\netstandard2.0\GoRogue.xml</DocumentationFile>
   </PropertyGroup>
   
-	<Target Name="CopyPackage" AfterTargets="Pack">
-		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
-	</Target>
+  <!-- When packing, copy the nuget files to the nuget output directory -->
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
+  </Target>
   
-	<ItemGroup>
-	  <PackageReference Include="OptimizedPriorityQueue" Version="4.1.1" />
-	  <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
-	</ItemGroup>
+  <!-- Pack a read-me with the nuget package, so it displays when installed -->
+  <ItemGroup>
+    <None Include="readme.txt" Pack="true" PackagePath="." />
+  </ItemGroup>
+
+  <!-- In Debug and Release builds only, set the ALLCONVERSIONS constant so MonoGame parts compile, and include the monogame reference. -->
+  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'" >
+    <DefineConstants>ALLCONVERSIONS</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'" >
+    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
+  </ItemGroup>
+  
+  <!-- Dependencies that apply to all builds -->
+  <ItemGroup>
+    <PackageReference Include="InheritDoc" Version="2.0.2" PrivateAssets="All">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+    <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
+    <PackageReference Include="Troschuetz.Random" Version="4.3.0" />
+  </ItemGroup>
+  
+  <!-- Run InheritDoc on the final builds.  This isn't used right now becuase of bugs with docfx and inheriting docs from template classes, but may be in the future -->
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command='"%userprofile%\.nuget\packages\inheritdoc\2.0.2\tools\InheritDoc.exe" -o -b "$(OutDir)\"' />
+  </Target>
 </Project>

@@ -1,0 +1,2126 @@
+{
+  "homepages": [],
+  "source_base_path": "D:/Google Drive/Documents/Development/CSharp/GoRogue/GoRogue.Docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.AdjacencyRule.Types.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.AdjacencyRule.Types.html",
+          "hash": "g1GViRbdpc7hbtnQH9dH4g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.AdjacencyRule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.AdjacencyRule.html",
+          "hash": "MVibAJbNsY6d+dJQCKjJ+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.AdvancedLayeredSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.AdvancedLayeredSpatialMap-1.html",
+          "hash": "GdUfDTWWe99+IJeeqpNnaw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.AdvancedMultiSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.AdvancedMultiSpatialMap-1.html",
+          "hash": "cpQd2og/lJMdYGx/Ob7/kA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.AdvancedSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.AdvancedSpatialMap-1.html",
+          "hash": "4kFgKi5MEiQK4V7LJt98Rg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.BoundedRectangle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.BoundedRectangle.html",
+          "hash": "aSDW2MwuG48P70YK5Oh7iQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.ComponentContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.ComponentContainer.html",
+          "hash": "htbtCLWV9OHmajUFJ0wvJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Coord.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Coord.html",
+          "hash": "m8IiDz4khWmfRodzRCRGWA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Dice.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Dice.html",
+          "hash": "hymBg1TVcdtY2BbPC2T1jg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.DiceExpression.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.DiceExpression.html",
+          "hash": "icfZ5/y2mqCUwT3TYO867Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Exceptions.ImpossibleDieException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Exceptions.ImpossibleDieException.html",
+          "hash": "OcixblV66dFkWM1M/WH3VQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidChooseException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidChooseException.html",
+          "hash": "tR7AGhfFxLIOOawXviw0Cg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidMultiplicityException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidMultiplicityException.html",
+          "hash": "lhdhZpa0IjUuqcp3GHTRmw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidSyntaxException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidSyntaxException.html",
+          "hash": "tO2GdvzH6ufJge4hrmF6YQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Exceptions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Exceptions.html",
+          "hash": "5FCq+jRysDB0KU7VPZXucQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.IDiceExpression.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.IDiceExpression.html",
+          "hash": "sTr+npKSb7NnAtwVHC6n9Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.IParser.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.IParser.html",
+          "hash": "Bt9V9NuzE06gPZDTsfKdEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Parser.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Parser.html",
+          "hash": "FGPTQpLdUOPZMaYuD0wLJA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.AddTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.AddTerm.html",
+          "hash": "+L/8DdAWNdpRM8cboJJjdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.ConstantTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.ConstantTerm.html",
+          "hash": "KWGyvI3Rtk8ij5QgNqijsw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.DiceTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.DiceTerm.html",
+          "hash": "aDk1Z659767GidFhRoGOFg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.DivideTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.DivideTerm.html",
+          "hash": "X4PTRi0d/SUzT0OPMKEbCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.ITerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.ITerm.html",
+          "hash": "vDqccw0/r61zXQh6dLuBJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.KeepTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.KeepTerm.html",
+          "hash": "OJCKzOwhsIbItrHJfviBbg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.MultiplyTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.MultiplyTerm.html",
+          "hash": "ukqcCmhusJKtpY0DWVaA8g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.SubtractTerm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.SubtractTerm.html",
+          "hash": "7CPLrfsfX4OX8X6bxPZxZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.Terms.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.Terms.html",
+          "hash": "qTd18sZ3L+8iELcOLxx8sw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DiceNotation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DiceNotation.html",
+          "hash": "ZLbtxvjkW4IEwfMQpcagCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Direction.Types.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Direction.Types.html",
+          "hash": "ypSWRUfNlIWhw+J54LWNDg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Direction.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Direction.html",
+          "hash": "FBn/TKl7eLQoi0t9ibCTXA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.DisjointSet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.DisjointSet.html",
+          "hash": "J++j53jZ0I5wYzlVRHRhqg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Distance.Types.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Distance.Types.html",
+          "hash": "z5hNiQtexS86EkaSd6VJ1A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Distance.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Distance.html",
+          "hash": "hlJfWjbI0t4vEgfit79C6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Effect-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Effect-1.html",
+          "hash": "e+L+zd3co/Rx7ZGoupnIQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.EffectArgs.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.EffectArgs.html",
+          "hash": "WSZiiBfwmO9HlA7VW9KEBg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.EffectTrigger-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.EffectTrigger-1.html",
+          "hash": "U9NaEAwV5+rXDFWbbaiFPw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.FOV.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.FOV.html",
+          "hash": "Gx+2XrJJN9SEekufbO7RXQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.Components.IGameObjectComponent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.Components.IGameObjectComponent.html",
+          "hash": "0NIUby1oxA+H+l81vrfmpA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.Components.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.Components.html",
+          "hash": "dHimjBW6DVVZGk2ksKzGTA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.GameObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.GameObject.html",
+          "hash": "91mMmEu4x1ClPhaFXe3ieQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.IGameObject.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.IGameObject.html",
+          "hash": "k9bUsUp+1o1hZOujNpy9fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.Map.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.Map.html",
+          "hash": "mJvFwz3EZci6S0gTxmVWyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.GameFramework.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.GameFramework.html",
+          "hash": "ruwFIPUyRWvrXaABGRxVPg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IDGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IDGenerator.html",
+          "hash": "S/S7DrjX/DQv/V7rlgQM7Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IHasComponents.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IHasComponents.html",
+          "hash": "NS/iOSRBjrbkNAizZKzJoQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IHasID.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IHasID.html",
+          "hash": "qcJt3APbQlAwGoYMxFkJzA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IHasLayer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IHasLayer.html",
+          "hash": "ErQ4xhFn77WyAe+BlC/58A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IReadOnlyDisjointSet.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IReadOnlyDisjointSet.html",
+          "hash": "rjH3CSfc40eVTW2euv9wEg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IReadOnlyFOV.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IReadOnlyFOV.html",
+          "hash": "U5L9FR8NgrxF41746pZtyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IReadOnlyLayeredSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IReadOnlyLayeredSpatialMap-1.html",
+          "hash": "Bf2vSmkn/wz/W1qA1bNrIw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IReadOnlyRadiusAreaProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IReadOnlyRadiusAreaProvider.html",
+          "hash": "Kt6xk9WEfU5eDH5I+Bu3Hg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.IReadOnlySpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.IReadOnlySpatialMap-1.html",
+          "hash": "rR0DEMSCO7Ww/++EgUl2kg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.ISpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.ISpatialMap-1.html",
+          "hash": "q0g+1yJigJEoQVppr53BYw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.ISpatialTuple-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.ISpatialTuple-1.html",
+          "hash": "XpvYp3a7dMFjk3ktnHJVpg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.ItemEventArgs-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.ItemEventArgs-1.html",
+          "hash": "dFPdoP6SLD9U01zguW19+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.ItemMovedEventArgs-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.ItemMovedEventArgs-1.html",
+          "hash": "O7nwHNWPlHTITQ80TBnH4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.LayerMasker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.LayerMasker.html",
+          "hash": "P5z1RMR9a3+UCl7okEoPZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.LayeredSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.LayeredSpatialMap-1.html",
+          "hash": "Y1EvN0EUx6nKuREa7xkXww=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Lines.Algorithm.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Lines.Algorithm.html",
+          "hash": "y5zQEFoWV6RkpG80wcHJZA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Lines.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Lines.html",
+          "hash": "RXUgw+Z4XT06XA45Uf3VRw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector.html",
+          "hash": "axpOun9R8iPSmDDDZCBGfA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.html",
+          "hash": "2S96EIjw7hAoe1yn1fXzaw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.html",
+          "hash": "muNSBlSqUax/h9uw6q5sag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.DeadEndTrimmer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.DeadEndTrimmer.html",
+          "hash": "fR7gNwnJA56soiociHITrA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html",
+          "hash": "mgrB01xOsgtFGysivjAj4w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.html",
+          "hash": "c70ys0cJU+4WLfbeFc8KUw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html",
+          "hash": "zOLGFzzkbpC8y6HqU5O4Ow=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.ITunnelCreator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.ITunnelCreator.html",
+          "hash": "RDpXOONOiZYsuJthOVuPBg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.html",
+          "hash": "9GnuqzvIzd7BAaZNF9x9kg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.html",
+          "hash": "aCR4jWDQtwDA9E+iYyLM+g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.RoomDoorConnector.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.RoomDoorConnector.html",
+          "hash": "n09CMTXWpLeB7tQOgZYGhg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Connectors.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Connectors.html",
+          "hash": "zPR7uyJcDFJB1Aet0YeiTA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Generators.BasicRoomsGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Generators.BasicRoomsGenerator.html",
+          "hash": "Rt0l/Z8KGVOGJ6QFq4usNQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.html",
+          "hash": "IRRdu/AMQKJr68GSkTNmzg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Generators.MazeGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Generators.MazeGenerator.html",
+          "hash": "ZTP177FNpaa1k/UoBvnNQw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Generators.RoomsGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Generators.RoomsGenerator.html",
+          "hash": "dqVNh6POhFtoFo+Ar1M8GQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.Generators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.Generators.html",
+          "hash": "5qrHy+Rk+f7WXIzu0/pfMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.IReadOnlyMapArea.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.IReadOnlyMapArea.html",
+          "hash": "6BN/38su2yE75bn5irfB6g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.MapArea.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.MapArea.html",
+          "hash": "vkx9LOEPdVLGiyaFQhDVSw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.MapAreaFinder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.MapAreaFinder.html",
+          "hash": "1ixs/XRXuX+ixAmdmWjVYA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.QuickGenerators.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.QuickGenerators.html",
+          "hash": "8mVNs8g2yhHBiPptP2OJUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapGeneration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapGeneration.html",
+          "hash": "3pwYCZR0yuw8kQYXXWKpMg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.ArrayMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.ArrayMap-1.html",
+          "hash": "fY1SXPids5mmTAfNQqtbCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.ArrayMap2D-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.ArrayMap2D-1.html",
+          "hash": "OSJE/CdZVhdYiedWgJum/g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.IMapView-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.IMapView-1.html",
+          "hash": "pwxK+PNXCFslW+fx58bMgg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.IMapViewExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.IMapViewExtensions.html",
+          "hash": "FOv8zg8k64WOR+zUe2JMUA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.ISettableMapView-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.ISettableMapView-1.html",
+          "hash": "WOlAfOgKExUzh4txbu7lJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.LambdaMapView-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.LambdaMapView-1.html",
+          "hash": "XXAD2fF4ZVmM4qCqzNp2fw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.LambdaSettableMapView-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.LambdaSettableMapView-1.html",
+          "hash": "LYp3qVX8cNe9bkubiqNz7Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.LambdaSettableTranslationMap-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.LambdaSettableTranslationMap-2.html",
+          "hash": "BhjdHzMepIi/u3h7HzqBJw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.LambdaTranslationMap-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.LambdaTranslationMap-2.html",
+          "hash": "HHx8sMfu22rdVXLEd5TpxA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.SettableTranslationMap-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.SettableTranslationMap-2.html",
+          "hash": "W6mMMRrY45fhFDQtYZbamw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.SettableViewport-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.SettableViewport-1.html",
+          "hash": "CrLIEMnwLV+K5ibfsma3Ng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.TranslationMap-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.TranslationMap-2.html",
+          "hash": "J0gZT/mtFXrWb44kvSRfAA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.UnboundedViewport-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.UnboundedViewport-1.html",
+          "hash": "LW5XSwduOznymiKgG77hug=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.Viewport-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.Viewport-1.html",
+          "hash": "YPvYCmsvLjPbKrtfUyCDrQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MapViews.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MapViews.html",
+          "hash": "Y9h6v6/E9QuxzEhasbun6Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MathHelpers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MathHelpers.html",
+          "hash": "imJUpuSF0NyFR2I1FUrAxQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.MultiSpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.MultiSpatialMap-1.html",
+          "hash": "R6JLfGRJ3288L3D4ujCYPw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.AStar.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.AStar.html",
+          "hash": "LVqhoL53iO+7zD8cap2lFQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.FleeMap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.FleeMap.html",
+          "hash": "I+WCxV8ivWmRPdac4yOfvg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.GoalMap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.GoalMap.html",
+          "hash": "+Nmjm7H84MeikpBd3BHuSw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.GoalMapExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.GoalMapExtensions.html",
+          "hash": "y/0ZD/Xwe07Z4/VMiFTuWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.GoalState.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.GoalState.html",
+          "hash": "swoweAQBUteqj+juqLhTsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.Path.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.Path.html",
+          "hash": "B3TbBGnSoe3aUTwwvIj6Jg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.WeightedGoalMap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.WeightedGoalMap.html",
+          "hash": "WaNBEqn4Kcdp+ZyQR/wEQg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Pathing.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Pathing.html",
+          "hash": "Cb/XxNDjAF1A4R0YkfaT5g=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Radius.Types.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Radius.Types.html",
+          "hash": "tmFc9wplhivAPs76Oz+dbg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Radius.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Radius.html",
+          "hash": "ukYw9dqrJF7lVGkOTeyfrQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.RadiusAreaProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.RadiusAreaProvider.html",
+          "hash": "WrmsTJJoJ3UaKEV8pqyZcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.DiscreteConverter-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.DiscreteConverter-1.html",
+          "hash": "LN7YOH6mL6gjUdxxmiBmCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.DistributionHelpers.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.DistributionHelpers.html",
+          "hash": "SmidJ9ZcEFGAlVH9j5uOCQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.KnownSeriesGenerator.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.KnownSeriesGenerator.html",
+          "hash": "GQe8xntO4PzVn9uQPxgJ3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.MaxRandom.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.MaxRandom.html",
+          "hash": "y3pYLypocYr+4PSKyjB3cQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.MinRandom.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.MinRandom.html",
+          "hash": "eOqq+e0L2rdbrh5IJYtwng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.SingletonRandom.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.SingletonRandom.html",
+          "hash": "3dTtCBUh/ksjiciH+ytr+Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Random.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Random.html",
+          "hash": "vMdkxWpgnJfOnisqLvsYnA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Rectangle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Rectangle.html",
+          "hash": "QdWLycHFt9OWbsJmAbZbWg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SenseMapping.IReadOnlySenseMap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SenseMapping.IReadOnlySenseMap.html",
+          "hash": "R/f5yJ6GFIkoSdt/1wj59A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SenseMapping.SenseMap.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SenseMapping.SenseMap.html",
+          "hash": "sWRqphGU4xL7S1ZnG8Szpg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SenseMapping.SenseSource.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SenseMapping.SenseSource.html",
+          "hash": "jReA5HnG4wbbraQPR1uBaQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SenseMapping.SourceType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SenseMapping.SourceType.html",
+          "hash": "Pz3i2F46gFDQ2I4z8WcQgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SenseMapping.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SenseMapping.html",
+          "hash": "GBuFtC3Psznz6cJjozb+Vw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.SpatialMap-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.SpatialMap-1.html",
+          "hash": "LmiCLIQmjOO5f8qgBu/Ujw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.Utility.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.Utility.html",
+          "hash": "jFDdmrdYjSZpX1oYcMLSSw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GoRogue.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GoRogue.html",
+          "hash": "G+e2IiBBArZINOXyZwXWxw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "4W5EW3IaNlxrILkIwH1Oyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "z5MIZlUVFKwJD/D2at4GdQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/1-to-2-upgrade-guide.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/1-to-2-upgrade-guide.html",
+          "hash": "StFf9cC70KIcfsE36fsspA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/game-framework.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/game-framework.html",
+          "hash": "7+DT6HK+SdmjXNAGYU2xuQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/getting-started.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/getting-started.html",
+          "hash": "1wNpHA/BLXiPkNpPkowB3Q=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "K7UD2pXmb/z0Xi1UVihWfg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "fvjNSBWpAPOvtEHQPsn6+A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dealing_with_directions/math_graphics.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/dealing_with_directions/math_graphics.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dealing_with_directions/screen_graphics.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/dealing_with_directions/screen_graphics.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_neighbors/Cardinals.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_neighbors/Cardinals.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_neighbors/Diagonals.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_neighbors/Diagonals.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_neighbors/Eight_Way.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_neighbors/Eight_Way.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/linux_project/1_Framework_Create_Project.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/linux_project/1_Framework_Create_Project.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/linux_project/2_Framework_Manage_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/linux_project/2_Framework_Manage_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/linux_project/3_Framework_Install_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/linux_project/3_Framework_Install_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/linux_project/4_Core_Run_Program.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/linux_project/4_Core_Run_Program.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/linux_project/4_Framework_Run_Program.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/linux_project/4_Framework_Run_Program.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/mac_project/1_Core_Create_Project.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/mac_project/1_Core_Create_Project.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/mac_project/2_Core_Manage_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/mac_project/2_Core_Manage_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/windows_project/1_Core_Create_Project.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/windows_project/1_Core_Create_Project.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/windows_project/1_Framework_Create_Project.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/windows_project/1_Framework_Create_Project.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/windows_project/2_Manage_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/windows_project/2_Manage_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/windows_project/3_Install_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/windows_project/3_Install_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/getting_started/windows_project/4_Run_Program.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/getting_started/windows_project/4_Run_Program.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/line_creation/bresenham.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/line_creation/bresenham.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/line_creation/bresenham_ordered.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/line_creation/bresenham_ordered.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/line_creation/dda.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/line_creation/dda.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/line_creation/ortho.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/line_creation/ortho.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/measuring_distance/chebyshev_distance.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/measuring_distance/chebyshev_distance.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/measuring_distance/chebyshev_distance_def.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/measuring_distance/chebyshev_distance_def.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/measuring_distance/euclidean_distance.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/measuring_distance/euclidean_distance.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/measuring_distance/manhattan_distance.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/measuring_distance/manhattan_distance.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/Run_Demo.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/Run_Demo.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/Terminal_Image.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/Terminal_Image.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/1_Manage_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/1_Manage_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/2_Install_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/2_Install_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/3_Add_Existing.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/3_Add_Existing.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/4_Add_Terminal.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/4_Add_Terminal.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/5_Copy_If_Newer.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/5_Copy_If_Newer.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/6_Project_Options.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/6_Project_Options.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/linux_project/7_Change_Namespace.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/linux_project/7_Change_Namespace.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/terminal8x8.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/terminal8x8.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/windows_project/1_Manage_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/windows_project/1_Manage_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/windows_project/2_Install_Nuget.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/windows_project/2_Install_Nuget.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/windows_project/3_Add_Existing.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/windows_project/3_Add_Existing.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/windows_project/4_Add_Terminal.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/windows_project/4_Add_Terminal.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/rlnet_setup/windows_project/5_Copy_If_Newer.PNG",
+      "output": {
+        "resource": {
+          "relative_path": "images/rlnet_setup/windows_project/5_Copy_If_Newer.PNG"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "lZmWO6F3tGJsdpSkUs97xg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "k+/dkjFuwAVS32HduMpmBw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": false,
+        "details": "Cannot build incrementally because config changed.",
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0,
+        "full_build_reason_code": "ConfigChanged"
+      },
+      "processors": {
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 6,
+          "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "incrementalPhase": "build",
+          "total_file_count": 126,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
