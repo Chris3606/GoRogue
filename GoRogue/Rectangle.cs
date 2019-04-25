@@ -613,6 +613,33 @@ namespace GoRogue
 		}
 
 		/// <summary>
+		/// Returns a random position from within this rectangle, for which the selector function
+		/// specified returns true.  Random positions will continuously be generated until one that
+		/// qualifies is found.
+		/// </summary>
+		/// <param name="selector">
+		/// Selector function that takes a position and a rectangle, and returns true if it is an
+		/// acceptable selection, and false otherwise.
+		/// </param>
+		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+		/// <returns>
+		/// A random position from within the rectangle, for which the given selector function
+		/// returned true.
+		/// </returns>
+		public Coord RandomPosition(Func<Rectangle, Coord, bool> selector, IGenerator rng = null)
+		{
+			if (rng == null)
+				rng = SingletonRandom.DefaultRNG;
+
+			var c = new Coord(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
+
+			while (!selector(this, c))
+				c = new Coord(rng.Next(X, MaxExtentX + 1), rng.Next(Y, MaxExtentY + 1));
+
+			return c;
+		}
+
+		/// <summary>
 		/// Creates and returns a new rectangle that has the same position and width as the current
 		/// one, but with the height changed to the given value.
 		/// </summary>
