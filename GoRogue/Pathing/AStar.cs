@@ -1,4 +1,6 @@
-﻿using GoRogue.MapViews;
+﻿using GoRogue;
+using GoRogue.MapViews;
+using Priority_Queue;
 using System;
 using System.Collections.Generic;
 
@@ -16,53 +18,64 @@ namespace GoRogue.Pathing
 	/// explaining the map view system at the GoRogue documentation page
 	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
 	/// 
-	/// If truly shortest paths are not necessary, you may want to consider <see cref="FastAStar"/> instead.
+	/// If truly shortest paths are not strictly necessary, you may want to consider <see cref="FastAStar"/> instead.
 	/// </remarks>
 	public class AStar
 	{
-		// Used to record the best known cost so far to each of the locations
-		private double[] costSoFar;
+		// Node objects used under the hood for the priority queue
+		private AStarNode[] nodes;
 
-		// Used to record the parent of the known best path to each location
-		private Coord[] cameFrom;
-
-		// Records which nodes are opened and which are closed.
-		private bool[] opened;
+		// Stored as seperate array for performance reasons since it must be cleared at each run
 		private bool[] closed;
 
-		// Used to cache map view width/height so we know when a resize happened
-		private int _cachedWidth;
-		private int _cachedHeight;
+		// Width and of the walkability map at the last path -- used to determine whether
+		// reallocation of nodes array is necessary
+		private int cachedHeight;
+		private int cachedWidth;
 
-		/// <summary>
-		/// Multiplier that is multiplied by the distance heuristic calculation, and is calculated
-		/// based on the length of the longest possible path.
-		/// </summary>
-		protected double MaxPathMultiplier;
-
-		/// <summary>
-		/// The map view being used to determine whether or not each tile is walkable.
-		/// </summary>
-		public readonly IMapView<bool> WalkabilityMap;
+		// Priority queue of the open nodes.
+		private FastPriorityQueue<AStarNode> openNodes;
 
 		/// <summary>
 		/// The distance calculation being used to determine distance between points. <see cref="Distance.MANHATTAN"/>
 		/// implies 4-way connectivity, while <see cref="Distance.CHEBYSHEV"/> or <see cref="Distance.EUCLIDEAN"/> imply
 		/// 8-way connectivity for the purpose of determining adjacent coordinates.
 		/// </summary>
-		public Distance DistanceMeasurement;
+		public Distance DistanceMeasurement { get; set; } // Has to be a property for default heuristic to update properly when this is changed
 
 		/// <summary>
-		/// The heuristic used to estimate distance from nodes to the end point.  If unspecified, defaults to using the distance
-		/// calculation specified by <see cref="DistanceMeasurement"/>, with a safe tie-breaking element.
+		/// The map view being used to determine whether or not each tile is walkable.
 		/// </summary>
-		public Func<Coord, Coord, double> Heuristic { get; set; }
+		public IMapView<bool> WalkabilityMap { get; private set; }
+
+		private Func<Coord, Coord, double> _heuristic;
+		/// <summary>
+		/// The heuristic used to estimate distance from nodes to the end point.  If unspecified or specified as null,
+		/// it defaults to using the distance calculation specified by <see cref="DistanceMeasurement"/>, with a safe/efficient
+		/// tie-breaking multiplier added on.
+		/// </summary>
+		public Func<Coord, Coord, double> Heuristic
+		{
+			get => _heuristic;
+
+			set
+			{
+				_heuristic = value ?? ((c1, c2) => DistanceMeasurement.Calculate(c1, c2) * MaxPathMultiplier);
+			}
+		}
 
 		/// <summary>
-		/// Weights given to each tile.  The weight is multiplied by the cost of a tile, so a tile with weight  is twice as hard to enter
-		/// as a tile with weight 1.  If unspecified, all tiles have weight 1.
+		/// Weights given to each tile.  The weight is multiplied by the cost of a tile, so a tile with weight 2 is twice as hard to
+		/// enter as a tile with weight 1.  If unspecified or specified as null, all tiles have weight 1.
 		/// </summary>
 		public IMapView<double> Weights { get; }
+
+		// NTOE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
+		/// <summary>
+		/// Multiplier that is multiplied by the distance in the default heuristic calculation.  This value is based on the
+		/// length of the longest possible path, and is used as a tiebreaking element in the default heuristic.
+		/// </summary>
+		public double MaxPathMultiplier { get; private set; }
 
 		/// <summary>
 		/// Constructor.
@@ -72,30 +85,26 @@ namespace GoRogue.Pathing
 		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
 		/// how to calculate the distance between points.  If <paramref name="heuristic"/> is unspecified, also determines the estimation heuristic used.</param>
 		/// <param name="heuristic">Function used to estimate the distance between two given points.  If unspecified, a distance calculation corresponding
-		/// to <paramref name="distanceMeasurement"/> is used along with a safe tiebreaking element, which will produce guranteed shortest paths.</param>
+		/// to <see cref="DistanceMeasurement"/> is used along with a safe/efficient tiebreaking element, which will produce guranteed shortest paths.</param>
 		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.  If unspecified, each location will default
 		/// to having a weight of 1.</param>
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null,
-						 IMapView<double> weights = null)
+					 IMapView<double> weights = null)
 		{
-			Heuristic = heuristic ?? ((c1, c2) => DistanceMeasurement.Calculate(c1, c2) * MaxPathMultiplier);
-
-			if (weights == null)
-			{
-				var weightsMap = new ArrayMap<double>(walkabilityMap.Width, walkabilityMap.Height);
-				foreach (var pos in weightsMap.Positions())
-					weightsMap[pos] = 1.0;
-				Weights = weightsMap;
-			}
-			else
-				Weights = weights;
+			Weights = weights;
 
 			WalkabilityMap = walkabilityMap;
 			DistanceMeasurement = distanceMeasurement;
 
-			InitializeCacheData(out costSoFar, out cameFrom, out opened, out closed, out MaxPathMultiplier, WalkabilityMap.Width * WalkabilityMap.Height);
-			_cachedWidth = WalkabilityMap.Width;
-			_cachedHeight = WalkabilityMap.Height;
+			Heuristic = heuristic;
+
+			int maxSize = walkabilityMap.Width * walkabilityMap.Height;
+			nodes = new AStarNode[maxSize];
+			closed = new bool[maxSize];
+			cachedWidth = walkabilityMap.Width;
+			cachedHeight = walkabilityMap.Height;
+
+			openNodes = new FastPriorityQueue<AStarNode>(maxSize);
 		}
 
 		/// <summary>
@@ -114,94 +123,105 @@ namespace GoRogue.Pathing
 		/// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
 		public Path ShortestPath(Coord start, Coord end, bool assumeEndpointsWalkable = true)
 		{
-			// Can't be a path
+			// Don't waste initialization time if there is definately no path
 			if (!assumeEndpointsWalkable && (!WalkabilityMap[start] || !WalkabilityMap[end]))
-				return null;
+				return null; // There is no path
 
-			// Path is 1 long, so don't bother with allocations
+			// If the path is simply the start, don't bother with graph initialization and such
 			if (start == end)
-				return new Path(new List<Coord> { start });
-
-			if (_cachedWidth != WalkabilityMap.Width || _cachedHeight != WalkabilityMap.Height)
 			{
-				InitializeCacheData(out costSoFar, out cameFrom, out opened, out closed, out MaxPathMultiplier, WalkabilityMap.Width * WalkabilityMap.Height);
-				_cachedWidth = WalkabilityMap.Width;
-				_cachedHeight = WalkabilityMap.Height;
-			}
-			else // Clear only opened and closed -- cameFrom is never accessed until path found, and opened controls access to costSoFar
-			{
-				int length = closed.Length;
-				Array.Clear(closed, 0, length);
-				Array.Clear(opened, 0, length);
+				var retVal = new List<Coord> { start };
+				return new Path(retVal);
 			}
 
-			// Calculate path
-			var head = new LinkedListPriorityQueueNode<Coord>(start, Heuristic(start, end));
-			var open = new LinkedListPriorityQueue<Coord>();
-			open.Push(head);
-			opened[start.ToIndex(WalkabilityMap.Width)] = true;
-
-			
-			while (!open.IsEmpty())
+			// Clear nodes to beginning state
+			if (cachedWidth != WalkabilityMap.Width || cachedHeight != WalkabilityMap.Height)
 			{
-				var current = open.Pop().Value;
+				int length = WalkabilityMap.Width * WalkabilityMap.Height;
+				nodes = new AStarNode[length];
+				closed = new bool[length];
+				openNodes = new FastPriorityQueue<AStarNode>(length);
 
-				// Path complete -- return
-				if (current == end)
-				{
-					List<Coord> path = new List<Coord>();
-					while (current != start)
-					{
-						path.Add(current);
-						current = cameFrom[current.ToIndex(WalkabilityMap.Width)];
-					}
-					path.Add(start);
-					return new Path(path);
-				}
+				cachedWidth = WalkabilityMap.Width;
+				cachedHeight = WalkabilityMap.Height;
 
-				// Step to neighbors
-				var currentIndex = current.ToIndex(WalkabilityMap.Width);
-				var initialCost = costSoFar[currentIndex];
+				MaxPathMultiplier = 1.0 + (1.0 / (length + 1));
+			}
+			else
+				Array.Clear(closed, 0, closed.Length);
 
+			var result = new List<Coord>();
+			int index = start.ToIndex(WalkabilityMap.Width);
+
+			if (nodes[index] == null)
+				nodes[index] = new AStarNode(start, null);
+
+			nodes[index].G = 0;
+			nodes[index].F = (float)Heuristic(start, end); // Completely heuristic for first node
+			openNodes.Enqueue(nodes[index], nodes[index].F);
+
+			while (openNodes.Count != 0)
+			{
+				var current = openNodes.Dequeue();
+				var currentIndex = current.Position.ToIndex(WalkabilityMap.Width);
 				closed[currentIndex] = true;
 
-				// Go through neighbors based on distance calculation
-				foreach (var neighborDir in ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors()/*neighborFunc(current.X - end.X, current.Y - end.Y)*/)
+				if (current.Position == end) // We found the end, cleanup and return the path
 				{
-					var neighbor = current + neighborDir;
-					// Ignore if out of bounds or location unwalkable
-					if (!WalkabilityMap.Bounds().Contains(neighbor) ||
-						(!WalkabilityMap[neighbor] && (!assumeEndpointsWalkable || (!neighbor.Equals(start) && !neighbor.Equals(end)))))
+					openNodes.Clear();
+
+					do
+					{
+						result.Add(current.Position);
+						current = current.Parent;
+					} while (current.Position != start);
+
+					result.Add(start);
+					return new Path(result);
+				}
+
+				foreach (var dir in ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors())
+				{
+					Coord neighborPos = current.Position + dir;
+
+					// Not a valid map position, ignore
+					if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width || neighborPos.Y >= WalkabilityMap.Height)
 						continue;
 
-					var neighborIndex = neighbor.ToIndex(WalkabilityMap.Width);
-
-					if (closed[neighborIndex])
+					if (!checkWalkability(neighborPos, start, end, assumeEndpointsWalkable)) // Not part of walkable node "graph", ignore
 						continue;
 
-					
-					// Real cost of getting to neighbor via path passing through current
-					var newCost = initialCost + DistanceMeasurement.Calculate(current, neighbor) * Weights[neighbor];
-					
-					var oldCost = costSoFar[neighborIndex];
-					// Compare to best path to neighbor we have; 0 means no path found yet to neighbor
-					if (opened[neighborIndex] && !(newCost < oldCost))
+					int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
+					var neighbor = nodes[neighborIndex];
+
+					var isNeighborOpen = IsOpen(neighbor, openNodes);
+
+					if (neighbor == null) // Can't be closed because never visited
+						nodes[neighborIndex] = neighbor = new AStarNode(neighborPos, null);
+					else if (closed[neighborIndex]) // This neighbor has already been evaluated at shortest possible path, don't re-add
 						continue;
 
-					opened[neighborIndex] = true;
+					float newDistance = current.G + (float)DistanceMeasurement.Calculate(current.Position, neighbor.Position) * (float)(Weights== null ? 1.0 : Weights[neighbor.Position]);
+					if (isNeighborOpen && newDistance >= neighbor.G) // Not a better path
+						continue;
 
-					// We've found a better path, so update parent and known cost
-					costSoFar[neighborIndex] = newCost;
-					cameFrom[neighborIndex] = current;
+					// We found a best path, so record and update
+					neighbor.Parent = current;
+					neighbor.G = newDistance; // (Known) distance to this node via shortest path
+					// Heuristic distance to end (priority in queue). If it's already in the queue, update priority to new F
+					neighbor.F = newDistance + (float)Heuristic(neighbor.Position, end);
 
-					// Use new distance + heuristic to compute new expected cost from neighbor to end, and update priority queue
-					var expectedCost = newCost + Heuristic(neighbor, end);
-					open.Push(new LinkedListPriorityQueueNode<Coord>(neighbor, expectedCost));
+					if (openNodes.Contains(neighbor))
+						openNodes.UpdatePriority(neighbor, neighbor.F);
+					else // Otherwise, add it with proper priority
+					{
+						openNodes.Enqueue(neighbor, neighbor.F);
+					}
 				}
 			}
 
-			// There is no path
-			return null;
+			openNodes.Clear();
+			return null; // No path found
 		}
 
 		/// <summary>
@@ -223,14 +243,17 @@ namespace GoRogue.Pathing
 		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
 			=> ShortestPath(new Coord(startX, startY), new Coord(endX, endY), assumeEndpointsWalkable);
 
-		private static void InitializeCacheData(out double[] costSoFar, out Coord[] cameFrom, out bool[] opened, out bool[] closed,
-												  out double maxPathMultiplier, int length)
+		private static bool IsOpen(AStarNode node, FastPriorityQueue<AStarNode> openSet)
 		{
-			costSoFar = new double[length];
-			cameFrom = new Coord[length];
-			opened = new bool[length];
-			closed = new bool[length];
-			maxPathMultiplier = 1.0 + (1.0 / (length + 1));
+			return node != null && openSet.Contains(node);
+		}
+
+		private bool checkWalkability(Coord pos, Coord start, Coord end, bool assumeEndpointsWalkable)
+		{
+			if (!assumeEndpointsWalkable)
+				return WalkabilityMap[pos];
+
+			return WalkabilityMap[pos] || pos == start || pos == end;
 		}
 	}
 
@@ -381,5 +404,27 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <returns>A string representation of all steps in the path, including the start.</returns>
 		public override string ToString() => StepsWithStart.ExtendToString();
+	}
+
+	// Node representing a grid position in AStar's priority queue
+	internal class AStarNode : FastPriorityQueueNode
+	{
+		public readonly Coord Position;
+
+		// Whether or not the node has been closed
+		public float F;
+
+		// (Partly estimated) distance to end point going thru this node
+		public float G;
+
+		public AStarNode Parent;
+		// (Known) distance from start to this node, by shortest known path
+
+		public AStarNode(Coord position, AStarNode parent = null)
+		{
+			Parent = parent;
+			Position = position;
+			F = G = float.MaxValue;
+		}
 	}
 }
