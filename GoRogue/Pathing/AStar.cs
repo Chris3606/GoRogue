@@ -72,9 +72,11 @@ namespace GoRogue.Pathing
 
 		// NTOE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
 		/// <summary>
-		/// Multiplier that is multiplied by the euclidean distance aspect of the default heuristic calculation to avoid over-estimation.
-		/// This value is based on the maximum possible euclidean distance magnitude between two points, on a map, and is used as a multiplier
-		/// for the tiebreaking/smoothing element in the default heuristic.
+		/// Multiplier that is used in the tiebreaking/smoothing element of the default heuristic. This value is based on the
+		/// maximum possible <see cref="Coord.EuclideanDistanceMagnitude(Coord, Coord)"/> between two points on the map.
+		/// 
+		/// Typically you dont' need this value unless you're creating a custom heuristic an introducing the same
+		/// tiebreaking/smoothing element as the default heuristic.
 		/// </summary>
 		public double MaxEuclideanMultiplier { get; private set; }
 

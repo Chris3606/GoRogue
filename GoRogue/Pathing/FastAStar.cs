@@ -8,10 +8,10 @@ namespace GoRogue.Pathing
 	/// </summary>
 	/// <remarks>
 	/// This class is exactly like a regular <see cref="AStar"/> instance, but sets the heuristic by default to the <see cref="Distance.MANHATTAN"/>
-	/// calculate function (with a tiebreaker). In the case that euclidean or chebyshev distance is used, this heuristic is over-estimating -- that is, it may in some cases
-	/// produce a value that is greater than the actual shortest path between two points.  As such, this means that, while the algorithm will still produce
-	/// valid paths, the algorithm is no longer guaranteed to produce fully shortest paths.  In exchange, however, the algorithm may perform significantly faster
-	/// than an AStar instance with the default heuristic.
+	/// calculate function (with the same tiebreaking/smoothing element as regular AStar. In the case that euclidean or chebyshev distance is used, this
+	/// heuristic is over-estimating -- that is, it may in some cases produce a value that is greater than the actual shortest path between two points.
+	/// As such, this means that, while the algorithm will still produce valid paths, the algorithm is no longer guaranteed to produce fully shortest paths.
+	/// In exchange, however, the algorithm may perform significantly faster than an AStar instance with its default heuristic.
 	/// 
 	/// In practice, however, it is worth noting that the paths are often (though not always) the shortest path regardless, and when they are not, the deviation
 	/// in length between the path that the algorithm returns and the actual shortest path is often very small (less than 5%).  As such, it may be viable for use
