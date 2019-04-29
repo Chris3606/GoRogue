@@ -86,6 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentTests.cs" />
     <Compile Include="CoordTests.cs" />
     <Compile Include="DiceNotationTests.cs" />
     <Compile Include="DirectionTests.cs" />

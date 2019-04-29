@@ -60,7 +60,10 @@ namespace GoRogue
 				if (!_components.ContainsKey(type))
 					_components[type] = new List<object>();
 
-				_components[type].Add(component);
+				if (component is ISortedComponent sorted)
+					InsertComponent(sorted, _components[type]);
+				else
+					_components[type].Add(component);
 			}
 		}
 
@@ -161,6 +164,30 @@ namespace GoRogue
 				foreach (var component in _components[typeOfT])
 					yield return (T)component;
 			}
+		}
+
+		// Insert in appropriate order to list based on what its SortOrder is
+		private static void InsertComponent(ISortedComponent component, List<object> componentList)
+		{
+			int insertionPoint = componentList.Count;
+			for (int i = 0; i < componentList.Count; i++)
+			{
+				if (componentList[i] is ISortedComponent sorted)
+				{
+					if (sorted.SortOrder > component.SortOrder)
+					{
+						insertionPoint = i;
+						break;
+					}
+				}
+				else
+				{
+					insertionPoint = i;
+					break;
+				}
+			}
+
+			componentList.Insert(insertionPoint, component);
 		}
 
 		// Gets the entire inheritance tree for the run-time actual type of the given component,

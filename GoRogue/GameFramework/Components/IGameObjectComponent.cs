@@ -1,7 +1,7 @@
 ﻿namespace GoRogue.GameFramework.Components
 {
 	/// <summary>
-	/// Optional interface for components that are attached to an <see cref="IGameObject"/>.  While the implementation of this inteerface is not
+	/// Optional interface for components that are attached to an <see cref="IGameObject"/>.  While the implementation of this interface is not
 	/// required for IGameObject components, if <see cref="GameObject"/>'s implementation of IHasComponents is used, the <see cref="Parent"/> field
 	/// is automatically kept up to date as you call <see cref="GameObject.AddComponent(object)"/>/<see cref="IHasComponents.RemoveComponent(object)"/>
 	/// on objects that implement this interface.  A component implmenting this interface cannot be added to multiple GameObjects
