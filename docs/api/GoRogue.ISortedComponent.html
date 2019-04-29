@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Enum Direction.Types
+    <title>Interface ISortedComponent
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Enum Direction.Types
+    <meta name="title" content="Interface ISortedComponent
    ">
     <meta name="generator" content="docfx 2.41.0.0">
     
@@ -68,82 +68,66 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="GoRogue.Direction.Types">
+            <article class="content wrap" id="_content" data-uid="GoRogue.ISortedComponent">
   
   
-  <h1 id="GoRogue_Direction_Types" data-uid="GoRogue.Direction.Types" class="text-break">Enum Direction.Types
+  <h1 id="GoRogue_ISortedComponent" data-uid="GoRogue.ISortedComponent" class="text-break">Interface ISortedComponent
   </h1>
-  <div class="markdown level0 summary"><p>Enum representing Direction types. Each Direction instance has a <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_Type">Type</a> field
-which contains the corresponding value from this enum.  Useful for easy mapping of Direction
-types to a primitive type (for cases like a switch statement).</p>
+  <div class="markdown level0 summary"><p>Optional interface that may be implemented by components to ensure they are returned in a specific order
+when <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_GetComponent__1">GetComponent&lt;T&gt;()</a> is called.  Components are not required to implement
+this interface, however components that do not will be returned after any components that do.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
-  <h5 id="GoRogue_Direction_Types_syntax">Syntax</h5>
+  <h5 id="GoRogue_ISortedComponent_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public enum Types</code></pre>
+    <pre><code class="lang-csharp hljs">public interface ISortedComponent</code></pre>
   </div>
-  <h3 id="fields">Fields
+  <h5 id="GoRogue_ISortedComponent_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>When the GetComponents function of either ComponentContainer or any object that uses one to implement the component
+system (such as <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a> is called, any components with a lower <a class="xref" href="GoRogue.ISortedComponent.html#GoRogue_ISortedComponent_SortOrder">SortOrder</a>
+are guaranteed to be returned BEFORE any components with a higher SortOrder.  This can be useful to enforce that certain
+types of or instances of components are processed before some other type of or instance of components.  Components that
+do not implement ISortedComponent will always be retorned AFTER any components that do implement that interface.</p>
+</div>
+  <h3 id="properties">Properties
   </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ISortedComponent_SortOrder.md&amp;value=---%0Auid%3A%20GoRogue.ISortedComponent.SortOrder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ISortedComponent.cs/#L21">View Source</a>
+  </span>
+  <a id="GoRogue_ISortedComponent_SortOrder_" data-uid="GoRogue.ISortedComponent.SortOrder*"></a>
+  <h4 id="GoRogue_ISortedComponent_SortOrder" data-uid="GoRogue.ISortedComponent.SortOrder">SortOrder</h4>
+  <div class="markdown level1 summary"><p>Value indicating the relative ordering of this component.  A lower value cause a component to be retrieved before
+any components with a higher value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">uint SortOrder { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th>Name</th>
+        <th>Type</th>
         <th>Description</th>
       </tr>
-    <thead>
+    </thead>
     <tbody>
       <tr>
-        <td id="GoRogue_Direction_Types_DOWN">DOWN</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_DOWN">DOWN</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_DOWN_LEFT">DOWN_LEFT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_DOWN_LEFT">DOWN_LEFT</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_DOWN_RIGHT">DOWN_RIGHT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_DOWN_RIGHT">DOWN_RIGHT</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_LEFT">LEFT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_LEFT">LEFT</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_NONE">NONE</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_RIGHT">RIGHT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_RIGHT">RIGHT</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_UP">UP</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_UP">UP</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_UP_LEFT">UP_LEFT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_UP_LEFT">UP_LEFT</a>.</p>
-</td>
-      </tr>
-      <tr>
-        <td id="GoRogue_Direction_Types_UP_RIGHT">UP_RIGHT</td>
-        <td><p>Type for <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_UP_RIGHT">UP_RIGHT</a>.</p>
-</td>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
       </tr>
     </tbody>
-  </thead></thead></table>
+  </table>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
-      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;Direction.Types&gt;()</a>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
   </div>
 </article>
           </div>
@@ -153,10 +137,10 @@ types to a primitive type (for cases like a switch statement).</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Direction_Types.md&amp;value=---%0Auid%3A%20GoRogue.Direction.Types%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ISortedComponent.md&amp;value=---%0Auid%3A%20GoRogue.ISortedComponent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Direction.cs/#L62" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ISortedComponent.cs/#L15" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

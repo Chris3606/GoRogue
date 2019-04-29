@@ -78,8 +78,11 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GoRogue.Pathing.AStar.html">AStar</a></h4>
-      <section><p>Implements basic AStar pathing. Distance calculation specified determines the heuristic and connectivity
-(4-way vs. 8-way) used.</p>
+      <section><p>Implements an optimized AStar pathfinding algorithm. Optionally supports custom heuristics, and custom weights for each tile.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Pathing.FastAStar.html">FastAStar</a></h4>
+      <section><p>A version of <a class="xref" href="GoRogue.Pathing.AStar.html">AStar</a> that may perform significantly faster, in exchange for not being guaranteed to always produce a shortest path.  A
+valid path will still be produced, but it is not guaranteed to be the shortest possible.</p>
 </section>
       <h4><a class="xref" href="GoRogue.Pathing.FleeMap.html">FleeMap</a></h4>
       <section><p>Implements the concept of a &quot;safety map&quot;, also known as &quot;flee map&quot;, as described in the

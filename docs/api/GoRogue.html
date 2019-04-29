@@ -236,6 +236,11 @@ for purposes of hashing.</p>
       <h4><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap&lt;T&gt;</a></h4>
       <section><p>Implements the read-only interface of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>.</p>
 </section>
+      <h4><a class="xref" href="GoRogue.ISortedComponent.html">ISortedComponent</a></h4>
+      <section><p>Optional interface that may be implemented by components to ensure they are returned in a specific order
+when <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_GetComponent__1">GetComponent&lt;T&gt;()</a> is called.  Components are not required to implement
+this interface, however components that do not will be returned after any components that do.</p>
+</section>
       <h4><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a></h4>
       <section><p>Interface common to spatial map implementations provided with GoRogue, which are designed
 to be a convenient way to store items that reside on a map.  TLDR; If you're about
