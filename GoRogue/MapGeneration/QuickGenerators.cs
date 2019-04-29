@@ -30,13 +30,25 @@ namespace GoRogue.MapGeneration
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
+			// Optimization to allow us to use the existing map if the existing map is an ArrayMap.
+			// otherwise we allocate a temporary ArrayMap and copy it onto the original at the end,
+			// to make sure that we set each value in the final array map only once in the case that
+			// it is something less "quick" than an ArrayMap.
+			(ArrayMap<bool> tempMap, bool wasArrayMap) = getStartingArray(map);
+
+			// TODO: The above optimization causes an extra arraymap copy in the case of CellularAutomata -- it may be useful to
+			// attempt to eliminate this copy for performance reasons
+
 			// Generate map
-			Generators.CellularAutomataAreaGenerator.Generate(map, rng, fillProbability, totalIterations, cutoffBigAreaFill);
+			Generators.CellularAutomataAreaGenerator.Generate(tempMap, rng, fillProbability, totalIterations, cutoffBigAreaFill);
 			// Calculate connected areas and store before we connect different rooms
-			var areas = MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS).ToList();
+			var areas = MapAreaFinder.MapAreasFor(tempMap, AdjacencyRule.CARDINALS).ToList();
 
 			// Connect randomly
-			Connectors.ClosestMapAreaConnector.Connect(map, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
+			Connectors.ClosestMapAreaConnector.Connect(tempMap, Distance.MANHATTAN, new Connectors.RandomConnectionPointSelector(rng));
+
+			if (!wasArrayMap)
+				map.ApplyOverlay(tempMap);
 
 			return areas;
 		}
