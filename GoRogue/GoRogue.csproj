@@ -46,10 +46,16 @@
   </ItemGroup>
 
   <!-- In Debug and Release builds only, set the ALLCONVERSIONS constant so MonoGame parts compile, and include the monogame reference. -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'" >
+  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'">
     <DefineConstants>ALLCONVERSIONS</DefineConstants>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'" >
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Minimal Dependencies|AnyCPU'">
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Minimal Dependencies|AnyCPU'">
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'">
     <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
   </ItemGroup>
   
@@ -65,6 +71,6 @@
   
   <!-- Run InheritDoc on the final builds.  This isn't used right now becuase of bugs with docfx and inheriting docs from template classes, but may be in the future -->
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command='"%userprofile%\.nuget\packages\inheritdoc\2.0.2\tools\InheritDoc.exe" -o -b "$(OutDir)\"' />
+    <Exec Command="&quot;%userprofile%\.nuget\packages\inheritdoc\2.0.2\tools\InheritDoc.exe&quot; -o -b &quot;$(OutDir)\&quot;" />
   </Target>
 </Project>
