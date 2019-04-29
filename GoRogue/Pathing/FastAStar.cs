@@ -31,7 +31,7 @@ namespace GoRogue.Pathing
 		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights = null)
 			: base(walkabilityMap, distanceMeasurement, null, weights)
 		{
-			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) * this.MaxPathMultiplier;
+			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
 		}
 	}
 }

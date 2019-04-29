@@ -60,7 +60,7 @@ namespace GoRogue.Pathing
 
 			set
 			{
-				_heuristic = value ?? ((c1, c2) => DistanceMeasurement.Calculate(c1, c2) * MaxPathMultiplier);
+				_heuristic = value ?? ((c1, c2) => DistanceMeasurement.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier));
 			}
 		}
 
@@ -72,10 +72,11 @@ namespace GoRogue.Pathing
 
 		// NTOE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
 		/// <summary>
-		/// Multiplier that is multiplied by the distance in the default heuristic calculation.  This value is based on the
-		/// length of the longest possible path, and is used as a tiebreaking element in the default heuristic.
+		/// Multiplier that is multiplied by the euclidean distance aspect of the default heuristic calculation to avoid over-estimation.
+		/// This value is based on the maximum possible euclidean distance magnitude between two points, on a map, and is used as a multiplier
+		/// for the tiebreaking/smoothing element in the default heuristic.
 		/// </summary>
-		public double MaxPathMultiplier { get; private set; }
+		public double MaxEuclideanMultiplier { get; private set; }
 
 		/// <summary>
 		/// Constructor.
@@ -95,6 +96,7 @@ namespace GoRogue.Pathing
 
 			WalkabilityMap = walkabilityMap;
 			DistanceMeasurement = distanceMeasurement;
+			MaxEuclideanMultiplier = 1.0 / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height) + 1);
 
 			Heuristic = heuristic;
 
@@ -145,7 +147,7 @@ namespace GoRogue.Pathing
 				cachedWidth = WalkabilityMap.Width;
 				cachedHeight = WalkabilityMap.Height;
 
-				MaxPathMultiplier = 1.0 + (1.0 / (length + 1));
+				MaxEuclideanMultiplier = 1.0 / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height) + 1);
 			}
 			else
 				Array.Clear(closed, 0, closed.Length);

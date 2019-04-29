@@ -105,7 +105,7 @@ namespace GoRogue_UnitTests
 			var map = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
 			QuickGenerators.GenerateRectangleMap(map);
 
-			var pather = new AStar(map, Distance.CHEBYSHEV);
+			var pather = new AStar(map, Distance.CHEBYSHEV, Distance.EUCLIDEAN.Calculate);
 			var path = pather.ShortestPath(START, END);
 
 			Utility.PrintHightlightedPoints(map, path.StepsWithStart);
