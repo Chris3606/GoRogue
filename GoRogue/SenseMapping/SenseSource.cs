@@ -233,7 +233,7 @@ namespace GoRogue.SenseMapping
 			set
 			{
 				if (_angle != value)
-					_angle = ((value > 360.0 || value < 0.0) ? Math.IEEERemainder(value + 720.0, 360) : value);
+					_angle = ((value > 360.0 || value < 0) ? Math.IEEERemainder(value, 360.0) : value);
 			}
 		}
 
@@ -311,7 +311,11 @@ namespace GoRogue.SenseMapping
 					case SourceType.RIPPLE_TIGHT:
 					case SourceType.RIPPLE_VERY_LOOSE:
 						if (IsAngleRestricted)
-							doRippleFOV(rippleValue(Type), resMap, MathHelpers.ToRadian(_angle), MathHelpers.ToRadian(_span));
+						{
+							double angle = _angle * MathHelpers.DEGREE_PCT_OF_CIRCLE;
+							double span = _span * MathHelpers.DEGREE_PCT_OF_CIRCLE;
+							doRippleFOV(rippleValue(Type), resMap, angle, span);
+						}
 						else
 							doRippleFOV(rippleValue(Type), resMap);
 						break;
@@ -319,20 +323,20 @@ namespace GoRogue.SenseMapping
 					case SourceType.SHADOW:
 						if (IsAngleRestricted)
 						{
-							double angleRadians = MathHelpers.ToRadian(_angle);
-							double spanRadians = MathHelpers.ToRadian(_span);
+							double angle = _angle * MathHelpers.DEGREE_PCT_OF_CIRCLE;
+							double span = _span * MathHelpers.DEGREE_PCT_OF_CIRCLE;
 
-							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, resMap, angleRadians, spanRadians);
-							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, resMap, angleRadians, spanRadians);
-							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, resMap, angleRadians, spanRadians);
-							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, resMap, angleRadians, spanRadians);
-							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, resMap, angleRadians, spanRadians);
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, resMap, angle, span);
 						}
 						else
 						{
@@ -426,8 +430,8 @@ namespace GoRogue.SenseMapping
 						DistanceCalc.Calculate(halfSize, halfSize, x2, y2) > _radius) // +1 covers starting tile at least
 						continue;
 
-					double newAngle = Math.Atan2(y2 - halfSize, x2 - halfSize) + Math.PI * 2;
-					if (Math.Abs(Math.IEEERemainder(angle - newAngle + Math.PI * 8, Math.PI * 2)) > span / 2.0)
+					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(y2 - halfSize, x2 - halfSize));
+					if (at2 > span * 0.5 && at2 < 1.0 - span * 0.5)
 						continue;
 
 					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
@@ -570,7 +574,7 @@ namespace GoRogue.SenseMapping
 			}
 		}
 
-		private void shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map, double angleRadians, double spanRadians)
+		private void shadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map, double angle, double span)
 		{
 			double newStart = 0;
 			if (start < end)
@@ -591,18 +595,13 @@ namespace GoRogue.SenseMapping
 
 					if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < map.Width && gCurrentY < map.Height) || start < rightSlope)
 						continue;
-
-					if (end > leftSlope)
+					else if (end > leftSlope)
 						break;
 
-					double newAngle = (Math.Atan2(currentY - halfSize, currentX - halfSize) + Math.PI * 8.0) % (Math.PI * 2);
-					double remainder = (angleRadians - newAngle + Math.PI * 2) % (Math.PI * 2);
-					double iRemainder = (newAngle - angleRadians + Math.PI * 2) % (Math.PI * 2);
-					if (Math.Abs(remainder) > spanRadians * 0.5 && Math.Abs(iRemainder) > spanRadians * 0.5)
-						continue;
-
 					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
-					if (deltaRadius <= _radius)
+					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - halfSize, currentX - halfSize));
+
+					if (deltaRadius <= _radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5))
 					{
 						double bright = _intensity - _decay * deltaRadius;
 						light[currentX, currentY] = bright;
@@ -618,14 +617,11 @@ namespace GoRogue.SenseMapping
 							start = newStart;
 						}
 					}
-					else
+					else if (map[gCurrentX, gCurrentY] >= _intensity && distance < _radius) // Wall within FOV
 					{
-						if (map[gCurrentX, gCurrentY] >= _intensity && distance < _radius) // Wall within FOV
-						{
-							blocked = true;
-							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, map, angleRadians, spanRadians);
-							newStart = rightSlope;
-						}
+						blocked = true;
+						shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, map, angle, span);
+						newStart = rightSlope;
 					}
 				}
 			}

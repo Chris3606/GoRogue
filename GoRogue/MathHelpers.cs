@@ -69,5 +69,38 @@ namespace GoRogue
 		/// wrapTo - 1], inclusive.
 		/// </returns>
 		public static int WrapAround(int num, int wrapTo) => (num % wrapTo + wrapTo) % wrapTo;
+
+		/// <summary>
+		/// Approximation of the Atan2 function that scales the returned value to the range [0.0, 1.0], in order to remain
+		/// agnostic of units (radius vs degrees).  It will never return a negative number, so is also useful to avoid floating-point
+		/// modulus.  Credit to the SquidLib java RL library and <a href="https://math.stackexchange.com/a/1105038">this suggestion
+		/// from user njuffa</a> for this math.
+		/// </summary>
+		/// <param name="y">Y-component of point to find angle towards.</param>
+		/// <param name="x">X-component of point to find angle towards.</param>
+		/// <returns>A value representing the angle to the given point, scaled to range [0.0, 1.0].</returns>
+		public static double ScaledAtan2Approx(double y, double x)
+		{
+			if (y == 0.0 && x >= 0.0)
+				return 0.0;
+
+			double ax = Math.Abs(x);
+			double ay = Math.Abs(y);
+
+			if (ax < ay)
+			{
+				double a = ax / ay;
+				double s = a * a;
+				double r = 0.25 - (((-0.0464964749 * s + 0.15931422) * s - 0.327622764) * s * a + a) * 0.15915494309189535;
+				return (x < 0.0) ? (y < 0.0) ? 0.5 + r : 0.5 - r : (y < 0.0) ? 1.0 - r : r;
+			}
+			else
+			{
+				double a = ay / ax;
+				double s = a * a;
+				double r = (((-0.0464964749 * s + 0.15931422) * s - 0.327622764) * s * a + a) * 0.15915494309189535;
+				return (x < 0.0) ? (y < 0.0) ? 0.5 + r : 0.5 - r : (y < 0.0) ? 1.0 - r : r;
+			}
+		}
 	}
 }

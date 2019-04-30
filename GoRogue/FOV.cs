@@ -224,8 +224,8 @@ namespace GoRogue
 			radius = Math.Max(1, radius);
 			double decay = 1.0 / (radius + 1);
 
-			angle = MathHelpers.ToRadian((angle > 360.0 || angle < 0.0) ? Math.IEEERemainder(angle + 720.0, 360.0) : angle);
-			span = MathHelpers.ToRadian(span);
+			angle = ((angle > 360.0 || angle < 0) ? Math.IEEERemainder(angle, 360.0) : angle) *MathHelpers.DEGREE_PCT_OF_CIRCLE;
+			span *= MathHelpers.DEGREE_PCT_OF_CIRCLE;
 
 			previousFOV = currentFOV;
 			currentFOV = new HashSet<Coord>();
@@ -334,8 +334,7 @@ namespace GoRogue
 
 					if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) || start < rightSlope)
 						continue;
-
-					if (end > leftSlope)
+					else if (end > leftSlope)
 						break;
 
 					double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
@@ -391,18 +390,14 @@ namespace GoRogue
 
 					if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) || start < rightSlope)
 						continue;
-
-					if (end > leftSlope)
+					else if (end > leftSlope)
 						break;
 
-					double newAngle = (Math.Atan2(currentY - startY, currentX - startX) + Math.PI * 8.0) % (Math.PI * 2);
-					double remainder = (angle - newAngle + Math.PI * 2) % (Math.PI * 2);
-					double iRemainder = (newAngle - angle + Math.PI * 2) % (Math.PI * 2);
-					if (Math.Abs(remainder) > span * 0.5 && Math.Abs(iRemainder) > span * 0.5)
-						continue;
-
 					double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
-					if (deltaRadius <= radius) // Check if within lightable area, light if needed
+					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - startY, currentX - startX));
+
+					// Check if within lightable area, light if needed
+					if (deltaRadius <= radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5)) 
 					{
 						double bright = 1 - decay * deltaRadius;
 						lightMap[currentX, currentY] = bright;
@@ -410,7 +405,7 @@ namespace GoRogue
 						if (bright > 0.0)
 							fovSet.Add(new Coord(currentX, currentY));
 					}
-
+					
 					if (blocked) // Previous cell was blocking
 					{
 						if (!map[currentX, currentY]) // We hit a wall...
@@ -421,14 +416,11 @@ namespace GoRogue
 							start = newStart;
 						}
 					}
-					else
+					else if (!map[currentX, currentY] && distance < radius) // Wall within line of sight
 					{
-						if (!map[currentX, currentY] && distance < radius) // Wall within line of sight
-						{
 							blocked = true;
 							shadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy, angle, span);
 							newStart = rightSlope;
-						}
 					}
 				}
 			}
