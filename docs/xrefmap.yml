@@ -9693,6 +9693,19 @@ references:
   isSpec: "True"
   fullName: GoRogue.MathHelpers.RoundToMultiple
   nameWithType: MathHelpers.RoundToMultiple
+- uid: GoRogue.MathHelpers.ScaledAtan2Approx(System.Double,System.Double)
+  name: ScaledAtan2Approx(Double, Double)
+  href: api/GoRogue.MathHelpers.html#GoRogue_MathHelpers_ScaledAtan2Approx_System_Double_System_Double_
+  commentId: M:GoRogue.MathHelpers.ScaledAtan2Approx(System.Double,System.Double)
+  fullName: GoRogue.MathHelpers.ScaledAtan2Approx(System.Double, System.Double)
+  nameWithType: MathHelpers.ScaledAtan2Approx(Double, Double)
+- uid: GoRogue.MathHelpers.ScaledAtan2Approx*
+  name: ScaledAtan2Approx
+  href: api/GoRogue.MathHelpers.html#GoRogue_MathHelpers_ScaledAtan2Approx_
+  commentId: Overload:GoRogue.MathHelpers.ScaledAtan2Approx
+  isSpec: "True"
+  fullName: GoRogue.MathHelpers.ScaledAtan2Approx
+  nameWithType: MathHelpers.ScaledAtan2Approx
 - uid: GoRogue.MathHelpers.ToDegree(System.Double)
   name: ToDegree(Double)
   href: api/GoRogue.MathHelpers.html#GoRogue_MathHelpers_ToDegree_System_Double_
@@ -12446,6 +12459,15 @@ references:
   fullName.vb: GoRogue.Rectangle.RandomPosition(System.Func(Of GoRogue.Coord, System.Boolean), Troschuetz.Random.IGenerator)
   nameWithType: Rectangle.RandomPosition(Func<Coord, Boolean>, IGenerator)
   nameWithType.vb: Rectangle.RandomPosition(Func(Of Coord, Boolean), IGenerator)
+- uid: GoRogue.Rectangle.RandomPosition(System.Func{GoRogue.Rectangle,GoRogue.Coord,System.Boolean},Troschuetz.Random.IGenerator)
+  name: RandomPosition(Func<Rectangle, Coord, Boolean>, IGenerator)
+  href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_RandomPosition_System_Func_GoRogue_Rectangle_GoRogue_Coord_System_Boolean__Troschuetz_Random_IGenerator_
+  commentId: M:GoRogue.Rectangle.RandomPosition(System.Func{GoRogue.Rectangle,GoRogue.Coord,System.Boolean},Troschuetz.Random.IGenerator)
+  name.vb: RandomPosition(Func(Of Rectangle, Coord, Boolean), IGenerator)
+  fullName: GoRogue.Rectangle.RandomPosition(System.Func<GoRogue.Rectangle, GoRogue.Coord, System.Boolean>, Troschuetz.Random.IGenerator)
+  fullName.vb: GoRogue.Rectangle.RandomPosition(System.Func(Of GoRogue.Rectangle, GoRogue.Coord, System.Boolean), Troschuetz.Random.IGenerator)
+  nameWithType: Rectangle.RandomPosition(Func<Rectangle, Coord, Boolean>, IGenerator)
+  nameWithType.vb: Rectangle.RandomPosition(Func(Of Rectangle, Coord, Boolean), IGenerator)
 - uid: GoRogue.Rectangle.RandomPosition(Troschuetz.Random.IGenerator)
   name: RandomPosition(IGenerator)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_RandomPosition_Troschuetz_Random_IGenerator_
