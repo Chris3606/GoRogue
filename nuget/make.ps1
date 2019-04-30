@@ -23,7 +23,7 @@ msbuild /t:pack /p:Configuration=Debug
 
 # Revert to backup of csproj
 Remove-Item "$fullCsProjPath"
-Copy-Item "$fullCsprojBackupPath" -Destination "$fullCsProjPath"
+Move-Item -Path "$fullCsprojBackupPath" -Destination "$fullCsProjPath"
 
 # Revert working directory to previous
 popd
