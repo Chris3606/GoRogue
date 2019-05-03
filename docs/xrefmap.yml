@@ -9783,6 +9783,33 @@ references:
   commentId: T:GoRogue.Pathing.AStar
   fullName: GoRogue.Pathing.AStar
   nameWithType: AStar
+- uid: GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)
+  name: AStar(IMapView<Boolean>, Distance)
+  href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_
+  commentId: M:GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)
+  name.vb: AStar(IMapView(Of Boolean), Distance)
+  fullName: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance)
+  fullName.vb: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance)
+  nameWithType: AStar.AStar(IMapView<Boolean>, Distance)
+  nameWithType.vb: AStar.AStar(IMapView(Of Boolean), Distance)
+- uid: GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)
+  name: AStar(IMapView<Boolean>, Distance, IMapView<Double>, Double)
+  href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_
+  commentId: M:GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)
+  name.vb: AStar(IMapView(Of Boolean), Distance, IMapView(Of Double), Double)
+  fullName: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance, GoRogue.MapViews.IMapView<System.Double>, System.Double)
+  fullName.vb: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance, GoRogue.MapViews.IMapView(Of System.Double), System.Double)
+  nameWithType: AStar.AStar(IMapView<Boolean>, Distance, IMapView<Double>, Double)
+  nameWithType.vb: AStar.AStar(IMapView(Of Boolean), Distance, IMapView(Of Double), Double)
+- uid: GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,System.Func{GoRogue.Coord,GoRogue.Coord,System.Double})
+  name: AStar(IMapView<Boolean>, Distance, Func<Coord, Coord, Double>)
+  href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__
+  commentId: M:GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,System.Func{GoRogue.Coord,GoRogue.Coord,System.Double})
+  name.vb: AStar(IMapView(Of Boolean), Distance, Func(Of Coord, Coord, Double))
+  fullName: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance, System.Func<GoRogue.Coord, GoRogue.Coord, System.Double>)
+  fullName.vb: GoRogue.Pathing.AStar.AStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance, System.Func(Of GoRogue.Coord, GoRogue.Coord, System.Double))
+  nameWithType: AStar.AStar(IMapView<Boolean>, Distance, Func<Coord, Coord, Double>)
+  nameWithType.vb: AStar.AStar(IMapView(Of Boolean), Distance, Func(Of Coord, Coord, Double))
 - uid: GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,System.Func{GoRogue.Coord,GoRogue.Coord,System.Double},GoRogue.MapViews.IMapView{System.Double})
   name: AStar(IMapView<Boolean>, Distance, Func<Coord, Coord, Double>, IMapView<Double>)
   href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__GoRogue_MapViews_IMapView_System_Double__
@@ -9838,6 +9865,12 @@ references:
   isSpec: "True"
   fullName: GoRogue.Pathing.AStar.MaxEuclideanMultiplier
   nameWithType: AStar.MaxEuclideanMultiplier
+- uid: GoRogue.Pathing.AStar.MinimumWeight
+  name: MinimumWeight
+  href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_MinimumWeight
+  commentId: F:GoRogue.Pathing.AStar.MinimumWeight
+  fullName: GoRogue.Pathing.AStar.MinimumWeight
+  nameWithType: AStar.MinimumWeight
 - uid: GoRogue.Pathing.AStar.ShortestPath(GoRogue.Coord,GoRogue.Coord,System.Boolean)
   name: ShortestPath(Coord, Coord, Boolean)
   href: api/GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_
@@ -9889,15 +9922,24 @@ references:
   commentId: T:GoRogue.Pathing.FastAStar
   fullName: GoRogue.Pathing.FastAStar
   nameWithType: FastAStar
-- uid: GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double})
-  name: FastAStar(IMapView<Boolean>, Distance, IMapView<Double>)
-  href: api/GoRogue.Pathing.FastAStar.html#GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__
-  commentId: M:GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double})
-  name.vb: FastAStar(IMapView(Of Boolean), Distance, IMapView(Of Double))
-  fullName: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance, GoRogue.MapViews.IMapView<System.Double>)
-  fullName.vb: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance, GoRogue.MapViews.IMapView(Of System.Double))
-  nameWithType: FastAStar.FastAStar(IMapView<Boolean>, Distance, IMapView<Double>)
-  nameWithType.vb: FastAStar.FastAStar(IMapView(Of Boolean), Distance, IMapView(Of Double))
+- uid: GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)
+  name: FastAStar(IMapView<Boolean>, Distance)
+  href: api/GoRogue.Pathing.FastAStar.html#GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_
+  commentId: M:GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)
+  name.vb: FastAStar(IMapView(Of Boolean), Distance)
+  fullName: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance)
+  fullName.vb: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance)
+  nameWithType: FastAStar.FastAStar(IMapView<Boolean>, Distance)
+  nameWithType.vb: FastAStar.FastAStar(IMapView(Of Boolean), Distance)
+- uid: GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)
+  name: FastAStar(IMapView<Boolean>, Distance, IMapView<Double>, Double)
+  href: api/GoRogue.Pathing.FastAStar.html#GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_
+  commentId: M:GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)
+  name.vb: FastAStar(IMapView(Of Boolean), Distance, IMapView(Of Double), Double)
+  fullName: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView<System.Boolean>, GoRogue.Distance, GoRogue.MapViews.IMapView<System.Double>, System.Double)
+  fullName.vb: GoRogue.Pathing.FastAStar.FastAStar(GoRogue.MapViews.IMapView(Of System.Boolean), GoRogue.Distance, GoRogue.MapViews.IMapView(Of System.Double), System.Double)
+  nameWithType: FastAStar.FastAStar(IMapView<Boolean>, Distance, IMapView<Double>, Double)
+  nameWithType.vb: FastAStar.FastAStar(IMapView(Of Boolean), Distance, IMapView(Of Double), Double)
 - uid: GoRogue.Pathing.FastAStar.#ctor*
   name: FastAStar
   href: api/GoRogue.Pathing.FastAStar.html#GoRogue_Pathing_FastAStar__ctor_
