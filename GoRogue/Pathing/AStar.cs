@@ -122,7 +122,7 @@ namespace GoRogue.Pathing
 		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.</param>
 		/// <param name="minimumWeight">The minimum value that will be present in <paramref name="weights"/>.  It must be greater than 0.0 and
 		/// must be less than or equal to the minimum value present in the weights view -- the algorithm may not produce truly shortest paths if
-		/// this condition is not met.  If this minimum changes after construction, it may be updated via the <see cref="AStar.MinimumWeight"/> property.</param></param>
+		/// this condition is not met.  If this minimum changes after construction, it may be updated via the <see cref="AStar.MinimumWeight"/> property.</param>
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights, double minimumWeight)
 			: this(walkabilityMap, distanceMeasurement, null, weights, minimumWeight) { }
 
@@ -138,20 +138,7 @@ namespace GoRogue.Pathing
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic, IMapView<double> weights)
 			: this(walkabilityMap, distanceMeasurement, heuristic, weights, -1.0) { }
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
-		/// and false indicates it cannot.</param>
-		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
-		/// how to calculate the distance between points.  If <paramref name="heuristic"/> is unspecified, also determines the estimation heuristic used.</param>
-		/// <param name="heuristic">Function used to estimate the distance between two given points.  If unspecified, a distance calculation corresponding
-		/// to <see cref="DistanceMeasurement"/> is used along with a safe/efficient tiebreaking element, which will produce guranteed shortest paths provided
-		/// <paramref name="minimumWeight"/> is correct.</param>
-		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.</param>
-		/// <param name="minimumWeight">The minimum value that will be present in <paramref name="weights"/>.  This value is only used
-		/// if the default heuristic is used, but in that case it must be greater than 0.0 and must be less than or equal to the
-		/// minimum value present in the weights view -- the algorithm may not produce truly shortest paths if this condition is not met.</param>
+		// Private constructor that does work of others
 		private AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null, IMapView<double> weights = null, double minimumWeight = 1.0)
 		{
 			Weights = weights;
