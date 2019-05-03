@@ -70,7 +70,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		public IMapView<double> Weights { get; }
 
-		// NTOE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
+		// NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
 		/// <summary>
 		/// Multiplier that is used in the tiebreaking/smoothing element of the default heuristic. This value is based on the
 		/// maximum possible <see cref="Coord.EuclideanDistanceMagnitude(Coord, Coord)"/> between two points on the map.
@@ -81,6 +81,64 @@ namespace GoRogue.Pathing
 		public double MaxEuclideanMultiplier { get; private set; }
 
 		/// <summary>
+		/// The minimum value that is allowed to occur in the <see cref="Weights"/> map view.  This value is only used with the default heuristic
+		/// for AStar and <see cref="FastAStar"/>, so if a custom heuristic is used, the value is also ignored.  Must be greater than 0.0 and less
+		/// than or equal to the minimum value in the <see cref="Weights"/> map view.  Defaults to 1.0 in cases where the default heuristic is used.
+		/// </summary>
+		public double MinimumWeight;
+
+		private double _cachedMinWeight;
+
+		/// <summary>
+		/// Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
+		/// tiebreaking/smoothing element which will produce guaranteed shortest paths.
+		/// </summary>
+		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+		/// and false indicates it cannot.</param>
+		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+		/// how to calculate the distance between points.</param>
+		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
+			: this(walkabilityMap, distanceMeasurement, null, null, 1.0) { }
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+		/// and false indicates it cannot.</param>
+		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+		/// how to calculate the distance between points.</param>
+		/// <param name="heuristic">Function used to estimate the distance between two given points.</param>
+		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic)
+			: this(walkabilityMap, distanceMeasurement, heuristic, null, -1.0) { }
+
+		/// <summary>
+		/// Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
+		/// tiebreaking/smoothing element which will produce guaranteed shortest paths, provided <paramref name="minimumWeight"/> is correct.
+		/// </summary>
+		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+		/// and false indicates it cannot.</param>
+		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+		/// how to calculate the distance between points.</param>
+		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.</param>
+		/// <param name="minimumWeight">The minimum value that will be present in <paramref name="weights"/>.  It must be greater than 0.0 and
+		/// must be less than or equal to the minimum value present in the weights view -- the algorithm may not produce truly shortest paths if
+		/// this condition is not met.  If this minimum changes after construction, it may be updated via the <see cref="AStar.MinimumWeight"/> property.</param></param>
+		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights, double minimumWeight)
+			: this(walkabilityMap, distanceMeasurement, null, weights, minimumWeight) { }
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+		/// and false indicates it cannot.</param>
+		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+		/// how to calculate the distance between points.</param>
+		/// <param name="heuristic">Function used to estimate the distance between two given points.</param>
+		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.</param>
+		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic, IMapView<double> weights)
+			: this(walkabilityMap, distanceMeasurement, heuristic, weights, -1.0) { }
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
@@ -88,17 +146,21 @@ namespace GoRogue.Pathing
 		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
 		/// how to calculate the distance between points.  If <paramref name="heuristic"/> is unspecified, also determines the estimation heuristic used.</param>
 		/// <param name="heuristic">Function used to estimate the distance between two given points.  If unspecified, a distance calculation corresponding
-		/// to <see cref="DistanceMeasurement"/> is used along with a safe/efficient tiebreaking element, which will produce guranteed shortest paths.</param>
-		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.  If unspecified, each location will default
-		/// to having a weight of 1.</param>
-		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null,
-					 IMapView<double> weights = null)
+		/// to <see cref="DistanceMeasurement"/> is used along with a safe/efficient tiebreaking element, which will produce guranteed shortest paths provided
+		/// <paramref name="minimumWeight"/> is correct.</param>
+		/// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights"/>.</param>
+		/// <param name="minimumWeight">The minimum value that will be present in <paramref name="weights"/>.  This value is only used
+		/// if the default heuristic is used, but in that case it must be greater than 0.0 and must be less than or equal to the
+		/// minimum value present in the weights view -- the algorithm may not produce truly shortest paths if this condition is not met.</param>
+		private AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Coord, Coord, double> heuristic = null, IMapView<double> weights = null, double minimumWeight = 1.0)
 		{
 			Weights = weights;
 
 			WalkabilityMap = walkabilityMap;
 			DistanceMeasurement = distanceMeasurement;
-			MaxEuclideanMultiplier = 1.0 / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height) + 1);
+			MinimumWeight = minimumWeight;
+			_cachedMinWeight = minimumWeight;
+			MaxEuclideanMultiplier = MinimumWeight / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height));
 
 			Heuristic = heuristic;
 
@@ -138,7 +200,13 @@ namespace GoRogue.Pathing
 				return new Path(retVal);
 			}
 
-			// Clear nodes to beginning state
+			// Update min weight if it has changed
+			if (MinimumWeight != _cachedMinWeight)
+			{
+				_cachedMinWeight = MinimumWeight;
+				MaxEuclideanMultiplier = MinimumWeight / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height));
+			}
+			// Update width/height dependent values if map width/height has changed
 			if (cachedWidth != WalkabilityMap.Width || cachedHeight != WalkabilityMap.Height)
 			{
 				int length = WalkabilityMap.Width * WalkabilityMap.Height;
@@ -149,7 +217,7 @@ namespace GoRogue.Pathing
 				cachedWidth = WalkabilityMap.Width;
 				cachedHeight = WalkabilityMap.Height;
 
-				MaxEuclideanMultiplier = 1.0 / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height) + 1);
+				MaxEuclideanMultiplier = MinimumWeight / (Coord.EuclideanDistanceMagnitude(0, 0, WalkabilityMap.Width, WalkabilityMap.Height));
 			}
 			else
 				Array.Clear(closed, 0, closed.Length);

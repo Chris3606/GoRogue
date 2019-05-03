@@ -26,12 +26,26 @@ namespace GoRogue.Pathing
 		/// and false indicates it cannot.</param>
 		/// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
 		/// how to calculate the distance between points.</param>
-		/// <param name="weights">A map view indicating the weights of each location (see <see cref="AStar.Weights"/>.  If unspecified, each location will default
-		/// to having a weight of 1.</param>
-		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights = null)
-			: base(walkabilityMap, distanceMeasurement, null, weights)
+		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
+			: base(walkabilityMap, distanceMeasurement)
 		{
 			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="walkabilityMap"></param>
+		/// <param name="distanceMeasurement"></param>
+		/// <param name="weights">A map view indicating the weights of each location (see <see cref="AStar.Weights"/>.</param>
+		/// <param name="minimumWeight">The minimum value that will be present in <paramref name="weights"/>.  It must be greater than 0.0 and
+		/// must be less than or equal to the minimum value present in the weights view -- the algorithm may not produce truly shortest paths if
+		/// this condition is not met.  If this minimum changes after construction, it may be updated via the <see cref="AStar.MinimumWeight"/> property.</param>
+		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights, double minimumWeight)
+			: base(walkabilityMap, distanceMeasurement, weights, minimumWeight)
+		{
+			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
+		}
+
 	}
 }
