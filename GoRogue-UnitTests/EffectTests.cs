@@ -68,16 +68,7 @@ namespace GoRogue_UnitTests
 			effectTrigger.Add(new IntEffect("Test Effect Inf", IntEffect.INFINITE));
 			Assert.AreEqual(3, effectTrigger.Effects.Count);
 
-			bool exception = false;
-			try
-			{
-				effectTrigger.Add(new IntEffect("Test Effect 0", 0));
-			}
-			catch (ArgumentException)
-			{
-				exception = true;
-			}
-			Assert.AreEqual(true, exception);
+			Assert.ThrowsException<ArgumentException>(() => effectTrigger.Add(new IntEffect("Test Effect 0", 0)));
 		}
 
 		[TestMethod]

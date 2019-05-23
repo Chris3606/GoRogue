@@ -45,10 +45,12 @@ namespace GoRogue
 		/// all superclasses, and all interfaces T or its superclasses implement.</returns>
 		public static IEnumerable<Type> GetTypeTree(Type type)
 		{
-			while (type != null)
+
+			var currentType = type;
+			while (currentType != null)
 			{
-				yield return type;
-				type = type.BaseType;
+				yield return currentType;
+				currentType = currentType.BaseType;
 			}
 
 			foreach (Type implementedInterface in type.GetInterfaces())

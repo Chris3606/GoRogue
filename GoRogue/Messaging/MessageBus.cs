@@ -5,7 +5,7 @@ using System.Linq;
 namespace GoRogue.Messaging
 {
 	/// <summary>
-	/// A messaging system that can have subscribers added to it, and send messages.  When message are sent, it will call any handlers that requested to handle messages
+	/// A messaging system that can have subscribers added to it, and send messages.  When messages are sent, it will call any handlers that requested to handle messages
 	/// of the proper types, based on the type-tree/interface-tree of the messages.
 	/// </summary>
 	public class MessageBus
@@ -14,12 +14,18 @@ namespace GoRogue.Messaging
 		private Dictionary<Type, Type[]> _typeTreeCache;
 
 		/// <summary>
+		/// Number of subscribers currently listening on this message bus.
+		/// </summary>
+		public int SubscriberCount { get; private set; }
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public MessageBus()
 		{
 			_subscriberRefs = new Dictionary<Type, List<ISubscriberRef>>();
 			_typeTreeCache = new Dictionary<Type, Type[]>();
+			SubscriberCount = 0;
 		}
 
 		/// <summary>
@@ -39,8 +45,11 @@ namespace GoRogue.Messaging
 
 			if (!_subscriberRefs.ContainsKey(messageType))
 				_subscriberRefs[messageType] = new List<ISubscriberRef>();
+			else if (_subscriberRefs[messageType].Any(i => ReferenceEquals(i.Subscriber, subscriber)))
+				throw new ArgumentException("Subscriber added to message bus twice.", nameof(subscriber));
 
 			_subscriberRefs[messageType].Add(new SubscriberRef<TMessage>(subscriber));
+			SubscriberCount++;
 
 			return subscriber;
 		}
@@ -67,6 +76,8 @@ namespace GoRogue.Messaging
 				handlerRefs.RemoveAt(item);
 				if (handlerRefs.Count == 0)
 					_subscriberRefs.Remove(messageType);
+
+				SubscriberCount--;
 			}
 			else
 				throw new ArgumentException($"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
