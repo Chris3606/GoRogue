@@ -9745,6 +9745,118 @@ references:
   isSpec: "True"
   fullName: GoRogue.MathHelpers.WrapAround
   nameWithType: MathHelpers.WrapAround
+- uid: GoRogue.Messaging
+  name: GoRogue.Messaging
+  href: api/GoRogue.Messaging.html
+  commentId: N:GoRogue.Messaging
+  fullName: GoRogue.Messaging
+  nameWithType: GoRogue.Messaging
+- uid: GoRogue.Messaging.ISubscriber`1
+  name: ISubscriber<TMessage>
+  href: api/GoRogue.Messaging.ISubscriber-1.html
+  commentId: T:GoRogue.Messaging.ISubscriber`1
+  name.vb: ISubscriber(Of TMessage)
+  fullName: GoRogue.Messaging.ISubscriber<TMessage>
+  fullName.vb: GoRogue.Messaging.ISubscriber(Of TMessage)
+  nameWithType: ISubscriber<TMessage>
+  nameWithType.vb: ISubscriber(Of TMessage)
+- uid: GoRogue.Messaging.ISubscriber`1.Handle(`0)
+  name: Handle(TMessage)
+  href: api/GoRogue.Messaging.ISubscriber-1.html#GoRogue_Messaging_ISubscriber_1_Handle__0_
+  commentId: M:GoRogue.Messaging.ISubscriber`1.Handle(`0)
+  fullName: GoRogue.Messaging.ISubscriber<TMessage>.Handle(TMessage)
+  fullName.vb: GoRogue.Messaging.ISubscriber(Of TMessage).Handle(TMessage)
+  nameWithType: ISubscriber<TMessage>.Handle(TMessage)
+  nameWithType.vb: ISubscriber(Of TMessage).Handle(TMessage)
+- uid: GoRogue.Messaging.ISubscriber`1.Handle*
+  name: Handle
+  href: api/GoRogue.Messaging.ISubscriber-1.html#GoRogue_Messaging_ISubscriber_1_Handle_
+  commentId: Overload:GoRogue.Messaging.ISubscriber`1.Handle
+  isSpec: "True"
+  fullName: GoRogue.Messaging.ISubscriber<TMessage>.Handle
+  fullName.vb: GoRogue.Messaging.ISubscriber(Of TMessage).Handle
+  nameWithType: ISubscriber<TMessage>.Handle
+  nameWithType.vb: ISubscriber(Of TMessage).Handle
+- uid: GoRogue.Messaging.MessageBus
+  name: MessageBus
+  href: api/GoRogue.Messaging.MessageBus.html
+  commentId: T:GoRogue.Messaging.MessageBus
+  fullName: GoRogue.Messaging.MessageBus
+  nameWithType: MessageBus
+- uid: GoRogue.Messaging.MessageBus.#ctor
+  name: MessageBus()
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus__ctor
+  commentId: M:GoRogue.Messaging.MessageBus.#ctor
+  fullName: GoRogue.Messaging.MessageBus.MessageBus()
+  nameWithType: MessageBus.MessageBus()
+- uid: GoRogue.Messaging.MessageBus.#ctor*
+  name: MessageBus
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus__ctor_
+  commentId: Overload:GoRogue.Messaging.MessageBus.#ctor
+  isSpec: "True"
+  fullName: GoRogue.Messaging.MessageBus.MessageBus
+  nameWithType: MessageBus.MessageBus
+- uid: GoRogue.Messaging.MessageBus.RegisterSubscriber*
+  name: RegisterSubscriber
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_RegisterSubscriber_
+  commentId: Overload:GoRogue.Messaging.MessageBus.RegisterSubscriber
+  isSpec: "True"
+  fullName: GoRogue.Messaging.MessageBus.RegisterSubscriber
+  nameWithType: MessageBus.RegisterSubscriber
+- uid: GoRogue.Messaging.MessageBus.RegisterSubscriber``1(GoRogue.Messaging.ISubscriber{``0})
+  name: RegisterSubscriber<TMessage>(ISubscriber<TMessage>)
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_RegisterSubscriber__1_GoRogue_Messaging_ISubscriber___0__
+  commentId: M:GoRogue.Messaging.MessageBus.RegisterSubscriber``1(GoRogue.Messaging.ISubscriber{``0})
+  name.vb: RegisterSubscriber(Of TMessage)(ISubscriber(Of TMessage))
+  fullName: GoRogue.Messaging.MessageBus.RegisterSubscriber<TMessage>(GoRogue.Messaging.ISubscriber<TMessage>)
+  fullName.vb: GoRogue.Messaging.MessageBus.RegisterSubscriber(Of TMessage)(GoRogue.Messaging.ISubscriber(Of TMessage))
+  nameWithType: MessageBus.RegisterSubscriber<TMessage>(ISubscriber<TMessage>)
+  nameWithType.vb: MessageBus.RegisterSubscriber(Of TMessage)(ISubscriber(Of TMessage))
+- uid: GoRogue.Messaging.MessageBus.Send*
+  name: Send
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_Send_
+  commentId: Overload:GoRogue.Messaging.MessageBus.Send
+  isSpec: "True"
+  fullName: GoRogue.Messaging.MessageBus.Send
+  nameWithType: MessageBus.Send
+- uid: GoRogue.Messaging.MessageBus.Send``1(``0)
+  name: Send<TMessage>(TMessage)
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_Send__1___0_
+  commentId: M:GoRogue.Messaging.MessageBus.Send``1(``0)
+  name.vb: Send(Of TMessage)(TMessage)
+  fullName: GoRogue.Messaging.MessageBus.Send<TMessage>(TMessage)
+  fullName.vb: GoRogue.Messaging.MessageBus.Send(Of TMessage)(TMessage)
+  nameWithType: MessageBus.Send<TMessage>(TMessage)
+  nameWithType.vb: MessageBus.Send(Of TMessage)(TMessage)
+- uid: GoRogue.Messaging.MessageBus.SubscriberCount
+  name: SubscriberCount
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_SubscriberCount
+  commentId: P:GoRogue.Messaging.MessageBus.SubscriberCount
+  fullName: GoRogue.Messaging.MessageBus.SubscriberCount
+  nameWithType: MessageBus.SubscriberCount
+- uid: GoRogue.Messaging.MessageBus.SubscriberCount*
+  name: SubscriberCount
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_SubscriberCount_
+  commentId: Overload:GoRogue.Messaging.MessageBus.SubscriberCount
+  isSpec: "True"
+  fullName: GoRogue.Messaging.MessageBus.SubscriberCount
+  nameWithType: MessageBus.SubscriberCount
+- uid: GoRogue.Messaging.MessageBus.UnregisterSubscriber*
+  name: UnregisterSubscriber
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_UnregisterSubscriber_
+  commentId: Overload:GoRogue.Messaging.MessageBus.UnregisterSubscriber
+  isSpec: "True"
+  fullName: GoRogue.Messaging.MessageBus.UnregisterSubscriber
+  nameWithType: MessageBus.UnregisterSubscriber
+- uid: GoRogue.Messaging.MessageBus.UnregisterSubscriber``1(GoRogue.Messaging.ISubscriber{``0})
+  name: UnregisterSubscriber<TMessage>(ISubscriber<TMessage>)
+  href: api/GoRogue.Messaging.MessageBus.html#GoRogue_Messaging_MessageBus_UnregisterSubscriber__1_GoRogue_Messaging_ISubscriber___0__
+  commentId: M:GoRogue.Messaging.MessageBus.UnregisterSubscriber``1(GoRogue.Messaging.ISubscriber{``0})
+  name.vb: UnregisterSubscriber(Of TMessage)(ISubscriber(Of TMessage))
+  fullName: GoRogue.Messaging.MessageBus.UnregisterSubscriber<TMessage>(GoRogue.Messaging.ISubscriber<TMessage>)
+  fullName.vb: GoRogue.Messaging.MessageBus.UnregisterSubscriber(Of TMessage)(GoRogue.Messaging.ISubscriber(Of TMessage))
+  nameWithType: MessageBus.UnregisterSubscriber<TMessage>(ISubscriber<TMessage>)
+  nameWithType.vb: MessageBus.UnregisterSubscriber(Of TMessage)(ISubscriber(Of TMessage))
 - uid: GoRogue.MultiSpatialMap`1
   name: MultiSpatialMap<T>
   href: api/GoRogue.MultiSpatialMap-1.html
@@ -12881,6 +12993,47 @@ references:
   commentId: F:GoRogue.Rectangle.Y
   fullName: GoRogue.Rectangle.Y
   nameWithType: Rectangle.Y
+- uid: GoRogue.Reflection
+  name: Reflection
+  href: api/GoRogue.Reflection.html
+  commentId: T:GoRogue.Reflection
+  fullName: GoRogue.Reflection
+  nameWithType: Reflection
+- uid: GoRogue.Reflection.GetRuntimeTypeTree(System.Object)
+  name: GetRuntimeTypeTree(Object)
+  href: api/GoRogue.Reflection.html#GoRogue_Reflection_GetRuntimeTypeTree_System_Object_
+  commentId: M:GoRogue.Reflection.GetRuntimeTypeTree(System.Object)
+  fullName: GoRogue.Reflection.GetRuntimeTypeTree(System.Object)
+  nameWithType: Reflection.GetRuntimeTypeTree(Object)
+- uid: GoRogue.Reflection.GetRuntimeTypeTree*
+  name: GetRuntimeTypeTree
+  href: api/GoRogue.Reflection.html#GoRogue_Reflection_GetRuntimeTypeTree_
+  commentId: Overload:GoRogue.Reflection.GetRuntimeTypeTree
+  isSpec: "True"
+  fullName: GoRogue.Reflection.GetRuntimeTypeTree
+  nameWithType: Reflection.GetRuntimeTypeTree
+- uid: GoRogue.Reflection.GetTypeTree(System.Type)
+  name: GetTypeTree(Type)
+  href: api/GoRogue.Reflection.html#GoRogue_Reflection_GetTypeTree_System_Type_
+  commentId: M:GoRogue.Reflection.GetTypeTree(System.Type)
+  fullName: GoRogue.Reflection.GetTypeTree(System.Type)
+  nameWithType: Reflection.GetTypeTree(Type)
+- uid: GoRogue.Reflection.GetTypeTree*
+  name: GetTypeTree
+  href: api/GoRogue.Reflection.html#GoRogue_Reflection_GetTypeTree_
+  commentId: Overload:GoRogue.Reflection.GetTypeTree
+  isSpec: "True"
+  fullName: GoRogue.Reflection.GetTypeTree
+  nameWithType: Reflection.GetTypeTree
+- uid: GoRogue.Reflection.GetTypeTree``1
+  name: GetTypeTree<T>()
+  href: api/GoRogue.Reflection.html#GoRogue_Reflection_GetTypeTree__1
+  commentId: M:GoRogue.Reflection.GetTypeTree``1
+  name.vb: GetTypeTree(Of T)()
+  fullName: GoRogue.Reflection.GetTypeTree<T>()
+  fullName.vb: GoRogue.Reflection.GetTypeTree(Of T)()
+  nameWithType: Reflection.GetTypeTree<T>()
+  nameWithType.vb: Reflection.GetTypeTree(Of T)()
 - uid: GoRogue.SenseMapping
   name: GoRogue.SenseMapping
   href: api/GoRogue.SenseMapping.html
