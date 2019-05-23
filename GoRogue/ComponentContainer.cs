@@ -54,7 +54,7 @@ namespace GoRogue
 			if (_components.ContainsKey(realType) && _components[realType].Contains(component))
 				throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
 
-			foreach (var type in GetTree(component))
+			foreach (var type in Reflection.GetTypeTree(realType))
 			{
 				// Because we remove empty lists in Remove, we can assume that there are no empty lists in the Dictionary
 				if (!_components.ContainsKey(type))
@@ -81,15 +81,15 @@ namespace GoRogue
 		{
 			foreach (var component in components)
 			{
-				var componentType = component.GetType();
-				if (!_components.ContainsKey(componentType))
-					throw new ArgumentException($"Tried to remove a component of type {componentType}, that did not exist on the object.", nameof(component));
+				var realComponentType = component.GetType();
+				if (!_components.ContainsKey(realComponentType))
+					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(component));
 
 				// Can't be invalid key because above check passed.
-				if (!_components[componentType].Contains(component))
-					throw new ArgumentException($"Tried to remove a component of type {componentType}, that did not exist on the object.", nameof(component));
+				if (!_components[realComponentType].Contains(component))
+					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(component));
 
-				foreach (var type in GetTree(component))
+				foreach (var type in Reflection.GetTypeTree(realComponentType))
 				{
 					// Guaranteed to be a valid key because the above checks passed, so the component does exist.
 					if (_components[type].Count == 1)
@@ -190,21 +190,6 @@ namespace GoRogue
 			componentList.Insert(insertionPoint, component);
 		}
 
-		// Gets the entire inheritance tree for the run-time actual type of the given component,
-		// including the fully derived class, all classes it implements (down to System.Object), and interfaces
-		// it implements.
-		private static IEnumerable<Type> GetTree(object component)
-		{
-			Type classType = component.GetType();
-
-			while (classType != null)
-			{
-				yield return classType;
-				classType = classType.BaseType;
-			}
-
-			foreach (Type implementedInterface in component.GetType().GetInterfaces())
-				yield return implementedInterface;
-		}
+		
 	}
 }
