@@ -187,7 +187,7 @@ With Visual Studio installed, perform the following steps:
 
 4. Ensure that the **Package Source** dropdown is set to nuget.org, then search **GoRogue**.  Install the package.
 
-![mac frameowrk install nuget](~/images/getting_started/linux_project/3_Framework_Install_Nuget.PNG)
+![mac framework install nuget](~/images/getting_started/linux_project/3_Framework_Install_Nuget.PNG)
 
 5. Replace the Main function in Program.cs with the following:
 
@@ -204,3 +204,37 @@ static void Main(string[] args)
 
 ![mac framework run program](~/images/getting_started/linux_project/4_Framework_Run_Program.PNG)
 ***
+
+# Unity
+GoRogue is fully capable of functioning with the Unity game engine.  However, since Unity does not natively support the NuGet package management system, installation will need to be done manually using the GoRogue dlls.  GoRogue provides dll builds on its GitHub releases page for each version to make this easy:
+
+1. Navigate to the [GitHub releases page](https://github.com/Chris3606/GoRogue/releases), and download the most recent versions `GoRogue_x.y.z_MinimalDependencies.zip`.
+> [!WARNING]
+> Ensure you download the zip file labeled MinimalDependencies or it will not work correctly!  The "minimal depedencies" builds are missing no functionality that is relevant in the Unity environment -- see [Common Issues](#common-issues) for details as to what these builds are and how they differ from the regular build.
+
+2. Extract the zip file, then drag and drop all files contained within it into your Unity project.
+
+#Godot
+Because it supports .NET Standard 2.0 for its C# scripting, GoRogue also fully functions within the Godot game engine:
+
+1. Make sure you have a version of Godot that supports C#.
+
+2. Add the GoRogue NuGet package.  Methods of doing this will vary with your development.  See the [Godot docs](https://docs.godotengine.org/en/3.1/getting_started/scripting/c_sharp/c_sharp_basics.html#using-nuget-packages-in-godot) on using nuget packages for details.
+
+# Enabling SourceLink (Optional)
+Starting with GoRogue 2.0, the library supports [SourceLink](https://github.com/dotnet/sourcelink), and distributes debugging symbols packages with each release in the form of _.snuget_ packages.  Enabling this functionality is optional, but if configured will allow you to step into GoRogue code using the debugger, just as you would your own code.  This may be extremely helpful for identifying and tracking down issues with your code.  The use of this feature requires Visual Studio 2017 version 15.9 or greater.
+
+1. Add the NuGet debugging symbols source to your Visual Studio debugging settings by following the instructions in the "Consume snupkg from NuGet.org in Visual Studio" section of [this webpage](https://blog.nuget.org/20181116/Improved-debugging-experience-with-the-NuGet-org-symbol-server-and-snupkg.html).
+
+2. In Visual Studio, go to _Tools->Options->Debugging_, and ensure that "Just My Code" is _disabled_, and that "SourceLink Support" is _enabled_.
+
+##  Utilizing Debug Builds
+The support of SourceLink and symbols packages in GoRogue can make debugging code much easier.  However, since the default GoRogue package for each version is still a "Release" build, it can still be challenging to debug code involving GoRogue function calls, as optimizations that occur during the release build process can limit the usefulness of debugging symbols.  Thus, with each version of GoRogue, a "Debug" build is also provided. The debug build is categorized as a prerelease by nuget, so you will need to enable prereleases to see it.  Once you do so, if you look at versions of GoRogue available, you will see two listings for each version -- x.y.z, which is the release build and x.y.z-debug, which is categorized as a prerelease, and is the debug build.  If you need to perform debugging involving stepping into GoRogue code, simply switch your package version to the "-debug" version corresponding to the GoRogue version you are using.  Then, you can switch back to the regular version when debugging is complete.
+
+# Common Issues
+Below are some common issues that have occured during installation, and how to fix them.
+
+## Dependency Issues 
+GoRogue is designed to be highly portable, and can function in any environment that supports .NET Standard 2.0.  While it does not depend on any libraries except Troschuetz.Random and OptimizedPriorityQueue (which NuGet will automatically install), it does provide some type conversions that makes the library more interoperable with other libraries, notably MonoGame.  The project is set up in such a way as to avoid creating a hard dependency on MonoGame in the process, so the compiler should _not_ attempt to resolve MonoGame as a required dependency of GoRogue.  However, the method of doing this involves the use of a newer project file tag, which some older or non-standard compilers (notably, the Unity compiler), may be unable to handle properly.  As such, when a project using GoRogue is compiled using these compilers, you may get an error saying that it cannot resolve the MonoGame dependency.
+
+To counteract this, on the [GitHub releases page](https://github.com/Chris3606/GoRogue/releases), GoRogue provides .zip files that contain the GoRogue DLL and its dependencies.  Specifically, it provides two zip files for each release -- `GoRogue_x.y.z.zip` and `GoRogue_x.y.z_MinimalDependencies.zip`.  The "minimal dependency" builds are exactly like the regular builds, except they do not contain the type conversions for third-party libraries such as MonoGame.  As such, these builds should be used in those cases where dependency errors related to MonoGame and other graphics libraries are encountered.

@@ -1916,11 +1916,11 @@ references:
   fullName: GoRogue.Coord.Addition(GoRogue.Coord, GoRogue.Direction)
   nameWithType: Coord.Addition(Coord, Direction)
 - uid: GoRogue.Coord.op_Addition(GoRogue.Coord,Microsoft.Xna.Framework.Point)
-  name: Addition(Coord, Point)
+  name: Addition(Coord, Xna.Framework.Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_GoRogue_Coord_Microsoft_Xna_Framework_Point_
   commentId: M:GoRogue.Coord.op_Addition(GoRogue.Coord,Microsoft.Xna.Framework.Point)
   fullName: GoRogue.Coord.Addition(GoRogue.Coord, Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Addition(Coord, Point)
+  nameWithType: Coord.Addition(Coord, Xna.Framework.Point)
 - uid: GoRogue.Coord.op_Addition(GoRogue.Coord,System.Drawing.Point)
   name: Addition(Coord, Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_GoRogue_Coord_System_Drawing_Point_
@@ -1949,11 +1949,11 @@ references:
   nameWithType: Coord.Addition(Coord, (Int32 x, Int32 y))
   nameWithType.vb: Coord.Addition(Coord, (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Coord)
-  name: Addition(Point, Coord)
+  name: Addition(Xna.Framework.Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_Microsoft_Xna_Framework_Point_GoRogue_Coord_
   commentId: M:GoRogue.Coord.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Coord)
   fullName: GoRogue.Coord.Addition(Microsoft.Xna.Framework.Point, GoRogue.Coord)
-  nameWithType: Coord.Addition(Point, Coord)
+  nameWithType: Coord.Addition(Xna.Framework.Point, Coord)
 - uid: GoRogue.Coord.op_Addition(System.Drawing.Point,GoRogue.Coord)
   name: Addition(Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Addition_System_Drawing_Point_GoRogue_Coord_
@@ -2020,11 +2020,11 @@ references:
   fullName: GoRogue.Coord.Equality(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Equality(Coord, Coord)
 - uid: GoRogue.Coord.op_Equality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
-  name: Equality(Coord, Point)
+  name: Equality(Coord, Xna.Framework.Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_Microsoft_Xna_Framework_Point_
   commentId: M:GoRogue.Coord.op_Equality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
   fullName: GoRogue.Coord.Equality(GoRogue.Coord, Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Equality(Coord, Point)
+  nameWithType: Coord.Equality(Coord, Xna.Framework.Point)
 - uid: GoRogue.Coord.op_Equality(GoRogue.Coord,System.Drawing.Point)
   name: Equality(Coord, Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_GoRogue_Coord_System_Drawing_Point_
@@ -2059,11 +2059,11 @@ references:
   nameWithType: Coord.Equality(Coord, (Int32 x, Int32 y))
   nameWithType.vb: Coord.Equality(Coord, (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
-  name: Equality(Point, Coord)
+  name: Equality(Xna.Framework.Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_Microsoft_Xna_Framework_Point_GoRogue_Coord_
   commentId: M:GoRogue.Coord.op_Equality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
   fullName: GoRogue.Coord.Equality(Microsoft.Xna.Framework.Point, GoRogue.Coord)
-  nameWithType: Coord.Equality(Point, Coord)
+  nameWithType: Coord.Equality(Xna.Framework.Point, Coord)
 - uid: GoRogue.Coord.op_Equality(System.Drawing.Point,GoRogue.Coord)
   name: Equality(Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Equality_System_Drawing_Point_GoRogue_Coord_
@@ -2105,14 +2105,14 @@ references:
   fullName: GoRogue.Coord.Equality
   nameWithType: Coord.Equality
 - uid: GoRogue.Coord.op_Implicit(GoRogue.Coord)~Microsoft.Xna.Framework.Point
-  name: Implicit(Coord to Point)
+  name: Implicit(Coord to Xna.Framework.Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Implicit_GoRogue_Coord__Microsoft_Xna_Framework_Point
   commentId: M:GoRogue.Coord.op_Implicit(GoRogue.Coord)~Microsoft.Xna.Framework.Point
-  name.vb: Widening(Coord to Point)
+  name.vb: Widening(Coord to Xna.Framework.Point)
   fullName: GoRogue.Coord.Implicit(GoRogue.Coord to Microsoft.Xna.Framework.Point)
   fullName.vb: GoRogue.Coord.Widening(GoRogue.Coord to Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Implicit(Coord to Point)
-  nameWithType.vb: Coord.Widening(Coord to Point)
+  nameWithType: Coord.Implicit(Coord to Xna.Framework.Point)
+  nameWithType.vb: Coord.Widening(Coord to Xna.Framework.Point)
 - uid: GoRogue.Coord.op_Implicit(GoRogue.Coord)~System.Drawing.Point
   name: Implicit(Coord to Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Implicit_GoRogue_Coord__System_Drawing_Point
@@ -2159,14 +2159,14 @@ references:
   nameWithType: Coord.Implicit(Coord to (Int32 x, Int32 y))
   nameWithType.vb: Coord.Widening(Coord to (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Implicit(Microsoft.Xna.Framework.Point)~GoRogue.Coord
-  name: Implicit(Point to Coord)
+  name: Implicit(Xna.Framework.Point to Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Implicit_Microsoft_Xna_Framework_Point__GoRogue_Coord
   commentId: M:GoRogue.Coord.op_Implicit(Microsoft.Xna.Framework.Point)~GoRogue.Coord
-  name.vb: Widening(Point to Coord)
+  name.vb: Widening(Xna.Framework.Point to Coord)
   fullName: GoRogue.Coord.Implicit(Microsoft.Xna.Framework.Point to GoRogue.Coord)
   fullName.vb: GoRogue.Coord.Widening(Microsoft.Xna.Framework.Point to GoRogue.Coord)
-  nameWithType: Coord.Implicit(Point to Coord)
-  nameWithType.vb: Coord.Widening(Point to Coord)
+  nameWithType: Coord.Implicit(Xna.Framework.Point to Coord)
+  nameWithType.vb: Coord.Widening(Xna.Framework.Point to Coord)
 - uid: GoRogue.Coord.op_Implicit(System.Drawing.Point)~GoRogue.Coord
   name: Implicit(Point to Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Implicit_System_Drawing_Point__GoRogue_Coord
@@ -2211,11 +2211,11 @@ references:
   fullName: GoRogue.Coord.Inequality(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Inequality(Coord, Coord)
 - uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
-  name: Inequality(Coord, Point)
+  name: Inequality(Coord, Xna.Framework.Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_Microsoft_Xna_Framework_Point_
   commentId: M:GoRogue.Coord.op_Inequality(GoRogue.Coord,Microsoft.Xna.Framework.Point)
   fullName: GoRogue.Coord.Inequality(GoRogue.Coord, Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Inequality(Coord, Point)
+  nameWithType: Coord.Inequality(Coord, Xna.Framework.Point)
 - uid: GoRogue.Coord.op_Inequality(GoRogue.Coord,System.Drawing.Point)
   name: Inequality(Coord, Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_GoRogue_Coord_System_Drawing_Point_
@@ -2250,11 +2250,11 @@ references:
   nameWithType: Coord.Inequality(Coord, (Int32 x, Int32 y))
   nameWithType.vb: Coord.Inequality(Coord, (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
-  name: Inequality(Point, Coord)
+  name: Inequality(Xna.Framework.Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_Microsoft_Xna_Framework_Point_GoRogue_Coord_
   commentId: M:GoRogue.Coord.op_Inequality(Microsoft.Xna.Framework.Point,GoRogue.Coord)
   fullName: GoRogue.Coord.Inequality(Microsoft.Xna.Framework.Point, GoRogue.Coord)
-  nameWithType: Coord.Inequality(Point, Coord)
+  nameWithType: Coord.Inequality(Xna.Framework.Point, Coord)
 - uid: GoRogue.Coord.op_Inequality(System.Drawing.Point,GoRogue.Coord)
   name: Inequality(Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Inequality_System_Drawing_Point_GoRogue_Coord_
@@ -2321,11 +2321,11 @@ references:
   fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Subtraction(Coord, Coord)
 - uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)
-  name: Subtraction(Coord, Point)
+  name: Subtraction(Coord, Xna.Framework.Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_Microsoft_Xna_Framework_Point_
   commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)
   fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, Microsoft.Xna.Framework.Point)
-  nameWithType: Coord.Subtraction(Coord, Point)
+  nameWithType: Coord.Subtraction(Coord, Xna.Framework.Point)
 - uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,System.Drawing.Point)
   name: Subtraction(Coord, Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_System_Drawing_Point_
@@ -2354,11 +2354,11 @@ references:
   nameWithType: Coord.Subtraction(Coord, (Int32 x, Int32 y))
   nameWithType.vb: Coord.Subtraction(Coord, (x As Int32, y As Int32))
 - uid: GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point,GoRogue.Coord)
-  name: Subtraction(Point, Coord)
+  name: Subtraction(Xna.Framework.Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_Microsoft_Xna_Framework_Point_GoRogue_Coord_
   commentId: M:GoRogue.Coord.op_Subtraction(Microsoft.Xna.Framework.Point,GoRogue.Coord)
   fullName: GoRogue.Coord.Subtraction(Microsoft.Xna.Framework.Point, GoRogue.Coord)
-  nameWithType: Coord.Subtraction(Point, Coord)
+  nameWithType: Coord.Subtraction(Xna.Framework.Point, Coord)
 - uid: GoRogue.Coord.op_Subtraction(System.Drawing.Point,GoRogue.Coord)
   name: Subtraction(Point, Coord)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_System_Drawing_Point_GoRogue_Coord_
@@ -3504,11 +3504,11 @@ references:
   fullName: GoRogue.Direction.Addition(GoRogue.Direction, System.Int32)
   nameWithType: Direction.Addition(Direction, Int32)
 - uid: GoRogue.Direction.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Direction)
-  name: Addition(Point, Direction)
+  name: Addition(Xna.Framework.Point, Direction)
   href: api/GoRogue.Direction.html#GoRogue_Direction_op_Addition_Microsoft_Xna_Framework_Point_GoRogue_Direction_
   commentId: M:GoRogue.Direction.op_Addition(Microsoft.Xna.Framework.Point,GoRogue.Direction)
   fullName: GoRogue.Direction.Addition(Microsoft.Xna.Framework.Point, GoRogue.Direction)
-  nameWithType: Direction.Addition(Point, Direction)
+  nameWithType: Direction.Addition(Xna.Framework.Point, Direction)
 - uid: GoRogue.Direction.op_Addition(System.Drawing.Point,GoRogue.Direction)
   name: Addition(Point, Direction)
   href: api/GoRogue.Direction.html#GoRogue_Direction_op_Addition_System_Drawing_Point_GoRogue_Direction_
@@ -12339,11 +12339,11 @@ references:
   fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, GoRogue.Rectangle)
   nameWithType: Rectangle.Equality(Rectangle, Rectangle)
 - uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
-  name: Equality(Rectangle, Rectangle)
+  name: Equality(Rectangle, Xna.Framework.Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_
   commentId: M:GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
   fullName: GoRogue.Rectangle.Equality(GoRogue.Rectangle, Microsoft.Xna.Framework.Rectangle)
-  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+  nameWithType: Rectangle.Equality(Rectangle, Xna.Framework.Rectangle)
 - uid: GoRogue.Rectangle.op_Equality(GoRogue.Rectangle,System.Drawing.Rectangle)
   name: Equality(Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_GoRogue_Rectangle_System_Drawing_Rectangle_
@@ -12366,11 +12366,11 @@ references:
   nameWithType: Rectangle.Equality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
   nameWithType.vb: Rectangle.Equality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
 - uid: GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
-  name: Equality(Rectangle, Rectangle)
+  name: Equality(Xna.Framework.Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_
   commentId: M:GoRogue.Rectangle.op_Equality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Equality(Microsoft.Xna.Framework.Rectangle, GoRogue.Rectangle)
-  nameWithType: Rectangle.Equality(Rectangle, Rectangle)
+  nameWithType: Rectangle.Equality(Xna.Framework.Rectangle, Rectangle)
 - uid: GoRogue.Rectangle.op_Equality(System.Drawing.Rectangle,GoRogue.Rectangle)
   name: Equality(Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Equality_System_Drawing_Rectangle_GoRogue_Rectangle_
@@ -12400,14 +12400,14 @@ references:
   fullName: GoRogue.Rectangle.Equality
   nameWithType: Rectangle.Equality
 - uid: GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~Microsoft.Xna.Framework.Rectangle
-  name: Implicit(Rectangle to Rectangle)
+  name: Implicit(Rectangle to Xna.Framework.Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__Microsoft_Xna_Framework_Rectangle
   commentId: M:GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~Microsoft.Xna.Framework.Rectangle
-  name.vb: Widening(Rectangle to Rectangle)
+  name.vb: Widening(Rectangle to Xna.Framework.Rectangle)
   fullName: GoRogue.Rectangle.Implicit(GoRogue.Rectangle to Microsoft.Xna.Framework.Rectangle)
   fullName.vb: GoRogue.Rectangle.Widening(GoRogue.Rectangle to Microsoft.Xna.Framework.Rectangle)
-  nameWithType: Rectangle.Implicit(Rectangle to Rectangle)
-  nameWithType.vb: Rectangle.Widening(Rectangle to Rectangle)
+  nameWithType: Rectangle.Implicit(Rectangle to Xna.Framework.Rectangle)
+  nameWithType.vb: Rectangle.Widening(Rectangle to Xna.Framework.Rectangle)
 - uid: GoRogue.Rectangle.op_Implicit(GoRogue.Rectangle)~System.Drawing.Rectangle
   name: Implicit(Rectangle to Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Implicit_GoRogue_Rectangle__System_Drawing_Rectangle
@@ -12436,14 +12436,14 @@ references:
   nameWithType: Rectangle.Implicit(Rectangle to (Int32 x, Int32 y, Int32 width, Int32 height))
   nameWithType.vb: Rectangle.Widening(Rectangle to (x As Int32, y As Int32, width As Int32, height As Int32))
 - uid: GoRogue.Rectangle.op_Implicit(Microsoft.Xna.Framework.Rectangle)~GoRogue.Rectangle
-  name: Implicit(Rectangle to Rectangle)
+  name: Implicit(Xna.Framework.Rectangle to Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Implicit_Microsoft_Xna_Framework_Rectangle__GoRogue_Rectangle
   commentId: M:GoRogue.Rectangle.op_Implicit(Microsoft.Xna.Framework.Rectangle)~GoRogue.Rectangle
-  name.vb: Widening(Rectangle to Rectangle)
+  name.vb: Widening(Xna.Framework.Rectangle to Rectangle)
   fullName: GoRogue.Rectangle.Implicit(Microsoft.Xna.Framework.Rectangle to GoRogue.Rectangle)
   fullName.vb: GoRogue.Rectangle.Widening(Microsoft.Xna.Framework.Rectangle to GoRogue.Rectangle)
-  nameWithType: Rectangle.Implicit(Rectangle to Rectangle)
-  nameWithType.vb: Rectangle.Widening(Rectangle to Rectangle)
+  nameWithType: Rectangle.Implicit(Xna.Framework.Rectangle to Rectangle)
+  nameWithType.vb: Rectangle.Widening(Xna.Framework.Rectangle to Rectangle)
 - uid: GoRogue.Rectangle.op_Implicit(System.Drawing.Rectangle)~GoRogue.Rectangle
   name: Implicit(Rectangle to Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Implicit_System_Drawing_Rectangle__GoRogue_Rectangle
@@ -12479,11 +12479,11 @@ references:
   fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, GoRogue.Rectangle)
   nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
 - uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
-  name: Inequality(Rectangle, Rectangle)
+  name: Inequality(Rectangle, Xna.Framework.Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_Microsoft_Xna_Framework_Rectangle_
   commentId: M:GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,Microsoft.Xna.Framework.Rectangle)
   fullName: GoRogue.Rectangle.Inequality(GoRogue.Rectangle, Microsoft.Xna.Framework.Rectangle)
-  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+  nameWithType: Rectangle.Inequality(Rectangle, Xna.Framework.Rectangle)
 - uid: GoRogue.Rectangle.op_Inequality(GoRogue.Rectangle,System.Drawing.Rectangle)
   name: Inequality(Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_GoRogue_Rectangle_System_Drawing_Rectangle_
@@ -12506,11 +12506,11 @@ references:
   nameWithType: Rectangle.Inequality(Rectangle, (Int32 x, Int32 y, Int32 width, Int32 height))
   nameWithType.vb: Rectangle.Inequality(Rectangle, (x As Int32, y As Int32, width As Int32, height As Int32))
 - uid: GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
-  name: Inequality(Rectangle, Rectangle)
+  name: Inequality(Xna.Framework.Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_Microsoft_Xna_Framework_Rectangle_GoRogue_Rectangle_
   commentId: M:GoRogue.Rectangle.op_Inequality(Microsoft.Xna.Framework.Rectangle,GoRogue.Rectangle)
   fullName: GoRogue.Rectangle.Inequality(Microsoft.Xna.Framework.Rectangle, GoRogue.Rectangle)
-  nameWithType: Rectangle.Inequality(Rectangle, Rectangle)
+  nameWithType: Rectangle.Inequality(Xna.Framework.Rectangle, Rectangle)
 - uid: GoRogue.Rectangle.op_Inequality(System.Drawing.Rectangle,GoRogue.Rectangle)
   name: Inequality(Rectangle, Rectangle)
   href: api/GoRogue.Rectangle.html#GoRogue_Rectangle_op_Inequality_System_Drawing_Rectangle_GoRogue_Rectangle_

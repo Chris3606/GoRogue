@@ -1,8 +1,8 @@
 ---
-title: GoRogue Documentation Home
+title: Welcome to GoRogue
 ---
 
-# GoRogue Documentation
+# Welcome To GoRogue
 Welcome to the GoRogue documentation!  This documentation consists of some articles on various features to help you understand and get started with those features, as well as the API documentation for GoRogue.
 
 # Utilizing the Documentation
