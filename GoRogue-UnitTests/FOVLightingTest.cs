@@ -14,6 +14,15 @@ namespace GoRogue_UnitTests
 	public class FOVLightingTest
 	{
 		[TestMethod]
+		public void TestAccessBeforeCalculate()
+		{
+			var testFOVMap = EmptyFOVMap(17, 17);
+			var myFOV = new FOV(testFOVMap);
+			foreach (var pos in testFOVMap.Positions())
+				Assert.AreEqual(0.0, myFOV[pos]);
+		}
+
+		[TestMethod]
 		public void CircleRadius()
 		{
 			var testFOVMap = EmptyFOVMap(17, 17);

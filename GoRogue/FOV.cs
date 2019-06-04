@@ -59,7 +59,7 @@ namespace GoRogue
 			this.fovMap = fovMap;
 			BooleanFOV = new LambdaTranslationMap<double, bool>(this, val => val > 0.0 ? true : false);
 
-			light = null;
+			light = new double[fovMap.Width, fovMap.Height];
 			currentFOV = new HashSet<Coord>();
 			previousFOV = new HashSet<Coord>();
 		}
@@ -428,7 +428,7 @@ namespace GoRogue
 
 		private void initializeLightMap()
 		{
-			if (light == null || light.GetLength(0) != fovMap.Width || light.GetLength(1) != fovMap.Height)
+			if (light.GetLength(0) != fovMap.Width || light.GetLength(1) != fovMap.Height)
 				light = new double[fovMap.Width, fovMap.Height];
 			else
 				Array.Clear(light, 0, light.Length);
