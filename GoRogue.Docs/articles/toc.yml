@@ -4,5 +4,16 @@
   href: getting-started.md
 - name: 1.x to 2.0 Upgrade Guide
   href: 1-to-2-upgrade-guide.md
+- name: Grid System
+  href: grid-system.md
+  items:
+    - name: 2D Point
+      href: grid_components/2d-points.md
+    - name: Directions and Defining a Coordinate Plane
+      href: grid_components/directions-defining-coordinate-plane.md
+    - name: Adjacency and Neighbors
+      href: grid_components/adjacency-and-neighbors.md
+    - name: Measuring Distance
+      href: grid_components/measuring-distance.md
 - name: Game Framework
   href: game-framework.md

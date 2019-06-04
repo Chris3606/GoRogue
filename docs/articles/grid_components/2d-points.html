@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>2D Points </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="2D Points ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="2d-points">2D Points</h1>
+
+<p>The <code>Coord</code> class simply represents a 2D, integral point.  It provides methods for things like adding coordinates together as vectors, as well as other common mathematical computations that pertain to an integer-based grid.</p>
+<h2 id="creatingaccessing-values">Creating/Accessing Values</h2>
+<p>Coord instances can be created, like any other object, by simply using <code>new</code>, eg. <code>Coord c = new Coord(1, 2);</code>, and their values may be accessed through their <code>X</code> and <code>Y</code> fields.  For the sake of performance and safety, however, Coords are immutable value types, which means their <code>X</code> and <code>Y</code> fields cannot be modified -- all operations that modify a <code>Coord</code> must create a new one.  However, Coord provides a lot of methods, operation, and &quot;syntactic sugar&quot; to help make utilizing them quick and easy.</p>
+<h3 id="conversion-to-tuples">Conversion to Tuples</h3>
+<p><code>Coords</code> are implicitly convertible to value-tuples of two <code>ints</code>, and such tuples are implicitly convertible to <code>Coord</code> instances.  This is useful particularly in C# because the syntax for creating a value tuple is simply parenthesized values (no <code>new</code> required).  Thus, when the type is obvious, say because of an explicit type declaration or a function definition, we can effectively omit <code>new Coord</code> part of the syntax involved in creating one, and instead just create a tuple and let it be implicitly converted:</p>
+<pre><code class="lang-CSharp">Coord c = (1, 2);
+// Assuming I have a function Process(Coord position) that I can call
+Process((5, 6));
+</code></pre>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This syntax works well with explicit type declaration, but it is recommended to avoid using <code>var</code> with it.  The code <code>var c = (1, 2)</code> will compile, but <code>c</code> will be of type <code>ValueTuple</code>, not of type <code>Coord</code>.  This could create unexpected behavior when <code>c</code> is used.</p>
+</div>
+<h3 id="deconstruction">Deconstruction</h3>
+<p><code>Coords</code> also support C# Deconstruction syntax, which can be very useful when using a <code>Coord</code>'s values as local parameters:</p>
+<pre><code class="lang-CSharp">// Assuming myEntity has a Position field that is of type Coord
+var (x, y) = myEntity.Position;
+// Do processing on x and y as local variables.  Example is printing to keep it succinct
+Console.WriteLine(&quot;Printing X: &quot; + x); 
+</code></pre>
+<h2 id="operations">Operations</h2>
+<p>Coords offer a number of operators that allow them to be added/subtracted from each other, as well as operators that allow you to add, subtract, multiply, and divide <code>Coords</code> by constants.  The following sample is not a comprehensive look at all available operators, but demonstrates the syntax.  Most of the operators are self-explanatory, and the API Documentation for <code>Coord</code> covers them in-depth.</p>
+<pre><code class="lang-CSharp">Coord c1 = (1, 2);
+Coord c2 = (5, 6);
+
+System.Console.WriteLine(c1 + c2); // (6, 8)
+System.Console.WriteLine(c1 - c2); // (-4, -4)
+
+System.Console.WriteLine(c1 * 2); // 2, 4
+</code></pre>
+<h2 id="1d-indices">1D Indices</h2>
+<p>When the size of a 2D grid is known, any position on that grid may be mathematically converted to a 1-dimensional array index value unique to that location.  Similarly, given a 1-dimensional index and a width of a grid, it is possible to retrieve the 2d point represented.  This may be particularly useful since some storing a grid as a 1-dimensional array can yield increased performance.  <code>Coord</code> provides a set of functions to convert to 1-dimsnional indices and back:</p>
+<pre><code class="lang-CSharp">int mapWidth = 10;
+int mapHeight = 10;
+
+Coord myCoord = (2, 3);
+int index = myCoord.ToIndex(mapWidth); // Get 1D index
+Console.WriteLine(Coord.ToIndex(5, 6, mapWidth)) // Get 1D index for position (5, 6)
+
+Coord originalPos = Coord.ToCoord(index, mapWidth); // Get 2D position from index
+</code></pre>
+<h2 id="utilitygrid-math">Utility/Grid Math</h2>
+<p><code>Coord</code> also provides a number of static functions to assist in common mathematical operations involving points.  These are covered in the API documentation, however include functions such as <code>BearingOfLine</code> to get the degree heading of a line between two points, <code>Midpoint</code> which simply implements the midpoint formula, and <code>EuclideanDistanceMagnitude</code> for quickly comparing euclidean distances.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue.Docs/articles/grid_components/2d-points.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

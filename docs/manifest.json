@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Coord.html",
-          "hash": "ZOWBGBfFKKJE+5EMfPiPOg=="
+          "hash": "ciG9UT/9ZWU5Gi6qrT43fA=="
         }
       },
       "is_incremental": true,
@@ -357,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Direction.html",
-          "hash": "ZrPSwcu+zO84QFVKouyTOg=="
+          "hash": "FA9F2710nacrOjQL+cnuXA=="
         }
       },
       "is_incremental": true,
@@ -861,7 +861,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.RoomDoorConnector.html",
-          "hash": "n09CMTXWpLeB7tQOgZYGhg=="
+          "hash": "8dkemmww/JenoB6Dr1oJ2Q=="
         }
       },
       "is_incremental": true,
@@ -981,7 +981,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.QuickGenerators.html",
-          "hash": "3SNPrdJ1m4QunHmeYGVakA=="
+          "hash": "fd6UbCJMdIx4Sx4wsBYB1A=="
         }
       },
       "is_incremental": true,
@@ -1413,7 +1413,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.KnownSeriesGenerator.html",
-          "hash": "GQe8xntO4PzVn9uQPxgJ3A=="
+          "hash": "Wwx6k7Uf4wj3cFcRtsoa1A=="
         }
       },
       "is_incremental": true,
@@ -1425,7 +1425,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.MaxRandom.html",
-          "hash": "y3pYLypocYr+4PSKyjB3cQ=="
+          "hash": "NXaqvm6cwpfSLPZvK3gOFg=="
         }
       },
       "is_incremental": true,
@@ -1437,7 +1437,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.MinRandom.html",
-          "hash": "eOqq+e0L2rdbrh5IJYtwng=="
+          "hash": "qRtuQ98y1vSQ5c0ZEbjg1Q=="
         }
       },
       "is_incremental": true,
@@ -1473,7 +1473,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Rectangle.html",
-          "hash": "FhjEwzR3jSInq5BNevCx6Q=="
+          "hash": "JP3tZJ7EkaYe6N1x+uCTZg=="
         }
       },
       "is_incremental": true,
@@ -1652,6 +1652,66 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/grid-system.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grid-system.html",
+          "hash": "HPfZW3nvdFUh1XhDnc4kBQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grid_components/2d-points.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grid_components/2d-points.html",
+          "hash": "LukEsG1XacB7PakS8WtU0g=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grid_components/adjacency-and-neighbors.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grid_components/adjacency-and-neighbors.html",
+          "hash": "r8I4VOGr/Bm+AP3SyTgKQw=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grid_components/directions-defining-coordinate-plane.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grid_components/directions-defining-coordinate-plane.html",
+          "hash": "OxXvd0KHfGRljIhCNUl8TQ=="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/grid_components/measuring-distance.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/grid_components/measuring-distance.html",
+          "hash": "Mj+XjwXAOVdlkWLwgFDzyg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/intro.md",
       "output": {
         ".html": {
@@ -1668,7 +1728,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "fvjNSBWpAPOvtEHQPsn6+A=="
+          "hash": "2O45tf0hYg2O9zNfn1g30g=="
         }
       },
       "is_incremental": false,
@@ -1676,10 +1736,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/dealing_with_directions/math_graphics.PNG",
+      "source_relative_path": "images/adjacency_and_neighbors/cardinals.PNG",
       "output": {
         "resource": {
-          "relative_path": "images/dealing_with_directions/math_graphics.PNG"
+          "relative_path": "images/adjacency_and_neighbors/cardinals.PNG"
         }
       },
       "is_incremental": false,
@@ -1687,10 +1747,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/dealing_with_directions/screen_graphics.PNG",
+      "source_relative_path": "images/adjacency_and_neighbors/diagonals.PNG",
       "output": {
         "resource": {
-          "relative_path": "images/dealing_with_directions/screen_graphics.PNG"
+          "relative_path": "images/adjacency_and_neighbors/diagonals.PNG"
         }
       },
       "is_incremental": false,
@@ -1698,10 +1758,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/getting_neighbors/Cardinals.PNG",
+      "source_relative_path": "images/adjacency_and_neighbors/eight_way.PNG",
       "output": {
         "resource": {
-          "relative_path": "images/getting_neighbors/Cardinals.PNG"
+          "relative_path": "images/adjacency_and_neighbors/eight_way.PNG"
         }
       },
       "is_incremental": false,
@@ -1709,10 +1769,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/getting_neighbors/Diagonals.PNG",
+      "source_relative_path": "images/directions_defining_coordinate_plane/standard_mathematical_coordinates.PNG",
       "output": {
         "resource": {
-          "relative_path": "images/getting_neighbors/Diagonals.PNG"
+          "relative_path": "images/directions_defining_coordinate_plane/standard_mathematical_coordinates.PNG"
         }
       },
       "is_incremental": false,
@@ -1720,10 +1780,10 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/getting_neighbors/Eight_Way.PNG",
+      "source_relative_path": "images/directions_defining_coordinate_plane/standard_screen_coordinates.PNG",
       "output": {
         "resource": {
-          "relative_path": "images/getting_neighbors/Eight_Way.PNG"
+          "relative_path": "images/directions_defining_coordinate_plane/standard_screen_coordinates.PNG"
         }
       },
       "is_incremental": false,
@@ -2123,7 +2183,7 @@
           "hash": "nGBBMfwd+jjphIyIAdBIhQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -2148,13 +2208,6 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ResourceDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
         "TocDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
@@ -2162,17 +2215,24 @@
           "total_file_count": 0,
           "skipped_file_count": 0
         },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 11,
+          "skipped_file_count": 10
+        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 132,
           "skipped_file_count": 132
-        },
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 6,
-          "skipped_file_count": 5
         }
       }
     },

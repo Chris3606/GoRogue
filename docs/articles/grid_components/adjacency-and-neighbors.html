@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Adjacency and Neighbors </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Adjacency and Neighbors ">
+    <meta name="generator" content="docfx 2.41.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="adjacency-">Adjacency <!-- Comment to get header to display properly, because docfx wont' accept a header of Adjacency properly. --></h1>
+
+<p>GoRogue provides convenient methods to calculate and retrieve neighboring grid locations via the <code>AdjacencyRule</code> class. This class also provides easy methods to get the <code>Direction</code> instances that lead to those neighbors.</p>
+<p>Instances of the <code>AdjacencyRule</code> class cannot be created by the user.  Instead, three instances are included as static members of the <code>AdjacencyRule</code> class, which represent all possible ways of defining adjacency on a 2d integer-based grid.  Each instance, and how it defines adjacency, is covered below.  Functions of these instances may be used to retrieve the <code>Direction</code> instances that lead to adjacent squares, as well as the coordinates of each square adjacent to a given point.</p>
+<h1 id="methods-of-determining-adjacency">Methods of Determining Adjacency</h1>
+<p>The three instances included are <code>AdjacencyRule,CARDINALS</code>, <code>AdjacencyRule.DIAGONALS</code>, and <code>AdjacencyRule.EIGHT_WAY</code>.  These instances and how they define adjacency is covered below.</p>
+<h2 id="adjacencyrulecardinals">AdjacencyRule.CARDINALS</h2>
+<p>This rule is effectively standard 4-way connectivity -- a location is &quot;adjacent&quot; to another if it is within 1 cardinal step away. In the image below, the red grid location is the starting cell, and the blue grid locations are those that are considered adjacent by this rule:</p>
+<p><img src="../../images/adjacency_and_neighbors/cardinals.PNG" alt="cardinal neighbors"></p>
+<h2 id="adjacencyrulediagonals">AdjacencyRule.DIAGONALS</h2>
+<p>This rule considers a location &quot;adjacent&quot; to another if it is within one diagonal step away.  Again, in the image below, the red grid location represents the starting cell, and the blue grid locations are those that are considered adjacent by this rule:</p>
+<p><img src="../../images/adjacency_and_neighbors/diagonals.PNG" alt="diagonal neighbors"></p>
+<h2 id="adjacencyruleeight_way">AdjacencyRule.EIGHT_WAY</h2>
+<p>This rule is effectively standard 8-way connectivity -- a location is &quot;adjacent&quot; to another if it is within 1 step in any direction.  Like in the previous images, in the image below the red grid location represents the starting cell, and the blue grid locations are those that are considered adjacent by this rule:</p>
+<p><img src="../../images/adjacency_and_neighbors/eight_way.PNG" alt="eight-way neighbors"></p>
+<h1 id="getting-directions-of-neighbors">Getting Directions of Neighbors</h1>
+<p><code>AdjacencyRule</code> provides a few functions to allow you to get the directions that lead to neighbors of a location.  The API documentation covers these in detail, however this may serve as a quick overview of their functionality.</p>
+<p>The <code>AdjacencyRule.DirectionsOfNeighbors</code> function is the most straightforward; it returns you an <code>IEnumerable&lt;Direction&gt;</code> with all the directions that lead to neighbors:</p>
+<pre><code class="lang-CSharp">foreach (Direction d in AdjacencyRule.EIGHT_WAY.DirectionOfNeighbors())
+    System.Console.WriteLine(d);
+</code></pre>
+<p>The <code>AdjacencyRule.DirectionsOfNeighborsClockwise</code> and <code>AdjacencyRule.DirectionsOfNeighborsCounterclockwise</code> functions work the same way, except that they return the directions in clockwise and counter-clockwise order, respectively.  In addition, both of these functions optionally take a <code>Direction</code> instance that will be the first direction returned.  Directions are returned in clockwise or counter-clockwise order as appropriate, starting from the given direction:</p>
+<pre><code class="lang-CSharp">// Returns directions in order Direction.LEFT, Direction.RIGHT, Direction.DOWN, Direction.UP.
+// AdjacencyRule.DirectionsOfNeighborsCounterclockwise functions similarly.
+foreach (Direction d in AdjacencyRule.CARDINALS.DirectionsOfNeighborsClockwise(Direction.LEFT))
+    System.Console.WriteLine(d);
+</code></pre>
+<h1 id="getting-locations-of-neighbors">Getting Locations of Neighbors</h1>
+<p><code>AdjacencyRule</code> also provides a few functions to allow you to get the coordinates that represent neighbors of a given location. This may prove to be more convenient than using the functions which return <code>Directions</code> and adding those <code>Direction</code> instances to a position. Again, the API documentation covers these in detail, however this may serve as a quick overview of their functionality.</p>
+<p>These functions work very similarly to their <code>Direction</code>-based equivalents.  <code>AdjacencyRule.Neighbors</code> returns an <code>IEnumerable&lt;Coord&gt;</code> for each neighboring position:</p>
+<pre><code class="lang-CSharp">Coord position = (1, 2);
+foreach (Coord neighbor in AdjacencyRule.EIGHT_WAY.Neighbors(position))
+    System.Console.WriteLine(neighbor);
+</code></pre>
+<p>The <code>AdjacencyRule.NeighborsClockwise</code> and <code>AdjacencyRule.NeighborsCounterclockwise</code> functions work the same way, except that they return the coordinates in clockwise and counter-clockwise order, respectively.  In addition, both of these functions optionally take a <code>Direction</code> instance, which indicates which position to return first.  Positions are returned in clockwise or counter-clockwise order as appropriate, starting from the position that is located in the given direction:</p>
+<pre><code class="lang-CSharp">Coord position = (1, 2);
+
+// Returns directions in clockwise order, starting with the position located in the direction Direction.LEFT.
+// AdjacencyRule.NeighborsCounterclockwise functions similarly.
+foreach (Direction d in AdjacencyRule.CARDINALS.NeighborsClockwise(position, Direction.LEFT))
+    System.Console.WriteLine(d);
+</code></pre>
+<h1 id="implicit-conversion-for-related-types">Implicit Conversion for Related Types</h1>
+<p>For any given <code>Distance</code> or <code>Radius</code> class instance, a method of determining adjacency is implied due to the mathematical concepts those classes represent.  Therefore, both <code>Distance</code> and <code>Radius</code> instances may be implicitly converted to their corresponding <code>AdjacencyRule</code> instance.  As a result of this, any function that accepts a parameter of type <code>AdjacencyRule</code> may also simply be passed a <code>Distance</code> or <code>Radius</code> instance, and that instance will be converted to the corresponding <code>AdjacencyRule</code> automatically.</p>
+<p>The correspondance between <code>Distance</code> instances and <code>AdjacencyRule</code> instances is as follows:</p>
+<ul>
+<li><code>Distance.MANHATTAN</code> -&gt; <code>AdjacencyRule.CARDINALS</code></li>
+<li><code>Distance.CHEBYSHEV</code> -&gt; <code>AdjacencyRule.EIGHT_WAY</code></li>
+<li><code>Distance.EUCLIDEAN</code> -&gt; <code>AdjacencyRule.EIGHT_WAY</code></li>
+</ul>
+<p>The correspondance between <code>Radius</code> instances and <code>AdjacencyRule</code> instances is similar:</p>
+<ul>
+<li><code>Radius.CIRCLE</code> or <code>Radius.SPHERE</code> -&gt; <code>AdjacencyRule.EIGHT_WAY</code></li>
+<li><code>Radius.SQUARE</code> or <code>Radius.CUBE</code> -&gt; <code>AdjacencyRule.EIGHT_WAY</code></li>
+<li><code>Radius.DIAMOND</code> or <code>Radius.OCTAHEDRON</code> -&gt; <code>AdjacencyRule.CARDINALS</code></li>
+</ul>
+<p>A demonstration of some of these conversions can be seen via the following code:</p>
+<pre><code class="lang-CSharp">// Both of these function without compiler error, since implicit conversions are defined.
+AdjacencyRule rule = Distance.MANHATTAN;
+rule = Radius.SQUARE;
+
+// Assuming a function MyFunc(AdjacencyRule rule) is defined
+MyFunc(Distance.CHEBYSHEV);
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue.Docs/articles/grid_components/adjacency-and-neighbors.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
