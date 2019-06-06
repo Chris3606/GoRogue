@@ -110,6 +110,7 @@
     <Compile Include="SpatialMapTests.cs" />
     <Compile Include="ToStringTests.cs" />
     <Compile Include="ReflectionTests.cs" />
+    <Compile Include="GameFrameworkTests.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>

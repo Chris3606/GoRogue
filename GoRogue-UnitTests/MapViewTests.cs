@@ -50,15 +50,16 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void LambdaSettableTranslationMapTest()
 		{
-			ArrayMap<double> map = new ArrayMap<double>(10, 10);
+			ArrayMap<bool> map = new ArrayMap<bool>(10, 10);
+			QuickGenerators.GenerateRectangleMap(map);
 
-			ArrayMap<bool> controlMap = new ArrayMap<bool>(10, 10);
-			QuickGenerators.GenerateRectangleMap(controlMap);
+			var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
+			checkMaps(map, settable);
 
-			var settable = new LambdaSettableTranslationMap<double, bool>(map, d => d > 0.0, b => b ? 1.0 : 0.0);
-			QuickGenerators.GenerateRectangleMap(settable);
-
-			checkMaps(controlMap, map);
+			// Check other constructor.  Intentaionally "misusing" the position parameter, to make sure we ensure the position
+			// parameter is correct without complicating our test case
+			settable = new LambdaSettableTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0, (pos, d) => d > 0.0);
+			checkMaps(map, settable);
 		}
 
 		[TestMethod]
@@ -69,6 +70,11 @@ namespace GoRogue_UnitTests
 
 			var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
+			checkMaps(map, lambdaMap);
+
+			// Check other constructor.  Intentaionally "misusing" the position parameter, to make sure we ensure the position
+			// parameter is correct without complicating our test case
+			lambdaMap = new LambdaTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0);
 			checkMaps(map, lambdaMap);
 		}
 

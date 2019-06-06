@@ -256,6 +256,9 @@ namespace GoRogue.GameFramework
 			if (terrain.CurrentMap != null)
 				throw new ArgumentException($"Cannot add terrain to more than one {nameof(Map)}.", nameof(terrain));
 
+			if (!this.Contains(terrain.Position))
+				throw new ArgumentException($"Terrain added to map must be within the bounds of that map.");
+
 			if (!terrain.IsWalkable)
 			{
 				foreach (var obj in Entities.GetItems(terrain.Position))
@@ -270,6 +273,22 @@ namespace GoRogue.GameFramework
 
 			terrain.OnMapChanged(this);
 			ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
+		}
+
+		/// <summary>
+		/// Sets all terrain on the current map to be equal to the corresponding values from the map view you pass in.  Equivalent to
+		/// calling <see cref="SetTerrain(IGameObject)"/> once on each object in the map view you pass in.
+		/// </summary>
+		/// <param name="overlay">
+		/// Map view specifying the terrain apply to the map. Must have identical dimensions to the current map.
+		/// </param>
+		public void ApplyTerrainOverlay(IMapView<IGameObject> overlay)
+		{
+			if (Height != overlay.Height || Width != overlay.Width)
+				throw new ArgumentException("Overlay size must match current map size.");
+
+			foreach (var pos in _terrain.Positions())
+				SetTerrain(overlay[pos]);
 		}
 		#endregion
 
@@ -286,6 +305,9 @@ namespace GoRogue.GameFramework
 				return false;
 
 			if (entity.Layer < 1)
+				return false;
+
+			if (!this.Contains(entity.Position))
 				return false;
 
 			if (!entity.IsWalkable && (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer) || !WalkabilityView[entity.Position]))

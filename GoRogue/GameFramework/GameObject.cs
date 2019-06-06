@@ -1,5 +1,6 @@
 ﻿using System;
 using GoRogue.GameFramework.Components;
+using GoRogue.MapViews;
 
 namespace GoRogue.GameFramework
 {
@@ -45,7 +46,7 @@ namespace GoRogue.GameFramework
 			get => _position;
 			set
 			{
-				if (_position == value || IsStatic)
+				if (_position == value || IsStatic || (CurrentMap != null && !CurrentMap.Contains(value)))
 					return;
 
 				if (CurrentMap == null || IsWalkable || CurrentMap.WalkabilityView[value])

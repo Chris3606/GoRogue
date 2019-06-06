@@ -55,8 +55,9 @@ namespace GoRogue.MapViews
 		/// Translates your map data into the view type by calling the getter function specified in the
 		/// class constructor.
 		/// </summary>
+		/// <param name="position">Position corresponding to given data value of your map.</param>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type (via the getter specified in the class constructor).</returns>
-		protected override T2 TranslateGet(T1 value) => _getter(new Coord(1, 1), value);
+		protected override T2 TranslateGet(Coord position, T1 value) => _getter(position, value);
 	}
 }

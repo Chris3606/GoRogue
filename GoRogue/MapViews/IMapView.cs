@@ -26,7 +26,7 @@
 	/// function to retrieve values.
 	/// </remarks>
 	/// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
-	public interface IMapView<T>
+	public interface IMapView<out T>
 	{
 		/// <summary>
 		/// The height of the map being represented.
