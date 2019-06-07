@@ -3,13 +3,13 @@
     <!-- Basic package info -->
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>GoRogue</PackageId>
-    <PackageVersion>2.3.1</PackageVersion>
+    <PackageVersion>2.4.0</PackageVersion>
     <Authors>Christopher Ridley</Authors>
     <Description>Roguelike/2D game utility library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Bugfix.  See https://github.com/Chris3606/GoRogue/releases/tag/2.3.1 for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>See https://github.com/Chris3606/GoRogue/releases/tag/2.4.0 for details.</PackageReleaseNotes>
     <Copyright>Copyright 2019 Christopher Ridley.  All rights reserved.</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
