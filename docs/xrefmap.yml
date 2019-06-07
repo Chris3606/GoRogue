@@ -4863,6 +4863,22 @@ references:
   isSpec: "True"
   fullName: GoRogue.GameFramework.Map.AddEntity
   nameWithType: Map.AddEntity
+- uid: GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView{GoRogue.GameFramework.IGameObject})
+  name: ApplyTerrainOverlay(IMapView<IGameObject>)
+  href: api/GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_ApplyTerrainOverlay_GoRogue_MapViews_IMapView_GoRogue_GameFramework_IGameObject__
+  commentId: M:GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView{GoRogue.GameFramework.IGameObject})
+  name.vb: ApplyTerrainOverlay(IMapView(Of IGameObject))
+  fullName: GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView<GoRogue.GameFramework.IGameObject>)
+  fullName.vb: GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView(Of GoRogue.GameFramework.IGameObject))
+  nameWithType: Map.ApplyTerrainOverlay(IMapView<IGameObject>)
+  nameWithType.vb: Map.ApplyTerrainOverlay(IMapView(Of IGameObject))
+- uid: GoRogue.GameFramework.Map.ApplyTerrainOverlay*
+  name: ApplyTerrainOverlay
+  href: api/GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_ApplyTerrainOverlay_
+  commentId: Overload:GoRogue.GameFramework.Map.ApplyTerrainOverlay
+  isSpec: "True"
+  fullName: GoRogue.GameFramework.Map.ApplyTerrainOverlay
+  nameWithType: Map.ApplyTerrainOverlay
 - uid: GoRogue.GameFramework.Map.AStar
   name: AStar
   href: api/GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_AStar
@@ -8822,14 +8838,14 @@ references:
   fullName.vb: GoRogue.MapViews.LambdaTranslationMap(Of T1, T2).LambdaTranslationMap
   nameWithType: LambdaTranslationMap<T1, T2>.LambdaTranslationMap
   nameWithType.vb: LambdaTranslationMap(Of T1, T2).LambdaTranslationMap
-- uid: GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(`0)
-  name: TranslateGet(T1)
-  href: api/GoRogue.MapViews.LambdaTranslationMap-2.html#GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet__0_
-  commentId: M:GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(`0)
-  fullName: GoRogue.MapViews.LambdaTranslationMap<T1, T2>.TranslateGet(T1)
-  fullName.vb: GoRogue.MapViews.LambdaTranslationMap(Of T1, T2).TranslateGet(T1)
-  nameWithType: LambdaTranslationMap<T1, T2>.TranslateGet(T1)
-  nameWithType.vb: LambdaTranslationMap(Of T1, T2).TranslateGet(T1)
+- uid: GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(GoRogue.Coord,`0)
+  name: TranslateGet(Coord, T1)
+  href: api/GoRogue.MapViews.LambdaTranslationMap-2.html#GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_GoRogue_Coord__0_
+  commentId: M:GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(GoRogue.Coord,`0)
+  fullName: GoRogue.MapViews.LambdaTranslationMap<T1, T2>.TranslateGet(GoRogue.Coord, T1)
+  fullName.vb: GoRogue.MapViews.LambdaTranslationMap(Of T1, T2).TranslateGet(GoRogue.Coord, T1)
+  nameWithType: LambdaTranslationMap<T1, T2>.TranslateGet(Coord, T1)
+  nameWithType.vb: LambdaTranslationMap(Of T1, T2).TranslateGet(Coord, T1)
 - uid: GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet*
   name: TranslateGet
   href: api/GoRogue.MapViews.LambdaTranslationMap-2.html#GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_

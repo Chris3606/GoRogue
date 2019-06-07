@@ -348,7 +348,7 @@
           "hash": "ypSWRUfNlIWhw+J54LWNDg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -405,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Effect-1.html",
-          "hash": "e+L+zd3co/Rx7ZGoupnIQg=="
+          "hash": "/YyZ+VR+VIY1eIWTqDF19Q=="
         }
       },
       "is_incremental": false,
@@ -429,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.EffectTrigger-1.html",
-          "hash": "U9NaEAwV5+rXDFWbbaiFPw=="
+          "hash": "h4RHQU5TCysaA1aYbNRrvA=="
         }
       },
       "is_incremental": false,
@@ -477,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.GameObject.html",
-          "hash": "91mMmEu4x1ClPhaFXe3ieQ=="
+          "hash": "emUf4OwqA74AEcerqSNflQ=="
         }
       },
       "is_incremental": false,
@@ -501,7 +501,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.Map.html",
-          "hash": "mJvFwz3EZci6S0gTxmVWyg=="
+          "hash": "2BNPYsLIr45Qyl9cjkTEKg=="
         }
       },
       "is_incremental": false,
@@ -1029,7 +1029,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.IMapView-1.html",
-          "hash": "pwxK+PNXCFslW+fx58bMgg=="
+          "hash": "ekECY/xWgwFkRwR1b0tXyg=="
         }
       },
       "is_incremental": false,
@@ -1101,7 +1101,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.LambdaTranslationMap-2.html",
-          "hash": "HHx8sMfu22rdVXLEd5TpxA=="
+          "hash": "IKDEiLy6f2UsxBUk1xlz7w=="
         }
       },
       "is_incremental": false,
@@ -1596,7 +1596,7 @@
           "hash": "4W5EW3IaNlxrILkIwH1Oyg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1620,7 +1620,7 @@
           "hash": "EzUbzA91khKX9v1Xuy5XRw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1647,7 +1647,7 @@
           "hash": "+1TJvC4ag1/W50Hjc/Mv7A=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1659,7 +1659,7 @@
           "hash": "HPfZW3nvdFUh1XhDnc4kBQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1671,7 +1671,7 @@
           "hash": "LukEsG1XacB7PakS8WtU0g=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1683,7 +1683,7 @@
           "hash": "r8I4VOGr/Bm+AP3SyTgKQw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1695,7 +1695,7 @@
           "hash": "OxXvd0KHfGRljIhCNUl8TQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1707,7 +1707,7 @@
           "hash": "Mj+XjwXAOVdlkWLwgFDzyg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1719,7 +1719,7 @@
           "hash": "ZlfFbjvRBBTRBmjI3zvosw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -2183,7 +2183,7 @@
           "hash": "nGBBMfwd+jjphIyIAdBIhQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -2219,13 +2219,13 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 11,
-          "skipped_file_count": 6
+          "skipped_file_count": 11
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 132,
-          "skipped_file_count": 67
+          "skipped_file_count": 68
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,

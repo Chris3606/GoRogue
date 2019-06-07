@@ -271,20 +271,20 @@ taking a value of type T1 and its corresponding position.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.TranslateGet(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_GoRogue_Coord__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.TranslateGet(GoRogue.Coord%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L60">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/LambdaTranslationMap.cs/#L61">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet*"></a>
-  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet__0_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(`0)">TranslateGet(T1)</h4>
+  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_GoRogue_Coord__0_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(GoRogue.Coord,`0)">TranslateGet(Coord, T1)</h4>
   <div class="markdown level1 summary"><p>Translates your map data into the view type by calling the getter function specified in the
 class constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override T2 TranslateGet(T1 value)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override T2 TranslateGet(Coord position, T1 value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -296,6 +296,12 @@ class constructor.</p>
       </tr>
     </thead>
     <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>Position corresponding to given data value of your map.</p>
+</td>
+      </tr>
       <tr>
         <td><span class="xref">T1</span></td>
         <td><span class="parametername">value</span></td>
@@ -321,7 +327,7 @@ class constructor.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">GoRogue.MapViews.TranslationMap&lt;T1, T2&gt;.TranslateGet(T1)</span></div>
+  <div><span class="xref">GoRogue.MapViews.TranslationMap&lt;T1, T2&gt;.TranslateGet(GoRogue.Coord, T1)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
