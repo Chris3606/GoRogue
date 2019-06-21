@@ -4879,6 +4879,15 @@ references:
   isSpec: "True"
   fullName: GoRogue.GameFramework.Map.ApplyTerrainOverlay
   nameWithType: Map.ApplyTerrainOverlay
+- uid: GoRogue.GameFramework.Map.ApplyTerrainOverlay``1(GoRogue.MapViews.IMapView{``0},System.Func{GoRogue.Coord,``0,GoRogue.GameFramework.IGameObject})
+  name: ApplyTerrainOverlay<T>(IMapView<T>, Func<Coord, T, IGameObject>)
+  href: api/GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_ApplyTerrainOverlay__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_GoRogue_GameFramework_IGameObject__
+  commentId: M:GoRogue.GameFramework.Map.ApplyTerrainOverlay``1(GoRogue.MapViews.IMapView{``0},System.Func{GoRogue.Coord,``0,GoRogue.GameFramework.IGameObject})
+  name.vb: ApplyTerrainOverlay(Of T)(IMapView(Of T), Func(Of Coord, T, IGameObject))
+  fullName: GoRogue.GameFramework.Map.ApplyTerrainOverlay<T>(GoRogue.MapViews.IMapView<T>, System.Func<GoRogue.Coord, T, GoRogue.GameFramework.IGameObject>)
+  fullName.vb: GoRogue.GameFramework.Map.ApplyTerrainOverlay(Of T)(GoRogue.MapViews.IMapView(Of T), System.Func(Of GoRogue.Coord, T, GoRogue.GameFramework.IGameObject))
+  nameWithType: Map.ApplyTerrainOverlay<T>(IMapView<T>, Func<Coord, T, IGameObject>)
+  nameWithType.vb: Map.ApplyTerrainOverlay(Of T)(IMapView(Of T), Func(Of Coord, T, IGameObject))
 - uid: GoRogue.GameFramework.Map.AStar
   name: AStar
   href: api/GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_AStar
