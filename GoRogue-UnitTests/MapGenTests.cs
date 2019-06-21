@@ -147,6 +147,27 @@ namespace GoRogue_UnitTests
 				Console.WriteLine();
 			}
 		}
+		
+		[TestMethod]
+		public void TestDungeonGenDefaultRNG()
+		{
+			// default rng
+			var map = new ArrayMap<bool>(100, 100);
+			// Assert no exceptions are thrown
+			QuickGenerators.GenerateDungeonMazeMap(map, 10, 30, 4, 9);
+		}
+
+		[TestMethod]
+		public void TestDungeonGenNonDefaultRNG()
+		{
+			var map = new ArrayMap<bool>(100, 100);
+			// Assert no exceptions are thrown
+			var gen = new XorShift128Generator();
+			for (int i = 0; i < 3; i++) // Due to Troscheutz.Random bug
+				gen.Next();
+
+			QuickGenerators.GenerateDungeonMazeMap(map, gen, 10, 30, 4, 9);
+		}
 
 		private void displayMapAreas(IMapView<bool> map, IEnumerable<MapArea> areas)
 		{

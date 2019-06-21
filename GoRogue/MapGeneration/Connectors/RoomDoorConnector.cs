@@ -144,9 +144,10 @@ namespace GoRogue.MapGeneration.Connectors
 					while (sidesTotal > maxSidesToConnect)
 					{
 						// - randomly remove side
-						var index = sides[rng.Next(sides.Count)];
+						var index = sides.RandomIndex(rng);
+						
+						validSides[sides[index]] = false;
 						sides.RemoveAt(index);
-						validSides[index] = false;
 						sidesTotal--;
 					}
 				}
