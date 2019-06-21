@@ -31,6 +31,24 @@ namespace GoRogue_UnitTests
 			foreach (var pos in map.Positions())
 				Assert.AreEqual(tempMap[pos], map.GetTerrain(pos));
 		}
+
+		[TestMethod]
+		public void ApplyTerrainOverlayTranslation()
+		{
+			var grMap = new ArrayMap<bool>(10, 10);
+			QuickGenerators.GenerateRectangleMap(grMap);
+
+			var map = new Map(grMap.Width, grMap.Height, 1, Distance.CHEBYSHEV);
+			map.ApplyTerrainOverlay(grMap, (pos, b) => b ? new GameObject(pos, 0, null, true, true, true) : new GameObject(pos, 0, null, true, false, false));
+
+			// If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
+			foreach (var pos in grMap.Positions())
+				if (grMap[pos])
+					Assert.IsTrue(map.GetTerrain(pos).IsWalkable == true);
+				else
+					Assert.IsTrue(map.GetTerrain(pos).IsWalkable == false);
+		}
+
 		[TestMethod]
 		public void OutOfBoundsTerrainAdd()
 		{

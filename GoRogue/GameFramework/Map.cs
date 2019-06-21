@@ -276,8 +276,22 @@ namespace GoRogue.GameFramework
 		}
 
 		/// <summary>
+		/// Sets all terrain on the map to the result of running the given translator on the value in <paramref name="overlay"/> at the
+		/// corresponding position.  Useful, for example, for applying the map view resulting from map generation to a Map as terrain.
+		/// </summary>
+		/// <typeparam name="T">Type of values exposed by map view to translate.  Generally inferred by the compiler.</typeparam>
+		/// <param name="overlay">Map view to translate.</param>
+		/// <param name="translator">Function that translates values of the type that <paramref name="overlay"/> exposes to values of type IGameObject.</param>
+		public void ApplyTerrainOverlay<T>(IMapView<T> overlay, Func<Coord, T, IGameObject> translator)
+		{
+			var terrainOverlay = new LambdaTranslationMap<T, IGameObject>(overlay, translator);
+			ApplyTerrainOverlay(terrainOverlay);
+		}
+
+		/// <summary>
 		/// Sets all terrain on the current map to be equal to the corresponding values from the map view you pass in.  Equivalent to
-		/// calling <see cref="SetTerrain(IGameObject)"/> once on each object in the map view you pass in.
+		/// calling <see cref="SetTerrain(IGameObject)"/> once on each object in the map view you pass in.  If translation between
+		/// the overlay and IGameObject is required, see the overloads of this function that take a translation function.
 		/// </summary>
 		/// <param name="overlay">
 		/// Map view specifying the terrain apply to the map. Must have identical dimensions to the current map.
