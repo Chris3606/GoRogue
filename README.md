@@ -27,7 +27,9 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [SquidLib](#squidlib)
 
 ## Documentation
-Instructions for getting started with GoRogue, as well as demonstrations of its features, can be found on the [wiki](https://github.com/Chris3606/GoRogue/wiki).  In addition, the API documentation is hosted on [GitHub pages](https://chris3606.github.io/GoRogue).  The same documentation can be found in the docs folder in the root of the repository.  GoRogue also has a subreddit at [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/).
+Instructions for getting started with GoRogue, articles detailing its features, and the API documentation can be found on the [documentation website](https://chris3606.github.io/GoRogue/index.html). In addition to being on the website, the API documentation show up in Visual Studio as normal.  GoRogue also has a subreddit at [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/).
+
+The GitHub wiki also contains articles, but these are outdated and are currently in the process of being moved to the above documetation website.
 
 ## Feature List
 ### .NET Standard 2.0 Compatibility
