@@ -1,5 +1,6 @@
 ﻿using GoRogue;
 using GoRogue.MapGeneration;
+using GoRogue.MapGeneration.Generators;
 using GoRogue.MapViews;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -12,6 +13,68 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class MapGenTests
 	{
+		[TestMethod]
+		public void BasicRoomsMapGenMin()
+		{
+			var map = new ArrayMap<bool>(15, 15);
+			var rooms = BasicRoomsGenerator.Generate(map, new GoRogue.Random.MinRandom(), 1, 5, 8, 10).ToList();
+			Assert.AreEqual(1, rooms.Count);
+			Assert.AreEqual(5, rooms[0].Width);
+			Assert.AreEqual(5, rooms[0].Height);
+
+			var areas = MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS).ToList();
+			Assert.AreEqual(1, areas.Count);
+			Assert.AreEqual(5, areas[0].Bounds.Width);
+			Assert.AreEqual(5, areas[0].Bounds.Height);
+		}
+
+		[TestMethod]
+		public void BasicRoomsMapGenMax()
+		{
+			var map = new ArrayMap<bool>(15, 15);
+			var rooms = BasicRoomsGenerator.Generate(map, new GoRogue.Random.MaxRandom(), 1, 5, 8, 10).ToList();
+			Assert.AreEqual(1, rooms.Count);
+			Assert.AreEqual(8, rooms[0].Width);
+			Assert.AreEqual(8, rooms[0].Height);
+
+			var areas = MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS).ToList();
+			Assert.AreEqual(1, areas.Count);
+			Assert.AreEqual(8, areas[0].Bounds.Width);
+			Assert.AreEqual(8, areas[0].Bounds.Height);
+		}
+
+		/*
+		[TestMethod]
+		public void DungeonRoomsMapGenMin()
+		{
+			var map = new ArrayMap<bool>(15, 15);
+			
+			var rooms = RoomsGenerator.Generate(map, new GoRogue.Random.MinRandom(), 1, 1, 5, 8).ToList();
+			Assert.AreEqual(1, rooms.Count);
+			Assert.AreEqual(5, rooms[0].Width);
+			Assert.AreEqual(5, rooms[0].Height);
+
+			var areas = MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS).ToList();
+			Assert.AreEqual(1, areas.Count);
+			Assert.AreEqual(5, areas[0].Bounds.Width);
+			Assert.AreEqual(5, areas[0].Bounds.Height);
+		}
+
+		[TestMethod]
+		public void DungeonRoomsMapGenMax()
+		{
+			var map = new ArrayMap<bool>(15, 15);
+			var rooms = RoomsGenerator.Generate(map, new GoRogue.Random.MaxRandom(), 1, 1, 5, 9).ToList();
+			Assert.AreEqual(1, rooms.Count);
+			Assert.AreEqual(9, rooms[0].Width);
+			Assert.AreEqual(9, rooms[0].Height);
+
+			var areas = MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS).ToList();
+			Assert.AreEqual(1, areas.Count);
+			Assert.AreEqual(9, areas[0].Bounds.Width);
+			Assert.AreEqual(9, areas[0].Bounds.Height);
+		}
+		*/
 		[TestMethod]
 		public void ManualTestCellAutoGen()
 		{

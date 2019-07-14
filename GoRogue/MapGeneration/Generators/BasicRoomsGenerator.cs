@@ -33,6 +33,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// The maximum number of times the position of a room will be generated to try to position
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the room.
 		/// </param>
+		/// <returns>A collection of rectangles representing the interior of each generated room.</returns>
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 			=> Generate(map, null, maxRooms, roomMinSize, roomMaxSize, attemptsPerRoom);
 
@@ -57,6 +58,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// The maximum number of times the position of a room will be generated to try to position
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the room.
 		/// </param>
+		/// <returns>A collection of rectangles representing the interior of each generated room.</returns>
 		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 		{
 			if (maxRooms <= 0)
@@ -104,7 +106,7 @@ namespace GoRogue.MapGeneration.Generators
 					positionAttempts++;
 				}
 
-				// Our rectangles represent the rooms with walls, so we shrink them to match convention of interior
+				// Our rectangles represent the rooms with walls at this point, so we shrink them to match convention of interior
 				// only
 				if (!newRoomIntersects)
 					rooms.Add(newRoom.Expand(-1, -1));  
@@ -133,9 +135,8 @@ namespace GoRogue.MapGeneration.Generators
 
 		static private void createRoom(ISettableMapView<bool> map, Rectangle room)
 		{
-			for (int x = room.X + 1; x < room.MaxExtentX; x++)
-				for (int y = room.Y + 1; y < room.MaxExtentY; y++)
-					map[x, y] = true;
+			foreach (var pos in room.Positions())
+				map[pos] = true;
 		}
 	}
 }

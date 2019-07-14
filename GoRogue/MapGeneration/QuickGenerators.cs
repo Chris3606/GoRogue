@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration
 		/// <param name="fillProbability"></param>
 		/// <param name="totalIterations"></param>
 		/// <param name="cutoffBigAreaFill"></param>
-		/// <returns>List of areas representing the areas of the map before they were connected.</returns>
+		/// <returns>Collection of areas representing the areas of the map before they were connected.</returns>
 		public static IEnumerable<MapArea> GenerateCellularAutomataMap(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40,
 																	   int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
@@ -104,7 +104,7 @@ namespace GoRogue.MapGeneration
 		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
 		/// time a door is placed (per room) during the connection process. Defaults to 10.
 		/// </param>
-		/// <returns>A list of rooms and the connections placed.</returns>
+		/// <returns>A list of the interior of rooms generated, and the connections placed.</returns>
 		public static IEnumerable<(Rectangle Room, Coord[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10,
 			int maxPlacementAttempts = 10, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0, int minSidesToConnect = 1, int maxSidesToConnect = 4,
@@ -165,7 +165,7 @@ namespace GoRogue.MapGeneration
 		/// After the connection finishes, the small dead ends will be trimmed out. This value
 		/// indicates the chance out of 100 that a given dead end remains. Defaults to 0.
 		/// </param>
-		/// <returns>A list of rooms and the connections placed.</returns>
+		/// <returns>A list of the interior of rooms generated and the connections placed.</returns>
 		public static IEnumerable<(Rectangle Room, Coord[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator rng, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
 			int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
