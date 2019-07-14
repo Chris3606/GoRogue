@@ -6799,12 +6799,12 @@ references:
   commentId: T:GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator
   fullName: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator
   nameWithType: DirectLineTunnelCreator
-- uid: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor(GoRogue.AdjacencyRule)
-  name: DirectLineTunnelCreator(AdjacencyRule)
-  href: api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html#GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator__ctor_GoRogue_AdjacencyRule_
-  commentId: M:GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor(GoRogue.AdjacencyRule)
-  fullName: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(GoRogue.AdjacencyRule)
-  nameWithType: DirectLineTunnelCreator.DirectLineTunnelCreator(AdjacencyRule)
+- uid: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor(GoRogue.AdjacencyRule,System.Boolean)
+  name: DirectLineTunnelCreator(AdjacencyRule, Boolean)
+  href: api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html#GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator__ctor_GoRogue_AdjacencyRule_System_Boolean_
+  commentId: M:GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor(GoRogue.AdjacencyRule,System.Boolean)
+  fullName: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.DirectLineTunnelCreator(GoRogue.AdjacencyRule, System.Boolean)
+  nameWithType: DirectLineTunnelCreator.DirectLineTunnelCreator(AdjacencyRule, Boolean)
 - uid: GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.#ctor*
   name: DirectLineTunnelCreator
   href: api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html#GoRogue_MapGeneration_Connectors_DirectLineTunnelCreator__ctor_
