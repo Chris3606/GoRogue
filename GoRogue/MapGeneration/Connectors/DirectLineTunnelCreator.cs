@@ -11,6 +11,7 @@ namespace GoRogue.MapGeneration.Connectors
 	public class DirectLineTunnelCreator : ITunnelCreator
 	{
 		private AdjacencyRule adjacencyRule;
+		private bool doubleWideVertical;
 
 		/// <summary>
 		/// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.ORTHO"/>
@@ -19,10 +20,12 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="adjacencyRule">
 		/// Method of adjacency to respect when creating tunnels. Cannot be diagonal.
 		/// </param>
-		public DirectLineTunnelCreator(AdjacencyRule adjacencyRule)
+		/// <param name="doubleWideVertical">Whether or not to create vertical tunnels as 2-wide.</param>
+		public DirectLineTunnelCreator(AdjacencyRule adjacencyRule, bool doubleWideVertical = true)
 		{
 			if (adjacencyRule == AdjacencyRule.DIAGONALS) throw new System.ArgumentException("Cannot use diagonal adjacency to create tunnels", nameof(adjacencyRule));
 			this.adjacencyRule = adjacencyRule;
+			this.doubleWideVertical = doubleWideVertical;
 		}
 
 		/// <summary>
@@ -41,10 +44,8 @@ namespace GoRogue.MapGeneration.Connectors
 				map[pos] = true;
 				// Previous cell, and we're going vertical, go 2 wide so it looks nicer Make sure not
 				// to break rectangles (less than last index)!
-				if (previous != Coord.NONE) // TODO: Make double wide vert an option
-					if (pos.Y != previous.Y)
-						if (pos.X + 1 < map.Width - 1)
-							map[pos.X + 1, pos.Y] = true;
+				if (doubleWideVertical && previous != Coord.NONE && pos.Y != previous.Y && pos.X + 1 < map.Width - 1)
+					map[pos.X + 1, pos.Y] = true;
 
 				previous = pos;
 			}
