@@ -19,7 +19,7 @@ namespace GoRogue.Pathing
 		/// </returns>
 		public static Direction GetDirectionOfMinValue(this IMapView<double?> goalMap, Coord position, AdjacencyRule adjacencyRule)
 		{
-			double min = double.MaxValue;
+			double min = goalMap[position].HasValue ? goalMap[position].Value : double.MaxValue;
 			Direction minDir = Direction.NONE;
 
 			foreach (var dir in adjacencyRule.DirectionsOfNeighbors())
@@ -28,7 +28,7 @@ namespace GoRogue.Pathing
 				if (!goalMap[newPosition].HasValue)
 					continue;
 
-				if (goalMap[newPosition].Value < min)
+				if (goalMap[newPosition].Value <= min) // <= to prefer movement over non movement
 				{
 					min = goalMap[newPosition].Value;
 					minDir = dir;

@@ -89,14 +89,78 @@ namespace GoRogue_UnitTests
 			Assert.AreEqual(true, path != null);
 		}
 
-		public Coord getWalkableCoord(IMapView<bool> mapView)
+		[TestMethod]
+		public void GoalMapBasicResult()
 		{
-			var c = (SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+			Coord goal = (5, 5);
+			var map = new ArrayMap<bool>(50, 50);
+			QuickGenerators.GenerateRectangleMap(map);
 
-			while (!mapView[c])
-				c = (SingletonRandom.DefaultRNG.Next(mapView.Width), SingletonRandom.DefaultRNG.Next(mapView.Height));
+			var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
+			goalMapData.ApplyOverlay(new LambdaTranslationMap<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
+			goalMapData[goal] = GoalState.Goal;
 
-			return c;
+			var goalMap = new GoalMap(goalMapData, Distance.CHEBYSHEV);
+			goalMap.Update();
+
+			foreach (var startPos in goalMap.Positions().Where(p => map[p] && p != goal))
+			{
+				Coord pos = startPos;
+				while (true)
+				{
+					var dir = goalMap.GetDirectionOfMinValue(pos);
+					if (dir == Direction.NONE)
+						break;
+					pos += dir;
+				}
+
+				bool success = pos == goal;
+				if (!success)
+				{
+					Console.WriteLine($"Failed starting from {startPos} on foal map.  Found min {goalMap.GetDirectionOfMinValue(pos)} when calculating from {pos}:");
+					Console.WriteLine(goalMap);
+				}
+				Assert.AreEqual(true, success);
+			}
+		}
+
+		[TestMethod]
+		public void FleeMapBasicResult()
+		{
+			Coord goal = (5, 5);
+			var map = new ArrayMap<bool>(50, 50);
+			QuickGenerators.GenerateRectangleMap(map);
+
+			var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
+			goalMapData.ApplyOverlay(new LambdaTranslationMap<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
+			goalMapData[goal] = GoalState.Goal;
+
+			var goalMap = new GoalMap(goalMapData, Distance.CHEBYSHEV);
+			var fleeMap = new FleeMap(goalMap);
+			goalMap.Update();
+
+			foreach (var startPos in fleeMap.Positions().Where(p => map[p] && p != goal))
+			{
+				Coord pos = startPos;
+				int moves = 0;
+				while (moves < map.Width * map.Height)
+				{
+					var dir = fleeMap.GetDirectionOfMinValue(pos);
+					if (dir == Direction.NONE)
+						break;
+					pos += dir;
+
+					moves++;
+				}
+
+				bool success = pos != goal;
+				if (!success)
+				{
+					Console.WriteLine($"Failed starting from {startPos} on flee map.  Found min {fleeMap.GetDirectionOfMinValue(pos)} when calculating from {pos}:");
+					Console.WriteLine(fleeMap);
+				}
+				Assert.AreEqual(true, success);
+			}
 		}
 
 		[TestMethod]
