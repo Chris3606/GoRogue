@@ -8,26 +8,31 @@ namespace GoRogue
 	/// coordinate, and which directions those neighbors are in. Cannot be instantiated -- premade
 	/// static instances are provided.
 	/// </summary>
-	public class AdjacencyRule
+	[Serializable]
+	public class AdjacencyRule : IEquatable<AdjacencyRule>
 	{
 		/// <summary>
 		/// Represents method of determining adjacency where neighbors are considered adjacent if
 		/// they are in a cardinal direction, eg. 4-way (manhattan-based) connectivity.
 		/// </summary>
+		[NonSerialized]
 		public static readonly AdjacencyRule CARDINALS = new AdjacencyRule(Types.CARDINALS);
 
 		/// <summary>
 		/// Represents method of determining adjacency where neighbors are considered adjacent only
 		/// if they are in a diagonal direction.
 		/// </summary>
+		[NonSerialized]
 		public static readonly AdjacencyRule DIAGONALS = new AdjacencyRule(Types.DIAGONALS);
 
 		/// <summary>
 		/// Represents method of determining adjacency where all 8 possible neighbors are considered
 		/// adjacent (eg. 8-way connectivity).
 		/// </summary>
+		[NonSerialized]
 		public static readonly AdjacencyRule EIGHT_WAY = new AdjacencyRule(Types.EIGHT_WAY);
 
+		[NonSerialized]
 		private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
 
 		// Constructor, takes type.
@@ -63,7 +68,7 @@ namespace GoRogue
 		/// Enum value representing the method of determining adjacency -- useful for using
 		/// AdjacencyRule types in switch statements.
 		/// </summary>
-		public Types Type { get; private set; }
+		public readonly Types Type;
 
 		/// <summary>
 		/// Gets the AdjacencyRule class instance representing the adjacency type specified.
@@ -322,5 +327,47 @@ namespace GoRogue
 		/// </summary>
 		/// <returns>A string representation of the AdjacencyRule.</returns>
 		public override string ToString() => writeVals[(int)Type];
+
+		/// <summary>
+		/// Compares the current AdjacencyRule to the object given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is an AdjacencyRule with the same Type, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is AdjacencyRule e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current AdjacencyRule to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given AdjacencyRule has the same Type, false otherwise.</returns>
+		public bool Equals(AdjacencyRule other) => !ReferenceEquals(other, null) && Type == other.Type;
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => Type.GetHashCode();
+
+		/// <summary>
+		/// Compares the two AdjacencyRule instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given AdjacencyRule instances have the same Type, false otherwise.</returns>
+		public static bool operator ==(AdjacencyRule lhs, AdjacencyRule rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two AdjacencyRule instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given AdjacencyRule instances do NOT have the same Type, false otherwise.</returns>
+		public static bool operator !=(AdjacencyRule lhs, AdjacencyRule rhs) => !(lhs == rhs);
 	}
 }

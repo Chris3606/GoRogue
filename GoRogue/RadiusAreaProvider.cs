@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -19,12 +20,14 @@ namespace GoRogue
 	/// changed, reallocation must be performed, however the overhead should be insignificant on
 	/// everything but extremely large radiuses.
 	/// </remarks>
-	public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider
+	[Serializable]
+	public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider, IEquatable<RadiusAreaProvider>
 	{
 		private Coord _center;
 
 		private int _radius;
 
+		[NonSerialized]
 		private bool[,] inQueue;
 
 		private Coord topLeft;
@@ -196,6 +199,49 @@ namespace GoRogue
 				}
 			}
 		}
+
+		/// <summary>
+		/// Compares the current RadiusAreaProvider to the one given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is a RadiusAreaProvider that represents the same radius/Bounds, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is RadiusAreaProvider e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current RadiusAreaProvider to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given RadiusAreaProvider represents the same radius/Bounds, false otherwise.</returns>
+		public bool Equals(RadiusAreaProvider other)
+			=> !ReferenceEquals(other, null) && _center == other._center && _radius == other._radius && Bounds == other.Bounds && DistanceCalc == other.DistanceCalc;
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => _center.GetHashCode() ^ _radius.GetHashCode() ^ Bounds.GetHashCode() ^ DistanceCalc.GetHashCode();
+
+		/// <summary>
+		/// Compares the two RadiusAreaProvider instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given RadiusAreaProvider instances represents the same radius/Bounds, false otherwise.</returns>
+		public static bool operator ==(RadiusAreaProvider lhs, RadiusAreaProvider rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two RadiusAreaProvider instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given RadiusAreaProvider instances do NOT represent the same radius/Bounds, false otherwise.</returns>
+		public static bool operator !=(RadiusAreaProvider lhs, RadiusAreaProvider rhs) => !(lhs == rhs);
 
 		/// <summary>
 		/// Returns a string representation of the parameters of the RadiusAreaProvider.

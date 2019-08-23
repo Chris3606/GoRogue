@@ -31,6 +31,7 @@ namespace GoRogue
 	/// Coord where possible, as something that accepts or works with Coord will generally work with other supported types
 	/// as well.
 	/// </remarks>
+	[Serializable]
 	public struct Coord : IEquatable<Coord>, IEquatable<(int x, int y)>
 	{
 		/// <summary>
@@ -41,6 +42,7 @@ namespace GoRogue
 		/// This constant has (x, y) values (int.MinValue, int.MinValue), so a coordinate with those
 		/// x/y values is not considered a valid coordinate by many GoRogue functions.
 		/// </remarks>
+		[NonSerialized]
 		public static readonly Coord NONE = new Coord(int.MinValue, int.MinValue);
 
 		/// <summary>
