@@ -85,17 +85,12 @@ and (optional) bounds.</p>
   <div classs="implements">
     <h5>Implements</h5>
     <div><a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html">IReadOnlyRadiusAreaProvider</a></div>
+    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a>&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
     </div>
     <div>
       <span class="xref">System.Object.GetType()</span>
@@ -111,7 +106,8 @@ and (optional) bounds.</p>
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_RadiusAreaProvider_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public class RadiusAreaProvider : IReadOnlyRadiusAreaProvider, IEquatable&lt;RadiusAreaProvider&gt;</code></pre>
   </div>
   <h5 id="GoRogue_RadiusAreaProvider_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>In the case that MANHATTAN/CHEBYSHEV distance, or DIAMOND/SQUARE/OCTAHEDRON/CUBE radius shapes
@@ -133,7 +129,7 @@ everything but extremely large radiuses.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider__ctor_GoRogue_Coord_System_Int32_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.%23ctor(GoRogue.Coord%2CSystem.Int32%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L77">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L80">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider__ctor_" data-uid="GoRogue.RadiusAreaProvider.#ctor*"></a>
   <h4 id="GoRogue_RadiusAreaProvider__ctor_GoRogue_Coord_System_Int32_GoRogue_Distance_" data-uid="GoRogue.RadiusAreaProvider.#ctor(GoRogue.Coord,System.Int32,GoRogue.Distance)">RadiusAreaProvider(Coord, Int32, Distance)</h4>
@@ -180,7 +176,7 @@ implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.R
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider__ctor_GoRogue_Coord_System_Int32_GoRogue_Distance_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.%23ctor(GoRogue.Coord%2CSystem.Int32%2CGoRogue.Distance%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L42">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L45">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider__ctor_" data-uid="GoRogue.RadiusAreaProvider.#ctor*"></a>
   <h4 id="GoRogue_RadiusAreaProvider__ctor_GoRogue_Coord_System_Int32_GoRogue_Distance_GoRogue_Rectangle_" data-uid="GoRogue.RadiusAreaProvider.#ctor(GoRogue.Coord,System.Int32,GoRogue.Distance,GoRogue.Rectangle)">RadiusAreaProvider(Coord, Int32, Distance, Rectangle)</h4>
@@ -233,7 +229,7 @@ implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.R
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Int32%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L90">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L93">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider__ctor_" data-uid="GoRogue.RadiusAreaProvider.#ctor*"></a>
   <h4 id="GoRogue_RadiusAreaProvider__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_" data-uid="GoRogue.RadiusAreaProvider.#ctor(System.Int32,System.Int32,System.Int32,GoRogue.Distance)">RadiusAreaProvider(Int32, Int32, Int32, Distance)</h4>
@@ -286,7 +282,7 @@ implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.R
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_GoRogue_Rectangle_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Int32%2CGoRogue.Distance%2CGoRogue.Rectangle)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L65">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L68">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider__ctor_" data-uid="GoRogue.RadiusAreaProvider.#ctor*"></a>
   <h4 id="GoRogue_RadiusAreaProvider__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_GoRogue_Rectangle_" data-uid="GoRogue.RadiusAreaProvider.#ctor(System.Int32,System.Int32,System.Int32,GoRogue.Distance,GoRogue.Rectangle)">RadiusAreaProvider(Int32, Int32, Int32, Distance, Rectangle)</h4>
@@ -347,7 +343,7 @@ implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.R
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_Bounds.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.Bounds%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L97">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L100">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_Bounds_" data-uid="GoRogue.RadiusAreaProvider.Bounds*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_Bounds" data-uid="GoRogue.RadiusAreaProvider.Bounds">Bounds</h4>
@@ -379,7 +375,7 @@ to indicate that there are no bounds.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_Center.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.Center%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L102">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L105">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_Center_" data-uid="GoRogue.RadiusAreaProvider.Center*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_Center" data-uid="GoRogue.RadiusAreaProvider.Center">Center</h4>
@@ -410,7 +406,7 @@ to indicate that there are no bounds.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_CenterX.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.CenterX%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L115">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L118">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_CenterX_" data-uid="GoRogue.RadiusAreaProvider.CenterX*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_CenterX" data-uid="GoRogue.RadiusAreaProvider.CenterX">CenterX</h4>
@@ -441,7 +437,7 @@ to indicate that there are no bounds.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_CenterY.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.CenterY%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L119">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L122">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_CenterY_" data-uid="GoRogue.RadiusAreaProvider.CenterY*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_CenterY" data-uid="GoRogue.RadiusAreaProvider.CenterY">CenterY</h4>
@@ -472,7 +468,7 @@ to indicate that there are no bounds.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_DistanceCalc.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.DistanceCalc%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L125">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L128">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_DistanceCalc_" data-uid="GoRogue.RadiusAreaProvider.DistanceCalc*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_DistanceCalc" data-uid="GoRogue.RadiusAreaProvider.DistanceCalc">DistanceCalc</h4>
@@ -504,7 +500,7 @@ implicitly convertible to a distance method, eg. <a class="xref" href="GoRogue.R
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_Radius.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.Radius%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L135">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L138">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_Radius_" data-uid="GoRogue.RadiusAreaProvider.Radius*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_Radius" data-uid="GoRogue.RadiusAreaProvider.Radius">Radius</h4>
@@ -542,7 +538,7 @@ be relatively small in most cases.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_AsReadOnly.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.AsReadOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L154">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L157">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_AsReadOnly_" data-uid="GoRogue.RadiusAreaProvider.AsReadOnly*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_AsReadOnly" data-uid="GoRogue.RadiusAreaProvider.AsReadOnly">AsReadOnly()</h4>
@@ -574,7 +570,7 @@ be relatively small in most cases.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_CalculatePositions.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.CalculatePositions%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L167">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L170">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_CalculatePositions_" data-uid="GoRogue.RadiusAreaProvider.CalculatePositions*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_CalculatePositions" data-uid="GoRogue.RadiusAreaProvider.CalculatePositions">CalculatePositions()</h4>
@@ -610,10 +606,143 @@ EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_Equals_GoRogue_RadiusAreaProvider_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.Equals(GoRogue.RadiusAreaProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L221">View Source</a>
+  </span>
+  <a id="GoRogue_RadiusAreaProvider_Equals_" data-uid="GoRogue.RadiusAreaProvider.Equals*"></a>
+  <h4 id="GoRogue_RadiusAreaProvider_Equals_GoRogue_RadiusAreaProvider_" data-uid="GoRogue.RadiusAreaProvider.Equals(GoRogue.RadiusAreaProvider)">Equals(RadiusAreaProvider)</h4>
+  <div class="markdown level1 summary"><p>Compares the current RadiusAreaProvider to the one given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(RadiusAreaProvider other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given RadiusAreaProvider represents the same radius/Bounds, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_Equals_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L208">View Source</a>
+  </span>
+  <a id="GoRogue_RadiusAreaProvider_Equals_" data-uid="GoRogue.RadiusAreaProvider.Equals*"></a>
+  <h4 id="GoRogue_RadiusAreaProvider_Equals_System_Object_" data-uid="GoRogue.RadiusAreaProvider.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Compares the current RadiusAreaProvider to the one given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given object is a RadiusAreaProvider that represents the same radius/Bounds, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_GetHashCode.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L228">View Source</a>
+  </span>
+  <a id="GoRogue_RadiusAreaProvider_GetHashCode_" data-uid="GoRogue.RadiusAreaProvider.GetHashCode*"></a>
+  <h4 id="GoRogue_RadiusAreaProvider_GetHashCode" data-uid="GoRogue.RadiusAreaProvider.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Returns a hash-value for this object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.GetHashCode()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_ToString.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L204">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L250">View Source</a>
   </span>
   <a id="GoRogue_RadiusAreaProvider_ToString_" data-uid="GoRogue.RadiusAreaProvider.ToString*"></a>
   <h4 id="GoRogue_RadiusAreaProvider_ToString" data-uid="GoRogue.RadiusAreaProvider.ToString">ToString()</h4>
@@ -642,9 +771,122 @@ EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.</p>
   </table>
   <h5 class="overrides">Overrides</h5>
   <div><span class="xref">System.Object.ToString()</span></div>
+  <h3 id="operators">Operators
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_op_Equality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.op_Equality(GoRogue.RadiusAreaProvider%2CGoRogue.RadiusAreaProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L236">View Source</a>
+  </span>
+  <a id="GoRogue_RadiusAreaProvider_op_Equality_" data-uid="GoRogue.RadiusAreaProvider.op_Equality*"></a>
+  <h4 id="GoRogue_RadiusAreaProvider_op_Equality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_" data-uid="GoRogue.RadiusAreaProvider.op_Equality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)">Equality(RadiusAreaProvider, RadiusAreaProvider)</h4>
+  <div class="markdown level1 summary"><p>Compares the two RadiusAreaProvider instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(RadiusAreaProvider lhs, RadiusAreaProvider rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></td>
+        <td><span class="parametername">lhs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></td>
+        <td><span class="parametername">rhs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two given RadiusAreaProvider instances represents the same radius/Bounds, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider_op_Inequality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider.op_Inequality(GoRogue.RadiusAreaProvider%2CGoRogue.RadiusAreaProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L244">View Source</a>
+  </span>
+  <a id="GoRogue_RadiusAreaProvider_op_Inequality_" data-uid="GoRogue.RadiusAreaProvider.op_Inequality*"></a>
+  <h4 id="GoRogue_RadiusAreaProvider_op_Inequality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_" data-uid="GoRogue.RadiusAreaProvider.op_Inequality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)">Inequality(RadiusAreaProvider, RadiusAreaProvider)</h4>
+  <div class="markdown level1 summary"><p>Compares the two RadiusAreaProvider instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(RadiusAreaProvider lhs, RadiusAreaProvider rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></td>
+        <td><span class="parametername">lhs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></td>
+        <td><span class="parametername">rhs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two given RadiusAreaProvider instances do NOT represent the same radius/Bounds, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html">IReadOnlyRadiusAreaProvider</a>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>
@@ -661,7 +903,7 @@ EUCLIDEAN distance, or CIRCLE/SPHERE radius shapes are specified.</p>
                     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_RadiusAreaProvider.md&amp;value=---%0Auid%3A%20GoRogue.RadiusAreaProvider%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L22" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/RadiusAreaProvider.cs/#L23" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

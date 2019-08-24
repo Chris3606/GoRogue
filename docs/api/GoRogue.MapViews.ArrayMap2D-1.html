@@ -87,17 +87,12 @@
     <div><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView</a>&lt;T&gt;</div>
     <div><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;T&gt;</div>
     <div><span class="xref">System.ICloneable</span></div>
+    <div><span class="xref">System.IEquatable</span>&lt;<a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;&gt;</div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
     <div>
-      <span class="xref">System.Object.Equals(System.Object)</span>
-    </div>
-    <div>
       <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
-    </div>
-    <div>
-      <span class="xref">System.Object.GetHashCode()</span>
     </div>
     <div>
       <span class="xref">System.Object.GetType()</span>
@@ -113,7 +108,8 @@
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_MapViews_ArrayMap2D_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public sealed class ArrayMap2D&lt;T&gt; : ISettableMapView&lt;T&gt;, IMapView&lt;T&gt;, ICloneable</code></pre>
+    <pre><code class="lang-csharp hljs">[Serializable]
+public sealed class ArrayMap2D&lt;T&gt; : ISettableMapView&lt;T&gt;, IMapView&lt;T&gt;, ICloneable, IEquatable&lt;ArrayMap2D&lt;T&gt;&gt;</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -144,7 +140,7 @@ appear in the map view as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1__ctor__0_0__0___.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.%23ctor(%600%5B0%3A%2C0%3A%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L34">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L35">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1__ctor_" data-uid="GoRogue.MapViews.ArrayMap2D`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1__ctor__0_0__0___" data-uid="GoRogue.MapViews.ArrayMap2D`1.#ctor(`0[0:,0:])">ArrayMap2D(T[,])</h4>
@@ -178,7 +174,7 @@ appear in the map view as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1__ctor_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.%23ctor(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L26">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L27">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1__ctor_" data-uid="GoRogue.MapViews.ArrayMap2D`1.#ctor*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1__ctor_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap2D`1.#ctor(System.Int32,System.Int32)">ArrayMap2D(Int32, Int32)</h4>
@@ -220,7 +216,7 @@ appear in the map view as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Height.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L42">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L43">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Height_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Height*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Height" data-uid="GoRogue.MapViews.ArrayMap2D`1.Height">Height</h4>
@@ -251,7 +247,7 @@ appear in the map view as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L78">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L79">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Item_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item(GoRogue.Coord)">Item[Coord]</h4>
@@ -301,7 +297,7 @@ appear in the map view as well.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L55">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L56">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Item_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Item_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item(System.Int32)">Item[Int32]</h4>
@@ -352,7 +348,7 @@ in the underlying 2D array.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L67">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L68">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Item_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -408,7 +404,7 @@ in the underlying 2D array.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Width.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L47">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L48">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Width_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Width*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Width" data-uid="GoRogue.MapViews.ArrayMap2D`1.Width">Width</h4>
@@ -441,7 +437,7 @@ in the underlying 2D array.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Clone.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Clone%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L88">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L89">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_Clone_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Clone*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_Clone" data-uid="GoRogue.MapViews.ArrayMap2D`1.Clone">Clone()</h4>
@@ -470,10 +466,143 @@ in the underlying 2D array.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Equals_GoRogue_MapViews_ArrayMap2D__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Equals(GoRogue.MapViews.ArrayMap2D%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L130">View Source</a>
+  </span>
+  <a id="GoRogue_MapViews_ArrayMap2D_1_Equals_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Equals*"></a>
+  <h4 id="GoRogue_MapViews_ArrayMap2D_1_Equals_GoRogue_MapViews_ArrayMap2D__0__" data-uid="GoRogue.MapViews.ArrayMap2D`1.Equals(GoRogue.MapViews.ArrayMap2D{`0})">Equals(ArrayMap2D&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Compares the current ArrayMap2D to the one given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(ArrayMap2D&lt;T&gt; other)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;</td>
+        <td><span class="parametername">other</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_Equals_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.Equals(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L117">View Source</a>
+  </span>
+  <a id="GoRogue_MapViews_ArrayMap2D_1_Equals_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Equals*"></a>
+  <h4 id="GoRogue_MapViews_ArrayMap2D_1_Equals_System_Object_" data-uid="GoRogue.MapViews.ArrayMap2D`1.Equals(System.Object)">Equals(Object)</h4>
+  <div class="markdown level1 summary"><p>Compares the current ArrayMap2D to the object given.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the given object is an ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.Equals(System.Object)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_GetHashCode.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.GetHashCode%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L136">View Source</a>
+  </span>
+  <a id="GoRogue_MapViews_ArrayMap2D_1_GetHashCode_" data-uid="GoRogue.MapViews.ArrayMap2D`1.GetHashCode*"></a>
+  <h4 id="GoRogue_MapViews_ArrayMap2D_1_GetHashCode" data-uid="GoRogue.MapViews.ArrayMap2D`1.GetHashCode">GetHashCode()</h4>
+  <div class="markdown level1 summary"><p>Returns a hash-value for this object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.GetHashCode()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_SetToDefault.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.SetToDefault%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L109">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L110">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_SetToDefault_" data-uid="GoRogue.MapViews.ArrayMap2D`1.SetToDefault*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_SetToDefault" data-uid="GoRogue.MapViews.ArrayMap2D`1.SetToDefault">SetToDefault()</h4>
@@ -489,7 +618,7 @@ in the underlying 2D array.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L115">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L158">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_ToString" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString">ToString()</h4>
@@ -523,7 +652,7 @@ in the underlying 2D array.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_ToString_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.ToString(System.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L129">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L172">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_ToString_System_Func__0_System_String__" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString(System.Func{`0,System.String})">ToString(Func&lt;T, String&gt;)</h4>
@@ -578,7 +707,7 @@ false values, and '.' for true values.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_ToString_System_Int32_System_Func__0_System_String__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.ToString(System.Int32%2CSystem.Func%7B%600%2CSystem.String%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L149">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L192">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_ToString_" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_ToString_System_Int32_System_Func__0_System_String__" data-uid="GoRogue.MapViews.ArrayMap2D`1.ToString(System.Int32,System.Func{`0,System.String})">ToString(Int32, Func&lt;T, String&gt;)</h4>
@@ -641,10 +770,64 @@ is less than the length of the element's string represention.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_op_Equality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.op_Equality(GoRogue.MapViews.ArrayMap2D%7B%600%7D%2CGoRogue.MapViews.ArrayMap2D%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L144">View Source</a>
+  </span>
+  <a id="GoRogue_MapViews_ArrayMap2D_1_op_Equality_" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Equality*"></a>
+  <h4 id="GoRogue_MapViews_ArrayMap2D_1_op_Equality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Equality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})">Equality(ArrayMap2D&lt;T&gt;, ArrayMap2D&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Compares the two ArrayMap2D instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(ArrayMap2D&lt;T&gt; lhs, ArrayMap2D&lt;T&gt; rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;</td>
+        <td><span class="parametername">lhs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;</td>
+        <td><span class="parametername">rhs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two given ArrayMap2D&lt;T&gt; instances have a reference to the same underlying array, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_op_Implicit_GoRogue_MapViews_ArrayMap2D__0____0_0__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.op_Implicit(GoRogue.MapViews.ArrayMap2D%7B%600%7D)~%600%5B0%3A%2C0%3A%5D%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L103">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L104">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ArrayMap2D_1_op_Implicit_" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Implicit*"></a>
   <h4 id="GoRogue_MapViews_ArrayMap2D_1_op_Implicit_GoRogue_MapViews_ArrayMap2D__0____0_0__0__" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Implicit(GoRogue.MapViews.ArrayMap2D{`0})~`0[0:,0:]">Implicit(ArrayMap2D&lt;T&gt; to T[,])</h4>
@@ -688,6 +871,60 @@ is less than the length of the element's string represention.</p>
       </tr>
     </tbody>
   </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/master/apiSpec/new?filename=GoRogue_MapViews_ArrayMap2D_1_op_Inequality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ArrayMap2D%601.op_Inequality(GoRogue.MapViews.ArrayMap2D%7B%600%7D%2CGoRogue.MapViews.ArrayMap2D%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/master/GoRogue/MapViews/ArrayMap2D.cs/#L152">View Source</a>
+  </span>
+  <a id="GoRogue_MapViews_ArrayMap2D_1_op_Inequality_" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Inequality*"></a>
+  <h4 id="GoRogue_MapViews_ArrayMap2D_1_op_Inequality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__" data-uid="GoRogue.MapViews.ArrayMap2D`1.op_Inequality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})">Inequality(ArrayMap2D&lt;T&gt;, ArrayMap2D&lt;T&gt;)</h4>
+  <div class="markdown level1 summary"><p>Compares the two ArrayMap2D instances.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(ArrayMap2D&lt;T&gt; lhs, ArrayMap2D&lt;T&gt; rhs)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;</td>
+        <td><span class="parametername">lhs</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.ArrayMap2D-1.html">ArrayMap2D</a>&lt;T&gt;</td>
+        <td><span class="parametername">rhs</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the two given ArrayMap2D&lt;T&gt; instances do NOT have a reference to the same underlying array, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>
@@ -697,6 +934,9 @@ is less than the length of the element's string represention.</p>
   </div>
   <div>
       <span class="xref">System.ICloneable</span>
+  </div>
+  <div>
+      <span class="xref">System.IEquatable&lt;T&gt;</span>
   </div>
   <h3 id="extensionmethods">Extension Methods</h3>
   <div>

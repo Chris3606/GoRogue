@@ -70,6 +70,38 @@ references:
   commentId: F:GoRogue.AdjacencyRule.EIGHT_WAY
   fullName: GoRogue.AdjacencyRule.EIGHT_WAY
   nameWithType: AdjacencyRule.EIGHT_WAY
+- uid: GoRogue.AdjacencyRule.Equals(GoRogue.AdjacencyRule)
+  name: Equals(AdjacencyRule)
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Equals_GoRogue_AdjacencyRule_
+  commentId: M:GoRogue.AdjacencyRule.Equals(GoRogue.AdjacencyRule)
+  fullName: GoRogue.AdjacencyRule.Equals(GoRogue.AdjacencyRule)
+  nameWithType: AdjacencyRule.Equals(AdjacencyRule)
+- uid: GoRogue.AdjacencyRule.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Equals_System_Object_
+  commentId: M:GoRogue.AdjacencyRule.Equals(System.Object)
+  fullName: GoRogue.AdjacencyRule.Equals(System.Object)
+  nameWithType: AdjacencyRule.Equals(Object)
+- uid: GoRogue.AdjacencyRule.Equals*
+  name: Equals
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Equals_
+  commentId: Overload:GoRogue.AdjacencyRule.Equals
+  isSpec: "True"
+  fullName: GoRogue.AdjacencyRule.Equals
+  nameWithType: AdjacencyRule.Equals
+- uid: GoRogue.AdjacencyRule.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_GetHashCode
+  commentId: M:GoRogue.AdjacencyRule.GetHashCode
+  fullName: GoRogue.AdjacencyRule.GetHashCode()
+  nameWithType: AdjacencyRule.GetHashCode()
+- uid: GoRogue.AdjacencyRule.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_GetHashCode_
+  commentId: Overload:GoRogue.AdjacencyRule.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.AdjacencyRule.GetHashCode
+  nameWithType: AdjacencyRule.GetHashCode
 - uid: GoRogue.AdjacencyRule.Neighbors(GoRogue.Coord)
   name: Neighbors(Coord)
   href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Neighbors_GoRogue_Coord_
@@ -127,6 +159,32 @@ references:
   isSpec: "True"
   fullName: GoRogue.AdjacencyRule.NeighborsCounterClockwise
   nameWithType: AdjacencyRule.NeighborsCounterClockwise
+- uid: GoRogue.AdjacencyRule.op_Equality(GoRogue.AdjacencyRule,GoRogue.AdjacencyRule)
+  name: Equality(AdjacencyRule, AdjacencyRule)
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_op_Equality_GoRogue_AdjacencyRule_GoRogue_AdjacencyRule_
+  commentId: M:GoRogue.AdjacencyRule.op_Equality(GoRogue.AdjacencyRule,GoRogue.AdjacencyRule)
+  fullName: GoRogue.AdjacencyRule.Equality(GoRogue.AdjacencyRule, GoRogue.AdjacencyRule)
+  nameWithType: AdjacencyRule.Equality(AdjacencyRule, AdjacencyRule)
+- uid: GoRogue.AdjacencyRule.op_Equality*
+  name: Equality
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_op_Equality_
+  commentId: Overload:GoRogue.AdjacencyRule.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.AdjacencyRule.Equality
+  nameWithType: AdjacencyRule.Equality
+- uid: GoRogue.AdjacencyRule.op_Inequality(GoRogue.AdjacencyRule,GoRogue.AdjacencyRule)
+  name: Inequality(AdjacencyRule, AdjacencyRule)
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_op_Inequality_GoRogue_AdjacencyRule_GoRogue_AdjacencyRule_
+  commentId: M:GoRogue.AdjacencyRule.op_Inequality(GoRogue.AdjacencyRule,GoRogue.AdjacencyRule)
+  fullName: GoRogue.AdjacencyRule.Inequality(GoRogue.AdjacencyRule, GoRogue.AdjacencyRule)
+  nameWithType: AdjacencyRule.Inequality(AdjacencyRule, AdjacencyRule)
+- uid: GoRogue.AdjacencyRule.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_op_Inequality_
+  commentId: Overload:GoRogue.AdjacencyRule.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.AdjacencyRule.Inequality
+  nameWithType: AdjacencyRule.Inequality
 - uid: GoRogue.AdjacencyRule.ToAdjacencyRule(GoRogue.AdjacencyRule.Types)
   name: ToAdjacencyRule(AdjacencyRule.Types)
   href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_ToAdjacencyRule_GoRogue_AdjacencyRule_Types_
@@ -156,14 +214,7 @@ references:
 - uid: GoRogue.AdjacencyRule.Type
   name: Type
   href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Type
-  commentId: P:GoRogue.AdjacencyRule.Type
-  fullName: GoRogue.AdjacencyRule.Type
-  nameWithType: AdjacencyRule.Type
-- uid: GoRogue.AdjacencyRule.Type*
-  name: Type
-  href: api/GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Type_
-  commentId: Overload:GoRogue.AdjacencyRule.Type
-  isSpec: "True"
+  commentId: F:GoRogue.AdjacencyRule.Type
   fullName: GoRogue.AdjacencyRule.Type
   nameWithType: AdjacencyRule.Type
 - uid: GoRogue.AdjacencyRule.Types
@@ -1609,6 +1660,64 @@ references:
   isSpec: "True"
   fullName: GoRogue.BoundedRectangle.BoundingBox
   nameWithType: BoundedRectangle.BoundingBox
+- uid: GoRogue.BoundedRectangle.Equals(GoRogue.BoundedRectangle)
+  name: Equals(BoundedRectangle)
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_Equals_GoRogue_BoundedRectangle_
+  commentId: M:GoRogue.BoundedRectangle.Equals(GoRogue.BoundedRectangle)
+  fullName: GoRogue.BoundedRectangle.Equals(GoRogue.BoundedRectangle)
+  nameWithType: BoundedRectangle.Equals(BoundedRectangle)
+- uid: GoRogue.BoundedRectangle.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_Equals_System_Object_
+  commentId: M:GoRogue.BoundedRectangle.Equals(System.Object)
+  fullName: GoRogue.BoundedRectangle.Equals(System.Object)
+  nameWithType: BoundedRectangle.Equals(Object)
+- uid: GoRogue.BoundedRectangle.Equals*
+  name: Equals
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_Equals_
+  commentId: Overload:GoRogue.BoundedRectangle.Equals
+  isSpec: "True"
+  fullName: GoRogue.BoundedRectangle.Equals
+  nameWithType: BoundedRectangle.Equals
+- uid: GoRogue.BoundedRectangle.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_GetHashCode
+  commentId: M:GoRogue.BoundedRectangle.GetHashCode
+  fullName: GoRogue.BoundedRectangle.GetHashCode()
+  nameWithType: BoundedRectangle.GetHashCode()
+- uid: GoRogue.BoundedRectangle.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_GetHashCode_
+  commentId: Overload:GoRogue.BoundedRectangle.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.BoundedRectangle.GetHashCode
+  nameWithType: BoundedRectangle.GetHashCode
+- uid: GoRogue.BoundedRectangle.op_Equality(GoRogue.BoundedRectangle,GoRogue.BoundedRectangle)
+  name: Equality(BoundedRectangle, BoundedRectangle)
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_op_Equality_GoRogue_BoundedRectangle_GoRogue_BoundedRectangle_
+  commentId: M:GoRogue.BoundedRectangle.op_Equality(GoRogue.BoundedRectangle,GoRogue.BoundedRectangle)
+  fullName: GoRogue.BoundedRectangle.Equality(GoRogue.BoundedRectangle, GoRogue.BoundedRectangle)
+  nameWithType: BoundedRectangle.Equality(BoundedRectangle, BoundedRectangle)
+- uid: GoRogue.BoundedRectangle.op_Equality*
+  name: Equality
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_op_Equality_
+  commentId: Overload:GoRogue.BoundedRectangle.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.BoundedRectangle.Equality
+  nameWithType: BoundedRectangle.Equality
+- uid: GoRogue.BoundedRectangle.op_Inequality(GoRogue.BoundedRectangle,GoRogue.BoundedRectangle)
+  name: Inequality(BoundedRectangle, BoundedRectangle)
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_op_Inequality_GoRogue_BoundedRectangle_GoRogue_BoundedRectangle_
+  commentId: M:GoRogue.BoundedRectangle.op_Inequality(GoRogue.BoundedRectangle,GoRogue.BoundedRectangle)
+  fullName: GoRogue.BoundedRectangle.Inequality(GoRogue.BoundedRectangle, GoRogue.BoundedRectangle)
+  nameWithType: BoundedRectangle.Inequality(BoundedRectangle, BoundedRectangle)
+- uid: GoRogue.BoundedRectangle.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.BoundedRectangle.html#GoRogue_BoundedRectangle_op_Inequality_
+  commentId: Overload:GoRogue.BoundedRectangle.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.BoundedRectangle.Inequality
+  nameWithType: BoundedRectangle.Inequality
 - uid: GoRogue.ComponentContainer
   name: ComponentContainer
   href: api/GoRogue.ComponentContainer.html
@@ -3347,27 +3456,13 @@ references:
 - uid: GoRogue.Direction.DeltaX
   name: DeltaX
   href: api/GoRogue.Direction.html#GoRogue_Direction_DeltaX
-  commentId: P:GoRogue.Direction.DeltaX
-  fullName: GoRogue.Direction.DeltaX
-  nameWithType: Direction.DeltaX
-- uid: GoRogue.Direction.DeltaX*
-  name: DeltaX
-  href: api/GoRogue.Direction.html#GoRogue_Direction_DeltaX_
-  commentId: Overload:GoRogue.Direction.DeltaX
-  isSpec: "True"
+  commentId: F:GoRogue.Direction.DeltaX
   fullName: GoRogue.Direction.DeltaX
   nameWithType: Direction.DeltaX
 - uid: GoRogue.Direction.DeltaY
   name: DeltaY
   href: api/GoRogue.Direction.html#GoRogue_Direction_DeltaY
-  commentId: P:GoRogue.Direction.DeltaY
-  fullName: GoRogue.Direction.DeltaY
-  nameWithType: Direction.DeltaY
-- uid: GoRogue.Direction.DeltaY*
-  name: DeltaY
-  href: api/GoRogue.Direction.html#GoRogue_Direction_DeltaY_
-  commentId: Overload:GoRogue.Direction.DeltaY
-  isSpec: "True"
+  commentId: F:GoRogue.Direction.DeltaY
   fullName: GoRogue.Direction.DeltaY
   nameWithType: Direction.DeltaY
 - uid: GoRogue.Direction.DOWN
@@ -3409,6 +3504,25 @@ references:
   isSpec: "True"
   fullName: GoRogue.Direction.DOWN_RIGHT
   nameWithType: Direction.DOWN_RIGHT
+- uid: GoRogue.Direction.Equals(GoRogue.Direction)
+  name: Equals(Direction)
+  href: api/GoRogue.Direction.html#GoRogue_Direction_Equals_GoRogue_Direction_
+  commentId: M:GoRogue.Direction.Equals(GoRogue.Direction)
+  fullName: GoRogue.Direction.Equals(GoRogue.Direction)
+  nameWithType: Direction.Equals(Direction)
+- uid: GoRogue.Direction.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.Direction.html#GoRogue_Direction_Equals_System_Object_
+  commentId: M:GoRogue.Direction.Equals(System.Object)
+  fullName: GoRogue.Direction.Equals(System.Object)
+  nameWithType: Direction.Equals(Object)
+- uid: GoRogue.Direction.Equals*
+  name: Equals
+  href: api/GoRogue.Direction.html#GoRogue_Direction_Equals_
+  commentId: Overload:GoRogue.Direction.Equals
+  isSpec: "True"
+  fullName: GoRogue.Direction.Equals
+  nameWithType: Direction.Equals
 - uid: GoRogue.Direction.GetCardinalDirection(GoRogue.Coord)
   name: GetCardinalDirection(Coord)
   href: api/GoRogue.Direction.html#GoRogue_Direction_GetCardinalDirection_GoRogue_Coord_
@@ -3471,6 +3585,19 @@ references:
   isSpec: "True"
   fullName: GoRogue.Direction.GetDirection
   nameWithType: Direction.GetDirection
+- uid: GoRogue.Direction.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.Direction.html#GoRogue_Direction_GetHashCode
+  commentId: M:GoRogue.Direction.GetHashCode
+  fullName: GoRogue.Direction.GetHashCode()
+  nameWithType: Direction.GetHashCode()
+- uid: GoRogue.Direction.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.Direction.html#GoRogue_Direction_GetHashCode_
+  commentId: Overload:GoRogue.Direction.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.Direction.GetHashCode
+  nameWithType: Direction.GetHashCode
 - uid: GoRogue.Direction.LEFT
   name: LEFT
   href: api/GoRogue.Direction.html#GoRogue_Direction_LEFT
@@ -3544,6 +3671,19 @@ references:
   isSpec: "True"
   fullName: GoRogue.Direction.Decrement
   nameWithType: Direction.Decrement
+- uid: GoRogue.Direction.op_Equality(GoRogue.Direction,GoRogue.Direction)
+  name: Equality(Direction, Direction)
+  href: api/GoRogue.Direction.html#GoRogue_Direction_op_Equality_GoRogue_Direction_GoRogue_Direction_
+  commentId: M:GoRogue.Direction.op_Equality(GoRogue.Direction,GoRogue.Direction)
+  fullName: GoRogue.Direction.Equality(GoRogue.Direction, GoRogue.Direction)
+  nameWithType: Direction.Equality(Direction, Direction)
+- uid: GoRogue.Direction.op_Equality*
+  name: Equality
+  href: api/GoRogue.Direction.html#GoRogue_Direction_op_Equality_
+  commentId: Overload:GoRogue.Direction.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.Direction.Equality
+  nameWithType: Direction.Equality
 - uid: GoRogue.Direction.op_Increment(GoRogue.Direction)
   name: Increment(Direction)
   href: api/GoRogue.Direction.html#GoRogue_Direction_op_Increment_GoRogue_Direction_
@@ -3557,6 +3697,19 @@ references:
   isSpec: "True"
   fullName: GoRogue.Direction.Increment
   nameWithType: Direction.Increment
+- uid: GoRogue.Direction.op_Inequality(GoRogue.Direction,GoRogue.Direction)
+  name: Inequality(Direction, Direction)
+  href: api/GoRogue.Direction.html#GoRogue_Direction_op_Inequality_GoRogue_Direction_GoRogue_Direction_
+  commentId: M:GoRogue.Direction.op_Inequality(GoRogue.Direction,GoRogue.Direction)
+  fullName: GoRogue.Direction.Inequality(GoRogue.Direction, GoRogue.Direction)
+  nameWithType: Direction.Inequality(Direction, Direction)
+- uid: GoRogue.Direction.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.Direction.html#GoRogue_Direction_op_Inequality_
+  commentId: Overload:GoRogue.Direction.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.Direction.Inequality
+  nameWithType: Direction.Inequality
 - uid: GoRogue.Direction.op_Subtraction(GoRogue.Direction,System.Int32)
   name: Subtraction(Direction, Int32)
   href: api/GoRogue.Direction.html#GoRogue_Direction_op_Subtraction_GoRogue_Direction_System_Int32_
@@ -3612,14 +3765,7 @@ references:
 - uid: GoRogue.Direction.Type
   name: Type
   href: api/GoRogue.Direction.html#GoRogue_Direction_Type
-  commentId: P:GoRogue.Direction.Type
-  fullName: GoRogue.Direction.Type
-  nameWithType: Direction.Type
-- uid: GoRogue.Direction.Type*
-  name: Type
-  href: api/GoRogue.Direction.html#GoRogue_Direction_Type_
-  commentId: Overload:GoRogue.Direction.Type
-  isSpec: "True"
+  commentId: F:GoRogue.Direction.Type
   fullName: GoRogue.Direction.Type
   nameWithType: Direction.Type
 - uid: GoRogue.Direction.Types
@@ -3910,18 +4056,63 @@ references:
   commentId: F:GoRogue.Distance.CHEBYSHEV
   fullName: GoRogue.Distance.CHEBYSHEV
   nameWithType: Distance.CHEBYSHEV
+- uid: GoRogue.Distance.Equals(GoRogue.Distance)
+  name: Equals(Distance)
+  href: api/GoRogue.Distance.html#GoRogue_Distance_Equals_GoRogue_Distance_
+  commentId: M:GoRogue.Distance.Equals(GoRogue.Distance)
+  fullName: GoRogue.Distance.Equals(GoRogue.Distance)
+  nameWithType: Distance.Equals(Distance)
+- uid: GoRogue.Distance.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.Distance.html#GoRogue_Distance_Equals_System_Object_
+  commentId: M:GoRogue.Distance.Equals(System.Object)
+  fullName: GoRogue.Distance.Equals(System.Object)
+  nameWithType: Distance.Equals(Object)
+- uid: GoRogue.Distance.Equals*
+  name: Equals
+  href: api/GoRogue.Distance.html#GoRogue_Distance_Equals_
+  commentId: Overload:GoRogue.Distance.Equals
+  isSpec: "True"
+  fullName: GoRogue.Distance.Equals
+  nameWithType: Distance.Equals
 - uid: GoRogue.Distance.EUCLIDEAN
   name: EUCLIDEAN
   href: api/GoRogue.Distance.html#GoRogue_Distance_EUCLIDEAN
   commentId: F:GoRogue.Distance.EUCLIDEAN
   fullName: GoRogue.Distance.EUCLIDEAN
   nameWithType: Distance.EUCLIDEAN
+- uid: GoRogue.Distance.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.Distance.html#GoRogue_Distance_GetHashCode
+  commentId: M:GoRogue.Distance.GetHashCode
+  fullName: GoRogue.Distance.GetHashCode()
+  nameWithType: Distance.GetHashCode()
+- uid: GoRogue.Distance.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.Distance.html#GoRogue_Distance_GetHashCode_
+  commentId: Overload:GoRogue.Distance.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.Distance.GetHashCode
+  nameWithType: Distance.GetHashCode
 - uid: GoRogue.Distance.MANHATTAN
   name: MANHATTAN
   href: api/GoRogue.Distance.html#GoRogue_Distance_MANHATTAN
   commentId: F:GoRogue.Distance.MANHATTAN
   fullName: GoRogue.Distance.MANHATTAN
   nameWithType: Distance.MANHATTAN
+- uid: GoRogue.Distance.op_Equality(GoRogue.Distance,GoRogue.Distance)
+  name: Equality(Distance, Distance)
+  href: api/GoRogue.Distance.html#GoRogue_Distance_op_Equality_GoRogue_Distance_GoRogue_Distance_
+  commentId: M:GoRogue.Distance.op_Equality(GoRogue.Distance,GoRogue.Distance)
+  fullName: GoRogue.Distance.Equality(GoRogue.Distance, GoRogue.Distance)
+  nameWithType: Distance.Equality(Distance, Distance)
+- uid: GoRogue.Distance.op_Equality*
+  name: Equality
+  href: api/GoRogue.Distance.html#GoRogue_Distance_op_Equality_
+  commentId: Overload:GoRogue.Distance.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.Distance.Equality
+  nameWithType: Distance.Equality
 - uid: GoRogue.Distance.op_Explicit(GoRogue.Distance)~GoRogue.Radius
   name: Explicit(Distance to Radius)
   href: api/GoRogue.Distance.html#GoRogue_Distance_op_Explicit_GoRogue_Distance__GoRogue_Radius
@@ -3960,6 +4151,19 @@ references:
   fullName.vb: GoRogue.Distance.Widening
   nameWithType: Distance.Implicit
   nameWithType.vb: Distance.Widening
+- uid: GoRogue.Distance.op_Inequality(GoRogue.Distance,GoRogue.Distance)
+  name: Inequality(Distance, Distance)
+  href: api/GoRogue.Distance.html#GoRogue_Distance_op_Inequality_GoRogue_Distance_GoRogue_Distance_
+  commentId: M:GoRogue.Distance.op_Inequality(GoRogue.Distance,GoRogue.Distance)
+  fullName: GoRogue.Distance.Inequality(GoRogue.Distance, GoRogue.Distance)
+  nameWithType: Distance.Inequality(Distance, Distance)
+- uid: GoRogue.Distance.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.Distance.html#GoRogue_Distance_op_Inequality_
+  commentId: Overload:GoRogue.Distance.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.Distance.Inequality
+  nameWithType: Distance.Inequality
 - uid: GoRogue.Distance.ToDistance(GoRogue.Distance.Types)
   name: ToDistance(Distance.Types)
   href: api/GoRogue.Distance.html#GoRogue_Distance_ToDistance_GoRogue_Distance_Types_
@@ -7793,6 +7997,49 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Clone
   nameWithType: ArrayMap<T>.Clone
   nameWithType.vb: ArrayMap(Of T).Clone
+- uid: GoRogue.MapViews.ArrayMap`1.Equals(GoRogue.MapViews.ArrayMap{`0})
+  name: Equals(ArrayMap<T>)
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_Equals_GoRogue_MapViews_ArrayMap__0__
+  commentId: M:GoRogue.MapViews.ArrayMap`1.Equals(GoRogue.MapViews.ArrayMap{`0})
+  name.vb: Equals(ArrayMap(Of T))
+  fullName: GoRogue.MapViews.ArrayMap<T>.Equals(GoRogue.MapViews.ArrayMap<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Equals(GoRogue.MapViews.ArrayMap(Of T))
+  nameWithType: ArrayMap<T>.Equals(ArrayMap<T>)
+  nameWithType.vb: ArrayMap(Of T).Equals(ArrayMap(Of T))
+- uid: GoRogue.MapViews.ArrayMap`1.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_Equals_System_Object_
+  commentId: M:GoRogue.MapViews.ArrayMap`1.Equals(System.Object)
+  fullName: GoRogue.MapViews.ArrayMap<T>.Equals(System.Object)
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Equals(System.Object)
+  nameWithType: ArrayMap<T>.Equals(Object)
+  nameWithType.vb: ArrayMap(Of T).Equals(Object)
+- uid: GoRogue.MapViews.ArrayMap`1.Equals*
+  name: Equals
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_Equals_
+  commentId: Overload:GoRogue.MapViews.ArrayMap`1.Equals
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap<T>.Equals
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Equals
+  nameWithType: ArrayMap<T>.Equals
+  nameWithType.vb: ArrayMap(Of T).Equals
+- uid: GoRogue.MapViews.ArrayMap`1.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_GetHashCode
+  commentId: M:GoRogue.MapViews.ArrayMap`1.GetHashCode
+  fullName: GoRogue.MapViews.ArrayMap<T>.GetHashCode()
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).GetHashCode()
+  nameWithType: ArrayMap<T>.GetHashCode()
+  nameWithType.vb: ArrayMap(Of T).GetHashCode()
+- uid: GoRogue.MapViews.ArrayMap`1.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_GetHashCode_
+  commentId: Overload:GoRogue.MapViews.ArrayMap`1.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap<T>.GetHashCode
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).GetHashCode
+  nameWithType: ArrayMap<T>.GetHashCode
+  nameWithType.vb: ArrayMap(Of T).GetHashCode
 - uid: GoRogue.MapViews.ArrayMap`1.Height
   name: Height
   href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_Height
@@ -7846,6 +8093,24 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Item
   nameWithType: ArrayMap<T>.Item
   nameWithType.vb: ArrayMap(Of T).Item
+- uid: GoRogue.MapViews.ArrayMap`1.op_Equality(GoRogue.MapViews.ArrayMap{`0},GoRogue.MapViews.ArrayMap{`0})
+  name: Equality(ArrayMap<T>, ArrayMap<T>)
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_op_Equality_GoRogue_MapViews_ArrayMap__0__GoRogue_MapViews_ArrayMap__0__
+  commentId: M:GoRogue.MapViews.ArrayMap`1.op_Equality(GoRogue.MapViews.ArrayMap{`0},GoRogue.MapViews.ArrayMap{`0})
+  name.vb: Equality(ArrayMap(Of T), ArrayMap(Of T))
+  fullName: GoRogue.MapViews.ArrayMap<T>.Equality(GoRogue.MapViews.ArrayMap<T>, GoRogue.MapViews.ArrayMap<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Equality(GoRogue.MapViews.ArrayMap(Of T), GoRogue.MapViews.ArrayMap(Of T))
+  nameWithType: ArrayMap<T>.Equality(ArrayMap<T>, ArrayMap<T>)
+  nameWithType.vb: ArrayMap(Of T).Equality(ArrayMap(Of T), ArrayMap(Of T))
+- uid: GoRogue.MapViews.ArrayMap`1.op_Equality*
+  name: Equality
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_op_Equality_
+  commentId: Overload:GoRogue.MapViews.ArrayMap`1.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap<T>.Equality
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Equality
+  nameWithType: ArrayMap<T>.Equality
+  nameWithType.vb: ArrayMap(Of T).Equality
 - uid: GoRogue.MapViews.ArrayMap`1.op_Implicit(GoRogue.MapViews.ArrayMap{`0})~`0[]
   name: Implicit(ArrayMap<T> to T[])
   href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_op_Implicit_GoRogue_MapViews_ArrayMap__0____0__
@@ -7865,6 +8130,24 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Widening
   nameWithType: ArrayMap<T>.Implicit
   nameWithType.vb: ArrayMap(Of T).Widening
+- uid: GoRogue.MapViews.ArrayMap`1.op_Inequality(GoRogue.MapViews.ArrayMap{`0},GoRogue.MapViews.ArrayMap{`0})
+  name: Inequality(ArrayMap<T>, ArrayMap<T>)
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_op_Inequality_GoRogue_MapViews_ArrayMap__0__GoRogue_MapViews_ArrayMap__0__
+  commentId: M:GoRogue.MapViews.ArrayMap`1.op_Inequality(GoRogue.MapViews.ArrayMap{`0},GoRogue.MapViews.ArrayMap{`0})
+  name.vb: Inequality(ArrayMap(Of T), ArrayMap(Of T))
+  fullName: GoRogue.MapViews.ArrayMap<T>.Inequality(GoRogue.MapViews.ArrayMap<T>, GoRogue.MapViews.ArrayMap<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Inequality(GoRogue.MapViews.ArrayMap(Of T), GoRogue.MapViews.ArrayMap(Of T))
+  nameWithType: ArrayMap<T>.Inequality(ArrayMap<T>, ArrayMap<T>)
+  nameWithType.vb: ArrayMap(Of T).Inequality(ArrayMap(Of T), ArrayMap(Of T))
+- uid: GoRogue.MapViews.ArrayMap`1.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_op_Inequality_
+  commentId: Overload:GoRogue.MapViews.ArrayMap`1.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap<T>.Inequality
+  fullName.vb: GoRogue.MapViews.ArrayMap(Of T).Inequality
+  nameWithType: ArrayMap<T>.Inequality
+  nameWithType.vb: ArrayMap(Of T).Inequality
 - uid: GoRogue.MapViews.ArrayMap`1.SetToDefault
   name: SetToDefault()
   href: api/GoRogue.MapViews.ArrayMap-1.html#GoRogue_MapViews_ArrayMap_1_SetToDefault
@@ -7986,6 +8269,49 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Clone
   nameWithType: ArrayMap2D<T>.Clone
   nameWithType.vb: ArrayMap2D(Of T).Clone
+- uid: GoRogue.MapViews.ArrayMap2D`1.Equals(GoRogue.MapViews.ArrayMap2D{`0})
+  name: Equals(ArrayMap2D<T>)
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_Equals_GoRogue_MapViews_ArrayMap2D__0__
+  commentId: M:GoRogue.MapViews.ArrayMap2D`1.Equals(GoRogue.MapViews.ArrayMap2D{`0})
+  name.vb: Equals(ArrayMap2D(Of T))
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Equals(GoRogue.MapViews.ArrayMap2D<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Equals(GoRogue.MapViews.ArrayMap2D(Of T))
+  nameWithType: ArrayMap2D<T>.Equals(ArrayMap2D<T>)
+  nameWithType.vb: ArrayMap2D(Of T).Equals(ArrayMap2D(Of T))
+- uid: GoRogue.MapViews.ArrayMap2D`1.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_Equals_System_Object_
+  commentId: M:GoRogue.MapViews.ArrayMap2D`1.Equals(System.Object)
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Equals(System.Object)
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Equals(System.Object)
+  nameWithType: ArrayMap2D<T>.Equals(Object)
+  nameWithType.vb: ArrayMap2D(Of T).Equals(Object)
+- uid: GoRogue.MapViews.ArrayMap2D`1.Equals*
+  name: Equals
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_Equals_
+  commentId: Overload:GoRogue.MapViews.ArrayMap2D`1.Equals
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Equals
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Equals
+  nameWithType: ArrayMap2D<T>.Equals
+  nameWithType.vb: ArrayMap2D(Of T).Equals
+- uid: GoRogue.MapViews.ArrayMap2D`1.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_GetHashCode
+  commentId: M:GoRogue.MapViews.ArrayMap2D`1.GetHashCode
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.GetHashCode()
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).GetHashCode()
+  nameWithType: ArrayMap2D<T>.GetHashCode()
+  nameWithType.vb: ArrayMap2D(Of T).GetHashCode()
+- uid: GoRogue.MapViews.ArrayMap2D`1.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_GetHashCode_
+  commentId: Overload:GoRogue.MapViews.ArrayMap2D`1.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.GetHashCode
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).GetHashCode
+  nameWithType: ArrayMap2D<T>.GetHashCode
+  nameWithType.vb: ArrayMap2D(Of T).GetHashCode
 - uid: GoRogue.MapViews.ArrayMap2D`1.Height
   name: Height
   href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_Height
@@ -8039,6 +8365,24 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Item
   nameWithType: ArrayMap2D<T>.Item
   nameWithType.vb: ArrayMap2D(Of T).Item
+- uid: GoRogue.MapViews.ArrayMap2D`1.op_Equality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})
+  name: Equality(ArrayMap2D<T>, ArrayMap2D<T>)
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_op_Equality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__
+  commentId: M:GoRogue.MapViews.ArrayMap2D`1.op_Equality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})
+  name.vb: Equality(ArrayMap2D(Of T), ArrayMap2D(Of T))
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Equality(GoRogue.MapViews.ArrayMap2D<T>, GoRogue.MapViews.ArrayMap2D<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Equality(GoRogue.MapViews.ArrayMap2D(Of T), GoRogue.MapViews.ArrayMap2D(Of T))
+  nameWithType: ArrayMap2D<T>.Equality(ArrayMap2D<T>, ArrayMap2D<T>)
+  nameWithType.vb: ArrayMap2D(Of T).Equality(ArrayMap2D(Of T), ArrayMap2D(Of T))
+- uid: GoRogue.MapViews.ArrayMap2D`1.op_Equality*
+  name: Equality
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_op_Equality_
+  commentId: Overload:GoRogue.MapViews.ArrayMap2D`1.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Equality
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Equality
+  nameWithType: ArrayMap2D<T>.Equality
+  nameWithType.vb: ArrayMap2D(Of T).Equality
 - uid: GoRogue.MapViews.ArrayMap2D`1.op_Implicit(GoRogue.MapViews.ArrayMap2D{`0})~`0[0:,0:]
   name: Implicit(ArrayMap2D<T> to T[,])
   href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_op_Implicit_GoRogue_MapViews_ArrayMap2D__0____0_0__0__
@@ -8058,6 +8402,24 @@ references:
   fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Widening
   nameWithType: ArrayMap2D<T>.Implicit
   nameWithType.vb: ArrayMap2D(Of T).Widening
+- uid: GoRogue.MapViews.ArrayMap2D`1.op_Inequality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})
+  name: Inequality(ArrayMap2D<T>, ArrayMap2D<T>)
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_op_Inequality_GoRogue_MapViews_ArrayMap2D__0__GoRogue_MapViews_ArrayMap2D__0__
+  commentId: M:GoRogue.MapViews.ArrayMap2D`1.op_Inequality(GoRogue.MapViews.ArrayMap2D{`0},GoRogue.MapViews.ArrayMap2D{`0})
+  name.vb: Inequality(ArrayMap2D(Of T), ArrayMap2D(Of T))
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Inequality(GoRogue.MapViews.ArrayMap2D<T>, GoRogue.MapViews.ArrayMap2D<T>)
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Inequality(GoRogue.MapViews.ArrayMap2D(Of T), GoRogue.MapViews.ArrayMap2D(Of T))
+  nameWithType: ArrayMap2D<T>.Inequality(ArrayMap2D<T>, ArrayMap2D<T>)
+  nameWithType.vb: ArrayMap2D(Of T).Inequality(ArrayMap2D(Of T), ArrayMap2D(Of T))
+- uid: GoRogue.MapViews.ArrayMap2D`1.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_op_Inequality_
+  commentId: Overload:GoRogue.MapViews.ArrayMap2D`1.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.MapViews.ArrayMap2D<T>.Inequality
+  fullName.vb: GoRogue.MapViews.ArrayMap2D(Of T).Inequality
+  nameWithType: ArrayMap2D<T>.Inequality
+  nameWithType.vb: ArrayMap2D(Of T).Inequality
 - uid: GoRogue.MapViews.ArrayMap2D`1.SetToDefault
   name: SetToDefault()
   href: api/GoRogue.MapViews.ArrayMap2D-1.html#GoRogue_MapViews_ArrayMap2D_1_SetToDefault
@@ -10789,12 +11151,57 @@ references:
   commentId: F:GoRogue.Radius.DIAMOND
   fullName: GoRogue.Radius.DIAMOND
   nameWithType: Radius.DIAMOND
+- uid: GoRogue.Radius.Equals(GoRogue.Radius)
+  name: Equals(Radius)
+  href: api/GoRogue.Radius.html#GoRogue_Radius_Equals_GoRogue_Radius_
+  commentId: M:GoRogue.Radius.Equals(GoRogue.Radius)
+  fullName: GoRogue.Radius.Equals(GoRogue.Radius)
+  nameWithType: Radius.Equals(Radius)
+- uid: GoRogue.Radius.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.Radius.html#GoRogue_Radius_Equals_System_Object_
+  commentId: M:GoRogue.Radius.Equals(System.Object)
+  fullName: GoRogue.Radius.Equals(System.Object)
+  nameWithType: Radius.Equals(Object)
+- uid: GoRogue.Radius.Equals*
+  name: Equals
+  href: api/GoRogue.Radius.html#GoRogue_Radius_Equals_
+  commentId: Overload:GoRogue.Radius.Equals
+  isSpec: "True"
+  fullName: GoRogue.Radius.Equals
+  nameWithType: Radius.Equals
+- uid: GoRogue.Radius.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.Radius.html#GoRogue_Radius_GetHashCode
+  commentId: M:GoRogue.Radius.GetHashCode
+  fullName: GoRogue.Radius.GetHashCode()
+  nameWithType: Radius.GetHashCode()
+- uid: GoRogue.Radius.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.Radius.html#GoRogue_Radius_GetHashCode_
+  commentId: Overload:GoRogue.Radius.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.Radius.GetHashCode
+  nameWithType: Radius.GetHashCode
 - uid: GoRogue.Radius.OCTAHEDRON
   name: OCTAHEDRON
   href: api/GoRogue.Radius.html#GoRogue_Radius_OCTAHEDRON
   commentId: F:GoRogue.Radius.OCTAHEDRON
   fullName: GoRogue.Radius.OCTAHEDRON
   nameWithType: Radius.OCTAHEDRON
+- uid: GoRogue.Radius.op_Equality(GoRogue.Radius,GoRogue.Radius)
+  name: Equality(Radius, Radius)
+  href: api/GoRogue.Radius.html#GoRogue_Radius_op_Equality_GoRogue_Radius_GoRogue_Radius_
+  commentId: M:GoRogue.Radius.op_Equality(GoRogue.Radius,GoRogue.Radius)
+  fullName: GoRogue.Radius.Equality(GoRogue.Radius, GoRogue.Radius)
+  nameWithType: Radius.Equality(Radius, Radius)
+- uid: GoRogue.Radius.op_Equality*
+  name: Equality
+  href: api/GoRogue.Radius.html#GoRogue_Radius_op_Equality_
+  commentId: Overload:GoRogue.Radius.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.Radius.Equality
+  nameWithType: Radius.Equality
 - uid: GoRogue.Radius.op_Implicit(GoRogue.Radius)~GoRogue.AdjacencyRule
   name: Implicit(Radius to AdjacencyRule)
   href: api/GoRogue.Radius.html#GoRogue_Radius_op_Implicit_GoRogue_Radius__GoRogue_AdjacencyRule
@@ -10823,6 +11230,19 @@ references:
   fullName.vb: GoRogue.Radius.Widening
   nameWithType: Radius.Implicit
   nameWithType.vb: Radius.Widening
+- uid: GoRogue.Radius.op_Inequality(GoRogue.Radius,GoRogue.Radius)
+  name: Inequality(Radius, Radius)
+  href: api/GoRogue.Radius.html#GoRogue_Radius_op_Inequality_GoRogue_Radius_GoRogue_Radius_
+  commentId: M:GoRogue.Radius.op_Inequality(GoRogue.Radius,GoRogue.Radius)
+  fullName: GoRogue.Radius.Inequality(GoRogue.Radius, GoRogue.Radius)
+  nameWithType: Radius.Inequality(Radius, Radius)
+- uid: GoRogue.Radius.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.Radius.html#GoRogue_Radius_op_Inequality_
+  commentId: Overload:GoRogue.Radius.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.Radius.Inequality
+  nameWithType: Radius.Inequality
 - uid: GoRogue.Radius.SPHERE
   name: SPHERE
   href: api/GoRogue.Radius.html#GoRogue_Radius_SPHERE
@@ -11037,6 +11457,64 @@ references:
   isSpec: "True"
   fullName: GoRogue.RadiusAreaProvider.DistanceCalc
   nameWithType: RadiusAreaProvider.DistanceCalc
+- uid: GoRogue.RadiusAreaProvider.Equals(GoRogue.RadiusAreaProvider)
+  name: Equals(RadiusAreaProvider)
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_Equals_GoRogue_RadiusAreaProvider_
+  commentId: M:GoRogue.RadiusAreaProvider.Equals(GoRogue.RadiusAreaProvider)
+  fullName: GoRogue.RadiusAreaProvider.Equals(GoRogue.RadiusAreaProvider)
+  nameWithType: RadiusAreaProvider.Equals(RadiusAreaProvider)
+- uid: GoRogue.RadiusAreaProvider.Equals(System.Object)
+  name: Equals(Object)
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_Equals_System_Object_
+  commentId: M:GoRogue.RadiusAreaProvider.Equals(System.Object)
+  fullName: GoRogue.RadiusAreaProvider.Equals(System.Object)
+  nameWithType: RadiusAreaProvider.Equals(Object)
+- uid: GoRogue.RadiusAreaProvider.Equals*
+  name: Equals
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_Equals_
+  commentId: Overload:GoRogue.RadiusAreaProvider.Equals
+  isSpec: "True"
+  fullName: GoRogue.RadiusAreaProvider.Equals
+  nameWithType: RadiusAreaProvider.Equals
+- uid: GoRogue.RadiusAreaProvider.GetHashCode
+  name: GetHashCode()
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_GetHashCode
+  commentId: M:GoRogue.RadiusAreaProvider.GetHashCode
+  fullName: GoRogue.RadiusAreaProvider.GetHashCode()
+  nameWithType: RadiusAreaProvider.GetHashCode()
+- uid: GoRogue.RadiusAreaProvider.GetHashCode*
+  name: GetHashCode
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_GetHashCode_
+  commentId: Overload:GoRogue.RadiusAreaProvider.GetHashCode
+  isSpec: "True"
+  fullName: GoRogue.RadiusAreaProvider.GetHashCode
+  nameWithType: RadiusAreaProvider.GetHashCode
+- uid: GoRogue.RadiusAreaProvider.op_Equality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)
+  name: Equality(RadiusAreaProvider, RadiusAreaProvider)
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_op_Equality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_
+  commentId: M:GoRogue.RadiusAreaProvider.op_Equality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)
+  fullName: GoRogue.RadiusAreaProvider.Equality(GoRogue.RadiusAreaProvider, GoRogue.RadiusAreaProvider)
+  nameWithType: RadiusAreaProvider.Equality(RadiusAreaProvider, RadiusAreaProvider)
+- uid: GoRogue.RadiusAreaProvider.op_Equality*
+  name: Equality
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_op_Equality_
+  commentId: Overload:GoRogue.RadiusAreaProvider.op_Equality
+  isSpec: "True"
+  fullName: GoRogue.RadiusAreaProvider.Equality
+  nameWithType: RadiusAreaProvider.Equality
+- uid: GoRogue.RadiusAreaProvider.op_Inequality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)
+  name: Inequality(RadiusAreaProvider, RadiusAreaProvider)
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_op_Inequality_GoRogue_RadiusAreaProvider_GoRogue_RadiusAreaProvider_
+  commentId: M:GoRogue.RadiusAreaProvider.op_Inequality(GoRogue.RadiusAreaProvider,GoRogue.RadiusAreaProvider)
+  fullName: GoRogue.RadiusAreaProvider.Inequality(GoRogue.RadiusAreaProvider, GoRogue.RadiusAreaProvider)
+  nameWithType: RadiusAreaProvider.Inequality(RadiusAreaProvider, RadiusAreaProvider)
+- uid: GoRogue.RadiusAreaProvider.op_Inequality*
+  name: Inequality
+  href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_op_Inequality_
+  commentId: Overload:GoRogue.RadiusAreaProvider.op_Inequality
+  isSpec: "True"
+  fullName: GoRogue.RadiusAreaProvider.Inequality
+  nameWithType: RadiusAreaProvider.Inequality
 - uid: GoRogue.RadiusAreaProvider.Radius
   name: Radius
   href: api/GoRogue.RadiusAreaProvider.html#GoRogue_RadiusAreaProvider_Radius
