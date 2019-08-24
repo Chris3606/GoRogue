@@ -9,6 +9,7 @@ namespace GoRogue.MapGeneration
 	/// Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each
 	/// unique position considered connected.
 	/// </summary>
+	[Serializable]
 	public class MapArea : IReadOnlyMapArea
 	{
 		private readonly HashSet<Coord> positionsSet;

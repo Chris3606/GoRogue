@@ -1,11 +1,14 @@
-﻿namespace GoRogue
+﻿using System;
+
+namespace GoRogue
 {
 	/// <summary>
 	/// This class defines a rectanglar area, whose position is automatically "locked" to
 	/// being inside a rectangular bounding box as it is changed. A typical use might be
 	/// keeping track of a camera's view area.
 	/// </summary>
-	public class BoundedRectangle
+	[Serializable]
+	public class BoundedRectangle : IEquatable<BoundedRectangle>
 	{
 		private Rectangle _area;
 		private Rectangle _boundingBox;
@@ -49,6 +52,48 @@
 		{
 			get => ref _boundingBox;
 		}
+
+		/// <summary>
+		/// Compares the current BoundedRectangle to the object given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is a BoundedRectangle that represents the same area, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is BoundedRectangle e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current BoundedRectangle to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given BoundedRectangle represents the same area, false otherwise.</returns>
+		public bool Equals(BoundedRectangle other) => !ReferenceEquals(other, null) && BoundingBox.Equals(other.BoundingBox) && Area.Equals(other.Area);
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => BoundingBox.GetHashCode() ^ Area.GetHashCode();
+
+		/// <summary>
+		/// Compares the two BoundedRectangle instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given BoundedRectangle instances represent the same area, false otherwise.</returns>
+		public static bool operator ==(BoundedRectangle lhs, BoundedRectangle rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two BoundedRectangle instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given BoundedRectangle instances do NOT represent the same area, false otherwise.</returns>
+		public static bool operator !=(BoundedRectangle lhs, BoundedRectangle rhs) => !(lhs == rhs);
 
 		private void boundLock()
 		{

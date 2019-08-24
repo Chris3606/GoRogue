@@ -14,7 +14,8 @@ namespace GoRogue.MapViews
 	/// If you need a 1D array instead of 2D, then you should use <see cref="ArrayMap{T}"/> instead.
 	/// </remarks>
 	/// <typeparam name="T">The type of value being stored.</typeparam>
-	public sealed class ArrayMap2D<T> : ISettableMapView<T>, ICloneable
+	[Serializable]
+	public sealed class ArrayMap2D<T> : ISettableMapView<T>, ICloneable, IEquatable<ArrayMap2D<T>>
 	{
 		private readonly T[,] _array;
 
@@ -107,6 +108,48 @@ namespace GoRogue.MapViews
 		/// Sets each element in the ArrayMap to the default for type T.
 		/// </summary>
 		public void SetToDefault() => Array.Clear(_array, 0, _array.Length);
+
+		/// <summary>
+		/// Compares the current ArrayMap2D to the object given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is an ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is ArrayMap2D<T> e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current ArrayMap2D to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+		public bool Equals(ArrayMap2D<T> other) => !ReferenceEquals(other, null) && _array == other._array;
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => _array.GetHashCode();
+
+		/// <summary>
+		/// Compares the two ArrayMap2D instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given ArrayMap2D&lt;T&gt; instances have a reference to the same underlying array, false otherwise.</returns>
+		public static bool operator ==(ArrayMap2D<T> lhs, ArrayMap2D<T> rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two ArrayMap2D instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given ArrayMap2D&lt;T&gt; instances do NOT have a reference to the same underlying array, false otherwise.</returns>
+		public static bool operator !=(ArrayMap2D<T> lhs, ArrayMap2D<T> rhs) => !(lhs == rhs);
 
 		/// <summary>
 		/// Returns a string representation of the 2D array.

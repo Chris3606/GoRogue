@@ -24,17 +24,23 @@ namespace GoRogue
 	/// left corner, and matches a typical mathmatical definition of a euclidean coordinate plane, as well as the scene
 	/// coordinate plane defined by Unity and other game engines.
 	/// </remarks>
-	public class Direction
+	[Serializable]
+	public class Direction : IEquatable<Direction>
 	{
+		[NonSerialized]
 		private static readonly Direction[] directions;
 
+		[NonSerialized]
 		private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
 
+		[NonSerialized]
 		private static bool _yIncreasesUpward;
 
 		// Used to optimize calcs for a function later on
+		[NonSerialized]
 		private static Direction[] directionSides = new Direction[2];
 
+		[NonSerialized]
 		private static bool initYInc;
 
 		static Direction()
@@ -46,6 +52,48 @@ namespace GoRogue
 			initYInc = false;
 			YIncreasesUpward = false; // Initializes rest of distance values
 		}
+
+		/// <summary>
+		/// Compares the current Direction to the object given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is a Direction with the same Type/dx/dy values, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is Direction e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current Direction to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given Direction has the same type and delta-y/delta-x values, false otherwise.</returns>
+		public bool Equals(Direction other) => !ReferenceEquals(other, null) && Type == other.Type && DeltaX == other.DeltaX && DeltaY == other.DeltaY;
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => Type.GetHashCode();
+
+		/// <summary>
+		/// Compares the two Direction instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given Direction instances have the same Type and delta values, false otherwise.</returns>
+		public static bool operator ==(Direction lhs, Direction rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two BoundedRectangle instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given Direction instances do NOT have the same Type and delta values, false otherwise.</returns>
+		public static bool operator !=(Direction lhs, Direction rhs) => !(lhs == rhs);
 
 		private Direction(int dx, int dy, Types type)
 		{
@@ -218,17 +266,17 @@ namespace GoRogue
 		/// <summary>
 		/// Change in x-value represented by this direction.
 		/// </summary>
-		public int DeltaX { get; private set; }
+		public readonly int DeltaX;
 
 		/// <summary>
 		/// Change in y-value represented by this direction.
 		/// </summary>
-		public int DeltaY { get; private set; }
+		public readonly int DeltaY;
 
 		/// <summary>
 		/// Enum type corresponding to direction being represented.
 		/// </summary>
-		public Types Type { get; private set; }
+		public readonly Types Type;
 
 		internal static int yMult { get; private set; }
 

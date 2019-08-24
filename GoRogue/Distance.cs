@@ -13,21 +13,25 @@ namespace GoRogue
 	/// types (since an adjacency method is implied by a distance calculation), and they may also be explicitly
 	/// casted to the appropriate 2D <see cref="Radius"/> types.
 	/// </remarks>
-	public class Distance
+	[Serializable]
+	public class Distance : IEquatable<Distance>
 	{
 		/// <summary>
 		/// Represents chebyshev distance (equivalent to 8-way movement with no extra cost for diagonals).
 		/// </summary>
+		[NonSerialized]
 		public static Distance CHEBYSHEV = new Distance(Types.CHEBYSHEV);
 
 		/// <summary>
 		/// Represents euclidean distance (equivalent to 8-way movement with ~1.41 movement cost for diagonals).
 		/// </summary>
+		[NonSerialized]
 		public static Distance EUCLIDEAN = new Distance(Types.EUCLIDEAN);
 
 		/// <summary>
 		/// Represents manhattan distance (equivalent to 4-way, cardinal-only movement).
 		/// </summary>
+		[NonSerialized]
 		public static Distance MANHATTAN = new Distance(Types.MANHATTAN);
 
 		/// <summary>
@@ -36,6 +40,7 @@ namespace GoRogue
 		/// </summary>
 		public readonly Types Type;
 
+		[NonSerialized]
 		private static readonly string[] writeVals = Enum.GetNames(typeof(Types));
 
 		private Distance(Types type)
@@ -269,6 +274,48 @@ namespace GoRogue
 			}
 			return radius;
 		}
+
+		/// <summary>
+		/// Compares the current Distance to the object given.
+		/// </summary>
+		/// <param name="obj"/>
+		/// <returns>True if the given object is a Distance with the same Type, false otherwise.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is Distance e)
+				return Equals(e);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Compares the current Distance to the one given.
+		/// </summary>
+		/// <param name="other"/>
+		/// <returns>True if the given Distance has the same Type, false otherwise.</returns>
+		public bool Equals(Distance other) =>!ReferenceEquals(other, null) && Type == other.Type;
+
+		/// <summary>
+		/// Returns a hash-value for this object.
+		/// </summary>
+		/// <returns/>
+		public override int GetHashCode() => Type.GetHashCode();
+
+		/// <summary>
+		/// Compares the two Distance instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given Distance instances have the same Type, false otherwise.</returns>
+		public static bool operator ==(Distance lhs, Distance rhs) => lhs?.Equals(rhs) ?? rhs is null;
+
+		/// <summary>
+		/// Compares the two Distance instances.
+		/// </summary>
+		/// <param name="lhs"/>
+		/// <param name="rhs"/>
+		/// <returns>True if the two given Distance instances do NOT have the same Type, false otherwise.</returns>
+		public static bool operator !=(Distance lhs, Distance rhs) => !(lhs == rhs);
 
 		/// <summary>
 		/// Returns a string representation of the distance calculation method represented.

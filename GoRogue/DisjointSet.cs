@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GoRogue
 {
@@ -11,6 +12,7 @@ namespace GoRogue
 	/// [0, num_items_in_set - 1].  Thus, you will need to assign appropriate IDs to objects you intend
 	/// to add and map them appropriately.
 	/// </remarks>
+	[Serializable]
 	public class DisjointSet : IReadOnlyDisjointSet
 	{
 		private int[] parents;
