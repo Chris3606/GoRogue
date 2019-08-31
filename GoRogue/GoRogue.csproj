@@ -3,18 +3,20 @@
     <!-- Basic package info -->
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>GoRogue</PackageId>
-    <PackageVersion>2.5.0</PackageVersion>
-    <Authors>Christopher Ridley</Authors>
+    <Version>2.5.0</Version>
+    <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
+    <Authors>Chris3606</Authors>
     <Description>Roguelike/2D game utility library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes>See https://github.com/Chris3606/GoRogue/releases/tag/2.5.0 for details.</PackageReleaseNotes>
-    <Copyright>Copyright 2019 Christopher Ridley.  All rights reserved.</Copyright>
+    <Copyright>Copyright © 2019 Christopher Ridley (Chris3606)</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
     
     <!-- Configurations for nuget (where MonoGame private asset doesn't require monogame to be present), and minimal versions for DLL builds where that doesn't work properly -->
     <Configurations>Debug;Release;Debug Minimal Dependencies;Release Minimal Dependencies</Configurations>
@@ -35,7 +37,7 @@
   </PropertyGroup>
   
   <!-- When packing, copy the nuget files to the nuget output directory -->
-  <Target Name="CopyPackage" AfterTargets="Pack">
+  <Target Name="CopyPackage" Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'" AfterTargets="Pack">
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
   </Target>
