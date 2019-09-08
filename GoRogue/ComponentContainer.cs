@@ -22,14 +22,14 @@ namespace GoRogue
 	///     void Tick();
 	/// }
 	/// 
-	/// public class PlayerTickable
+	/// public class PlayerTickable : ITickable
 	/// {
 	///     public void Tick() => Console.WriteLine("Player ticked!");
 	/// }
 	/// </code>
 	/// 
-	/// Let's say we add a component of type PlayerTickable to an object called obj.  obj.GetComponent&lt;PlayerTickable&gt;() then returns
-	/// the instance we added, as does obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
+	/// If we then add a component of type PlayerTickable to an object called obj.  obj.GetComponent&lt;PlayerTickable&gt;() will return
+	/// the instance we added, as will obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
 	/// obj.HasComponent(typeof(PlayerTickable)) both return true.
 	/// </remarks>
 	public class ComponentContainer : IHasComponents
