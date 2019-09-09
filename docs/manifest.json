@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.AdjacencyRule.Types.html",
-          "hash": "Z1+BDkcmTkjA1dC8FTvFXg=="
+          "hash": "fXKSJ0icBrt2hOIodj1ZAQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.AdjacencyRule.html",
-          "hash": "423a3ezF37Fpx+ON0QBhpA=="
+          "hash": "aULrHQADqYRqwc5Z1FlrHw=="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.AdvancedLayeredSpatialMap-1.html",
-          "hash": "GdUfDTWWe99+IJeeqpNnaw=="
+          "hash": "Q0rGWBg9YkKjUHoBTPoU8Q=="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.AdvancedMultiSpatialMap-1.html",
-          "hash": "cpQd2og/lJMdYGx/Ob7/kA=="
+          "hash": "x4D9u5r0rJLJJ2PS9parqQ=="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.AdvancedSpatialMap-1.html",
-          "hash": "4kFgKi5MEiQK4V7LJt98Rg=="
+          "hash": "obpaLm91MHnBaTQ4PKXFjg=="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.BoundedRectangle.html",
-          "hash": "cXOrf5XnF6tj3UcDMPvndQ=="
+          "hash": "uHLF5SNTnEFYIHgiKdQtKg=="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ComponentContainer.html",
-          "hash": "4XZwrYs4VFLDQm/W7cjFiQ=="
+          "hash": "1momVE1JBha/y/HmoxdMNw=="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Coord.html",
-          "hash": "j7wELS+J0GqTj/W965RmjQ=="
+          "hash": "gnFfQQJc9AACZIPRo1YSCA=="
         }
       },
       "is_incremental": false,
@@ -105,10 +105,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Dice.html",
-          "hash": "hymBg1TVcdtY2BbPC2T1jg=="
+          "hash": "MCiTt4+hZF2AllBth3hdTQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -117,10 +117,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.DiceExpression.html",
-          "hash": "icfZ5/y2mqCUwT3TYO867Q=="
+          "hash": "mF5KFZDEf8KXgNcFB1fYRA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -129,10 +129,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Exceptions.ImpossibleDieException.html",
-          "hash": "OcixblV66dFkWM1M/WH3VQ=="
+          "hash": "ugnzCa27Haycz5T8QrneCQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -141,10 +141,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidChooseException.html",
-          "hash": "tR7AGhfFxLIOOawXviw0Cg=="
+          "hash": "OSilkY8ySDp+rVXdjFLa7A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -153,10 +153,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidMultiplicityException.html",
-          "hash": "lhdhZpa0IjUuqcp3GHTRmw=="
+          "hash": "Gue1lafZsXVsK+dGSVZ9aw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -165,10 +165,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Exceptions.InvalidSyntaxException.html",
-          "hash": "tO2GdvzH6ufJge4hrmF6YQ=="
+          "hash": "Fwxu/p+plXdcO4w0Dkzy2Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -180,7 +180,7 @@
           "hash": "5FCq+jRysDB0KU7VPZXucQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -189,10 +189,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.IDiceExpression.html",
-          "hash": "sTr+npKSb7NnAtwVHC6n9Q=="
+          "hash": "DjPww4rwq5vyUcbPp2WvRg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -201,10 +201,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.IParser.html",
-          "hash": "Bt9V9NuzE06gPZDTsfKdEg=="
+          "hash": "dcxV7CKApq4gPCMWLkCmKw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -213,10 +213,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Parser.html",
-          "hash": "FGPTQpLdUOPZMaYuD0wLJA=="
+          "hash": "Kk47IWDtLp0fuFjjo9MyGA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -225,10 +225,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.AddTerm.html",
-          "hash": "+L/8DdAWNdpRM8cboJJjdQ=="
+          "hash": "6kkHSz6bDo9CTAcwodbx8Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -237,10 +237,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.ConstantTerm.html",
-          "hash": "KWGyvI3Rtk8ij5QgNqijsw=="
+          "hash": "L73vFnJ1WWECzX8ctZizmQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -249,10 +249,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.DiceTerm.html",
-          "hash": "aDk1Z659767GidFhRoGOFg=="
+          "hash": "OhRHORrzZcg6FEDIlBUMVg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -261,10 +261,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.DivideTerm.html",
-          "hash": "X4PTRi0d/SUzT0OPMKEbCA=="
+          "hash": "fRXYj45DYyYNGw/qR8mZBw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -273,10 +273,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.ITerm.html",
-          "hash": "vDqccw0/r61zXQh6dLuBJw=="
+          "hash": "9DgjcozkdQc3R45Q9xlqMw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -285,10 +285,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.KeepTerm.html",
-          "hash": "OJCKzOwhsIbItrHJfviBbg=="
+          "hash": "pzPQ0od0gieg3tjCzmNeiA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -297,10 +297,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.MultiplyTerm.html",
-          "hash": "ukqcCmhusJKtpY0DWVaA8g=="
+          "hash": "cbIzYxS/IQpXHgKz5vKMLQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -309,10 +309,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DiceNotation.Terms.SubtractTerm.html",
-          "hash": "7CPLrfsfX4OX8X6bxPZxZA=="
+          "hash": "eTMsvC9CgIHyvTQ7f7+Rew=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -324,7 +324,7 @@
           "hash": "qTd18sZ3L+8iELcOLxx8sw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -336,7 +336,7 @@
           "hash": "ZLbtxvjkW4IEwfMQpcagCQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -345,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Direction.Types.html",
-          "hash": "k8gJL0XT1PQsLx2nG9KeWg=="
+          "hash": "IqFZnuAjuiBmPsnaSXcJJQ=="
         }
       },
       "is_incremental": false,
@@ -357,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Direction.html",
-          "hash": "YQyLntGFCvGLqitLmWmncQ=="
+          "hash": "tLkL2YdOH5bgSZVr7adacg=="
         }
       },
       "is_incremental": false,
@@ -369,10 +369,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.DisjointSet.html",
-          "hash": "rwaRIvRmcYEhDcyCWGZMcg=="
+          "hash": "NjZmrZ5A26Icrd15wzGmcQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -381,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Distance.Types.html",
-          "hash": "JmZhDlcrCXXVus3pKCyPug=="
+          "hash": "FAX8rw1hldeBe6pBviozig=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -393,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Distance.html",
-          "hash": "VFk5ConkoAwBpa4h7kZ7OA=="
+          "hash": "2CtU5xzFmUjy5KnDf7h6Qw=="
         }
       },
       "is_incremental": false,
@@ -405,10 +405,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Effect-1.html",
-          "hash": "e+L+zd3co/Rx7ZGoupnIQg=="
+          "hash": "m0DdZdoHF3ro+tjJRTtxrw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -417,10 +417,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.EffectArgs.html",
-          "hash": "WSZiiBfwmO9HlA7VW9KEBg=="
+          "hash": "UhbeN9PqT22vOy/4yurx2g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -429,10 +429,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.EffectTrigger-1.html",
-          "hash": "U9NaEAwV5+rXDFWbbaiFPw=="
+          "hash": "JU7xZXWatnIkGCubtCBdXg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -441,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.FOV.html",
-          "hash": "Gx+2XrJJN9SEekufbO7RXQ=="
+          "hash": "CSavKz57Zouc+We8YulsEg=="
         }
       },
       "is_incremental": false,
@@ -453,10 +453,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.Components.IGameObjectComponent.html",
-          "hash": "RDo9RQA+F5i909YYxCVk5A=="
+          "hash": "lR2MWqlNXJG+3xBhUVb1pA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -468,7 +468,7 @@
           "hash": "3MlYkHRACQiOXUAxKyBUZA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -477,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.GameObject.html",
-          "hash": "emUf4OwqA74AEcerqSNflQ=="
+          "hash": "/KAq81gN8qSLi8l9kekGBw=="
         }
       },
       "is_incremental": false,
@@ -489,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.IGameObject.html",
-          "hash": "k9bUsUp+1o1hZOujNpy9fw=="
+          "hash": "jYmswwYtRZF9Cx9GcwdiTg=="
         }
       },
       "is_incremental": false,
@@ -501,7 +501,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.Map.html",
-          "hash": "U7QglE+cTJaGH6WnKy4Ogw=="
+          "hash": "l6ShN1jD05a658ILUdNgbg=="
         }
       },
       "is_incremental": false,
@@ -525,10 +525,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IDGenerator.html",
-          "hash": "S/S7DrjX/DQv/V7rlgQM7Q=="
+          "hash": "z85qt+QU14MS/tIDnrJm3w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -537,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IHasComponents.html",
-          "hash": "NS/iOSRBjrbkNAizZKzJoQ=="
+          "hash": "UieB+CaIsKoo2gWEpzBSZA=="
         }
       },
       "is_incremental": false,
@@ -549,10 +549,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IHasID.html",
-          "hash": "qcJt3APbQlAwGoYMxFkJzA=="
+          "hash": "dalfnThpPWRWTv80vDwmnQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -561,10 +561,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IHasLayer.html",
-          "hash": "ErQ4xhFn77WyAe+BlC/58A=="
+          "hash": "wRd43nPG4vrOfU8YdWFwJw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -573,10 +573,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IReadOnlyDisjointSet.html",
-          "hash": "rjH3CSfc40eVTW2euv9wEg=="
+          "hash": "EdgtyHo/Cn8w63iNyOWu+w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -585,10 +585,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IReadOnlyFOV.html",
-          "hash": "U5L9FR8NgrxF41746pZtyg=="
+          "hash": "aJUILspwyvuc2A6oZaDuxw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IReadOnlyLayeredSpatialMap-1.html",
-          "hash": "Bf2vSmkn/wz/W1qA1bNrIw=="
+          "hash": "iP+Pyed24XOK+lk11d5l9g=="
         }
       },
       "is_incremental": false,
@@ -609,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IReadOnlyRadiusAreaProvider.html",
-          "hash": "Kt6xk9WEfU5eDH5I+Bu3Hg=="
+          "hash": "LKEIiEXME5Hb0HWJ0Sg4+g=="
         }
       },
       "is_incremental": false,
@@ -621,7 +621,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.IReadOnlySpatialMap-1.html",
-          "hash": "rR0DEMSCO7Ww/++EgUl2kg=="
+          "hash": "BBtykpYcSYaUegRsvWaCFw=="
         }
       },
       "is_incremental": false,
@@ -633,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ISortedComponent.html",
-          "hash": "gYL4ChSXBZmXJDP5ojBfdg=="
+          "hash": "Bh5CdHkGp1t3XvMkD21PDg=="
         }
       },
       "is_incremental": false,
@@ -645,7 +645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ISpatialMap-1.html",
-          "hash": "q0g+1yJigJEoQVppr53BYw=="
+          "hash": "3MxG29zJ9irp6ZWDVY4JyA=="
         }
       },
       "is_incremental": false,
@@ -657,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ISpatialTuple-1.html",
-          "hash": "XpvYp3a7dMFjk3ktnHJVpg=="
+          "hash": "0YWMjvEAoIjT6rJKBUFxKA=="
         }
       },
       "is_incremental": false,
@@ -669,7 +669,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ItemEventArgs-1.html",
-          "hash": "dFPdoP6SLD9U01zguW19+Q=="
+          "hash": "MGznfu98e0efusVy/G8gAQ=="
         }
       },
       "is_incremental": false,
@@ -681,7 +681,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.ItemMovedEventArgs-1.html",
-          "hash": "O7nwHNWPlHTITQ80TBnH4w=="
+          "hash": "VFKe+UW68w8KlvX4//Gx5g=="
         }
       },
       "is_incremental": false,
@@ -693,10 +693,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.LayerMasker.html",
-          "hash": "P5z1RMR9a3+UCl7okEoPZA=="
+          "hash": "55PX7creWqY3qQ9T8Oae5g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -705,10 +705,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.LayeredSpatialMap-1.html",
-          "hash": "Y1EvN0EUx6nKuREa7xkXww=="
+          "hash": "kuFzhbD3pFyZbQqNenYdRg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -717,10 +717,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Lines.Algorithm.html",
-          "hash": "y5zQEFoWV6RkpG80wcHJZA=="
+          "hash": "3Ll3wPZK+jUK5uCXa9s8yw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -729,7 +729,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Lines.html",
-          "hash": "RXUgw+Z4XT06XA45Uf3VRw=="
+          "hash": "qmcdEHeuhTQfGIrfkbQKWA=="
         }
       },
       "is_incremental": false,
@@ -741,10 +741,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector.html",
-          "hash": "axpOun9R8iPSmDDDZCBGfA=="
+          "hash": "p1sHEk0yDrd3Y64hQGXEFw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -753,10 +753,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.html",
-          "hash": "2S96EIjw7hAoe1yn1fXzaw=="
+          "hash": "CuReyLBjRTWn1NeEXlnvzA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -765,10 +765,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.html",
-          "hash": "muNSBlSqUax/h9uw6q5sag=="
+          "hash": "zGhsfo+vlV0G2Kg+ICVK7Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -777,10 +777,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.DeadEndTrimmer.html",
-          "hash": "fR7gNwnJA56soiociHITrA=="
+          "hash": "RN5OsH2atsrW8wbaZbUp4A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -789,7 +789,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html",
-          "hash": "26u/asNWLHE+xnsdMkpLdg=="
+          "hash": "NJ4gL5LfUrmRbuS2NbpDew=="
         }
       },
       "is_incremental": false,
@@ -801,7 +801,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.html",
-          "hash": "c70ys0cJU+4WLfbeFc8KUw=="
+          "hash": "dXn9cpU1DciCZ6021f9t7g=="
         }
       },
       "is_incremental": false,
@@ -813,10 +813,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html",
-          "hash": "zOLGFzzkbpC8y6HqU5O4Ow=="
+          "hash": "yNwSVBK9o/1oeAJ9JP3r+g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -825,7 +825,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.ITunnelCreator.html",
-          "hash": "RDpXOONOiZYsuJthOVuPBg=="
+          "hash": "3ONefTiWoghZNB1kUMgIsQ=="
         }
       },
       "is_incremental": false,
@@ -837,10 +837,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.html",
-          "hash": "9GnuqzvIzd7BAaZNF9x9kg=="
+          "hash": "ct65NOp0Xs8VlO8b8nKq3A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -849,10 +849,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.html",
-          "hash": "aCR4jWDQtwDA9E+iYyLM+g=="
+          "hash": "skoNG0agmGjLKrdkc2+eYA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -861,10 +861,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.RoomDoorConnector.html",
-          "hash": "8dkemmww/JenoB6Dr1oJ2Q=="
+          "hash": "ShESVYyyz+kooum2bcGSQw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -885,10 +885,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Generators.BasicRoomsGenerator.html",
-          "hash": "GNmEC0LGUTs4jWn0MSNbtQ=="
+          "hash": "AG1AN1y1eMLTf3PBE0jJfQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -897,10 +897,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Generators.CellularAutomataAreaGenerator.html",
-          "hash": "IRRdu/AMQKJr68GSkTNmzg=="
+          "hash": "0zplQPDAJG2gaiq0SmxsrA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -909,10 +909,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Generators.MazeGenerator.html",
-          "hash": "ZTP177FNpaa1k/UoBvnNQw=="
+          "hash": "5JroexoKjx/CfK8DgiDmBQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -921,10 +921,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Generators.RoomsGenerator.html",
-          "hash": "dqVNh6POhFtoFo+Ar1M8GQ=="
+          "hash": "3m3x0L7vXHjTdlCs1Rj3+Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -936,7 +936,7 @@
           "hash": "5qrHy+Rk+f7WXIzu0/pfMg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -945,7 +945,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.IReadOnlyMapArea.html",
-          "hash": "6BN/38su2yE75bn5irfB6g=="
+          "hash": "9dpTV9AwX+yV3QYg9n3Euw=="
         }
       },
       "is_incremental": false,
@@ -957,7 +957,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.MapArea.html",
-          "hash": "e+bmiicRFlgyuUtR51p1CA=="
+          "hash": "szodizIfN72Xc94pvJyrwg=="
         }
       },
       "is_incremental": false,
@@ -969,10 +969,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.MapAreaFinder.html",
-          "hash": "1ixs/XRXuX+ixAmdmWjVYA=="
+          "hash": "ylmVXdZ1pmdA94NFyGUfIQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -981,10 +981,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.QuickGenerators.html",
-          "hash": "xGPcwDobnAVEPtxGi+pumA=="
+          "hash": "qQE/BQeLQHGUvM+wr4zHCg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1005,7 +1005,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.ArrayMap-1.html",
-          "hash": "MMG4Jzeyus3a6sPvTOwfZA=="
+          "hash": "t1Dl5XNBfkvy58roEkgYcQ=="
         }
       },
       "is_incremental": false,
@@ -1017,7 +1017,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.ArrayMap2D-1.html",
-          "hash": "AP0jxoihwzjKeYw8dAasFA=="
+          "hash": "LwXD9vs65soYWucxYAeKKw=="
         }
       },
       "is_incremental": false,
@@ -1029,7 +1029,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.IMapView-1.html",
-          "hash": "ekECY/xWgwFkRwR1b0tXyg=="
+          "hash": "cYEiqRrYTzwW7UvMmJYvsw=="
         }
       },
       "is_incremental": false,
@@ -1041,7 +1041,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.IMapViewExtensions.html",
-          "hash": "FOv8zg8k64WOR+zUe2JMUA=="
+          "hash": "5NbDtEg/mADygTGth9ODBg=="
         }
       },
       "is_incremental": false,
@@ -1053,7 +1053,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.ISettableMapView-1.html",
-          "hash": "WOlAfOgKExUzh4txbu7lJg=="
+          "hash": "vnceuDAQbqULOvh/eNZ5Xw=="
         }
       },
       "is_incremental": false,
@@ -1065,7 +1065,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.LambdaMapView-1.html",
-          "hash": "XXAD2fF4ZVmM4qCqzNp2fw=="
+          "hash": "JjPStgaLWmaP5Rk3NAip+A=="
         }
       },
       "is_incremental": false,
@@ -1077,7 +1077,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.LambdaSettableMapView-1.html",
-          "hash": "LYp3qVX8cNe9bkubiqNz7Q=="
+          "hash": "jjKwZHE4en0FhQ3/M4wPpA=="
         }
       },
       "is_incremental": false,
@@ -1089,7 +1089,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.LambdaSettableTranslationMap-2.html",
-          "hash": "BhjdHzMepIi/u3h7HzqBJw=="
+          "hash": "3QZG2ofLF8Nvy1m96Pwr+A=="
         }
       },
       "is_incremental": false,
@@ -1101,7 +1101,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.LambdaTranslationMap-2.html",
-          "hash": "IKDEiLy6f2UsxBUk1xlz7w=="
+          "hash": "KeGD+tFPY1zjm2L9/fTc6g=="
         }
       },
       "is_incremental": false,
@@ -1113,7 +1113,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.SettableTranslationMap-2.html",
-          "hash": "W6mMMRrY45fhFDQtYZbamw=="
+          "hash": "CIDkrzphS6QnBIaoAld36Q=="
         }
       },
       "is_incremental": false,
@@ -1125,7 +1125,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.SettableViewport-1.html",
-          "hash": "CrLIEMnwLV+K5ibfsma3Ng=="
+          "hash": "/pmxfEF/WHsh+BHj/zfjCw=="
         }
       },
       "is_incremental": false,
@@ -1137,7 +1137,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.TranslationMap-2.html",
-          "hash": "J0gZT/mtFXrWb44kvSRfAA=="
+          "hash": "G4JaI0X5RvmxVssxpctF+Q=="
         }
       },
       "is_incremental": false,
@@ -1149,7 +1149,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.UnboundedViewport-1.html",
-          "hash": "LW5XSwduOznymiKgG77hug=="
+          "hash": "sauFbSOj/LympeukzTEPxg=="
         }
       },
       "is_incremental": false,
@@ -1161,7 +1161,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapViews.Viewport-1.html",
-          "hash": "YPvYCmsvLjPbKrtfUyCDrQ=="
+          "hash": "nvoUG6gYEzLUalu0duiptA=="
         }
       },
       "is_incremental": false,
@@ -1185,10 +1185,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MathHelpers.html",
-          "hash": "VFIE9hNVkRBccZlwPOv04w=="
+          "hash": "gw9mDGAdysYhFN6nVbb2pQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1197,10 +1197,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Messaging.ISubscriber-1.html",
-          "hash": "JpmYwvWme995WKhXhZpEIQ=="
+          "hash": "91smKRmjY5AXwWHRSEnQFw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1209,10 +1209,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Messaging.MessageBus.html",
-          "hash": "1RKxRiREZWhFFUgCI6EdZQ=="
+          "hash": "iTN7LFyL0pwrVOM1VDFkCA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1224,7 +1224,7 @@
           "hash": "V/amSuC571whk7WALOQFKg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1233,10 +1233,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MultiSpatialMap-1.html",
-          "hash": "R6JLfGRJ3288L3D4ujCYPw=="
+          "hash": "d8qyzR0CRBntNwzVjy3tqQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1245,7 +1245,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.AStar.html",
-          "hash": "KyeZy9NERHAo2TOEVSoDcQ=="
+          "hash": "28tBLpXtf7ubZHCgQfD07A=="
         }
       },
       "is_incremental": false,
@@ -1257,7 +1257,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.FastAStar.html",
-          "hash": "W0Bz4+/qUFY12kDo3gpXWQ=="
+          "hash": "/ajzu4gb2cran/bxw/Nu0A=="
         }
       },
       "is_incremental": false,
@@ -1269,7 +1269,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.FleeMap.html",
-          "hash": "I+WCxV8ivWmRPdac4yOfvg=="
+          "hash": "auLqkPLsnjuHpeX6BpowYA=="
         }
       },
       "is_incremental": false,
@@ -1281,7 +1281,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.GoalMap.html",
-          "hash": "+Nmjm7H84MeikpBd3BHuSw=="
+          "hash": "hsTdFJa1ivHEWyiZl6IiOQ=="
         }
       },
       "is_incremental": false,
@@ -1293,7 +1293,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.GoalMapExtensions.html",
-          "hash": "y/0ZD/Xwe07Z4/VMiFTuWw=="
+          "hash": "p23By1wDl+A3f+oBdOmGlA=="
         }
       },
       "is_incremental": false,
@@ -1305,10 +1305,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.GoalState.html",
-          "hash": "swoweAQBUteqj+juqLhTsA=="
+          "hash": "TkE4dmpY5gI2NdxXA1PA8g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1317,7 +1317,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.Path.html",
-          "hash": "f0X4Wge3bCeukWeYmHNeYg=="
+          "hash": "lofmGRzd1iFnyYscKxkQcQ=="
         }
       },
       "is_incremental": false,
@@ -1329,7 +1329,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Pathing.WeightedGoalMap.html",
-          "hash": "WaNBEqn4Kcdp+ZyQR/wEQg=="
+          "hash": "OKUIHhOlhFRA5SZVMpEcJQ=="
         }
       },
       "is_incremental": false,
@@ -1353,10 +1353,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Radius.Types.html",
-          "hash": "tJL8fuYFUNbYznIknyevGA=="
+          "hash": "j70BrdD+6/vZ0Fi/iW6ofA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1365,10 +1365,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Radius.html",
-          "hash": "Jeo20WC2pnz2gT08qef3eA=="
+          "hash": "frBup4zagVERs30CZQo5BQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1377,7 +1377,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.RadiusAreaProvider.html",
-          "hash": "/WFCtEU/kdlIIBAt5JGnPw=="
+          "hash": "EDX3aUU2S95ePN0fkdtSqw=="
         }
       },
       "is_incremental": false,
@@ -1389,10 +1389,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.DiscreteConverter-1.html",
-          "hash": "LN7YOH6mL6gjUdxxmiBmCQ=="
+          "hash": "hd4YDbhk2kFWvHfvo0S9Fg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1401,10 +1401,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.DistributionHelpers.html",
-          "hash": "SmidJ9ZcEFGAlVH9j5uOCQ=="
+          "hash": "8OWum+3edO/IEm2+V15nlw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1413,10 +1413,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.KnownSeriesGenerator.html",
-          "hash": "Wwx6k7Uf4wj3cFcRtsoa1A=="
+          "hash": "0SiNT/qKpVg+VL/QXUzmuA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1425,10 +1425,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.MaxRandom.html",
-          "hash": "NXaqvm6cwpfSLPZvK3gOFg=="
+          "hash": "ln24ID22NzoM8ISO8ns7YA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1437,10 +1437,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.MinRandom.html",
-          "hash": "qRtuQ98y1vSQ5c0ZEbjg1Q=="
+          "hash": "DQ2B7iZhfidgCxchbMSRfw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1449,10 +1449,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Random.SingletonRandom.html",
-          "hash": "3dTtCBUh/ksjiciH+ytr+Q=="
+          "hash": "Fcf2H6AUmHPNe1aFktYL4A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1464,7 +1464,7 @@
           "hash": "vMdkxWpgnJfOnisqLvsYnA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1473,7 +1473,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Rectangle.html",
-          "hash": "ffvc82HT7W8IB0jfBgMbQg=="
+          "hash": "BQhp5C8qpjs+JDevo0IUFw=="
         }
       },
       "is_incremental": false,
@@ -1485,10 +1485,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Reflection.html",
-          "hash": "+V5nwvnIF8OioPHAZ6fIiQ=="
+          "hash": "sQXD8TodNbptFz8i24eUcA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1497,10 +1497,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.SenseMapping.IReadOnlySenseMap.html",
-          "hash": "R/f5yJ6GFIkoSdt/1wj59A=="
+          "hash": "rCBkx7cRrdx9qDJJQXdimA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1509,7 +1509,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.SenseMapping.SenseMap.html",
-          "hash": "sWRqphGU4xL7S1ZnG8Szpg=="
+          "hash": "tR65pedUcT5UM9dh9BMAvg=="
         }
       },
       "is_incremental": false,
@@ -1521,7 +1521,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.SenseMapping.SenseSource.html",
-          "hash": "jReA5HnG4wbbraQPR1uBaQ=="
+          "hash": "KFGVi8HSAyTDwhZX85OVzg=="
         }
       },
       "is_incremental": false,
@@ -1533,10 +1533,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.SenseMapping.SourceType.html",
-          "hash": "Pz3i2F46gFDQ2I4z8WcQgA=="
+          "hash": "B9ivoYL3I6Z+Zs/CXFWVQg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1557,10 +1557,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.SpatialMap-1.html",
-          "hash": "LmiCLIQmjOO5f8qgBu/Ujw=="
+          "hash": "KkUjxMdPfIRjKZzLI1zflQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1569,10 +1569,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Utility.html",
-          "hash": "jFDdmrdYjSZpX1oYcMLSSw=="
+          "hash": "JaY18+C6VV5hUtlwwELTEA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1635,7 +1635,7 @@
           "hash": "FgCDNvtExZVfNkEIe2r+VQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -2208,16 +2208,16 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ResourceDocumentProcessor": {
+        "TocDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
           "skipped_file_count": 0
         },
-        "TocDocumentProcessor": {
+        "ResourceDocumentProcessor": {
           "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
           "skipped_file_count": 0
@@ -2232,7 +2232,7 @@
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 132,
-          "skipped_file_count": 128
+          "skipped_file_count": 14
         }
       }
     },
