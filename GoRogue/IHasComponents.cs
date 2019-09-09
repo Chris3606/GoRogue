@@ -29,7 +29,7 @@ namespace GoRogue
 		/// Gets all components of type T that are added.
 		/// </summary>
 		/// <typeparam name="T">Type of components to retrieve.</typeparam>
-		/// <returns>All components of Type T that are attacked.</returns>
+		/// <returns>All components of Type T that are attached.</returns>
 		IEnumerable<T> GetComponents<T>();
 
 		/// <summary>
