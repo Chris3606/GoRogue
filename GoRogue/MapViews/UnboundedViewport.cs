@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -71,7 +72,7 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Given a position in relative 1d-array-index style, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeIndex1D">
 		/// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
@@ -80,11 +81,11 @@ namespace GoRogue.MapViews
 		/// The "value" associated with the absolute location represented on the underlying map view,
 		/// or <see cref="DefaultValue"/> if the absolute position does not exist in the underlying map view.
 		/// </returns>
-		public T this[int relativeIndex1D] => this[Coord.ToCoord(relativeIndex1D, Width)];
+		public T this[int relativeIndex1D] => this[Point.FromIndex(relativeIndex1D, Width)];
 
 		/// <summary>
-		/// Given a position in relative coordinates, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// Given a position in relative Pointinates, returns the "value" associated with that
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativePosition">
 		/// Viewport-relative position of the location to retrieve the value for.
@@ -93,7 +94,7 @@ namespace GoRogue.MapViews
 		/// The "value" associated with the absolute location represented on the underlying map view,
 		/// or <see cref="DefaultValue"/> if the absolute position does not exist in the underlying map view.
 		/// </returns>
-		public virtual T this[Coord relativePosition]
+		public virtual T this[Point relativePosition]
 		{
 			get
 			{
@@ -107,8 +108,8 @@ namespace GoRogue.MapViews
 		}
 
 		/// <summary>
-		/// Given an X and Y value in relative coordinates, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// Given an X and Y value in relative Pointinates, returns the "value" associated with that
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeX">Viewport-relative X-value of location.</param>
 		/// <param name="relativeY">Viewport-relative Y-value of location.</param>

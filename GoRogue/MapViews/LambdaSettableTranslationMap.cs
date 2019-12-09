@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -17,8 +18,8 @@ namespace GoRogue.MapViews
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
 	public sealed class LambdaSettableTranslationMap<T1, T2> : SettableTranslationMap<T1, T2>
 	{
-		private Func<Coord, T1, T2> _getter;
-		private Func<Coord, T2, T1> _setter;
+		private Func<Point, T1, T2> _getter;
+		private Func<Point, T2, T1> _setter;
 
 		/// <summary>
 		/// Constructor. Takes an existing map view to create a view from, and getter/setter
@@ -50,11 +51,11 @@ namespace GoRogue.MapViews
 		/// <param name="baseMap">Your underlying map data.</param>
 		/// <param name="getter">The TranslateGet implementation.</param>
 		/// <param name="setter">The TranslateSet implementation.</param>
-		public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, Func<Coord, T1, T2> getter, Func<Coord, T2, T1> setter)
+		public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, Func<Point, T1, T2> getter, Func<Point, T2, T1> setter)
 			: base(baseMap)
 		{
-			_getter = getter ?? throw new ArgumentException(nameof(getter));
-			_setter = setter ?? throw new ArgumentException(nameof(setter));
+			_getter = getter ?? throw new ArgumentNullException(nameof(getter));
+			_setter = setter ?? throw new ArgumentNullException(nameof(setter));
 		}
 
 		/// <summary>
@@ -81,7 +82,7 @@ namespace GoRogue.MapViews
 		/// </param>
 		/// <param name="getter">The TranslateGet implementation.</param>
 		/// <param name="setter">The TranslateSet implementation.</param>
-		public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay, Func<Coord, T1, T2> getter, Func<Coord, T2, T1> setter)
+		public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay, Func<Point, T1, T2> getter, Func<Point, T2, T1> setter)
 			: this(baseMap, getter, setter)
 		{
 			this.ApplyOverlay(overlay);
@@ -94,7 +95,7 @@ namespace GoRogue.MapViews
 		/// <param name="position">Position corresponding to given data value of your map.</param>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type (via the getter specified in the class constructor).</returns>
-		protected override T2 TranslateGet(Coord position, T1 value) => _getter(position, value);
+		protected override T2 TranslateGet(Point position, T1 value) => _getter(position, value);
 
 		/// <summary>
 		/// Translates the view type into the appropriate form for your map data, by calling the
@@ -103,6 +104,6 @@ namespace GoRogue.MapViews
 		/// <param name="position">Position corresponding to the given mapped data type.</param>
 		/// <param name="value">A value of the mapped data type.</param>
 		/// <returns>The data value for your map, (via the setter specified in the class constructor).</returns>
-		protected override T1 TranslateSet(Coord position, T2 value) => _setter(position, value);
+		protected override T1 TranslateSet(Point position, T2 value) => _setter(position, value);
 	}
 }

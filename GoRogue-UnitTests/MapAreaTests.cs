@@ -31,7 +31,7 @@ namespace GoRogue_UnitTests
 		public void TestMapAreaRemove()
 		{
 			var mapArea = new MapArea();
-			mapArea.Add(GoRogue.Utility.Yield<Coord>((1, 1), (2, 2), (3, 2)));
+			mapArea.Add(GoRogue.Utility.Yield<Point>((1, 1), (2, 2), (3, 2)));
 
 			Assert.AreEqual(3, mapArea.Count);
 			Assert.AreEqual(1, mapArea.Bounds.X);

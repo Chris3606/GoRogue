@@ -10,9 +10,9 @@ namespace GoRogue_PerformanceTests
 {
 	public static class PathingTests
 	{
-		//private static Coord END = new Coord(17, 14);
-		private static Coord START = new Coord(1, 2);
-		private static Coord END = new Coord(490,490);
+		//private static Point END = new Point(17, 14);
+		private static Point START = new Point(1, 2);
+		private static Point END = new Point(490,490);
 
 		public static TimeSpan TimeForAStar(int mapWidth, int mapHeight, int iterations)
 		{
@@ -50,7 +50,7 @@ namespace GoRogue_PerformanceTests
 			return s.Elapsed;
 		}
 
-		public static TimeSpan TimeForFleeMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
+		public static TimeSpan TimeForFleeMap(IMapView<bool> map, IEnumerable<Point> goals, int iterations)
 		{
 			Stopwatch s = new Stopwatch();
 
@@ -68,7 +68,7 @@ namespace GoRogue_PerformanceTests
 			return s.Elapsed;
 		}
 
-		public static TimeSpan TimeForGoalMap(IMapView<bool> map, IEnumerable<Coord> goals, int iterations)
+		public static TimeSpan TimeForGoalMap(IMapView<bool> map, IEnumerable<Point> goals, int iterations)
 		{
 			Stopwatch s = new Stopwatch();
 
@@ -85,7 +85,7 @@ namespace GoRogue_PerformanceTests
 			return s.Elapsed;
 		}
 
-		private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
+		private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Point> goals)
 		{
 			var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
 			for (int x = 0; x < walkabilityMap.Width; x++)

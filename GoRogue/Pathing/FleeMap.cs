@@ -3,20 +3,23 @@ using Priority_Queue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
 {
-	/// <summary>
-	/// Implements the concept of a "safety map", also known as "flee map", as described in the
-	/// <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">this article</a>.
-	/// </summary>
-	/// <remarks>
-	/// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically
-	/// recalculated when the underlying goal map is recalculated. Implements IDisposable, so ensure
-	/// that it is disposed of properly after use.
-	/// </remarks>
-	public class FleeMap : IMapView<double?>, IDisposable
-	{
+    /// <summary>
+    /// Implements the concept of a "safety map", also known as "flee map", as described in the
+    /// <a href="http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps">this article</a>.
+    /// </summary>
+    /// <remarks>
+    /// Takes a goal map, wherein any goals are treated as "threats" to be avoided. Automatically
+    /// recalculated when the underlying goal map is recalculated. Implements IDisposable, so ensure
+    /// that it is disposed of properly after use.
+    /// </remarks>
+#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
+    public class FleeMap : IMapView<double?>, IDisposable
+#pragma warning restore CA1063
+    {
 		private readonly GoalMap _baseMap;
 		private ArrayMap<double?> _goalMap;
 
@@ -70,7 +73,7 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <param name="pos">The position to return the value for.</param>
 		/// <returns>The flee-map value for the given location.</returns>
-		public double? this[Coord pos] => _goalMap[pos];
+		public double? this[Point pos] => _goalMap[pos];
 
 		/// <summary>
 		/// Returns the goal-map value for the given position.
@@ -85,10 +88,10 @@ namespace GoRogue.Pathing
 		/// </summary>
 		/// <param name="position">The position to get the minimum value for.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
-		public Direction GetDirectionOfMinValue(Coord position) => _goalMap.GetDirectionOfMinValue(position, _baseMap.DistanceMeasurement);
+		public Direction GetDirectionOfMinValue(Point position) => _goalMap.GetDirectionOfMinValue(position, _baseMap.DistanceMeasurement);
 
 		/// <summary>
 		/// Gets the direction of the neighbor with the minimum flee-map value from the given position.
@@ -96,7 +99,7 @@ namespace GoRogue.Pathing
 		/// <param name="positionX">The x-value of the position to get the minimum value for.</param>
 		/// <param name="positionY">The y-value of the position to get the minimum value for.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
 		public Direction GetDirectionOfMinValue(int positionX, int positionY) => _goalMap.GetDirectionOfMinValue(positionX, positionY, _baseMap.DistanceMeasurement);
@@ -147,8 +150,8 @@ namespace GoRogue.Pathing
 
 				openSet.Enqueue(_nodes[point], newPoint.Value);
 			}
-			var edgeSet = new HashSet<Coord>();
-			var closedSet = new HashSet<Coord>();
+			var edgeSet = new HashSet<Point>();
+			var closedSet = new HashSet<Point>();
 
 			while (openSet.Count > 0) //multiple runs are needed to deal with islands
 			{
@@ -162,15 +165,15 @@ namespace GoRogue.Pathing
 				}
 				while (edgeSet.Count > 0)
 				{
-					foreach (var coord in edgeSet.ToArray())
+					foreach (var Point in edgeSet.ToArray())
 					{
-						var current = _goalMap[coord].Value;
-						foreach (var openPoint in adjacencyRule.Neighbors(coord))
+						var current = _goalMap[Point].Value;
+						foreach (var openPoint in adjacencyRule.Neighbors(Point))
 						{
 							if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
 								continue;
 							var neighborValue = _goalMap[openPoint].Value;
-							var newValue = current + _baseMap.DistanceMeasurement.Calculate(coord, openPoint);
+							var newValue = current + _baseMap.DistanceMeasurement.Calculate(Point, openPoint);
 							if (newValue < neighborValue)
 							{
 								_goalMap[openPoint] = newValue;
@@ -178,9 +181,9 @@ namespace GoRogue.Pathing
 								edgeSet.Add(openPoint);
 							}
 						}
-						edgeSet.Remove(coord);
-						closedSet.Add(coord);
-						openSet.Remove(_nodes[coord]);
+						edgeSet.Remove(Point);
+						closedSet.Add(Point);
+						openSet.Remove(_nodes[Point]);
 					}
 				}
 			}
@@ -190,19 +193,23 @@ namespace GoRogue.Pathing
 
 		private bool _disposed = false;
 
-		/// <summary>
-		/// Destructor for IDisposable implementation.
-		/// </summary>
-		~FleeMap()
-		{
+        /// <summary>
+        /// Destructor for IDisposable implementation.
+        /// </summary>
+#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
+        ~FleeMap()
+#pragma warning restore CA1063
+        {
 			Dispose();
 		}
 
-		/// <summary>
-		/// Function called to dispose of the class, automatically unlinking it from its goal map.
-		/// </summary>
-		public void Dispose()
-		{
+        /// <summary>
+        /// Function called to dispose of the class, automatically unlinking it from its goal map.
+        /// </summary>
+#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
+        public void Dispose()
+#pragma warning restore CA1063
+        {
 			if (!_disposed)
 			{
 				_baseMap.Updated -= Update;
@@ -214,15 +221,15 @@ namespace GoRogue.Pathing
 		#endregion IDisposable Support
 	}
 
-	// Priority queue node for coords
+	// Priority queue node for Points
 	internal class PositionNode : GenericPriorityQueueNode<double>
 	{
-		public PositionNode(Coord position)
+		public PositionNode(Point position)
 		{
 			Position = position;
 		}
 
 		// Position being represented.
-		public Coord Position { get; }
+		public Point Position { get; }
 	}
 }

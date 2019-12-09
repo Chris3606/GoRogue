@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Troschuetz.Random;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -22,7 +23,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// to 10.
 		/// </param>
 		/// <returns>A list of mazes that were generated.</returns>
-		public static IEnumerable<MapArea> Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10)
+		public static IEnumerable<Area> Generate(ISettableMapView<bool> map, int crawlerChangeDirectionImprovement = 10)
 			=> Generate(map, null, crawlerChangeDirectionImprovement);
 
 		/// <summary>
@@ -36,7 +37,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// to 10.
 		/// </param>
 		/// <returns>A list of mazes that were generated.</returns>
-		public static IEnumerable<MapArea> Generate(ISettableMapView<bool> map, IGenerator rng, int crawlerChangeDirectionImprovement = 10)
+		public static IEnumerable<Area> Generate(ISettableMapView<bool> map, IGenerator rng, int crawlerChangeDirectionImprovement = 10)
 		{
 			// Implemented the logic from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
@@ -46,7 +47,7 @@ namespace GoRogue.MapGeneration.Generators
 
 			var empty = FindEmptySquare(map, rng);
 
-			while (empty != Coord.NONE)
+			while (empty != Point.None)
 			{
 				Crawler crawler = new Crawler();
 				crawlers.Add(crawler);
@@ -60,8 +61,8 @@ namespace GoRogue.MapGeneration.Generators
 					map[crawler.CurrentPosition] = true;
 
 					// Get valid directions (basically is any position outside the map or not?)
-					var points = AdjacencyRule.CARDINALS.NeighborsClockwise(crawler.CurrentPosition).ToArray();
-					var directions = AdjacencyRule.CARDINALS.DirectionsOfNeighborsClockwise(Direction.NONE).ToList();
+					var points = AdjacencyRule.Cardinals.NeighborsClockwise(crawler.CurrentPosition).ToArray();
+					var directions = AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise(Direction.None).ToList();
 					var valids = new bool[4];
 
 					// Rule out any valids based on their position. Only process NSEW, do not use diagonals
@@ -114,7 +115,7 @@ namespace GoRogue.MapGeneration.Generators
 			return crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0);
 		}
 
-		private static Coord FindEmptySquare(IMapView<bool> map, IGenerator rng)
+		private static Point FindEmptySquare(IMapView<bool> map, IGenerator rng)
 		{
 			// Try random positions first
 			for (int i = 0; i < 100; i++)
@@ -128,13 +129,13 @@ namespace GoRogue.MapGeneration.Generators
 			// Start looping through every single one
 			for (int i = 0; i < map.Width * map.Height; i++)
 			{
-				var location = Coord.ToCoord(i, map.Width);
+				var location = Point.FromIndex(i, map.Width);
 
 				if (IsPointConsideredEmpty(map, location))
 					return location;
 			}
 
-			return Coord.NONE;
+			return Point.None;
 		}
 
 		private static int GetDirectionIndex(bool[] valids, IGenerator rng)
@@ -170,7 +171,7 @@ namespace GoRogue.MapGeneration.Generators
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static bool IsPointConsideredEmpty(IMapView<bool> map, Coord location)
+		private static bool IsPointConsideredEmpty(IMapView<bool> map, Point location)
 		{
 			return !IsPointMapEdge(map, location) &&  // exclude outer ridge of map
 				   location.X % 2 != 0 && location.Y % 2 != 0 && // check is odd number position
@@ -179,16 +180,16 @@ namespace GoRogue.MapGeneration.Generators
 		}
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)
+		private static bool IsPointMapEdge(IMapView<bool> map, Point location, bool onlyEdgeTest = false)
 		{
 			if (onlyEdgeTest)
 				return location.X == 0 || location.X == map.Width - 1 || location.Y == 0 || location.Y == map.Height - 1;
 			return location.X <= 0 || location.X >= map.Width - 1 || location.Y <= 0 || location.Y >= map.Height - 1;
 		}
 
-		private static bool IsPointSurroundedByWall(IMapView<bool> map, Coord location)
+		private static bool IsPointSurroundedByWall(IMapView<bool> map, Point location)
 		{
-			var points = AdjacencyRule.EIGHT_WAY.Neighbors(location);
+			var points = AdjacencyRule.EightWay.Neighbors(location);
 
 			var mapBounds = map.Bounds();
 			foreach (var point in points)
@@ -203,7 +204,7 @@ namespace GoRogue.MapGeneration.Generators
 			return true;
 		}
 
-		private static bool IsPointWallsExceptSource(IMapView<bool> map, Coord location, Direction sourceDirection)
+		private static bool IsPointWallsExceptSource(IMapView<bool> map, Point location, Direction sourceDirection)
 		{
 			// exclude the outside of the map
 			var mapInner = map.Bounds().Expand(-1, -1);
@@ -213,18 +214,18 @@ namespace GoRogue.MapGeneration.Generators
 				return false;
 
 			// Get map indexes for all surrounding locations
-			var index = AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsClockwise().ToArray();
+			var index = AdjacencyRule.EightWay.DirectionsOfNeighborsClockwise().ToArray();
 
 			Direction[] skipped;
 
-			if (sourceDirection == Direction.RIGHT)
-				skipped = new[] { sourceDirection, Direction.UP_RIGHT, Direction.DOWN_RIGHT };
-			else if (sourceDirection == Direction.LEFT)
-				skipped = new[] { sourceDirection, Direction.UP_LEFT, Direction.DOWN_LEFT };
-			else if (sourceDirection == Direction.UP)
-				skipped = new[] { sourceDirection, Direction.UP_RIGHT, Direction.UP_LEFT };
+			if (sourceDirection == Direction.Right)
+				skipped = new[] { sourceDirection, Direction.UpRight, Direction.DownRight };
+			else if (sourceDirection == Direction.Left)
+				skipped = new[] { sourceDirection, Direction.UpLeft, Direction.DownLeft };
+			else if (sourceDirection == Direction.Up)
+				skipped = new[] { sourceDirection, Direction.UpRight, Direction.UpLeft };
 			else
-				skipped = new[] { sourceDirection, Direction.DOWN_RIGHT, Direction.DOWN_LEFT };
+				skipped = new[] { sourceDirection, Direction.DownRight, Direction.DownLeft };
 
 			for (int i = 0; i < index.Length; i++)
 			{
@@ -245,11 +246,11 @@ namespace GoRogue.MapGeneration.Generators
 
 		private class Crawler
 		{
-			public MapArea AllPositions = new MapArea();
-			public Coord CurrentPosition = new Coord(0, 0);
-			public Direction Facing = Direction.UP;
+			public Area AllPositions = new Area();
+			public Point CurrentPosition = new Point(0, 0);
+			public Direction Facing = Direction.Up;
 			public bool IsActive = true;
-			public Stack<Coord> Path = new Stack<Coord>();
+			public Stack<Point> Path = new Stack<Point>();
 
 			public void Backtrack()
 			{
@@ -257,7 +258,7 @@ namespace GoRogue.MapGeneration.Generators
 					CurrentPosition = Path.Pop();
 			}
 
-			public void MoveTo(Coord position)
+			public void MoveTo(Point position)
 			{
 				Path.Push(position);
 				AllPositions.Add(position);

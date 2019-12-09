@@ -6,10 +6,10 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class SpatialMapTests
 	{
-		private Coord newPos;
+		private Point newPos;
 
 		// Used to test events
-		private Coord oldPos;
+		private Point oldPos;
 
 		[TestMethod]
 		public void SpatialMapAdd()
@@ -91,7 +91,7 @@ namespace GoRogue_UnitTests
 
 			bool retVal = mySpatialMap.Move(myId1, (5, 6));
 			Assert.AreEqual(true, retVal);
-			Assert.AreEqual(new Coord(5, 6), mySpatialMap.GetPosition(myId1));
+			Assert.AreEqual(new Point(5, 6), mySpatialMap.GetPosition(myId1));
 
 			retVal = mySpatialMap.Contains((5, 6));
 			Assert.AreEqual(true, retVal);

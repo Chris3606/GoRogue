@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
 {
@@ -7,7 +8,7 @@ namespace GoRogue.Pathing
 	/// valid path will still be produced, but it is not guaranteed to be the shortest possible.
 	/// </summary>
 	/// <remarks>
-	/// This class is exactly like a regular <see cref="AStar"/> instance, but sets the heuristic by default to the <see cref="Distance.MANHATTAN"/>
+	/// This class is exactly like a regular <see cref="AStar"/> instance, but sets the heuristic by default to the <see cref="Distance.Manhattan"/>
 	/// calculate function (with the same tiebreaking/smoothing element as regular AStar. In the case that euclidean or chebyshev distance is used, this
 	/// heuristic is over-estimating -- that is, it may in some cases produce a value that is greater than the actual shortest path between two points.
 	/// As such, this means that, while the algorithm will still produce valid paths, the algorithm is no longer guaranteed to produce fully shortest paths.
@@ -29,7 +30,7 @@ namespace GoRogue.Pathing
 		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
 			: base(walkabilityMap, distanceMeasurement)
 		{
-			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
+			Heuristic = (c1, c2) => Distance.Manhattan.Calculate(c1, c2) + (Point.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
 		}
 
 		/// <summary>
@@ -44,7 +45,7 @@ namespace GoRogue.Pathing
 		public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights, double minimumWeight)
 			: base(walkabilityMap, distanceMeasurement, weights, minimumWeight)
 		{
-			Heuristic = (c1, c2) => Distance.MANHATTAN.Calculate(c1, c2) + (Coord.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
+			Heuristic = (c1, c2) => Distance.Manhattan.Calculate(c1, c2) + (Point.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
 		}
 
 	}

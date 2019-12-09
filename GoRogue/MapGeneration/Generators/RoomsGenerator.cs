@@ -3,6 +3,7 @@ using GoRogue.Random;
 using System;
 using System.Collections.Generic;
 using Troschuetz.Random;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Generators
 {
@@ -137,7 +138,7 @@ namespace GoRogue.MapGeneration.Generators
 						while (yPos % 2 == 0)
 							yPos = rng.Next(3, map.Height - roomInnerRect.Height - 3);
 						
-						roomInnerRect = roomInnerRect.WithPosition(xPos, yPos);
+						roomInnerRect = roomInnerRect.WithPosition(new Point(xPos, yPos));
 
 						var roomBounds = roomInnerRect.Expand(3, 3);
 

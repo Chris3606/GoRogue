@@ -1,5 +1,6 @@
 ﻿using GoRogue.MapViews;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue.SenseMapping
 {
@@ -12,21 +13,21 @@ namespace GoRogue.SenseMapping
 		/// IEnumerable of only positions currently "in" the sense map, eg. all positions that have a
 		/// value other than 0.0.
 		/// </summary>
-		IEnumerable<Coord> CurrentSenseMap { get; }
+		IEnumerable<Point> CurrentSenseMap { get; }
 
 		/// <summary>
 		/// IEnumerable of positions that DO have a non-zero value in the sense map as of the most
 		/// current Calculate call, but DID NOT have a non-zero value after the previous time
 		/// Calculate was called.
 		/// </summary>
-		IEnumerable<Coord> NewlyInSenseMap { get; }
+		IEnumerable<Point> NewlyInSenseMap { get; }
 
 		/// <summary>
 		/// IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the
 		/// most current Calculate call, but DID have a non-zero value after the previous time
 		/// Calculate was called.
 		/// </summary>
-		IEnumerable<Coord> NewlyOutOfSenseMap { get; }
+		IEnumerable<Point> NewlyOutOfSenseMap { get; }
 
 		/// <summary>
 		/// Read-only list of all sources currently considered part of the sense map. Some may have their

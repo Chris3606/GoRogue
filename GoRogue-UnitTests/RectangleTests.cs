@@ -51,15 +51,15 @@ namespace GoRogue_UnitTests
 		public void RectangleSetSize()
 		{
 			Rectangle myRect = new Rectangle(1, 1, 50, 25);
-			Assert.AreEqual(new Coord(50, 25), myRect.Size);
+			Assert.AreEqual(new Point(50, 25), myRect.Size);
 
 			myRect = myRect.WithSize(20, 15);
-			Assert.AreEqual(new Coord(20, 15), myRect.Size);
+			Assert.AreEqual(new Point(20, 15), myRect.Size);
 			myRect = myRect.WithSize((21, 16));
-			Assert.AreEqual(new Coord(21, 16), myRect.Size);
+			Assert.AreEqual(new Point(21, 16), myRect.Size);
 		}
 
-		private void TestRect(Rectangle rect, Coord expectedMinExtent, Coord expectedMaxExtent)
+		private void TestRect(Rectangle rect, Point expectedMinExtent, Point expectedMaxExtent)
 		{
 			Assert.AreEqual(expectedMinExtent, rect.MinExtent);
 			Assert.AreEqual(expectedMaxExtent, rect.MaxExtent);

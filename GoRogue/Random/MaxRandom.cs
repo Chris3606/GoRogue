@@ -1,4 +1,5 @@
-﻿using Troschuetz.Random;
+﻿using System;
+using Troschuetz.Random;
 
 namespace GoRogue.Random
 {
@@ -9,7 +10,7 @@ namespace GoRogue.Random
 	/// </summary>
 	public class MaxRandom : IGenerator
 	{
-		private static readonly double DOUBLE_EPSILON = 1 - 0.99999999999999978;
+		private const double DOUBLE_EPSILON = 1 - 0.99999999999999978;
 
 		/// <summary>
 		/// Whether or not the RNG is capable of resetting, such that it will return the same series
@@ -61,12 +62,22 @@ namespace GoRogue.Random
 				buffer[i] = byte.MaxValue;
 		}
 
-		/// <summary>
-		/// Returns a number very close to (but still less than) 1.0.
+        /// <summary>
+		/// Fills the given buffer with bytes of value <see cref="byte.MaxValue"/>.
 		/// </summary>
-		/// <remarks>Value returned is 0.99999999999999978.</remarks>
-		/// <returns>A number very close to (but still less than) 1.0.</returns>
-		public double NextDouble() => 1 - DOUBLE_EPSILON;
+		/// <param name="buffer">Buffer to fill.</param>
+		public void NextBytes(Span<byte> buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+                buffer[i] = byte.MaxValue;
+        }
+
+        /// <summary>
+        /// Returns a number very close to (but still less than) 1.0.
+        /// </summary>
+        /// <remarks>Value returned is 0.99999999999999978.</remarks>
+        /// <returns>A number very close to (but still less than) 1.0.</returns>
+        public double NextDouble() => 1 - DOUBLE_EPSILON;
 
 		/// <summary>
 		/// Returns a double very close to (but still less than) <paramref name="maxValue"/>.

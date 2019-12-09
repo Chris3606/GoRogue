@@ -54,10 +54,10 @@ namespace GoRogue
 	/// More explanation of Effects and EffectTriggers, and usage examples, can be found at the GoRogue documentation site
 	/// <a href="https://chris3606.github.io/GoRogue/articles">here</a>.
 	/// </remarks>
-	/// <typeparam name="TriggerArgs">
+	/// <typeparam name="TTriggerArgs">
 	/// The type of the parameter that will be specified to the <see cref="Effect{T}.Trigger(T)"/> function when called.
 	/// </typeparam>
-	abstract public class Effect<TriggerArgs> where TriggerArgs : EffectArgs
+	abstract public class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs
 	{
 #pragma warning disable RECS0108
 
@@ -88,8 +88,8 @@ namespace GoRogue
 		/// The duration of the effect.
 		/// </summary>
 		/// <remarks>
-		/// When the duration reaches 0, the Effect will be automatically removed from an <see cref="EffectTrigger{TriggerArgs}"/>.
-		/// The duration can be changed from a subclass, which can be used in <see cref="OnTrigger(TriggerArgs)"/> to
+		/// When the duration reaches 0, the Effect will be automatically removed from an <see cref="EffectTrigger{TTriggerArgs}"/>.
+		/// The duration can be changed from a subclass, which can be used in <see cref="OnTrigger(TTriggerArgs)"/> to
 		/// cause an effect to be "cancelled", eg. immediately expire, or to extend/reduce its duration.
 		/// </remarks>
 		public int Duration
@@ -108,8 +108,8 @@ namespace GoRogue
 
 		/// <summary>
 		/// Event that fires as soon as the effect is about to expire. Fires after the
-		/// <see cref="OnTrigger(TriggerArgs)"/> function has been called but before it is
-		/// removed from any <see cref="EffectTrigger{TriggerArgs}"/> instances.
+		/// <see cref="OnTrigger(TTriggerArgs)"/> function has been called but before it is
+		/// removed from any <see cref="EffectTrigger{TTriggerArgs}"/> instances.
 		/// </summary>
 		public event EventHandler Expired;
 
@@ -129,11 +129,11 @@ namespace GoRogue
 		/// </summary>
 		/// <remarks>
 		/// Any effect that has INSTANT duration or duration 0 when this function is called
-		/// will still have its <see cref="OnTrigger(TriggerArgs)"/> function called.
+		/// will still have its <see cref="OnTrigger(TTriggerArgs)"/> function called.
 		/// </remarks>
-		/// <param name="args">Parameters that are passed to <see cref="OnTrigger(TriggerArgs)"/>.
+		/// <param name="args">Parameters that are passed to <see cref="OnTrigger(TTriggerArgs)"/>.
 		/// Can be null.</param>
-		public void Trigger(TriggerArgs args)
+		public void Trigger(TTriggerArgs args)
 		{
 			OnTrigger(args);
 
@@ -146,7 +146,7 @@ namespace GoRogue
 		/// This function is called automatically when <see cref="Trigger"/> is called.
 		/// </summary>
 		/// <param name="e">Class containing all arguments <see cref="OnTrigger"/> requires to function.</param>
-		abstract protected void OnTrigger(TriggerArgs e);
+		abstract protected void OnTrigger(TTriggerArgs e);
 
 		/// <summary>
 		/// Returns a string of the effect's name and duration.

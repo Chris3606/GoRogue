@@ -1,4 +1,6 @@
-﻿namespace GoRogue.MapViews
+﻿using SadRogue.Primitives;
+
+namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Interface designed to act as a standardized input/output interpretation for algorithms that need to make
@@ -30,16 +32,16 @@
 		/// </summary>
 		/// <param name="pos">Location to get/set the value for.</param>
 		/// <returns>The "value" associated with the provided location.</returns>
-		new T this[Coord pos] { get; set; }
+		new T this[Point pos] { get; set; }
 
 		/// <summary>
 		/// Given an 1-dimensional index, returns/sets the value associated with the corresponding position
 		/// in the map view.
 		/// </summary>
 		/// <remarks>
-		/// Typically, this may be implemented in terms of <see cref="this[Coord]"/> by using
-		/// <see cref="Coord.ToCoord(int, int)"/> to calculate the 2D position represented by that
-		/// 1D index, and passing that position to the <see cref="this[Coord]"/> indexer to get/set
+		/// Typically, this may be implemented in terms of <see cref="this[Point]"/> by using
+		/// <see cref="Point.FromIndex(int, int)"/> to calculate the 2D position represented by that
+		/// 1D index, and passing that position to the <see cref="this[Point]"/> indexer to get/set
 		/// the value associated with the position.
 		/// </remarks>
 		/// <param name="index1D">1D index of location to get/set the "value" for.</param>

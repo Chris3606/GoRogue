@@ -99,12 +99,12 @@ namespace GoRogue_UnitTests
 			checkViewportBounds(viewport, (5, 5), (VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
 
 			// Move outside x-bounds by 1
-			Coord newCenter = (MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
-			// viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
+			Point newCenter = (MAP_WIDTH - (VIEWPORT_WIDTH / 2) + 1, MAP_HEIGHT - (VIEWPORT_HEIGHT / 2) + 1);
+			// viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Point.Get(250, 100));
 			viewport.ViewArea = viewport.ViewArea.WithCenter(newCenter);
 
-			Coord minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
-			Coord maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
+			Point minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
+			Point maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
 			checkViewportBounds(viewport, minVal, maxVal);
 		}
 
@@ -155,7 +155,7 @@ namespace GoRogue_UnitTests
 				}
 		}
 
-		private static void checkViewportBounds(Viewport<bool> viewport, Coord expectedMinCorner, Coord expectedMaxCorner)
+		private static void checkViewportBounds(Viewport<bool> viewport, Point expectedMinCorner, Point expectedMaxCorner)
 		{
 			Assert.AreEqual(expectedMaxCorner, viewport.ViewArea.MaxExtent);
 			Assert.AreEqual(expectedMinCorner, viewport.ViewArea.MinExtent);
@@ -178,7 +178,7 @@ namespace GoRogue_UnitTests
 				Assert.AreEqual(true, pos.X < viewport.MapView.Width);
 				Assert.AreEqual(true, pos.Y < viewport.MapView.Height);
 
-				// Utterly stupid way to access things via viewport, but verifies that the coordinate
+				// Utterly stupid way to access things via viewport, but verifies that the Pointinate
 				// translation is working properly.
 				if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 || pos.Y == viewport.MapView.Height - 1)
 					Assert.AreEqual(false, viewport[pos - viewport.ViewArea.MinExtent]);

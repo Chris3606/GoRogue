@@ -1,10 +1,11 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Viewport is a class that effectively creates and maintains a "viewport", or subsection, of the map.
-	/// Its indexers perform relative to absolute coordinate translations, and return the proper value of
+	/// Its indexers perform relative to absolute Pointinate translations, and return the proper value of
 	/// type T from the underlying map.
 	/// </summary>
 	/// <remarks>
@@ -56,12 +57,10 @@ namespace GoRogue.MapViews
 		public IMapView<T> MapView { get; private set; }
 
 		/// <summary>
-		/// The area of <see cref="MapView"/> that this Viewport is exposing. Although this property does
-		/// not explicitly expose a set accessor, it is returning a reference and as such may be
-		/// assigned to. When accessed, the rectangle is automatically restricted by the edges of the
-		/// map as necessary.
+		/// The area of <see cref="MapView"/> that this Viewport is exposing.  Use <see cref="SetViewArea(Rectangle)"/>
+        /// to set the viewing area.
 		/// </summary>
-		public ref Rectangle ViewArea
+		public ref readonly Rectangle ViewArea
 		{
 			get => ref _boundedRect.Area;
 		}
@@ -76,7 +75,7 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Given a position in relative 1d-array-index style, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeIndex1D">
 		/// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
@@ -84,11 +83,11 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
-		public T this[int relativeIndex1D] => MapView[ViewArea.Position + Coord.ToCoord(relativeIndex1D, Width)];
+		public T this[int relativeIndex1D] => MapView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)];
 
 		/// <summary>
-		/// Given a position in relative coordinates, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// Given a position in relative Pointinates, returns the "value" associated with that
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativePosition">
 		/// Viewport-relative position of the location to retrieve the value for.
@@ -96,11 +95,11 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
-		public virtual T this[Coord relativePosition] => MapView[ViewArea.Position + relativePosition];
+		public virtual T this[Point relativePosition] => MapView[ViewArea.Position + relativePosition];
 
 		/// <summary>
-		/// Given an X and Y value in relative coordinates, returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// Given an X and Y value in relative Pointinates, returns the "value" associated with that
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeX">Viewport-relative X-value of location.</param>
 		/// <param name="relativeY">Viewport-relative Y-value of location.</param>
@@ -108,6 +107,13 @@ namespace GoRogue.MapViews
 		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
 		public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
+
+        /// <summary>
+        /// Sets the viewing area for the viewport to the value given.  The viewport will automatically be bounded as needed to ensure that
+        /// it remains within the bounds of the underlying IMapView.
+        /// </summary>
+        /// <param name="viewArea">The new view area.</param>
+        public void SetViewArea(Rectangle viewArea) => _boundedRect.SetArea(viewArea);
 
 		/// <summary>
 		/// Returns a string representation of the Viewport.

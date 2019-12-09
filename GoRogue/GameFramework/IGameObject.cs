@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
 {
@@ -39,14 +40,14 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		bool IsWalkable { get; set; }
 
-		/// <summary>
-		/// The position of this object on the grid. Any time this value is changed, the <see cref="Moved"/> event is fired.
-		/// </summary>
-		/// <remarks>
-		/// This property may be overriden to implement custom functionality, however it is highly recommended
-		/// that you call the base set in the overridden setter, as it performs collision detection.
-		/// </remarks>
-		Coord Position { get; set; }
+        /// <summary>
+        /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved"/> event is fired.
+        /// </summary>
+        /// <remarks>
+        /// This property may be overriden to implement custom functionality, however it is highly recommended
+        /// that you call the base set in the overridden setter, as it performs collision detection.
+        /// </remarks>
+        Point Position { get; set; }
 
 		/// <summary>
 		/// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether

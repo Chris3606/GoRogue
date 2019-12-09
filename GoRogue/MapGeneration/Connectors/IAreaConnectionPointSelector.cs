@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -13,12 +14,12 @@ namespace GoRogue.MapGeneration.Connectors
 		/// position in <paramref name="area1"/> to use, the second position is the position in
 		/// <paramref name="area2"/> to use.
 		/// </summary>
-		/// <param name="area1">First <see cref="MapArea"/> to connect.</param>
-		/// <param name="area2">Second <see cref="MapArea"/> to connect.</param>
+		/// <param name="area1">First <see cref="Area"/> to connect.</param>
+		/// <param name="area2">Second <see cref="Area"/> to connect.</param>
 		/// <returns>
-		/// A tuple containing the coordinates from each <see cref="MapArea"/> to connect -- the first
+		/// A tuple containing the Pointinates from each <see cref="Area"/> to connect -- the first
 		/// item in the tuple is the position in area1, the second is the position in area2.
 		/// </returns>
-		Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2);
+		Tuple<Point, Point> SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2);
 	}
 }

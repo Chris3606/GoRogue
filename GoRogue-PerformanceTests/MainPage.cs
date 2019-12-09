@@ -153,7 +153,7 @@ namespace GoRogue_PerformanceTests
 			/* Single-Goal GoalMap */
 			var map = new ArrayMap<bool>(Runner.MAP_WIDTH, Runner.MAP_HEIGHT);
 			QuickGenerators.GenerateCellularAutomataMap(map);
-			Coord goal = map.RandomPosition(true);
+			Point goal = map.RandomPosition(true);
 
 			var timeGoalMap = PathingTests.TimeForGoalMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);
 			var timeFleeMap = PathingTests.TimeForFleeMap(map, goal.Yield(), Runner.ITERATIONS_FOR_TIMING);
@@ -164,7 +164,7 @@ namespace GoRogue_PerformanceTests
 			Console.WriteLine($"\tFlee-Map    : {timeFleeMap}");
 
 			/* Multi-Goal GoalMap */
-			var goals = new List<Coord>();
+			var goals = new List<Point>();
 
 			for (int i = 0; i < Runner.NUM_GOALS; i++)
 				goals.Add(map.RandomPosition(true));

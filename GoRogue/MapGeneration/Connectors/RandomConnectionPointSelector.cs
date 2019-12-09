@@ -1,6 +1,7 @@
 ﻿using GoRogue.Random;
 using System;
 using Troschuetz.Random;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -30,7 +31,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="area1">First map area to connect.</param>
 		/// <param name="area2">Second area to connect</param>
 		/// <returns>A tuple containing the selected positions.</returns>
-		public Tuple<Coord, Coord> SelectConnectionPoints(IReadOnlyMapArea area1, IReadOnlyMapArea area2) =>
-			new Tuple<Coord, Coord>(area1.Positions.RandomItem(rng), area2.Positions.RandomItem(rng));
+		public Tuple<Point, Point> SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2) =>
+			new Tuple<Point, Point>(area1.Positions.RandomItem(rng), area2.Positions.RandomItem(rng));
 	}
 }

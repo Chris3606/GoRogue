@@ -1,8 +1,10 @@
-﻿namespace GoRogue.MapViews
+﻿using SadRogue.Primitives;
+
+namespace GoRogue.MapViews
 {
 	/// <summary>
 	/// Similar to <see cref="Viewport{T}"/>, but implements <see cref="ISettableMapView{T}"/>and thus implements
-	/// "set" functionality via relative coordinates.
+	/// "set" functionality via relative Pointinates.
 	/// </summary>
 	/// <typeparam name="T">Type being exposed by map view.</typeparam>
 	public class SettableViewport<T> : Viewport<T>, ISettableMapView<T>
@@ -31,7 +33,7 @@
 
 		/// <summary>
 		/// Given a position in relative 1d-array-index style, returns/sets the "value" associated with that
-		/// location in absolute coordinates.
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeIndex1D">
 		/// Viewport-relative position of the location to retrieve/set the value for, as a 1D array index.
@@ -42,12 +44,12 @@
 		public new T this[int relativeIndex1D]
 		{
 			get => base[relativeIndex1D];
-			set => MapView[ViewArea.Position + Coord.ToCoord(relativeIndex1D, Width)] = value;
+			set => MapView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)] = value;
 		}
 
 		/// <summary>
-		/// Given a position in relative coordinates, sets/returns the "value" associated with that
-		/// location in absolute coordinates.
+		/// Given a position in relative Pointinates, sets/returns the "value" associated with that
+		/// location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativePosition">
 		/// Viewport-relative position of the location to retrieve/set the value for.
@@ -55,7 +57,7 @@
 		/// <returns>
 		/// The "value" associated with the absolute location represented on the underlying map view.
 		/// </returns>
-		public new T this[Coord relativePosition]
+		public new T this[Point relativePosition]
 		{
 			get => base[relativePosition];
 			set => MapView[ViewArea.Position + relativePosition] = value;
@@ -63,8 +65,8 @@
 		}
 
 		/// <summary>
-		/// Given an X and Y value in relative coordinates, sets/returns the "value" associated with
-		/// that location in absolute coordinates.
+		/// Given an X and Y value in relative Pointinates, sets/returns the "value" associated with
+		/// that location in absolute Pointinates.
 		/// </summary>
 		/// <param name="relativeX">Viewport-relative X-value of location.</param>
 		/// <param name="relativeY">Viewport-relative Y-value of location.</param>

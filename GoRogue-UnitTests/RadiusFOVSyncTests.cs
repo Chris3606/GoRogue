@@ -10,7 +10,7 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class RadiusFOVSyncTests
 	{
-		private static readonly Coord CENTER = (15, 15);
+		private static readonly Point CENTER = (15, 15);
 		private static readonly int MAP_HEIGHT = 30;
 		private static readonly int MAP_WIDTH = 30;
 		private static readonly int RADIUS_LEGNTH = 10;

@@ -16,7 +16,7 @@ namespace GoRogue_UnitTests
 		public void SerializeBoundedRectangle() => TestSerialization(new BoundedRectangle((1, 2, 3, 4), (10, 10, 10, 10)));
 
 		[TestMethod]
-		public void SerializeCoord() => TestSerialization<Coord>((1, 2));
+		public void SerializePoint() => TestSerialization<Point>((1, 2));
 
 		[TestMethod]
 		public void SerializeDirection() => TestSerialization(Direction.DOWN_RIGHT);

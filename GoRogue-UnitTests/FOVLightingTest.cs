@@ -93,7 +93,7 @@ namespace GoRogue_UnitTests
 			fov.Calculate(20, 20, 10);
 
 			// Inefficient copy but fine for testing
-			HashSet<Coord> currentFov = new HashSet<Coord>(fov.CurrentFOV);
+			HashSet<Point> currentFov = new HashSet<Point>(fov.CurrentFOV);
 
 			for (int x = 0; x < map.Width; x++)
 				for (int y = 0; y < map.Height; y++)
@@ -113,12 +113,12 @@ namespace GoRogue_UnitTests
 			var fov = new FOV(fovMap);
 
 			fov.Calculate(20, 20, 10, Radius.SQUARE);
-			var prevFov = new HashSet<Coord>(fov.CurrentFOV);
+			var prevFov = new HashSet<Point>(fov.CurrentFOV);
 
 			fov.Calculate(19, 19, 10, Radius.SQUARE);
-			var curFov = new HashSet<Coord>(fov.CurrentFOV);
-			var newlySeen = new HashSet<Coord>(fov.NewlySeen);
-			var newlyUnseen = new HashSet<Coord>(fov.NewlyUnseen);
+			var curFov = new HashSet<Point>(fov.CurrentFOV);
+			var newlySeen = new HashSet<Point>(fov.NewlySeen);
+			var newlyUnseen = new HashSet<Point>(fov.NewlyUnseen);
 
 			foreach (var pos in prevFov)
 			{
@@ -143,7 +143,7 @@ namespace GoRogue_UnitTests
 			int MAP_SIZE = 30;
 			int RADIUS = 10;
 			Radius RAD_TYPE = Radius.CIRCLE;
-			Coord SOURCE_POS = (15, 15);
+			Point SOURCE_POS = (15, 15);
 
 			var resMap = BoxResMap(MAP_SIZE, MAP_SIZE);
 			SenseMap senseMap = new SenseMap(resMap);
@@ -174,7 +174,7 @@ namespace GoRogue_UnitTests
 			senseMap.Calculate();
 
 			// Inefficient copy but fine for testing
-			HashSet<Coord> currentSenseMap = new HashSet<Coord>(senseMap.CurrentSenseMap);
+			HashSet<Point> currentSenseMap = new HashSet<Point>(senseMap.CurrentSenseMap);
 
 			for (int x = 0; x < map.Width; x++)
 				for (int y = 0; y < map.Height; y++)

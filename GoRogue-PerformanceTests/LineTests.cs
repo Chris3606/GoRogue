@@ -8,12 +8,12 @@ namespace GoRogue_PerformanceTests
 {
 	public static class LineTests
 	{
-		public static TimeSpan TimeForLineGeneration(Coord start, Coord end, Lines.Algorithm algorithm, int iterations)
+		public static TimeSpan TimeForLineGeneration(Point start, Point end, Lines.Algorithm algorithm, int iterations)
 		{
 			var s = new Stopwatch();
 
 			// Caching
-			List<Coord> line = Lines.Get(start, end, algorithm).ToList();
+			List<Point> line = Lines.Get(start, end, algorithm).ToList();
 
 			s.Start();
 			for (int i = 0; i < iterations; i++)

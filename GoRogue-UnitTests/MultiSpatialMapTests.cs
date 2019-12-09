@@ -88,7 +88,7 @@ namespace GoRogue_UnitTests
 
 			bool retVal = mySpatialMap.Move(myId1, (5, 6));
 			Assert.AreEqual(true, retVal);
-			Assert.AreEqual(new Coord(5, 6), mySpatialMap.GetPosition(myId1));
+			Assert.AreEqual(new Point(5, 6), mySpatialMap.GetPosition(myId1));
 
 			retVal = mySpatialMap.Contains((5, 6));
 			Assert.AreEqual(true, retVal);

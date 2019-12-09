@@ -10,9 +10,9 @@ namespace GoRogue_UnitTests
 	public class MonoGameConversionTests
 	{
 		[TestMethod]
-		public void CoordToPointConversion()
+		public void PointToPointConversion()
 		{
-			Coord c = (1, 2);
+			Point c = (1, 2);
 			Point p = c;
 
 			Assert.AreEqual(c.X, p.X);
@@ -20,10 +20,10 @@ namespace GoRogue_UnitTests
 		}
 
 		[TestMethod]
-		public void PointToCoordConversion()
+		public void PointToPointConversion()
 		{
 			Point p = new Point(1, 2);
-			Coord c = p;
+			Point c = p;
 
 			Assert.AreEqual(p.X, c.X);
 			Assert.AreEqual(p.Y, c.Y);

@@ -1,4 +1,5 @@
-﻿using Troschuetz.Random;
+﻿using System;
+using Troschuetz.Random;
 
 namespace GoRogue.Random
 {
@@ -61,11 +62,21 @@ namespace GoRogue.Random
 				buffer[i] = 0;
 		}
 
-		/// <summary>
-		/// Returns 0.0.
+        /// <summary>
+		/// Fills the given buffer with bytes of value 0.
 		/// </summary>
-		/// <returns>0.0</returns>
-		public double NextDouble() => 0.0;
+		/// <param name="buffer">The buffer to fill.</param>
+		public void NextBytes(Span<byte> buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+                buffer[i] = 0;
+        }
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <returns>0.0</returns>
+        public double NextDouble() => 0.0;
 
 		/// <summary>
 		/// Returns 0.0.

@@ -1,6 +1,7 @@
 ﻿using GoRogue.MapViews;
 using System;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue.SenseMapping
 {
@@ -13,23 +14,23 @@ namespace GoRogue.SenseMapping
 		/// Performs calculation by pushing values out from the source location. Source values spread
 		/// around corners a bit.
 		/// </summary>
-		RIPPLE,
+		Ripple,
 
-		/// <summary>
-		/// Similar to <see cref="RIPPLE"/> but with different spread mechanics. Values spread around edges like
-		/// smoke or water, but maintains a tendency to curl towards the start position as it goes around edges.
-		/// </summary>
-		RIPPLE_LOOSE,
+        /// <summary>
+        /// Similar to <see cref="Ripple"/> but with different spread mechanics. Values spread around edges like
+        /// smoke or water, but maintains a tendency to curl towards the start position as it goes around edges.
+        /// </summary>
+        RippleLoose,
 
-		/// <summary>
-		/// Similar to <see cref="RIPPLE"/>, but values spread around corners only very slightly.
-		/// </summary>
-		RIPPLE_TIGHT,
+        /// <summary>
+        /// Similar to <see cref="Ripple"/>, but values spread around corners only very slightly.
+        /// </summary>
+        RippleTight,
 
-		/// <summary>
-		/// Similar to <see cref="RIPPLE"/>, but values spread around corners a lot.
-		/// </summary>
-		RIPPLE_VERY_LOOSE,
+        /// <summary>
+        /// Similar to <see cref="Ripple"/>, but values spread around corners a lot.
+        /// </summary>
+        RippleVeryLoose,
 
 		/// <summary>
 		/// Uses a Shadowcasting algorithm. All partially resistant grid locations are treated as
@@ -37,7 +38,7 @@ namespace GoRogue.SenseMapping
 		/// source's <see cref="SenseSource.Intensity"/> in the resistance map blocks, and all lower
 		/// values don't).
 		/// </summary>
-		SHADOW
+		Shadow
 	};
 
 	/// <summary>
@@ -79,13 +80,13 @@ namespace GoRogue.SenseMapping
 		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
-		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double intensity = 1.0)
+		public SenseSource(SourceType type, Point position, double radius, Distance distanceCalc, double intensity = 1.0)
 		{
 			if (radius <= 0)
-				throw new ArgumentOutOfRangeException("SenseMap radius cannot be 0", nameof(radius));
+				throw new ArgumentOutOfRangeException(nameof(radius), "SenseMap radius cannot be 0");
 
 			if (intensity < 0)
-				throw new ArgumentOutOfRangeException("SenseSource intensity cannot be less than 0.0.", nameof(intensity));
+				throw new ArgumentOutOfRangeException(nameof(intensity), "SenseSource intensity cannot be less than 0.0.");
 
 			Type = type;
 			Position = position;
@@ -119,11 +120,11 @@ namespace GoRogue.SenseMapping
 		/// <paramref name="angle"/> / 2 degrees are included on either side of the cone's center line.
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
-		public SenseSource(SourceType type, Coord position, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
+		public SenseSource(SourceType type, Point position, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
 			: this(type, position, radius, distanceCalc, intensity)
 		{
 			if (span < 0.0 || span > 360.0)
-				throw new ArgumentOutOfRangeException("Span used to initialize SenseSource must be in range [0, 360]", nameof(span));
+				throw new ArgumentOutOfRangeException(nameof(span), "Span used to initialize SenseSource must be in range [0, 360]");
 
 			IsAngleRestricted = true;
 			Angle = angle;
@@ -152,7 +153,7 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double angle, double span, double intensity = 1.0)
-			: this(type, new Coord(positionX, positionY), radius, distanceCalc, angle, span, intensity) { }
+			: this(type, new Point(positionX, positionY), radius, distanceCalc, angle, span, intensity) { }
 
 		/// <summary>
 		/// Constructor.
@@ -174,11 +175,11 @@ namespace GoRogue.SenseMapping
 		/// </param>
 		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 		public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc, double intensity = 1.0)
-			: this(type, new Coord(positionX, positionY), radius, distanceCalc, intensity) { }
+			: this(type, new Point(positionX, positionY), radius, distanceCalc, intensity) { }
 
 		/// <summary>
 		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="GoRogue.Radius"/>).
+		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="SadRogue.Primitives.Radius"/>).
 		/// </summary>
 		public Distance DistanceCalc { get; set; }
 
@@ -188,11 +189,11 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public bool Enabled { get; set; }
 
-		private Coord _position;
+		private Point _position;
 		/// <summary>
 		/// The position on a map that the source is located at.
 		/// </summary>
-		public ref Coord Position => ref _position;
+		public ref Point Position => ref _position;
 
 		/// <summary>
 		/// Whether or not the spreading of values from this source is restricted to an angle and span.
@@ -210,7 +211,7 @@ namespace GoRogue.SenseMapping
 			set
 			{
 				if (value < 0.0)
-					throw new ArgumentOutOfRangeException("Intensity for SenseSource cannot be set to less than 0.0.", nameof(Intensity));
+					throw new ArgumentOutOfRangeException(nameof(Intensity), "Intensity for SenseSource cannot be set to less than 0.0.");
 
 				if (_intensity != value)
 				{
@@ -249,7 +250,7 @@ namespace GoRogue.SenseMapping
 			set
 			{
 				if (value < 0.0 || value > 360.0)
-					throw new ArgumentOutOfRangeException("SenseSource Span must be in range [0, 360]", nameof(Span));
+					throw new ArgumentOutOfRangeException(nameof(Span), "SenseSource Span must be in range [0, 360]");
 
 				if (_span != value)
 					_span = value;
@@ -267,7 +268,7 @@ namespace GoRogue.SenseMapping
 			set
 			{
 				if (value <= 0.0)
-					throw new ArgumentOutOfRangeException("Radius for a SenseSource must be greater than 0.", nameof(Radius));
+					throw new ArgumentOutOfRangeException(nameof(Radius), "Radius for a SenseSource must be greater than 0.");
 
 				if (_radius != value)
 				{
@@ -306,25 +307,25 @@ namespace GoRogue.SenseMapping
 				initArrays();
 				switch (Type)
 				{
-					case SourceType.RIPPLE:
-					case SourceType.RIPPLE_LOOSE:
-					case SourceType.RIPPLE_TIGHT:
-					case SourceType.RIPPLE_VERY_LOOSE:
+					case SourceType.Ripple:
+					case SourceType.RippleLoose:
+					case SourceType.RippleTight:
+					case SourceType.RippleVeryLoose:
 						if (IsAngleRestricted)
 						{
-							double angle = _angle * MathHelpers.DEGREE_PCT_OF_CIRCLE;
-							double span = _span * MathHelpers.DEGREE_PCT_OF_CIRCLE;
+							double angle = _angle * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
+							double span = _span * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 							doRippleFOV(rippleValue(Type), resMap, angle, span);
 						}
 						else
 							doRippleFOV(rippleValue(Type), resMap);
 						break;
 
-					case SourceType.SHADOW:
+					case SourceType.Shadow:
 						if (IsAngleRestricted)
 						{
-							double angle = _angle * MathHelpers.DEGREE_PCT_OF_CIRCLE;
-							double span = _span * MathHelpers.DEGREE_PCT_OF_CIRCLE;
+							double angle = _angle * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
+							double span = _span * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
 							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, resMap, angle, span);
 							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, resMap, angle, span);
@@ -340,7 +341,7 @@ namespace GoRogue.SenseMapping
 						}
 						else
 						{
-							foreach (Direction d in AdjacencyRule.DIAGONALS.DirectionsOfNeighbors())
+							foreach (Direction d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
 							{
 								shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
 								shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);
@@ -355,37 +356,37 @@ namespace GoRogue.SenseMapping
 		{
 			switch (type)
 			{
-				case SourceType.RIPPLE:
+				case SourceType.Ripple:
 					return 2;
 
-				case SourceType.RIPPLE_LOOSE:
+				case SourceType.RippleLoose:
 					return 3;
 
-				case SourceType.RIPPLE_TIGHT:
+				case SourceType.RippleTight:
 					return 1;
 
-				case SourceType.RIPPLE_VERY_LOOSE:
+				case SourceType.RippleVeryLoose:
 					return 6;
 
 				default:
 					Console.Error.WriteLine("Unrecognized ripple type, defaulting to RIPPLE...");
-					return rippleValue(SourceType.RIPPLE);
+					return rippleValue(SourceType.Ripple);
 			}
 		}
 
 		private void doRippleFOV(int ripple, IMapView<double> map)
 		{
-			LinkedList<Coord> dq = new LinkedList<Coord>();
-			dq.AddLast(new Coord(halfSize, halfSize)); // Add starting point
+			LinkedList<Point> dq = new LinkedList<Point>();
+			dq.AddLast(new Point(halfSize, halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
-				Coord p = dq.First.Value;
+				Point p = dq.First.Value;
 				dq.RemoveFirst();
 
 				if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
 					continue; // Nothing left to spread!
 
-				foreach (Direction dir in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighbors())
+				foreach (Direction dir in AdjacencyRule.EightWay.DirectionsOfNeighbors())
 				{
 					int x2 = p.X + dir.DeltaX;
 					int y2 = p.Y + dir.DeltaY;
@@ -401,7 +402,7 @@ namespace GoRogue.SenseMapping
 					{
 						light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
-							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
+							dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
 			}
@@ -409,17 +410,17 @@ namespace GoRogue.SenseMapping
 
 		private void doRippleFOV(int ripple, IMapView<double> map, double angle, double span)
 		{
-			LinkedList<Coord> dq = new LinkedList<Coord>();
-			dq.AddLast(new Coord(halfSize, halfSize)); // Add starting point
+			LinkedList<Point> dq = new LinkedList<Point>();
+			dq.AddLast(new Point(halfSize, halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
-				Coord p = dq.First.Value;
+				Point p = dq.First.Value;
 				dq.RemoveFirst();
 
 				if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
 					continue; // Nothing left to spread!
 
-				foreach (Direction dir in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsCounterClockwise(Direction.RIGHT))
+				foreach (Direction dir in AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right))
 				{
 					int x2 = p.X + dir.DeltaX;
 					int y2 = p.Y + dir.DeltaY;
@@ -439,7 +440,7 @@ namespace GoRogue.SenseMapping
 					{
 						light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
-							dq.AddLast(new Coord(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
+							dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
 				}
 			}
@@ -450,7 +451,7 @@ namespace GoRogue.SenseMapping
 		{
 			Array.Clear(light, 0, light.Length);
 			light[halfSize, halfSize] = _intensity; // source light is center, starts out at our intensity
-			if (Type != SourceType.SHADOW) // Only clear if we are using it, since this is called at each calculate
+			if (Type != SourceType.Shadow) // Only clear if we are using it, since this is called at each calculate
 				Array.Clear(nearLight, 0, nearLight.Length);
 		}
 
@@ -459,11 +460,11 @@ namespace GoRogue.SenseMapping
 			if (x == halfSize && y == halfSize)
 				return _intensity;
 
-			List<Coord> neighbors = new List<Coord>();
+			List<Point> neighbors = new List<Point>();
 			double tmpDistance = 0, testDistance;
-			Coord c;
+			Point c;
 
-			foreach (Direction di in AdjacencyRule.EIGHT_WAY.DirectionsOfNeighbors())
+			foreach (Direction di in AdjacencyRule.EightWay.DirectionsOfNeighbors())
 			{
 				int x2 = x + di.DeltaX;
 				int y2 = y + di.DeltaY;
@@ -484,7 +485,7 @@ namespace GoRogue.SenseMapping
 
 						idx++;
 					}
-					neighbors.Insert(idx, new Coord(x2, y2));
+					neighbors.Insert(idx, new Point(x2, y2));
 				}
 			}
 			if (neighbors.Count == 0)
@@ -494,7 +495,7 @@ namespace GoRogue.SenseMapping
 
 			double curLight = 0;
 			int lit = 0, indirects = 0;
-			foreach (Coord p in neighbors)
+			foreach (Point p in neighbors)
 			{
 				int gpx = Position.X - (int)Radius + p.X;
 				int gpy = Position.Y - (int)Radius + p.Y;

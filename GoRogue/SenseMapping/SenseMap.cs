@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SadRogue.Primitives;
 
 namespace GoRogue.SenseMapping
 {
@@ -37,13 +38,13 @@ namespace GoRogue.SenseMapping
 	{
 		private List<SenseSource> _senseSources;
 
-		private HashSet<Coord> currentSenseMap;
+		private HashSet<Point> currentSenseMap;
 
 		private int lastHeight;
 
 		private int lastWidth;
 
-		private HashSet<Coord> previousSenseMap;
+		private HashSet<Point> previousSenseMap;
 
 		private IMapView<double> resMap;
 
@@ -64,15 +65,15 @@ namespace GoRogue.SenseMapping
 
 			_senseSources = new List<SenseSource>();
 
-			previousSenseMap = new HashSet<Coord>();
-			currentSenseMap = new HashSet<Coord>();
+			previousSenseMap = new HashSet<Point>();
+			currentSenseMap = new HashSet<Point>();
 		}
 
 		/// <summary>
 		/// IEnumerable of only positions currently "in" the SenseMap, eg. all positions that have a
 		/// value other than 0.0.
 		/// </summary>
-		public IEnumerable<Coord> CurrentSenseMap => currentSenseMap;
+		public IEnumerable<Point> CurrentSenseMap => currentSenseMap;
 
 		/// <summary>
 		/// Height of sense map.
@@ -84,14 +85,14 @@ namespace GoRogue.SenseMapping
 		/// current <see cref="Calculate"/> call, but DID NOT have a non-zero value after the previous time
 		/// <see cref="Calculate"/> was called.
 		/// </summary>
-		public IEnumerable<Coord> NewlyInSenseMap => currentSenseMap.Where(pos => !previousSenseMap.Contains(pos));
+		public IEnumerable<Point> NewlyInSenseMap => currentSenseMap.Where(pos => !previousSenseMap.Contains(pos));
 
 		/// <summary>
 		/// IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the
 		/// most current <see cref="Calculate"/> call, but DID have a non-zero value after the previous time
 		/// <see cref="Calculate"/> was called.
 		/// </summary>
-		public IEnumerable<Coord> NewlyOutOfSenseMap => previousSenseMap.Where(pos => !currentSenseMap.Contains(pos));
+		public IEnumerable<Point> NewlyOutOfSenseMap => previousSenseMap.Where(pos => !currentSenseMap.Contains(pos));
 
 		/// <summary>
 		/// Read-only list of all sources currently considered part of the SenseMap. Some may have their
@@ -110,20 +111,20 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		/// <param name="index1D">Position to return the sensory value for, as a 1d-index-style value.</param>
 		/// <returns>The sense-map value for the given position.</returns>
-		public double this[int index1D] => senseMap[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
+		public double this[int index1D] => senseMap[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
 
 		/// <summary>
 		/// Returns the "sensory value" for the given position.
 		/// </summary>
 		/// <param name="pos">The position to return the sensory value for.</param>
 		/// <returns>The sensory value for the given position.</returns>
-		public double this[Coord pos] => senseMap[pos.X, pos.Y];
+		public double this[Point pos] => senseMap[pos.X, pos.Y];
 
 		/// <summary>
 		/// Returns the "sensory value" for the given position.
 		/// </summary>
-		/// <param name="x">X-coordinate of the position to return the sensory value for.</param>
-		/// <param name="y">Y-coordinate of the position to return the sensory value for.</param>
+		/// <param name="x">X-Pointinate of the position to return the sensory value for.</param>
+		/// <param name="y">Y-Pointinate of the position to return the sensory value for.</param>
 		/// <returns>The sensory value for the given position.</returns>
 		public double this[int x, int y] => senseMap[x, y];
 
@@ -161,7 +162,7 @@ namespace GoRogue.SenseMapping
 				Array.Clear(senseMap, 0, senseMap.Length);
 
 			previousSenseMap = currentSenseMap;
-			currentSenseMap = new HashSet<Coord>();
+			currentSenseMap = new HashSet<Point>();
 
 			if (_senseSources.Count > 1) // Probably not the proper condition, but useful for now.
 			{
@@ -282,7 +283,7 @@ namespace GoRogue.SenseMapping
 		}
 
 		// Blits given source's lightMap onto the global lightmap given
-		private static void blitSenseSource(SenseSource source, double[,] destination, HashSet<Coord> sourceMap, IMapView<double> resMap)
+		private static void blitSenseSource(SenseSource source, double[,] destination, HashSet<Point> sourceMap, IMapView<double> resMap)
 		{
 			// Calculate actual radius bounds, given constraint based on location
 			int minX = Math.Min((int)source.Radius, source.Position.X);
@@ -290,14 +291,14 @@ namespace GoRogue.SenseMapping
 			int maxX = Math.Min((int)source.Radius, resMap.Width - 1 - source.Position.X);
 			int maxY = Math.Min((int)source.Radius, resMap.Height - 1 - source.Position.Y);
 
-			// Use radius bounds to extrapalate global coordinate scheme mins and maxes
-			Coord gMin = source.Position - new Coord(minX, minY);
-			//Coord gMax = source.Position + Coord.Get(maxX, maxY);
+			// Use radius bounds to extrapalate global Pointinate scheme mins and maxes
+			Point gMin = source.Position - new Point(minX, minY);
+			//Point gMax = source.Position + Point.Get(maxX, maxY);
 
-			// Use radius bound to extrapalate light-local coordinate scheme min and max bounds that
+			// Use radius bound to extrapalate light-local Pointinate scheme min and max bounds that
 			// are actually blitted
-			Coord lMin = new Coord((int)source.Radius - minX, (int)source.Radius - minY);
-			Coord lMax = new Coord((int)source.Radius + maxX, (int)source.Radius + maxY);
+			Point lMin = new Point((int)source.Radius - minX, (int)source.Radius - minY);
+			Point lMax = new Point((int)source.Radius + maxX, (int)source.Radius + maxY);
 
 			for (int xOffset = 0; xOffset <= lMax.X - lMin.X; xOffset++)
 			//Parallel.For(0, lMax.X - lMin.X + 1, xOffset => // By light radius 30 or so, there is enough work to get benefit here.  Manual thread splitting may also be an option.
@@ -305,9 +306,9 @@ namespace GoRogue.SenseMapping
 				for (int yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
 				{
 					// Offset local/current by proper amount, and update lightmap
-					Coord c = new Coord(xOffset, yOffset);
-					Coord gCur = gMin + c;
-					Coord lCur = lMin + c;
+					Point c = new Point(xOffset, yOffset);
+					Point gCur = gMin + c;
+					Point lCur = lMin + c;
 
 					destination[gCur.X, gCur.Y] = destination[gCur.X, gCur.Y] + source.light[lCur.X, lCur.Y]; // Add source values,
 					if (destination[gCur.X, gCur.Y] > 0.0)

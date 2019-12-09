@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -55,8 +56,8 @@ namespace GoRogue.MapViews
 		/// <returns>The "value" associated with the given location.</returns>
 		public T this[int index1D]
 		{
-			get => _array[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
-			set => _array[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)] = value;
+			get => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
+			set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
 		}
 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="pos">Location to get/set the value for.</param>
 		/// <returns>The "value" associated with the provided location.</returns>
-		public T this[Coord pos]
+		public T this[Point pos]
 		{
 			get => _array[pos.X, pos.Y];
 			set => _array[pos.X, pos.Y] = value;

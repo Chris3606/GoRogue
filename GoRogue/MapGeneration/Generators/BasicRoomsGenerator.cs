@@ -3,6 +3,7 @@ using GoRogue.Random;
 using System.Collections.Generic;
 using System.Linq;
 using Troschuetz.Random;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Generators
 {

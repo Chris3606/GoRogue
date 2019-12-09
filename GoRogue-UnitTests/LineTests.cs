@@ -8,10 +8,10 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class LineTests
 	{
-		private static readonly Coord END = (8, 6);
+		private static readonly Point END = (8, 6);
 		private static readonly int MAP_HEIGHT = 10;
 		private static readonly int MAP_WIDTH = 10;
-		private static readonly Coord START = (1, 1);
+		private static readonly Point START = (1, 1);
 
 		[TestMethod]
 		public void ManualBresenhamTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.BRESENHAM);
@@ -29,15 +29,15 @@ namespace GoRogue_UnitTests
 
 			for (int i = 0; i < 100; i++)
 			{
-				Coord start = rectangle.RandomPosition();
-				Coord end = rectangle.RandomPosition();
+				Point start = rectangle.RandomPosition();
+				Point end = rectangle.RandomPosition();
 
 				var line = Lines.Get(start, end, Lines.Algorithm.BRESENHAM_ORDERED).ToList();
 				Assert.AreEqual(start, line[0]);
 			}
 		}
 
-		private void DrawLine(Coord start, Coord end, int width, int height, Lines.Algorithm type)
+		private void DrawLine(Point start, Point end, int width, int height, Lines.Algorithm type)
 		{
 			char[,] myChars = new char[width, height];
 

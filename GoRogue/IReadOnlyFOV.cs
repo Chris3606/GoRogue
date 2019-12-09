@@ -1,5 +1,6 @@
 ﻿using GoRogue.MapViews;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -17,18 +18,18 @@ namespace GoRogue
 		/// <summary>
 		/// IEnumerable of only positions currently in the field of view.
 		/// </summary>
-		IEnumerable<Coord> CurrentFOV { get; }
+		IEnumerable<Point> CurrentFOV { get; }
 
 		/// <summary>
 		/// IEnumerable of positions that ARE in field of view as of the most current Calculate call, but were
 		/// NOT in field of view after the previous time Calculate was called.
 		/// </summary>
-		IEnumerable<Coord> NewlySeen { get; }
+		IEnumerable<Point> NewlySeen { get; }
 
 		/// <summary>
 		/// IEnumerable of positions that are NOT in field of view as of the most current Calculate call, but
 		/// WERE in field of view after the previous time Calculate was called.
 		/// </summary>
-		IEnumerable<Coord> NewlyUnseen { get; }
+		IEnumerable<Point> NewlyUnseen { get; }
 	}
 }

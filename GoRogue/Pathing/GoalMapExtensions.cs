@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
 {
@@ -14,17 +15,17 @@ namespace GoRogue.Pathing
 		/// <param name="position">The position to get the minimum value for.</param>
 		/// <param name="adjacencyRule">The adjacency rule to use to determine neighbors.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
-		public static Direction GetDirectionOfMinValue(this IMapView<double?> goalMap, Coord position, AdjacencyRule adjacencyRule)
+		public static Direction GetDirectionOfMinValue(this IMapView<double?> goalMap, Point position, AdjacencyRule adjacencyRule)
 		{
 			double min = goalMap[position].HasValue ? goalMap[position].Value : double.MaxValue;
-			Direction minDir = Direction.NONE;
+			Direction minDir = Direction.None;
 
 			foreach (var dir in adjacencyRule.DirectionsOfNeighbors())
 			{
-				Coord newPosition = position + dir;
+				Point newPosition = position + dir;
 				if (!goalMap[newPosition].HasValue)
 					continue;
 
@@ -46,10 +47,10 @@ namespace GoRogue.Pathing
 		/// <param name="positionY">The y-value of the position to get the minimum value for.</param>
 		/// <param name="adjacencyRule">The adjacency rule to use to determine neighbors.</param>
 		/// <returns>
-		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.NONE"/> if the
+		/// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
 		/// neighbors are all obstacles.
 		/// </returns>
 		public static Direction GetDirectionOfMinValue(this IMapView<double?> goalMap, int positionX, int positionY, AdjacencyRule adjacencyRule)
-			=> goalMap.GetDirectionOfMinValue(new Coord(positionX, positionY), adjacencyRule);
+			=> goalMap.GetDirectionOfMinValue(new Point(positionX, positionY), adjacencyRule);
 	}
 }

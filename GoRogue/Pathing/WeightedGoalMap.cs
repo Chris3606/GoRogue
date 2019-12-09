@@ -1,6 +1,7 @@
 ﻿using GoRogue.MapViews;
 using System.Collections.Generic;
 using System.Diagnostics;
+using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
 {
@@ -103,7 +104,7 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// Returns the value of the combined goal maps at the given point.
 		/// </summary>
-		public double? this[int index1D] => this[Coord.ToXValue(index1D, Width), Coord.ToYValue(index1D, Width)];
+		public double? this[int index1D] => this[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
 
 		/// <summary>
 		/// Returns the value of the combined goal maps at any given point.
@@ -137,7 +138,7 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// Returns the value of the combined goal maps at any given point.
 		/// </summary>
-		public double? this[Coord point] => this[point.X, point.Y];
+		public double? this[Point point] => this[point.X, point.Y];
 
 		/// <summary>
 		/// Computes the entire aggregate goal map and returns it, effectively caching the result.

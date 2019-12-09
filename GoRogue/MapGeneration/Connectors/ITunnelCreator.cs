@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -13,9 +14,9 @@ namespace GoRogue.MapGeneration.Connectors
 		/// path of positions set to true between those two points).
 		/// </summary>
 		/// <param name="map">Map to create the tunnel on.</param>
-		/// <param name="start">Start position to connect.</param>
-		/// <param name="end">End position to connect.</param>
-		void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end);
+		/// <param name="tunnelStart">Start position to connect.</param>
+		/// <param name="tunnelEnd">End position to connect.</param>
+		void CreateTunnel(ISettableMapView<bool> map, Point tunnelStart, Point tunnelEnd);
 
 		/// <summary>
 		/// Implements the algorithm, creating the tunnel between the two points (ensuring there is a

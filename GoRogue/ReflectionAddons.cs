@@ -7,17 +7,17 @@ namespace GoRogue
 	/// Contains a series of functions that complement the reflection capabilities of C#, to conveniently allow for things like
 	/// iterating over all types that a given type can be casted to.
 	/// </summary>
-	public static class Reflection
+	public static class ReflectionAddons
 	{
 		/// <summary>
 		/// Gets the entire inheritanc/interface tree for the actual run-time type of the object passed in.  This will include
 		/// a type representing the actual run-time type of the object, as well as a type representing each superclass
 		/// of that runtime type, and each interface that runtime type or one of its superclasses implement.
 		/// </summary>
-		/// <param name="obj">Object to return type tree for.</param>
+		/// <param name="instance">Object to return type tree for.</param>
 		/// <returns>The complete inheritance/interface tree for the runtime-type of the object passed in, including the runtime type itself,
 		/// and all superclasses of that type, as well as Type objects for each interface that runtime type or its superclasses implement.</returns>
-		public static IEnumerable<Type> GetRuntimeTypeTree(object obj) => GetTypeTree(obj.GetType());
+		public static IEnumerable<Type> GetRuntimeTypeTree(object instance) => GetTypeTree(instance.GetType());
 
 		/// <summary>
 		/// Gets the entire inheritance/interface tree for type T.  This will include a Type that represents type T, as well

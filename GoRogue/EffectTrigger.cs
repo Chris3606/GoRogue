@@ -14,7 +14,7 @@ namespace GoRogue
 	/// type of argument to their <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/>
 	/// function, as specified by this class's type parameter.
 	///
-	/// Each time the <see cref="TriggerEffects(TriggerArgs)"/> function is called, every Effect has its
+	/// Each time the <see cref="TriggerEffects(TTriggerArgs)"/> function is called, every Effect has its
 	/// Trigger function called (provided its duration is not 0). Each Effect may, via the TriggerArgs
 	/// <see cref="EffectArgs.CancelTrigger"/> member, stop the effect from
 	/// being sent to subsequent effects in the EffectTrigger's list. Once either all effects in the list
@@ -34,33 +34,33 @@ namespace GoRogue
 	/// in the effects list of EffectTriggers, etc. In these cases, subclassing EffectTrigger and overriding the
 	/// add and remove functions can allow this functionality.
 	/// </remarks>
-	/// <typeparam name="TriggerArgs">
+	/// <typeparam name="TTriggerArgs">
 	/// The type of argument that must be accepted by the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/> 
 	/// function of any Effect added to this EffectTrigger.
 	/// </typeparam>
-	public class EffectTrigger<TriggerArgs> where TriggerArgs : EffectArgs
+	public class EffectTrigger<TTriggerArgs> where TTriggerArgs : EffectArgs
 	{
-		private List<Effect<TriggerArgs>> _effects;
+		private List<Effect<TTriggerArgs>> _effects;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public EffectTrigger()
 		{
-			_effects = new List<Effect<TriggerArgs>>();
+			_effects = new List<Effect<TTriggerArgs>>();
 		}
 
 		/// <summary>
 		/// List of all effects that are part of this EffectTrigger.
 		/// </summary>
-		public IReadOnlyList<Effect<TriggerArgs>> Effects { get => _effects.AsReadOnly(); }
+		public IReadOnlyList<Effect<TTriggerArgs>> Effects { get => _effects.AsReadOnly(); }
 
 		/// <summary>
 		/// Adds the given effect to this EffectTrigger, provided the effect's duration is not 0. If
 		/// the effect's duration is 0, an ArgumentException is thrown.
 		/// </summary>
 		/// <param name="effect">The effect to add to this trigger.</param>
-		public virtual void Add(Effect<TriggerArgs> effect)
+		public virtual void Add(Effect<TTriggerArgs> effect)
 		{
 			if (effect.Duration == 0)
 				throw new System.ArgumentException($"Tried to add effect {effect.Name} to an EffectTrigger, but it has duration 0!", nameof(effect));
@@ -72,7 +72,7 @@ namespace GoRogue
 		/// Removes the given effect from this EffectTrigger.
 		/// </summary>
 		/// <param name="effect">The effect to remove</param>
-		public virtual void Remove(Effect<TriggerArgs> effect) => _effects.Remove(effect);
+		public virtual void Remove(Effect<TTriggerArgs> effect) => _effects.Remove(effect);
 
 		/// <summary>
 		/// Yields a string representation of each effect that has been added to the effect trigger.
@@ -97,7 +97,7 @@ namespace GoRogue
 		/// </remarks>
 		/// <param name="args">Argument to pass to the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/> function
 		/// of each effect.</param>
-		public void TriggerEffects(TriggerArgs args)
+		public void TriggerEffects(TTriggerArgs args)
 		{
 			foreach (var effect in _effects)
 			{

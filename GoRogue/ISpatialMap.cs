@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -30,11 +31,11 @@ namespace GoRogue
 	/// position is in some cases -- however, in many cases, this may be undesireable, particularly when interfacing
 	/// with more traditional infrastructures from other libraries, which likely record each item's position as a field
 	/// or property of the item itself.  In these cases, where the item itself records its position, you will need to
-	/// call the <see cref="Move(T, Coord)"/> function (or a similar overload) whenever an object moves, to keep the
+	/// call the <see cref="Move(T, Point)"/> function (or a similar overload) whenever an object moves, to keep the
 	/// spatial map's position for that item in sync with its actual position.
 	/// 
 	/// It is also worthy of note, that some implementations of ISpatialMap (such as <see cref="SpatialMap{T}"/>) have implemented
-	/// <see cref="Move(T, Coord)"/> in such a way that it could fail in some cases.  Move will return false in cases where it
+	/// <see cref="Move(T, Point)"/> in such a way that it could fail in some cases.  Move will return false in cases where it
 	/// fails, so if you are using an implementation where that may happen, you may need to check this to avoid desync issues.
 	/// The Move function documentation for each implementation clearly states in what cases a call to Move can fail.
 	/// </remarks>
@@ -48,7 +49,7 @@ namespace GoRogue
 		/// <param name="newItem">Item to add.</param>
 		/// <param name="position">Position to add item to.</param>
 		/// <returns>True if item was successfully added, false otherwise.</returns>
-		bool Add(T newItem, Coord position);
+		bool Add(T newItem, Point position);
 
 		/// <summary>
 		/// Adds the given item at the given position, and returns true if the item was successfully
@@ -72,7 +73,7 @@ namespace GoRogue
 		/// <param name="item">Item to move.</param>
 		/// <param name="target">Location to move item to.</param>
 		/// <returns>True if item was successfully moved, false otherwise.</returns>
-		bool Move(T item, Coord target);
+		bool Move(T item, Point target);
 
 		/// <summary>
 		/// Moves the given item from its current location to the specified one. Returns true if the
@@ -90,7 +91,7 @@ namespace GoRogue
 		/// <param name="current">Location to move items from.</param>
 		/// <param name="target">Location to move items to.</param>
 		/// <returns>Any items that were moved, or nothing if no items were moved.</returns>
-		IEnumerable<T> Move(Coord current, Coord target);
+		IEnumerable<T> Move(Point current, Point target);
 
 		/// <summary>
 		/// Moves any items at the specified location to the target one. Returns any items that were moved.
@@ -116,7 +117,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="position">Position to remove items from.</param>
 		/// <returns>Any items that were removed, or nothing if no items were removed.</returns>
-		IEnumerable<T> Remove(Coord position);
+		IEnumerable<T> Remove(Point position);
 
 		/// <summary>
 		/// Removes any items at the specified location from the spatial map. Returns any items
@@ -140,7 +141,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="item">Item being represented.</param>
 		/// <param name="position">Current position of the item.</param>
-		public ItemEventArgs(T item, Coord position)
+		public ItemEventArgs(T item, Point position)
 		{
 			Item = item;
 			Position = position;
@@ -153,7 +154,7 @@ namespace GoRogue
 		/// <param name="x">X-value of the current position of the item.</param>
 		/// <param name="y">Y-value of the current position of the item.</param>
 		public ItemEventArgs(T item, int x, int y)
-			: this(item, new Coord(x, y)) { }
+			: this(item, new Point(x, y)) { }
 
 		/// <summary>
 		/// Item being represented.
@@ -163,7 +164,7 @@ namespace GoRogue
 		/// <summary>
 		/// Current position of that item at time of event.
 		/// </summary>
-		public Coord Position { get; private set; }
+		public Point Position { get; private set; }
 	}
 
 	/// <summary>
@@ -178,7 +179,7 @@ namespace GoRogue
 		/// <param name="item">Item being represented.</param>
 		/// <param name="oldPosition">Position of item before it was moved.</param>
 		/// <param name="newPosition">Position of item after it has been moved.</param>
-		public ItemMovedEventArgs(T item, Coord oldPosition, Coord newPosition)
+		public ItemMovedEventArgs(T item, Point oldPosition, Point newPosition)
 		{
 			Item = item;
 			OldPosition = oldPosition;
@@ -194,7 +195,7 @@ namespace GoRogue
 		/// <param name="newPositionX">X-value of the position of item after it has been moved.</param>
 		/// <param name="newPositionY">Y-value of the position of item after it has been moved.</param>
 		public ItemMovedEventArgs(T item, int oldPositionX, int oldPositionY, int newPositionX, int newPositionY)
-			: this(item, new Coord(oldPositionX, oldPositionY), new Coord(newPositionX, newPositionY)) { }
+			: this(item, new Point(oldPositionX, oldPositionY), new Point(newPositionX, newPositionY)) { }
 
 		/// <summary>
 		/// Item being represented.
@@ -204,12 +205,12 @@ namespace GoRogue
 		/// <summary>
 		/// Position of item after it has been moved.
 		/// </summary>
-		public Coord NewPosition { get; private set; }
+		public Point NewPosition { get; private set; }
 
 		/// <summary>
 		/// Position of item before it was moved.
 		/// </summary>
-		public Coord OldPosition { get; private set; }
+		public Point OldPosition { get; private set; }
 	}
 
 	// Class for dictionary-hashing of things that implement IHasID

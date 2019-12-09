@@ -11,11 +11,11 @@
 		int Count { get; }
 
 		/// <summary>
-		/// Returns the parent of the set containing <paramref name="obj"/>, performing path compression as search is completed.
+		/// Returns the parent of the set containing <paramref name="objectID"/>, performing path compression as search is completed.
 		/// </summary>
-		/// <param name="obj">Object to search for.</param>
+		/// <param name="objectID">Object to search for.</param>
 		/// <returns>The parent of the object given.</returns>
-		int Find(int obj);
+		int Find(int objectID);
 
 		/// <summary>
 		/// Returns true if the two objects specified are in the same set.

@@ -2,7 +2,7 @@
 using GoRogue.Random;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using SadRogue.Primitives;
 using System.Linq;
 using Troschuetz.Random;
 
@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 			=> ConnectRooms(map, null, rooms, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
@@ -58,7 +58,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Coord[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 		{
@@ -71,7 +71,7 @@ namespace GoRogue.MapGeneration.Connectors
 
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-			var roomHallwayConnections = new List<(Rectangle Room, Coord[][] Connections)>();
+			var roomHallwayConnections = new List<(Rectangle Room, Point[][] Connections)>();
 
 			/*
 			- Get all points along a side
@@ -99,13 +99,13 @@ namespace GoRogue.MapGeneration.Connectors
 				var innerRect = room;
 
 				// - Get all points along each side
-				List<Coord>[] validPoints = new List<Coord>[4];
+				List<Point>[] validPoints = new List<Point>[4];
 
 				for (int i = 0; i < validPoints.Length; i++)
-					validPoints[i] = new List<Coord>();
+					validPoints[i] = new List<Point>();
 
 				int sideIndex = 0;
-				foreach (var side in AdjacencyRule.CARDINALS.DirectionsOfNeighbors())
+				foreach (var side in AdjacencyRule.Cardinals.DirectionsOfNeighbors())
 				{
 					foreach (var innerPoint in innerRect.PositionsOnSide(side))
 					{
@@ -174,11 +174,11 @@ namespace GoRogue.MapGeneration.Connectors
 					}
 				}
 
-				List<Coord>[] finalConnectionPoints = new List<Coord>[4];
-				finalConnectionPoints[0] = new List<Coord>();
-				finalConnectionPoints[1] = new List<Coord>();
-				finalConnectionPoints[2] = new List<Coord>();
-				finalConnectionPoints[3] = new List<Coord>();
+				List<Point>[] finalConnectionPoints = new List<Point>[4];
+				finalConnectionPoints[0] = new List<Point>();
+				finalConnectionPoints[1] = new List<Point>();
+				finalConnectionPoints[2] = new List<Point>();
+				finalConnectionPoints[3] = new List<Point>();
 
 				// - loop sides
 				for (var i = 0; i < 4; i++)
@@ -223,9 +223,9 @@ namespace GoRogue.MapGeneration.Connectors
 			return roomHallwayConnections;
 		}
 
-		private static bool IsPointByTwoWalls(IMapView<bool> map, Coord location)
+		private static bool IsPointByTwoWalls(IMapView<bool> map, Point location)
 		{
-			var points = AdjacencyRule.CARDINALS.Neighbors(location);
+			var points = AdjacencyRule.Cardinals.Neighbors(location);
 			var area = new Rectangle(0, 0, map.Width, map.Height);
 			var counter = 0;
 
@@ -238,14 +238,14 @@ namespace GoRogue.MapGeneration.Connectors
 			return counter >= 2;
 		}
 
-		private static bool IsPointMapEdge(IMapView<bool> map, Coord location, bool onlyEdgeTest = false)
+		private static bool IsPointMapEdge(IMapView<bool> map, Point location, bool onlyEdgeTest = false)
 		{
 			if (onlyEdgeTest)
 				return location.X == 0 || location.X == map.Width - 1 || location.Y == 0 || location.Y == map.Height - 1;
 			return location.X <= 0 || location.X >= map.Width - 1 || location.Y <= 0 || location.Y >= map.Height - 1;
 		}
 
-		private static bool IsPointWall(IMapView<bool> map, Coord location)
+		private static bool IsPointWall(IMapView<bool> map, Point location)
 		{
 			return !map[location];
 		}

@@ -9,11 +9,6 @@ namespace GoRogue
 	public static class MathHelpers
 	{
 		/// <summary>
-		/// Result of 1/360; represents in decimal form a percent of a circle that a degree constitutes.
-		/// </summary>
-		public const double DEGREE_PCT_OF_CIRCLE = 0.002777777777777778;
-
-		/// <summary>
 		/// Rounds the given number up (toward highest number), to the nearest multiple of the
 		/// specified value.
 		/// </summary>
@@ -25,20 +20,6 @@ namespace GoRogue
 			int isPositive = (number >= 0) ? 1 : 0;
 			return ((number + isPositive * (toMultipleOf - 1)) / toMultipleOf) * toMultipleOf;
 		}
-
-		/// <summary>
-		/// Converts given angle from radians to degrees.
-		/// </summary>
-		/// <param name="radAngle">Angle in radians.</param>
-		/// <returns>The given angle in degrees.</returns>
-		public static double ToDegree(double radAngle) => radAngle * (180.0 / Math.PI);
-
-		/// <summary>
-		/// Converts given angle from degrees to radians.
-		/// </summary>
-		/// <param name="degAngle">Angle in degrees.</param>
-		/// <returns>The given angle in radians.</returns>
-		public static double ToRadian(double degAngle) => Math.PI * degAngle / 180.0;
 
 		// Basically modulo for array indices, solves - num issues. (-1, 3) is 2.
 		/// <summary>

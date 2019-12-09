@@ -4,13 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GoRogue_UnitTests
 {
 	[TestClass]
-	public class CoordTests
+	public class PointTests
 	{
 		[TestMethod]
 		public void TestNullEquality()
 		{
-			Coord c1 = (1, 6);
-			Coord c2 = Coord.NONE;
+			Point c1 = (1, 6);
+			Point c2 = Point.NONE;
 
 			bool x = c1 == c2;
 			Assert.AreEqual(false, x);
@@ -22,7 +22,7 @@ namespace GoRogue_UnitTests
 			x = c2 != c1;
 			Assert.AreEqual(true, x);
 
-			c1 = Coord.NONE;
+			c1 = Point.NONE;
 			x = c1 == c2;
 			Assert.AreEqual(true, x);
 

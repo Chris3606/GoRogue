@@ -101,11 +101,21 @@ namespace GoRogue.Random
 		/// <returns>The next boolean value in the underlying series.</returns>
 		public bool NextBoolean() => returnValueFrom(boolSeries, ref boolIndex);
 
-		/// <summary>
+        /// <summary>
 		/// Fills the specified buffer with values from the underlying byte series.
 		/// </summary>
 		/// <param name="buffer">Buffer to fill.</param>
 		public void NextBytes(byte[] buffer)
+        {
+            for (int i = 0; i < buffer.Length; i++)
+                buffer[i] = returnValueFrom(byteSeries, ref byteIndex);
+        }
+
+        /// <summary>
+        /// Fills the specified buffer with values from the underlying byte series.
+        /// </summary>
+        /// <param name="buffer">Buffer to fill.</param>
+        public void NextBytes(Span<byte> buffer)
 		{
 			for (int i = 0; i < buffer.Length; i++)
 				buffer[i] = returnValueFrom(byteSeries, ref byteIndex);

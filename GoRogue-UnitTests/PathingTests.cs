@@ -14,11 +14,11 @@ namespace GoRogue_UnitTests
 	[TestClass]
 	public class PathingTests
 	{
-		static private readonly Coord END = (17, 14);
+		static private readonly Point END = (17, 14);
 		static private readonly int ITERATIONS = 100;
 		static private readonly int MAP_HEIGHT = 30;
 		static private readonly int MAP_WIDTH = 30;
-		static private readonly Coord START = (1, 2);
+		static private readonly Point START = (1, 2);
 
 		[TestMethod]
 		public void AStarAssumeWalkable()
@@ -92,7 +92,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void GoalMapBasicResult()
 		{
-			Coord goal = (5, 5);
+			Point goal = (5, 5);
 			var map = new ArrayMap<bool>(50, 50);
 			QuickGenerators.GenerateRectangleMap(map);
 
@@ -105,7 +105,7 @@ namespace GoRogue_UnitTests
 
 			foreach (var startPos in goalMap.Positions().Where(p => map[p] && p != goal))
 			{
-				Coord pos = startPos;
+				Point pos = startPos;
 				while (true)
 				{
 					var dir = goalMap.GetDirectionOfMinValue(pos);
@@ -127,7 +127,7 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void FleeMapBasicResult()
 		{
-			Coord goal = (5, 5);
+			Point goal = (5, 5);
 			var map = new ArrayMap<bool>(50, 50);
 			QuickGenerators.GenerateRectangleMap(map);
 
@@ -141,7 +141,7 @@ namespace GoRogue_UnitTests
 
 			foreach (var startPos in fleeMap.Positions().Where(p => map[p] && p != goal))
 			{
-				Coord pos = startPos;
+				Point pos = startPos;
 				int moves = 0;
 				while (moves < map.Width * map.Height)
 				{
@@ -237,8 +237,8 @@ namespace GoRogue_UnitTests
 				for (int y = 0; y < map.Height; y++)
 					map[x, y] = true;
 
-			Coord start = (1, 6);
-			Coord end = (0, 1);
+			Point start = (1, 6);
+			Point end = (0, 1);
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 
 			try
@@ -254,8 +254,8 @@ namespace GoRogue_UnitTests
 		[TestMethod]
 		public void PathInitReversing()
 		{
-			Coord start = (1, 1);
-			Coord end = (6, 6);
+			Point start = (1, 1);
+			Point end = (6, 6);
 			// Because Path constructor is internal to avoid confusion, we use AStar to return a
 			// (simple) known path
 			var map = new ArrayMap<bool>(10, 10);
@@ -263,7 +263,7 @@ namespace GoRogue_UnitTests
 			var pather = new AStar(map, Distance.CHEBYSHEV);
 
 			var actualPath = pather.ShortestPath(start, end);
-			var expectedPath = new List<Coord>();
+			var expectedPath = new List<Point>();
 
 			for (int i = start.X; i <= end.X; i++)
 				expectedPath.Add((i, i));
@@ -309,7 +309,7 @@ namespace GoRogue_UnitTests
 				Assert.AreEqual(true, map[pos]);
 		}
 
-		private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Coord> goals)
+		private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Point> goals)
 		{
 			var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
 			for (int x = 0; x < walkabilityMap.Width; x++)
@@ -390,11 +390,11 @@ namespace GoRogue_UnitTests
 
 			for (int i = 0; i < ITERATIONS; i++)
 			{
-				Coord start = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+				Point start = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 				while (!map[start])
 					start = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 
-				Coord end = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
+				Point end = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 				while (end == start || !map[end])
 					end = (SingletonRandom.DefaultRNG.Next(map.Width - 1), SingletonRandom.DefaultRNG.Next(map.Height - 1));
 
@@ -406,7 +406,7 @@ namespace GoRogue_UnitTests
 				{
 					Console.WriteLine($"Error: Control got {path2.Length}, but custom AStar got {path1.LengthWithStart}");
 					Console.WriteLine("Control: ");
-					Utility.PrintHightlightedPoints(map, Utility.ToCoords(path2));
+					Utility.PrintHightlightedPoints(map, Utility.ToPoints(path2));
 					Console.WriteLine("AStar  :");
 					Utility.PrintHightlightedPoints(map, path1.StepsWithStart);
 				}
@@ -420,7 +420,7 @@ namespace GoRogue_UnitTests
 			}
 		}
 
-		private void checkAgainstPath(IReadOnlyList<Coord> expectedPath, Path actual, Coord start, Coord end)
+		private void checkAgainstPath(IReadOnlyList<Point> expectedPath, Path actual, Point start, Point end)
 		{
 			var actualList = actual.StepsWithStart.ToList();
 
@@ -439,7 +439,7 @@ namespace GoRogue_UnitTests
 			Assert.AreEqual(actual.LengthWithStart, expectedPath.Count);
 		}
 
-		private void checkListsMatch(IReadOnlyList<Coord> expected, IReadOnlyList<Coord> actual)
+		private void checkListsMatch(IReadOnlyList<Point> expected, IReadOnlyList<Point> actual)
 		{
 			Assert.AreEqual(expected.Count, actual.Count);
 
@@ -447,7 +447,7 @@ namespace GoRogue_UnitTests
 				Assert.AreEqual(expected[i], actual[i]);
 		}
 
-		private void printExpectedAndActual(IReadOnlyList<Coord> expected, Path actual)
+		private void printExpectedAndActual(IReadOnlyList<Point> expected, Path actual)
 		{
 			Console.WriteLine("Expected:");
 			foreach (var i in expected)

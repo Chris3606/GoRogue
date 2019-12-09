@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -53,7 +54,7 @@ namespace GoRogue
 		/// True if there is some item at the given position on a layer included in the given layer
 		/// mask, false if not.
 		/// </returns>
-		bool Contains(Coord position, uint layerMask = uint.MaxValue);
+		bool Contains(Point position, uint layerMask = uint.MaxValue);
 
 		/// <summary>
 		/// Returns whether or not there is an item in the data structure at the given position, that
@@ -83,7 +84,7 @@ namespace GoRogue
 		/// The item(s) at the given position that reside on a layer included in the layer mask if
 		/// there are any items, or nothing if there is nothing at that position.
 		/// </returns>
-		IEnumerable<T> GetItems(Coord position, uint layerMask = uint.MaxValue);
+		IEnumerable<T> GetItemsAt(Point position, uint layerMask = uint.MaxValue);
 
 		/// <summary>
 		/// Gets the item(s) associated with the given position that reside on any layer included in
@@ -99,7 +100,7 @@ namespace GoRogue
 		/// The item(s) at the given position that reside on a layer included in the layer mask if
 		/// there are any items, or nothing if there is nothing at that position.
 		/// </returns>
-		IEnumerable<T> GetItems(int x, int y, uint layerMask = uint.MaxValue);
+		IEnumerable<T> GetItemsAt(int x, int y, uint layerMask = uint.MaxValue);
 
 		/// <summary>
 		/// Gets a read-only spatial map representing the layer specified.
@@ -116,7 +117,7 @@ namespace GoRogue
 		/// Layer mask indicating which layers to return. Defaults to all layers.
 		/// </param>
 		/// <returns>Read-only spatial maps representing each layer in the given layer mask.</returns>
-		IEnumerable<IReadOnlySpatialMap<T>> GetLayers(uint layerMask = uint.MaxValue);
+		IEnumerable<IReadOnlySpatialMap<T>> GetLayersInMask(uint layerMask = uint.MaxValue);
 	}
 
 	/// <summary>

@@ -1,6 +1,7 @@
 ﻿using GoRogue.MapViews;
 using System.Collections.Generic;
 using System.Linq;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -52,7 +53,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<MapArea> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
+		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<Area> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
 		{
 			if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 			if (tunnelCreator == null) tunnelCreator = new DirectLineTunnelCreator(distanceCalc);
@@ -72,7 +73,7 @@ namespace GoRogue.MapGeneration.Connectors
 			}
 		}
 
-		static private int findNearestMapArea(IReadOnlyList<IReadOnlyMapArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
+		static private int findNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
 		{
 			int closestIndex = mapAreaIndex;
 			double distance = double.MaxValue;

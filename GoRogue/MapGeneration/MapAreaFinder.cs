@@ -1,6 +1,7 @@
 ﻿using GoRogue.MapViews;
 using System;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration
 {
@@ -52,7 +53,7 @@ namespace GoRogue.MapGeneration
 		/// </param>
 		/// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
 		/// <returns>An IEnumerable of each (unique) map area.</returns>
-		static public IEnumerable<MapArea> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
+		static public IEnumerable<Area> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
 		{
 			var areaFinder = new MapAreaFinder(map, adjacencyMethod);
 			return areaFinder.MapAreas();
@@ -62,7 +63,7 @@ namespace GoRogue.MapGeneration
 		/// Calculates the list of map areas, returning each unique map area.
 		/// </summary>
 		/// <returns>An IEnumerable of each (unique) map area.</returns>
-		public IEnumerable<MapArea> MapAreas()
+		public IEnumerable<Area> MapAreas()
 		{
 			if (visited == null || visited.GetLength(1) != Map.Height || visited.GetLength(0) != Map.Width)
 				visited = new bool[Map.Width, Map.Height];
@@ -72,21 +73,21 @@ namespace GoRogue.MapGeneration
 			for (int x = 0; x < Map.Width; x++)
 				for (int y = 0; y < Map.Height; y++)
 				{
-					var area = visit(new Coord(x, y));
+					var area = visit(new Point(x, y));
 
 					if (area != null && area.Count != 0)
 						yield return area;
 				}
 		}
 
-		private MapArea visit(Coord position)
+		private Area visit(Point position)
 		{
 			// Don't bother allocating a MapArea, because the starting point isn't valid.
 			if (!Map[position])
 				return null;
 
-			var stack = new Stack<Coord>();
-			var area = new MapArea();
+			var stack = new Stack<Point>();
+			var area = new Area();
 			stack.Push(position);
 
 			while (stack.Count != 0)

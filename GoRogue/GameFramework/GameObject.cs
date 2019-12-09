@@ -1,6 +1,7 @@
 ﻿using System;
 using GoRogue.GameFramework.Components;
 using GoRogue.MapViews;
+using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
 {
@@ -33,7 +34,7 @@ namespace GoRogue.GameFramework
 		// Use the value of this variable instead of the "this" keyword from within GameObject
 		private IGameObject _parentObject;
 
-		private Coord _position;
+		private Point _position;
 		/// <summary>
 		/// The position of this object on the grid. Any time this value is changed, the <see cref="Moved"/> event is fired.
 		/// </summary>
@@ -41,7 +42,7 @@ namespace GoRogue.GameFramework
 		/// This property may be overriden to implement custom functionality, however it is highly recommended
 		/// that you call the base set in the overridden setter, as it performs collision detection.
 		/// </remarks>
-		public virtual Coord Position
+		public virtual Point Position
 		{
 			get => _position;
 			set
@@ -106,8 +107,8 @@ namespace GoRogue.GameFramework
 
 		/// <summary>
 		/// ID of the object.  Used for the sake of putting instances of this class in an <see cref="ISpatialMap{T}"/> implementation,
-		/// and is NOT guaranteed to be entirely unique, though this can be modified by overriding the <see cref="GenerateID"/>
-		/// function.
+		/// and is NOT guaranteed to be entirely unique, though this can be modified by passing a custom generation function to the
+		/// GameObject constructor.
 		/// </summary>
 		public uint ID { get; }
 
@@ -122,24 +123,52 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public Map CurrentMap { get; private set; }
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="position">Position to start the object at.</param>
-		/// <param name="layer">The layer of of a <see cref="Map"/> the object is assigned to.</param>
-		/// <param name="parentObject">Object holding this GameObject instance. If you are inheriting from GameObject,
-		/// or using a backing field of type GameObject to implement <see cref="IGameObject"/>, for example, you would pass <see langword="this"/> at construction.
-		/// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map"/>, you would pass null.</param>
-		/// <param name="isStatic">Whether or not the object can be moved (true if the object CANNOT be moved,
-		/// false otherwise).</param>
-		/// <param name="isWalkable">Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
-		/// on can be traversed by other, non-walkable objects on the same <see cref="Map"/>.  Effectively, whether or not this
-		/// object collides.</param>
-		/// <param name="isTransparent">Whether or not the object is considered "transparent", eg. whether or not light passes through it
-		/// for the sake of calculating the FOV of a <see cref="Map"/>.</param>
-		public GameObject(Coord position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)
+        /// <summary>
+        /// Function used at construction to assign an ID to the object.
+        /// </summary>
+        /// <remarks>
+        /// The default implementation simply assigns a random number in range of valid uints. This
+        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}"/>
+        /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
+        /// implementation is required, override this function to return an appropriate ID. Keep in
+        /// mind a relatively high degree of uniqueness is necessary for efficient placement in an
+        /// ISpatialMap implementation.
+        ///
+        /// This function is called from within the constructor 
+        /// </remarks>
+        /// <returns>An ID to assign to the current object.</returns>
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <remarks>
+        /// The idGenerator function given is used to generate an ID which is assigned to the <see cref="ID"/> field.
+        /// When null is specified, the constructor simply assigns a random number in range of valid uints. This
+        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}"/>
+        /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
+        /// implementation is required, override this function to return an appropriate ID. Keep in
+        /// mind a relatively high degree of uniqueness is necessary for efficient placement in an
+        /// ISpatialMap implementation.
+        /// </remarks>
+        /// <param name="position">Position to start the object at.</param>
+        /// <param name="layer">The layer of of a <see cref="Map"/> the object is assigned to.</param>
+        /// <param name="parentObject">Object holding this GameObject instance. If you are inheriting from GameObject,
+        /// or using a backing field of type GameObject to implement <see cref="IGameObject"/>, for example, you would pass <see langword="this"/> at construction.
+        /// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map"/>, you would pass null.</param>
+        /// <param name="isStatic">Whether or not the object can be moved (true if the object CANNOT be moved,
+        /// false otherwise).</param>
+        /// <param name="isWalkable">Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
+        /// on can be traversed by other, non-walkable objects on the same <see cref="Map"/>.  Effectively, whether or not this
+        /// object collides.</param>
+        /// <param name="isTransparent">Whether or not the object is considered "transparent", eg. whether or not light passes through it
+        /// for the sake of calculating the FOV of a <see cref="Map"/>.</param>
+        /// <param name="idGenerator">The function used to generate and return an unsigned integer to use assign to the <see cref="ID"/> field.
+        /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor remarks for details.</param>
+        public GameObject(Point position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true, Func<uint> idGenerator = null)
 		{
-			_parentObject = parentObject ?? this;
+            idGenerator = idGenerator ?? Random.SingletonRandom.DefaultRNG.NextUInt;
+
+            _parentObject = parentObject ?? this;
 			_position = position;
 			Layer = layer;
 			IsWalkable = isWalkable;
@@ -148,7 +177,7 @@ namespace GoRogue.GameFramework
 
 			CurrentMap = null;
 
-			ID = GenerateID();
+			ID = idGenerator();
 		}
 
 		/// <summary>
@@ -159,25 +188,11 @@ namespace GoRogue.GameFramework
 		/// <returns>True if the object was successfully moved, false otherwise.</returns>
 		public bool MoveIn(Direction direction)
 		{
-			Coord oldPos = _position;
+            Point oldPos = _position;
 			Position += direction;
 
 			return _position != oldPos;
 		}
-
-		/// <summary>
-		/// Function used at construction to assign an ID to the object.
-		/// </summary>
-		/// <remarks>
-		/// The default implementation simply assigns a random number in range of valid uints. This
-		/// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}"/>
-		/// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
-		/// implementation is required, override this function to return an appropriate ID. Keep in
-		/// mind a relatively high degree of uniqueness is necessary for efficient placement in an
-		/// ISpatialMap implementation.
-		/// </remarks>
-		/// <returns>An ID to assign to the current object.</returns>
-		protected virtual uint GenerateID() => Random.SingletonRandom.DefaultRNG.NextUInt();
 
 		/// <summary>
 		/// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap"/> field of the

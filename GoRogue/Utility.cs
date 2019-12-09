@@ -19,12 +19,12 @@ namespace GoRogue
 		/// Adds an AsReadOnly method to <see cref="IDictionary{K, V}"/>, similar to the AsReadOnly method of
 		/// <see cref="IList{T}"/>, that returns a read-only reference to the dictionary.
 		/// </summary>
-		/// <typeparam name="K">Type of keys of the dictionary.</typeparam>
-		/// <typeparam name="V">Type of values of the dictionary.</typeparam>
+		/// <typeparam name="TKey">Type of keys of the dictionary.</typeparam>
+		/// <typeparam name="TValue">Type of values of the dictionary.</typeparam>
 		/// <param name="dictionary"/>
 		/// <returns>A ReadOnlyDictionary instance for the specified dictionary.</returns>
-		public static ReadOnlyDictionary<K, V> AsReadOnly<K, V>(this IDictionary<K, V> dictionary)
-			=> new ReadOnlyDictionary<K, V>(dictionary);
+		public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+			=> new ReadOnlyDictionary<TKey, TValue>(dictionary);
 
 		/// <summary>
 		/// Extension method for <see cref="IEnumerable{T}"/> that allows retrieving a string
@@ -102,8 +102,8 @@ namespace GoRogue
 		/// When no customization paramters are specified, it defaults to a representation looking something
 		/// like {key1 : value, key2 : value}.
 		/// </remarks>
-		/// <typeparam name="K"/>
-		/// <typeparam name="V"/>
+		/// <typeparam name="TKey"/>
+		/// <typeparam name="TValue"/>
 		/// <param name="dictionary"/>
 		/// <param name="begin">Character(s) that should precede the string representation of the dictionary's elements.</param>
 		/// <param name="keyStringifier">
@@ -118,14 +118,14 @@ namespace GoRogue
 		/// <param name="pairSeparator">Characters used to separate each key-value pair from the next.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the dictionary's elements.</param>
 		/// <returns>A string representation of the IDictionary.</returns>
-		public static string ExtendToString<K, V>(this IDictionary<K, V> dictionary, string begin = "{", Func<K, string> keyStringifier = null,
-												   Func<V, string> valueStringifier = null, string kvSeparator = " : ", string pairSeparator = ", ", string end = "}")
+		public static string ExtendToString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, string begin = "{", Func<TKey, string> keyStringifier = null,
+												   Func<TValue, string> valueStringifier = null, string kvSeparator = " : ", string pairSeparator = ", ", string end = "}")
 		{
 			if (keyStringifier == null)
-				keyStringifier = (K obj) => obj.ToString();
+				keyStringifier = (TKey obj) => obj.ToString();
 
 			if (valueStringifier == null)
-				valueStringifier = (V obj) => obj.ToString();
+				valueStringifier = (TValue obj) => obj.ToString();
 
 			var result = new StringBuilder(begin);
 			bool first = true;
@@ -186,13 +186,13 @@ namespace GoRogue
 
 		/// <summary>
 		/// Extension method for 2D arrays that allows retrieving a string representing the contents,
-		/// formatted as if the 2D array represents a coordinate plane/grid.
+		/// formatted as if the 2D array represents a Pointinate plane/grid.
 		/// </summary>
 		/// <remarks>
 		/// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
 		/// in that this method prints the array
 		/// such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
-		/// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
+		/// Effectively it assumes the indexes being used are grid/Pointinate plane Pointinates.
 		/// </remarks>
 		/// <typeparam name="T"/>
 		/// <param name="array"/>
@@ -207,7 +207,7 @@ namespace GoRogue
 		/// <param name="endRow">Character(s) that should follow the string representation of each row.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the 2D array.</param>
 		/// <returns>
-		/// A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.
+		/// A string representation of the 2D array, formatted as if the array represents a 2D Pointinate plane/grid map.
 		/// </returns>
 		public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
@@ -217,12 +217,12 @@ namespace GoRogue
 
 		/// <summary>
 		/// Extension method for 2D arrays that allows retrieving a string representing the contents,
-		/// formatted as if the 2D array represents a coordinate plane/grid.
+		/// formatted as if the 2D array represents a Pointinate plane/grid.
 		/// </summary>
 		/// <remarks>
 		/// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
 		/// in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
-		/// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
+		/// Effectively it assumes the indexes being used are grid/Pointinate plane Pointinates.
 		/// </remarks>
 		/// <typeparam name="T"/>
 		/// <param name="array"/>
@@ -241,7 +241,7 @@ namespace GoRogue
 		/// <param name="endRow">Character(s) that should follow the string representation of each row.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the 2D array.</param>
 		/// <returns>
-		/// A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.
+		/// A string representation of the 2D array, formatted as if the array represents a 2D Pointinate plane/grid map.
 		/// </returns>
 		public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")

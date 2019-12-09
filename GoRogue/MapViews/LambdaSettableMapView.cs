@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -16,8 +17,8 @@ namespace GoRogue.MapViews
 	public sealed class LambdaSettableMapView<T> : ISettableMapView<T>
 	{
 		private Func<int> heightGetter;
-		private Func<Coord, T> valueGetter;
-		private Action<Coord, T> valueSetter;
+		private Func<Point, T> valueGetter;
+		private Action<Point, T> valueSetter;
 		private Func<int> widthGetter;
 
 		/// <summary>
@@ -37,7 +38,7 @@ namespace GoRogue.MapViews
 		/// A function/lambda that updates the map being represented accordingly, given a type T and
 		/// position to which it was set.
 		/// </param>
-		public LambdaSettableMapView(int width, int height, Func<Coord, T> valueGetter, Action<Coord, T> valueSetter)
+		public LambdaSettableMapView(int width, int height, Func<Point, T> valueGetter, Action<Point, T> valueSetter)
 			: this(() => width, () => height, valueGetter, valueSetter) { }
 
 		/// <summary>
@@ -63,7 +64,7 @@ namespace GoRogue.MapViews
 		/// A function/lambda that updates the map being represented accordingly, given a type T and
 		/// position to which it was set.
 		/// </param>
-		public LambdaSettableMapView(Func<int> widthGetter, Func<int> heightGetter, Func<Coord, T> valueGetter, Action<Coord, T> valueSetter)
+		public LambdaSettableMapView(Func<int> widthGetter, Func<int> heightGetter, Func<Point, T> valueGetter, Action<Point, T> valueSetter)
 		{
 			this.widthGetter = widthGetter;
 			this.heightGetter = heightGetter;
@@ -93,8 +94,8 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public T this[int index1D]
 		{
-			get => valueGetter(Coord.ToCoord(index1D, Width));
-			set => valueSetter(Coord.ToCoord(index1D, Width), value);
+			get => valueGetter(Point.FromIndex(index1D, Width));
+			set => valueSetter(Point.FromIndex(index1D, Width), value);
 		}
 
 		/// <summary>
@@ -109,8 +110,8 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public T this[int x, int y]
 		{
-			get => valueGetter(new Coord(x, y));
-			set => valueSetter(new Coord(x, y), value);
+			get => valueGetter(new Point(x, y));
+			set => valueSetter(new Point(x, y), value);
 		}
 
 		/// <summary>
@@ -122,7 +123,7 @@ namespace GoRogue.MapViews
 		/// The "value" associated with the provided location, according to the valueGetter function
 		/// provided at construction.
 		/// </returns>
-		public T this[Coord pos]
+		public T this[Point pos]
 		{
 			get => valueGetter(pos);
 			set => valueSetter(pos, value);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -21,7 +22,7 @@ namespace GoRogue
 	public class AdvancedMultiSpatialMap<T> : ISpatialMap<T>
 	{
 		private Dictionary<T, SpatialTuple<T>> itemMapping;
-		private Dictionary<Coord, List<SpatialTuple<T>>> positionMapping;
+		private Dictionary<Point, List<SpatialTuple<T>>> positionMapping;
 
 		/// <summary>
 		/// Constructor.
@@ -38,7 +39,7 @@ namespace GoRogue
 		public AdvancedMultiSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
 		{
 			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
-			positionMapping = new Dictionary<Coord, List<SpatialTuple<T>>>(initialCapacity);
+			positionMapping = new Dictionary<Point, List<SpatialTuple<T>>>(initialCapacity);
 		}
 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace GoRogue
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Positions"/>.
 		/// </summary>
-		public IEnumerable<Coord> Positions
+		public IEnumerable<Point> Positions
 		{
 			get
 			{
@@ -93,7 +94,7 @@ namespace GoRogue
 		/// <param name="newItem">The item to add.</param>
 		/// <param name="position">The position at which to add the new item.</param>
 		/// <returns>True if the item was added, false if the add operation failed.</returns>
-		public bool Add(T newItem, Coord position)
+		public bool Add(T newItem, Point position)
 		{
 			if (itemMapping.ContainsKey(newItem))
 				return false;
@@ -118,7 +119,7 @@ namespace GoRogue
 		/// <param name="x">x-value of the position to add item to.</param>
 		/// <param name="y">y-value of the position to add item to.</param>
 		/// <returns>True if the item was added, false if the add operation failed.</returns>
-		public bool Add(T newItem, int x, int y) => Add(newItem, new Coord(x, y));
+		public bool Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
@@ -140,14 +141,14 @@ namespace GoRogue
 		public bool Contains(T item) => itemMapping.ContainsKey(item);
 
 		/// <summary>
-		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Coord)"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
 		/// </summary>
-		public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+		public bool Contains(Point position) => positionMapping.ContainsKey(position);
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
 		/// </summary>
-		public bool Contains(int x, int y) => Contains(new Coord(x, y));
+		public bool Contains(int x, int y) => Contains(new Point(x, y));
 
 		/// <summary>
 		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -167,9 +168,9 @@ namespace GoRogue
 		IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 		/// <summary>
-		/// See <see cref="IReadOnlySpatialMap{T}.GetItems(Coord)"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.GetItemsAt(Point)"/>.
 		/// </summary>
-		public IEnumerable<T> GetItems(Coord position)
+		public IEnumerable<T> GetItemsAt(Point position)
 		{
 			if (positionMapping.ContainsKey(position))
 			{
@@ -181,18 +182,18 @@ namespace GoRogue
 		}
 
 		/// <summary>
-		/// See <see cref="IReadOnlySpatialMap{T}.GetItems(int, int)"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.GetItemsAt(int, int)"/>.
 		/// </summary>
-		public IEnumerable<T> GetItems(int x, int y) => GetItems(new Coord(x, y));
+		public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
 		/// <summary>
-		/// <see cref="IReadOnlySpatialMap{T}.GetPosition(T)"/>.
+		/// <see cref="IReadOnlySpatialMap{T}.GetPositionOf(T)"/>.
 		/// </summary>
-		public Coord GetPosition(T item)
+		public Point GetPositionOf(T item)
 		{
 			SpatialTuple<T> tuple;
 			itemMapping.TryGetValue(item, out tuple);
-			if (tuple == null) return Coord.NONE;
+			if (tuple == null) return Point.None;
 			return tuple.Position;
 		}
 
@@ -203,7 +204,7 @@ namespace GoRogue
 		/// <param name="item">The item to move.</param>
 		/// <param name="target">The position to move it to.</param>
 		/// <returns>True if the item was moved, false if the move failed.</returns>
-		public bool Move(T item, Coord target)
+		public bool Move(T item, Point target)
 		{
 			if (!itemMapping.ContainsKey(item))
 				return false;
@@ -212,7 +213,7 @@ namespace GoRogue
 			if (movingTuple.Position == target)
 				return false;
 
-			Coord oldPos = movingTuple.Position;
+			Point oldPos = movingTuple.Position;
 			positionMapping[movingTuple.Position].Remove(movingTuple);
 			if (positionMapping[movingTuple.Position].Count == 0)
 				positionMapping.Remove(movingTuple.Position);
@@ -234,7 +235,7 @@ namespace GoRogue
 		/// <param name="targetX">X-value of the location to move it to.</param>
 		/// <param name="targetY">Y-value of the location to move it to.</param>
 		/// <returns>True if the item was moved, false if the move failed.</returns>
-		public bool Move(T item, int targetX, int targetY) => Move(item, new Coord(targetX, targetY));
+		public bool Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
 		/// <summary>
 		/// Moves everything at <paramref name="current"/>, if anything, to <paramref name="target"/>.
@@ -244,7 +245,7 @@ namespace GoRogue
 		/// <param name="current">The position of the items to move.</param>
 		/// <param name="target">The position to move the item to.</param>
 		/// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
-		public IEnumerable<T> Move(Coord current, Coord target)
+		public IEnumerable<T> Move(Point current, Point target)
 		{
 			if (positionMapping.ContainsKey(current) && current != target)
 			{
@@ -280,7 +281,7 @@ namespace GoRogue
 		/// <param name="targetX">X-value of the location to move items to.</param>
 		/// <param name="targetY">Y-value of the location to move items to.</param>
 		/// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
-		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(new Coord(currentX, currentY), new Coord(targetX, targetY));
+		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(new Point(currentX, currentY), new Point(targetX, targetY));
 
 		/// <summary>
 		/// Removes the item specified, if it exists, and returns true. Returns false if the item was
@@ -312,7 +313,7 @@ namespace GoRogue
 		/// <returns>
 		/// The items removed, if any were removed; nothing if no items were found at that position.
 		/// </returns>
-		public IEnumerable<T> Remove(Coord position)
+		public IEnumerable<T> Remove(Point position)
 		{
 			if (positionMapping.ContainsKey(position))
 			{
@@ -339,7 +340,7 @@ namespace GoRogue
 		/// <returns>
 		/// The items removed, if any were removed; nothing if no items were found at that position.
 		/// </returns>
-		public IEnumerable<T> Remove(int x, int y) => Remove(new Coord(x, y));
+		public IEnumerable<T> Remove(int x, int y) => Remove(new Point(x, y));
 
 		/// <summary>
 		/// Returns a string representation of the spatial map, allowing display of the

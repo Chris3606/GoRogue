@@ -4,6 +4,7 @@ using GoRogue.Random;
 using Troschuetz.Random;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -20,7 +21,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends.  Defaults to infinity.</param>
 		/// <param name="rng">Rng to use.  Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		public static void Trim(ISettableMapView<bool> map, int saveDeadEndChance = 0, int maxTrimIterations = -1, IGenerator rng = null)
-			=> Trim(map, MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS), saveDeadEndChance, maxTrimIterations, rng);
+			=> Trim(map, MapAreaFinder.MapAreasFor(map, AdjacencyRule.Cardinals), saveDeadEndChance, maxTrimIterations, rng);
 
 		/// <summary>
 		/// Trims current small dead-end paths from the given list of map areas, and removes them from the given map.
@@ -37,16 +38,16 @@ namespace GoRogue.MapGeneration.Connectors
 
 			foreach (var area in areas)
 			{
-				HashSet<Coord> safeDeadEnds = new HashSet<Coord>();
-				HashSet<Coord> deadEnds = new HashSet<Coord>();
+				HashSet<Point> safeDeadEnds = new HashSet<Point>();
+				HashSet<Point> deadEnds = new HashSet<Point>();
 
 				int iteration = 1;
 				while (maxTrimIterations == -1 || iteration <= maxTrimIterations)
 				{
 					foreach (var point in area.Positions)
 					{
-						var points = AdjacencyRule.EIGHT_WAY.NeighborsClockwise(point).ToArray();
-						var directions = AdjacencyRule.EIGHT_WAY.DirectionsOfNeighborsClockwise(Direction.NONE).ToList();
+						var points = AdjacencyRule.EightWay.NeighborsClockwise(point).ToArray();
+						var directions = AdjacencyRule.EightWay.DirectionsOfNeighborsClockwise(Direction.None).ToList();
 
 						for (int i = 0; i < 8; i += 2)
 						{
@@ -63,32 +64,32 @@ namespace GoRogue.MapGeneration.Connectors
 									{
 										// Check for a wall pattern in the map. In this case
 										// something like where X is a wall XXX X X
-										case Direction.Types.UP:
-											found = !map[points[(int)Direction.Types.UP_LEFT]] &&
-													!map[points[(int)Direction.Types.UP_RIGHT]] &&
-													!map[points[(int)Direction.Types.LEFT]] &&
-													!map[points[(int)Direction.Types.RIGHT]];
+										case Direction.Types.Up:
+											found = !map[points[(int)Direction.Types.UpLeft]] &&
+													!map[points[(int)Direction.Types.UpRight]] &&
+													!map[points[(int)Direction.Types.Left]] &&
+													!map[points[(int)Direction.Types.Right]];
 											break;
 
-										case Direction.Types.DOWN:
-											found = !map[points[(int)Direction.Types.DOWN_LEFT]] &&
-													!map[points[(int)Direction.Types.DOWN_RIGHT]] &&
-													!map[points[(int)Direction.Types.LEFT]] &&
-													!map[points[(int)Direction.Types.RIGHT]];
+										case Direction.Types.Down:
+											found = !map[points[(int)Direction.Types.DownLeft]] &&
+													!map[points[(int)Direction.Types.DownRight]] &&
+													!map[points[(int)Direction.Types.Left]] &&
+													!map[points[(int)Direction.Types.Right]];
 											break;
 
-										case Direction.Types.RIGHT:
-											found = !map[points[(int)Direction.Types.UP_RIGHT]] &&
-													!map[points[(int)Direction.Types.DOWN_RIGHT]] &&
-													!map[points[(int)Direction.Types.UP]] &&
-													!map[points[(int)Direction.Types.DOWN]];
+										case Direction.Types.Right:
+											found = !map[points[(int)Direction.Types.UpRight]] &&
+													!map[points[(int)Direction.Types.DownRight]] &&
+													!map[points[(int)Direction.Types.Up]] &&
+													!map[points[(int)Direction.Types.Down]];
 											break;
 
-										case Direction.Types.LEFT:
-											found = !map[points[(int)Direction.Types.UP_LEFT]] &&
-													!map[points[(int)Direction.Types.DOWN_LEFT]] &&
-													!map[points[(int)Direction.Types.UP]] &&
-													!map[points[(int)Direction.Types.DOWN]];
+										case Direction.Types.Left:
+											found = !map[points[(int)Direction.Types.UpLeft]] &&
+													!map[points[(int)Direction.Types.DownLeft]] &&
+													!map[points[(int)Direction.Types.Up]] &&
+													!map[points[(int)Direction.Types.Down]];
 											break;
 									}
 								}

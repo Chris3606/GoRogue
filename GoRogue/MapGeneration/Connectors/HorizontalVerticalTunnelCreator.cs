@@ -2,6 +2,7 @@
 using GoRogue.Random;
 using System;
 using Troschuetz.Random;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Connectors
 {
@@ -29,9 +30,9 @@ namespace GoRogue.MapGeneration.Connectors
 		/// Implemnets the algorithm, creating the tunnel as specified in the class description.
 		/// </summary>
 		/// <param name="map">The map to create the tunnel on.</param>
-		/// <param name="start">Start coordinate of the tunnel.</param>
-		/// <param name="end">End coordinate of the tunnel.</param>
-		public void CreateTunnel(ISettableMapView<bool> map, Coord start, Coord end)
+		/// <param name="start">Start Pointinate of the tunnel.</param>
+		/// <param name="end">End Pointinate of the tunnel.</param>
+		public void CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -55,7 +56,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="startY">Y-value of the start position of the tunnel.</param>
 		/// <param name="endX">X-value of the end position of the tunnel.</param>
 		/// <param name="endY">Y-value of the end position of the tunnel.</param>
-		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Coord(startX, startY), new Coord(endX, endY));
+		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
 
 		static private void createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
 		{

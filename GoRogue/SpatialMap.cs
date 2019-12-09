@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -21,7 +22,7 @@ namespace GoRogue
 	public class AdvancedSpatialMap<T> : ISpatialMap<T>
 	{
 		private Dictionary<T, SpatialTuple<T>> itemMapping;
-		private Dictionary<Coord, SpatialTuple<T>> positionMapping;
+		private Dictionary<Point, SpatialTuple<T>> positionMapping;
 
 		/// <summary>
 		/// Constructor.
@@ -38,7 +39,7 @@ namespace GoRogue
 		public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
 		{
 			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
-			positionMapping = new Dictionary<Coord, SpatialTuple<T>>(initialCapacity);
+			positionMapping = new Dictionary<Point, SpatialTuple<T>>(initialCapacity);
 		}
 
 		/// <summary>
@@ -76,7 +77,7 @@ namespace GoRogue
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Positions"/>.
 		/// </summary>
-		public IEnumerable<Coord> Positions
+		public IEnumerable<Point> Positions
 		{
 			get
 			{
@@ -93,7 +94,7 @@ namespace GoRogue
 		/// <param name="newItem">The item to add.</param>
 		/// <param name="position">The position at which to add the new item.</param>
 		/// <returns>True if the item was added, false if adding the item failed.</returns>
-		public bool Add(T newItem, Coord position)
+		public bool Add(T newItem, Point position)
 		{
 			if (itemMapping.ContainsKey(newItem))
 				return false;
@@ -117,7 +118,7 @@ namespace GoRogue
 		/// <param name="x">X-value of the position to add item to.</param>
 		/// <param name="y">Y-value of the position to add item to.</param>
 		/// <returns>True if the item was added, false if adding the item failed.</returns>
-		public bool Add(T newItem, int x, int y) => Add(newItem, new Coord(x, y));
+		public bool Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
@@ -139,14 +140,14 @@ namespace GoRogue
 		public bool Contains(T item) => itemMapping.ContainsKey(item);
 
 		/// <summary>
-		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Coord)"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
 		/// </summary>
-		public bool Contains(Coord position) => positionMapping.ContainsKey(position);
+		public bool Contains(Point position) => positionMapping.ContainsKey(position);
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
 		/// </summary>
-		public bool Contains(int x, int y) => positionMapping.ContainsKey(new Coord(x, y));
+		public bool Contains(int x, int y) => positionMapping.ContainsKey(new Point(x, y));
 
 		/// <summary>
 		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -169,14 +170,14 @@ namespace GoRogue
 		/// Gets the item at the given position, or default(T) if no item exists.
 		/// </summary>
 		/// <remarks>
-		/// Intended to be a more convenient function as compared to <see cref="GetItems(Coord)"/>, since
+		/// Intended to be a more convenient function as compared to <see cref="GetItemsAt(Point)"/>, since
 		/// this spatial map implementation only allows a single item to at any given location at a time.
 		/// </remarks>
 		/// <param name="position">The postiion to return the item for.</param>
 		/// <returns>
 		/// The item at the given position, or default(T) if no item exists at that location.
 		/// </returns>
-		public T GetItem(Coord position)
+		public T GetItem(Point position)
 		{
 			SpatialTuple<T> tuple;
 			positionMapping.TryGetValue(position, out tuple);
@@ -190,7 +191,7 @@ namespace GoRogue
 		/// Gets the item at the given position, or default(T) if no item exists.
 		/// </summary>
 		/// <remarks>
-		/// Intended to be a more convenient function as compared to <see cref="GetItems(int, int)"/>, since
+		/// Intended to be a more convenient function as compared to <see cref="GetItemsAt(int, int)"/>, since
 		/// this spatial map implementation only allows a single item to at any given location at a time.
 		/// </remarks>
 		/// <param name="x">The x-value of the position to return the item for.</param>
@@ -198,7 +199,7 @@ namespace GoRogue
 		/// <returns>
 		/// The item at the given position, or default(T) if no item exists at that location.
 		/// </returns>
-		public T GetItem(int x, int y) => GetItem(new Coord(x, y));
+		public T GetItem(int x, int y) => GetItem(new Point(x, y));
 
 		/// <summary>
 		/// Gets the item at the given position as a 1-element enumerable if there is any item there,
@@ -207,7 +208,7 @@ namespace GoRogue
 		/// <remarks>
 		/// Since this implementation guarantees that only one item can be at any given
 		/// location at once, the return value is guaranteed to be at most one element. You may find it
-		/// more convenient to use the <see cref="GetItems(Coord)"/> function when you know you are
+		/// more convenient to use the <see cref="GetItemsAt(Point)"/> function when you know you are
 		/// dealing with a SpatialMap/AdvancedSpatialMap instance.
 		/// </remarks>
 		/// <param name="position">The position to return the item for.</param>
@@ -215,7 +216,7 @@ namespace GoRogue
 		/// The item at the given position as a 1-element enumerable, if there is an item there, or
 		/// nothing if there is no item there.
 		/// </returns>
-		public IEnumerable<T> GetItems(Coord position)
+		public IEnumerable<T> GetItemsAt(Point position)
 		{
 			SpatialTuple<T> tuple;
 			positionMapping.TryGetValue(position, out tuple);
@@ -230,7 +231,7 @@ namespace GoRogue
 		/// <remarks>
 		/// Since this implementation guarantees that only one item can be at any given
 		/// location at once, the return value is guaranteed to be at most one element. You may find it
-		/// more convenient to use the <see cref="GetItems(int, int)"/> function when you know you are
+		/// more convenient to use the <see cref="GetItemsAt(int, int)"/> function when you know you are
 		/// dealing with a SpatialMap/AdvancedSpatialMap instance.
 		/// </remarks>
 		/// <param name="x">The x-value of the position to return the item(s) for.</param>
@@ -239,16 +240,16 @@ namespace GoRogue
 		/// The item at the given position as a 1-element enumerable, if there is an item there, or
 		/// nothing if there is no item there.
 		/// </returns>
-		public IEnumerable<T> GetItems(int x, int y) => GetItems(new Coord(x, y));
+		public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
 		/// <summary>
-		/// See <see cref="IReadOnlySpatialMap{T}.GetPosition(T)"/>.
+		/// See <see cref="IReadOnlySpatialMap{T}.GetPositionOf(T)"/>.
 		/// </summary>
-		public Coord GetPosition(T item)
+		public Point GetPositionOf(T item)
 		{
 			SpatialTuple<T> tuple;
 			itemMapping.TryGetValue(item, out tuple);
-			if (tuple == null) return Coord.NONE;
+			if (tuple == null) return Point.None;
 			return tuple.Position;
 		}
 
@@ -260,7 +261,7 @@ namespace GoRogue
 		/// <param name="item">The item to move.</param>
 		/// <param name="target">The position to move it to.</param>
 		/// <returns>True if the item was moved, false if the move operation failed.</returns>
-		public bool Move(T item, Coord target)
+		public bool Move(T item, Point target)
 		{
 			if (!itemMapping.ContainsKey(item))
 				return false;
@@ -269,7 +270,7 @@ namespace GoRogue
 				return false;
 
 			var movingTuple = itemMapping[item];
-			Coord oldPos = movingTuple.Position;
+			Point oldPos = movingTuple.Position;
 			positionMapping.Remove(movingTuple.Position);
 			movingTuple.Position = target;
 			positionMapping.Add(target, movingTuple);
@@ -286,7 +287,7 @@ namespace GoRogue
 		/// <param name="targetX">X-value of the location to move item to.</param>
 		/// <param name="targetY">Y-value of the location to move item to.</param>
 		/// <returns>True if the item was moved, false if not.</returns>
-		public bool Move(T item, int targetX, int targetY) => Move(item, new Coord(targetX, targetY));
+		public bool Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
 		/// <summary>
 		/// Moves whatever is at position current, if anything, to the target position. If something was
@@ -303,7 +304,7 @@ namespace GoRogue
 		/// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
 		/// was moved.
 		/// </returns>
-		public IEnumerable<T> Move(Coord current, Coord target)
+		public IEnumerable<T> Move(Point current, Point target)
 		{
 			if (positionMapping.ContainsKey(current) && !positionMapping.ContainsKey(target))
 			{
@@ -334,7 +335,7 @@ namespace GoRogue
 		/// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
 		/// was moved.
 		/// </returns>
-		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(new Coord(currentX, currentY), new Coord(targetX, targetY));
+		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY) => Move(new Point(currentX, currentY), new Point(targetX, targetY));
 
 		/// <summary>
 		/// Removes the item specified, if it exists, and returns true. Returns false if the item was
@@ -367,7 +368,7 @@ namespace GoRogue
 		/// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
 		/// was found at that position.
 		/// </returns>
-		public IEnumerable<T> Remove(Coord position)
+		public IEnumerable<T> Remove(Point position)
 		{
 			SpatialTuple<T> tuple;
 			positionMapping.TryGetValue(position, out tuple);
@@ -394,7 +395,7 @@ namespace GoRogue
 		/// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
 		/// was found at that position.
 		/// </returns>
-		public IEnumerable<T> Remove(int x, int y) => Remove(new Coord(x, y));
+		public IEnumerable<T> Remove(int x, int y) => Remove(new Point(x, y));
 
 		/// <summary>
 		/// Returns a string representation of the spatial map.
@@ -445,14 +446,14 @@ namespace GoRogue
 
 	internal class SpatialTuple<T> : ISpatialTuple<T>
 	{
-		public SpatialTuple(T item, Coord position)
+		public SpatialTuple(T item, Point position)
 		{
 			Item = item;
 			Position = position;
 		}
 
 		public T Item { get; set; }
-		public Coord Position { get; set; }
+		public Point Position { get; set; }
 
 		public string ToString(Func<T, string> itemStringifier) => Position + " : " + itemStringifier(Item);
 

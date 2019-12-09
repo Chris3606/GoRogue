@@ -92,7 +92,7 @@ namespace GoRogue.Messaging
 		{
 			var runtimeMessageType = message.GetType();
 			if (!_typeTreeCache.ContainsKey(runtimeMessageType))
-				_typeTreeCache[runtimeMessageType] = Reflection.GetTypeTree(runtimeMessageType).ToArray();
+				_typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
 
 			foreach (var type in _typeTreeCache[runtimeMessageType])
 			{

@@ -3,6 +3,7 @@ using GoRogue.Pathing;
 using GoRogue.MapViews;
 using System.Linq;
 using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
 {
@@ -116,14 +117,14 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="index1D">Location to retrieve objects for, specified as a 1D array-style index.</param>
 		/// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-		public IEnumerable<IGameObject> this[int index1D] => GetObjects(Coord.ToCoord(index1D, Width));
+		public IEnumerable<IGameObject> this[int index1D] => GetObjectsAt(Point.FromIndex(index1D, Width));
 
 		/// <summary>
 		/// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
 		/// </summary>
 		/// <param name="pos">The position to retrieve objects for.</param>
 		/// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-		public IEnumerable<IGameObject> this[Coord pos] => GetObjects(pos);
+		public IEnumerable<IGameObject> this[Point pos] => GetObjectsAt(pos);
 
 		/// <summary>
 		/// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
@@ -131,7 +132,7 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the position to retrieve objects for.</param>
 		/// <param name="y">Y-value of the position to retrieve objects for.</param>
 		/// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-		public IEnumerable<IGameObject> this[int x, int y] => GetObjects(x, y);
+		public IEnumerable<IGameObject> this[int x, int y] => GetObjectsAt(x, y);
 
 		/// <summary>
 		/// Constructor.  Constructs terrain map as <see cref="ArrayMap{IGameObject}"/>; with the given width/height.
@@ -209,17 +210,17 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="position">The position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public IGameObject GetTerrain(Coord position) => _terrain[position];
+		public IGameObject GetTerrainAt(Point position) => _terrain[position];
 
 		/// <summary>
 		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
 		/// cannot be casted to the type specified.
 		/// </summary>
-		/// <typeparam name="TerrainType">Type to check for/return the terrain as.</typeparam>
+		/// <typeparam name="TTerrain">Type to check for/return the terrain as.</typeparam>
 		/// <param name="position">The position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 		/// TerrainType.</returns>
-		public TerrainType GetTerrain<TerrainType>(Coord position) where TerrainType : class, IGameObject => _terrain[position] as TerrainType;
+		public TTerrain GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject => _terrain[position] as TTerrain;
 
 		/// <summary>
 		/// Gets the terrain object at the given location, or null if no terrain is set to that location.
@@ -227,18 +228,18 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the position to get the terrain for.</param>
 		/// <param name="y">Y-value of the position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public IGameObject GetTerrain(int x, int y) => _terrain[x, y];
+		public IGameObject GetTerrainAt(int x, int y) => _terrain[x, y];
 
 		/// <summary>
 		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
 		/// cannot be casted to the type specified.
 		/// </summary>
-		/// <typeparam name="TerrainType">Type to return the terrain as.</typeparam>
+		/// <typeparam name="TTerrain">Type to return the terrain as.</typeparam>
 		/// <param name="x">X-value of the position to get the terrain for.</param>
 		/// <param name="y">Y-value of the position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 		/// TerrainType.</returns>
-		public TerrainType GetTerrain<TerrainType>(int x, int y) where TerrainType : class, IGameObject => _terrain[x, y] as TerrainType;
+		public TTerrain GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject => _terrain[x, y] as TTerrain;
 
 		/// <summary>
 		/// Sets the terrain at the given objects location to the given object, overwriting any terrain already present there.
@@ -261,7 +262,7 @@ namespace GoRogue.GameFramework
 
 			if (!terrain.IsWalkable)
 			{
-				foreach (var obj in Entities.GetItems(terrain.Position))
+				foreach (var obj in Entities.GetItemsAt(terrain.Position))
 					if (!obj.IsWalkable)
 						throw new Exception("Tried to place non-walkable terrain at a location that already has another non-walkable item.");
 			}
@@ -282,7 +283,7 @@ namespace GoRogue.GameFramework
 		/// <typeparam name="T">Type of values exposed by map view to translate.  Generally inferred by the compiler.</typeparam>
 		/// <param name="overlay">Map view to translate.</param>
 		/// <param name="translator">Function that translates values of the type that <paramref name="overlay"/> exposes to values of type IGameObject.</param>
-		public void ApplyTerrainOverlay<T>(IMapView<T> overlay, Func<Coord, T, IGameObject> translator)
+		public void ApplyTerrainOverlay<T>(IMapView<T> overlay, Func<Point, T, IGameObject> translator)
 		{
 			var terrainOverlay = new LambdaTranslationMap<T, IGameObject>(overlay, translator);
 			ApplyTerrainOverlay(terrainOverlay);
@@ -343,54 +344,54 @@ namespace GoRogue.GameFramework
 		/// layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
 		/// there are no entities at the location.
 		/// </summary>
-		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <typeparam name="TEntity">Type of entities to return.</typeparam>
 		/// <param name="position">Position to check get entity for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an entity.  Defaults to all layers.</param>
 		/// <returns>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
 		/// the specified type are found.</returns>
-		public EntityType GetEntity<EntityType>(Coord position, uint layerMask = uint.MaxValue) where EntityType : IGameObject
-			=> GetEntities<EntityType>(position.X, position.Y, layerMask).FirstOrDefault();
+		public TEntity GetEntityAt<TEntity>(Point position, uint layerMask = uint.MaxValue) where TEntity : IGameObject
+			=> GetEntitiesAt<TEntity>(position.X, position.Y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
 		/// layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
 		/// there are no entities at the location.
 		/// </summary>
-		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <typeparam name="TEntity">Type of entities to return.</typeparam>
 		/// <param name="x">X-value of the position to get entity for.</param>
 		/// <param name="y">Y-value of the position to get entity for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an entity.  Defaults to all layers.</param>
 		/// <returns>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
 		/// the specified type are found.</returns>
-		public EntityType GetEntity<EntityType>(int x, int y, uint layerMask = uint.MaxValue) where EntityType : IGameObject
-			=> GetEntities<EntityType>(x, y, layerMask).FirstOrDefault();
+		public TEntity GetEntityAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue) where TEntity : IGameObject
+			=> GetEntitiesAt<TEntity>(x, y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
 		/// in the layer mask downward.  Layer mask defaults to all layers.
 		/// </summary>
-		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <typeparam name="TEntity">Type of entities to return.</typeparam>
 		/// <param name="position">Position to get entities for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
 		/// in the mask downward.</returns>
-		public IEnumerable<EntityType> GetEntities<EntityType>(Coord position, uint layerMask = uint.MaxValue) where EntityType : IGameObject
-			=> GetEntities<EntityType>(position.X, position.Y, layerMask);
+		public IEnumerable<TEntity> GetEntitiesAt<TEntity>(Point position, uint layerMask = uint.MaxValue) where TEntity : IGameObject
+			=> GetEntitiesAt<TEntity>(position.X, position.Y, layerMask);
 
 		/// <summary>
 		/// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
 		/// in the layer mask downward.  Layer mask defaults to all layers.
 		/// </summary>
-		/// <typeparam name="EntityType">Type of entities to return.</typeparam>
+		/// <typeparam name="TEntity">Type of entities to return.</typeparam>
 		/// <param name="x">X-value of the position to get entities for.</param>
 		/// <param name="y">Y-value of the position to get entities for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
 		/// in the mask downward.</returns>
-		public IEnumerable<EntityType> GetEntities<EntityType>(int x, int y, uint layerMask = uint.MaxValue) where EntityType : IGameObject
+		public IEnumerable<TEntity> GetEntitiesAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue) where TEntity : IGameObject
 		{
-			foreach (var entity in Entities.GetItems(x, y, layerMask))
-				if (entity is EntityType e)
+			foreach (var entity in Entities.GetItemsAt(x, y, layerMask))
+				if (entity is TEntity e)
 					yield return e;
 		}
 
@@ -417,7 +418,7 @@ namespace GoRogue.GameFramework
 		/// <param name="position">Position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-		public IGameObject GetObject(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask).FirstOrDefault();
+		public IGameObject GetObjectAt(Point position, uint layerMask = uint.MaxValue) => GetObjectsAt(position.X, position.Y, layerMask).FirstOrDefault();
 
 		
 		/// <summary>
@@ -425,13 +426,13 @@ namespace GoRogue.GameFramework
 		/// layer mask downward. Layer mask defaults to all layers.  null is returned if no objects of the specified type are found, or if there are no
 		/// objects at the location.
 		/// </summary>
-		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <typeparam name="TObject">Type of objects to return.</typeparam>
 		/// <param name="position">Position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of
 		/// the specified type are found.</returns>
-		public ObjectType GetObject<ObjectType>(Coord position, uint layerMask = uint.MaxValue) where ObjectType : class, IGameObject
-			=> GetObjects<ObjectType>(position.X, position.Y, layerMask).FirstOrDefault();
+		public TObject GetObjectAt<TObject>(Point position, uint layerMask = uint.MaxValue) where TObject : class, IGameObject
+			=> GetObjectsAt<TObject>(position.X, position.Y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
@@ -442,21 +443,21 @@ namespace GoRogue.GameFramework
 		/// <param name="y">Y-value of the position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-		public IGameObject GetObject(int x, int y, uint layerMask = uint.MaxValue) => GetObjects(x, y, layerMask).FirstOrDefault();
+		public IGameObject GetObjectAt(int x, int y, uint layerMask = uint.MaxValue) => GetObjectsAt(x, y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
 		/// layer mask downward. Layer mask defaults to all layers. null is returned if no objects of the specified type are found, or if there are no
 		/// objects at the location.
 		/// </summary>
-		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <typeparam name="TObject">Type of objects to return.</typeparam>
 		/// <param name="x">X-value of the position to get object for.</param>
 		/// <param name="y">Y-value of the position to get object for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of
 		/// the specified type are found.</returns>
-		public ObjectType GetObject<ObjectType>(int x, int y, uint layerMask = uint.MaxValue) where ObjectType : class, IGameObject
-			=> GetObjects<ObjectType>(x, y, layerMask).FirstOrDefault();
+		public TObject GetObjectAt<TObject>(int x, int y, uint layerMask = uint.MaxValue) where TObject : class, IGameObject
+			=> GetObjectsAt<TObject>(x, y, layerMask).FirstOrDefault();
 
 		/// <summary>
 		/// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults
@@ -465,19 +466,19 @@ namespace GoRogue.GameFramework
 		/// <param name="position">Position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position, in order from the highest existing layer in the mask downward.</returns>
-		public IEnumerable<IGameObject> GetObjects(Coord position, uint layerMask = uint.MaxValue) => GetObjects(position.X, position.Y, layerMask);
+		public IEnumerable<IGameObject> GetObjectsAt(Point position, uint layerMask = uint.MaxValue) => GetObjectsAt(position.X, position.Y, layerMask);
 
 		/// <summary>
 		/// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer
 		/// mask downward. Layer mask defaults to all layers.
 		/// </summary>
-		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <typeparam name="TObject">Type of objects to return.</typeparam>
 		/// <param name="position">Position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
 		/// in the mask downward.</returns>
-		public IEnumerable<ObjectType> GetObjects<ObjectType>(Coord position, uint layerMask = uint.MaxValue) where ObjectType : class, IGameObject
-			=> GetObjects<ObjectType>(position.X, position.Y, layerMask);
+		public IEnumerable<TObject> GetObjectsAt<TObject>(Point position, uint layerMask = uint.MaxValue) where TObject : class, IGameObject
+			=> GetObjectsAt<TObject>(position.X, position.Y, layerMask);
 
 		/// <summary>
 		/// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults
@@ -487,9 +488,9 @@ namespace GoRogue.GameFramework
 		/// <param name="y">Y-value of the position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position, in order from the highest existing layer in the mask downward.</returns>
-		public IEnumerable<IGameObject> GetObjects(int x, int y, uint layerMask = uint.MaxValue)
+		public IEnumerable<IGameObject> GetObjectsAt(int x, int y, uint layerMask = uint.MaxValue)
 		{
-			foreach (var entity in _entities.GetItems(x, y, layerMask))
+			foreach (var entity in _entities.GetItemsAt(x, y, layerMask))
 				yield return entity;
 
 			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] != null)
@@ -500,19 +501,19 @@ namespace GoRogue.GameFramework
 		/// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer
 		/// mask downward. Layer mask defaults to all layers.
 		/// </summary>
-		/// <typeparam name="ObjectType">Type of objects to return.</typeparam>
+		/// <typeparam name="TObject">Type of objects to return.</typeparam>
 		/// <param name="x">X-value of the position to get objects for.</param>
 		/// <param name="y">Y-value of the position to get objects for.</param>
 		/// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
 		/// <returns>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
 		/// in the mask downward.</returns>
-		public IEnumerable<ObjectType> GetObjects<ObjectType>(int x, int y, uint layerMask = uint.MaxValue) where ObjectType : class, IGameObject
+		public IEnumerable<TObject> GetObjectsAt<TObject>(int x, int y, uint layerMask = uint.MaxValue) where TObject : class, IGameObject
 		{
-			foreach (var entity in _entities.GetItems(x, y, layerMask))
-				if (entity is ObjectType e)
+			foreach (var entity in _entities.GetItemsAt(x, y, layerMask))
+				if (entity is TObject e)
 					yield return e;
 
-			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] is ObjectType t)
+			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] is TObject t)
 				yield return t;
 		}
 		#endregion
@@ -525,7 +526,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="position">The center point of the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-		public void CalculateFOV(Coord position, double radius = double.MaxValue) => CalculateFOV(position.X, position.Y, radius, Radius.CIRCLE);
+		public void CalculateFOV(Point position, double radius = double.MaxValue) => CalculateFOV(position.X, position.Y, radius, Radius.Circle);
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <see cref="FOV"/> property.  All tiles
@@ -535,7 +536,7 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the center point for the new FOV to calculate.</param>
 		/// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-		public void CalculateFOV(int x, int y, double radius = double.MaxValue) => CalculateFOV(x, y, radius, Radius.CIRCLE);
+		public void CalculateFOV(int x, int y, double radius = double.MaxValue) => CalculateFOV(x, y, radius, Radius.Circle);
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV"/> property.  All tiles that are in the
@@ -546,7 +547,7 @@ namespace GoRogue.GameFramework
 		/// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
 		/// <param name="radiusShape">The shape of the FOV to calculate.  Can be specified as either <see cref="Distance"/> or <see cref="Radius"/> types
 		/// (they are implicitly convertible).</param>
-		public void CalculateFOV(Coord position, double radius, Distance radiusShape) => CalculateFOV(position.X, position.Y, radius, radiusShape);
+		public void CalculateFOV(Point position, double radius, Distance radiusShape) => CalculateFOV(position.X, position.Y, radius, radiusShape);
 
 		/// <summary>
 		/// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV"/> property.  All tiles that are in the
@@ -579,7 +580,7 @@ namespace GoRogue.GameFramework
 		/// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
 		/// <param name="span">The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are included
 		/// in the cone.</param>
-		public void CalculateFOV(Coord position, double radius, Distance radiusShape, double angle, double span)
+		public void CalculateFOV(Point position, double radius, Distance radiusShape, double angle, double span)
 			=> CalculateFOV(position.X, position.Y, radius, radiusShape, angle, span);
 
 		/// <summary>
@@ -641,20 +642,20 @@ namespace GoRogue.GameFramework
 			return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems);
 		}
 
-		internal bool AttemptEntityMove(IGameObject gameObject, Coord newPosition) => _entities.Move(gameObject, newPosition);
+		internal bool AttemptEntityMove(IGameObject gameObject, Point newPosition) => _entities.Move(gameObject, newPosition);
 
-		private bool FullIsTransparent(Coord position)
+		private bool FullIsTransparent(Point position)
 		{
-			foreach (var item in GetObjects(position, LayersBlockingTransparency))
+			foreach (var item in GetObjectsAt(position, LayersBlockingTransparency))
 				if (!item.IsTransparent)
 					return false;
 
 			return true;
 		}
 
-		private bool FullIsWalkable(Coord position)
+		private bool FullIsWalkable(Point position)
 		{
-			foreach (var item in GetObjects(position, LayersBlockingWalkability))
+			foreach (var item in GetObjectsAt(position, LayersBlockingWalkability))
 				if (!item.IsWalkable)
 					return false;
 

@@ -10,7 +10,7 @@ namespace GoRogue_UnitTests
 	// Adds functions commonly used in tests
 	public static class Utility
 	{
-		public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Coord> points, char wall = '#', char floor = '.', char path = '*')
+		public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#', char floor = '.', char path = '*')
 		{
 			char[,] array = new char[map.Width, map.Height];
 			for (int y = 0; y < map.Height; y++)
@@ -42,10 +42,10 @@ namespace GoRogue_UnitTests
 			}
 		}
 
-		public static Tuple<Coord, Coord> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
+		public static Tuple<Point, Point> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
 		{
-			Coord start = Coord.NONE;
-			Coord end = Coord.NONE;
+			Point start = Point.NONE;
+			Point end = Point.NONE;
 
 			using (var reader = new StreamReader(filePath))
 			{
@@ -66,10 +66,10 @@ namespace GoRogue_UnitTests
 				}
 			}
 
-			return new Tuple<Coord, Coord>(start, end);
+			return new Tuple<Point, Point>(start, end);
 		}
 
-		public static IEnumerable<Coord> ToCoords(IEnumerable<CA.Node> points)
+		public static IEnumerable<Point> ToPoints(IEnumerable<CA.Node> points)
 		{
 			foreach (var p in points)
 				yield return ((int)p.X, (int)p.Y);
@@ -103,7 +103,7 @@ namespace GoRogue_UnitTests
 
 		public int Height => view.Height;
 		public int Width => view.Width;
-		public double this[Coord pos] => (view[pos]) ? 0.0 : 1.0;
+		public double this[Point pos] => (view[pos]) ? 0.0 : 1.0;
 		public double this[int x, int y] => (view[x, y]) ? 0.0 : 1.0;
 		public double this[int index1D] => (view[index1D]) ? 0.0 : 1.0;
 	}

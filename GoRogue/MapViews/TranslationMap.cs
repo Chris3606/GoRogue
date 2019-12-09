@@ -1,4 +1,5 @@
 ﻿using System;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -49,7 +50,7 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Given an 1D-array-style index, determines the position associated with that index, and
-		/// returns the "value" associated with that location.  This function calls <see cref="this[Coord]"/>,
+		/// returns the "value" associated with that location.  This function calls <see cref="this[Point]"/>,
 		/// so override that indexer to change functionality.
 		/// </summary>
 		/// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
@@ -60,21 +61,21 @@ namespace GoRogue.MapViews
 		{
 			get
 			{
-				var pos = Coord.ToCoord(index1D, Width);
+				var pos = Point.FromIndex(index1D, Width);
 				return this[pos];
 			}
 		}
 
 		/// <summary>
 		/// Given an X and Y value, translates and returns the "value" associated with that location.
-		/// This function calls this[Coord pos], so override that indexer to change functionality.
+		/// This function calls this[Point pos], so override that indexer to change functionality.
 		/// </summary>
 		/// <param name="x">X-value of location.</param>
 		/// <param name="y">Y-value of location.</param>
 		/// <returns>The translated "value" associated with that location.</returns>
 		public T2 this[int x, int y]
 		{
-			get => this[new Coord(x, y)];
+			get => this[new Point(x, y)];
 		}
 
 		/// <summary>
@@ -84,7 +85,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="pos">Location to get the value for.</param>
 		/// <returns>The translated "value" associated with the provided location.</returns>
-		virtual public T2 this[Coord pos]
+		virtual public T2 this[Point pos]
 		{
 			get => TranslateGet(pos, BaseMap[pos]);
 		}
@@ -131,13 +132,13 @@ namespace GoRogue.MapViews
 
 		/// <summary>
 		/// Translates your map data into the view type using just the map data value itself. If you need
-		/// the location as well to perform the translation, implement <see cref="TranslateGet(Coord, T1)"/>
+		/// the location as well to perform the translation, implement <see cref="TranslateGet(Point, T1)"/>
 		/// instead.
 		/// </summary>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type</returns>
 		protected virtual T2 TranslateGet(T1 value) =>
-			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Coord, T1) was not re-implemented.  One of these two functions must be implemented.");
+			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
 
 		/// <summary>
 		/// Translates your map data into the view type using the position and the map data value. If
@@ -147,6 +148,6 @@ namespace GoRogue.MapViews
 		/// <param name="position">The position of the given data value in your map.</param>
 		/// <param name="value">The data value from your map.</param>
 		/// <returns>A value of the mapped data type</returns>
-		protected virtual T2 TranslateGet(Coord position, T1 value) => TranslateGet(value);
+		protected virtual T2 TranslateGet(Point position, T1 value) => TranslateGet(value);
 	}
 }

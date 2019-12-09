@@ -54,7 +54,7 @@ namespace GoRogue
 			if (_components.ContainsKey(realType) && _components[realType].Contains(component))
 				throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
 
-			foreach (var type in Reflection.GetTypeTree(realType))
+			foreach (var type in ReflectionAddons.GetTypeTree(realType))
 			{
 				// Because we remove empty lists in Remove, we can assume that there are no empty lists in the Dictionary
 				if (!_components.ContainsKey(type))
@@ -89,7 +89,7 @@ namespace GoRogue
 				if (!_components[realComponentType].Contains(component))
 					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(component));
 
-				foreach (var type in Reflection.GetTypeTree(realComponentType))
+				foreach (var type in ReflectionAddons.GetTypeTree(realComponentType))
 				{
 					// Guaranteed to be a valid key because the above checks passed, so the component does exist.
 					if (_components[type].Count == 1)

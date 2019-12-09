@@ -102,7 +102,7 @@ namespace GoRogue_UnitTests
 			Assert.AreEqual(true, added);
 
 			obj.Position = (5, 5);
-			Assert.AreEqual(new Coord(5, 5), obj.Position);
+			Assert.AreEqual(new Point(5, 5), obj.Position);
 		}
 	}
 }

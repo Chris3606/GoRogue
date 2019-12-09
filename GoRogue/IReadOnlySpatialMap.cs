@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SadRogue.Primitives;
 
 namespace GoRogue
 {
@@ -42,7 +43,7 @@ namespace GoRogue
 		/// <summary>
 		/// Enumerable of all positions that contain items.
 		/// </summary>
-		IEnumerable<Coord> Positions { get; }
+		IEnumerable<Point> Positions { get; }
 
 		/// <summary>
 		/// Returns a read-only reference to the spatial map. Convenient for "safely" exposing the
@@ -63,7 +64,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="position">The position to check for.</param>
 		/// <returns>True if there is some item at the given position, false if not.</returns>
-		bool Contains(Coord position);
+		bool Contains(Point position);
 
 		/// <summary>
 		/// Returns if there is an item in the spatial map at the given position or not.
@@ -82,7 +83,7 @@ namespace GoRogue
 		/// The item(s) at the given position if there are any items, or nothing if there is nothing
 		/// at that position.
 		/// </returns>
-		IEnumerable<T> GetItems(Coord position);
+		IEnumerable<T> GetItemsAt(Point position);
 
 		/// <summary>
 		/// Gets the item(s) at the given position if there are any items, or returns
@@ -94,7 +95,7 @@ namespace GoRogue
 		/// The item(s) at the given position if there are any items, or nothing if there is nothing
 		/// at that position.
 		/// </returns>
-		IEnumerable<T> GetItems(int x, int y);
+		IEnumerable<T> GetItemsAt(int x, int y);
 
 		/// <summary>
 		/// Gets the position associated with the given item in the spatial map, or null if that item is
@@ -102,10 +103,10 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="item">The item to get the position for.</param>
 		/// <returns>
-		/// The position associated with the given item, if it exists in the spatial map, or <see cref="Coord.NONE"/>
+		/// The position associated with the given item, if it exists in the spatial map, or <see cref="Point.None"/>
 		/// if the item does not exist.
 		/// </returns>
-		Coord GetPosition(T item);
+		Point GetPositionOf(T item);
 
 		/// <summary>
 		/// Returns a string representation of the IReadOnlySpatialMap, allowing display of the spatial map's
@@ -130,6 +131,6 @@ namespace GoRogue
 		/// <summary>
 		/// The position associated with this pair.
 		/// </summary>
-		Coord Position { get; }
+		Point Position { get; }
 	}
 }
