@@ -104,11 +104,20 @@ namespace GoRogue.MapViews
 			return newObj;
 		}
 
-		/// <summary>
-		/// Allows implicit conversion to 1D array.
-		/// </summary>
-		/// <param name="arrayMap">ArrayMap to convert.</param>
-		public static implicit operator T[](ArrayMap<T> arrayMap) => arrayMap._array;
+#pragma warning disable CA2225 // The proper equivalent function is provided, however because the type is [] instead of Array the analyzer cannot determine this properly.
+        /// <summary>
+        /// Allows implicit conversion to 1D array.  Does not copy the underlying values.
+        /// </summary>
+        /// <param name="arrayMap">ArrayMap to convert.</param>
+        public static implicit operator T[](ArrayMap<T> arrayMap) => arrayMap._array;
+#pragma warning restore CA2225
+
+        /// <summary>
+        /// Converts to 1D array, without copying the values.  Typically using this method is unnecessary
+        /// and you can use the implicit conversion defined for this type instead.
+        /// </summary>
+        /// <returns>The underlying ArrayMap data as a 1D array.</returns>
+        public T[] ToArray() => this;
 
 
 		/// <summary>

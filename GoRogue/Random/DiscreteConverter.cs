@@ -62,15 +62,18 @@ namespace GoRogue.Random
 		/// </summary>
 		public double Minimum => ContinuousDistribution.Minimum;
 
-		/// <summary>
-		/// Gets the mode of distributed random numbers.
-		/// </summary>
-		public double[] Mode => ContinuousDistribution.Mode;
 
-		/// <summary>
-		/// Gets the variance of distributed random numbers for the underlying distribution.
-		/// </summary>
-		public double Variance => ContinuousDistribution.Variance;
+#pragma warning disable CA1819 // Must return array in this case as the dependent library does
+        /// <summary>
+        /// Gets the mode of distributed random numbers.
+        /// </summary>
+        public double[] Mode => ContinuousDistribution.Mode;
+#pragma warning restore CA1819
+
+        /// <summary>
+        /// Gets the variance of distributed random numbers for the underlying distribution.
+        /// </summary>
+        public double Variance => ContinuousDistribution.Variance;
 
 		/// <summary>
 		/// Returns the result of the underlying continuous distribution's <see cref="NextDouble"/> function, but

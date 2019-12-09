@@ -83,11 +83,11 @@ namespace GoRogue
 			{
 				var realComponentType = component.GetType();
 				if (!_components.ContainsKey(realComponentType))
-					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(component));
+					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(components));
 
 				// Can't be invalid key because above check passed.
 				if (!_components[realComponentType].Contains(component))
-					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(component));
+					throw new ArgumentException($"Tried to remove a component of type {realComponentType}, that did not exist on the object.", nameof(components));
 
 				foreach (var type in ReflectionAddons.GetTypeTree(realComponentType))
 				{
