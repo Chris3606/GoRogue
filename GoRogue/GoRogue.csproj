@@ -21,17 +21,20 @@
 	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>roguelike;roguelikes;rogue;library;2d;game;games</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	
+	<!-- Enable C# 8.0 nullable reference feature -->
+	<Nullable>enable</Nullable>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <DocumentationFile>bin\$(Configuration)\netstandard2.1\GoRogue.xml</DocumentationFile>
-    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211</NoWarn>
+    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
   </PropertyGroup>
   
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>bin\$(Configuration)\netstandard2.1\GoRogue.xml</DocumentationFile>
-    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211</NoWarn>
+    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
   </PropertyGroup>
   
   <!-- Pack a read-me with the nuget package, so it displays when installed -->
