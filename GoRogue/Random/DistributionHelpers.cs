@@ -67,7 +67,7 @@ namespace GoRogue.Random
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
-		static public NormalDistribution CreateNormalDistribution(IGenerator generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
+		static public NormalDistribution CreateNormalDistribution(IGenerator? generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
 		{
 			if (generator == null)
 				generator = SingletonRandom.DefaultRNG;

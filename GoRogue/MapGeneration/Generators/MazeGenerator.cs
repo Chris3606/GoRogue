@@ -37,7 +37,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// to 10.
 		/// </param>
 		/// <returns>A list of mazes that were generated.</returns>
-		public static IEnumerable<Area> Generate(ISettableMapView<bool> map, IGenerator rng, int crawlerChangeDirectionImprovement = 10)
+		public static IEnumerable<Area> Generate(ISettableMapView<bool> map, IGenerator? rng, int crawlerChangeDirectionImprovement = 10)
 		{
 			// Implemented the logic from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 

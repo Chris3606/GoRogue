@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
+		static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
 		{
 			var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 			Connect(map, areas, distanceCalc, areaConnector, tunnelCreator);
@@ -53,7 +53,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<Area> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector areaConnector = null, ITunnelCreator tunnelCreator = null)
+		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<Area> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
 		{
 			if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 			if (tunnelCreator == null) tunnelCreator = new DirectLineTunnelCreator(distanceCalc);

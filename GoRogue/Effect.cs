@@ -111,7 +111,7 @@ namespace GoRogue
 		/// <see cref="OnTrigger(TTriggerArgs)"/> function has been called but before it is
 		/// removed from any <see cref="EffectTrigger{TTriggerArgs}"/> instances.
 		/// </summary>
-		public event EventHandler Expired;
+		public event EventHandler? Expired;
 
 		/// <summary>
 		/// Constructor.
@@ -133,7 +133,7 @@ namespace GoRogue
 		/// </remarks>
 		/// <param name="args">Parameters that are passed to <see cref="OnTrigger(TTriggerArgs)"/>.
 		/// Can be null.</param>
-		public void Trigger(TTriggerArgs args)
+		public void Trigger(TTriggerArgs? args)
 		{
 			OnTrigger(args);
 
@@ -146,7 +146,7 @@ namespace GoRogue
 		/// This function is called automatically when <see cref="Trigger"/> is called.
 		/// </summary>
 		/// <param name="e">Class containing all arguments <see cref="OnTrigger"/> requires to function.</param>
-		abstract protected void OnTrigger(TTriggerArgs e);
+		abstract protected void OnTrigger(TTriggerArgs? e);
 
 		/// <summary>
 		/// Returns a string of the effect's name and duration.

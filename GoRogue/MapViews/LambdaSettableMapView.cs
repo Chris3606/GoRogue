@@ -167,6 +167,6 @@ namespace GoRogue.MapViews
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the LambdaSettableMapView.</returns>
-		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+		public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 	}
 }

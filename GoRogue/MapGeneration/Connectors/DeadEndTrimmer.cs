@@ -20,7 +20,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="saveDeadEndChance">The chance out of 100 that a given dead end is left alone. Defaults to 0.</param>
 		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends.  Defaults to infinity.</param>
 		/// <param name="rng">Rng to use.  Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
-		public static void Trim(ISettableMapView<bool> map, int saveDeadEndChance = 0, int maxTrimIterations = -1, IGenerator rng = null)
+		public static void Trim(ISettableMapView<bool> map, int saveDeadEndChance = 0, int maxTrimIterations = -1, IGenerator? rng = null)
 			=> Trim(map, MapAreaFinder.MapAreasFor(map, AdjacencyRule.Cardinals), saveDeadEndChance, maxTrimIterations, rng);
 
 		/// <summary>
@@ -31,7 +31,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="saveDeadEndChance">The chance out of 100 that a given dead end is left alone. Defaults to 0.</param>
 		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends.  Defaults to infinity.</param>
 		/// <param name="rng">Rng to use.  Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
-		public static void Trim(ISettableMapView<bool> map, IEnumerable<MapArea> areas, int saveDeadEndChance = 100, int maxTrimIterations = -1, IGenerator rng = null)
+		public static void Trim(ISettableMapView<bool> map, IEnumerable<MapArea> areas, int saveDeadEndChance = 100, int maxTrimIterations = -1, IGenerator? rng = null)
 		{
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;

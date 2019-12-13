@@ -18,7 +18,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// Constructor. Takes rng to use -- if null is specified, the <see cref="SingletonRandom.DefaultRNG"/> is used.
 		/// </summary>
 		/// <param name="rng">Rng to use -- if null is specified, <see cref="SingletonRandom.DefaultRNG"/> is used.</param>
-		public HorizontalVerticalTunnelCreator(IGenerator rng = null)
+		public HorizontalVerticalTunnelCreator(IGenerator? rng = null)
 		{
 			if (rng == null)
 				this.rng = SingletonRandom.DefaultRNG;

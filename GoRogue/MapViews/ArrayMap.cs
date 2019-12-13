@@ -130,7 +130,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="obj"/>
 		/// <returns>True if the given object is an ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-		public override bool Equals(object obj)
+		public override bool Equals(object? obj)
 		{
 			if (obj is ArrayMap<T> e)
 				return Equals(e);
@@ -143,7 +143,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="other"/>
 		/// <returns>True if the given ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-		public bool Equals(ArrayMap<T> other) => !ReferenceEquals(other, null) && _array == other._array;
+		public bool Equals(ArrayMap<T>? other) => !ReferenceEquals(other, null) && _array == other._array;
 
 		/// <summary>
 		/// Returns a hash-value for this object.
@@ -157,7 +157,7 @@ namespace GoRogue.MapViews
 		/// <param name="lhs"/>
 		/// <param name="rhs"/>
 		/// <returns>True if the two given ArrayMap&lt;T&gt; instances have a reference to the same underlying array, false otherwise.</returns>
-		public static bool operator ==(ArrayMap<T> lhs, ArrayMap<T> rhs) => lhs?.Equals(rhs) ?? rhs is null;
+		public static bool operator ==(ArrayMap<T>? lhs, ArrayMap<T>? rhs) => lhs?.Equals(rhs) ?? rhs is null;
 
 		/// <summary>
 		/// Compares the two ArrayMap instances.
@@ -165,7 +165,7 @@ namespace GoRogue.MapViews
 		/// <param name="lhs"/>
 		/// <param name="rhs"/>
 		/// <returns>True if the two given ArrayMap&lt;T&gt; instances do NOT have a reference to the same underlying array, false otherwise.</returns>
-		public static bool operator !=(ArrayMap<T> lhs, ArrayMap<T> rhs) => !(lhs == rhs);
+		public static bool operator !=(ArrayMap<T>? lhs, ArrayMap<T>? rhs) => !(lhs == rhs);
 
 		/// <summary>
 		/// Returns a string representation of the 2D array.
@@ -205,6 +205,6 @@ namespace GoRogue.MapViews
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the ArrayMap.</returns>
-		public string ToString(int fieldSize, Func<T, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+		public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 	}
 }

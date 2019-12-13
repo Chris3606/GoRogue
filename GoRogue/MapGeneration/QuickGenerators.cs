@@ -26,7 +26,7 @@ namespace GoRogue.MapGeneration
 		/// <param name="totalIterations"></param>
 		/// <param name="cutoffBigAreaFill"></param>
 		/// <returns>Collection of areas representing the areas of the map before they were connected.</returns>
-		public static IEnumerable<Area> GenerateCellularAutomataMap(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40,
+		public static IEnumerable<Area> GenerateCellularAutomataMap(ISettableMapView<bool> map, IGenerator? rng = null, int fillProbability = 40,
 																	   int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -172,7 +172,7 @@ namespace GoRogue.MapGeneration
 		/// </param>
 		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.</param>
 		/// <returns>A list of the interior of rooms generated and the connections placed.</returns>
-		public static IEnumerable<(Rectangle Room, Point[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator rng, int minRooms,
+		public static IEnumerable<(Rectangle Room, Point[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator? rng, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
 			int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
 			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0, int maxTrimIterations = -1)
@@ -246,7 +246,7 @@ namespace GoRogue.MapGeneration
 		/// room. Defaults to 10.
 		/// </param>
 		/// <returns>Rectangles representing the interor of each room generated.</returns>
-		public static IEnumerable<Rectangle> GenerateRandomRoomsMap(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize,
+		public static IEnumerable<Rectangle> GenerateRandomRoomsMap(ISettableMapView<bool> map, IGenerator? rng, int maxRooms, int roomMinSize, int roomMaxSize,
 																	  int attemptsPerRoom = 10)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;

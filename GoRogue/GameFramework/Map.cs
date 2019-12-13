@@ -27,11 +27,11 @@ namespace GoRogue.GameFramework
 	/// </remarks>
 	public class Map : IMapView<IEnumerable<IGameObject>>
 	{
-		private ISettableMapView<IGameObject> _terrain;
+		private ISettableMapView<IGameObject?> _terrain;
 		/// <summary>
 		/// Terrain of the map.  Terrain at each location may be set via the <see cref="SetTerrain(IGameObject)"/> function.
 		/// </summary>
-		public IMapView<IGameObject> Terrain => _terrain;
+		public IMapView<IGameObject?> Terrain => _terrain;
 
 		/// <summary>
 		/// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as they are within
@@ -92,15 +92,15 @@ namespace GoRogue.GameFramework
 		/// <summary>
 		/// Event that is fired whenever some object is added to the map.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<IGameObject>> ObjectAdded;
+		public event EventHandler<ItemEventArgs<IGameObject>>? ObjectAdded;
 		/// <summary>
 		/// Event that is fired whenever some object is removed from the map.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<IGameObject>> ObjectRemoved;
+		public event EventHandler<ItemEventArgs<IGameObject>>? ObjectRemoved;
 		/// <summary>
 		/// Event that is fired whenever some object that is part of the map is successfully moved.
 		/// </summary>
-		public event EventHandler<ItemMovedEventArgs<IGameObject>> ObjectMoved;
+		public event EventHandler<ItemMovedEventArgs<IGameObject>>? ObjectMoved;
 
 		/// <summary>
 		/// Height of the map, in grid spaces.
@@ -149,7 +149,7 @@ namespace GoRogue.GameFramework
 		/// location on the same layer.  Defaults to no layers.</param>
 		public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
-			: this(new ArrayMap<IGameObject>(width, height), numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
+			: this(new ArrayMap<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
 				  layersBlockingTransparency, entityLayersSupportingMultipleItems)
 		{ }
 
@@ -175,7 +175,7 @@ namespace GoRogue.GameFramework
 		/// Defaults to all layers.</param>
 		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
 		/// location on the same layer.  Defaults to no layers.</param>
-		public Map(ISettableMapView<IGameObject> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+		public Map(ISettableMapView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
 			       uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
 		{
 			_terrain = terrainLayer;
@@ -191,12 +191,12 @@ namespace GoRogue.GameFramework
 			_entities.ItemMoved += (s, e) => ObjectMoved?.Invoke(this, e);
 
 			if (layersBlockingTransparency == 1) // Only terrain so we optimize
-				TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c] == null || _terrain[c].IsTransparent);
+				TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsTransparent ?? true);
 			else
 				TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsTransparent);
 
 			if (layersBlockingWalkability == 1) // Similar, only terrain blocks, so optimize
-				WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c] == null || _terrain[c].IsWalkable);
+				WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true);
 			else
 				WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
@@ -210,7 +210,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		/// <param name="position">The position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public IGameObject GetTerrainAt(Point position) => _terrain[position];
+		public IGameObject? GetTerrainAt(Point position) => _terrain[position];
 
 		/// <summary>
 		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
@@ -220,7 +220,7 @@ namespace GoRogue.GameFramework
 		/// <param name="position">The position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 		/// TerrainType.</returns>
-		public TTerrain GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject => _terrain[position] as TTerrain;
+		public TTerrain? GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject => _terrain[position] as TTerrain;
 
 		/// <summary>
 		/// Gets the terrain object at the given location, or null if no terrain is set to that location.
@@ -228,7 +228,7 @@ namespace GoRogue.GameFramework
 		/// <param name="x">X-value of the position to get the terrain for.</param>
 		/// <param name="y">Y-value of the position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
-		public IGameObject GetTerrainAt(int x, int y) => _terrain[x, y];
+		public IGameObject? GetTerrainAt(int x, int y) => _terrain[x, y];
 
 		/// <summary>
 		/// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
@@ -239,7 +239,7 @@ namespace GoRogue.GameFramework
 		/// <param name="y">Y-value of the position to get the terrain for.</param>
 		/// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 		/// TerrainType.</returns>
-		public TTerrain GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject => _terrain[x, y] as TTerrain;
+		public TTerrain? GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject => _terrain[x, y] as TTerrain;
 
 		/// <summary>
 		/// Sets the terrain at the given objects location to the given object, overwriting any terrain already present there.
@@ -494,7 +494,7 @@ namespace GoRogue.GameFramework
 				yield return entity;
 
 			if (LayerMasker.HasLayer(layerMask, 0) && _terrain[x, y] != null)
-				yield return _terrain[x, y];
+				yield return _terrain[x, y]!; // Null-checked above
 		}
 
 		/// <summary>
@@ -635,10 +635,10 @@ namespace GoRogue.GameFramework
 		/// <param name="entityLayersSupportingMultipleItems">Layer mask containing those layers that should be allowed to have multiple objects at the same
 		/// location on the same layer.  Defaults to no layers.</param>
 		/// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
-		public static Map CreateMap<T>(ISettableMapView<T> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
-				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0) where T : IGameObject
-		{
-			var terrainMap = new LambdaSettableTranslationMap<T, IGameObject>(terrainLayer, t => t, g => (T)g);
+		public static Map CreateMap<T>(ISettableMapView<T?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+				   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0) where T : class, IGameObject
+        {
+			var terrainMap = new LambdaSettableTranslationMap<T?, IGameObject?>(terrainLayer, t => t, g => (T?)g); // Assignment is fine here
 			return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems);
 		}
 

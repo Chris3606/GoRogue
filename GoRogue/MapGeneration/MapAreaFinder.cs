@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		public IMapView<bool> Map;
 
-		private bool[,] visited;
+		private bool[,]? visited;
 
 		/// <summary>
 		/// Constructor.
@@ -80,7 +80,7 @@ namespace GoRogue.MapGeneration
 				}
 		}
 
-		private Area visit(Point position)
+		private Area? visit(Point position)
 		{
 			// Don't bother allocating a MapArea, because the starting point isn't valid.
 			if (!Map[position])
@@ -93,7 +93,7 @@ namespace GoRogue.MapGeneration
 			while (stack.Count != 0)
 			{
 				position = stack.Pop();
-				if (visited[position.X, position.Y] || !Map[position]) // Already visited, or not part of any mapArea
+				if (visited![position.X, position.Y] || !Map[position]) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
 					continue;
 
 				area.Add(position);

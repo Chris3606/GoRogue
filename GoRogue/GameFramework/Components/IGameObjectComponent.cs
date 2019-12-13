@@ -13,6 +13,6 @@
 		/// The object to which this component is attached, or null if it is not attached.  Should not be set manually, as this is taken
 		/// care of by <see cref="GameObject.AddComponent(object)"/>/<see cref="IHasComponents.RemoveComponent(object)"/>
 		/// </summary>
-		IGameObject Parent { get; set; }
+		IGameObject? Parent { get; set; }
 	}
 }

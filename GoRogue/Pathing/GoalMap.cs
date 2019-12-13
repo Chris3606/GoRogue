@@ -209,23 +209,23 @@ namespace GoRogue.Pathing
 			}
 			while (_edgeSet.Count > 0)
 			{
-				foreach (var Point in _edgeSet.ToArray())
+				foreach (var point in _edgeSet.ToArray())
 				{
-					var current = _goalMap[Point].Value;
-					foreach (var openPoint in adjacencyRule.Neighbors(Point))
+					var current = _goalMap[point]!.Value; // Known to be not null since the else condition above will have assigned to it.
+					foreach (var openPoint in adjacencyRule.Neighbors(point))
 					{
 						if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
 							continue;
-						var neighborValue = _goalMap[openPoint].Value;
-						var newValue = current + DistanceMeasurement.Calculate(Point, openPoint);
+						var neighborValue = _goalMap[openPoint]!.Value; // Known to be not null since it must be walkable.
+                        var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
 						if (newValue < neighborValue)
 						{
 							_goalMap[openPoint] = newValue;
 							_edgeSet.Add(openPoint);
 						}
 					}
-					_edgeSet.Remove(Point);
-					_closedSet.Add(Point);
+					_edgeSet.Remove(point);
+					_closedSet.Add(point);
 				}
 			}
 			Updated();

@@ -69,7 +69,7 @@ namespace GoRogue.Pathing
 		/// Weights given to each tile.  The weight is multiplied by the cost of a tile, so a tile with weight 2 is twice as hard to
 		/// enter as a tile with weight 1.  If unspecified or specified as null, all tiles have weight 1.
 		/// </summary>
-		public IMapView<double> Weights { get; }
+		public IMapView<double>? Weights { get; }
 
 		// NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
 		/// <summary>
@@ -139,9 +139,11 @@ namespace GoRogue.Pathing
 		public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Point, Point, double> heuristic, IMapView<double> weights)
 			: this(walkabilityMap, distanceMeasurement, heuristic, weights, -1.0) { }
 
-		// Private constructor that does work of others
-		private AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Point, Point, double> heuristic = null, IMapView<double> weights = null, double minimumWeight = 1.0)
-		{
+        // Private constructor that does work of others
+#pragma warning disable CS8618 // _heuristic is initialized via Heuristic so ignore erroneous warning
+        private AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Point, Point, double>? heuristic = null, IMapView<double>? weights = null, double minimumWeight = 1.0)
+#pragma warning restore CS8618
+        {
 			Weights = weights;
 
 			WalkabilityMap = walkabilityMap;
@@ -150,7 +152,7 @@ namespace GoRogue.Pathing
 			_cachedMinWeight = minimumWeight;
 			MaxEuclideanMultiplier = MinimumWeight / (Point.EuclideanDistanceMagnitude(new Point(0, 0), new Point(WalkabilityMap.Width, WalkabilityMap.Height)));
 
-			Heuristic = heuristic;
+			Heuristic = heuristic!; // Handles null and exposes as non-nullable since it will never allow null
 
 			int maxSize = walkabilityMap.Width * walkabilityMap.Height;
 			nodes = new AStarNode[maxSize];
@@ -175,7 +177,7 @@ namespace GoRogue.Pathing
 		/// <see cref="WalkabilityMap"/> reports. Defaults to <see langword="true"/>.
 		/// </param>
 		/// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
-		public Path ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
+		public Path? ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
 		{
 			// Don't waste initialization time if there is definately no path
 			if (!assumeEndpointsWalkable && (!WalkabilityMap[start] || !WalkabilityMap[end]))
@@ -233,7 +235,7 @@ namespace GoRogue.Pathing
 					do
 					{
 						result.Add(current.Position);
-						current = current.Parent;
+						current = current.Parent!; // Overriding null because we know Parent won't be null because we'll hit the start and exit the loop first
 					} while (current.Position != start);
 
 					result.Add(start);
@@ -300,7 +302,7 @@ namespace GoRogue.Pathing
 		/// <see cref="WalkabilityMap"/> reports. Defaults to <see langword="true"/>.
 		/// </param>
 		/// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
-		public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
+		public Path? ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
 			=> ShortestPath(new Point(startX, startY), new Point(endX, endY), assumeEndpointsWalkable);
 
 		private static bool IsOpen(AStarNode node, FastPriorityQueue<AStarNode> openSet)
@@ -477,10 +479,10 @@ namespace GoRogue.Pathing
 		// (Partly estimated) distance to end point going thru this node
 		public float G;
 
-		public AStarNode Parent;
+		public AStarNode? Parent;
 		// (Known) distance from start to this node, by shortest known path
 
-		public AStarNode(Point position, AStarNode parent = null)
+		public AStarNode(Point position, AStarNode? parent = null)
 		{
 			Parent = parent;
 			Position = position;

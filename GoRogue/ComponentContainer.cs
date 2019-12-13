@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GoRogue
 {
@@ -12,7 +13,7 @@ namespace GoRogue
 	/// <remarks>
 	/// The component system is designed to be as efficient as possible at run-time for accessing components and determining if a
 	/// ComponentContainer possesses one or more given types of components, and as well remains flexible and type-safe.
-	/// Components may be of any type, although it is recommended that you _not_ use value-types.  The system also remains accurate
+	/// Components may be of any type, although it is recommended that you _do not_ use value types.  The system also remains accurate
 	/// with respect to types, even when the components added implement interfaces or have an inheritance heirarchy.
 	/// 
 	/// For example, suppose we have the following structure:
@@ -51,6 +52,9 @@ namespace GoRogue
 		public virtual void AddComponent(object component)
 		{
 			var realType = component.GetType();
+            if (realType.IsValueType)
+                throw new ArgumentException("Cannot use value-types as a component.");
+
 			if (_components.ContainsKey(realType) && _components[realType].Contains(component))
 				throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
 
@@ -130,19 +134,20 @@ namespace GoRogue
 		/// <returns>True if the ComponentContainer has at least one component of the specified type, false otherwise.</returns>
 		public bool HasComponent<T>() => HasComponents(typeof(T));
 
-		/// <summary>
-		/// Gets the first component of type T found, or default(T) if no component of that type has been added
-		/// to the object.
-		/// </summary>
-		/// <typeparam name="T">Type of component to retrieve.</typeparam>
-		/// <returns>The first component of Type T that was added to the ComponentContainer, or default(T) if no
-		/// components of the given type have been added.</returns>
-		public T GetComponent<T>()
+        /// <summary>
+        /// Gets the first component of type T found, or default(T) if no component of that type has been added
+        /// to the object.
+        /// </summary>
+        /// <typeparam name="T">Type of component to retrieve.</typeparam>
+        /// <returns>The first component of Type T that was added to the ComponentContainer, or default(T) if no
+        /// components of the given type have been added.</returns>
+        [return: MaybeNull]
+        public T GetComponent<T>()
 		{
 			Type typeOfT = typeof(T);
 
 			if (!_components.ContainsKey(typeOfT))
-				return default(T);
+				return default!; // Can override null check safely here because MaybeNull enforces that the return value may be null 
 
 			// We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
 			// Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time

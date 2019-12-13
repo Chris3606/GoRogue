@@ -47,10 +47,10 @@ namespace GoRogue
 		/// <param name="separator">Characters to separate the IEnumerable's elements by.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the IEnumerable's elements.</param>
 		/// <returns>A string representation of the IEnumerable.</returns>
-		public static string ExtendToString<T>(this IEnumerable<T> enumerable, string begin = "[", Func<T, string> elementStringifier = null, string separator = ", ", string end = "]")
+		public static string ExtendToString<T>(this IEnumerable<T> enumerable, string begin = "[", Func<T, string>? elementStringifier = null, string separator = ", ", string end = "]")
 		{
 			if (elementStringifier == null)
-				elementStringifier = (T obj) => obj.ToString();
+				elementStringifier = (T obj) => obj?.ToString() ?? "null";
 
 			var result = new StringBuilder(begin);
 			bool first = true;
@@ -89,7 +89,7 @@ namespace GoRogue
 		/// <param name="separator">Characters to separate the set's items by.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the set's elements.</param>
 		/// <returns>A string representation of the ISet.</returns>
-		public static string ExtendToString<T>(this ISet<T> set, string begin = "set(", Func<T, string> elementStringifier = null, string separator = ", ", string end = ")")
+		public static string ExtendToString<T>(this ISet<T> set, string begin = "set(", Func<T, string>? elementStringifier = null, string separator = ", ", string end = ")")
 			=> ExtendToString((IEnumerable<T>)set, begin, elementStringifier, separator, end);
 
 		/// <summary>
@@ -118,14 +118,14 @@ namespace GoRogue
 		/// <param name="pairSeparator">Characters used to separate each key-value pair from the next.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the dictionary's elements.</param>
 		/// <returns>A string representation of the IDictionary.</returns>
-		public static string ExtendToString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, string begin = "{", Func<TKey, string> keyStringifier = null,
-												   Func<TValue, string> valueStringifier = null, string kvSeparator = " : ", string pairSeparator = ", ", string end = "}")
+		public static string ExtendToString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, string begin = "{", Func<TKey, string>? keyStringifier = null,
+												   Func<TValue, string>? valueStringifier = null, string kvSeparator = " : ", string pairSeparator = ", ", string end = "}")
 		{
 			if (keyStringifier == null)
-				keyStringifier = (TKey obj) => obj.ToString();
+				keyStringifier = (TKey obj) => obj?.ToString() ?? "null";
 
 			if (valueStringifier == null)
-				valueStringifier = (TValue obj) => obj.ToString();
+				valueStringifier = (TValue obj) => obj?.ToString() ?? "null";
 
 			var result = new StringBuilder(begin);
 			bool first = true;
@@ -160,11 +160,11 @@ namespace GoRogue
 		/// <param name="endRow">Character(s) that should follow the string representation of each row.</param>
 		/// <param name="end">Character(s) that should follow the string representation of the 2D array.</param>
 		/// <returns>A string representation of the 2D array.</returns>
-		public static string ExtendToString<T>(this T[,] array, string begin = "[\n", string beginRow = "\t[", Func<T, string> elementStringifier = null,
+		public static string ExtendToString<T>(this T[,] array, string begin = "[\n", string beginRow = "\t[", Func<T, string>? elementStringifier = null,
 												 string rowSeparator = ",\n", string elementSeparator = ", ", string endRow = "]", string end = "\n]")
 		{
 			if (elementStringifier == null)
-				elementStringifier = (T obj) => obj.ToString();
+				elementStringifier = (T obj) => obj?.ToString() ?? "null";
 
 			var result = new StringBuilder(begin);
 			for (int x = 0; x < array.GetLength(0); x++)
@@ -209,7 +209,7 @@ namespace GoRogue
 		/// <returns>
 		/// A string representation of the 2D array, formatted as if the array represents a 2D Pointinate plane/grid map.
 		/// </returns>
-		public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+		public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
 			return new ArrayMap2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
@@ -243,7 +243,7 @@ namespace GoRogue
 		/// <returns>
 		/// A string representation of the 2D array, formatted as if the array represents a 2D Pointinate plane/grid map.
 		/// </returns>
-		public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+		public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
 			return new ArrayMap2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
@@ -257,7 +257,7 @@ namespace GoRogue
 		/// <param name="list"/>
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used</param>
-		static public void FisherYatesShuffle<T>(this IList<T> list, IGenerator rng = null)
+		static public void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -289,7 +289,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>The index selected.</returns>
-		static public int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator rng = null)
+		static public int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -312,7 +312,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Index selected.</returns>
-		static public int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator rng = null)
+		static public int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -335,14 +335,14 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
-		static public T RandomItem<T>(this IReadOnlyList<T> list, IGenerator rng = null)
+		static public T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-			if (list.Count == 0)
-				return default(T);
+            if (list.Count == 0)
+                throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
 
-			return list[rng.Next(list.Count)];
+            return list[rng.Next(list.Count)];
 		}
 
 		/// <summary>
@@ -356,14 +356,14 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
-		static public T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator rng = null)
+		static public T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
-			if (list.Count == 0)
-				return default(T);
+            if (list.Count == 0)
+                throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
 
-			T item = list[rng.Next(list.Count)];
+            T item = list[rng.Next(list.Count)];
 			while (!selector(item))
 				item = list[rng.Next(list.Count)];
 

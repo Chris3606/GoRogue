@@ -69,7 +69,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// and re-generating that room. Defaults to 10.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of the rooms that were added to the map.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
+		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
 		{
 			if (minRooms > maxRooms)

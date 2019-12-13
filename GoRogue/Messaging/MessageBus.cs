@@ -88,7 +88,7 @@ namespace GoRogue.Messaging
 		/// </summary>
 		/// <typeparam name="TMessage"></typeparam>
 		/// <param name="message"></param>
-		public void Send<TMessage>(TMessage message)
+		public void Send<TMessage>(TMessage message) where TMessage : notnull
 		{
 			var runtimeMessageType = message.GetType();
 			if (!_typeTreeCache.ContainsKey(runtimeMessageType))

@@ -17,7 +17,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// Constructor. Specifies the RNG to use, or null if the default RNG should be used.
 		/// </summary>
 		/// <param name="rng">The RNG to use, or null if the default RNG should be used.</param>
-		public RandomConnectionPointSelector(IGenerator rng = null)
+		public RandomConnectionPointSelector(IGenerator? rng = null)
 		{
 			if (rng == null)
 				this.rng = SingletonRandom.DefaultRNG;

@@ -128,7 +128,7 @@ namespace GoRogue.MapViews
 		/// function of type T.
 		/// </param>
 		/// <returns>A string representation of the TranslationMap.</returns>
-		public string ToString(int fieldSize, Func<T2, string> elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+		public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 
 		/// <summary>
 		/// Translates your map data into the view type using just the map data value itself. If you need

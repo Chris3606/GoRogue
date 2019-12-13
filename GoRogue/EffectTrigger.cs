@@ -97,7 +97,7 @@ namespace GoRogue
 		/// </remarks>
 		/// <param name="args">Argument to pass to the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/> function
 		/// of each effect.</param>
-		public void TriggerEffects(TTriggerArgs args)
+		public void TriggerEffects(TTriggerArgs? args)
 		{
 			foreach (var effect in _effects)
 			{

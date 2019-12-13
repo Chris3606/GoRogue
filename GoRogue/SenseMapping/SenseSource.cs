@@ -58,7 +58,7 @@ namespace GoRogue.SenseMapping
 		internal double[,] light;
 
 		internal bool[,] nearLight;
-		internal IMapView<double> resMap;
+		internal IMapView<double>? resMap;
 		private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
 		private double _radius;
 		private double _decay; // Set when radius is set
@@ -66,22 +66,24 @@ namespace GoRogue.SenseMapping
 		private int size;
 		private int halfSize;
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="type">The spread mechanics to use for source values.</param>
-		/// <param name="position">The position on a map that the source is located at.</param>
-		/// <param name="radius">
-		/// The maximum radius of the source -- this is the maximum distance the source values will
-		/// emanate, provided the area is completely unobstructed.
-		/// </param>
-		/// <param name="distanceCalc">
-		/// The distance calculation used to determine what shape the radius has (or a type
-		/// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
-		/// </param>
-		/// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
-		public SenseSource(SourceType type, Point position, double radius, Distance distanceCalc, double intensity = 1.0)
-		{
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="type">The spread mechanics to use for source values.</param>
+        /// <param name="position">The position on a map that the source is located at.</param>
+        /// <param name="radius">
+        /// The maximum radius of the source -- this is the maximum distance the source values will
+        /// emanate, provided the area is completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance"/>, such as <see cref="Radius"/>).
+        /// </param>
+        /// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
+#pragma warning disable CS8618 // Unintialized non-nullable variable for light and nearLight is incorrect, as the Radius setter initializes them.
+        public SenseSource(SourceType type, Point position, double radius, Distance distanceCalc, double intensity = 1.0)
+#pragma warning restore CS8618
+        {
 			if (radius <= 0)
 				throw new ArgumentOutOfRangeException(nameof(radius), "SenseMap radius cannot be 0");
 
@@ -304,6 +306,9 @@ namespace GoRogue.SenseMapping
 		{
 			if (Enabled)
 			{
+                if (resMap == null)
+                    throw new InvalidOperationException("Attempted to calculate the light of a sense map without a resistance map.  This is almost certainly a GoRogue bug.");
+
 				initArrays();
 				switch (Type)
 				{

@@ -45,7 +45,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// result in "breaking up" large areas will be run before switching to the more standard
 		/// nearest neighbors version. Recommended to be in range [2, 7] (4 is used in roguebasin article).
 		/// </param>
-		static public void Generate(ISettableMapView<bool> map, IGenerator rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
+		static public void Generate(ISettableMapView<bool> map, IGenerator? rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 

@@ -86,11 +86,11 @@ namespace GoRogue.MapViews
 		/// <param name="endRow">Character(s) that should follow each row.</param>
 		/// <param name="end">Character(s) that should follow the IMapView printout.</param>
 		/// <returns>A string representation of the map, as viewd by the given map view.</returns>
-		public static string ExtendToString<T>(this IMapView<T> map, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+		public static string ExtendToString<T>(this IMapView<T> map, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
 			if (elementStringifier == null)
-				elementStringifier = (T obj) => obj.ToString();
+				elementStringifier = (T obj) => obj?.ToString() ?? "null";
 
 			var result = new StringBuilder(begin);
 			for (int y = 0; y < map.Height; y++)
@@ -137,11 +137,11 @@ namespace GoRogue.MapViews
 		/// <param name="endRow">Character(s) that should follow each row.</param>
 		/// <param name="end">Character(s) that should follow the IMapView printout.</param>
 		/// <returns>A string representation of the map, as viewd by the given map view.</returns>
-		public static string ExtendToString<T>(this IMapView<T> map, int fieldSize, string begin = "", string beginRow = "", Func<T, string> elementStringifier = null,
+		public static string ExtendToString<T>(this IMapView<T> map, int fieldSize, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
 													  string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
 		{
 			if (elementStringifier == null)
-				elementStringifier = (T obj) => obj.ToString();
+				elementStringifier = (T obj) => obj?.ToString() ?? "null";
 
 			var result = new StringBuilder(begin);
 			for (int y = 0; y < map.Height; y++)
@@ -183,7 +183,7 @@ namespace GoRogue.MapViews
 		/// <param name="mapView"/>
 		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>The item at a random position in the IMapView.</returns>
-		public static T RandomItem<T>(this IMapView<T> mapView, IGenerator rng = null)
+		public static T RandomItem<T>(this IMapView<T> mapView, IGenerator? rng = null)
 			=> mapView[RandomPosition(mapView, rng)];
 
 		/// <summary>
@@ -200,7 +200,7 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// The item at a random position in the IMapView for which the selector returns true.
 		/// </returns>
-		public static T RandomItem<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator rng = null)
+		public static T RandomItem<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator? rng = null)
 			=> mapView[RandomPosition(mapView, selector, rng)];
 
 		/// <summary>
@@ -214,8 +214,8 @@ namespace GoRogue.MapViews
 		/// </param>
 		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>A random position whose value in the current IMapView is equal to the one specified.</returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator rng = null)
-			=> mapView.RandomPosition((c, i) => i.Equals(validValue), rng);
+		public static Point RandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator? rng = null)
+			=> mapView.RandomPosition((c, i) => i?.Equals(validValue) ?? validValue == null, rng);
 
 		/// <summary>
 		/// Gets a random position in the map view, whose value in map view is one of the ones
@@ -232,7 +232,7 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator rng = null)
+		public static Point RandomPosition<T>(this IMapView<T> mapView, IEnumerable<T> validValues, IGenerator? rng = null)
 			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
 		/// <summary>
@@ -250,7 +250,7 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, HashSet<T> validValues, IGenerator rng = null)
+		public static Point RandomPosition<T>(this IMapView<T> mapView, HashSet<T> validValues, IGenerator? rng = null)
 			=> mapView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
 		/// <summary>
@@ -268,7 +268,7 @@ namespace GoRogue.MapViews
 		/// <returns>
 		/// A random position whose value in this IMapView is equal to one of the values specified.
 		/// </returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null, params T[] validValues)
+		public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator? rng = null, params T[] validValues)
 			=> RandomPosition(mapView, (IEnumerable<T>)validValues, rng);
 
 		/// <summary>
@@ -283,7 +283,7 @@ namespace GoRogue.MapViews
 		/// </param>
 		/// <param name="rng">The rng to use. Defaults to<see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>A random position in the IMapView for which the selector returns true.</returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator rng = null)
+		public static Point RandomPosition<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator? rng = null)
 		{
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
@@ -303,7 +303,7 @@ namespace GoRogue.MapViews
 		/// <param name="mapView"/>
 		/// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
 		/// <returns>A random position within the IMapView.</returns>
-		public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator rng = null)
+		public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator? rng = null)
 		{
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;

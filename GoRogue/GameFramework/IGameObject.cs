@@ -19,7 +19,7 @@ namespace GoRogue.GameFramework
 		/// The current <see cref="Map"/> which this object resides on.  Returns null if the object has not been added to a map.
 		/// An IGameObject is allowed to reside on only one map.
 		/// </summary>
-		Map CurrentMap { get; }
+		Map? CurrentMap { get; }
 
 		/// <summary>
 		/// Whether or not the object is "static".  Static objects CANNOT be moved, and only static objects may
@@ -68,6 +68,6 @@ namespace GoRogue.GameFramework
 		/// IGameObject to reflect the change.
 		/// </summary>
 		/// <param name="newMap">New map to which the IGameObject has been added.</param>
-		void OnMapChanged(Map newMap);
+		void OnMapChanged(Map? newMap);
 	}
 }

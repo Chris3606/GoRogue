@@ -60,7 +60,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the room.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of each generated room.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
+		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 		{
 			if (maxRooms <= 0)
 				throw new System.ArgumentOutOfRangeException(nameof(maxRooms), "Maximum number of rooms must be greater than 0.");

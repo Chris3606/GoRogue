@@ -46,7 +46,7 @@ namespace GoRogue.DiceNotation
 		/// RNG to use to perform the roll. If null is specified, the default RNG is used.
 		/// </param>
 		/// <returns>The result of evaluating the dice expression given.</returns>
-		public static int Roll(string expression, IGenerator random = null)
+		public static int Roll(string expression, IGenerator? random = null)
 		{
 			if (random == null) random = SingletonRandom.DefaultRNG;
 			return DiceParser.Parse(expression).Roll(random);

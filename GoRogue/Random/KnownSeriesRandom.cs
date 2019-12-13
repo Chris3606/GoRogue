@@ -32,7 +32,7 @@ namespace GoRogue.Random
 		/// specified, no values of that type may be returned, and functions that try to return a
 		/// value of that type will throw an exception.
 		/// </summary>
-		public KnownSeriesGenerator(IEnumerable<int> intSeries = null, IEnumerable<uint> uintSeries = null, IEnumerable<double> doubleSeries = null, IEnumerable<bool> boolSeries = null, IEnumerable<byte> byteSeries = null)
+		public KnownSeriesGenerator(IEnumerable<int>? intSeries = null, IEnumerable<uint>? uintSeries = null, IEnumerable<double>? doubleSeries = null, IEnumerable<bool>? boolSeries = null, IEnumerable<byte>? byteSeries = null)
 		{
 			if (intSeries == null)
 				this.intSeries = new List<int>();

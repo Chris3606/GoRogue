@@ -143,12 +143,12 @@ namespace GoRogue.Pathing
 			var adjacencyRule = (AdjacencyRule)_baseMap.DistanceMeasurement;
 			var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
 
-			foreach (var point in _baseMap.Walkable)
+			foreach (var point in _baseMap.Walkable) 
 			{
-				var newPoint = _baseMap[point] * -Magnitude;
+				var newPoint = _baseMap[point]!.Value * -Magnitude; // Value won't be null as null only happens for non-walkable squares
 				_goalMap[point] = newPoint;
 
-				openSet.Enqueue(_nodes[point], newPoint.Value);
+				openSet.Enqueue(_nodes[point], newPoint);
 			}
 			var edgeSet = new HashSet<Point>();
 			var closedSet = new HashSet<Point>();
@@ -165,15 +165,15 @@ namespace GoRogue.Pathing
 				}
 				while (edgeSet.Count > 0)
 				{
-					foreach (var Point in edgeSet.ToArray())
+					foreach (var point in edgeSet.ToArray())
 					{
-						var current = _goalMap[Point].Value;
-						foreach (var openPoint in adjacencyRule.Neighbors(Point))
+						var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
+						foreach (var openPoint in adjacencyRule.Neighbors(point))
 						{
 							if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
 								continue;
-							var neighborValue = _goalMap[openPoint].Value;
-							var newValue = current + _baseMap.DistanceMeasurement.Calculate(Point, openPoint);
+							var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
+							var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
 							if (newValue < neighborValue)
 							{
 								_goalMap[openPoint] = newValue;
@@ -181,9 +181,9 @@ namespace GoRogue.Pathing
 								edgeSet.Add(openPoint);
 							}
 						}
-						edgeSet.Remove(Point);
-						closedSet.Add(Point);
-						openSet.Remove(_nodes[Point]);
+						edgeSet.Remove(point);
+						closedSet.Add(point);
+						openSet.Remove(_nodes[point]);
 					}
 				}
 			}

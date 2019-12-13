@@ -67,7 +67,7 @@ namespace GoRogue.GameFramework
 		/// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
 		/// the object is part of a <see cref="Map"/>.
 		/// </summary>
-		public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved;
+		public event EventHandler<ItemMovedEventArgs<IGameObject>>? Moved;
 
 		private bool _isWalkable;
 
@@ -117,11 +117,11 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public int Layer { get; }
 
-		/// <summary>
-		/// The current <see cref="Map"/> which this object resides on.  Returns null if the object has not been added to a map.
-		/// A GameObject is allowed to reside on only one map.
-		/// </summary>
-		public Map CurrentMap { get; private set; }
+        /// <summary>
+        /// The current <see cref="Map"/> which this object resides on.  Returns null if the object has not been added to a map.
+        /// A GameObject is allowed to reside on only one map.
+        /// </summary>
+        public Map? CurrentMap { get; private set; }
 
         /// <summary>
         /// Function used at construction to assign an ID to the object.
@@ -164,9 +164,9 @@ namespace GoRogue.GameFramework
         /// for the sake of calculating the FOV of a <see cref="Map"/>.</param>
         /// <param name="idGenerator">The function used to generate and return an unsigned integer to use assign to the <see cref="ID"/> field.
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor remarks for details.</param>
-        public GameObject(Point position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true, Func<uint> idGenerator = null)
+        public GameObject(Point position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null)
 		{
-            idGenerator = idGenerator ?? Random.SingletonRandom.DefaultRNG.NextUInt;
+            idGenerator ??= Random.SingletonRandom.DefaultRNG.NextUInt;
 
             _parentObject = parentObject ?? this;
 			_position = position;
@@ -199,7 +199,7 @@ namespace GoRogue.GameFramework
 		/// GameObject to reflect the change.
 		/// </summary>
 		/// <param name="newMap">New map to which the GameObject has been added.</param>
-		public void OnMapChanged(Map newMap)
+		public void OnMapChanged(Map? newMap)
 		{
 			if (newMap != null)
 			{

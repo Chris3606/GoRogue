@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace GoRogue
 {
@@ -23,6 +24,7 @@ namespace GoRogue
 		/// <typeparam name="T">Type of component to retrieve.</typeparam>
 		/// <returns>The first component of Type T that was attached, or default(T) if no components of the given type
 		/// have been attached.</returns>
+        [return: MaybeNull]
 		T GetComponent<T>();
 
 		/// <summary>

@@ -58,7 +58,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator rng, IEnumerable<Rectangle> rooms,
+		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator? rng, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 		{

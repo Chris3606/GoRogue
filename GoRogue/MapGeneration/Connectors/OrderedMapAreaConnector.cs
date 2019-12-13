@@ -38,8 +38,8 @@ namespace GoRogue.MapGeneration.Connectors
 		/// Whether or not to randomize which room is connected to which -- if this is set to false,
 		/// they will be conencted in the exact order they are returned from the <see cref="MapAreaFinder"/>.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, AdjacencyRule adjacencyRule, IAreaConnectionPointSelector areaConnector = null,
-									ITunnelCreator tunnelCreator = null, IGenerator rng = null, bool randomizeOrder = true)
+		static public void Connect(ISettableMapView<bool> map, AdjacencyRule adjacencyRule, IAreaConnectionPointSelector? areaConnector = null,
+									ITunnelCreator? tunnelCreator = null, IGenerator? rng = null, bool randomizeOrder = true)
 		{
 			if (adjacencyRule == AdjacencyRule.Diagonals) throw new System.ArgumentException("Cannot specify diagonal adjacency for map connections.", nameof(adjacencyRule));
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
@@ -71,8 +71,8 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, a <see cref="HorizontalVerticalTunnelCreator"/>
 		/// that utilizes the default RNG is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<IReadOnlyArea> mapAreas, IAreaConnectionPointSelector areaConnector = null,
-									ITunnelCreator tunnelCreator = null)
+		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<IReadOnlyArea> mapAreas, IAreaConnectionPointSelector? areaConnector = null,
+									ITunnelCreator? tunnelCreator = null)
 		{
 			if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 			if (tunnelCreator == null) tunnelCreator = new HorizontalVerticalTunnelCreator();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using SadRogue.Primitives;
 
 namespace GoRogue
@@ -45,17 +46,17 @@ namespace GoRogue
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.ItemAdded"/>.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<T>> ItemAdded;
+		public event EventHandler<ItemEventArgs<T>>? ItemAdded;
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.ItemMoved"/>.
 		/// </summary>
-		public event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
+		public event EventHandler<ItemMovedEventArgs<T>>? ItemMoved;
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>.
 		/// </summary>
-		public event EventHandler<ItemEventArgs<T>> ItemRemoved;
+		public event EventHandler<ItemEventArgs<T>>? ItemRemoved;
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Count"/>.
@@ -177,6 +178,7 @@ namespace GoRogue
 		/// <returns>
 		/// The item at the given position, or default(T) if no item exists at that location.
 		/// </returns>
+        [return: MaybeNull]
 		public T GetItem(Point position)
 		{
 			SpatialTuple<T> tuple;
@@ -184,8 +186,8 @@ namespace GoRogue
 			if (tuple != null)
 				return tuple.Item;
 
-			return default(T);
-		}
+            return default!; // Ok to override as the return value is manually flagged as nullable
+        }
 
 		/// <summary>
 		/// Gets the item at the given position, or default(T) if no item exists.
@@ -401,7 +403,7 @@ namespace GoRogue
 		/// Returns a string representation of the spatial map.
 		/// </summary>
 		/// <returns>A string representation of the spatial map.</returns>
-		public override string ToString() => ToString((T obj) => obj.ToString());
+		public override string ToString() => ToString((T obj) => obj?.ToString() ?? "null");
 
 		/// <summary>
 		/// Returns a string representation of the spatial map, allowing display of the spatial map's
