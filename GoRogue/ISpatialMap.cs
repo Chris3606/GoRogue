@@ -42,14 +42,29 @@ namespace GoRogue
 	/// <typeparam name="T">The type of object that will be contained by the spatial map.</typeparam>
 	public interface ISpatialMap<T> : IReadOnlySpatialMap<T>
 	{
-		/// <summary>
-		/// Adds the given item at the given position, and returns true if the item was successfully
-		/// added. If the item could not be added, returns false.
-		/// </summary>
-		/// <param name="newItem">Item to add.</param>
+        /// <summary>
+        /// Returns true if the given item can be added at the given position; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
 		/// <param name="position">Position to add item to.</param>
-		/// <returns>True if item was successfully added, false otherwise.</returns>
-		bool Add(T newItem, Point position);
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
+        bool CanAdd(T newItem, Point position);
+
+        /// <summary>
+        /// Returns true if the given item can be added at the given position; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+		/// <param name="x">X-value of the position to add item to.</param>
+		/// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
+        bool CanAdd(T newItem, int x, int y);
+
+        /// <summary>
+        /// Tries to add the given item at the given position, and throws InvalidArgumentException if the item cannot be added.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+        /// <param name="position">Position to add item to.</param>
+        void Add(T newItem, Point position);
 
 		/// <summary>
 		/// Adds the given item at the given position, and returns true if the item was successfully
@@ -66,14 +81,29 @@ namespace GoRogue
 		/// </summary>
 		void Clear();
 
-		/// <summary>
-		/// Moves the given item from its current location to the specified one. Returns true if the
-		/// item was successfully moved, false otherwise.
-		/// </summary>
-		/// <param name="item">Item to move.</param>
-		/// <param name="target">Location to move item to.</param>
-		/// <returns>True if item was successfully moved, false otherwise.</returns>
-		bool Move(T item, Point target);
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
+        bool CanMove(T item, Point target);
+
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+		/// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
+        bool CanMove(T item, int targetX, int targetY);
+
+        /// <summary>
+        /// Moves the given item from its current location to the specified one. Throws InvalidArgumentException if the item cannot be moved.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Location to move item to.</param>
+        void Move(T item, Point target);
 
 		/// <summary>
 		/// Moves the given item from its current location to the specified one. Returns true if the
@@ -85,23 +115,29 @@ namespace GoRogue
 		/// <returns>True if item was successfully moved, false otherwise.</returns>
 		bool Move(T item, int targetX, int targetY);
 
+        bool CanMoveAll(Point current, Point target);
+        bool CanMoveAll(int currentX, int currentY, int targetX, int targetY);
+
+        void MoveAll(Point current, Point target);
+        void MoveAll(int currentX, int currentY, int targetX, int targetY);
+
 		/// <summary>
-		/// Moves any items at the specified location to the target one. Returns any items that were moved.
+		/// Moves all items at the specified source location that can be moved to the target location. Returns all items that were moved.
 		/// </summary>
 		/// <param name="current">Location to move items from.</param>
 		/// <param name="target">Location to move items to.</param>
-		/// <returns>Any items that were moved, or nothing if no items were moved.</returns>
-		IEnumerable<T> Move(Point current, Point target);
+		/// <returns>All items that were moved, or nothing if no items were moved.</returns>
+		IEnumerable<T> MoveValid(Point current, Point target);
 
 		/// <summary>
-		/// Moves any items at the specified location to the target one. Returns any items that were moved.
+		/// Moves all items at the specified location that can be moved to the target one. Returns all items that were moved.
 		/// </summary>
 		/// <param name="currentX">X-value of the location to move items from.</param>
 		/// <param name="currentY">Y-value of the location to move items from.</param>
 		/// <param name="targetX">X-value of the location to move items to.</param>
 		/// <param name="targetY">Y-value of the location to move items to.</param>
-		/// <returns>Any items that were moved, or nothing if no items were moved.</returns>
-		IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY);
+		/// <returns>All items that were moved, or nothing if no items were moved.</returns>
+		IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY);
 
 		/// <summary>
 		/// Removes the given item from the spatial map, returning true if the item was removed, false
