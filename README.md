@@ -1,7 +1,7 @@
 # GoRogue
 [![Chat on discord](https://img.shields.io/discord/660952837572001804.svg)](https://discord.gg/fxj5kPq)
 [![Join us on Reddit](https://img.shields.io/badge/reddit-GoRogueLib-red.svg)](http://reddit.com/r/goroguelib)
-[![NuGet](https://img.shields.io/nuget/v/SadConsole.svg)][nuget]
+[![NuGet](https://img.shields.io/nuget/v/GoRogue.svg)][nuget]
 
 Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with all .NET Standard 2.0+ projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.
 
