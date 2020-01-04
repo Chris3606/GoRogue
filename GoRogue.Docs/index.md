@@ -18,4 +18,4 @@ For bug reports and feature suggestions, feel free to create an issue on the [Gi
 GoRogue has its own subreddit at [r/goroguelib](https://www.reddit.com/r/goroguelib).  Feel free to post there with general questions, suggestions for the library, etc.
 
 ## Discord
-GoRogue (currently) does not have its own Discord server.  However, for [SadConsole](https://github.com/SadConsole/SadConsole/) users, SadConsole's discord does have a gorogue-integration channel that can be useful for getting questions answered or problems solved -- I frequently check this discord, so if you're using SadConsole, feel free to post there with issues or questions as well.
+GoRogue now has its own [Discord server](https://discord.gg/fxj5kPq)!. Feel free to stop by with issues or questions.  Additionally, for [SadConsole](https://github.com/SadConsole/SadConsole/) users, SadConsole's discord does have a gorogue-integration channel that can be useful for getting questions answered or problems solved -- I also frequently check this discord, so if you're using SadConsole, feel free to post there with issues or questions as well.
