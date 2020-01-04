@@ -1,5 +1,9 @@
 # GoRogue
-Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with both .NET Framework and .NET Core projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.  Also see the roadmap for planned major features!
+[![Chat on discord](https://img.shields.io/discord/660952837572001804.svg)](https://discord.gg/fxj5kPq)
+[![Join us on Reddit](https://img.shields.io/badge/reddit-GoRogueLib-red.svg)](http://reddit.com/r/goroguelib)
+[![NuGet](https://img.shields.io/nuget/v/SadConsole.svg)][nuget]
+
+Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with all .NET Standard 2.0+ projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.
 
 ## Table of Contents
 - [GoRogue](#gorogue)
@@ -16,7 +20,6 @@ Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility
 		- [Line Drawing](#line-drawing)
 		- [Robust Effects System](#robust-effects-system)
 		- [Utility](#utility)
-	- [Roadmap](#roadmap)
 	- [Licensing](#licensing)
 		- [GoRogue](#gorogue-1)
 		- [Other Licenses](#other-licenses)
@@ -124,21 +127,6 @@ The GitHub wiki also contains articles, but these are outdated and are currently
 - Extension methods for IList are provided to select either a random index or random value from an IList.
 - Extension method provided for IEnumerable to convert the IEnumerable to a List.
 - Provides basic integer-based DisjointSet data structure, that implements path compression.
-
-## Roadmap
-This library is still in development - there are a number of important features on the horizon! These include:
-- Pathfinding Additions
-   - AStar implementation supporting custom heuristics/weights
-   - Dijkstra maps (commonly known as Goal Maps)
-- Statistics Library
-   - Utility classes to assist in dealing with interdependent character/monster statistics.
-- Demo Project/writeup
-- Map generation improvements
-   - More map generation algorithms (BSP Tree).
-   - Possibly improve RandomRoomsMapGenerator - change room placement strategy to be more even, or replace with BSP tree.
-- Additional FOV Algorithms
-   - Permissive-style FOV
-   - Others?
 
 ## Licensing
 ### GoRogue
