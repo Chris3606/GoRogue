@@ -60,21 +60,19 @@ namespace GoRogue
         bool CanAdd(T newItem, int x, int y);
 
         /// <summary>
-        /// Tries to add the given item at the given position, and throws InvalidArgumentException if the item cannot be added.
+        /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
         /// </summary>
         /// <param name="newItem">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
         void Add(T newItem, Point position);
 
-		/// <summary>
-		/// Adds the given item at the given position, and returns true if the item was successfully
-		/// added. If the item could not be added, returns false.
-		/// </summary>
-		/// <param name="newItem">Item to add.</param>
-		/// <param name="x">X-value of the position to add item to.</param>
-		/// <param name="y">Y-value of the position to add item to.</param>
-		/// <returns>True if item was successfully added, false otherwise.</returns>
-		bool Add(T newItem, int x, int y);
+        /// <summary>
+        /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+        /// <param name="x">X-value of the position to add item to.</param>
+        /// <param name="y">Y-value of the position to add item to.</param>
+        void Add(T newItem, int x, int y);
 
 		/// <summary>
 		/// Clears all items out of the spatial map.
@@ -99,14 +97,14 @@ namespace GoRogue
         bool CanMove(T item, int targetX, int targetY);
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidArgumentException if the item cannot be moved.
+        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item cannot be moved.
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="target">Location to move item to.</param>
         void Move(T item, Point target);
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidArgumentException if the item cannot be moved.
+        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item cannot be moved.
         /// </summary>
         /// <param name="item">Item to move</param>
         /// <param name="targetX">X-value of the location to move item to.</param>
@@ -132,14 +130,14 @@ namespace GoRogue
         bool CanMoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidArgumentException if one or more items cannot be moved.
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
 		/// <param name="target">Location to move items to.</param>
         void MoveAll(Point current, Point target);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidArgumentException if one or more items cannot be moved.
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
 		/// <param name="currentY">Y-value of the location to move items from.</param>
@@ -165,11 +163,11 @@ namespace GoRogue
 		/// <returns>All items that were moved, or nothing if no items were moved.</returns>
 		IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY);
 
-		/// <summary>
-		/// Removes the given item from the spatial map.  Throws InvalidArgumentException if the item cannot be removed.
-		/// </summary>
-		/// <param name="item">The item to remove.</param>
-		void Remove(T item);
+        /// <summary>
+        /// Removes the given item from the spatial map.  Throws InvalidOperationException if the item cannot be removed.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        void Remove(T item);
 
 		/// <summary>
 		/// Removes all items at the specified location from the spatial map. Returns all items
