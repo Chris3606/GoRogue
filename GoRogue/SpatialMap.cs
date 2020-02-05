@@ -421,6 +421,7 @@ namespace GoRogue
 	/// See the <see cref="ISpatialMap{T}"/> for documentation on the practical purpose of spatial
 	/// maps.
 	/// 
+	/// 
 	/// The objects stored in a SpatialMap must implement <see cref="IHasID"/>. This is used
 	/// internally to keep track of the objects, since uints are easily (and efficiently) hashable.
 	/// </remarks>

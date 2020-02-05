@@ -4493,6 +4493,313 @@ references:
   fullName.vb: GoRogue.EffectTrigger(Of TriggerArgs).TriggerEffects
   nameWithType: EffectTrigger<TriggerArgs>.TriggerEffects
   nameWithType.vb: EffectTrigger(Of TriggerArgs).TriggerEffects
+- uid: GoRogue.Factory
+  name: GoRogue.Factory
+  href: api/GoRogue.Factory.html
+  commentId: N:GoRogue.Factory
+  fullName: GoRogue.Factory
+  nameWithType: GoRogue.Factory
+- uid: GoRogue.Factory.BlueprintConfig
+  name: BlueprintConfig
+  href: api/GoRogue.Factory.BlueprintConfig.html
+  commentId: T:GoRogue.Factory.BlueprintConfig
+  fullName: GoRogue.Factory.BlueprintConfig
+  nameWithType: BlueprintConfig
+- uid: GoRogue.Factory.BlueprintConfig.Empty
+  name: Empty
+  href: api/GoRogue.Factory.BlueprintConfig.html#GoRogue_Factory_BlueprintConfig_Empty
+  commentId: F:GoRogue.Factory.BlueprintConfig.Empty
+  fullName: GoRogue.Factory.BlueprintConfig.Empty
+  nameWithType: BlueprintConfig.Empty
+- uid: GoRogue.Factory.Factory`1
+  name: Factory<TProduced>
+  href: api/GoRogue.Factory.Factory-1.html
+  commentId: T:GoRogue.Factory.Factory`1
+  name.vb: Factory(Of TProduced)
+  fullName: GoRogue.Factory.Factory<TProduced>
+  fullName.vb: GoRogue.Factory.Factory(Of TProduced)
+  nameWithType: Factory<TProduced>
+  nameWithType.vb: Factory(Of TProduced)
+- uid: GoRogue.Factory.Factory`1.Create(System.String)
+  name: Create(String)
+  href: api/GoRogue.Factory.Factory-1.html#GoRogue_Factory_Factory_1_Create_System_String_
+  commentId: M:GoRogue.Factory.Factory`1.Create(System.String)
+  fullName: GoRogue.Factory.Factory<TProduced>.Create(System.String)
+  fullName.vb: GoRogue.Factory.Factory(Of TProduced).Create(System.String)
+  nameWithType: Factory<TProduced>.Create(String)
+  nameWithType.vb: Factory(Of TProduced).Create(String)
+- uid: GoRogue.Factory.Factory`1.Create*
+  name: Create
+  href: api/GoRogue.Factory.Factory-1.html#GoRogue_Factory_Factory_1_Create_
+  commentId: Overload:GoRogue.Factory.Factory`1.Create
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TProduced>.Create
+  fullName.vb: GoRogue.Factory.Factory(Of TProduced).Create
+  nameWithType: Factory<TProduced>.Create
+  nameWithType.vb: Factory(Of TProduced).Create
+- uid: GoRogue.Factory.Factory`2
+  name: Factory<TBlueprintConfig, TProduced>
+  href: api/GoRogue.Factory.Factory-2.html
+  commentId: T:GoRogue.Factory.Factory`2
+  name.vb: Factory(Of TBlueprintConfig, TProduced)
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced)
+  nameWithType: Factory<TBlueprintConfig, TProduced>
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced)
+- uid: GoRogue.Factory.Factory`2.Add(GoRogue.Factory.IBlueprint{`0,`1})
+  name: Add(IBlueprint<TBlueprintConfig, TProduced>)
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_Add_GoRogue_Factory_IBlueprint__0__1__
+  commentId: M:GoRogue.Factory.Factory`2.Add(GoRogue.Factory.IBlueprint{`0,`1})
+  name.vb: Add(IBlueprint(Of TBlueprintConfig, TProduced))
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.Add(GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>)
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).Add(GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced))
+  nameWithType: Factory<TBlueprintConfig, TProduced>.Add(IBlueprint<TBlueprintConfig, TProduced>)
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).Add(IBlueprint(Of TBlueprintConfig, TProduced))
+- uid: GoRogue.Factory.Factory`2.Add*
+  name: Add
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_Add_
+  commentId: Overload:GoRogue.Factory.Factory`2.Add
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.Add
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).Add
+  nameWithType: Factory<TBlueprintConfig, TProduced>.Add
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).Add
+- uid: GoRogue.Factory.Factory`2.BlueprintExists(System.String)
+  name: BlueprintExists(String)
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_BlueprintExists_System_String_
+  commentId: M:GoRogue.Factory.Factory`2.BlueprintExists(System.String)
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.BlueprintExists(System.String)
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).BlueprintExists(System.String)
+  nameWithType: Factory<TBlueprintConfig, TProduced>.BlueprintExists(String)
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).BlueprintExists(String)
+- uid: GoRogue.Factory.Factory`2.BlueprintExists*
+  name: BlueprintExists
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_BlueprintExists_
+  commentId: Overload:GoRogue.Factory.Factory`2.BlueprintExists
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.BlueprintExists
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).BlueprintExists
+  nameWithType: Factory<TBlueprintConfig, TProduced>.BlueprintExists
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).BlueprintExists
+- uid: GoRogue.Factory.Factory`2.Create(System.String,`0)
+  name: Create(String, TBlueprintConfig)
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_Create_System_String__0_
+  commentId: M:GoRogue.Factory.Factory`2.Create(System.String,`0)
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.Create(System.String, TBlueprintConfig)
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).Create(System.String, TBlueprintConfig)
+  nameWithType: Factory<TBlueprintConfig, TProduced>.Create(String, TBlueprintConfig)
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).Create(String, TBlueprintConfig)
+- uid: GoRogue.Factory.Factory`2.Create*
+  name: Create
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_Create_
+  commentId: Overload:GoRogue.Factory.Factory`2.Create
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.Create
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).Create
+  nameWithType: Factory<TBlueprintConfig, TProduced>.Create
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).Create
+- uid: GoRogue.Factory.Factory`2.GetBlueprint(System.String)
+  name: GetBlueprint(String)
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_GetBlueprint_System_String_
+  commentId: M:GoRogue.Factory.Factory`2.GetBlueprint(System.String)
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.GetBlueprint(System.String)
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).GetBlueprint(System.String)
+  nameWithType: Factory<TBlueprintConfig, TProduced>.GetBlueprint(String)
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).GetBlueprint(String)
+- uid: GoRogue.Factory.Factory`2.GetBlueprint*
+  name: GetBlueprint
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_GetBlueprint_
+  commentId: Overload:GoRogue.Factory.Factory`2.GetBlueprint
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.GetBlueprint
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).GetBlueprint
+  nameWithType: Factory<TBlueprintConfig, TProduced>.GetBlueprint
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).GetBlueprint
+- uid: GoRogue.Factory.Factory`2.GetEnumerator
+  name: GetEnumerator()
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_GetEnumerator
+  commentId: M:GoRogue.Factory.Factory`2.GetEnumerator
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.GetEnumerator()
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).GetEnumerator()
+  nameWithType: Factory<TBlueprintConfig, TProduced>.GetEnumerator()
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).GetEnumerator()
+- uid: GoRogue.Factory.Factory`2.GetEnumerator*
+  name: GetEnumerator
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_GetEnumerator_
+  commentId: Overload:GoRogue.Factory.Factory`2.GetEnumerator
+  isSpec: "True"
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.GetEnumerator
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).GetEnumerator
+  nameWithType: Factory<TBlueprintConfig, TProduced>.GetEnumerator
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).GetEnumerator
+- uid: GoRogue.Factory.Factory`2.System#Collections#IEnumerable#GetEnumerator
+  name: IEnumerable.GetEnumerator()
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_System_Collections_IEnumerable_GetEnumerator
+  commentId: M:GoRogue.Factory.Factory`2.System#Collections#IEnumerable#GetEnumerator
+  name.vb: System.Collections.IEnumerable.GetEnumerator()
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.System.Collections.IEnumerable.GetEnumerator()
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).System.Collections.IEnumerable.GetEnumerator()
+  nameWithType: Factory<TBlueprintConfig, TProduced>.IEnumerable.GetEnumerator()
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).System.Collections.IEnumerable.GetEnumerator()
+- uid: GoRogue.Factory.Factory`2.System#Collections#IEnumerable#GetEnumerator*
+  name: IEnumerable.GetEnumerator
+  href: api/GoRogue.Factory.Factory-2.html#GoRogue_Factory_Factory_2_System_Collections_IEnumerable_GetEnumerator_
+  commentId: Overload:GoRogue.Factory.Factory`2.System#Collections#IEnumerable#GetEnumerator
+  isSpec: "True"
+  name.vb: System.Collections.IEnumerable.GetEnumerator
+  fullName: GoRogue.Factory.Factory<TBlueprintConfig, TProduced>.System.Collections.IEnumerable.GetEnumerator
+  fullName.vb: GoRogue.Factory.Factory(Of TBlueprintConfig, TProduced).System.Collections.IEnumerable.GetEnumerator
+  nameWithType: Factory<TBlueprintConfig, TProduced>.IEnumerable.GetEnumerator
+  nameWithType.vb: Factory(Of TBlueprintConfig, TProduced).System.Collections.IEnumerable.GetEnumerator
+- uid: GoRogue.Factory.IBlueprint`2
+  name: IBlueprint<TBlueprintConfig, TProduced>
+  href: api/GoRogue.Factory.IBlueprint-2.html
+  commentId: T:GoRogue.Factory.IBlueprint`2
+  name.vb: IBlueprint(Of TBlueprintConfig, TProduced)
+  fullName: GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>
+  fullName.vb: GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced)
+  nameWithType: IBlueprint<TBlueprintConfig, TProduced>
+  nameWithType.vb: IBlueprint(Of TBlueprintConfig, TProduced)
+- uid: GoRogue.Factory.IBlueprint`2.Create(`0)
+  name: Create(TBlueprintConfig)
+  href: api/GoRogue.Factory.IBlueprint-2.html#GoRogue_Factory_IBlueprint_2_Create__0_
+  commentId: M:GoRogue.Factory.IBlueprint`2.Create(`0)
+  fullName: GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>.Create(TBlueprintConfig)
+  fullName.vb: GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced).Create(TBlueprintConfig)
+  nameWithType: IBlueprint<TBlueprintConfig, TProduced>.Create(TBlueprintConfig)
+  nameWithType.vb: IBlueprint(Of TBlueprintConfig, TProduced).Create(TBlueprintConfig)
+- uid: GoRogue.Factory.IBlueprint`2.Create*
+  name: Create
+  href: api/GoRogue.Factory.IBlueprint-2.html#GoRogue_Factory_IBlueprint_2_Create_
+  commentId: Overload:GoRogue.Factory.IBlueprint`2.Create
+  isSpec: "True"
+  fullName: GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>.Create
+  fullName.vb: GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced).Create
+  nameWithType: IBlueprint<TBlueprintConfig, TProduced>.Create
+  nameWithType.vb: IBlueprint(Of TBlueprintConfig, TProduced).Create
+- uid: GoRogue.Factory.IBlueprint`2.Id
+  name: Id
+  href: api/GoRogue.Factory.IBlueprint-2.html#GoRogue_Factory_IBlueprint_2_Id
+  commentId: P:GoRogue.Factory.IBlueprint`2.Id
+  fullName: GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>.Id
+  fullName.vb: GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced).Id
+  nameWithType: IBlueprint<TBlueprintConfig, TProduced>.Id
+  nameWithType.vb: IBlueprint(Of TBlueprintConfig, TProduced).Id
+- uid: GoRogue.Factory.IBlueprint`2.Id*
+  name: Id
+  href: api/GoRogue.Factory.IBlueprint-2.html#GoRogue_Factory_IBlueprint_2_Id_
+  commentId: Overload:GoRogue.Factory.IBlueprint`2.Id
+  isSpec: "True"
+  fullName: GoRogue.Factory.IBlueprint<TBlueprintConfig, TProduced>.Id
+  fullName.vb: GoRogue.Factory.IBlueprint(Of TBlueprintConfig, TProduced).Id
+  nameWithType: IBlueprint<TBlueprintConfig, TProduced>.Id
+  nameWithType.vb: IBlueprint(Of TBlueprintConfig, TProduced).Id
+- uid: GoRogue.Factory.IFactoryObject
+  name: IFactoryObject
+  href: api/GoRogue.Factory.IFactoryObject.html
+  commentId: T:GoRogue.Factory.IFactoryObject
+  fullName: GoRogue.Factory.IFactoryObject
+  nameWithType: IFactoryObject
+- uid: GoRogue.Factory.IFactoryObject.DefinitionId
+  name: DefinitionId
+  href: api/GoRogue.Factory.IFactoryObject.html#GoRogue_Factory_IFactoryObject_DefinitionId
+  commentId: P:GoRogue.Factory.IFactoryObject.DefinitionId
+  fullName: GoRogue.Factory.IFactoryObject.DefinitionId
+  nameWithType: IFactoryObject.DefinitionId
+- uid: GoRogue.Factory.IFactoryObject.DefinitionId*
+  name: DefinitionId
+  href: api/GoRogue.Factory.IFactoryObject.html#GoRogue_Factory_IFactoryObject_DefinitionId_
+  commentId: Overload:GoRogue.Factory.IFactoryObject.DefinitionId
+  isSpec: "True"
+  fullName: GoRogue.Factory.IFactoryObject.DefinitionId
+  nameWithType: IFactoryObject.DefinitionId
+- uid: GoRogue.Factory.ItemNotDefinedException
+  name: ItemNotDefinedException
+  href: api/GoRogue.Factory.ItemNotDefinedException.html
+  commentId: T:GoRogue.Factory.ItemNotDefinedException
+  fullName: GoRogue.Factory.ItemNotDefinedException
+  nameWithType: ItemNotDefinedException
+- uid: GoRogue.Factory.ItemNotDefinedException.#ctor(System.String)
+  name: ItemNotDefinedException(String)
+  href: api/GoRogue.Factory.ItemNotDefinedException.html#GoRogue_Factory_ItemNotDefinedException__ctor_System_String_
+  commentId: M:GoRogue.Factory.ItemNotDefinedException.#ctor(System.String)
+  fullName: GoRogue.Factory.ItemNotDefinedException.ItemNotDefinedException(System.String)
+  nameWithType: ItemNotDefinedException.ItemNotDefinedException(String)
+- uid: GoRogue.Factory.ItemNotDefinedException.#ctor*
+  name: ItemNotDefinedException
+  href: api/GoRogue.Factory.ItemNotDefinedException.html#GoRogue_Factory_ItemNotDefinedException__ctor_
+  commentId: Overload:GoRogue.Factory.ItemNotDefinedException.#ctor
+  isSpec: "True"
+  fullName: GoRogue.Factory.ItemNotDefinedException.ItemNotDefinedException
+  nameWithType: ItemNotDefinedException.ItemNotDefinedException
+- uid: GoRogue.Factory.SimpleBlueprint`1
+  name: SimpleBlueprint<TProduced>
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html
+  commentId: T:GoRogue.Factory.SimpleBlueprint`1
+  name.vb: SimpleBlueprint(Of TProduced)
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced)
+  nameWithType: SimpleBlueprint<TProduced>
+  nameWithType.vb: SimpleBlueprint(Of TProduced)
+- uid: GoRogue.Factory.SimpleBlueprint`1.#ctor(System.String)
+  name: SimpleBlueprint(String)
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1__ctor_System_String_
+  commentId: M:GoRogue.Factory.SimpleBlueprint`1.#ctor(System.String)
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.SimpleBlueprint(System.String)
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).SimpleBlueprint(System.String)
+  nameWithType: SimpleBlueprint<TProduced>.SimpleBlueprint(String)
+  nameWithType.vb: SimpleBlueprint(Of TProduced).SimpleBlueprint(String)
+- uid: GoRogue.Factory.SimpleBlueprint`1.#ctor*
+  name: SimpleBlueprint
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1__ctor_
+  commentId: Overload:GoRogue.Factory.SimpleBlueprint`1.#ctor
+  isSpec: "True"
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.SimpleBlueprint
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).SimpleBlueprint
+  nameWithType: SimpleBlueprint<TProduced>.SimpleBlueprint
+  nameWithType.vb: SimpleBlueprint(Of TProduced).SimpleBlueprint
+- uid: GoRogue.Factory.SimpleBlueprint`1.Create
+  name: Create()
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1_Create
+  commentId: M:GoRogue.Factory.SimpleBlueprint`1.Create
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.Create()
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).Create()
+  nameWithType: SimpleBlueprint<TProduced>.Create()
+  nameWithType.vb: SimpleBlueprint(Of TProduced).Create()
+- uid: GoRogue.Factory.SimpleBlueprint`1.Create(GoRogue.Factory.BlueprintConfig)
+  name: Create(BlueprintConfig)
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1_Create_GoRogue_Factory_BlueprintConfig_
+  commentId: M:GoRogue.Factory.SimpleBlueprint`1.Create(GoRogue.Factory.BlueprintConfig)
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.Create(GoRogue.Factory.BlueprintConfig)
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).Create(GoRogue.Factory.BlueprintConfig)
+  nameWithType: SimpleBlueprint<TProduced>.Create(BlueprintConfig)
+  nameWithType.vb: SimpleBlueprint(Of TProduced).Create(BlueprintConfig)
+- uid: GoRogue.Factory.SimpleBlueprint`1.Create*
+  name: Create
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1_Create_
+  commentId: Overload:GoRogue.Factory.SimpleBlueprint`1.Create
+  isSpec: "True"
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.Create
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).Create
+  nameWithType: SimpleBlueprint<TProduced>.Create
+  nameWithType.vb: SimpleBlueprint(Of TProduced).Create
+- uid: GoRogue.Factory.SimpleBlueprint`1.Id
+  name: Id
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1_Id
+  commentId: P:GoRogue.Factory.SimpleBlueprint`1.Id
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.Id
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).Id
+  nameWithType: SimpleBlueprint<TProduced>.Id
+  nameWithType.vb: SimpleBlueprint(Of TProduced).Id
+- uid: GoRogue.Factory.SimpleBlueprint`1.Id*
+  name: Id
+  href: api/GoRogue.Factory.SimpleBlueprint-1.html#GoRogue_Factory_SimpleBlueprint_1_Id_
+  commentId: Overload:GoRogue.Factory.SimpleBlueprint`1.Id
+  isSpec: "True"
+  fullName: GoRogue.Factory.SimpleBlueprint<TProduced>.Id
+  fullName.vb: GoRogue.Factory.SimpleBlueprint(Of TProduced).Id
+  nameWithType: SimpleBlueprint<TProduced>.Id
+  nameWithType.vb: SimpleBlueprint(Of TProduced).Id
 - uid: GoRogue.FOV
   name: FOV
   href: api/GoRogue.FOV.html

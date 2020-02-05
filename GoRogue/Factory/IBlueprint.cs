@@ -1,4 +1,4 @@
-﻿namespace SadConsole.Factory
+﻿namespace GoRogue.Factory
 {
     /// <summary>
     /// Defines how to create a <typeparamref name="TProduced"/> object.

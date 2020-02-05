@@ -1,4 +1,4 @@
-﻿namespace SadConsole.Factory
+﻿namespace GoRogue.Factory
 {
     /// <summary>
     /// Base class for a settings object that contains parameters to pass to the Create function of a factory.

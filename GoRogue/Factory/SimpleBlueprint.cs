@@ -1,4 +1,4 @@
-﻿namespace SadConsole.Factory
+﻿namespace GoRogue.Factory
 {
     /// <summary>
     /// A simple <see cref="IBlueprint{TBlueprintConfig, TProduced}"/> that can be used when no configuration object is necessary to create the object.

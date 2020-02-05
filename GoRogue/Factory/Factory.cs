@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SadConsole.Factory
+namespace GoRogue.Factory
 {
     /// <summary>
     /// A factory that produces a type of object based on a blueprint and a set of configuration parameters.

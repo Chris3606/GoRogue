@@ -1,4 +1,4 @@
-﻿namespace SadConsole.Factory
+﻿namespace GoRogue.Factory
 {
     /// <summary>
     /// Interface that can optionally be implemented by objects created via a <see cref="Factory{TBlueprintConfig, TProduced}"/>.  The <see cref="DefinitionId"/> property
