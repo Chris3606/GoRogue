@@ -1,11 +1,11 @@
-﻿namespace GoRogue.Factory
+﻿namespace GoRogue.Factories
 {
     /// <summary>
-    /// Defines how to create a <typeparamref name="TProduced"/> object.
+    /// Defines how to create a <typeparamref name="TProduced"/> object for use in an <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>.
     /// </summary>
     /// <typeparam name="TBlueprintConfig">The type of the parameter to pass to the <see cref="Create(TBlueprintConfig)"/> function.</typeparam>
     /// <typeparam name="TProduced">The type of object to create.</typeparam>
-    public interface IBlueprint<in TBlueprintConfig, out TProduced> where TBlueprintConfig : BlueprintConfig
+    public interface IAdvancedFactoryBlueprint<in TBlueprintConfig, out TProduced>
     {
         /// <summary>
         /// A unique identifier of this factory definition.
