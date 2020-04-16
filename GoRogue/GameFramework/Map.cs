@@ -27,7 +27,7 @@ namespace GoRogue.GameFramework
 	/// </remarks>
 	public class Map : IMapView<IEnumerable<IGameObject>>
 	{
-		private ISettableMapView<IGameObject?> _terrain;
+		private readonly ISettableMapView<IGameObject?> _terrain;
 		/// <summary>
 		/// Terrain of the map.  Terrain at each location may be set via the <see cref="SetTerrain(IGameObject)"/> function.
 		/// </summary>
@@ -39,7 +39,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public ArrayMap<bool> Explored;
 
-		private LayeredSpatialMap<IGameObject> _entities;
+		private readonly LayeredSpatialMap<IGameObject> _entities;
 		/// <summary>
 		/// <see cref="IReadOnlyLayeredSpatialMap{IGameObject}"/> of all entities (non-terrain objects) on the map.
 		/// </summary>
@@ -72,7 +72,7 @@ namespace GoRogue.GameFramework
 		/// </summary>
 		public IMapView<bool> WalkabilityView { get; }
 
-		private FOV _fov;
+		private readonly FOV _fov;
 		/// <summary>
 		/// Current FOV results for the map.  Calculate FOV via the Map's CalculateFOV functions.
 		/// </summary>
@@ -309,34 +309,36 @@ namespace GoRogue.GameFramework
 
 		#region Entities
 		/// <summary>
-		/// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part of.  Returns true if the
-		/// entity was added, and false otherwise (eg., collision detection would not allow it, etc.)
+		/// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part of.  Throws InvalidOperationException if the entity could not be added
+        /// (eg., collision detection would not allow it, etc.)
 		/// </summary>
 		/// <param name="entity">Entity to add.</param>
-		/// <returns>True if the entity was successfully added to the map, false otherwise.</returns>
-		public bool AddEntity(IGameObject entity)
+		public void AddEntity(IGameObject entity)
 		{
-			if (entity.CurrentMap == this)
-				return false;
+            if (entity.CurrentMap == this)
+                throw new InvalidOperationException($"Tried to add entity to a {GetType().Name} that was already a part of that map.");
 
-			if (entity.Layer < 1)
-				return false;
+            if (entity.Layer < 1)
+                throw new InvalidOperationException($"Tried to add entity to a {GetType().Name} that had layer < 1.  Non-terrain items must have a layer >= 1.");
 
-			if (!this.Contains(entity.Position))
-				return false;
+            if (!this.Contains(entity.Position))
+                throw new InvalidOperationException($"Tried to add entity to a {GetType().Name}, but that entity's position was not within the map.");
 
-			if (!entity.IsWalkable && (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer) || !WalkabilityView[entity.Position]))
-				return false;
+            if (!entity.IsWalkable)
+            {
+                if (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer))
+                    throw new InvalidOperationException($"Tried to add a non-walkable entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block walkablity.");
+                if (!WalkabilityView[entity.Position])
+                    throw new InvalidOperationException($"Tried to add a non-walkable entity to a {GetType().Name}, but that map already has a non-walkable object at the entity's location.");
+            }
 
-			if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
-				return false;
+            if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
+                throw new InvalidOperationException($"Tried to add a non-transparent entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block transparency.");
 
-			if (!_entities.Add(entity, entity.Position))
-				return false;
+            _entities.Add(entity, entity.Position);
 
 			entity.CurrentMap?.RemoveEntity(entity);
 			entity.OnMapChanged(this);
-			return true;
 		}
 
 		/// <summary>
@@ -395,18 +397,14 @@ namespace GoRogue.GameFramework
 					yield return e;
 		}
 
-		/// <summary>
-		/// Removes the given entity (non-terrain object) from the map, returning true if it was successfully removed, and false otherwise.
-		/// </summary>
-		/// <param name="entity">The entity to remove from the map.</param>
-		/// <returns>True if the entity was removed successfully, false otherwise (eg, the entity was not part of this map).</returns>
-		public bool RemoveEntity(IGameObject entity)
+        /// <summary>
+        /// Removes the given entity (non-terrain object) from the map.  Throws InvalidOperationException if the entity was not part of this map.
+        /// </summary>
+        /// <param name="entity">The entity to remove from the map.</param>
+        public void RemoveEntity(IGameObject entity)
 		{
-			if (!_entities.Remove(entity))
-				return false;
-
+            _entities.Remove(entity);
 			entity.OnMapChanged(null);
-			return true;
 		}
 		#endregion
 
@@ -642,9 +640,11 @@ namespace GoRogue.GameFramework
 			return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems);
 		}
 
-		internal bool AttemptEntityMove(IGameObject gameObject, Point newPosition) => _entities.Move(gameObject, newPosition);
+		internal void AttemptEntityMove(IGameObject gameObject, Point newPosition) => _entities.Move(gameObject, newPosition);
 
-		private bool FullIsTransparent(Point position)
+        internal bool EntityCanMove(IGameObject gameObject, Point newPosition) => _entities.CanMove(gameObject, newPosition);
+
+        private bool FullIsTransparent(Point position)
 		{
 			foreach (var item in GetObjectsAt(position, LayersBlockingTransparency))
 				if (!item.IsTransparent)

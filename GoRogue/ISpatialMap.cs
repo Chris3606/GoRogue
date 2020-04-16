@@ -112,32 +112,36 @@ namespace GoRogue
         void Move(T item, int targetX, int targetY);
 
         /// <summary>
-        /// Returns true if all items at the current position specified can be moved to the target position; false otherwise.
+        /// Returns true if there are items at <paramref name="current"/> and all items at that position
+        /// can be moved to <paramref name="target"/>; false otherwise.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
 		/// <param name="target">Location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved.</returns>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
         bool CanMoveAll(Point current, Point target);
 
         /// <summary>
-        /// Returns true if all items at the current position specified can be moved to the target position; false otherwise.
+        /// Returns true if there are items at the current position specified, and all items at that position
+        /// can be moved to the target position; false otherwise.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
 		/// <param name="currentY">Y-value of the location to move items from.</param>
 		/// <param name="targetX">X-value of the location to move items to.</param>
 		/// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved.</returns>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
         bool CanMoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved.
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// no items to be moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
 		/// <param name="target">Location to move items to.</param>
         void MoveAll(Point current, Point target);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved.
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are no items
+        /// to be moved.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
 		/// <param name="currentY">Y-value of the location to move items from.</param>
@@ -281,14 +285,14 @@ namespace GoRogue
 	/// </typeparam>
 	internal class IDComparer<T> : IEqualityComparer<T> where T : class, IHasID
 	{
-		/// <summary>
-		/// Equality comparison. Performs comparison via the object's <see cref="Object.ReferenceEquals(object, object)"/>
-		/// function.
-		/// </summary>
-		/// <param name="x">First object to compare.</param>
-		/// <param name="y">Second object to compare.</param>
-		/// <returns>True if the objects are considered equal, false otherwise.</returns>
-		public bool Equals(T x, T y) => ReferenceEquals(x, y);
+        /// <summary>
+        /// Equality comparison. Performs comparison via the object's <see cref="object.ReferenceEquals(object, object)"/>
+        /// function.
+        /// </summary>
+        /// <param name="x">First object to compare.</param>
+        /// <param name="y">Second object to compare.</param>
+        /// <returns>True if the objects are considered equal, false otherwise.</returns>
+        public bool Equals(T x, T y) => ReferenceEquals(x, y);
 
 		/// <summary>
 		/// Generates a hash based on the object's ID.GetHashCode() function.

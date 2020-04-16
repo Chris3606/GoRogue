@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using SadRogue.Primitives;
 
 namespace GoRogue
@@ -22,8 +23,8 @@ namespace GoRogue
 	/// <typeparam name="T">The type of object that will be contained by this AdvancedSpatialMap.</typeparam>
 	public class AdvancedSpatialMap<T> : ISpatialMap<T>
 	{
-		private Dictionary<T, SpatialTuple<T>> itemMapping;
-		private Dictionary<Point, SpatialTuple<T>> positionMapping;
+		private readonly Dictionary<T, SpatialTuple<T>> _itemMapping;
+		private readonly Dictionary<Point, SpatialTuple<T>> _positionMapping;
 
 		/// <summary>
 		/// Constructor.
@@ -39,8 +40,8 @@ namespace GoRogue
 		/// </param>
 		public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
 		{
-			itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
-			positionMapping = new Dictionary<Point, SpatialTuple<T>>(initialCapacity);
+			_itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
+			_positionMapping = new Dictionary<Point, SpatialTuple<T>>(initialCapacity);
 		}
 
 		/// <summary>
@@ -61,7 +62,7 @@ namespace GoRogue
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Count"/>.
 		/// </summary>
-		public int Count => itemMapping.Count;
+		public int Count => _itemMapping.Count;
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
@@ -70,7 +71,7 @@ namespace GoRogue
 		{
 			get
 			{
-				foreach (var item in itemMapping.Values)
+				foreach (var item in _itemMapping.Values)
 					yield return item.Item;
 			}
 		}
@@ -82,7 +83,7 @@ namespace GoRogue
 		{
 			get
 			{
-				foreach (var position in positionMapping.Keys)
+				foreach (var position in _positionMapping.Keys)
 					yield return position;
 			}
 		}
@@ -96,15 +97,15 @@ namespace GoRogue
         /// <param name="position">Position to add item to.</param>
         public void Add(T newItem, Point position)
 		{
-            if (itemMapping.ContainsKey(newItem))
+            if (_itemMapping.ContainsKey(newItem))
                 throw new InvalidOperationException($"Item added to {GetType().Name} when it has already been added.");
 
-			if (positionMapping.ContainsKey(position))
+			if (_positionMapping.ContainsKey(position))
                 throw new InvalidOperationException($"Item added to {GetType().Name} at a position already occupied by another item.");
 
             var tuple = new SpatialTuple<T>(newItem, position);
-			itemMapping.Add(newItem, tuple);
-			positionMapping.Add(position, tuple);
+			_itemMapping.Add(newItem, tuple);
+			_positionMapping.Add(position, tuple);
 			ItemAdded?.Invoke(this, new ItemEventArgs<T>(newItem, position));
 		}
 
@@ -112,6 +113,7 @@ namespace GoRogue
         /// Tries to add the given item at the given position, provided the item is not already in the
         /// spatial map and the position is not already filled. If either of those are the case,
         /// throws InvalidOperationException.
+        /// </summary>
         /// <param name="newItem">Item to add.</param>
         /// <param name="x">X-value of the position to add item to.</param>
         /// <param name="y">Y-value of the position to add item to.</param>
@@ -127,24 +129,24 @@ namespace GoRogue
 		/// </summary>
 		public void Clear()
 		{
-			itemMapping.Clear();
-			positionMapping.Clear();
+			_itemMapping.Clear();
+			_positionMapping.Clear();
 		}
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Contains(T)"/>.
 		/// </summary>
-		public bool Contains(T item) => itemMapping.ContainsKey(item);
+		public bool Contains(T item) => _itemMapping.ContainsKey(item);
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
 		/// </summary>
-		public bool Contains(Point position) => positionMapping.ContainsKey(position);
+		public bool Contains(Point position) => _positionMapping.ContainsKey(position);
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
 		/// </summary>
-		public bool Contains(int x, int y) => positionMapping.ContainsKey(new Point(x, y));
+		public bool Contains(int x, int y) => _positionMapping.ContainsKey(new Point(x, y));
 
 		/// <summary>
 		/// Used by foreach loop, so that the class will give ISpatialTuple objects when used in a
@@ -153,7 +155,7 @@ namespace GoRogue
 		/// <returns>An enumerator for the spatial map</returns>
 		public IEnumerator<ISpatialTuple<T>> GetEnumerator()
 		{
-			foreach (var tuple in itemMapping.Values)
+			foreach (var tuple in _itemMapping.Values)
 				yield return tuple;
 		}
 
@@ -177,27 +179,27 @@ namespace GoRogue
         [return: MaybeNull]
 		public T GetItem(Point position)
 		{
-			SpatialTuple<T> tuple;
-			positionMapping.TryGetValue(position, out tuple);
-			if (tuple != null)
+            _positionMapping.TryGetValue(position, out var tuple);
+            if (tuple != null)
 				return tuple.Item;
 
             return default!; // Ok to override as the return value is manually flagged as nullable
         }
 
-		/// <summary>
-		/// Gets the item at the given position, or default(T) if no item exists.
-		/// </summary>
-		/// <remarks>
-		/// Intended to be a more convenient function as compared to <see cref="GetItemsAt(int, int)"/>, since
-		/// this spatial map implementation only allows a single item to at any given location at a time.
-		/// </remarks>
-		/// <param name="x">The x-value of the position to return the item for.</param>
-		/// <param name="y">The y-value of the position to return the item for.</param>
-		/// <returns>
-		/// The item at the given position, or default(T) if no item exists at that location.
-		/// </returns>
-		public T GetItem(int x, int y) => GetItem(new Point(x, y));
+        /// <summary>
+        /// Gets the item at the given position, or default(T) if no item exists.
+        /// </summary>
+        /// <remarks>
+        /// Intended to be a more convenient function as compared to <see cref="GetItemsAt(int, int)"/>, since
+        /// this spatial map implementation only allows a single item to at any given location at a time.
+        /// </remarks>
+        /// <param name="x">The x-value of the position to return the item for.</param>
+        /// <param name="y">The y-value of the position to return the item for.</param>
+        /// <returns>
+        /// The item at the given position, or default(T) if no item exists at that location.
+        /// </returns>
+        [return: MaybeNull]
+        public T GetItem(int x, int y) => GetItem(new Point(x, y));
 
 		/// <summary>
 		/// Gets the item at the given position as a 1-element enumerable if there is any item there,
@@ -216,9 +218,8 @@ namespace GoRogue
 		/// </returns>
 		public IEnumerable<T> GetItemsAt(Point position)
 		{
-			SpatialTuple<T> tuple;
-			positionMapping.TryGetValue(position, out tuple);
-			if (tuple != null)
+            _positionMapping.TryGetValue(position, out var tuple);
+            if (tuple != null)
 				yield return tuple.Item;
 		}
 
@@ -245,9 +246,8 @@ namespace GoRogue
 		/// </summary>
 		public Point GetPositionOf(T item)
 		{
-			SpatialTuple<T> tuple;
-			itemMapping.TryGetValue(item, out tuple);
-			if (tuple == null) return Point.None;
+            _itemMapping.TryGetValue(item, out var tuple);
+            if (tuple == null) return Point.None;
 			return tuple.Position;
 		}
 
@@ -259,17 +259,17 @@ namespace GoRogue
         /// <param name="target">Location to move item to.</param>
 		public void Move(T item, Point target)
 		{
-            if (!itemMapping.ContainsKey(item))
+            if (!_itemMapping.ContainsKey(item))
                 throw new InvalidOperationException($"Tried to move item in {GetType().Name}, but the item does not exist.");
 
-			if (positionMapping.ContainsKey(target))
+			if (_positionMapping.ContainsKey(target))
                 throw new InvalidOperationException($"Tried to move item in {GetType().Name}, but the target position already contains an item.");
 
-            var movingTuple = itemMapping[item];
+            var movingTuple = _itemMapping[item];
 			var oldPos = movingTuple.Position;
-			positionMapping.Remove(movingTuple.Position);
+			_positionMapping.Remove(movingTuple.Position);
 			movingTuple.Position = target;
-			positionMapping.Add(target, movingTuple);
+			_positionMapping.Add(target, movingTuple);
 			ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
 		}
 
@@ -299,12 +299,12 @@ namespace GoRogue
 		/// </returns>
 		public IEnumerable<T> MoveValid(Point current, Point target)
 		{
-			if (positionMapping.ContainsKey(current) && !positionMapping.ContainsKey(target))
+			if (_positionMapping.ContainsKey(current) && !_positionMapping.ContainsKey(target))
 			{
-				var movingTuple = positionMapping[current];
-				positionMapping.Remove(current);
+				var movingTuple = _positionMapping[current];
+				_positionMapping.Remove(current);
 				movingTuple.Position = target;
-				positionMapping.Add(target, movingTuple);
+				_positionMapping.Add(target, movingTuple);
 				yield return movingTuple.Item;
 
 				ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(movingTuple.Item, current, target));
@@ -338,12 +338,12 @@ namespace GoRogue
         /// <param name="item">The item to remove.</param>
         public void Remove(T item)
 		{
-            if (!itemMapping.ContainsKey(item))
+            if (!_itemMapping.ContainsKey(item))
                 throw new InvalidOperationException($"Tried to remove an item from the {GetType().Name} that has not been added.");
 
-			var tuple = itemMapping[item];
-			itemMapping.Remove(item);
-			positionMapping.Remove(tuple.Position);
+			var tuple = _itemMapping[item];
+			_itemMapping.Remove(item);
+			_positionMapping.Remove(tuple.Position);
 			ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, tuple.Position));
 		}
 
@@ -362,12 +362,11 @@ namespace GoRogue
 		/// </returns>
 		public IEnumerable<T> Remove(Point position)
 		{
-			SpatialTuple<T> tuple;
-			positionMapping.TryGetValue(position, out tuple);
-			if (tuple != null)
+            _positionMapping.TryGetValue(position, out var tuple);
+            if (tuple != null)
 			{
-				positionMapping.Remove(position);
-				itemMapping.Remove(tuple.Item);
+				_positionMapping.Remove(position);
+				_itemMapping.Remove(tuple.Item);
 				ItemRemoved?.Invoke(this, new ItemEventArgs<T>(tuple.Item, tuple.Position));
 				yield return tuple.Item;
 			}
@@ -402,50 +401,110 @@ namespace GoRogue
 		/// <param name="itemStringifier">Function that turns an item into a string.</param>
 		/// <returns>A string representation of the spatial map.</returns>
 		public string ToString(Func<T, string> itemStringifier)
-			=> positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
+			=> _positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
 
+        /// <summary>
+        /// Returns true if the given item can be added at the given position, eg. the item is not already in the
+        /// spatial map and the position is not already filled; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+		/// <param name="position">Position to add item to.</param>
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
         public bool CanAdd(T newItem, Point position)
         {
-            if (itemMapping.ContainsKey(newItem) || positionMapping.ContainsKey(position))
+            if (_itemMapping.ContainsKey(newItem) || _positionMapping.ContainsKey(position))
                 return false;
 
             return true;
         }
 
+        /// <summary>
+        /// Returns true if the given item can be added at the given position, eg. the item is not already in the
+        /// spatial map and the position is not already filled; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+		/// <param name="x">X-value of the position to add item to.</param>
+		/// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
         public bool CanAdd(T newItem, int x, int y) => CanAdd(newItem, new Point(x, y));
 
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one, eg. if the item
+        /// does exists in the spatial map and if the new position is not already filled by some other item; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
         public bool CanMove(T item, Point target)
         {
-            if (!itemMapping.ContainsKey(item) || positionMapping.ContainsKey(target))
+            if (!_itemMapping.ContainsKey(item) || _positionMapping.ContainsKey(target))
                 return false;
 
             return true;
         }
 
-        public bool CanMove(T item, int targetX, int targetY)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one, eg. if the item
+        /// exists in the spatial map and if the new position is not already filled by some other item; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+		/// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
+        public bool CanMove(T item, int targetX, int targetY) => CanMove(item, new Point(targetX, targetY));
 
+        /// <summary>
+        /// Returns true if the item at the current position specified can be moved to the target position, eg. if an item exists at the current
+        /// position and the new position is not already filled by some other item; false otherwise.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+		/// <param name="target">Location to move items to.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved.</returns>
         public bool CanMoveAll(Point current, Point target)
-        {
-            throw new NotImplementedException();
-        }
+            => _positionMapping.ContainsKey(current) && !_positionMapping.ContainsKey(target);
 
+        /// <summary>
+        /// Returns true if the item at the current position specified can be moved to the target position, eg. if an item exists at the current
+        /// position and the new position is not already filled by some other item; false otherwise.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+		/// <param name="currentY">Y-value of the location to move items from.</param>
+		/// <param name="targetX">X-value of the location to move items to.</param>
+		/// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved.</returns>
         public bool CanMoveAll(int currentX, int currentY, int targetX, int targetY)
-        {
-            throw new NotImplementedException();
-        }
+            => CanMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
+        /// <summary>
+        /// Moves the item at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved, eg.
+        /// if no item exists at the current position or the new position is already filled by some other item.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+		/// <param name="target">Location to move items to.</param>
         public void MoveAll(Point current, Point target)
         {
-            throw new NotImplementedException();
+            if (!_positionMapping.ContainsKey(current))
+                throw new InvalidOperationException($"Tried to move item from {current} in {GetType().Name}, but there was nothing at the that position.");
+
+            if (current == target)
+                throw new InvalidOperationException($"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.");
+
+            if (_positionMapping.ContainsKey(target))
+                throw new InvalidOperationException($"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.");
+
+            // This spatial map can only have one item at each location so this is fine.  We force immediate execution by calling ToArray
+            MoveValid(current, target).ToArray();
         }
 
-        public void MoveAll(int currentX, int currentY, int targetX, int targetY)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Moves the item at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved, eg.
+        /// if no item exists at the current position or the new position is already filled by some other item.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+		/// <param name="currentY">Y-value of the location to move items from.</param>
+		/// <param name="targetX">X-value of the location to move items to.</param>
+		/// <param name="targetY">Y-value of the location to move items to.</param>
+        public void MoveAll(int currentX, int currentY, int targetX, int targetY) => MoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
     }
 
 	/// <summary>
@@ -456,7 +515,6 @@ namespace GoRogue
 	/// <remarks>
 	/// See the <see cref="ISpatialMap{T}"/> for documentation on the practical purpose of spatial
 	/// maps.
-	/// 
 	/// 
 	/// The objects stored in a SpatialMap must implement <see cref="IHasID"/>. This is used
 	/// internally to keep track of the objects, since uints are easily (and efficiently) hashable.

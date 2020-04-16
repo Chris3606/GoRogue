@@ -283,7 +283,7 @@ namespace GoRogue
 				return ALL_LAYERS;
 
 			uint mask = (uint)1 << (layer - 1);
-			mask = mask | (mask - 1); // Propagate the right-most 1-bit all the way down
+			mask |= (mask - 1); // Propagate the right-most 1-bit all the way down
 			return (~mask) & ALL_LAYERS; // Invert so 1's are in upper half
 		}
 

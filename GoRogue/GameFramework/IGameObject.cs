@@ -56,18 +56,32 @@ namespace GoRogue.GameFramework
 		event EventHandler<ItemMovedEventArgs<IGameObject>> Moved;
 
 		/// <summary>
-		/// Attempts to move the object in the given direction, and returns true if the object was successfully
-		/// moved, false otherwise.
-		/// </summary>
-		/// <param name="direction">The direction in which to try to move the object.</param>
-		/// <returns>True if the object was successfully moved, false otherwise.</returns>
-		bool MoveIn(Direction direction);
-
-		/// <summary>
 		/// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap"/> field of the
 		/// IGameObject to reflect the change.
 		/// </summary>
 		/// <param name="newMap">New map to which the IGameObject has been added.</param>
 		void OnMapChanged(Map? newMap);
-	}
+
+        /// <summary>
+        /// Returns true if the GameObject can be moved to the location specified; false otherwise.
+        /// </summary>
+        /// <remarks>
+        /// This function should return false in exactly any case where setting the <see cref="Position"/> property to the value specified
+        /// would fail.
+        /// </remarks>
+        /// <param name="position">The position to check.</param>
+        /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
+        public bool CanMove(Point position);
+
+        /// <summary>
+        /// Returns true if the GameObject can move in the given direction; false otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See remarks in documentation for <see cref="CanMove(Point)"/> for details on when this function should return false.
+        /// </remarks>
+        /// <param name="direction">The direction of movement to check.</param>
+        /// <returns>True if the object can be moved in the specified direction; false otherwise</returns>
+        public bool CanMoveIn(Direction direction);
+
+    }
 }

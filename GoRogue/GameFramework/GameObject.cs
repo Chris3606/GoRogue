@@ -32,7 +32,7 @@ namespace GoRogue.GameFramework
 	public class GameObject : ComponentContainer, IGameObject
 	{
 		// Use the value of this variable instead of the "this" keyword from within GameObject
-		private IGameObject _parentObject;
+		private readonly IGameObject _parentObject;
 
 		private Point _position;
 		/// <summary>
@@ -47,19 +47,26 @@ namespace GoRogue.GameFramework
 			get => _position;
 			set
 			{
-				if (_position == value || IsStatic || (CurrentMap != null && !CurrentMap.Contains(value)))
-					return;
+                if (_position == value)
+                    return; // This is OK as the position is already what was given so count it as "success".
 
-				if (CurrentMap == null || IsWalkable || CurrentMap.WalkabilityView[value])
-				{
-					var oldPos = _position;
+                if (IsStatic)
+                    throw new InvalidOperationException($"Tried to move a {GetType().Name} that was set as static.  Static objects cannot move.");
+               
+                if (CurrentMap != null && !CurrentMap.Contains(value))
+				    throw new InvalidOperationException($"An entity's {nameof(CurrentMap)} is not synchronized with the map, as the {nameof(CurrentMap)} reports that it does not contain the entity." +
+                                                        "This indicates either a GoRogue bug or a bug in an implementation of IGameObject.");
 
-					if (CurrentMap != null && !CurrentMap.AttemptEntityMove(_parentObject, value))
-						return; // The spatial map kicked it back, so invalidate the move.  Otherwise, proceed.
+                if (!IsWalkable && CurrentMap != null && !CurrentMap.WalkabilityView[value])
+                    throw new InvalidOperationException($"Tried to move {GetType().Name} to a square that it is not allowed to because it would collide with another non-walkable object.");
 
-					_position = value;
-					Moved?.Invoke(_parentObject, new ItemMovedEventArgs<IGameObject>(_parentObject, oldPos, _position));
-				}
+				var oldPos = _position;
+
+                // TODO: We need to integrate this into a CanMove/Move function as well, as the spatial map can kick this back by throwing exception here...
+                CurrentMap?.AttemptEntityMove(_parentObject, value);
+
+				_position = value;
+				Moved?.Invoke(_parentObject, new ItemMovedEventArgs<IGameObject>(_parentObject, oldPos, _position));
 			}
 		}
 
@@ -124,21 +131,6 @@ namespace GoRogue.GameFramework
         public Map? CurrentMap { get; private set; }
 
         /// <summary>
-        /// Function used at construction to assign an ID to the object.
-        /// </summary>
-        /// <remarks>
-        /// The default implementation simply assigns a random number in range of valid uints. This
-        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}"/>
-        /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
-        /// implementation is required, override this function to return an appropriate ID. Keep in
-        /// mind a relatively high degree of uniqueness is necessary for efficient placement in an
-        /// ISpatialMap implementation.
-        ///
-        /// This function is called from within the constructor 
-        /// </remarks>
-        /// <returns>An ID to assign to the current object.</returns>
-
-        /// <summary>
         /// Constructor.
         /// </summary>
         /// <remarks>
@@ -180,26 +172,51 @@ namespace GoRogue.GameFramework
 			ID = idGenerator();
 		}
 
-		/// <summary>
-		/// Attempts to move the object in the given direction, and returns true if the object was successfully
-		/// moved, false otherwise.
-		/// </summary>
-		/// <param name="direction">The direction in which to try to move the object.</param>
-		/// <returns>True if the object was successfully moved, false otherwise.</returns>
-		public bool MoveIn(Direction direction)
-		{
-            Point oldPos = _position;
-			Position += direction;
+        /// <summary>
+        /// Returns true if the GameObject can be moved to the location specified; false otherwise.
+        /// </summary>
+        /// <remarks>
+        /// This function can return false in the following cases:
+        /// 1. If the object has <see cref="IsStatic"/> set to true (in which case it cannot be moved)
+        /// 2. If the object is added to the map and either:
+        ///     a. The position specified is not within the bounds of the map
+        ///     b. The object is not walkable and there is already a non-walkable item at the specified location
+        ///     c. The object's layer cannot support mulitple items at one location and there is already an item at that location on that layer.
+        /// </remarks>
+        /// <param name="position">The position to check.</param>
+        /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
+        public bool CanMove(Point position)
+        {
+            if (IsStatic)
+                return false;
 
-			return _position != oldPos;
-		}
+            if (CurrentMap != null)
+            {
+                if (!CurrentMap.Contains(position) || (!IsWalkable && !CurrentMap.WalkabilityView[position]))
+                    return false;
 
-		/// <summary>
-		/// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap"/> field of the
-		/// GameObject to reflect the change.
-		/// </summary>
-		/// <param name="newMap">New map to which the GameObject has been added.</param>
-		public void OnMapChanged(Map? newMap)
+                return CurrentMap.EntityCanMove(_parentObject, position);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if the GameObject can move in the given direction; false otherwise.
+        /// </summary>
+        /// <remarks>
+        /// See remarks in documentation for <see cref="CanMove(Point)"/> for details on when this function can return false.
+        /// </remarks>
+        /// <param name="direction">The direction of movement to check.</param>
+        /// <returns>True if the object can be moved in the specified direction; false otherwise</returns>
+        public bool CanMoveIn(Direction direction) => CanMove(Position + direction);
+
+        /// <summary>
+        /// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap"/> field of the
+        /// GameObject to reflect the change.
+        /// </summary>
+        /// <param name="newMap">New map to which the GameObject has been added.</param>
+        public void OnMapChanged(Map? newMap)
 		{
 			if (newMap != null)
 			{

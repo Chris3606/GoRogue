@@ -26,11 +26,11 @@ namespace GoRogue
 	public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasLayer
 	{
 		// Same as above but startingLayers less layers, for actual use, since we view our layers as
-		// 0 - numberOfLayers - 1
-		private LayerMasker _internalLayerMasker;
+		// 0 -> numberOfLayers - 1
+		private readonly LayerMasker _internalLayerMasker;
 
-		private ISpatialMap<T>[] _layers;
-		private HashSet<Point> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
+		private readonly ISpatialMap<T>[] _layers;
+		private readonly HashSet<Point> _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
 
 		/// <summary>
 		/// Constructor.
@@ -142,33 +142,31 @@ namespace GoRogue
 		/// Starting index for layers contained in this spatial map.
 		/// </summary>
 		public int StartingLayer { get; }
-		
-		/// <summary>
-		/// Adds the given item at the given position. Item is automatically added to correct layer.
-		/// </summary>
-		/// <param name="newItem">Item to add.</param>
-		/// <param name="position">Position to add item at.</param>
-		/// <returns>True if the item was successfully added -- false otherwise.</returns>
-		public bool Add(T newItem, Point position) => Add(newItem, position.X, position.Y);
 
-		/// <summary>
-		/// Adds the given item at the given position, or returns false if the item cannot be added.
-		/// Item is automatically added to correct layer.
-		/// </summary>
-		/// <param name="newItem">Item to add.</param>
-		/// <param name="x">X-value of position to add item at.</param>
-		/// <param name="y">Y-value of position to add item at.</param>
-		/// <returns>True if the item was successfully added, false otherwise.</returns>
-		public bool Add(T newItem, int x, int y)
-		{
-			
-			int relativeLayer = newItem.Layer - StartingLayer;
+        /// <summary>
+        /// Adds the given item at the given position on the correct layer.  InvalidOperationException is thrown if the layer is invalid or
+        /// the item otherwise cannot be added to its layer.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+        /// <param name="position">Position to add item at.</param>
+        public void Add(T newItem, Point position)
+        {
+            int relativeLayer = newItem.Layer - StartingLayer;
 
-			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-				return false;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                throw new InvalidOperationException($"Tried to add item to {GetType().Name} on layer {newItem.Layer}, but no such layer exists.");
 
-			return _layers[relativeLayer].Add(newItem, x, y);
-		}
+            _layers[relativeLayer].Add(newItem, position);
+        }
+
+        /// <summary>
+        /// Adds the given item at the given position on the correct layer.  InvalidOperationException is thrown if the layer is invalid or
+        /// the item otherwise cannot be added to its layer.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+        /// <param name="x">X-value of position to add item at.</param>
+        /// <param name="y">Y-value of position to add item at.</param>
+        public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
 		/// <summary>
 		/// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
@@ -310,47 +308,43 @@ namespace GoRogue
 			return _layers[relativeLayer].GetPositionOf(item);
 		}
 
-		/// <summary>
-		/// Moves the given item to the given position, or returns false if the item cannot be moved.
-		/// The move could fail if either the item given isn't in the spatial map, or if the layer that
-		/// the item resides on is configured to allow only one item per location at any given time and
-		/// there is already an item at the <paramref name="target"/>.
-		/// </summary>
-		/// <param name="item">Item to move.</param>
-		/// <param name="target">Position to move the given item to.</param>
-		/// <returns>True if the item was successfully moved, false if the move failed.</returns>
-		public bool Move(T item, Point target) => Move(item, target.X, target.Y);
+        /// <summary>
+        ///Moves the given item to the given position.  Throws InvalidOperationException if either the item given
+        /// isn't in the spatial map, or if the layer that the item resides on is configured to allow only one item per
+        /// location at any given time and there is already an item at <paramref name="target"/>.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Position to move the given item to.</param>
+        public void Move(T item, Point target)
+        {
+            int relativeLayer = item.Layer - StartingLayer;
+
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                throw new InvalidOperationException($"Tried to move item in {GetType().Name} on layer {item.Layer}, but no such layer exists.");
+
+            _layers[relativeLayer].Move(item, target);
+        }
+
+        /// <summary>
+        /// Moves the given item to the given position.  Throws InvalidOperationException if either the item given
+        /// isn't in the spatial map, or if the layer that the item resides on is configured to allow only one item per
+        /// location at any given time and there is already an item at the target position.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="targetX">X-value of position to move the given item to.</param>
+        /// <param name="targetY">Y-value of position to move the given item to.</param>
+        public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
 		/// <summary>
-		/// Moves the given item to the given position, or returns false if the item cannot be moved.
-		/// The move could fail if either the item given isn't in the spatial map, or if the layer that
-		/// the item resides on is configured to allow only one item per location at any given time and
-		/// there is already an item at the target position.
-		/// </summary>
-		/// <param name="item">Item to move.</param>
-		/// <param name="targetX">X-value of position to move the given item to.</param>
-		/// <param name="targetY">Y-value of position to move the given item to.</param>
-		/// <returns>True if the item was successfully moved, false otherwise.</returns>
-		public bool Move(T item, int targetX, int targetY)
-		{
-			int relativeLayer = item.Layer - StartingLayer;
-			
-			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-				return false;
-
-			return _layers[relativeLayer].Move(item, targetX, targetY);
-		}
-
-		/// <summary>
-		/// Moves all items on all layers at the given position to the new position.
+		/// Moves all items that can be moved, that are at the given position and on any layer, to the new position.
 		/// </summary>
 		/// <param name="current">Position to move items from.</param>
 		/// <param name="target">Position to move items to</param>
 		/// <returns>All items moved.</returns>
-		IEnumerable<T> ISpatialMap<T>.Move(Point current, Point target) => Move(current.X, current.Y, target.X, target.Y);
+		IEnumerable<T> ISpatialMap<T>.MoveValid(Point current, Point target) => MoveValid(current.X, current.Y, target.X, target.Y);
 
 		/// <summary>
-		/// Moves all items at the given position, that are on any layer specified by the given layer
+		/// Moves all items that can be moved, that are at the given position and on any layer specified by the given layer
 		/// mask, to the new position. If no layer mask is specified, defaults to all layers.
 		/// </summary>
 		/// <param name="current">Position to move all items from.</param>
@@ -359,47 +353,47 @@ namespace GoRogue
 		/// Layer mask specifying which layers to search for items on. Defaults to all layers.
 		/// </param>
 		/// <returns>All items moved.</returns>
-		public IEnumerable<T> Move(Point current, Point target, uint layerMask = uint.MaxValue) => Move(current.X, current.Y, target.X, target.Y, layerMask);
+		public IEnumerable<T> MoveValid(Point current, Point target, uint layerMask = uint.MaxValue) => MoveValid(current.X, current.Y, target.X, target.Y, layerMask);
 
-		/// <summary>
-		/// Moves all items on all layers at the given position to the new position.
-		/// </summary>
-		/// <param name="currentX">X-value of the position to move items from.</param>
-		/// <param name="currentY">Y-value of the position to move items from.</param>
-		/// <param name="targetX">X-value of the position to move items to.</param>
-		/// <param name="targetY">Y-value of the position to move itesm from.</param>
-		/// <returns>All items moved.</returns>
-		IEnumerable<T> ISpatialMap<T>.Move(int currentX, int currentY, int targetX, int targetY) => Move(currentX, currentY, targetX, targetY, uint.MaxValue);
+        /// <summary>
+        /// Moves all items that can be moved, that are at the given position and on any layer, to the new position.
+        /// </summary>
+        /// <param name="currentX">X-value of the position to move items from.</param>
+        /// <param name="currentY">Y-value of the position to move items from.</param>
+        /// <param name="targetX">X-value of the position to move items to.</param>
+        /// <param name="targetY">Y-value of the position to move itesm from.</param>
+        /// <returns>All items moved.</returns>
+        IEnumerable<T> ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY) => MoveValid(currentX, currentY, targetX, targetY, uint.MaxValue);
 
-		/// <summary>
-		/// Moves all items at the given position, that are on any layer specified by the given layer
-		/// mask, to the new position. If no layer mask is specified, defaults to all layers.
-		/// </summary>
-		/// <param name="currentX">X-value of the position to move items from.</param>
-		/// <param name="currentY">Y-value of the position to move items from.</param>
-		/// <param name="targetX">X-value of the position to move items to.</param>
-		/// <param name="targetY">Y-value of the position to move itesm from.</param>
-		/// <param name="layerMask">
-		/// Layer mask specifying which layers to search for items on. Defaults to all layers.
-		/// </param>
-		/// <returns>All items moved.</returns>
-		public IEnumerable<T> Move(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
+        /// <summary>
+        /// Moves all items that can be moved, that are at the given position and on any layer specified by the given layer
+        /// mask, to the new position. If no layer mask is specified, defaults to all layers.
+        /// </summary>
+        /// <param name="currentX">X-value of the position to move items from.</param>
+        /// <param name="currentY">Y-value of the position to move items from.</param>
+        /// <param name="targetX">X-value of the position to move items to.</param>
+        /// <param name="targetY">Y-value of the position to move itesm from.</param>
+        /// <param name="layerMask">
+        /// Layer mask specifying which layers to search for items on. Defaults to all layers.
+        /// </param>
+        /// <returns>All items moved.</returns>
+        public IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
 		{
 			foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
-				foreach (var itemMoved in _layers[relativeLayerNumber].Move(currentX, currentY, targetX, targetY))
+				foreach (var itemMoved in _layers[relativeLayerNumber].MoveValid(currentX, currentY, targetX, targetY))
 					yield return itemMoved;
 		}
 
 		/// <summary>
 		/// See <see cref="ISpatialMap{T}.Remove(T)"/>.
 		/// </summary>
-		public bool Remove(T item)
+		public void Remove(T item)
 		{
 			int relativeLayer = item.Layer - StartingLayer;
-			if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-				return false;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                throw new InvalidOperationException($"Tried to remove item from {GetType().Name} on layer {item.Layer}, but no such layer exists.");
 
-			return _layers[relativeLayer].Remove(item);
+			_layers[relativeLayer].Remove(item);
 		}
 
 		/// <summary>
@@ -467,7 +461,139 @@ namespace GoRogue
 
 			return sb.ToString();
 		}
-	}
+
+        /// <summary>
+        /// Returns true if the given item can be added at the given position, eg. it is on a layer in the spatial map and its layer will accept it; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+		/// <param name="position">Position to add item to.</param>
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
+        public bool CanAdd(T newItem, Point position)
+        {
+            int relativeLayer = newItem.Layer - StartingLayer;
+            return relativeLayer >= 0 && relativeLayer < _layers.Length && _layers[relativeLayer].CanAdd(newItem, position);
+        }
+
+        /// <summary>
+        /// Returns true if the given item can be added at the given position, eg. it is on a layer in the spatial map and its layer will accept it; false otherwise.
+        /// </summary>
+        /// <param name="newItem">Item to add.</param>
+		/// <param name="x">X-value of the position to add item to.</param>
+		/// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
+        public bool CanAdd(T newItem, int x, int y) => CanAdd(newItem, new Point(x, y));
+
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one, eg. it is in the spatial map and its layer will
+        /// accept it at the new position; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
+        public bool CanMove(T item, Point target)
+        {
+            int relativeLayer = item.Layer - StartingLayer;
+            return relativeLayer >= 0 && relativeLayer < _layers.Length && _layers[relativeLayer].CanMove(item, target);
+        }
+
+        /// <summary>
+        /// Returns true if the given item can be moved from its current location to the specfied one, eg. it is in the spatial map and its layer will
+        /// accept it at the new position; false otherwise.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+		/// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
+        public bool CanMove(T item, int targetX, int targetY) => CanMove(item, new Point(targetX, targetY));
+
+        /// <summary>
+        /// Returns true if there are items at <paramref name="current"/> on one or more of the layers specified by the layer mask,
+        /// and all items on those layers at that position can be moved to <paramref name="target"/>; false otherwise.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+		/// <param name="target">Location to move items to.</param>
+        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        public bool CanMoveAll(Point current, Point target, uint layerMask = uint.MaxValue) => CanMoveAll(current.X, current.Y, target.X, target.Y, layerMask);
+
+        /// <summary>
+		/// See <see cref="ISpatialMap{T}.CanMoveAll(Point, Point)"/>.
+		/// </summary>
+        bool ISpatialMap<T>.CanMoveAll(Point current, Point target) => CanMoveAll(current.X, current.Y, target.X, target.Y);
+
+        /// <summary>
+        /// Returns true if there are items at the current postion on one or more of the layers specified by the layer mask,
+        /// and all items on those layers at that position can be moved to the target position; false otherwise.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        public bool CanMoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
+        {
+            bool hasItems = false;
+
+            foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+                if (_layers[relativeLayerNumber].Contains(currentX, currentY))
+                {
+                    hasItems = true;
+                    if (!_layers[relativeLayerNumber].CanMoveAll(currentX, currentY, targetX, targetY))
+                        return false;
+                }
+
+            return hasItems;
+        }
+
+        /// <summary>
+		/// See <see cref="ISpatialMap{T}.CanMoveAll(int, int, int, int)"/>.
+		/// </summary>
+        bool ISpatialMap<T>.CanMoveAll(int currentX, int currentY, int targetX, int targetY) => CanMoveAll(currentX, currentY, targetX, targetY);
+
+        /// <summary>
+		/// See <see cref="ISpatialMap{T}.MoveAll(Point, Point)"/>.
+		/// </summary>
+        void ISpatialMap<T>.MoveAll(Point current, Point target) => MoveAll(current, target);
+
+        /// <summary>
+		/// See <see cref="ISpatialMap{T}.MoveAll(int, int, int, int)"/>.
+		/// </summary>
+        void ISpatialMap<T>.MoveAll(int currentX, int currentY, int targetX, int targetY) => MoveAll(currentX, currentY, targetX, targetY);
+
+        /// <summary>
+        /// Moves all items that are on layers in <paramref name="layerMask"/> at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// no items to be moved.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+		/// <param name="target">Location to move items to.</param>
+        /// <param name="layerMask">The layer mask to use to find items.</param>
+        public void MoveAll(Point current, Point target, uint layerMask = uint.MaxValue) => MoveAll(current.X, current.Y, target.X, target.Y, layerMask);
+
+        /// <summary>
+        /// Moves all items that are on layers in <paramref name="layerMask"/> at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// no items to be moved.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+		/// <param name="currentY">Y-value of the location to move items from.</param>
+		/// <param name="targetX">X-value of the location to move items to.</param>
+		/// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="layerMask">The layer mask to use to find items.</param>
+        public void MoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
+        {
+            bool hasItems = false;
+
+            foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+                if (_layers[relativeLayerNumber].Contains(currentX, currentY))
+                {
+                    hasItems = true;
+                    _layers[relativeLayerNumber].MoveAll(currentX, currentY, targetX, targetY);
+                }
+
+            if (!hasItems)
+                throw new InvalidOperationException($"Tried to move all items at position {new Point(currentX, currentY)} in a {GetType().Name}, but there were no items present at that location.");
+        }
+    }
 
 	/// <summary>
 	/// <see cref="ISpatialMap{T}"/> implementation that can be used to efficiently represent multiple
