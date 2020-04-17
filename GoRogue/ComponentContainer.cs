@@ -35,7 +35,7 @@ namespace GoRogue
 	/// </remarks>
 	public class ComponentContainer : IHasComponents
 	{
-		private Dictionary<Type, List<object>> _components;
+		private readonly Dictionary<Type, List<object>> _components;
 
 		/// <summary>
 		/// Constructor.

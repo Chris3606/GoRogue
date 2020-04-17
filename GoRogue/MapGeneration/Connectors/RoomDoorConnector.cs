@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration.Connectors
 	/// <summary>
 	/// Opens up room walls to connect tunnels that are placed near rooms.
 	/// </summary>
-	static public class RoomDoorConnector
+	public static class RoomDoorConnector
 	{
 		/// <summary>
 		/// Detects tunnels near the specified rooms and tries to open a wall spot to represent a door.
@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
+		public static IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 			=> ConnectRooms(map, null, rooms, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
@@ -58,7 +58,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// time a door is placed (per room). Defaults to 10.
 		/// </param>
 		/// <returns>A list of rooms and the connections placed.</returns>
-		static public IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator? rng, IEnumerable<Rectangle> rooms,
+		public static IEnumerable<(Rectangle Room, Point[][] Connections)> ConnectRooms(ArrayMap<bool> map, IGenerator? rng, IEnumerable<Rectangle> rooms,
 						   int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70,
 						   int cancelConnectionPlacementChanceIncrease = 10)
 		{

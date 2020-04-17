@@ -9,7 +9,7 @@ namespace GoRogue.DiceNotation
 	/// </summary>
 	public class DiceExpression : IDiceExpression
 	{
-		private ITerm termToEvaluate;
+		private readonly ITerm _termToEvaluate;
 
 		/// <summary>
 		/// Constructor. Takes the last term in the dice expression (the root of the expression tree).
@@ -19,7 +19,7 @@ namespace GoRogue.DiceNotation
 		/// </param>
 		public DiceExpression(ITerm termToEvaluate)
 		{
-			this.termToEvaluate = termToEvaluate;
+			_termToEvaluate = termToEvaluate;
 		}
 
 		/// <summary>
@@ -44,13 +44,13 @@ namespace GoRogue.DiceNotation
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
 
-			return termToEvaluate.GetResult(rng);
+			return _termToEvaluate.GetResult(rng);
 		}
 
 		/// <summary>
 		/// Returns a parenthesized string representing the dice expression in dice notation
 		/// </summary>
 		/// <returns>A paranethesized string representing the expression.</returns>
-		public override string ToString() => termToEvaluate.ToString();
+		public override string ToString() => _termToEvaluate.ToString();
 	}
 }

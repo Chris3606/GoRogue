@@ -4,7 +4,7 @@ using Troschuetz.Random;
 namespace GoRogue.DiceNotation
 {
 	/// <summary>
-	/// The most important <see cref="GoRogue.DiceNotation"/> class -- contains functions to roll dice, and to retrieve an
+	/// The most important <see cref="DiceNotation"/> class -- contains functions to roll dice, and to retrieve an
 	/// <see cref="IDiceExpression"/> instance representing a given expression.
 	/// </summary>
 	public static class Dice

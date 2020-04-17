@@ -21,10 +21,10 @@ namespace GoRogue.Pathing
 #pragma warning restore CA1063
     {
 		private readonly GoalMap _baseMap;
-		private ArrayMap<double?> _goalMap;
+		private readonly ArrayMap<double?> _goalMap;
 
 		// Nodes for the priority queue used in Update.
-		private ArrayMap<PositionNode> _nodes;
+		private readonly ArrayMap<PositionNode> _nodes;
 
 		/// <summary>
 		/// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,

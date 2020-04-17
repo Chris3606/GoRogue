@@ -16,7 +16,7 @@ namespace GoRogue.MapGeneration.Connectors
 	/// center point of the bounding boxes of those areas. Points to connect two areas, as well as method used to create
 	/// a tunnel between those two points, are selected via specified parameters.
 	/// </remarks>
-	static public class ClosestMapAreaConnector
+	public static class ClosestMapAreaConnector
 	{
 		/// <summary>
 		/// Connects the given map using the algorithm described in the class description.  Map areas
@@ -32,7 +32,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
+		public static void Connect(ISettableMapView<bool> map, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
 		{
 			var areas = MapAreaFinder.MapAreasFor(map, distanceCalc).ToList();
 			Connect(map, areas, distanceCalc, areaConnector, tunnelCreator);
@@ -53,7 +53,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// The tunnel creation strategy to use. If null is specified, <see cref="DirectLineTunnelCreator"/> with
 		/// the distance calculation specified is used.
 		/// </param>
-		static public void Connect(ISettableMapView<bool> map, IReadOnlyList<Area> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
+		public static void Connect(ISettableMapView<bool> map, IReadOnlyList<Area> mapAreas, Distance distanceCalc, IAreaConnectionPointSelector? areaConnector = null, ITunnelCreator? tunnelCreator = null)
 		{
 			if (areaConnector == null) areaConnector = new RandomConnectionPointSelector();
 			if (tunnelCreator == null) tunnelCreator = new DirectLineTunnelCreator(distanceCalc);
@@ -73,7 +73,7 @@ namespace GoRogue.MapGeneration.Connectors
 			}
 		}
 
-		static private int findNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
+		private static int findNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
 		{
 			int closestIndex = mapAreaIndex;
 			double distance = double.MaxValue;

@@ -26,13 +26,13 @@ namespace GoRogue.Pathing
 	/// </remarks>
 	public class GoalMap : IMapView<double?>
 	{
-		private HashSet<Point> _closedSet = new HashSet<Point>();
+		private readonly HashSet<Point> _closedSet = new HashSet<Point>();
 
-		private HashSet<Point> _edgeSet = new HashSet<Point>();
+		private readonly HashSet<Point> _edgeSet = new HashSet<Point>();
 
-		private ArrayMap<double?> _goalMap;
+		private readonly ArrayMap<double?> _goalMap;
 
-		private HashSet<Point> _walkable = new HashSet<Point>();
+		private readonly HashSet<Point> _walkable = new HashSet<Point>();
 
 		/// <summary>
 		/// Constructor. Takes a base map and a distance measurement to use for calculation.

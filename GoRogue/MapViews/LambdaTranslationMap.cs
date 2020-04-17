@@ -19,7 +19,7 @@ namespace GoRogue.MapViews
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
 	public sealed class LambdaTranslationMap<T1, T2> : TranslationMap<T1, T2>
 	{
-		private Func<Point, T1, T2> _getter;
+		private readonly Func<Point, T1, T2> _getter;
 
 		/// <summary>
 		/// Constructor. Takes an existing map view to create a view from and a getter function

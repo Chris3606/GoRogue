@@ -35,11 +35,11 @@ namespace GoRogue
 	/// </remarks>
 	public class FOV : IReadOnlyFOV, IMapView<double>
 	{
-		private HashSet<Point> currentFOV;
-		private double[,] light;
-		private HashSet<Point> previousFOV;
+		private HashSet<Point> _currentFOV;
+		private double[,] _light;
+		private HashSet<Point> _previousFOV;
 
-		private IMapView<bool> fovMap;
+		private readonly IMapView<bool> _fovMap;
 
 		/// <summary>
 		/// A view of the calculation results in boolean form, where true indicates a location is inside
@@ -57,47 +57,47 @@ namespace GoRogue
 		/// </param>
 		public FOV(IMapView<bool> fovMap)
 		{
-			this.fovMap = fovMap;
+			_fovMap = fovMap;
 			BooleanFOV = new LambdaTranslationMap<double, bool>(this, val => val > 0.0 ? true : false);
 
-			light = new double[fovMap.Width, fovMap.Height];
-			currentFOV = new HashSet<Point>();
-			previousFOV = new HashSet<Point>();
+			_light = new double[fovMap.Width, fovMap.Height];
+			_currentFOV = new HashSet<Point>();
+			_previousFOV = new HashSet<Point>();
 		}
 
 		/// <summary>
 		/// IEnumerable of only positions that are currently inside field of view.
 		/// </summary>
-		public IEnumerable<Point> CurrentFOV { get => currentFOV; }
+		public IEnumerable<Point> CurrentFOV { get => _currentFOV; }
 
 		/// <summary>
 		/// Height of the map view.
 		/// </summary>
-		public int Height { get => fovMap.Height; }
+		public int Height { get => _fovMap.Height; }
 
 		/// <summary>
 		/// IEnumerable of positions that ARE in field of view as of the most current Calculate
 		/// call, but were NOT in field of view after the previous time Calculate was called.
 		/// </summary>
-		public IEnumerable<Point> NewlySeen { get => currentFOV.Where(pos => !previousFOV.Contains(pos)); }
+		public IEnumerable<Point> NewlySeen { get => _currentFOV.Where(pos => !_previousFOV.Contains(pos)); }
 
 		/// <summary>
 		/// IEnumerable of positions that are NOT in field of view as of the most current Calculate call,
 		/// but WERE in field of view after the previous time Calculate was called.
 		/// </summary>
-		public IEnumerable<Point> NewlyUnseen { get => previousFOV.Where(pos => !currentFOV.Contains(pos)); }
+		public IEnumerable<Point> NewlyUnseen { get => _previousFOV.Where(pos => !_currentFOV.Contains(pos)); }
 
 		/// <summary>
 		/// Width of map view.
 		/// </summary>
-		public int Width { get => fovMap.Width; }
+		public int Width { get => _fovMap.Width; }
 		
 		/// <summary>
 		/// Returns the field of view value for the given position.
 		/// </summary>
 		/// <param name="index1D">Position to return the field of view value for, as a 1D-index-style value.</param>
 		/// <returns>The field of view value for the given position.</returns>
-		public double this[int index1D] => light[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
+		public double this[int index1D] => _light[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
 
 		/// <summary>
 		/// Returns the field of view value for the given position.
@@ -106,7 +106,7 @@ namespace GoRogue
 		/// <returns>The field of view value for the given position.</returns>
 		public double this[Point position]
 		{
-			get { return light[position.X, position.Y]; }
+			get { return _light[position.X, position.Y]; }
 		}
 
 		/// <summary>
@@ -117,7 +117,7 @@ namespace GoRogue
 		/// <returns>The field of view value for the given position.</returns>
 		public double this[int x, int y]
 		{
-			get { return light[x, y]; }
+			get { return _light[x, y]; }
 		}
 
 		/// <summary>
@@ -171,17 +171,17 @@ namespace GoRogue
 			radius = Math.Max(1, radius);
 			double decay = 1.0 / (radius + 1);
 
-			previousFOV = currentFOV;
-			currentFOV = new HashSet<Point>();
+			_previousFOV = _currentFOV;
+			_currentFOV = new HashSet<Point>();
 
 			initializeLightMap();
-			light[startX, startY] = 1; // Full power to starting space
-			currentFOV.Add(new Point(startX, startY));
+			_light[startX, startY] = 1; // Full power to starting space
+			_currentFOV.Add(new Point(startX, startY));
 
 			foreach (Direction d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
 			{
-				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc);
-				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc);
+				shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc);
 			}
 		}
 
@@ -228,24 +228,24 @@ namespace GoRogue
 			angle = ((angle > 360.0 || angle < 0) ? Math.IEEERemainder(angle, 360.0) : angle) * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 			span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
-			previousFOV = currentFOV;
-			currentFOV = new HashSet<Point>();
+			_previousFOV = _currentFOV;
+			_currentFOV = new HashSet<Point>();
 
 			initializeLightMap();
-			light[startX, startY] = 1; // Full power to starting space
-			currentFOV.Add(new Point(startX, startY));
+			_light[startX, startY] = 1; // Full power to starting space
+			_currentFOV.Add(new Point(startX, startY));
 
-			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
 
-			shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
-			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, light, currentFOV, fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+			shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
 		}
 
 		/// <summary>
@@ -285,11 +285,11 @@ namespace GoRogue
 		{
 			string result = "";
 
-			for (int y = 0; y < fovMap.Height; y++)
+			for (int y = 0; y < _fovMap.Height; y++)
 			{
-				for (int x = 0; x < fovMap.Width; x++)
+				for (int x = 0; x < _fovMap.Width; x++)
 				{
-					result += (light[x, y] > 0.0) ? sourceValue : normal;
+					result += (_light[x, y] > 0.0) ? sourceValue : normal;
 					result += " ";
 				}
 
@@ -305,7 +305,7 @@ namespace GoRogue
 		/// </summary>
 		/// <param name="decimalPlaces">The number of decimal places to round to.</param>
 		/// <returns>A string representation of FOV, rounded to the given number of decimal places.</returns>
-		public string ToString(int decimalPlaces) => light.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+		public string ToString(int decimalPlaces) => _light.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
 		/// <summary>
 		/// Returns a string representation of the map, where any location not in FOV is represented
@@ -429,10 +429,10 @@ namespace GoRogue
 
 		private void initializeLightMap()
 		{
-			if (light.GetLength(0) != fovMap.Width || light.GetLength(1) != fovMap.Height)
-				light = new double[fovMap.Width, fovMap.Height];
+			if (_light.GetLength(0) != _fovMap.Width || _light.GetLength(1) != _fovMap.Height)
+				_light = new double[_fovMap.Width, _fovMap.Height];
 			else
-				Array.Clear(light, 0, light.Length);
+				Array.Clear(_light, 0, _light.Length);
 		}
 	}
 }

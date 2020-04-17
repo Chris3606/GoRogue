@@ -18,8 +18,8 @@ namespace GoRogue.MapViews
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
 	public sealed class LambdaSettableTranslationMap<T1, T2> : SettableTranslationMap<T1, T2>
 	{
-		private Func<Point, T1, T2> _getter;
-		private Func<Point, T2, T1> _setter;
+		private readonly Func<Point, T1, T2> _getter;
+		private readonly Func<Point, T2, T1> _setter;
 
 		/// <summary>
 		/// Constructor. Takes an existing map view to create a view from, and getter/setter

@@ -36,9 +36,11 @@ namespace GoRogue.Pathing
 		/// <param name="map">The goal map.</param>
 		public WeightedGoalMap(IMapView<double?> map)
 		{
-			Weights = new Dictionary<IMapView<double?>, double>();
-			Weights.Add(map, 1);
-			Width = map.Width;
+            Weights = new Dictionary<IMapView<double?>, double>
+            {
+                { map, 1 }
+            };
+            Width = map.Width;
 			Height = map.Height;
 		}
 

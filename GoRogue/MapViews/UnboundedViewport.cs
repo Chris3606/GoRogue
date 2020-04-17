@@ -17,7 +17,7 @@ namespace GoRogue.MapViews
 		/// <param name="mapView">The map view being represented.</param>
 		/// <param name="viewArea">The initial subsection of that map to represent.</param>
 		/// <param name="defaultValue">The value to return if a position is accessed that is outside the actual underlying map view.</param>
-		public UnboundedViewport(IMapView<T> mapView, Rectangle viewArea, T defaultValue = default(T))
+		public UnboundedViewport(IMapView<T> mapView, Rectangle viewArea, T defaultValue = default)
 		{
 			MapView = mapView;
 			_viewArea = viewArea;
@@ -30,7 +30,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="mapView">The map view to represent.</param>
 		/// <param name="defaultValue">The value to return if a position is accessed that is outside the actual underlying map view.</param>
-		public UnboundedViewport(IMapView<T> mapView, T defaultValue = default(T))
+		public UnboundedViewport(IMapView<T> mapView, T defaultValue = default)
 			: this(mapView, mapView.Bounds(), defaultValue) { }
 
 		/// <summary>
@@ -46,7 +46,10 @@ namespace GoRogue.MapViews
 		/// </summary>
 		public IMapView<T> MapView { get; private set; }
 
+        // Analyzer misreads this because of ref return
+        #pragma warning disable IDE0044
 		private Rectangle _viewArea;
+        #pragma warning restore IDE0044
 		/// <summary>
 		/// The area of the base MapView that this Viewport is exposing. Although this property does
 		/// not explicitly expose a set accessor, it is returning a reference and as such may be

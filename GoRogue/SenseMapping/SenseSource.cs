@@ -55,16 +55,16 @@ namespace GoRogue.SenseMapping
 	public class SenseSource
 	{
 		// Local calculation arrays, internal so SenseMap can easily copy them.
-		internal double[,] light;
+		internal double[,] _light;
 
-		internal bool[,] nearLight;
-		internal IMapView<double>? resMap;
-		private static readonly string[] typeWriteVals = Enum.GetNames(typeof(SourceType));
+		internal bool[,] _nearLight;
+		internal IMapView<double>? _resMap;
+		private static readonly string[] s_typeWriteVals = Enum.GetNames(typeof(SourceType));
 		private double _radius;
 		private double _decay; // Set when radius is set
 
-		private int size;
-		private int halfSize;
+		private int _size;
+		private int _halfSize;
 
         /// <summary>
         /// Constructor.
@@ -95,7 +95,7 @@ namespace GoRogue.SenseMapping
 			Radius = radius; // Arrays are initialized by this setter
 			DistanceCalc = distanceCalc;
 
-			resMap = null;
+			_resMap = null;
 			Enabled = true;
 
 			IsAngleRestricted = false;
@@ -191,11 +191,14 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public bool Enabled { get; set; }
 
+        // Analyzer gets this wrong because it's returned by ref
+        #pragma warning disable IDE0044
 		private Point _position;
-		/// <summary>
-		/// The position on a map that the source is located at.
-		/// </summary>
-		public ref Point Position => ref _position;
+        #pragma warning restore IDE0044
+        /// <summary>
+        /// The position on a map that the source is located at.
+        /// </summary>
+        public ref Point Position => ref _position;
 
 		/// <summary>
 		/// Whether or not the spreading of values from this source is restricted to an angle and span.
@@ -277,11 +280,11 @@ namespace GoRogue.SenseMapping
 					_radius = Math.Max(1, value);
 					// Can round down here because the EUCLIDEAN distance shape is always contained within
 					// the CHEBYSHEV distance shape
-					size = (int)_radius * 2 + 1;
+					_size = (int)_radius * 2 + 1;
 					// Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
-					halfSize = size / 2;
-					light = new double[size, size];
-					nearLight = new bool[size, size]; // ALlocate whether we use shadow or not, just to support.  Could be lazy but its just bools
+					_halfSize = _size / 2;
+					_light = new double[_size, _size];
+					_nearLight = new bool[_size, _size]; // ALlocate whether we use shadow or not, just to support.  Could be lazy but its just bools
 
 					_decay = _intensity / (_radius + 1);
 				}
@@ -297,7 +300,7 @@ namespace GoRogue.SenseMapping
 		/// Returns a string representation of the configuration of this SenseSource.
 		/// </summary>
 		/// <returns>A string representation of the configuration of this SenseSource.</returns>
-		public override string ToString() => $"Enabled: {Enabled}, Type: {typeWriteVals[(int)Type]}, Radius Mode: {(Radius)DistanceCalc}, Position: {Position}, Radius: {Radius}";
+		public override string ToString() => $"Enabled: {Enabled}, Type: {s_typeWriteVals[(int)Type]}, Radius Mode: {(Radius)DistanceCalc}, Position: {Position}, Radius: {Radius}";
 
 		// Set from lighting, just so we have a reference.
 
@@ -306,7 +309,7 @@ namespace GoRogue.SenseMapping
 		{
 			if (Enabled)
 			{
-                if (resMap == null)
+                if (_resMap == null)
                     throw new InvalidOperationException("Attempted to calculate the light of a sense map without a resistance map.  This is almost certainly a GoRogue bug.");
 
 				initArrays();
@@ -320,10 +323,10 @@ namespace GoRogue.SenseMapping
 						{
 							double angle = _angle * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 							double span = _span * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
-							doRippleFOV(rippleValue(Type), resMap, angle, span);
+							doRippleFOV(rippleValue(Type), _resMap, angle, span);
 						}
 						else
-							doRippleFOV(rippleValue(Type), resMap);
+							doRippleFOV(rippleValue(Type), _resMap);
 						break;
 
 					case SourceType.Shadow:
@@ -332,24 +335,24 @@ namespace GoRogue.SenseMapping
 							double angle = _angle * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 							double span = _span * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
-							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, resMap, angle, span);
-							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, _resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, _resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, resMap, angle, span);
-							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, _resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, _resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, resMap, angle, span);
-							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, _resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, _resMap, angle, span);
 
-							shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, resMap, angle, span);
-							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, _resMap, angle, span);
+							shadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, _resMap, angle, span);
 						}
 						else
 						{
 							foreach (Direction d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
 							{
-								shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, resMap);
-								shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, resMap);
+								shadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, _resMap);
+								shadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, _resMap);
 							}
 						}
 						break;
@@ -382,13 +385,13 @@ namespace GoRogue.SenseMapping
 		private void doRippleFOV(int ripple, IMapView<double> map)
 		{
 			LinkedList<Point> dq = new LinkedList<Point>();
-			dq.AddLast(new Point(halfSize, halfSize)); // Add starting point
+			dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
 				Point p = dq.First.Value;
 				dq.RemoveFirst();
 
-				if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
+				if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
 					continue; // Nothing left to spread!
 
 				foreach (Direction dir in AdjacencyRule.EightWay.DirectionsOfNeighbors())
@@ -399,13 +402,13 @@ namespace GoRogue.SenseMapping
 					int globalY2 = Position.Y - (int)Radius + y2;
 
 					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-						DistanceCalc.Calculate(halfSize, halfSize, x2, y2) > _radius) // +1 covers starting tile at least
+						DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2) > _radius) // +1 covers starting tile at least
 						continue;
 
 					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
-					if (light[x2, y2] < surroundingLight)
+					if (_light[x2, y2] < surroundingLight)
 					{
-						light[x2, y2] = surroundingLight;
+						_light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
 							dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
@@ -416,13 +419,13 @@ namespace GoRogue.SenseMapping
 		private void doRippleFOV(int ripple, IMapView<double> map, double angle, double span)
 		{
 			LinkedList<Point> dq = new LinkedList<Point>();
-			dq.AddLast(new Point(halfSize, halfSize)); // Add starting point
+			dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
 			while (!(dq.Count == 0))
 			{
 				Point p = dq.First.Value;
 				dq.RemoveFirst();
 
-				if (light[p.X, p.Y] <= 0 || nearLight[p.X, p.Y])
+				if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
 					continue; // Nothing left to spread!
 
 				foreach (Direction dir in AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right))
@@ -433,17 +436,17 @@ namespace GoRogue.SenseMapping
 					int globalY2 = Position.Y - (int)Radius + y2;
 
 					if (globalX2 < 0 || globalX2 >= map.Width || globalY2 < 0 || globalY2 >= map.Height || // Bounds check
-						DistanceCalc.Calculate(halfSize, halfSize, x2, y2) > _radius) // +1 covers starting tile at least
+						DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2) > _radius) // +1 covers starting tile at least
 						continue;
 
-					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(y2 - halfSize, x2 - halfSize));
+					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(y2 - _halfSize, x2 - _halfSize));
 					if (at2 > span * 0.5 && at2 < 1.0 - span * 0.5)
 						continue;
 
 					double surroundingLight = nearRippleLight(x2, y2, globalX2, globalY2, ripple, map);
-					if (light[x2, y2] < surroundingLight)
+					if (_light[x2, y2] < surroundingLight)
 					{
-						light[x2, y2] = surroundingLight;
+						_light[x2, y2] = surroundingLight;
 						if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
 							dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
 					}
@@ -454,19 +457,19 @@ namespace GoRogue.SenseMapping
 		// Initializes arrays.
 		private void initArrays() // Prep for lighting calculations
 		{
-			Array.Clear(light, 0, light.Length);
-			light[halfSize, halfSize] = _intensity; // source light is center, starts out at our intensity
+			Array.Clear(_light, 0, _light.Length);
+			_light[_halfSize, _halfSize] = _intensity; // source light is center, starts out at our intensity
 			if (Type != SourceType.Shadow) // Only clear if we are using it, since this is called at each calculate
-				Array.Clear(nearLight, 0, nearLight.Length);
+				Array.Clear(_nearLight, 0, _nearLight.Length);
 		}
 
 		private double nearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors, IMapView<double> map)
 		{
-			if (x == halfSize && y == halfSize)
+			if (x == _halfSize && y == _halfSize)
 				return _intensity;
 
 			List<Point> neighbors = new List<Point>();
-			double tmpDistance = 0, testDistance;
+            double testDistance;
 			Point c;
 
 			foreach (Direction di in AdjacencyRule.EightWay.DirectionsOfNeighbors())
@@ -478,13 +481,13 @@ namespace GoRogue.SenseMapping
 
 				if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
 				{
-					tmpDistance = DistanceCalc.Calculate(halfSize, halfSize, x2, y2);
-					int idx = 0;
+                    var tmpDistance = DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2);
+                    int idx = 0;
 
 					for (int i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
 					{
 						c = neighbors[i];
-						testDistance = DistanceCalc.Calculate(halfSize, halfSize, c.X, c.Y);
+						testDistance = DistanceCalc.Calculate(_halfSize, _halfSize, c.X, c.Y);
 						if (tmpDistance < testDistance)
 							break;
 
@@ -504,10 +507,10 @@ namespace GoRogue.SenseMapping
 			{
 				int gpx = Position.X - (int)Radius + p.X;
 				int gpy = Position.Y - (int)Radius + p.Y;
-				if (light[p.X, p.Y] > 0)
+				if (_light[p.X, p.Y] > 0)
 				{
 					lit++;
-					if (nearLight[p.X, p.Y])
+					if (_nearLight[p.X, p.Y])
 						indirects++;
 
 					double dist = DistanceCalc.Calculate(x, y, p.X, p.Y);
@@ -515,12 +518,12 @@ namespace GoRogue.SenseMapping
 					if (gpx == Position.X && gpy == Position.Y)
 						resistance = 0.0;
 
-					curLight = Math.Max(curLight, light[p.X, p.Y] - dist * _decay - resistance);
+					curLight = Math.Max(curLight, _light[p.X, p.Y] - dist * _decay - resistance);
 				}
 			}
 
 			if (map[globalX, globalY] >= _intensity || indirects >= lit)
-				nearLight[x, y] = true;
+				_nearLight[x, y] = true;
 
 			return curLight;
 		}
@@ -532,13 +535,13 @@ namespace GoRogue.SenseMapping
 				return;
 
 			bool blocked = false;
-			for (int distance = row; distance <= _radius && distance < size + size && !blocked; distance++)
+			for (int distance = row; distance <= _radius && distance < _size + _size && !blocked; distance++)
 			{
 				int deltaY = -distance;
 				for (int deltaX = -distance; deltaX <= 0; deltaX++)
 				{
-					int currentX = halfSize + deltaX * xx + deltaY * xy;
-					int currentY = halfSize + deltaX * yx + deltaY * yy;
+					int currentX = _halfSize + deltaX * xx + deltaY * xy;
+					int currentY = _halfSize + deltaX * yx + deltaY * yy;
 					int gCurrentX = Position.X - (int)_radius + currentX;
 					int gCurrentY = Position.Y - (int)_radius + currentY;
 					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
@@ -554,7 +557,7 @@ namespace GoRogue.SenseMapping
 					if (deltaRadius <= _radius)
 					{
 						double bright = _intensity - _decay * deltaRadius;
-						light[currentX, currentY] = bright;
+						_light[currentX, currentY] = bright;
 					}
 
 					if (blocked) // Previous cell was blocked
@@ -587,13 +590,13 @@ namespace GoRogue.SenseMapping
 				return;
 
 			bool blocked = false;
-			for (int distance = row; distance <= _radius && distance < size + size && !blocked; distance++)
+			for (int distance = row; distance <= _radius && distance < _size + _size && !blocked; distance++)
 			{
 				int deltaY = -distance;
 				for (int deltaX = -distance; deltaX <= 0; deltaX++)
 				{
-					int currentX = halfSize + deltaX * xx + deltaY * xy;
-					int currentY = halfSize + deltaX * yx + deltaY * yy;
+					int currentX = _halfSize + deltaX * xx + deltaY * xy;
+					int currentY = _halfSize + deltaX * yx + deltaY * yy;
 					int gCurrentX = Position.X - (int)_radius + currentX;
 					int gCurrentY = Position.Y - (int)_radius + currentY;
 					double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
@@ -605,12 +608,12 @@ namespace GoRogue.SenseMapping
 						break;
 
 					double deltaRadius = DistanceCalc.Calculate(deltaX, deltaY);
-					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - halfSize, currentX - halfSize));
+					double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - _halfSize, currentX - _halfSize));
 
 					if (deltaRadius <= _radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5))
 					{
 						double bright = _intensity - _decay * deltaRadius;
-						light[currentX, currentY] = bright;
+						_light[currentX, currentY] = bright;
 					}
 
 					if (blocked) // Previous cell was blocked

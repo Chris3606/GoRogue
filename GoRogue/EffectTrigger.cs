@@ -40,7 +40,7 @@ namespace GoRogue
 	/// </typeparam>
 	public class EffectTrigger<TTriggerArgs> where TTriggerArgs : EffectArgs
 	{
-		private List<Effect<TTriggerArgs>> _effects;
+		private readonly List<Effect<TTriggerArgs>> _effects;
 
 		/// <summary>
 		/// Constructor.

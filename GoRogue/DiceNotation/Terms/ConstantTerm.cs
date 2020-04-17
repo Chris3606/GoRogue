@@ -7,7 +7,7 @@ namespace GoRogue.DiceNotation.Terms
 	/// </summary>
 	public class ConstantTerm : ITerm
 	{
-		private int value;
+		private readonly int _value;
 
 		/// <summary>
 		/// Constructor. Takes the numerical constant it represents.
@@ -15,7 +15,7 @@ namespace GoRogue.DiceNotation.Terms
 		/// <param name="value">The numerical value this term represents.</param>
 		public ConstantTerm(int value)
 		{
-			this.value = value;
+			_value = value;
 		}
 
 		/// <summary>
@@ -23,15 +23,12 @@ namespace GoRogue.DiceNotation.Terms
 		/// </summary>
 		/// <param name="rng">(Unused) rng.</param>
 		/// <returns>The numerical constant this term represents.</returns>
-		public int GetResult(IGenerator rng) => value;
+		public int GetResult(IGenerator rng) => _value;
 
 		/// <summary>
 		/// Returns a string representation of this constant.
 		/// </summary>
 		/// <returns>The numerical constant being represented, as a string.</returns>
-		public override string ToString()
-		{
-			return value.ToString();
-		}
+		public override string ToString() => _value.ToString();
 	}
 }

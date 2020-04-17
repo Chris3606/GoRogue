@@ -35,7 +35,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the room.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of each generated room.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
+		public static IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 			=> Generate(map, null, maxRooms, roomMinSize, roomMaxSize, attemptsPerRoom);
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// it properly (eg. without overlapping with other rooms), before simply discarding the room.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of each generated room.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
+		public static IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int maxRooms, int roomMinSize, int roomMaxSize, int attemptsPerRoom)
 		{
 			if (maxRooms <= 0)
 				throw new System.ArgumentOutOfRangeException(nameof(maxRooms), "Maximum number of rooms must be greater than 0.");
@@ -119,7 +119,7 @@ namespace GoRogue.MapGeneration.Generators
 			return rooms;
 		}
 
-		static private bool checkOverlap(Rectangle room, List<Rectangle> existingRooms, IMapView<bool> map)
+		private static bool checkOverlap(Rectangle room, List<Rectangle> existingRooms, IMapView<bool> map)
 		{
 			bool intersected = false;
 			foreach (var point in room.Positions())
@@ -134,7 +134,7 @@ namespace GoRogue.MapGeneration.Generators
 			return intersected || existingRooms.Any(rect => rect.Intersects(room));
 		}
 
-		static private void createRoom(ISettableMapView<bool> map, Rectangle room)
+		private static void createRoom(ISettableMapView<bool> map, Rectangle room)
 		{
 			foreach (var pos in room.Positions())
 				map[pos] = true;

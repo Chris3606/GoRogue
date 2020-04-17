@@ -11,8 +11,8 @@ namespace GoRogue.MapGeneration.Connectors
 	/// </summary>
 	public class DirectLineTunnelCreator : ITunnelCreator
 	{
-		private AdjacencyRule adjacencyRule;
-		private bool doubleWideVertical;
+		private readonly AdjacencyRule _adjacencyRule;
+		private readonly bool _doubleWideVertical;
 
 		/// <summary>
 		/// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Ortho"/>
@@ -25,8 +25,8 @@ namespace GoRogue.MapGeneration.Connectors
 		public DirectLineTunnelCreator(AdjacencyRule adjacencyRule, bool doubleWideVertical = true)
 		{
 			if (adjacencyRule == AdjacencyRule.Diagonals) throw new System.ArgumentException("Cannot use diagonal adjacency to create tunnels", nameof(adjacencyRule));
-			this.adjacencyRule = adjacencyRule;
-			this.doubleWideVertical = doubleWideVertical;
+			_adjacencyRule = adjacencyRule;
+			_doubleWideVertical = doubleWideVertical;
 		}
 
 		/// <summary>
@@ -37,7 +37,7 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="end">End Pointinate of the tunnel.</param>
 		public void CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
 		{
-			var lineAlgorithm = (adjacencyRule == AdjacencyRule.Cardinals) ? Lines.Algorithm.Ortho : Lines.Algorithm.Bresenham;
+			var lineAlgorithm = (_adjacencyRule == AdjacencyRule.Cardinals) ? Lines.Algorithm.Ortho : Lines.Algorithm.Bresenham;
 
 			Point previous = Point.None;
 			foreach (var pos in Lines.Get(start, end, lineAlgorithm))
@@ -45,7 +45,7 @@ namespace GoRogue.MapGeneration.Connectors
 				map[pos] = true;
 				// Previous cell, and we're going vertical, go 2 wide so it looks nicer Make sure not
 				// to break rectangles (less than last index)!
-				if (doubleWideVertical && previous != Point.None && pos.Y != previous.Y && pos.X + 1 < map.Width - 1)
+				if (_doubleWideVertical && previous != Point.None && pos.Y != previous.Y && pos.X + 1 < map.Width - 1)
 					map[pos.X + 1, pos.Y] = true;
 
 				previous = pos;

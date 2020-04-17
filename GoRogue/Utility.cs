@@ -257,7 +257,7 @@ namespace GoRogue
 		/// <param name="list"/>
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used</param>
-		static public void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
+		public static void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -278,7 +278,7 @@ namespace GoRogue
 		/// <param name="str"/>
 		/// <param name="numTimes">The number of times to repeat the string.</param>
 		/// <returns>The current string repeated <paramref name="numTimes"/> times.</returns>
-		public static string Multiply(this string str, int numTimes) => String.Concat(Enumerable.Repeat(str, numTimes));
+		public static string Multiply(this string str, int numTimes) => string.Concat(Enumerable.Repeat(str, numTimes));
 
 		/// <summary>
 		/// Extension method that selects and returns a random valid index from the list, using the
@@ -289,7 +289,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>The index selected.</returns>
-		static public int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
+		public static int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -312,7 +312,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Index selected.</returns>
-		static public int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
+		public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -335,7 +335,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
-		static public T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
+		public static T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -356,7 +356,7 @@ namespace GoRogue
 		/// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
 		/// to be used.</param>
 		/// <returns>Item selected.</returns>
-		static public T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
+		public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 

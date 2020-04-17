@@ -12,7 +12,7 @@ namespace GoRogue.MapGeneration.Connectors
 	/// </summary>
 	public class HorizontalVerticalTunnelCreator : ITunnelCreator
 	{
-		private IGenerator rng;
+		private IGenerator _rng;
 
 		/// <summary>
 		/// Constructor. Takes rng to use -- if null is specified, the <see cref="SingletonRandom.DefaultRNG"/> is used.
@@ -21,9 +21,9 @@ namespace GoRogue.MapGeneration.Connectors
 		public HorizontalVerticalTunnelCreator(IGenerator? rng = null)
 		{
 			if (rng == null)
-				this.rng = SingletonRandom.DefaultRNG;
+				_rng = SingletonRandom.DefaultRNG;
 			else
-				this.rng = rng;
+				_rng = rng;
 		}
 
 		/// <summary>
@@ -34,9 +34,9 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="end">End Pointinate of the tunnel.</param>
 		public void CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
 		{
-			if (rng == null) rng = SingletonRandom.DefaultRNG;
+			if (_rng == null) _rng = SingletonRandom.DefaultRNG;
 
-			if (rng.NextBoolean())
+			if (_rng.NextBoolean())
 			{
 				createHTunnel(map, start.X, end.X, start.Y);
 				createVTunnel(map, start.Y, end.Y, end.X);
@@ -58,13 +58,13 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="endY">Y-value of the end position of the tunnel.</param>
 		public void CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
 
-		static private void createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
+		private static void createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
 		{
 			for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
 				map[x, yPos] = true;
 		}
 
-		static private void createVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
+		private static void createVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
 		{
 			for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
 				map[xPos, y] = true;

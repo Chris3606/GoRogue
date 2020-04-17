@@ -14,7 +14,7 @@ namespace GoRogue.MapViews
 	/// </remarks>
 	/// <typeparam name="T1">The type of your underlying data.</typeparam>
 	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
-	abstract public class SettableTranslationMap<T1, T2> : ISettableMapView<T2>
+	public abstract class SettableTranslationMap<T1, T2> : ISettableMapView<T2>
 	{
 		/// <summary>
 		/// Constructor. Takes an existing map view to create a view from.

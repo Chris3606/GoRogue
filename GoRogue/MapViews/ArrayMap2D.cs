@@ -137,7 +137,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="other"/>
 		/// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-		public bool Equals(ArrayMap2D<T> other) => !ReferenceEquals(other, null) && _array == other._array;
+		public bool Equals(ArrayMap2D<T> other) => other is object && _array == other._array;
 
 		/// <summary>
 		/// Returns a hash-value for this object.

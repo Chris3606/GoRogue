@@ -7,7 +7,7 @@ namespace GoRogue.Random
 	/// <summary>
 	/// Defines functions that assist in dealing with RNG distributions.
 	/// </summary>
-	static public class DistributionHelpers
+	public static class DistributionHelpers
 	{
 		/// <summary>
 		/// Creates a normal distribution based on a lower and upper value, and a distance to place
@@ -25,7 +25,7 @@ namespace GoRogue.Random
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
-		static public NormalDistribution CreateNormalDistribution(double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
+		public static NormalDistribution CreateNormalDistribution(double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
 			=> CreateNormalDistribution(new XorShift128Generator(), lower, upper, deviationsFromMean);
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace GoRogue.Random
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
-		static public NormalDistribution CreateNormalDistribution(uint seed, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
+		public static NormalDistribution CreateNormalDistribution(uint seed, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
 			=> CreateNormalDistribution(new XorShift128Generator(seed), lower, upper, deviationsFromMean);
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace GoRogue.Random
 		/// upper values given, and the lower and upper values are exatly the specified number of
 		/// deviations away from the mean.
 		/// </returns>
-		static public NormalDistribution CreateNormalDistribution(IGenerator? generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
+		public static NormalDistribution CreateNormalDistribution(IGenerator? generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
 		{
 			if (generator == null)
 				generator = SingletonRandom.DefaultRNG;

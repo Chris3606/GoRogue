@@ -33,18 +33,13 @@ namespace GoRogue.DiceNotation.Terms
 		/// </summary>
 		/// <param name="rng">The rng to use, passed to other terms.</param>
 		/// <returns>The result of adding <see cref="Term1"/> and <see cref="Term2"/>.</returns>
-		public int GetResult(IGenerator rng)
-		{
-			return Term1.GetResult(rng) + Term2.GetResult(rng);
-		}
+		public int GetResult(IGenerator rng) => Term1.GetResult(rng) + Term2.GetResult(rng);
 
-		/// <summary>
-		/// Converts to a parenthesized string.
-		/// </summary>
-		/// <returns>A parenthesized string representing the term.</returns>
-		public override string ToString()
-		{
-			return "(" + Term1 + "+" + Term2 + ")";
-		}
+        /// <summary>
+        /// Converts to a parenthesized string.
+        /// </summary>
+        /// <returns>A parenthesized string representing the term.</returns>
+        public override string ToString() => $"({Term1}+{Term2})";
+
 	}
 }

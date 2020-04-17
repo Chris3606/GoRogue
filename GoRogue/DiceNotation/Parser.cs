@@ -9,7 +9,7 @@ namespace GoRogue.DiceNotation
 	public class Parser : IParser
 	{
 		// Defines operator priorities
-		private static Dictionary<char, int> operatorPrecedence = new Dictionary<char, int>()
+		private static readonly Dictionary<char, int> s_operatorPrecedence = new Dictionary<char, int>()
 		{
 			['('] = 1,
 			['+'] = 2,
@@ -91,11 +91,11 @@ namespace GoRogue.DiceNotation
 						case "k":
 							op2 = operands.Pop();
 							op1 = operands.Pop();
-							var diceOp = op1 as DiceTerm; // Must be preceded by a dice term
-							if (diceOp == null)
-								throw new Exceptions.InvalidSyntaxException();
+                            // Must be preceded by a dice term
+                            if (!(op1 is DiceTerm diceOp))
+                                throw new Exceptions.InvalidSyntaxException();
 
-							operands.Push(new KeepTerm(op2, diceOp));
+                            operands.Push(new KeepTerm(op2, diceOp));
 							break;
 					}
 				}
@@ -140,9 +140,9 @@ namespace GoRogue.DiceNotation
 							op = operators.Pop();
 						}
 					}
-					else if (operatorPrecedence.ContainsKey(infix[charIndex]))
+					else if (s_operatorPrecedence.ContainsKey(infix[charIndex]))
 					{
-						while (operators.Count > 0 && operatorPrecedence[operators.Peek()] >= operatorPrecedence[infix[charIndex]])
+						while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >= s_operatorPrecedence[infix[charIndex]])
 						{
 							output.Add(operators.Pop().ToString());
 						}

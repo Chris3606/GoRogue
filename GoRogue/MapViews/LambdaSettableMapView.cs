@@ -16,10 +16,10 @@ namespace GoRogue.MapViews
 	/// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
 	public sealed class LambdaSettableMapView<T> : ISettableMapView<T>
 	{
-		private Func<int> heightGetter;
-		private Func<Point, T> valueGetter;
-		private Action<Point, T> valueSetter;
-		private Func<int> widthGetter;
+		private readonly Func<int> _heightGetter;
+		private readonly Func<Point, T> _valueGetter;
+		private readonly Action<Point, T> _valueSetter;
+		private readonly Func<int> _widthGetter;
 
 		/// <summary>
 		/// Constructor. Takes the width and height of the map, and the functions to use to
@@ -66,21 +66,21 @@ namespace GoRogue.MapViews
 		/// </param>
 		public LambdaSettableMapView(Func<int> widthGetter, Func<int> heightGetter, Func<Point, T> valueGetter, Action<Point, T> valueSetter)
 		{
-			this.widthGetter = widthGetter;
-			this.heightGetter = heightGetter;
-			this.valueGetter = valueGetter;
-			this.valueSetter = valueSetter;
+			_widthGetter = widthGetter;
+			_heightGetter = heightGetter;
+			_valueGetter = valueGetter;
+			_valueSetter = valueSetter;
 		}
 
 		/// <summary>
 		/// The height of the map being represented.
 		/// </summary>
-		public int Height { get => heightGetter(); }
+		public int Height { get => _heightGetter(); }
 
 		/// <summary>
 		/// The width of the map being represented.
 		/// </summary>
-		public int Width { get => widthGetter(); }
+		public int Width { get => _widthGetter(); }
 
 		/// <summary>
 		/// Given an 1D-array-style index, determines the position associated with that index, and
@@ -94,8 +94,8 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public T this[int index1D]
 		{
-			get => valueGetter(Point.FromIndex(index1D, Width));
-			set => valueSetter(Point.FromIndex(index1D, Width), value);
+			get => _valueGetter(Point.FromIndex(index1D, Width));
+			set => _valueSetter(Point.FromIndex(index1D, Width), value);
 		}
 
 		/// <summary>
@@ -110,8 +110,8 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public T this[int x, int y]
 		{
-			get => valueGetter(new Point(x, y));
-			set => valueSetter(new Point(x, y), value);
+			get => _valueGetter(new Point(x, y));
+			set => _valueSetter(new Point(x, y), value);
 		}
 
 		/// <summary>
@@ -125,8 +125,8 @@ namespace GoRogue.MapViews
 		/// </returns>
 		public T this[Point pos]
 		{
-			get => valueGetter(pos);
-			set => valueSetter(pos, value);
+			get => _valueGetter(pos);
+			set => _valueSetter(pos, value);
 		}
 
 		/// <summary>

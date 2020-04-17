@@ -15,16 +15,16 @@ namespace GoRogue.Random
 	/// </remarks>
 	public class KnownSeriesGenerator : IGenerator
 	{
-		private int boolIndex;
-		private List<bool> boolSeries;
-		private int byteIndex;
-		private List<byte> byteSeries;
-		private int doubleIndex;
-		private List<double> doubleSeries;
-		private int intIndex;
-		private List<int> intSeries;
-		private int uintIndex;
-		private List<uint> uintSeries;
+		private int _boolIndex;
+		private readonly List<bool> _boolSeries;
+		private int _byteIndex;
+		private readonly List<byte> _byteSeries;
+		private int _doubleIndex;
+		private readonly List<double> _doubleSeries;
+		private int _intIndex;
+		private readonly List<int> _intSeries;
+		private int _uintIndex;
+		private readonly List<uint> _uintSeries;
 
 		/// <summary>
 		/// Creates a new known series generator, with parameters to indicate which series to use for
@@ -35,29 +35,29 @@ namespace GoRogue.Random
 		public KnownSeriesGenerator(IEnumerable<int>? intSeries = null, IEnumerable<uint>? uintSeries = null, IEnumerable<double>? doubleSeries = null, IEnumerable<bool>? boolSeries = null, IEnumerable<byte>? byteSeries = null)
 		{
 			if (intSeries == null)
-				this.intSeries = new List<int>();
+				_intSeries = new List<int>();
 			else
-				this.intSeries = intSeries.ToList();
+				_intSeries = intSeries.ToList();
 
 			if (uintSeries == null)
-				this.uintSeries = new List<uint>();
+				_uintSeries = new List<uint>();
 			else
-				this.uintSeries = uintSeries.ToList();
+				_uintSeries = uintSeries.ToList();
 
 			if (doubleSeries == null)
-				this.doubleSeries = new List<double>();
+				_doubleSeries = new List<double>();
 			else
-				this.doubleSeries = doubleSeries.ToList();
+				_doubleSeries = doubleSeries.ToList();
 
 			if (boolSeries == null)
-				this.boolSeries = new List<bool>();
+				_boolSeries = new List<bool>();
 			else
-				this.boolSeries = boolSeries.ToList();
+				_boolSeries = boolSeries.ToList();
 
 			if (byteSeries == null)
-				this.byteSeries = new List<byte>();
+				_byteSeries = new List<byte>();
 			else
-				this.byteSeries = byteSeries.ToList();
+				_byteSeries = byteSeries.ToList();
 		}
 
 		/// <summary>
@@ -86,7 +86,7 @@ namespace GoRogue.Random
 		/// <param name="minValue">Minimum allowable number that can be returned.</param>
 		/// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
 		/// <returns>The appropriate number from the series.</returns>
-		public int Next(int minValue, int maxValue) => returnIfRange(minValue, maxValue, intSeries, ref intIndex);
+		public int Next(int minValue, int maxValue) => returnIfRange(minValue, maxValue, _intSeries, ref _intIndex);
 
 		/// <summary>
 		/// Gets the next integer in the underlying series. If the integer is equal to <see cref="int.MaxValue"/>,
@@ -99,7 +99,7 @@ namespace GoRogue.Random
 		/// Returns the next boolean in the underlying series.
 		/// </summary>
 		/// <returns>The next boolean value in the underlying series.</returns>
-		public bool NextBoolean() => returnValueFrom(boolSeries, ref boolIndex);
+		public bool NextBoolean() => returnValueFrom(_boolSeries, ref _boolIndex);
 
         /// <summary>
 		/// Fills the specified buffer with values from the underlying byte series.
@@ -108,7 +108,7 @@ namespace GoRogue.Random
 		public void NextBytes(byte[] buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
-                buffer[i] = returnValueFrom(byteSeries, ref byteIndex);
+                buffer[i] = returnValueFrom(_byteSeries, ref _byteIndex);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace GoRogue.Random
         public void NextBytes(Span<byte> buffer)
 		{
 			for (int i = 0; i < buffer.Length; i++)
-				buffer[i] = returnValueFrom(byteSeries, ref byteIndex);
+				buffer[i] = returnValueFrom(_byteSeries, ref _byteIndex);
 		}
 
 		/// <summary>
@@ -143,13 +143,13 @@ namespace GoRogue.Random
 		/// <param name="minValue">Minimum value for the returned number, inclusive.</param>
 		/// <param name="maxValue">Maximum value for the returned number, exclusive.</param>
 		/// <returns>The next double in the underlying series.</returns>
-		public double NextDouble(double minValue, double maxValue) => returnIfRange(minValue, maxValue, doubleSeries, ref doubleIndex);
+		public double NextDouble(double minValue, double maxValue) => returnIfRange(minValue, maxValue, _doubleSeries, ref _doubleIndex);
 
 		/// <summary>
 		/// Returns the next integer in the underlying series. If the value is less than 0, throws an exception.
 		/// </summary>
 		/// <returns>The next integer in the underlying series.</returns>
-		public int NextInclusiveMaxValue() => returnIfRangeInclusive(0, int.MaxValue, intSeries, ref intIndex);
+		public int NextInclusiveMaxValue() => returnIfRangeInclusive(0, int.MaxValue, _intSeries, ref _intIndex);
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is equal to
@@ -173,7 +173,7 @@ namespace GoRogue.Random
 		/// <param name="minValue">The minimum value for the returned number, inclusive.</param>
 		/// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
 		/// <returns>The next unsigned integer in the underlying series.</returns>
-		public uint NextUInt(uint minValue, uint maxValue) => returnIfRange(minValue, maxValue, uintSeries, ref uintIndex);
+		public uint NextUInt(uint minValue, uint maxValue) => returnIfRange(minValue, maxValue, _uintSeries, ref _uintIndex);
 
 		/// <summary>
 		/// Returns the next unsigned integer in the underlying series. If the value is equal to
@@ -186,7 +186,7 @@ namespace GoRogue.Random
 		/// Returns the next unsigned integer in the underlying series.
 		/// </summary>
 		/// <returns>The next unsinged integer in the underlying series.</returns>
-		public uint NextUIntInclusiveMaxValue() => returnIfRangeInclusive((uint)0, uint.MaxValue, uintSeries, ref uintIndex);
+		public uint NextUIntInclusiveMaxValue() => returnIfRangeInclusive((uint)0, uint.MaxValue, _uintSeries, ref _uintIndex);
 
 		/// <summary>
 		/// Resets the random number generator, such that it starts returning values from the
@@ -195,11 +195,11 @@ namespace GoRogue.Random
 		/// <returns>True, since the reset cannot fail.</returns>
 		public bool Reset()
 		{
-			intIndex = 0;
-			uintIndex = 0;
-			doubleIndex = 0;
-			boolIndex = 0;
-			byteIndex = 0;
+			_intIndex = 0;
+			_uintIndex = 0;
+			_doubleIndex = 0;
+			_boolIndex = 0;
+			_byteIndex = 0;
 
 			return true;
 		}

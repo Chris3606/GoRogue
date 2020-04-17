@@ -10,10 +10,10 @@ namespace GoRogue.Factories
     public class ItemNotDefinedException : Exception
     {
         /// <summary>
-        /// Creates an exception with no message.
+        /// Creates an exception with default message.
         /// </summary>
         public ItemNotDefinedException()
-            : base()
+            : base("A blueprint ID was used that has not been added to the factory.")
         { }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace GoRogue.Factories
         /// </summary>
         /// <param name="factoryId">Factory id that caused the error.</param>
         public ItemNotDefinedException(string factoryId)
-            : base($"The item '{factoryId}' has not been added to this factory.")
+            : base($"The blueprint ID '{factoryId}' was used but has not been added to the factory.")
         { }
     }
 }

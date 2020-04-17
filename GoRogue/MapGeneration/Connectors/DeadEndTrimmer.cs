@@ -125,8 +125,5 @@ namespace GoRogue.MapGeneration.Connectors
 
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
-
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		private static bool PercentageCheck(double outOfHundred, IGenerator rng) => outOfHundred > 0d && rng.NextDouble() < outOfHundred;
 	}
 }

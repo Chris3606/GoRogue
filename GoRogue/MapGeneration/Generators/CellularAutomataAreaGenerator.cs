@@ -45,7 +45,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// result in "breaking up" large areas will be run before switching to the more standard
 		/// nearest neighbors version. Recommended to be in range [2, 7] (4 is used in roguebasin article).
 		/// </param>
-		static public void Generate(ISettableMapView<bool> map, IGenerator? rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
+		public static void Generate(ISettableMapView<bool> map, IGenerator? rng = null, int fillProbability = 40, int totalIterations = 7, int cutoffBigAreaFill = 4)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -77,7 +77,7 @@ namespace GoRogue.MapGeneration.Generators
 					map[pos] = true;
 		}
 
-		static private void cellAutoBigAreaAlgo(ISettableMapView<bool> map)
+		private static void cellAutoBigAreaAlgo(ISettableMapView<bool> map)
 		{
 			var oldMap = new ArrayMap<bool>(map.Width, map.Height);
 
@@ -98,7 +98,7 @@ namespace GoRogue.MapGeneration.Generators
 				}
 		}
 
-		static private void cellAutoNearestNeighborsAlgo(ISettableMapView<bool> map)
+		private static void cellAutoNearestNeighborsAlgo(ISettableMapView<bool> map)
 		{
 			var oldMap = new ArrayMap<bool>(map.Width, map.Height);
 
@@ -119,7 +119,7 @@ namespace GoRogue.MapGeneration.Generators
 				}
 		}
 
-		static private int countWallsNear(ISettableMapView<bool> mapToUse, int posX, int posY, int distance)
+		private static int countWallsNear(ISettableMapView<bool> mapToUse, int posX, int posY, int distance)
 		{
 			int count = 0;
 			int xMin = Math.Max(posX - distance, 0);
@@ -140,7 +140,7 @@ namespace GoRogue.MapGeneration.Generators
 			return count;
 		}
 
-		static private void fillToRectangle(ISettableMapView<bool> map)
+		private static void fillToRectangle(ISettableMapView<bool> map)
 		{
 			for (int x = 0; x < map.Width; x++)
 			{
@@ -155,7 +155,7 @@ namespace GoRogue.MapGeneration.Generators
 			}
 		}
 
-		static private void randomlyFillCells(ISettableMapView<bool> map, IGenerator rng, int fillProbability)
+		private static void randomlyFillCells(ISettableMapView<bool> map, IGenerator rng, int fillProbability)
 		{
 			for (int x = 0; x < map.Width; x++)
 				for (int y = 0; y < map.Height; y++)

@@ -8,7 +8,7 @@ namespace GoRogue.DiceNotation.Terms
 	/// </summary>
 	public class DiceTerm : ITerm
 	{
-		private List<int> _diceResults;
+		private readonly List<int> _diceResults;
 
 		/// <summary>
 		/// Constructor. Takes the terms representing multiplicity and number of sides.
@@ -82,13 +82,10 @@ namespace GoRogue.DiceNotation.Terms
 			return sum;
 		}
 
-		/// <summary>
-		/// Gets a parenthesized string representation of the dice term, eg (2d6).
-		/// </summary>
-		/// <returns>A parenthesized representation of the term.</returns>
-		public override string ToString()
-		{
-			return "(" + Multiplicity + "d" + Sides + ")";
-		}
+        /// <summary>
+        /// Gets a parenthesized string representation of the dice term, eg (2d6).
+        /// </summary>
+        /// <returns>A parenthesized representation of the term.</returns>
+        public override string ToString() => $"({Multiplicity}d{Sides})";
 	}
 }

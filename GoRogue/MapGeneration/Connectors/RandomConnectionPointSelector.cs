@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration.Connectors
 	/// </summary>
 	public class RandomConnectionPointSelector : IAreaConnectionPointSelector
 	{
-		private IGenerator rng;
+		private readonly IGenerator _rng;
 
 		/// <summary>
 		/// Constructor. Specifies the RNG to use, or null if the default RNG should be used.
@@ -20,9 +20,9 @@ namespace GoRogue.MapGeneration.Connectors
 		public RandomConnectionPointSelector(IGenerator? rng = null)
 		{
 			if (rng == null)
-				this.rng = SingletonRandom.DefaultRNG;
+				_rng = SingletonRandom.DefaultRNG;
 			else
-				this.rng = rng;
+				_rng = rng;
 		}
 
 		/// <summary>
@@ -32,6 +32,6 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="area2">Second area to connect</param>
 		/// <returns>A tuple containing the selected positions.</returns>
 		public Tuple<Point, Point> SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2) =>
-			new Tuple<Point, Point>(area1.Positions.RandomItem(rng), area2.Positions.RandomItem(rng));
+			new Tuple<Point, Point>(area1.Positions.RandomItem(_rng), area2.Positions.RandomItem(_rng));
 	}
 }

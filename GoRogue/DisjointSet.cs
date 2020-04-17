@@ -15,9 +15,9 @@ namespace GoRogue
 	[Serializable]
 	public class DisjointSet : IReadOnlyDisjointSet
 	{
-		private int[] parents;
+		private readonly int[] _parents;
 
-		private int[] sizes;
+		private readonly int[] _sizes;
 
 		/// <summary>
 		/// Constructor. The disjoint set will contain all values in range [0, <paramref name="size"/> - 1].
@@ -26,13 +26,13 @@ namespace GoRogue
 		public DisjointSet(int size)
 		{
 			Count = size;
-			parents = new int[size];
-			sizes = new int[size];
+			_parents = new int[size];
+			_sizes = new int[size];
 
 			for (int i = 0; i < size; i++)
 			{
-				parents[i] = i;
-				sizes[i] = 1;
+				_parents[i] = i;
+				_sizes[i] = 1;
 			}
 		}
 
@@ -56,10 +56,10 @@ namespace GoRogue
 		public int Find(int obj)
 		{
 			// Find base parent, and path compress
-			if (obj != parents[obj])
-				parents[obj] = Find(parents[obj]);
+			if (obj != _parents[obj])
+				_parents[obj] = Find(_parents[obj]);
 
-			return parents[obj];
+			return _parents[obj];
 		}
 
 		/// <summary>
@@ -88,15 +88,15 @@ namespace GoRogue
 			if (i == j) return; // Two elements are already in same set; same parent
 
 			// Always append smaller set to larger set
-			if (sizes[i] <= sizes[j])
+			if (_sizes[i] <= _sizes[j])
 			{
-				parents[i] = j;
-				sizes[j] += sizes[i];
+				_parents[i] = j;
+				_sizes[j] += _sizes[i];
 			}
 			else
 			{
-				parents[j] = i;
-				sizes[i] += sizes[j];
+				_parents[j] = i;
+				_sizes[i] += _sizes[j];
 			}
 			Count--;
 		}
@@ -110,14 +110,16 @@ namespace GoRogue
 		{
 			var values = new Dictionary<int, List<int>>();
 
-			for (int i = 0; i < parents.Length; i++)
+			for (int i = 0; i < _parents.Length; i++)
 			{
 				int parentOf = findNoCompression(i);
 				if (!values.ContainsKey(parentOf))
 				{
-					values[parentOf] = new List<int>();
-					values[parentOf].Add(parentOf); // Parent is the first element in each child list
-				}
+                    values[parentOf] = new List<int>
+                    {
+                        parentOf // Parent is the first element in each child list
+                    };
+                }
 
 				if (parentOf != i) // We already added the parent, so don't double add
 					values[parentOf].Add(i);
@@ -129,8 +131,8 @@ namespace GoRogue
 		// Used to ensure ToString doesn't affect the performance of future operations
 		private int findNoCompression(int obj)
 		{
-			while (parents[obj] != obj)
-				obj = parents[obj];
+			while (_parents[obj] != obj)
+				obj = _parents[obj];
 
 			return obj;
 		}

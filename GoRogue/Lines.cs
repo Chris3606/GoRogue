@@ -62,7 +62,7 @@ namespace GoRogue
 		/// An IEnumerable of every point, in order, closest to a line between the two points
 		/// specified (according to the algorithm given).
 		/// </returns>
-		static public IEnumerable<Point> Get(Point start, Point end, Lines.Algorithm type = Algorithm.Bresenham) => Get(start.X, start.Y, end.X, end.Y, type);
+		public static IEnumerable<Point> Get(Point start, Point end, Lines.Algorithm type = Algorithm.Bresenham) => Get(start.X, start.Y, end.X, end.Y, type);
 
 		/// <summary>
 		/// Returns an IEnumerable of every point, in order, closest to a line between the two points
@@ -78,7 +78,7 @@ namespace GoRogue
 		/// An IEnumerable of every point, in order, closest to a line between the two points
 		/// specified (according to the algorithm given).
 		/// </returns>
-		static public IEnumerable<Point> Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Algorithm.Bresenham)
+		public static IEnumerable<Point> Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Algorithm.Bresenham)
 		{
 			switch (type)
 			{
@@ -103,7 +103,7 @@ namespace GoRogue
 			}
 		}
 
-		static private IEnumerable<Point> bresenham(int startX, int startY, int endX, int endY)
+		private static IEnumerable<Point> bresenham(int startX, int startY, int endX, int endY)
 		{
 			bool steep = Math.Abs(endY - startY) > Math.Abs(endX - startX);
 			if (steep)
@@ -141,7 +141,7 @@ namespace GoRogue
 			}
 		}
 
-		static private IEnumerable<Point> dda(int startX, int startY, int endX, int endY)
+		private static IEnumerable<Point> dda(int startX, int startY, int endX, int endY)
 		{
 			int dx = endX - startX;
 			int dy = endY - startY;
@@ -151,11 +151,12 @@ namespace GoRogue
 
 			// Calculate octant value
 			int octant = ((dy < 0) ? 4 : 0) | ((dx < 0) ? 2 : 0) | ((ny > nx) ? 1 : 0);
-			int move = 0;
-			int frac = 0;
-			int mn = Math.Max(nx, ny);
+            int frac = 0;
+            int mn = Math.Max(nx, ny);
 
-			if (mn == 0)
+            int move;
+
+            if (mn == 0)
 			{
 				yield return new Point(startX, startY);
 				yield break;
@@ -185,59 +186,59 @@ namespace GoRogue
 				yield break;
 			}
 
-			switch (octant)
-			{
-				case 0: // +x, +y
-					move = (ny << 16) / nx;
-					for (int primary = startX; primary <= endX; primary++, frac += move)
-						yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
-					break;
+            switch (octant)
+            {
+                case 0: // +x, +y
+                    move = (ny << 16) / nx;
+                    for (int primary = startX; primary <= endX; primary++, frac += move)
+                        yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
+                    break;
 
-				case 1:
-					move = (nx << 16) / ny;
-					for (int primary = startY; primary <= endY; primary++, frac += move)
-						yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
-					break;
+                case 1:
+                    move = (nx << 16) / ny;
+                    for (int primary = startY; primary <= endY; primary++, frac += move)
+                        yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
+                    break;
 
-				case 2: // -x, +y
-					move = (ny << 16) / nx;
-					for (int primary = startX; primary >= endX; primary--, frac += move)
-						yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
-					break;
+                case 2: // -x, +y
+                    move = (ny << 16) / nx;
+                    for (int primary = startX; primary >= endX; primary--, frac += move)
+                        yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
+                    break;
 
-				case 3:
-					move = (nx << 16) / ny;
-					for (int primary = startY; primary <= endY; primary++, frac += move)
-						yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
-					break;
+                case 3:
+                    move = (nx << 16) / ny;
+                    for (int primary = startY; primary <= endY; primary++, frac += move)
+                        yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
+                    break;
 
-				case 6: // -x, -y
-					move = (ny << 16) / nx;
-					for (int primary = startX; primary >= endX; primary--, frac += move)
-						yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
-					break;
+                case 6: // -x, -y
+                    move = (ny << 16) / nx;
+                    for (int primary = startX; primary >= endX; primary--, frac += move)
+                        yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
+                    break;
 
-				case 7:
-					move = (nx << 16) / ny;
-					for (int primary = startY; primary >= endY; primary--, frac += move)
-						yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
-					break;
+                case 7:
+                    move = (nx << 16) / ny;
+                    for (int primary = startY; primary >= endY; primary--, frac += move)
+                        yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
+                    break;
 
-				case 4: // +x, -y
-					move = (ny << 16) / nx;
-					for (int primary = startX; primary <= endX; primary++, frac += move)
-						yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
-					break;
+                case 4: // +x, -y
+                    move = (ny << 16) / nx;
+                    for (int primary = startX; primary <= endX; primary++, frac += move)
+                        yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
+                    break;
 
-				case 5:
-					move = (nx << 16) / ny;
-					for (int primary = startY; primary >= endY; primary--, frac += move)
-						yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
-					break;
-			}
-		}
+                case 5:
+                    move = (nx << 16) / ny;
+                    for (int primary = startY; primary >= endY; primary--, frac += move)
+                        yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
+                    break;
+            }
+        }
 
-		static private IEnumerable<Point> ortho(int startX, int startY, int endX, int endY)
+		private static IEnumerable<Point> ortho(int startX, int startY, int endX, int endY)
 		{
 			int dx = endX - startX;
 			int dy = endY - startY;

@@ -23,14 +23,14 @@ namespace GoRogue.MapViews
 	/// <typeparam name="T">The type being exposed by the Viewport.</typeparam>
 	public class Viewport<T> : IMapView<T>
 	{
-		private BoundedRectangle _boundedRect;
+		private readonly BoundedRectangle _boundedRect;
 
-		/// <summary>
-		/// Constructor. Takes the parent map view, and the initial subsection of that map view to represent.
-		/// </summary>
-		/// <param name="mapView">The map view being represented.</param>
-		/// <param name="viewArea">The initial subsection of that map to represent.</param>
-		public Viewport(IMapView<T> mapView, Rectangle viewArea)
+        /// <summary>
+        /// Constructor. Takes the parent map view, and the initial subsection of that map view to represent.
+        /// </summary>
+        /// <param name="mapView">The map view being represented.</param>
+        /// <param name="viewArea">The initial subsection of that map to represent.</param>
+        public Viewport(IMapView<T> mapView, Rectangle viewArea)
 		{
 			MapView = mapView;
 			_boundedRect = new BoundedRectangle(viewArea, MapView.Bounds());

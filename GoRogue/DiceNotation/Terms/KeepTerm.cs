@@ -8,8 +8,8 @@ namespace GoRogue.DiceNotation.Terms
 	/// </summary>
 	public class KeepTerm : ITerm
 	{
-		private DiceTerm diceTerm;
-		private ITerm keep;
+		private readonly DiceTerm _diceTerm;
+		private readonly ITerm _keep;
 
 		/// <summary>
 		/// Constructor. Takes a term representing the number of dice to keep, and the dice term to
@@ -19,8 +19,8 @@ namespace GoRogue.DiceNotation.Terms
 		/// <param name="diceTerm">The dice term to operate on.</param>
 		public KeepTerm(ITerm keep, DiceTerm diceTerm)
 		{
-			this.diceTerm = diceTerm;
-			this.keep = keep;
+			_diceTerm = diceTerm;
+			_keep = keep;
 		}
 
 		/// <summary>
@@ -34,26 +34,23 @@ namespace GoRogue.DiceNotation.Terms
 		/// </returns>
 		public int GetResult(IGenerator rng)
 		{
-			int keepVal = keep.GetResult(rng);
+			int keepVal = _keep.GetResult(rng);
 
 			if (keepVal < 0)
 				throw new Exceptions.InvalidChooseException();
 
-			diceTerm.GetResult(rng); // Roll so we can check chooses
+			_diceTerm.GetResult(rng); // Roll so we can check chooses
 
-			if (keepVal > diceTerm.LastMultiplicity)
+			if (keepVal > _diceTerm.LastMultiplicity)
 				throw new Exceptions.InvalidChooseException();
 
-			return diceTerm.DiceResults.OrderByDescending(value => value).Take(keepVal).Sum();
+			return _diceTerm.DiceResults.OrderByDescending(value => value).Take(keepVal).Sum();
 		}
 
-		/// <summary>
-		/// Returns a parenthesized string representing the term -- eg (4d6k3) or (2d6k2)
-		/// </summary>
-		/// <returns>A parenthesized string representing the term</returns>
-		public override string ToString()
-		{
-			return "(" + diceTerm + "k" + keep + ")";
-		}
+        /// <summary>
+        /// Returns a parenthesized string representing the term -- eg (4d6k3) or (2d6k2)
+        /// </summary>
+        /// <returns>A parenthesized string representing the term</returns>
+        public override string ToString() => $"({_diceTerm}k{_keep})";
 	}
 }

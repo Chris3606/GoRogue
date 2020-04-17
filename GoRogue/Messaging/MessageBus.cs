@@ -10,8 +10,8 @@ namespace GoRogue.Messaging
 	/// </summary>
 	public class MessageBus
 	{
-		private Dictionary<Type, List<ISubscriberRef>> _subscriberRefs;
-		private Dictionary<Type, Type[]> _typeTreeCache;
+		private readonly Dictionary<Type, List<ISubscriberRef>> _subscriberRefs;
+		private readonly Dictionary<Type, Type[]> _typeTreeCache;
 
 		/// <summary>
 		/// Number of subscribers currently listening on this message bus.

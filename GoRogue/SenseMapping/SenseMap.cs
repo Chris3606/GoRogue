@@ -36,21 +36,21 @@ namespace GoRogue.SenseMapping
 	/// </remarks>
 	public class SenseMap : IReadOnlySenseMap, IEnumerable<double>, IMapView<double>
 	{
-		private List<SenseSource> _senseSources;
+		private readonly List<SenseSource> _senseSources;
 
-		private HashSet<Point> currentSenseMap;
+		private HashSet<Point> _currentSenseMap;
 
-		private int lastHeight;
+		private int _lastHeight;
 
-		private int lastWidth;
+		private int _lastWidth;
 
-		private HashSet<Point> previousSenseMap;
+		private HashSet<Point> _previousSenseMap;
 
-		private IMapView<double> resMap;
+		private readonly IMapView<double> _resMap;
 
 		// Making these 1D didn't really affect performance that much, though may be worth it on
 		// large maps
-		private double[,] senseMap;
+		private double[,] _senseMap;
 
 		/// <summary>
 		/// Constructor. Takes the resistance map to use for calculations.
@@ -58,41 +58,41 @@ namespace GoRogue.SenseMapping
 		/// <param name="resMap">The resistance map to use for calculations.</param>
 		public SenseMap(IMapView<double> resMap)
 		{
-			this.resMap = resMap;
-			senseMap = new double[resMap.Width, resMap.Height];
-			lastWidth = resMap.Width;
-			lastHeight = resMap.Height;
+			_resMap = resMap;
+			_senseMap = new double[resMap.Width, resMap.Height];
+			_lastWidth = resMap.Width;
+			_lastHeight = resMap.Height;
 
 			_senseSources = new List<SenseSource>();
 
-			previousSenseMap = new HashSet<Point>();
-			currentSenseMap = new HashSet<Point>();
+			_previousSenseMap = new HashSet<Point>();
+			_currentSenseMap = new HashSet<Point>();
 		}
 
 		/// <summary>
 		/// IEnumerable of only positions currently "in" the SenseMap, eg. all positions that have a
 		/// value other than 0.0.
 		/// </summary>
-		public IEnumerable<Point> CurrentSenseMap => currentSenseMap;
+		public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
 
 		/// <summary>
 		/// Height of sense map.
 		/// </summary>
-		public int Height => resMap.Height;
+		public int Height => _resMap.Height;
 
 		/// <summary>
 		/// IEnumerable of positions that DO have a non-zero value in the sense map as of the most
 		/// current <see cref="Calculate"/> call, but DID NOT have a non-zero value after the previous time
 		/// <see cref="Calculate"/> was called.
 		/// </summary>
-		public IEnumerable<Point> NewlyInSenseMap => currentSenseMap.Where(pos => !previousSenseMap.Contains(pos));
+		public IEnumerable<Point> NewlyInSenseMap => _currentSenseMap.Where(pos => !_previousSenseMap.Contains(pos));
 
 		/// <summary>
 		/// IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the
 		/// most current <see cref="Calculate"/> call, but DID have a non-zero value after the previous time
 		/// <see cref="Calculate"/> was called.
 		/// </summary>
-		public IEnumerable<Point> NewlyOutOfSenseMap => previousSenseMap.Where(pos => !currentSenseMap.Contains(pos));
+		public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !_currentSenseMap.Contains(pos));
 
 		/// <summary>
 		/// Read-only list of all sources currently considered part of the SenseMap. Some may have their
@@ -104,21 +104,21 @@ namespace GoRogue.SenseMapping
 		/// <summary>
 		/// Width of the sense map.
 		/// </summary>
-		public int Width => resMap.Width;
+		public int Width => _resMap.Width;
 
 		/// <summary>
 		/// Returns the "sensory value" for the given position.
 		/// </summary>
 		/// <param name="index1D">Position to return the sensory value for, as a 1d-index-style value.</param>
 		/// <returns>The sense-map value for the given position.</returns>
-		public double this[int index1D] => senseMap[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
+		public double this[int index1D] => _senseMap[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
 
 		/// <summary>
 		/// Returns the "sensory value" for the given position.
 		/// </summary>
 		/// <param name="pos">The position to return the sensory value for.</param>
 		/// <returns>The sensory value for the given position.</returns>
-		public double this[Point pos] => senseMap[pos.X, pos.Y];
+		public double this[Point pos] => _senseMap[pos.X, pos.Y];
 
 		/// <summary>
 		/// Returns the "sensory value" for the given position.
@@ -126,7 +126,7 @@ namespace GoRogue.SenseMapping
 		/// <param name="x">X-Pointinate of the position to return the sensory value for.</param>
 		/// <param name="y">Y-Pointinate of the position to return the sensory value for.</param>
 		/// <returns>The sensory value for the given position.</returns>
-		public double this[int x, int y] => senseMap[x, y];
+		public double this[int x, int y] => _senseMap[x, y];
 
 		/// <summary>
 		/// Adds the given source to the list of sources. If the source has its
@@ -137,7 +137,7 @@ namespace GoRogue.SenseMapping
 		public void AddSenseSource(SenseSource senseSource)
 		{
 			_senseSources.Add(senseSource);
-			senseSource.resMap = resMap;
+			senseSource._resMap = _resMap;
 		}
 
 		/// <summary>
@@ -152,17 +152,17 @@ namespace GoRogue.SenseMapping
 		/// </summary>
 		public void Calculate()
 		{
-			if (lastWidth != resMap.Width || lastHeight != resMap.Height)
+			if (_lastWidth != _resMap.Width || _lastHeight != _resMap.Height)
 			{
-				senseMap = new double[resMap.Width, resMap.Height];
-				lastWidth = resMap.Width;
-				lastHeight = resMap.Height;
+				_senseMap = new double[_resMap.Width, _resMap.Height];
+				_lastWidth = _resMap.Width;
+				_lastHeight = _resMap.Height;
 			}
 			else
-				Array.Clear(senseMap, 0, senseMap.Length);
+				Array.Clear(_senseMap, 0, _senseMap.Length);
 
-			previousSenseMap = currentSenseMap;
-			currentSenseMap = new HashSet<Point>();
+			_previousSenseMap = _currentSenseMap;
+			_currentSenseMap = new HashSet<Point>();
 
 			if (_senseSources.Count > 1) // Probably not the proper condition, but useful for now.
 			{
@@ -177,7 +177,7 @@ namespace GoRogue.SenseMapping
 
 			// Flush sources to actual senseMap
 			foreach (var senseSource in _senseSources)
-				blitSenseSource(senseSource, senseMap, currentSenseMap, resMap);
+				blitSenseSource(senseSource, _senseMap, _currentSenseMap, _resMap);
 		}
 
 		/// <summary>
@@ -186,9 +186,9 @@ namespace GoRogue.SenseMapping
 		/// <returns>Enumerable of doubles (the sensory values).</returns>
 		public IEnumerator<double> GetEnumerator()
 		{
-			for (int y = 0; y < resMap.Height; y++)
-				for (int x = 0; x < resMap.Width; x++)
-					yield return senseMap[x, y];
+			for (int y = 0; y < _resMap.Height; y++)
+				for (int x = 0; x < _resMap.Width; x++)
+					yield return _senseMap[x, y];
 		}
 
 		// Warning about hidden overload intentionally disabled -- the two methods are equivalent but
@@ -214,11 +214,11 @@ namespace GoRogue.SenseMapping
 		{
 			string result = "";
 
-			for (int y = 0; y < resMap.Height; y++)
+			for (int y = 0; y < _resMap.Height; y++)
 			{
-				for (int x = 0; x < resMap.Width; x++)
+				for (int x = 0; x < _resMap.Width; x++)
 				{
-					if (senseMap[x, y] > 0.0)
+					if (_senseMap[x, y] > 0.0)
 						result += (isACenter(x, y)) ? center : sourceValue;
 					else
 						result += normal;
@@ -250,7 +250,7 @@ namespace GoRogue.SenseMapping
 		/// A string representation of the map, rounded to the given number of decimal places.
 		/// </returns>
 		public string ToString(int decimalPlaces)
-		=> senseMap.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+		=> _senseMap.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
 		/// <summary>
 		/// Generic enumerator.
@@ -270,7 +270,7 @@ namespace GoRogue.SenseMapping
 		public void RemoveSenseSource(SenseSource senseSource)
 		{
 			_senseSources.Remove(senseSource);
-			senseSource.resMap = null;
+			senseSource._resMap = null;
 		}
 
 		private bool isACenter(int x, int y)
@@ -310,7 +310,7 @@ namespace GoRogue.SenseMapping
 					Point gCur = gMin + c;
 					Point lCur = lMin + c;
 
-					destination[gCur.X, gCur.Y] = destination[gCur.X, gCur.Y] + source.light[lCur.X, lCur.Y]; // Add source values,
+					destination[gCur.X, gCur.Y] = destination[gCur.X, gCur.Y] + source._light[lCur.X, lCur.Y]; // Add source values,
 					if (destination[gCur.X, gCur.Y] > 0.0)
 						sourceMap.Add(gCur);
 				}

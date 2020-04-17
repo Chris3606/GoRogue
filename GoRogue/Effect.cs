@@ -57,7 +57,7 @@ namespace GoRogue
 	/// <typeparam name="TTriggerArgs">
 	/// The type of the parameter that will be specified to the <see cref="Effect{T}.Trigger(T)"/> function when called.
 	/// </typeparam>
-	abstract public class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs
+	public abstract class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs
 	{
 #pragma warning disable RECS0108
 
@@ -146,7 +146,7 @@ namespace GoRogue
 		/// This function is called automatically when <see cref="Trigger"/> is called.
 		/// </summary>
 		/// <param name="e">Class containing all arguments <see cref="OnTrigger"/> requires to function.</param>
-		abstract protected void OnTrigger(TTriggerArgs? e);
+		protected abstract void OnTrigger(TTriggerArgs? e);
 
 		/// <summary>
 		/// Returns a string of the effect's name and duration.

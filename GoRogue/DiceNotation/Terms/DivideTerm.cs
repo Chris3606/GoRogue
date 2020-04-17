@@ -34,18 +34,12 @@ namespace GoRogue.DiceNotation.Terms
 		/// </summary>
 		/// <param name="rng">The rng to used -- passed to other terms.</param>
 		/// <returns>The result of evaluating <see cref="Term1"/> / <see cref="Term2"/>.</returns>
-		public int GetResult(IGenerator rng)
-		{
-			return (int)Math.Round((double)Term1.GetResult(rng) / Term2.GetResult(rng));
-		}
+		public int GetResult(IGenerator rng) => (int)Math.Round((double)Term1.GetResult(rng) / Term2.GetResult(rng));
 
-		/// <summary>
-		/// Returns a parenthesized string representing the operation.
-		/// </summary>
-		/// <returns>A parenthesized string representing the operation.</returns>
-		public override string ToString()
-		{
-			return "(" + Term1 + "/" + Term2 + ")";
-		}
+        /// <summary>
+        /// Returns a parenthesized string representing the operation.
+        /// </summary>
+        /// <returns>A parenthesized string representing the operation.</returns>
+        public override string ToString() => $"({Term1}/{Term2})";
 	}
 }

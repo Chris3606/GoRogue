@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration
 		/// </summary>
 		public IMapView<bool> Map;
 
-		private bool[,]? visited;
+		private bool[,]? _visited;
 
 		/// <summary>
 		/// Constructor.
@@ -39,7 +39,7 @@ namespace GoRogue.MapGeneration
 		public MapAreaFinder(IMapView<bool> map, AdjacencyRule adjacencyMethod)
 		{
 			Map = map;
-			visited = null;
+			_visited = null;
 			AdjacencyMethod = adjacencyMethod;
 		}
 
@@ -53,7 +53,7 @@ namespace GoRogue.MapGeneration
 		/// </param>
 		/// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
 		/// <returns>An IEnumerable of each (unique) map area.</returns>
-		static public IEnumerable<Area> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
+		public static IEnumerable<Area> MapAreasFor(IMapView<bool> map, AdjacencyRule adjacencyMethod)
 		{
 			var areaFinder = new MapAreaFinder(map, adjacencyMethod);
 			return areaFinder.MapAreas();
@@ -65,10 +65,10 @@ namespace GoRogue.MapGeneration
 		/// <returns>An IEnumerable of each (unique) map area.</returns>
 		public IEnumerable<Area> MapAreas()
 		{
-			if (visited == null || visited.GetLength(1) != Map.Height || visited.GetLength(0) != Map.Width)
-				visited = new bool[Map.Width, Map.Height];
+			if (_visited == null || _visited.GetLength(1) != Map.Height || _visited.GetLength(0) != Map.Width)
+				_visited = new bool[Map.Width, Map.Height];
 			else
-				Array.Clear(visited, 0, visited.Length);
+				Array.Clear(_visited, 0, _visited.Length);
 
 			for (int x = 0; x < Map.Width; x++)
 				for (int y = 0; y < Map.Height; y++)
@@ -93,18 +93,18 @@ namespace GoRogue.MapGeneration
 			while (stack.Count != 0)
 			{
 				position = stack.Pop();
-				if (visited![position.X, position.Y] || !Map[position]) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
+				if (_visited![position.X, position.Y] || !Map[position]) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
 					continue;
 
 				area.Add(position);
-				visited[position.X, position.Y] = true;
+				_visited[position.X, position.Y] = true;
 
 				foreach (var c in AdjacencyMethod.Neighbors(position))
 				{
 					if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height) // Out of bounds, thus not actually a neighbor
 						continue;
 
-					if (Map[c] && !visited[c.X, c.Y])
+					if (Map[c] && !_visited[c.X, c.Y])
 						stack.Push(c);
 				}
 			}

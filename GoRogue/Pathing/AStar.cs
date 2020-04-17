@@ -24,18 +24,18 @@ namespace GoRogue.Pathing
 	public class AStar
 	{
 		// Node objects used under the hood for the priority queue
-		private AStarNode[] nodes;
+		private AStarNode[] _nodes;
 
 		// Stored as seperate array for performance reasons since it must be cleared at each run
-		private bool[] closed;
+		private bool[] _closed;
 
 		// Width and of the walkability map at the last path -- used to determine whether
 		// reallocation of nodes array is necessary
-		private int cachedHeight;
-		private int cachedWidth;
+		private int _cachedHeight;
+		private int _cachedWidth;
 
 		// Priority queue of the open nodes.
-		private FastPriorityQueue<AStarNode> openNodes;
+		private FastPriorityQueue<AStarNode> _openNodes;
 
 		/// <summary>
 		/// The distance calculation being used to determine distance between points. <see cref="Distance.Manhattan"/>
@@ -155,12 +155,12 @@ namespace GoRogue.Pathing
 			Heuristic = heuristic!; // Handles null and exposes as non-nullable since it will never allow null
 
 			int maxSize = walkabilityMap.Width * walkabilityMap.Height;
-			nodes = new AStarNode[maxSize];
-			closed = new bool[maxSize];
-			cachedWidth = walkabilityMap.Width;
-			cachedHeight = walkabilityMap.Height;
+			_nodes = new AStarNode[maxSize];
+			_closed = new bool[maxSize];
+			_cachedWidth = walkabilityMap.Width;
+			_cachedHeight = walkabilityMap.Height;
 
-			openNodes = new FastPriorityQueue<AStarNode>(maxSize);
+			_openNodes = new FastPriorityQueue<AStarNode>(maxSize);
 		}
 
 		/// <summary>
@@ -197,40 +197,40 @@ namespace GoRogue.Pathing
 				MaxEuclideanMultiplier = MinimumWeight / (Point.EuclideanDistanceMagnitude(new Point(0, 0), new Point(WalkabilityMap.Width, WalkabilityMap.Height)));
 			}
 			// Update width/height dependent values if map width/height has changed
-			if (cachedWidth != WalkabilityMap.Width || cachedHeight != WalkabilityMap.Height)
+			if (_cachedWidth != WalkabilityMap.Width || _cachedHeight != WalkabilityMap.Height)
 			{
 				int length = WalkabilityMap.Width * WalkabilityMap.Height;
-				nodes = new AStarNode[length];
-				closed = new bool[length];
-				openNodes = new FastPriorityQueue<AStarNode>(length);
+				_nodes = new AStarNode[length];
+				_closed = new bool[length];
+				_openNodes = new FastPriorityQueue<AStarNode>(length);
 
-				cachedWidth = WalkabilityMap.Width;
-				cachedHeight = WalkabilityMap.Height;
+				_cachedWidth = WalkabilityMap.Width;
+				_cachedHeight = WalkabilityMap.Height;
 
 				MaxEuclideanMultiplier = MinimumWeight / (Point.EuclideanDistanceMagnitude(new Point(0, 0), new Point(WalkabilityMap.Width, WalkabilityMap.Height)));
 			}
 			else
-				Array.Clear(closed, 0, closed.Length);
+				Array.Clear(_closed, 0, _closed.Length);
 
 			var result = new List<Point>();
 			int index = start.ToIndex(WalkabilityMap.Width);
 
-			if (nodes[index] == null)
-				nodes[index] = new AStarNode(start, null);
+			if (_nodes[index] == null)
+				_nodes[index] = new AStarNode(start, null);
 
-			nodes[index].G = 0;
-			nodes[index].F = (float)Heuristic(start, end); // Completely heuristic for first node
-			openNodes.Enqueue(nodes[index], nodes[index].F);
+			_nodes[index].G = 0;
+			_nodes[index].F = (float)Heuristic(start, end); // Completely heuristic for first node
+			_openNodes.Enqueue(_nodes[index], _nodes[index].F);
 
-			while (openNodes.Count != 0)
+			while (_openNodes.Count != 0)
 			{
-				var current = openNodes.Dequeue();
+				var current = _openNodes.Dequeue();
 				var currentIndex = current.Position.ToIndex(WalkabilityMap.Width);
-				closed[currentIndex] = true;
+				_closed[currentIndex] = true;
 
 				if (current.Position == end) // We found the end, cleanup and return the path
 				{
-					openNodes.Clear();
+					_openNodes.Clear();
 
 					do
 					{
@@ -254,13 +254,13 @@ namespace GoRogue.Pathing
 						continue;
 
 					int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
-					var neighbor = nodes[neighborIndex];
+					var neighbor = _nodes[neighborIndex];
 
-					var isNeighborOpen = IsOpen(neighbor, openNodes);
+					var isNeighborOpen = IsOpen(neighbor, _openNodes);
 
 					if (neighbor == null) // Can't be closed because never visited
-						nodes[neighborIndex] = neighbor = new AStarNode(neighborPos, null);
-					else if (closed[neighborIndex]) // This neighbor has already been evaluated at shortest possible path, don't re-add
+						_nodes[neighborIndex] = neighbor = new AStarNode(neighborPos, null);
+					else if (_closed[neighborIndex]) // This neighbor has already been evaluated at shortest possible path, don't re-add
 						continue;
 
 					float newDistance = current.G + (float)DistanceMeasurement.Calculate(current.Position, neighbor.Position) * (float)(Weights== null ? 1.0 : Weights[neighbor.Position]);
@@ -273,16 +273,16 @@ namespace GoRogue.Pathing
 					// Heuristic distance to end (priority in queue). If it's already in the queue, update priority to new F
 					neighbor.F = newDistance + (float)Heuristic(neighbor.Position, end);
 
-					if (openNodes.Contains(neighbor))
-						openNodes.UpdatePriority(neighbor, neighbor.F);
+					if (_openNodes.Contains(neighbor))
+						_openNodes.UpdatePriority(neighbor, neighbor.F);
 					else // Otherwise, add it with proper priority
 					{
-						openNodes.Enqueue(neighbor, neighbor.F);
+						_openNodes.Enqueue(neighbor, neighbor.F);
 					}
 				}
 			}
 
-			openNodes.Clear();
+			_openNodes.Clear();
 			return null; // No path found
 		}
 
@@ -328,8 +328,8 @@ namespace GoRogue.Pathing
 	/// </remarks>
 	public class Path
 	{
-		private IReadOnlyList<Point> _steps;
-		private bool inOriginalOrder;
+		private readonly IReadOnlyList<Point> _steps;
+		private bool _inOriginalOrder;
 
 		/// <summary>
 		/// Creates a copy of the path, optionally reversing the path as it does so.
@@ -340,14 +340,14 @@ namespace GoRogue.Pathing
 		public Path(Path pathToCopy, bool reverse = false)
 		{
 			_steps = pathToCopy._steps;
-			inOriginalOrder = (reverse ? !pathToCopy.inOriginalOrder : pathToCopy.inOriginalOrder);
+			_inOriginalOrder = (reverse ? !pathToCopy._inOriginalOrder : pathToCopy._inOriginalOrder);
 		}
 
 		// Create based on internal list
 		internal Path(IReadOnlyList<Point> steps)
 		{
 			_steps = steps;
-			inOriginalOrder = true;
+			_inOriginalOrder = true;
 		}
 
 		/// <summary>
@@ -357,7 +357,7 @@ namespace GoRogue.Pathing
 		{
 			get
 			{
-				if (inOriginalOrder)
+				if (_inOriginalOrder)
 					return _steps[0];
 
 				return _steps[_steps.Count - 1];
@@ -381,7 +381,7 @@ namespace GoRogue.Pathing
 		{
 			get
 			{
-				if (inOriginalOrder)
+				if (_inOriginalOrder)
 					return _steps[_steps.Count - 1];
 
 				return _steps[0];
@@ -396,7 +396,7 @@ namespace GoRogue.Pathing
 		{
 			get
 			{
-				if (inOriginalOrder)
+				if (_inOriginalOrder)
 				{
 					for (int i = _steps.Count - 2; i >= 0; i--)
 						yield return _steps[i];
@@ -416,7 +416,7 @@ namespace GoRogue.Pathing
 		{
 			get
 			{
-				if (inOriginalOrder)
+				if (_inOriginalOrder)
 				{
 					for (int i = _steps.Count - 1; i >= 0; i--)
 						yield return _steps[i];
@@ -436,7 +436,7 @@ namespace GoRogue.Pathing
 		/// <returns>The Pointinate consituting the step specified.</returns>
 		public Point GetStep(int stepNum)
 		{
-			if (inOriginalOrder)
+			if (_inOriginalOrder)
 				return _steps[(_steps.Count - 2) - stepNum];
 
 			return _steps[stepNum + 1];
@@ -449,7 +449,7 @@ namespace GoRogue.Pathing
 		/// <returns>The Pointinate consituting the step specified.</returns>
 		public Point GetStepWithStart(int stepNum)
 		{
-			if (inOriginalOrder)
+			if (_inOriginalOrder)
 				return _steps[(_steps.Count - 1) - stepNum];
 
 			return _steps[stepNum];
@@ -458,7 +458,7 @@ namespace GoRogue.Pathing
 		/// <summary>
 		/// Reverses the path, in constant time.
 		/// </summary>
-		public void Reverse() => inOriginalOrder = !inOriginalOrder;
+		public void Reverse() => _inOriginalOrder = !_inOriginalOrder;
 
 		/// <summary>
 		/// Returns a string representation of all the steps in the path, including the start point,

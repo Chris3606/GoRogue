@@ -14,7 +14,7 @@ namespace GoRogue.MapGeneration.Generators
 	/// <see cref="QuickGenerators.GenerateDungeonMazeMap(ISettableMapView{bool}, int, int, int, int, float, float, int, int, int, int, int, int, int, int, int, int)"/>
 	/// and overloads.
 	/// </summary>
-	static public class RoomsGenerator
+	public static class RoomsGenerator
 	{
 		/// <summary>
 		/// Carves random rectangles out of the map, setting the interior of the room to true. Does
@@ -40,7 +40,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// and re-generating that room. Defaults to 10.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of the rooms that were added to the map.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
+		public static IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
 			=> Generate(map, null, minRooms, maxRooms, roomMinSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts);
 
@@ -69,7 +69,7 @@ namespace GoRogue.MapGeneration.Generators
 		/// and re-generating that room. Defaults to 10.
 		/// </param>
 		/// <returns>A collection of rectangles representing the interior of the rooms that were added to the map.</returns>
-		static public IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
+		public static IEnumerable<Rectangle> Generate(ISettableMapView<bool> map, IGenerator? rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize,
 													   float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10)
 		{
 			if (minRooms > maxRooms)

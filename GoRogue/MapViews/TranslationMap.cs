@@ -85,7 +85,7 @@ namespace GoRogue.MapViews
 		/// </summary>
 		/// <param name="pos">Location to get the value for.</param>
 		/// <returns>The translated "value" associated with the provided location.</returns>
-		virtual public T2 this[Point pos]
+		public virtual T2 this[Point pos]
 		{
 			get => TranslateGet(pos, BaseMap[pos]);
 		}

@@ -12,9 +12,9 @@
 	/// </remarks>
 	public class IDGenerator
 	{
-		private uint currentInteger;
+		private uint _currentInteger;
 
-		private bool lastAssigned;
+		private bool _lastAssigned;
 
 		/// <summary>
 		/// Constructor.
@@ -25,8 +25,8 @@
 		/// </param>
 		public IDGenerator(uint startingInt = 0)
 		{
-			currentInteger = startingInt;
-			lastAssigned = false;
+			_currentInteger = startingInt;
+			_lastAssigned = false;
 		}
 
 		/// <summary>
@@ -36,11 +36,11 @@
 		/// <returns>The ID that has been assigned.</returns>
 		public uint UseID()
 		{
-			if (lastAssigned)
+			if (_lastAssigned)
 				throw new System.Exception($"An {nameof(IDGenerator)} ran out of IDs to assign, as uint.MaxValue was hit.");
-			else if (currentInteger == uint.MaxValue) // We're about to assign the last box
-				lastAssigned = true;
-			return currentInteger++;
+			else if (_currentInteger == uint.MaxValue) // We're about to assign the last box
+				_lastAssigned = true;
+			return _currentInteger++;
 		}
 	}
 }
