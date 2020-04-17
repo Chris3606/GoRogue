@@ -3,151 +3,142 @@ using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
-	/// <summary>
-	/// Map view class capable of taking complex data and providing a simpler view of it. For a
-	/// version that provides "set" functionality, see <see cref="SettableTranslationMap{T1, T2}"/>.
-	/// </summary>
-	/// <remarks>
-	/// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
-	/// poor match for your game's actual map data. For example, map generation works with bools, and
-	/// SenseMap calculation with doubles, while your map data may model each map cell as a class or
-	/// struct containing many different member values. This class allows you to build descendant
-	/// classes that override the TranslateGet method(s) for simple mapping, or the "this" indexers
-	/// if you need full access to the underlying data for context, in order to present a simplified
-	/// view of your data to an algorithm without having to create the large amount of duplicate code
-	/// associated with multiple ISettableMapView instances that all extract data from a Cell or Tile class.
-	/// 
-	/// If your TranslateGet implementation is simple, or you do not want to create a full subclass, you should
-	/// look at <see cref="LambdaTranslationMap{T1, T2}"/> instead.
-	/// </remarks>
-	/// <typeparam name="T1">The type of your underlying data.</typeparam>
-	/// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
-	public abstract class TranslationMap<T1, T2> : IMapView<T2>
-	{
-		/// <summary>
-		/// Constructor. Takes an existing map view to create a view from.
-		/// </summary>
-		/// <param name="baseMap">Your underlying map data.</param>
-		protected TranslationMap(IMapView<T1> baseMap)
-		{
-			BaseMap = baseMap;
-		}
+    /// <summary>
+    /// Map view class capable of taking complex data and providing a simpler view of it. For a
+    /// version that provides "set" functionality, see <see cref="SettableTranslationMap{T1, T2}"/>.
+    /// </summary>
+    /// <remarks>
+    /// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
+    /// poor match for your game's actual map data. For example, map generation works with bools, and
+    /// SenseMap calculation with doubles, while your map data may model each map cell as a class or
+    /// struct containing many different member values. This class allows you to build descendant
+    /// classes that override the TranslateGet method(s) for simple mapping, or the "this" indexers
+    /// if you need full access to the underlying data for context, in order to present a simplified
+    /// view of your data to an algorithm without having to create the large amount of duplicate code
+    /// associated with multiple ISettableMapView instances that all extract data from a Cell or Tile class.
+    /// 
+    /// If your TranslateGet implementation is simple, or you do not want to create a full subclass, you should
+    /// look at <see cref="LambdaTranslationMap{T1, T2}"/> instead.
+    /// </remarks>
+    /// <typeparam name="T1">The type of your underlying data.</typeparam>
+    /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
+    public abstract class TranslationMap<T1, T2> : IMapView<T2>
+    {
+        /// <summary>
+        /// Constructor. Takes an existing map view to create a view from.
+        /// </summary>
+        /// <param name="baseMap">Your underlying map data.</param>
+        protected TranslationMap(IMapView<T1> baseMap) => BaseMap = baseMap;
 
-		/// <summary>
-		/// The underlying map.
-		/// </summary>
-		public IMapView<T1> BaseMap { get; private set; }
+        /// <summary>
+        /// The underlying map.
+        /// </summary>
+        public IMapView<T1> BaseMap { get; private set; }
 
-		/// <summary>
-		/// The height of the underlying map.
-		/// </summary>
-		public int Height { get => BaseMap.Height; }
+        /// <summary>
+        /// The height of the underlying map.
+        /// </summary>
+        public int Height => BaseMap.Height;
 
-		/// <summary>
-		/// The width of the underlying map.
-		/// </summary>
-		public int Width { get => BaseMap.Width; }
+        /// <summary>
+        /// The width of the underlying map.
+        /// </summary>
+        public int Width => BaseMap.Width;
 
-		/// <summary>
-		/// Given an 1D-array-style index, determines the position associated with that index, and
-		/// returns the "value" associated with that location.  This function calls <see cref="this[Point]"/>,
-		/// so override that indexer to change functionality.
-		/// </summary>
-		/// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
-		/// <returns>
-		/// The "value" associated with the given location, according to the translation function.
-		/// </returns>
-		public T2 this[int index1D]
-		{
-			get
-			{
-				var pos = Point.FromIndex(index1D, Width);
-				return this[pos];
-			}
-		}
+        /// <summary>
+        /// Given an 1D-array-style index, determines the position associated with that index, and
+        /// returns the "value" associated with that location.  This function calls <see cref="this[Point]"/>,
+        /// so override that indexer to change functionality.
+        /// </summary>
+        /// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
+        /// <returns>
+        /// The "value" associated with the given location, according to the translation function.
+        /// </returns>
+        public T2 this[int index1D]
+        {
+            get
+            {
+                var pos = Point.FromIndex(index1D, Width);
+                return this[pos];
+            }
+        }
 
-		/// <summary>
-		/// Given an X and Y value, translates and returns the "value" associated with that location.
-		/// This function calls this[Point pos], so override that indexer to change functionality.
-		/// </summary>
-		/// <param name="x">X-value of location.</param>
-		/// <param name="y">Y-value of location.</param>
-		/// <returns>The translated "value" associated with that location.</returns>
-		public T2 this[int x, int y]
-		{
-			get => this[new Point(x, y)];
-		}
+        /// <summary>
+        /// Given an X and Y value, translates and returns the "value" associated with that location.
+        /// This function calls this[Point pos], so override that indexer to change functionality.
+        /// </summary>
+        /// <param name="x">X-value of location.</param>
+        /// <param name="y">Y-value of location.</param>
+        /// <returns>The translated "value" associated with that location.</returns>
+        public T2 this[int x, int y] => this[new Point(x, y)];
 
-		/// <summary>
-		/// Given a position, translates and returns the "value" associated with that position. the other indexers
-		/// call this indexer for its functionality, so overriding this functionality also
-		/// changes those overloads.
-		/// </summary>
-		/// <param name="pos">Location to get the value for.</param>
-		/// <returns>The translated "value" associated with the provided location.</returns>
-		public virtual T2 this[Point pos]
-		{
-			get => TranslateGet(pos, BaseMap[pos]);
-		}
-		
-		/// <summary>
-		/// Returns a string representation of the TranslationMap.
-		/// </summary>
-		/// <returns>A string representation of the TranslationMap.</returns>
-		public override string ToString() => this.ExtendToString();
+        /// <summary>
+        /// Given a position, translates and returns the "value" associated with that position. the other indexers
+        /// call this indexer for its functionality, so overriding this functionality also
+        /// changes those overloads.
+        /// </summary>
+        /// <param name="pos">Location to get the value for.</param>
+        /// <returns>The translated "value" associated with the provided location.</returns>
+        public virtual T2 this[Point pos] => TranslateGet(pos, BaseMap[pos]);
 
-		/// <summary>
-		/// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
-		/// to determine what string represents each value.
-		/// </summary>
-		/// <remarks>
-		/// This could be used, for example, on an TranslationMap of boolean values, to output '#' for
-		/// false values, and '.' for true values.
-		/// </remarks>
-		/// <param name="elementStringifier">
-		/// Function determining the string representation of each element.
-		/// </param>
-		/// <returns>A string representation of the TranslationMap.</returns>
-		public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        /// <summary>
+        /// Returns a string representation of the TranslationMap.
+        /// </summary>
+        /// <returns>A string representation of the TranslationMap.</returns>
+        public override string ToString() => this.ExtendToString();
 
-		/// <summary>
-		/// Prints the values in the map view, using the function specified to turn elements into
-		/// strings, and using the "field length" specified.
-		/// </summary>
-		/// <remarks>
-		/// Each element of type T will have spaces added to cause it to take up exactly
-		/// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-		/// is less than the length of the element's string represention.
-		/// </remarks>
-		/// <param name="fieldSize">
-		/// The size of the field to give each value.  A positive-number
-		/// right-aligns the text within the field, while a negative number left-aligns the text.
-		/// </param>
-		/// <param name="elementStringifier">
-		/// Function to use to convert each element to a string. null defaults to the ToString
-		/// function of type T.
-		/// </param>
-		/// <returns>A string representation of the TranslationMap.</returns>
-		public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        /// <summary>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// to determine what string represents each value.
+        /// </summary>
+        /// <remarks>
+        /// This could be used, for example, on an TranslationMap of boolean values, to output '#' for
+        /// false values, and '.' for true values.
+        /// </remarks>
+        /// <param name="elementStringifier">
+        /// Function determining the string representation of each element.
+        /// </param>
+        /// <returns>A string representation of the TranslationMap.</returns>
+        public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
 
-		/// <summary>
-		/// Translates your map data into the view type using just the map data value itself. If you need
-		/// the location as well to perform the translation, implement <see cref="TranslateGet(Point, T1)"/>
-		/// instead.
-		/// </summary>
-		/// <param name="value">The data value from your map.</param>
-		/// <returns>A value of the mapped data type</returns>
-		protected virtual T2 TranslateGet(T1 value) =>
-			throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+        /// <summary>
+        /// Prints the values in the map view, using the function specified to turn elements into
+        /// strings, and using the "field length" specified.
+        /// </summary>
+        /// <remarks>
+        /// Each element of type T will have spaces added to cause it to take up exactly
+        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// is less than the length of the element's string represention.
+        /// </remarks>
+        /// <param name="fieldSize">
+        /// The size of the field to give each value.  A positive-number
+        /// right-aligns the text within the field, while a negative number left-aligns the text.
+        /// </param>
+        /// <param name="elementStringifier">
+        /// Function to use to convert each element to a string. null defaults to the ToString
+        /// function of type T.
+        /// </param>
+        /// <returns>A string representation of the TranslationMap.</returns>
+        public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 
-		/// <summary>
-		/// Translates your map data into the view type using the position and the map data value. If
-		/// you need only the data value to perform the translation, implement <see cref="TranslateGet(T1)"/>
-		/// instead.
-		/// </summary>
-		/// <param name="position">The position of the given data value in your map.</param>
-		/// <param name="value">The data value from your map.</param>
-		/// <returns>A value of the mapped data type</returns>
-		protected virtual T2 TranslateGet(Point position, T1 value) => TranslateGet(value);
-	}
+        /// <summary>
+        /// Translates your map data into the view type using just the map data value itself. If you need
+        /// the location as well to perform the translation, implement <see cref="TranslateGet(Point, T1)"/>
+        /// instead.
+        /// </summary>
+        /// <param name="value">The data value from your map.</param>
+        /// <returns>A value of the mapped data type</returns>
+        protected virtual T2 TranslateGet(T1 value) =>
+            throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+
+        /// <summary>
+        /// Translates your map data into the view type using the position and the map data value. If
+        /// you need only the data value to perform the translation, implement <see cref="TranslateGet(T1)"/>
+        /// instead.
+        /// </summary>
+        /// <param name="position">The position of the given data value in your map.</param>
+        /// <param name="value">The data value from your map.</param>
+        /// <returns>A value of the mapped data type</returns>
+        protected virtual T2 TranslateGet(Point position, T1 value) => TranslateGet(value);
+    }
 }

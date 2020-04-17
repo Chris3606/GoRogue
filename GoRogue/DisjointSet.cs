@@ -3,138 +3,135 @@ using System.Collections.Generic;
 
 namespace GoRogue
 {
-	/// <summary>
-	/// Basic representation of a disjoint set data structure.
-	/// </summary>
-	/// <remarks>
-	/// For reasons pertaining to optimization, this disjoint set implementation does not use
-	/// generics, and instead holds integer values, which MUST be exactly all integer values in range
-	/// [0, num_items_in_set - 1].  Thus, you will need to assign appropriate IDs to objects you intend
-	/// to add and map them appropriately.
-	/// </remarks>
-	[Serializable]
-	public class DisjointSet : IReadOnlyDisjointSet
-	{
-		private readonly int[] _parents;
+    /// <summary>
+    /// Basic representation of a disjoint set data structure.
+    /// </summary>
+    /// <remarks>
+    /// For reasons pertaining to optimization, this disjoint set implementation does not use
+    /// generics, and instead holds integer values, which MUST be exactly all integer values in range
+    /// [0, num_items_in_set - 1].  Thus, you will need to assign appropriate IDs to objects you intend
+    /// to add and map them appropriately.
+    /// </remarks>
+    [Serializable]
+    public class DisjointSet : IReadOnlyDisjointSet
+    {
+        private readonly int[] _parents;
 
-		private readonly int[] _sizes;
+        private readonly int[] _sizes;
 
-		/// <summary>
-		/// Constructor. The disjoint set will contain all values in range [0, <paramref name="size"/> - 1].
-		/// </summary>
-		/// <param name="size">(Max) size of the disjoint set.</param>
-		public DisjointSet(int size)
-		{
-			Count = size;
-			_parents = new int[size];
-			_sizes = new int[size];
+        /// <summary>
+        /// Constructor. The disjoint set will contain all values in range [0, <paramref name="size"/> - 1].
+        /// </summary>
+        /// <param name="size">(Max) size of the disjoint set.</param>
+        public DisjointSet(int size)
+        {
+            Count = size;
+            _parents = new int[size];
+            _sizes = new int[size];
 
-			for (int i = 0; i < size; i++)
-			{
-				_parents[i] = i;
-				_sizes[i] = 1;
-			}
-		}
+            for (int i = 0; i < size; i++)
+            {
+                _parents[i] = i;
+                _sizes[i] = 1;
+            }
+        }
 
-		/// <summary>
-		/// Number of distinct sets.
-		/// </summary>
-		public int Count { get; private set; }
+        /// <summary>
+        /// Number of distinct sets.
+        /// </summary>
+        public int Count { get; private set; }
 
-		/// <summary>
-		/// Returns a read-only representation of the disjoint set.
-		/// </summary>
-		/// <returns>A read-only representation of the disjoint set.</returns>
-		public IReadOnlyDisjointSet AsReadOnly() => this;
+        /// <summary>
+        /// Returns a read-only representation of the disjoint set.
+        /// </summary>
+        /// <returns>A read-only representation of the disjoint set.</returns>
+        public IReadOnlyDisjointSet AsReadOnly() => this;
 
-		/// <summary>
-		/// Returns the parent of the set containing <paramref name="obj"/>, performing path compression
-		/// as the search is completed.
-		/// </summary>
-		/// <param name="obj">Object to search for.</param>
-		/// <returns>The parent of the object given.</returns>
-		public int Find(int obj)
-		{
-			// Find base parent, and path compress
-			if (obj != _parents[obj])
-				_parents[obj] = Find(_parents[obj]);
+        /// <summary>
+        /// Returns the parent of the set containing <paramref name="obj"/>, performing path compression
+        /// as the search is completed.
+        /// </summary>
+        /// <param name="obj">Object to search for.</param>
+        /// <returns>The parent of the object given.</returns>
+        public int Find(int obj)
+        {
+            // Find base parent, and path compress
+            if (obj != _parents[obj])
+                _parents[obj] = Find(_parents[obj]);
 
-			return _parents[obj];
-		}
+            return _parents[obj];
+        }
 
-		/// <summary>
-		/// Returns true if the two objects specified are in the same set.
-		/// </summary>
-		/// <param name="obj1"/>
-		/// <param name="obj2"/>
-		/// <returns>True if the two objects are in the same set, false otherwise.</returns>
-		public bool InSameSet(int obj1, int obj2)
-		{
-			return Find(obj1) == Find(obj2); // In same set; same parent
-		}
+        /// <summary>
+        /// Returns true if the two objects specified are in the same set.
+        /// </summary>
+        /// <param name="obj1"/>
+        /// <param name="obj2"/>
+        /// <returns>True if the two objects are in the same set, false otherwise.</returns>
+        public bool InSameSet(int obj1, int obj2) => Find(obj1) == Find(obj2); // In same set; same parent
 
-		/// <summary>
-		/// Performs a union of the sets containing the two objects specified. After this operation,
-		/// every element in the sets containing the two objects specified will be part of one larger set.
-		/// </summary>
-		/// <remarks>If the two elements are already in the same set, nothing is done.</remarks>
-		/// <param name="obj1"/>
-		/// <param name="obj2"/>
-		public void MakeUnion(int obj1, int obj2)
-		{
-			int i = Find(obj1);
-			int j = Find(obj2);
+        /// <summary>
+        /// Performs a union of the sets containing the two objects specified. After this operation,
+        /// every element in the sets containing the two objects specified will be part of one larger set.
+        /// </summary>
+        /// <remarks>If the two elements are already in the same set, nothing is done.</remarks>
+        /// <param name="obj1"/>
+        /// <param name="obj2"/>
+        public void MakeUnion(int obj1, int obj2)
+        {
+            int i = Find(obj1);
+            int j = Find(obj2);
 
-			if (i == j) return; // Two elements are already in same set; same parent
+            if (i == j) return; // Two elements are already in same set; same parent
 
-			// Always append smaller set to larger set
-			if (_sizes[i] <= _sizes[j])
-			{
-				_parents[i] = j;
-				_sizes[j] += _sizes[i];
-			}
-			else
-			{
-				_parents[j] = i;
-				_sizes[i] += _sizes[j];
-			}
-			Count--;
-		}
+            // Always append smaller set to larger set
+            if (_sizes[i] <= _sizes[j])
+            {
+                _parents[i] = j;
+                _sizes[j] += _sizes[i];
+            }
+            else
+            {
+                _parents[j] = i;
+                _sizes[i] += _sizes[j];
+            }
+            Count--;
+        }
 
-		/// <summary>
-		/// Returns a string representation of the DisjointSet, showing parents and all elements in
-		/// their set.
-		/// </summary>
-		/// <returns>A string representation of the DisjointSet.</returns>
-		public override string ToString()
-		{
-			var values = new Dictionary<int, List<int>>();
+        /// <summary>
+        /// Returns a string representation of the DisjointSet, showing parents and all elements in
+        /// their set.
+        /// </summary>
+        /// <returns>A string representation of the DisjointSet.</returns>
+        public override string ToString()
+        {
+            var values = new Dictionary<int, List<int>>();
 
-			for (int i = 0; i < _parents.Length; i++)
-			{
-				int parentOf = findNoCompression(i);
-				if (!values.ContainsKey(parentOf))
-				{
+            for (int i = 0; i < _parents.Length; i++)
+            {
+                int parentOf = findNoCompression(i);
+                if (!values.ContainsKey(parentOf))
+                {
                     values[parentOf] = new List<int>
                     {
                         parentOf // Parent is the first element in each child list
                     };
                 }
 
-				if (parentOf != i) // We already added the parent, so don't double add
-					values[parentOf].Add(i);
-			}
+                if (parentOf != i) // We already added the parent, so don't double add
+                    values[parentOf].Add(i);
+            }
 
-			return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
-		}
+            return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
+        }
 
-		// Used to ensure ToString doesn't affect the performance of future operations
-		private int findNoCompression(int obj)
-		{
-			while (_parents[obj] != obj)
-				obj = _parents[obj];
+        // Used to ensure ToString doesn't affect the performance of future operations
+        private int findNoCompression(int obj)
+        {
+            while (_parents[obj] != obj)
+                obj = _parents[obj];
 
-			return obj;
-		}
-	}
+            return obj;
+        }
+    }
 }

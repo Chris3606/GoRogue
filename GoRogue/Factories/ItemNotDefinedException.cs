@@ -33,7 +33,7 @@ namespace GoRogue.Factories
         protected ItemNotDefinedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
-        
+
         /// <summary>
         /// Creates an exception with a message based on the specified factory ID.
         /// </summary>

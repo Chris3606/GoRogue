@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using GoRogue.MapViews;
-using GoRogue.Random;
-using Troschuetz.Random;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using GoRogue.MapViews;
+using GoRogue.Random;
 using SadRogue.Primitives;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Connectors
 {
