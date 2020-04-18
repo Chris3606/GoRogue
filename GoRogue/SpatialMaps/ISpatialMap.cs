@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SadRogue.Primitives;
 
-namespace GoRogue
+namespace GoRogue.SpatialMaps
 {
     /// <summary>
     /// Interface common to spatial map implementations provided with GoRogue, which are designed

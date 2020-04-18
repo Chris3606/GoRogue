@@ -1,6 +1,7 @@
 ﻿using System;
 using GoRogue.GameFramework.Components;
 using GoRogue.MapViews;
+using GoRogue.SpatialMaps;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework

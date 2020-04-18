@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SadRogue.Primitives;
 
-namespace GoRogue
+namespace GoRogue.SpatialMaps
 {
     /// <summary>
     /// A more complex version of <see cref="MultiSpatialMap{T}"/> that does not require the items in it to implement

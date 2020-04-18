@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using SadRogue.Primitives;
 
-namespace GoRogue
+namespace GoRogue.SpatialMaps
 {
     /// <summary>
     /// Interface implementing only the read-only functions for <see cref="LayeredSpatialMap{T}"/>/

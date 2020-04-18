@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
+using GoRogue.SpatialMaps;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework

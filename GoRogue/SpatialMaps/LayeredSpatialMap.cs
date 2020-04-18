@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using SadRogue.Primitives;
 
-namespace GoRogue
+namespace GoRogue.SpatialMaps
 {
     /// <summary>
     /// A more complex version of <see cref="LayeredSpatialMap{T}"/> that does not require the items in it to implement
