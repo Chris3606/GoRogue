@@ -93,7 +93,7 @@ namespace GoRogue_UnitTests
 			var random = new StandardGenerator(12345);
 
 			var map = new ArrayMap<bool>(80, 50);
-			QuickGenerators.GenerateDungeonMazeMap(map, random, minRooms: 4, maxRooms: 10, roomMinSize: 4, roomMaxSize: 7);
+			QuickGenerators.GenerateDungeonMazeMap(map, random, minRooms: 4, maxRooms: 10, roomMinSize: 4, roomMaxSize: 7, maxTrimIterations: 20);
 			
 			displayMap(map);
 			// TODO: Some assert here

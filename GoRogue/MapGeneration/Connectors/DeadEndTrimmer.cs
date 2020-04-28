@@ -17,9 +17,10 @@ namespace GoRogue.MapGeneration.Connectors
 		/// </summary>
 		/// <param name="map">Map to remove-dead-end paths from.</param>
 		/// <param name="saveDeadEndChance">The chance out of 100 that a given dead end is left alone. Defaults to 0.</param>
+		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends.  Defaults to infinity.</param>
 		/// <param name="rng">Rng to use.  Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
-		public static void Trim(ISettableMapView<bool> map, int saveDeadEndChance = 0, IGenerator rng = null)
-			=> Trim(map, MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS), saveDeadEndChance, rng);
+		public static void Trim(ISettableMapView<bool> map, int saveDeadEndChance = 0, int maxTrimIterations = -1, IGenerator rng = null)
+			=> Trim(map, MapAreaFinder.MapAreasFor(map, AdjacencyRule.CARDINALS), saveDeadEndChance, maxTrimIterations, rng);
 
 		/// <summary>
 		/// Trims current small dead-end paths from the given list of map areas, and removes them from the given map.
@@ -27,8 +28,9 @@ namespace GoRogue.MapGeneration.Connectors
 		/// <param name="map">Map to remove-dead-end paths from.</param>
 		/// <param name="areas">Map areas to check for dead ends.  Dead ends not contained as one of these map areas will be ignored.</param>
 		/// <param name="saveDeadEndChance">The chance out of 100 that a given dead end is left alone. Defaults to 0.</param>
+		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends.  Defaults to infinity.</param>
 		/// <param name="rng">Rng to use.  Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
-		public static void Trim(ISettableMapView<bool> map, IEnumerable<MapArea> areas, int saveDeadEndChance = 100, IGenerator rng = null)
+		public static void Trim(ISettableMapView<bool> map, IEnumerable<MapArea> areas, int saveDeadEndChance = 100, int maxTrimIterations = -1, IGenerator rng = null)
 		{
 			if (rng == null)
 				rng = SingletonRandom.DefaultRNG;
@@ -38,7 +40,8 @@ namespace GoRogue.MapGeneration.Connectors
 				HashSet<Coord> safeDeadEnds = new HashSet<Coord>();
 				HashSet<Coord> deadEnds = new HashSet<Coord>();
 
-				while (true)
+				int iteration = 1;
+				while (maxTrimIterations == -1 || iteration <= maxTrimIterations)
 				{
 					foreach (var point in area.Positions)
 					{
@@ -113,7 +116,8 @@ namespace GoRogue.MapGeneration.Connectors
 					}
 
 					deadEnds.Clear();
-					break; // We only do 1 pass, to avoid erasing the entire map.
+
+					iteration++;
 				}
 			}
 		}

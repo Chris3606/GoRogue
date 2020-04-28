@@ -165,11 +165,12 @@ namespace GoRogue.MapGeneration
 		/// After the connection finishes, the small dead ends will be trimmed out. This value
 		/// indicates the chance out of 100 that a given dead end remains. Defaults to 0.
 		/// </param>
+		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.</param>
 		/// <returns>A list of the interior of rooms generated and the connections placed.</returns>
 		public static IEnumerable<(Rectangle Room, Coord[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator rng, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
 			int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
-			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0)
+			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0, int maxTrimIterations = -1)
 		{
 			if (rng == null) rng = SingletonRandom.DefaultRNG;
 
@@ -193,7 +194,7 @@ namespace GoRogue.MapGeneration
 																			 cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
 																			 cancelConnectionPlacementChanceIncrease);
 
-			Connectors.DeadEndTrimmer.Trim(tempMap, mazes, saveDeadEndChance, rng);
+			Connectors.DeadEndTrimmer.Trim(tempMap, mazes, saveDeadEndChance, maxTrimIterations, rng);
 
 			if (!wasArrayMap)
 				map.ApplyOverlay(tempMap);
