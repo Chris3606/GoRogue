@@ -343,19 +343,19 @@ are trimmed out.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.QuickGenerators.GenerateDungeonMazeMap(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CTroschuetz.Random.IGenerator%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Single%2CSystem.Single%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.QuickGenerators.GenerateDungeonMazeMap(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CTroschuetz.Random.IGenerator%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Single%2CSystem.Single%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L169">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L170">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateDungeonMazeMap*"></a>
-  <h4 id="GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateDungeonMazeMap(GoRogue.MapViews.ISettableMapView{System.Boolean},Troschuetz.Random.IGenerator,System.Int32,System.Int32,System.Int32,System.Int32,System.Single,System.Single,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">GenerateDungeonMazeMap(ISettableMapView&lt;Boolean&gt;, IGenerator, Int32, Int32, Int32, Int32, Single, Single, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)</h4>
+  <h4 id="GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateDungeonMazeMap(GoRogue.MapViews.ISettableMapView{System.Boolean},Troschuetz.Random.IGenerator,System.Int32,System.Int32,System.Int32,System.Int32,System.Single,System.Single,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)">GenerateDungeonMazeMap(ISettableMapView&lt;Boolean&gt;, IGenerator, Int32, Int32, Int32, Int32, Single, Single, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Generates a dungeon map based on the process outlined here: <a href="http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/">http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(Rectangle Room, Coord[][] Connections)&gt; GenerateDungeonMazeMap(ISettableMapView&lt;bool&gt; map, IGenerator rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1F, float roomSizeRatioY = 1F, int maxCreationAttempts = 10, int maxPlacementAttempts = 10, int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;(Rectangle Room, Coord[][] Connections)&gt; GenerateDungeonMazeMap(ISettableMapView&lt;bool&gt; map, IGenerator rng, int minRooms, int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1F, float roomSizeRatioY = 1F, int maxCreationAttempts = 10, int maxPlacementAttempts = 10, int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0, int maxTrimIterations = -1)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -477,6 +477,12 @@ time a door is placed (per room) during the connection process. Defaults to 10.<
 indicates the chance out of 100 that a given dead end remains. Defaults to 0.</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">maxTrimIterations</span></td>
+        <td><p>Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h5 class="returns">Returns</h5>
@@ -495,7 +501,7 @@ indicates the chance out of 100 that a given dead end remains. Defaults to 0.</p
       </tr>
     </tbody>
   </table>
-  <h5 id="GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
+  <h5 id="GoRogue_MapGeneration_QuickGenerators_GenerateDungeonMazeMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_System_Single_System_Single_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>First, non-overlapping rooms are randomly placed using <a class="xref" href="GoRogue.MapGeneration.Generators.RoomsGenerator.html">RoomsGenerator</a>. Then, a maze is
 generated into the remaining space using a <a class="xref" href="GoRogue.MapGeneration.Generators.MazeGenerator.html">MazeGenerator</a>. Those mazes are then connected.
 The rooms are connected to the maze using a <a class="xref" href="GoRogue.MapGeneration.Connectors.RoomDoorConnector.html">RoomDoorConnector</a>, and finally, small dead ends
@@ -506,7 +512,7 @@ are trimmed out.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L220">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L221">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap*"></a>
   <h4 id="GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_GoRogue_MapViews_ISettableMapView_System_Boolean__System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap(GoRogue.MapViews.ISettableMapView{System.Boolean},System.Int32,System.Int32,System.Int32,System.Int32)">GenerateRandomRoomsMap(ISettableMapView&lt;Boolean&gt;, Int32, Int32, Int32, Int32)</h4>
@@ -585,7 +591,7 @@ room. Defaults to 10.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D%2CTroschuetz.Random.IGenerator%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L243">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L244">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap*"></a>
   <h4 id="GoRogue_MapGeneration_QuickGenerators_GenerateRandomRoomsMap_GoRogue_MapViews_ISettableMapView_System_Boolean__Troschuetz_Random_IGenerator_System_Int32_System_Int32_System_Int32_System_Int32_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRandomRoomsMap(GoRogue.MapViews.ISettableMapView{System.Boolean},Troschuetz.Random.IGenerator,System.Int32,System.Int32,System.Int32,System.Int32)">GenerateRandomRoomsMap(ISettableMapView&lt;Boolean&gt;, IGenerator, Int32, Int32, Int32, Int32)</h4>
@@ -671,7 +677,7 @@ room. Defaults to 10.</p>
     <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapGeneration_QuickGenerators_GenerateRectangleMap_GoRogue_MapViews_ISettableMapView_System_Boolean__.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.QuickGenerators.GenerateRectangleMap(GoRogue.MapViews.ISettableMapView%7BSystem.Boolean%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L270">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapGeneration/QuickGenerators.cs/#L271">View Source</a>
   </span>
   <a id="GoRogue_MapGeneration_QuickGenerators_GenerateRectangleMap_" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRectangleMap*"></a>
   <h4 id="GoRogue_MapGeneration_QuickGenerators_GenerateRectangleMap_GoRogue_MapViews_ISettableMapView_System_Boolean__" data-uid="GoRogue.MapGeneration.QuickGenerators.GenerateRectangleMap(GoRogue.MapViews.ISettableMapView{System.Boolean})">GenerateRectangleMap(ISettableMapView&lt;Boolean&gt;)</h4>

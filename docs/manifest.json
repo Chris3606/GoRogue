@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Coord.html",
-          "hash": "gnFfQQJc9AACZIPRo1YSCA=="
+          "hash": "JGCiFWj5g/x1h9I42pBU7Q=="
         }
       },
       "is_incremental": false,
@@ -108,7 +108,7 @@
           "hash": "MCiTt4+hZF2AllBth3hdTQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -204,7 +204,7 @@
           "hash": "dcxV7CKApq4gPCMWLkCmKw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -276,7 +276,7 @@
           "hash": "9DgjcozkdQc3R45Q9xlqMw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -357,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Direction.html",
-          "hash": "tLkL2YdOH5bgSZVr7adacg=="
+          "hash": "6Gl3pEvaGQa8wbZDIVmXww=="
         }
       },
       "is_incremental": false,
@@ -405,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Effect-1.html",
-          "hash": "m0DdZdoHF3ro+tjJRTtxrw=="
+          "hash": "jv3ry/O4xqTB6Q9J/ZBmow=="
         }
       },
       "is_incremental": false,
@@ -429,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.EffectTrigger-1.html",
-          "hash": "JU7xZXWatnIkGCubtCBdXg=="
+          "hash": "yfIbYohne8qa8Ab8jUBAXw=="
         }
       },
       "is_incremental": false,
@@ -456,7 +456,7 @@
           "hash": "5CL6zZqBu152NPBNZ6Duew=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -489,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Factory.IBlueprint-2.html",
-          "hash": "Ru6t9TkPufJFzAthCQBhGg=="
+          "hash": "VkLgYaou39boc8uCOLwOFg=="
         }
       },
       "is_incremental": false,
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.Map.html",
-          "hash": "l6ShN1jD05a658ILUdNgbg=="
+          "hash": "8DdQjNr3YAHWRcEeH2yHTg=="
         }
       },
       "is_incremental": false,
@@ -624,7 +624,7 @@
           "hash": "z85qt+QU14MS/tIDnrJm3w=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -648,7 +648,7 @@
           "hash": "dalfnThpPWRWTv80vDwmnQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -816,7 +816,7 @@
           "hash": "3Ll3wPZK+jUK5uCXa9s8yw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -873,10 +873,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.Connectors.DeadEndTrimmer.html",
-          "hash": "RN5OsH2atsrW8wbaZbUp4A=="
+          "hash": "zEnEEkm0EvhqYYD1emAevg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -960,7 +960,7 @@
           "hash": "ShESVYyyz+kooum2bcGSQw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -984,7 +984,7 @@
           "hash": "AG1AN1y1eMLTf3PBE0jJfQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -996,7 +996,7 @@
           "hash": "0zplQPDAJG2gaiq0SmxsrA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1008,7 +1008,7 @@
           "hash": "5JroexoKjx/CfK8DgiDmBQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1020,7 +1020,7 @@
           "hash": "3m3x0L7vXHjTdlCs1Rj3+Q=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1032,7 +1032,7 @@
           "hash": "5qrHy+Rk+f7WXIzu0/pfMg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1077,10 +1077,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.MapGeneration.QuickGenerators.html",
-          "hash": "qQE/BQeLQHGUvM+wr4zHCg=="
+          "hash": "owqYVUa5Fapv8SH01HU8Bg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1284,7 +1284,7 @@
           "hash": "gw9mDGAdysYhFN6nVbb2pQ=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1296,7 +1296,7 @@
           "hash": "91smKRmjY5AXwWHRSEnQFw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1308,7 +1308,7 @@
           "hash": "iTN7LFyL0pwrVOM1VDFkCA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1320,7 +1320,7 @@
           "hash": "V/amSuC571whk7WALOQFKg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1404,7 +1404,7 @@
           "hash": "TkE4dmpY5gI2NdxXA1PA8g=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1500,7 +1500,7 @@
           "hash": "8OWum+3edO/IEm2+V15nlw=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1548,7 +1548,7 @@
           "hash": "Fcf2H6AUmHPNe1aFktYL4A=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1569,7 +1569,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Rectangle.html",
-          "hash": "BQhp5C8qpjs+JDevo0IUFw=="
+          "hash": "/PH+g8da0Wgx/Re4EcVXnw=="
         }
       },
       "is_incremental": false,
@@ -1584,7 +1584,7 @@
           "hash": "sQXD8TodNbptFz8i24eUcA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1632,7 +1632,7 @@
           "hash": "B9ivoYL3I6Z+Zs/CXFWVQg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1668,7 +1668,7 @@
           "hash": "JaY18+C6VV5hUtlwwELTEA=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1692,7 +1692,7 @@
           "hash": "4W5EW3IaNlxrILkIwH1Oyg=="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -1731,7 +1731,7 @@
           "hash": "FgCDNvtExZVfNkEIe2r+VQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1740,7 +1740,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/getting-started.html",
-          "hash": "+1TJvC4ag1/W50Hjc/Mv7A=="
+          "hash": "bUx5yMfYCYETsE/MXxtrqg=="
         }
       },
       "is_incremental": true,
@@ -2311,12 +2311,11 @@
           "total_file_count": 0,
           "skipped_file_count": 0
         },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
+          "total_file_count": 140,
+          "skipped_file_count": 66
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
@@ -2324,11 +2323,12 @@
           "total_file_count": 11,
           "skipped_file_count": 11
         },
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
-          "total_file_count": 140,
-          "skipped_file_count": 131
+          "total_file_count": 0,
+          "skipped_file_count": 0
         }
       }
     },

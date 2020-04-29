@@ -1336,6 +1336,7 @@ be any type that implements <a class="xref" href="GoRogue.GameFramework.IGameObj
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Map CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt; terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = 4294967295U, uint layersBlockingTransparency = 4294967295U, uint entityLayersSupportingMultipleItems = 0U)
+
     where T : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1450,6 +1451,7 @@ in the layer mask downward.  Layer mask defaults to all layers.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityType&gt; GetEntities&lt;EntityType&gt;(Coord position, uint layerMask = 4294967295U)
+
     where EntityType : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1525,6 +1527,7 @@ in the layer mask downward.  Layer mask defaults to all layers.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityType&gt; GetEntities&lt;EntityType&gt;(int x, int y, uint layerMask = 4294967295U)
+
     where EntityType : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1607,6 +1610,7 @@ there are no entities at the location.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public EntityType GetEntity&lt;EntityType&gt;(Coord position, uint layerMask = 4294967295U)
+
     where EntityType : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1683,6 +1687,7 @@ there are no entities at the location.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public EntityType GetEntity&lt;EntityType&gt;(int x, int y, uint layerMask = 4294967295U)
+
     where EntityType : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1886,6 +1891,7 @@ objects at the location.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public ObjectType GetObject&lt;ObjectType&gt;(Coord position, uint layerMask = 4294967295U)
+
     where ObjectType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -1962,6 +1968,7 @@ objects at the location.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public ObjectType GetObject&lt;ObjectType&gt;(int x, int y, uint layerMask = 4294967295U)
+
     where ObjectType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -2163,6 +2170,7 @@ mask downward. Layer mask defaults to all layers.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IEnumerable&lt;ObjectType&gt; GetObjects&lt;ObjectType&gt;(Coord position, uint layerMask = 4294967295U)
+
     where ObjectType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -2238,6 +2246,7 @@ mask downward. Layer mask defaults to all layers.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public IEnumerable&lt;ObjectType&gt; GetObjects&lt;ObjectType&gt;(int x, int y, uint layerMask = 4294967295U)
+
     where ObjectType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -2425,6 +2434,7 @@ cannot be casted to the type specified.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public TerrainType GetTerrain&lt;TerrainType&gt;(Coord position)
+
     where TerrainType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
@@ -2494,6 +2504,7 @@ cannot be casted to the type specified.</p>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public TerrainType GetTerrain&lt;TerrainType&gt;(int x, int y)
+
     where TerrainType : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
