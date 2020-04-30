@@ -118,66 +118,66 @@ namespace GoRogue.MapGeneration
                                       crawlerChangeDirectionImprovement, saveDeadEndChance, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance,
                                       cancelConnectionPlacementChance, cancelConnectionPlacementChanceIncrease, saveDeadEndChance, maxTrimIterations);
 
-		/// <summary>
-		/// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
-		/// </summary>
-		/// <remarks>
-		/// First, non-overlapping rooms are randomly placed using <see cref="Generators.RoomsGenerator"/>. Then, a maze is
-		/// generated into the remaining space using a <see cref="Generators.MazeGenerator"/>. Those mazes are then connected.
-		/// The rooms are connected to the maze using a <see cref="Connectors.RoomDoorConnector"/>, and finally, small dead ends
-		/// are trimmed out.
-		/// </remarks>
-		/// <param name="map">The map to set values to.</param>
-		/// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
-		/// <param name="minRooms">Minimum amount of rooms to generate.</param>
-		/// <param name="maxRooms">Maximum amount of rooms to generate.</param>
-		/// <param name="roomMinSize">The minimum size of the room. Forces an odd number.</param>
-		/// <param name="roomMaxSize">The maximum size of the room. Forces an odd number.</param>
-		/// <param name="roomSizeRatioX">
-		/// The ratio of the room width to the height. Defaults to 1.0.
-		/// </param>
-		/// <param name="roomSizeRatioY">
-		/// The ratio of the room height to the width. Defaults to 1.0.
-		/// </param>
-		/// <param name="maxCreationAttempts">
-		/// The max times to re-generate a room that cannot be placed before giving up on placing
-		/// that room. Defaults to 10.
-		/// </param>
-		/// <param name="maxPlacementAttempts">
-		/// The max times to attempt to place a room in a map without intersection, before giving up
-		/// and re-generating that room. Defaults to 10.
-		/// </param>
-		/// <param name="crawlerChangeDirectionImprovement">
-		/// Out of 100, how much to increase the chance of the crawler changing direction each step
-		/// during maze generation. Once it changes direction, the chance resets to 0 and increases
-		/// by this amount. Defaults to 10.
-		/// </param>
-		/// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
-		/// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
-		/// <param name="cancelSideConnectionSelectChance">
-		/// A chance out of 100 to cancel selecting sides to process (per room) while we are
-		/// connecting them. Defaults to 50.
-		/// </param>
-		/// <param name="cancelConnectionPlacementChance">
-		/// A chance out of 100 to cancel placing a door on a side after one has already been placed
-		/// (per room) during connection.Defaults to 70.
-		/// </param>
-		/// <param name="cancelConnectionPlacementChanceIncrease">
-		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
-		/// time a door is placed (per room) during the connection process. Defaults to 10.
-		/// </param>
-		/// <param name="saveDeadEndChance">
-		/// After the connection finishes, the small dead ends will be trimmed out. This value
-		/// indicates the chance out of 100 that a given dead end remains. Defaults to 0.
-		/// </param>
-		/// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.</param>
-		/// <returns>A list of the interior of rooms generated and the connections placed.</returns>
-		public static IEnumerable<(Rectangle Room, Point[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator? rng, int minRooms,
-			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
-			int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
-			int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0, int maxTrimIterations = -1)
-		{
-			if (rng == null) rng = SingletonRandom.DefaultRNG;
+        /// <summary>
+        /// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
+        /// </summary>
+        /// <remarks>
+        /// First, non-overlapping rooms are randomly placed using <see cref="Generators.RoomsGenerator"/>. Then, a maze is
+        /// generated into the remaining space using a <see cref="Generators.MazeGenerator"/>. Those mazes are then connected.
+        /// The rooms are connected to the maze using a <see cref="Connectors.RoomDoorConnector"/>, and finally, small dead ends
+        /// are trimmed out.
+        /// </remarks>
+        /// <param name="map">The map to set values to.</param>
+        /// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
+        /// <param name="minRooms">Minimum amount of rooms to generate.</param>
+        /// <param name="maxRooms">Maximum amount of rooms to generate.</param>
+        /// <param name="roomMinSize">The minimum size of the room. Forces an odd number.</param>
+        /// <param name="roomMaxSize">The maximum size of the room. Forces an odd number.</param>
+        /// <param name="roomSizeRatioX">
+        /// The ratio of the room width to the height. Defaults to 1.0.
+        /// </param>
+        /// <param name="roomSizeRatioY">
+        /// The ratio of the room height to the width. Defaults to 1.0.
+        /// </param>
+        /// <param name="maxCreationAttempts">
+        /// The max times to re-generate a room that cannot be placed before giving up on placing
+        /// that room. Defaults to 10.
+        /// </param>
+        /// <param name="maxPlacementAttempts">
+        /// The max times to attempt to place a room in a map without intersection, before giving up
+        /// and re-generating that room. Defaults to 10.
+        /// </param>
+        /// <param name="crawlerChangeDirectionImprovement">
+        /// Out of 100, how much to increase the chance of the crawler changing direction each step
+        /// during maze generation. Once it changes direction, the chance resets to 0 and increases
+        /// by this amount. Defaults to 10.
+        /// </param>
+        /// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
+        /// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
+        /// <param name="cancelSideConnectionSelectChance">
+        /// A chance out of 100 to cancel selecting sides to process (per room) while we are
+        /// connecting them. Defaults to 50.
+        /// </param>
+        /// <param name="cancelConnectionPlacementChance">
+        /// A chance out of 100 to cancel placing a door on a side after one has already been placed
+        /// (per room) during connection.Defaults to 70.
+        /// </param>
+        /// <param name="cancelConnectionPlacementChanceIncrease">
+        /// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
+        /// time a door is placed (per room) during the connection process. Defaults to 10.
+        /// </param>
+        /// <param name="saveDeadEndChance">
+        /// After the connection finishes, the small dead ends will be trimmed out. This value
+        /// indicates the chance out of 100 that a given dead end remains. Defaults to 0.
+        /// </param>
+        /// <param name="maxTrimIterations">Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.</param>
+        /// <returns>A list of the interior of rooms generated and the connections placed.</returns>
+        public static IEnumerable<(Rectangle Room, Point[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, IGenerator? rng, int minRooms,
+            int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10, int maxPlacementAttempts = 10,
+            int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4, int cancelSideConnectionSelectChance = 50,
+            int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10, int saveDeadEndChance = 0, int maxTrimIterations = -1)
+        {
+            if (rng == null) rng = SingletonRandom.DefaultRNG;
 
             // Optimization to allow us to use the existing map if the existing map is an ArrayMap.
             // otherwise we allocate a temporary ArrayMap and copy it onto the original at the end,
@@ -199,7 +199,7 @@ namespace GoRogue.MapGeneration
                                                                              cancelSideConnectionSelectChance, cancelConnectionPlacementChance,
                                                                              cancelConnectionPlacementChanceIncrease);
 
-			Connectors.DeadEndTrimmer.Trim(tempMap, mazes, saveDeadEndChance, maxTrimIterations, rng);
+            Connectors.DeadEndTrimmer.Trim(tempMap, mazes, saveDeadEndChance, maxTrimIterations, rng);
 
             if (!wasArrayMap)
                 map.ApplyOverlay(tempMap);

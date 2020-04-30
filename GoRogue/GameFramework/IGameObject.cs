@@ -1,5 +1,5 @@
-﻿using GoRogue.SpatialMaps;
-using System;
+﻿using System;
+using GoRogue.SpatialMaps;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
