@@ -1,7 +1,7 @@
 ﻿namespace GoRogue
 {
     /// <summary>
-    /// Interface to be implemented by objects that will be added to a <see cref="LayeredSpatialMap{T}"/>.
+    /// Interface to be implemented by objects that will be added to a <see cref="SpatialMaps.LayeredSpatialMap{T}"/>.
     /// </summary>
     public interface IHasLayer
     {
