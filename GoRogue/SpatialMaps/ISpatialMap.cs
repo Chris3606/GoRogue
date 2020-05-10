@@ -43,23 +43,6 @@ namespace GoRogue.SpatialMaps
     public interface ISpatialMap<T> : IReadOnlySpatialMap<T>
     {
         /// <summary>
-        /// Returns true if the given item can be added at the given position; false otherwise.
-        /// </summary>
-        /// <param name="newItem">Item to add.</param>
-		/// <param name="position">Position to add item to.</param>
-        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
-        bool CanAdd(T newItem, Point position);
-
-        /// <summary>
-        /// Returns true if the given item can be added at the given position; false otherwise.
-        /// </summary>
-        /// <param name="newItem">Item to add.</param>
-		/// <param name="x">X-value of the position to add item to.</param>
-		/// <param name="y">Y-value of the position to add item to.</param>
-        /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
-        bool CanAdd(T newItem, int x, int y);
-
-        /// <summary>
         /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
         /// </summary>
         /// <param name="newItem">Item to add.</param>
@@ -80,23 +63,6 @@ namespace GoRogue.SpatialMaps
         void Clear();
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
-        /// </summary>
-        /// <param name="item">Item to move.</param>
-        /// <param name="target">Location to move item to.</param>
-        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
-        bool CanMove(T item, Point target);
-
-        /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
-        /// </summary>
-        /// <param name="item">Item to move.</param>
-        /// <param name="targetX">X-value of the location to move item to.</param>
-		/// <param name="targetY">Y-value of the location to move item to.</param>
-        /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
-        bool CanMove(T item, int targetX, int targetY);
-
-        /// <summary>
         /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item cannot be moved.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -110,26 +76,6 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetX">X-value of the location to move item to.</param>
         /// <param name="targetY">Y-value of the location to move item to.</param>
         void Move(T item, int targetX, int targetY);
-
-        /// <summary>
-        /// Returns true if there are items at <paramref name="current"/> and all items at that position
-        /// can be moved to <paramref name="target"/>; false otherwise.
-        /// </summary>
-        /// <param name="current">Location to move items from.</param>
-		/// <param name="target">Location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
-        bool CanMoveAll(Point current, Point target);
-
-        /// <summary>
-        /// Returns true if there are items at the current position specified, and all items at that position
-        /// can be moved to the target position; false otherwise.
-        /// </summary>
-        /// <param name="currentX">X-value of the location to move items from.</param>
-		/// <param name="currentY">Y-value of the location to move items from.</param>
-		/// <param name="targetX">X-value of the location to move items to.</param>
-		/// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
-        bool CanMoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
         /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are

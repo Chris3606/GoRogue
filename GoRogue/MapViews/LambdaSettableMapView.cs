@@ -72,14 +72,10 @@ namespace GoRogue.MapViews
             _valueSetter = valueSetter;
         }
 
-        /// <summary>
-        /// The height of the map being represented.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height => _heightGetter();
 
-        /// <summary>
-        /// The width of the map being represented.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width => _widthGetter();
 
         /// <summary>

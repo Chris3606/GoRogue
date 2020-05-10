@@ -39,7 +39,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The distance calculation being used to determine distance between points. <see cref="Distance.Manhattan"/>
         /// implies 4-way connectivity, while <see cref="Distance.Chebyshev"/> or <see cref="Distance.Euclidean"/> imply
-        /// 8-way connectivity for the purpose of determining adjacent Pointinates.
+        /// 8-way connectivity for the purpose of determining adjacent coordinates.
         /// </summary>
         public Distance DistanceMeasurement { get; set; } // Has to be a property for default heuristic to update properly when this is changed
 
@@ -382,8 +382,8 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// The Pointinates that constitute the path (in order), NOT including the starting point.
-        /// These are the Pointinates something might walk along to follow a path.
+        /// The coordinates that constitute the path (in order), NOT including the starting point.
+        /// These are the coordinates something might walk along to follow a path.
         /// </summary>
         public IEnumerable<Point> Steps
         {
@@ -403,7 +403,7 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// The Pointinates that constitute the path (in order), INCLUDING the starting point.
+        /// The coordinates that constitute the path (in order), INCLUDING the starting point.
         /// </summary>
         public IEnumerable<Point> StepsWithStart
         {

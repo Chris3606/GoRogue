@@ -36,13 +36,8 @@ namespace GoRogue.GameFramework
         private readonly IGameObject _parentObject;
 
         private Point _position;
-        /// <summary>
-        /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved"/> event is fired.
-        /// </summary>
-        /// <remarks>
-        /// This property may be overriden to implement custom functionality, however it is highly recommended
-        /// that you call the base set in the overridden setter, as it performs collision detection.
-        /// </remarks>
+
+        /// <inheritdoc/>
         public virtual Point Position
         {
             get => _position;
@@ -71,19 +66,12 @@ namespace GoRogue.GameFramework
             }
         }
 
-        /// <summary>
-        /// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
-        /// the object is part of a <see cref="Map"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemMovedEventArgs<IGameObject>>? Moved;
 
         private bool _isWalkable;
 
-        /// <summary>
-        /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
-        /// on can be traversed by other, non-walkable objects on the same <see cref="Map"/>.  Effectively, whether or not this
-        /// object collides.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual bool IsWalkable
         {
             get => _isWalkable;
@@ -101,34 +89,19 @@ namespace GoRogue.GameFramework
             }
         }
 
-        /// <summary>
-        /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
-        /// for the sake of calculating the FOV of a <see cref="Map"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public virtual bool IsTransparent { get; set; }
 
-        /// <summary>
-        /// Whether or not the object is "static".  Static objects CANNOT be moved, and only static objects may
-        /// be placed on layer 0 of a <see cref="Map"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsStatic { get; }
 
-        /// <summary>
-        /// ID of the object.  Used for the sake of putting instances of this class in an <see cref="ISpatialMap{T}"/> implementation,
-        /// and is NOT guaranteed to be entirely unique, though this can be modified by passing a custom generation function to the
-        /// GameObject constructor.
-        /// </summary>
+        /// <inheritdoc/>
         public uint ID { get; }
 
-        /// <summary>
-        /// Layer of a <see cref="Map"/> that this object will reside on.
-        /// </summary>
+        /// <inheritdoc/>
         public int Layer { get; }
 
-        /// <summary>
-        /// The current <see cref="Map"/> which this object resides on.  Returns null if the object has not been added to a map.
-        /// A GameObject is allowed to reside on only one map.
-        /// </summary>
+        /// <inheritdoc/>
         public Map? CurrentMap { get; private set; }
 
         /// <summary>
@@ -186,7 +159,7 @@ namespace GoRogue.GameFramework
         /// </remarks>
         /// <param name="position">The position to check.</param>
         /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
-        public bool CanMove(Point position)
+        public virtual bool CanMove(Point position)
         {
             if (IsStatic)
                 return false;
@@ -212,11 +185,7 @@ namespace GoRogue.GameFramework
         /// <returns>True if the object can be moved in the specified direction; false otherwise</returns>
         public bool CanMoveIn(Direction direction) => CanMove(Position + direction);
 
-        /// <summary>
-        /// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap"/> field of the
-        /// GameObject to reflect the change.
-        /// </summary>
-        /// <param name="newMap">New map to which the GameObject has been added.</param>
+        /// <inheritdoc/>
         public void OnMapChanged(Map? newMap)
         {
             if (newMap != null)
@@ -242,10 +211,7 @@ namespace GoRogue.GameFramework
         }
 
         #region Component Functions
-        /// <summary>
-        /// Adds the given object as a component.  Throws an exception if that specific instance is already attached to this GameObject.
-        /// </summary>
-        /// <param name="component">Component to add.</param>
+        /// <inheritdoc/>
         public override void AddComponent(object component)
         {
             base.AddComponent(component);
@@ -260,11 +226,7 @@ namespace GoRogue.GameFramework
             }
         }
 
-        /// <summary>
-        /// Removes the given component(s) from the GameObject.  Throws an exception if a component given is not attached to
-        /// the GameObject.
-        /// </summary>
-        /// <param name="components">One or more component instances to remove.</param>
+        /// <inheritdoc/>
         public override void RemoveComponents(params object[] components)
         {
             base.RemoveComponents(components);

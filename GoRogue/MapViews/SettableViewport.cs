@@ -4,7 +4,7 @@ namespace GoRogue.MapViews
 {
     /// <summary>
     /// Similar to <see cref="Viewport{T}"/>, but implements <see cref="ISettableMapView{T}"/>and thus implements
-    /// "set" functionality via relative Pointinates.
+    /// "set" functionality via relative coordinates.
     /// </summary>
     /// <typeparam name="T">Type being exposed by map view.</typeparam>
     public class SettableViewport<T> : Viewport<T>, ISettableMapView<T>
@@ -30,7 +30,7 @@ namespace GoRogue.MapViews
 
         /// <summary>
         /// Given a position in relative 1d-array-index style, returns/sets the "value" associated with that
-        /// location in absolute Pointinates.
+        /// location in absolute coordinates.
         /// </summary>
         /// <param name="relativeIndex1D">
         /// Viewport-relative position of the location to retrieve/set the value for, as a 1D array index.
@@ -45,8 +45,8 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
-        /// Given a position in relative Pointinates, sets/returns the "value" associated with that
-        /// location in absolute Pointinates.
+        /// Given a position in relative coordinates, sets/returns the "value" associated with that
+        /// location in absolute coordinates.
         /// </summary>
         /// <param name="relativePosition">
         /// Viewport-relative position of the location to retrieve/set the value for.
@@ -62,8 +62,8 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
-        /// Given an X and Y value in relative Pointinates, sets/returns the "value" associated with
-        /// that location in absolute Pointinates.
+        /// Given an X and Y value in relative coordinates, sets/returns the "value" associated with
+        /// that location in absolute coordinates.
         /// </summary>
         /// <param name="relativeX">Viewport-relative X-value of location.</param>
         /// <param name="relativeY">Viewport-relative Y-value of location.</param>

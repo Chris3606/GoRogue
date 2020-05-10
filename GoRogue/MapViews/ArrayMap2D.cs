@@ -35,45 +35,27 @@ namespace GoRogue.MapViews
         /// <param name="existingArray">An existing 2D array to use as the data structure.</param>
         public ArrayMap2D(T[,] existingArray) => _array = existingArray;
 
-        /// <summary>
-        /// The height of the map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height => _array.GetLength(1);
 
-        /// <summary>
-        /// The width of the map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width => _array.GetLength(0);
 
-        /// <summary>
-        /// Given an 1-dimensional index, returns/sets the value associated with the corresponding position
-        /// in the underlying 2D array.
-        /// </summary>
-        /// <param name="index1D">1D index of location to retrieve the "value" for.</param>
-        /// <returns>The "value" associated with the given location.</returns>
+        /// <inheritdoc/>
         public T this[int index1D]
         {
             get => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
             set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
         }
 
-        /// <summary>
-        /// Given an X and Y value, returns/sets the "value" associated with that location.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>The "value" associated with that location.</returns>
+        /// <inheritdoc/>
         public T this[int x, int y]
         {
             get => _array[x, y];
             set => _array[x, y] = value;
         }
 
-        /// <summary>
-        /// Given a position, returns/sets the "value" associated with that location.
-        /// </summary>
-        /// <param name="pos">Location to get/set the value for.</param>
-        /// <returns>The "value" associated with the provided location.</returns>
+        /// <inheritdoc/>
         public T this[Point pos]
         {
             get => _array[pos.X, pos.Y];

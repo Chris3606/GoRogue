@@ -43,29 +43,19 @@ namespace GoRogue.SpatialMaps
             _positionMapping = new Dictionary<Point, List<SpatialTuple<T>>>(initialCapacity);
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemAdded"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemAdded;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemMoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemMovedEventArgs<T>>? ItemMoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemRemoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Count"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public int Count => _itemMapping.Count;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> Items
         {
             get
@@ -75,9 +65,7 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Positions"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> Positions
         {
             get
@@ -117,33 +105,23 @@ namespace GoRogue.SpatialMaps
         /// <param name="y">y-value of the position to add item to.</param>
         public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Clear"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public void Clear()
         {
             _itemMapping.Clear();
             _positionMapping.Clear();
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(T item) => _itemMapping.ContainsKey(item);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(Point position) => _positionMapping.ContainsKey(position);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(int x, int y) => Contains(new Point(x, y));
 
         /// <summary>
@@ -163,9 +141,7 @@ namespace GoRogue.SpatialMaps
         /// <returns>Enumerator of ISpatialTuples.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.GetItemsAt(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> GetItemsAt(Point position)
         {
             if (_positionMapping.ContainsKey(position))
@@ -177,14 +153,10 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.GetItemsAt(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
-        /// <summary>
-        /// <see cref="IReadOnlySpatialMap{T}.GetPositionOf(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public Point GetPositionOf(T item)
         {
             _itemMapping.TryGetValue(item, out var tuple);
@@ -228,14 +200,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetY">Y-value of the location to move it to.</param>
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
-        /// <summary>
-        /// Moves everything at <paramref name="current"/>, if anything, to <paramref name="target"/>.
-        /// If something was moved, returns everything that was moved. If nothing was moved, eg. there
-        /// was nothing at <paramref name="current"/>, returns nothing.
-        /// </summary>
-        /// <param name="current">The position of the items to move.</param>
-        /// <param name="target">The position to move the item to.</param>
-        /// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
+        /// <inheritdoc/>
         public IEnumerable<T> MoveValid(Point current, Point target)
         {
             if (_positionMapping.ContainsKey(current) && current != target)
@@ -262,16 +227,7 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// Moves whatever is at the "current" position specified, if anything, to the "target" position.
-        /// If something was moved, returns what was moved. If nothing was moved, eg. there was nothing
-        /// at the "current" position given, returns nothing.
-        /// </summary>
-        /// <param name="currentX">X-value of the location to move items from.</param>
-        /// <param name="currentY">Y-value of the location to move items from.</param>
-        /// <param name="targetX">X-value of the location to move items to.</param>
-        /// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <returns>The items moved if something was moved, or nothing if no item was moved.</returns>
+        /// <inheritdoc/>
         public IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY) => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
@@ -294,14 +250,7 @@ namespace GoRogue.SpatialMaps
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, tuple.Position));
         }
 
-        /// <summary>
-        /// Removes everything at the given position, and returns the items removed.
-        /// Returns nothing if no items were at the position specified.
-        /// </summary>
-        /// <param name="position">The position of the item to remove.</param>
-        /// <returns>
-        /// The items removed, if any were removed; nothing if no items were found at that position.
-        /// </returns>
+        /// <inheritdoc/>
         public IEnumerable<T> Remove(Point position)
         {
             if (_positionMapping.ContainsKey(position))
@@ -320,15 +269,7 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// Removes everything at the given position, and returns the items removed.
-        /// Returns nothing if no item was at the position specified.
-        /// </summary>
-        /// <param name="x">X-value of the position to remove items from.</param>
-        /// <param name="y">Y-value of the position to remove items from.</param>
-        /// <returns>
-        /// The items removed, if any were removed; nothing if no items were found at that position.
-        /// </returns>
+        /// <inheritdoc/>
         public IEnumerable<T> Remove(int x, int y) => Remove(new Point(x, y));
 
         /// <summary>
@@ -385,24 +326,10 @@ namespace GoRogue.SpatialMaps
         /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
         public bool CanMove(T item, int targetX, int targetY) => CanMove(item, new Point(targetX, targetY));
 
-        /// <summary>
-        /// Returns true if there are items at <paramref name="current"/> and all items at that position
-        /// can be moved to <paramref name="target"/>; false otherwise.
-        /// </summary>
-        /// <param name="current">Location to move items from.</param>
-		/// <param name="target">Location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <inheritdoc/>
         public bool CanMoveAll(Point current, Point target) => _positionMapping.ContainsKey(current) && current != target;
 
-        /// <summary>
-        /// Returns true if there are items at the current position specified, and all items at that position
-        /// can be moved to the target position; false otherwise.
-        /// </summary>
-        /// <param name="currentX">X-value of the location to move items from.</param>
-		/// <param name="currentY">Y-value of the location to move items from.</param>
-		/// <param name="targetX">X-value of the location to move items to.</param>
-		/// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <inheritdoc/>
         public bool CanMoveAll(int currentX, int currentY, int targetX, int targetY) => CanMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>

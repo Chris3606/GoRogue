@@ -35,5 +35,11 @@ namespace GoRogue.SenseMapping
         /// when Calculate is called.
         /// </summary>
         IReadOnlyList<SenseSource> SenseSources { get; }
+
+        /// <summary>
+        /// Returns a read-only representation of the sensory map.
+        /// </summary>
+        /// <returns>This sensory map object as <see cref="IReadOnlySenseMap"/>.</returns>
+        public IReadOnlySenseMap AsReadOnly() => this;
     }
 }

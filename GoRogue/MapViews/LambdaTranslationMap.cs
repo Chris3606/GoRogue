@@ -5,7 +5,7 @@ namespace GoRogue.MapViews
 {
     /// <summary>
     /// A simple <see cref="TranslationMap{T1, T2}"/> implementation that allows you to provide a function/lambda
-    /// at construction to use as the TranslateGet implementation. For a version offering "set" functionality,
+    /// at construction to use as the <see cref="TranslationMap{T1, T2}.TranslateGet(Point, T1)"/> implementation. For a version offering "set" functionality,
     /// see <see cref="LambdaSettableTranslationMap{T1, T2}"/>.
     /// </summary>
     /// <remarks>

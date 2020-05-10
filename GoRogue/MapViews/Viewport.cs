@@ -66,7 +66,7 @@ namespace GoRogue.MapViews
 
         /// <summary>
         /// Given a position in relative 1d-array-index style, returns the "value" associated with that
-        /// location in absolute Pointinates.
+        /// location in absolute coordinates.
         /// </summary>
         /// <param name="relativeIndex1D">
         /// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
@@ -77,8 +77,8 @@ namespace GoRogue.MapViews
         public T this[int relativeIndex1D] => MapView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)];
 
         /// <summary>
-        /// Given a position in relative Pointinates, returns the "value" associated with that
-        /// location in absolute Pointinates.
+        /// Given a position in relative coordinates, returns the "value" associated with that
+        /// location in absolute coordinates.
         /// </summary>
         /// <param name="relativePosition">
         /// Viewport-relative position of the location to retrieve the value for.
@@ -89,8 +89,8 @@ namespace GoRogue.MapViews
         public virtual T this[Point relativePosition] => MapView[ViewArea.Position + relativePosition];
 
         /// <summary>
-        /// Given an X and Y value in relative Pointinates, returns the "value" associated with that
-        /// location in absolute Pointinates.
+        /// Given an X and Y value in relative coordinates, returns the "value" associated with that
+        /// location in absolute coordinates.
         /// </summary>
         /// <param name="relativeX">Viewport-relative X-value of location.</param>
         /// <param name="relativeY">Viewport-relative Y-value of location.</param>

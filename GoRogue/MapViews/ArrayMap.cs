@@ -45,44 +45,27 @@ namespace GoRogue.MapViews
             Height = existingArray.Length / width;
         }
 
-        /// <summary>
-        /// The height of the map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height { get; }
 
-        /// <summary>
-        /// The width of the map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width { get; }
 
-        /// <summary>
-        /// Returns/sets the value associated with the given index in the underlying array.
-        /// </summary>
-        /// <param name="index1D">1D index of location to retrieve the "value" for.</param>
-        /// <returns>The "value" associated with the given location.</returns>
+        /// <inheritdoc/>
         public T this[int index1D]
         {
             get => _array[index1D];
             set => _array[index1D] = value;
         }
 
-        /// <summary>
-        /// Given an X and Y value, returns/sets the "value" associated with that location.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>The "value" associated with that location.</returns>
+        /// <inheritdoc/>
         public T this[int x, int y]
         {
             get => _array[Point.ToIndex(x, y, Width)];
             set => _array[Point.ToIndex(x, y, Width)] = value;
         }
 
-        /// <summary>
-        /// Given a position, returns/sets the "value" associated with that location.
-        /// </summary>
-        /// <param name="pos">Location to get/set the value for.</param>
-        /// <returns>The "value" associated with the provided location.</returns>
+        /// <inheritdoc/>
         public T this[Point pos]
         {
             get => _array[pos.ToIndex(Width)];

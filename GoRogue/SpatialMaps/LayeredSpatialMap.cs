@@ -72,29 +72,19 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemAdded"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemAdded;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemMoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemMovedEventArgs<T>>? ItemMoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemRemoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Count"/>
-        /// </summary>
+        /// <inheritdoc/>
         public int Count => _layers.Sum(map => map.Count);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> Items
         {
             get
@@ -105,26 +95,16 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// Object used to get layer masks as they pertain to this spatial map.
-        /// </summary>
+        /// <inheritdoc/>
         public LayerMasker LayerMasker { get; }
 
-        /// <summary>
-        /// Gets read-only spatial maps representing each layer. To access a specific layer, instead
-        /// use <see cref="GetLayer(int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<IReadOnlySpatialMap<T>> Layers => _layers;
 
-        /// <summary>
-        /// Gets the number of layers contained in the spatial map.
-        /// </summary>
+        /// <inheritdoc/>
         public int NumberOfLayers => _layers.Length;
 
-        /// <summary>
-        /// Gets all positions that have items for each layer. No positions are duplicated if
-        /// multiple layers have an item at a position.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> Positions
         {
             get
@@ -138,9 +118,7 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// Starting index for layers contained in this spatial map.
-        /// </summary>
+        /// <inheritdoc/>
         public int StartingLayer { get; }
 
         /// <summary>
@@ -168,29 +146,20 @@ namespace GoRogue.SpatialMaps
         /// <param name="y">Y-value of position to add item at.</param>
         public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
-        /// </summary>
+        /// <inheritdoc/>
         IReadOnlySpatialMap<T> IReadOnlySpatialMap<T>.AsReadOnly() => this;
 
-        /// <summary>
-        /// See <see cref="IReadOnlyLayeredSpatialMap{T}.AsReadOnly"/>.
-        /// </summary>
-        /// <returns>The current data structure, as a "read-only" reference.</returns>
+        /// <inheritdoc/>
         public IReadOnlyLayeredSpatialMap<T> AsReadOnly() => this;
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Clear"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public void Clear()
         {
             foreach (var layer in _layers)
                 layer.Clear();
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(T item)
         {
             int relativeLayer = item.Layer - StartingLayer;
@@ -200,24 +169,16 @@ namespace GoRogue.SpatialMaps
             return _layers[relativeLayer].Contains(item);
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         bool IReadOnlySpatialMap<T>.Contains(Point position) => Contains(position);
 
-        /// <summary>
-        /// See <see cref="IReadOnlyLayeredSpatialMap{T}.Contains(Point, uint)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(Point position, uint layerMask = uint.MaxValue) => Contains(position.X, position.Y, layerMask);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         bool IReadOnlySpatialMap<T>.Contains(int x, int y) => Contains(x, y);
 
-        /// <summary>
-        /// See <see cref="IReadOnlyLayeredSpatialMap{T}.Contains(int, int, uint)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(int x, int y, uint layerMask = uint.MaxValue)
         {
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
@@ -250,24 +211,16 @@ namespace GoRogue.SpatialMaps
                     yield return tuple;
         }
 
-        /// <summary>
-        /// <see cref="IReadOnlySpatialMap{T}.GetItemsAt(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         IEnumerable<T> IReadOnlySpatialMap<T>.GetItemsAt(Point position) => GetItemsAt(position);
 
-        /// <summary>
-        /// See <see cref="IReadOnlyLayeredSpatialMap{T}.GetItemsAt(Point, uint)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> GetItemsAt(Point position, uint layerMask = uint.MaxValue) => GetItemsAt(position.X, position.Y, layerMask);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.GetItemsAt(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         IEnumerable<T> IReadOnlySpatialMap<T>.GetItemsAt(int x, int y) => GetItemsAt(x, y);
 
-        /// <summary>
-        /// See <see cref="IReadOnlyLayeredSpatialMap{T}.GetItemsAt(int, int, uint)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> GetItemsAt(int x, int y, uint layerMask = uint.MaxValue)
         {
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
@@ -275,30 +228,17 @@ namespace GoRogue.SpatialMaps
                     yield return item;
         }
 
-        /// <summary>
-        /// Gets a read-only spatial map representing the layer given.
-        /// </summary>
-        /// <param name="layer">The layer to retrieve.</param>
-        /// <returns>The IReadOnlySpatialMap that represents the given layer.</returns>
+        /// <inheritdoc/>
         public IReadOnlySpatialMap<T> GetLayer(int layer) => _layers[layer - StartingLayer].AsReadOnly();
 
-        /// <summary>
-        /// Returns read-only spatial maps that represent each layer included in the given layer
-        /// mask. Defaults to all layers.
-        /// </summary>
-        /// <param name="layerMask">
-        /// Layer mask indicating which layers to return. Defaults to all layers.
-        /// </param>
-        /// <returns>Read-only spatial maps representing each layer in the given layer mask.</returns>
+        /// <inheritdoc/>
         public IEnumerable<IReadOnlySpatialMap<T>> GetLayersInMask(uint layerMask = uint.MaxValue)
         {
             foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer)) // LayerMasking will ignore layers that dont' actually exist
                 yield return _layers[num - StartingLayer];
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.GetPositionOf(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public Point GetPositionOf(T item)
         {
             int relativeLayer = item.Layer - StartingLayer;
@@ -309,7 +249,7 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        ///Moves the given item to the given position.  Throws InvalidOperationException if either the item given
+        /// Moves the given item to the given position.  Throws InvalidOperationException if either the item given
         /// isn't in the spatial map, or if the layer that the item resides on is configured to allow only one item per
         /// location at any given time and there is already an item at <paramref name="target"/>.
         /// </summary>
@@ -335,12 +275,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetY">Y-value of position to move the given item to.</param>
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
-        /// <summary>
-        /// Moves all items that can be moved, that are at the given position and on any layer, to the new position.
-        /// </summary>
-        /// <param name="current">Position to move items from.</param>
-        /// <param name="target">Position to move items to</param>
-        /// <returns>All items moved.</returns>
+        /// <inheritdoc/>
         IEnumerable<T> ISpatialMap<T>.MoveValid(Point current, Point target) => MoveValid(current.X, current.Y, target.X, target.Y);
 
         /// <summary>
@@ -355,14 +290,7 @@ namespace GoRogue.SpatialMaps
         /// <returns>All items moved.</returns>
         public IEnumerable<T> MoveValid(Point current, Point target, uint layerMask = uint.MaxValue) => MoveValid(current.X, current.Y, target.X, target.Y, layerMask);
 
-        /// <summary>
-        /// Moves all items that can be moved, that are at the given position and on any layer, to the new position.
-        /// </summary>
-        /// <param name="currentX">X-value of the position to move items from.</param>
-        /// <param name="currentY">Y-value of the position to move items from.</param>
-        /// <param name="targetX">X-value of the position to move items to.</param>
-        /// <param name="targetY">Y-value of the position to move itesm from.</param>
-        /// <returns>All items moved.</returns>
+        /// <inheritdoc/>
         IEnumerable<T> ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY) => MoveValid(currentX, currentY, targetX, targetY, uint.MaxValue);
 
         /// <summary>
@@ -384,9 +312,7 @@ namespace GoRogue.SpatialMaps
                     yield return itemMoved;
         }
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Remove(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public void Remove(T item)
         {
             int relativeLayer = item.Layer - StartingLayer;
@@ -396,9 +322,7 @@ namespace GoRogue.SpatialMaps
             _layers[relativeLayer].Remove(item);
         }
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Remove(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         IEnumerable<T> ISpatialMap<T>.Remove(Point position) => Remove(position);
 
         /// <summary>
@@ -413,9 +337,7 @@ namespace GoRogue.SpatialMaps
         /// <returns>Any items that were removed, or nothing if no items were removed.</returns>
         public IEnumerable<T> Remove(Point position, uint layerMask = uint.MaxValue) => Remove(position.X, position.Y, layerMask);
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Remove(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         IEnumerable<T> ISpatialMap<T>.Remove(int x, int y) => Remove(x, y);
 
         /// <summary>
@@ -506,31 +428,13 @@ namespace GoRogue.SpatialMaps
         /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
         public bool CanMove(T item, int targetX, int targetY) => CanMove(item, new Point(targetX, targetY));
 
-        /// <summary>
-        /// Returns true if there are items at <paramref name="current"/> on one or more of the layers specified by the layer mask,
-        /// and all items on those layers at that position can be moved to <paramref name="target"/>; false otherwise.
-        /// </summary>
-        /// <param name="current">Location to move items from.</param>
-		/// <param name="target">Location to move items to.</param>
-        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <inheritdoc/>
         public bool CanMoveAll(Point current, Point target, uint layerMask = uint.MaxValue) => CanMoveAll(current.X, current.Y, target.X, target.Y, layerMask);
 
-        /// <summary>
-		/// See <see cref="ISpatialMap{T}.CanMoveAll(Point, Point)"/>.
-		/// </summary>
-        bool ISpatialMap<T>.CanMoveAll(Point current, Point target) => CanMoveAll(current.X, current.Y, target.X, target.Y);
+        /// <inheritdoc/>
+        bool IReadOnlySpatialMap<T>.CanMoveAll(Point current, Point target) => CanMoveAll(current.X, current.Y, target.X, target.Y);
 
-        /// <summary>
-        /// Returns true if there are items at the current postion on one or more of the layers specified by the layer mask,
-        /// and all items on those layers at that position can be moved to the target position; false otherwise.
-        /// </summary>
-        /// <param name="currentX">X-value of the location to move items from.</param>
-        /// <param name="currentY">Y-value of the location to move items from.</param>
-        /// <param name="targetX">X-value of the location to move items to.</param>
-        /// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <inheritdoc/>
         public bool CanMoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
         {
             bool hasItems = false;
@@ -546,19 +450,13 @@ namespace GoRogue.SpatialMaps
             return hasItems;
         }
 
-        /// <summary>
-		/// See <see cref="ISpatialMap{T}.CanMoveAll(int, int, int, int)"/>.
-		/// </summary>
-        bool ISpatialMap<T>.CanMoveAll(int currentX, int currentY, int targetX, int targetY) => CanMoveAll(currentX, currentY, targetX, targetY);
+        /// <inheritdoc/>
+        bool IReadOnlySpatialMap<T>.CanMoveAll(int currentX, int currentY, int targetX, int targetY) => CanMoveAll(currentX, currentY, targetX, targetY);
 
-        /// <summary>
-		/// See <see cref="ISpatialMap{T}.MoveAll(Point, Point)"/>.
-		/// </summary>
+        /// <inheritdoc/>
         void ISpatialMap<T>.MoveAll(Point current, Point target) => MoveAll(current, target);
 
-        /// <summary>
-		/// See <see cref="ISpatialMap{T}.MoveAll(int, int, int, int)"/>.
-		/// </summary>
+        /// <inheritdoc/>
         void ISpatialMap<T>.MoveAll(int currentX, int currentY, int targetX, int targetY) => MoveAll(currentX, currentY, targetX, targetY);
 
         /// <summary>

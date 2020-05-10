@@ -41,14 +41,10 @@ namespace GoRogue.MapViews
         /// </summary>
         public ISettableMapView<T1> BaseMap { get; private set; }
 
-        /// <summary>
-        /// The height of the underlying map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height => BaseMap.Height;
 
-        /// <summary>
-        /// The width of the underlying map.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width => BaseMap.Width;
 
         /// <summary>

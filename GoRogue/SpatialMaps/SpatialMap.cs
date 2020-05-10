@@ -44,29 +44,19 @@ namespace GoRogue.SpatialMaps
             _positionMapping = new Dictionary<Point, SpatialTuple<T>>(initialCapacity);
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemAdded"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemAdded;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemMoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemMovedEventArgs<T>>? ItemMoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public event EventHandler<ItemEventArgs<T>>? ItemRemoved;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Count"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public int Count => _itemMapping.Count;
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Items"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<T> Items
         {
             get
@@ -76,9 +66,7 @@ namespace GoRogue.SpatialMaps
             }
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Positions"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> Positions
         {
             get
@@ -119,33 +107,23 @@ namespace GoRogue.SpatialMaps
         /// <param name="y">Y-value of the position to add item to.</param>
         public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.AsReadOnly"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
 
-        /// <summary>
-        /// See <see cref="ISpatialMap{T}.Clear"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public void Clear()
         {
             _itemMapping.Clear();
             _positionMapping.Clear();
         }
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(T item) => _itemMapping.ContainsKey(item);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(Point)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(Point position) => _positionMapping.ContainsKey(position);
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.Contains(int, int)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public bool Contains(int x, int y) => _positionMapping.ContainsKey(new Point(x, y));
 
         /// <summary>
@@ -241,9 +219,7 @@ namespace GoRogue.SpatialMaps
         /// </returns>
         public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
-        /// <summary>
-        /// See <see cref="IReadOnlySpatialMap{T}.GetPositionOf(T)"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public Point GetPositionOf(T item)
         {
             _itemMapping.TryGetValue(item, out var tuple);

@@ -69,10 +69,7 @@ namespace GoRogue.SenseMapping
             _currentSenseMap = new HashSet<Point>();
         }
 
-        /// <summary>
-        /// IEnumerable of only positions currently "in" the SenseMap, eg. all positions that have a
-        /// value other than 0.0.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
 
         /// <summary>
@@ -80,25 +77,13 @@ namespace GoRogue.SenseMapping
         /// </summary>
         public int Height => _resMap.Height;
 
-        /// <summary>
-        /// IEnumerable of positions that DO have a non-zero value in the sense map as of the most
-        /// current <see cref="Calculate"/> call, but DID NOT have a non-zero value after the previous time
-        /// <see cref="Calculate"/> was called.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> NewlyInSenseMap => _currentSenseMap.Where(pos => !_previousSenseMap.Contains(pos));
 
-        /// <summary>
-        /// IEnumerable of positions that DO NOT have a non-zero value in the sense map as of the
-        /// most current <see cref="Calculate"/> call, but DID have a non-zero value after the previous time
-        /// <see cref="Calculate"/> was called.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !_currentSenseMap.Contains(pos));
 
-        /// <summary>
-        /// Read-only list of all sources currently considered part of the SenseMap. Some may have their
-        /// <see cref="SenseSource.Enabled"/> flag set to false, so all of these may or may not be counted
-        /// when <see cref="Calculate"/> is called.
-        /// </summary>
+        /// <inheritdoc/>
         public IReadOnlyList<SenseSource> SenseSources => _senseSources.AsReadOnly();
 
         /// <summary>
@@ -140,10 +125,7 @@ namespace GoRogue.SenseMapping
             senseSource._resMap = _resMap;
         }
 
-        /// <summary>
-        /// Returns a read-only representation of the SenseMap.
-        /// </summary>
-        /// <returns>This SenseMap object as <see cref="IReadOnlySenseMap"/>.</returns>
+        /// <inheritdoc/>
         public IReadOnlySenseMap AsReadOnly() => this;
 
         /// <summary>

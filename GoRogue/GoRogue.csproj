@@ -59,10 +59,4 @@
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
     <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
   </Target>
-  
-  <!-- Run InheritDoc on the final builds. -->
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(OS)' == 'Windows_NT'">
-	<Exec Command="dotnet tool restore" />
-    <Exec Command="dotnet inheritdoc -o -b $(OutDir)" />
-  </Target>
 </Project>

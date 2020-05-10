@@ -36,9 +36,7 @@ namespace GoRogue
             }
         }
 
-        /// <summary>
-        /// Number of distinct sets.
-        /// </summary>
+        /// <inheritdoc/>
         public int Count { get; private set; }
 
         /// <summary>
@@ -47,12 +45,7 @@ namespace GoRogue
         /// <returns>A read-only representation of the disjoint set.</returns>
         public IReadOnlyDisjointSet AsReadOnly() => this;
 
-        /// <summary>
-        /// Returns the parent of the set containing <paramref name="obj"/>, performing path compression
-        /// as the search is completed.
-        /// </summary>
-        /// <param name="obj">Object to search for.</param>
-        /// <returns>The parent of the object given.</returns>
+        /// <inheritdoc/>
         public int Find(int obj)
         {
             // Find base parent, and path compress
@@ -62,12 +55,7 @@ namespace GoRogue
             return _parents[obj];
         }
 
-        /// <summary>
-        /// Returns true if the two objects specified are in the same set.
-        /// </summary>
-        /// <param name="obj1"/>
-        /// <param name="obj2"/>
-        /// <returns>True if the two objects are in the same set, false otherwise.</returns>
+        /// <inheritdoc/>
         public bool InSameSet(int obj1, int obj2) => Find(obj1) == Find(obj2); // In same set; same parent
 
         /// <summary>

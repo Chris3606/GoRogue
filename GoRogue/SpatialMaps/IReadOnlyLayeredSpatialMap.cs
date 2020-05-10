@@ -118,6 +118,28 @@ namespace GoRogue.SpatialMaps
         /// </param>
         /// <returns>Read-only spatial maps representing each layer in the given layer mask.</returns>
         IEnumerable<IReadOnlySpatialMap<T>> GetLayersInMask(uint layerMask = uint.MaxValue);
+
+        /// <summary>
+        /// Returns true if there are items at <paramref name="current"/> on one or more of the layers specified by the layer mask,
+        /// and all items on those layers at that position can be moved to <paramref name="target"/>; false otherwise.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+		/// <param name="target">Location to move items to.</param>
+        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        public bool CanMoveAll(Point current, Point target, uint layerMask = uint.MaxValue);
+
+        /// <summary>
+        /// Returns true if there are items at the current postion on one or more of the layers specified by the layer mask,
+        /// and all items on those layers at that position can be moved to the target position; false otherwise.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="layerMask">Layer mask indicating which layers to check items on.</param>
+        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        public bool CanMoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue);
     }
 
     /// <summary>

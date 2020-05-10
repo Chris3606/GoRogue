@@ -41,10 +41,7 @@ namespace GoRogue
 
         private readonly IMapView<bool> _fovMap;
 
-        /// <summary>
-        /// A view of the calculation results in boolean form, where true indicates a location is inside
-        /// field of view, and false indicates it is not.
-        /// </summary>
+        /// <inheritdoc/>
         public IMapView<bool> BooleanFOV { get; private set; }
 
         /// <summary>
@@ -65,31 +62,19 @@ namespace GoRogue
             _previousFOV = new HashSet<Point>();
         }
 
-        /// <summary>
-        /// IEnumerable of only positions that are currently inside field of view.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> CurrentFOV => _currentFOV;
 
-        /// <summary>
-        /// Height of the map view.
-        /// </summary>
+        /// <inheritdoc/>
         public int Height => _fovMap.Height;
 
-        /// <summary>
-        /// IEnumerable of positions that ARE in field of view as of the most current Calculate
-        /// call, but were NOT in field of view after the previous time Calculate was called.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> NewlySeen => _currentFOV.Where(pos => !_previousFOV.Contains(pos));
 
-        /// <summary>
-        /// IEnumerable of positions that are NOT in field of view as of the most current Calculate call,
-        /// but WERE in field of view after the previous time Calculate was called.
-        /// </summary>
+        /// <inheritdoc/>
         public IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
-        /// <summary>
-        /// Width of map view.
-        /// </summary>
+        /// <inheritdoc/>
         public int Width => _fovMap.Width;
 
         /// <summary>
@@ -114,10 +99,7 @@ namespace GoRogue
         /// <returns>The field of view value for the given position.</returns>
         public double this[int x, int y] => _light[x, y];
 
-        /// <summary>
-        /// Returns a read-only representation of the field of view.
-        /// </summary>
-        /// <returns>This FOV object, as an <see cref="IReadOnlyFOV"/> instance.</returns>
+        /// <inheritdoc/>
         public IReadOnlyFOV AsReadOnly() => this;
 
         // Note: since the values aren't compile-time constants, we have to do it this way (with overloads,

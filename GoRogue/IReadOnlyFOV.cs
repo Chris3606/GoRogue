@@ -10,6 +10,12 @@ namespace GoRogue
     public interface IReadOnlyFOV : IMapView<double>
     {
         /// <summary>
+        /// Returns a read-only representation of the field of view.
+        /// </summary>
+        /// <returns>This FOV object, as an <see cref="IReadOnlyFOV"/> instance.</returns>
+        public IReadOnlyFOV AsReadOnly();
+
+        /// <summary>
         /// A view of the calculation results in boolean form, where true indicates a location is in
         /// field of view, and false indicates it is not.
         /// </summary>

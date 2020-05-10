@@ -192,7 +192,7 @@ namespace GoRogue
         /// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
         /// in that this method prints the array
         /// such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
-        /// Effectively it assumes the indexes being used are grid/Pointinate plane Pointinates.
+        /// Effectively it assumes the indexes being used are grid/Pointinate plane coordinates.
         /// </remarks>
         /// <typeparam name="T"/>
         /// <param name="array"/>
@@ -219,7 +219,7 @@ namespace GoRogue
         /// <remarks>
         /// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
         /// in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
-        /// Effectively it assumes the indexes being used are grid/Pointinate plane Pointinates.
+        /// Effectively it assumes the indexes being used are grid/Pointinate plane coordinates.
         /// </remarks>
         /// <typeparam name="T"/>
         /// <param name="array"/>
