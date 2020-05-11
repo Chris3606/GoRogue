@@ -1,4 +1,6 @@
-﻿using GoRogue.MapViews;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using GoRogue.MapViews;
 
 namespace GoRogue.MapGeneration
 {
@@ -27,6 +29,24 @@ namespace GoRogue.MapGeneration
         {
             Width = width;
             Height = height;
+        }
+
+        /// <summary>
+        /// Retrives a context component, or utilizes the specified function to create a new one and adds it if an existing one does not exist.
+        /// </summary>
+        /// <typeparam name="TComponent">Type of component to retrieve.</typeparam>
+        /// <param name="newFunc">Function to use to create a new component, if there is no existing component.</param>
+        /// <returns>An existing component of the appropriate type if one exists, or the newly created/added component if not.</returns>
+        public TComponent GetComponentOrNew<TComponent>(Func<TComponent> newFunc) where TComponent : notnull
+        {
+            TComponent contextComponent = GetComponent<TComponent>();
+            if (contextComponent == null)
+            {
+                contextComponent = newFunc();
+                AddComponent(contextComponent);
+            }
+
+            return contextComponent;
         }
     }
 }

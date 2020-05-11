@@ -12,16 +12,17 @@ namespace GoRogue.MapGeneration.Steps
     ///     - None
     ///
     /// Context Components Added:
-    ///     - <see cref="ContextComponents.RoomsList"/>
+    ///     - <see cref="ContextComponents.RoomsList"/> (if none is present -- existing one is used if one already exists)
     ///     - <see cref="ContextComponents.WallFloor"/> (if none is present -- existing one is used if one already exists)
     /// </summary>
     /// <remarks>
-    /// This generation step generates rooms, and adds a <see cref="ContextComponents.RoomsList"/> context component that contains those rooms to the <see cref="GenerationContext"/>.
-    /// It also sets the interior positions to true in the map context's <see cref="ContextComponents.WallFloor"/> context component.  If the GenerationContext has an existing WallFloor context
-    /// component, that component is used.  If not, a WallFloor component is created and added to the map context, with it's <see cref="ContextComponents.WallFloor.View"/> property being an
-    /// <see cref="MapViews.ArrayMap{T}"/> whose width/height match <see cref="GenerationContext.Width"/>/<see cref="GenerationContext.Height"/>.
+    /// This generation step generates rooms, and adds the rooms generated to the <see cref="ContextComponents.RoomsList"/> context component of the <see cref="GenerationContext"/>.
+    /// If such a component does not exist, a new one is created. It also sets the interior positions to true in the map context's <see cref="ContextComponents.WallFloor"/> context
+    /// component.  If the GenerationContext has an existing WallFloor context component, that component is used.  If not, a WallFloor component is created and added to the map context,
+    /// with it's <see cref="ContextComponents.WallFloor.View"/> property being an <see cref="MapViews.ArrayMap{T}"/> whose width/height match
+    /// <see cref="GenerationContext.Width"/>/<see cref="GenerationContext.Height"/>.
     /// </remarks>
-    public class RoomsGenerationStep : GenerationStep
+    public class RoomsGeneration : GenerationStep
     {
         /// <summary>
         /// RNG to use for room creation/placement.
@@ -69,6 +70,13 @@ namespace GoRogue.MapGeneration.Steps
         /// </summary>
         public int MaxPlacementAttempts = 10;
 
+        /// <summary>
+        /// Creates a new rooms generation step.
+        /// </summary>
+        /// <param name="name">The name of the generation step.  Defaults to <see cref="RoomsGeneration"/>.</param>
+        public RoomsGeneration(string? name = null)
+            : base(name) { }
+
         /// <inheritdoc/>
         protected override void OnPerform(GenerationContext context)
         {
@@ -89,19 +97,14 @@ namespace GoRogue.MapGeneration.Steps
             if (RoomSizeRatioY <= 0f)
                 throw new Exception("Y-value room size ratio must be greater than 0.");
 
-            // Add wall/floor component if one doesn't exist and retrieve it
-            var wallFloorContext = context.GetComponent<ContextComponents.WallFloor>();
-            if (wallFloorContext == null)
-            {
-                wallFloorContext = new ContextComponents.WallFloor(context);
-                context.AddComponent(wallFloorContext);
-            }
+            // Get or create/add a wall-floor context component
+            var wallFloorContext = context.GetComponentOrNew(() => new ContextComponents.WallFloor(context));
             
             // Determine how many rooms to generate
-            var roomCounter = RNG.Next(MinRooms, MaxRooms + 1);
+            int roomCounter = RNG.Next(MinRooms, MaxRooms + 1);
 
-            // Create rooms context
-            var roomsContext = new ContextComponents.RoomsList(roomCounter);
+            // Get or create/add a rooms context component
+            var roomsContext = context.GetComponentOrNew(() => new ContextComponents.RoomsList(roomCounter));
 
             // Try to place all the rooms
             while (roomCounter != 0)
@@ -145,7 +148,7 @@ namespace GoRogue.MapGeneration.Steps
 
                     int tryCounterPlace = MaxPlacementAttempts;
 
-                    // Try to place the room we've created until either it doesn't intersect any other rooms, or we reach max retries (in which case, we will scrap the room entirely and try again)
+                    // Try to place the room we've created until either it doesn't intersect any other rooms, or we reach max retries (in which case, we will scrap the room entirely, create a new one, and try again)
                     while (tryCounterPlace != 0)
                     {
                         int xPos = 0, yPos = 0;
@@ -184,7 +187,7 @@ namespace GoRogue.MapGeneration.Steps
                             wallFloorContext.View[point] = true;
 
                         placed = true;
-                        roomsContext.Rooms.Add(roomInnerRect);
+                        roomsContext.AddItem(roomInnerRect, Name);
                         break;
                     }
 

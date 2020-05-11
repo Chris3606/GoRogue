@@ -16,11 +16,18 @@ namespace GoRogue.MapGeneration
         public IEnumerable<Type> RequiredComponents => _requiredComponents;
 
         /// <summary>
+        /// The name of the generation step.
+        /// </summary>
+        public readonly string Name;
+
+        /// <summary>
         /// Creates a generation step that requires the given component(s) on the <see cref="GenerationContext"/> to function.
         /// </summary>
         /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will use from the context.</param>
-        public GenerationStep(params Type[] requiredComponents)
+        /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
+        public GenerationStep(string? name = null, params Type[] requiredComponents)
         {
+            Name = name ?? GetType().Name;
             _requiredComponents = requiredComponents;
         }
 
