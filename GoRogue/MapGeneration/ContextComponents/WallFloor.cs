@@ -1,6 +1,6 @@
 ﻿using GoRogue.MapViews;
 
-namespace GoRogue.MapGeneration.Contexts
+namespace GoRogue.MapGeneration.ContextComponents
 {
     /// <summary>
     /// Context component for map generation containing a basic map of walls/floors, where false indicates wall, and true indicates floor.
