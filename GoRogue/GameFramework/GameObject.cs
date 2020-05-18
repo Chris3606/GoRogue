@@ -212,7 +212,7 @@ namespace GoRogue.GameFramework
 
         #region Component Functions
         /// <inheritdoc/>
-        public override void AddComponent(object component)
+        public override void AddComponent(object component, string? tag = null)
         {
             base.AddComponent(component);
 
