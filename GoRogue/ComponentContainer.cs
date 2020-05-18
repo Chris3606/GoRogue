@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection.Emit;
 
 namespace GoRogue
 {
@@ -12,9 +13,10 @@ namespace GoRogue
     /// </summary>
     /// <remarks>
     /// The component system is designed to be as efficient as possible at run-time for accessing components and determining if a
-    /// ComponentContainer possesses one or more given types of components, and as well remains flexible and type-safe.
-    /// Components may be of any type, although it is recommended that you _do not_ use value types.  The system also remains accurate
-    /// with respect to types, even when the components added implement interfaces or have an inheritance heirarchy.
+    /// ComponentContainer possesses one or more given types of components (or if it has a component with a specific tag), and as well
+    /// remains flexible and type-safe.  Components may be of any type, although it is recommended that you _do not_ use value types.
+    /// The system also remains accurate with respect to types, even when the components added implement interfaces or have an inheritance
+    /// heirarchy.
     /// 
     /// For example, suppose we have the following structure:
     /// <code>
@@ -33,20 +35,34 @@ namespace GoRogue
     /// the instance we added, as will obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
     /// obj.HasComponent(typeof(PlayerTickable)) both return true.
     /// </remarks>
-    public class ComponentContainer : IHasComponents
+    public class ComponentContainer : IHasTaggableComponents
     {
         private readonly Dictionary<Type, List<object>> _components;
+
+        // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are removed
+        private readonly Dictionary<object, string> _componentsToTags;
+
+        // Used for tag-based lookups
+        private readonly Dictionary<string, object> _tagsToComponents;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ComponentContainer() => _components = new Dictionary<Type, List<object>>();
+        public ComponentContainer()
+        {
+            _components = new Dictionary<Type, List<object>>();
+            _componentsToTags = new Dictionary<object, string>();
+            _tagsToComponents = new Dictionary<string, object>();
+        }
 
-        /// <summary>
-        /// Adds the given object as a component.  Throws an exception if that specific instance is already in this ComponentContainer.
-        /// </summary>
-        /// <param name="component">Component to add.</param>
-        public virtual void AddComponent(object component)
+        /// <inheritdoc/>
+        public event EventHandler<ComponentChangedEventArgs>? ComponentAdded;
+
+        /// <inheritdoc/>
+        public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
+
+        /// <inheritdoc/>
+        public virtual void AddComponent(object component, string? tag = null)
         {
             var realType = component.GetType();
             if (realType.IsValueType)
@@ -66,18 +82,20 @@ namespace GoRogue
                 else
                     _components[type].Add(component);
             }
+
+            if (tag != null)
+            {
+                _componentsToTags.Add(component, tag);
+                _tagsToComponents.Add(tag, component);
+            }
+
+            ComponentAdded?.Invoke(this, new ComponentChangedEventArgs(component));
         }
 
-        /// <summary>
-        /// Removes the given component.  Throws an exception if the component does not exist in the ComponentContainer.
-        /// </summary>
-        /// <param name="component">Component to remove.</param>
+        /// <inheritdoc/>
         public void RemoveComponent(object component) => RemoveComponents(component);
 
-        /// <summary>
-        /// Removes the given component(s).  Throws an exception if a component given does not exist in the ComponentContainer.
-        /// </summary>
-        /// <param name="components">One or more component instances to remove.</param>
+        /// <inheritdoc/>
         public virtual void RemoveComponents(params object[] components)
         {
             foreach (var component in components)
@@ -98,15 +116,33 @@ namespace GoRogue
                     else
                         _components[type].Remove(component);
                 }
+
+                // Add tag as needed
+                if (_componentsToTags.ContainsKey(component))
+                {
+                    string tag = _componentsToTags[component];
+                    _componentsToTags.Remove(component);
+                    _tagsToComponents.Remove(tag);
+                }
+
+                ComponentRemoved?.Invoke(this, new ComponentChangedEventArgs(component));
             }
         }
 
-        /// <summary>
-        /// Returns whether or not the current ComponentContainer has all the given types of components.  Types may be specified by
-        /// using typeof(MyComponentType)
-        /// </summary>
-        /// <param name="componentTypes">One or more component types to check for.</param>
-        /// <returns>True if the ComponentContainer has at least one component of each specified type, false otherwise.</returns>
+        public void RemoveComponent(string tag) => RemoveComponents(tag);
+
+        public void RemoveComponents(params string[] tags)
+        {
+            foreach (var tag in tags)
+            {
+                if (_tagsToComponents.TryGetValue(tag, out object? component))
+                    RemoveComponent(component);
+                else
+                    throw new ArgumentException($"Tried to remove a component with tag {tag}, but no such component exists on the object.");
+            }
+        }
+
+        /// <inheritdoc/>
         public bool HasComponents(params Type[] componentTypes)
         {
             foreach (var component in componentTypes)
@@ -116,53 +152,68 @@ namespace GoRogue
             return true;
         }
 
-        /// <summary>
-        /// Returns whether or not the current ComponentContainer has at least one component of the specified type.  Type may be specified
-        /// by using typeof(MyComponentType).
-        /// </summary>
-        /// <param name="componentType">The type of component to check for.</param>
-        /// <returns>True if the ComponentContainer has at least one component of the specified type, false otherwise.</returns>
-        public bool HasComponent(Type componentType) => HasComponents(componentType);
+        /// <inheritdoc/>
+        public bool HasComponents(params (Type type, string? tag)[] componentTypesAndTags)
+        {
+            foreach (var (type, tag) in componentTypesAndTags)
+            {
+                if (!_components.ContainsKey(type)) // Make sure we have one or more components of the proper types
+                    return false;
 
-        /// <summary>
-        /// Returns whether or not the current ComponentContainer has at least one component of type T.
-        /// </summary>
-        /// <typeparam name="T">Type of component to check for.</typeparam>
-        /// <returns>True if the ComponentContainer has at least one component of the specified type, false otherwise.</returns>
-        public bool HasComponent<T>() => HasComponents(typeof(T));
+                if (tag != null) // We'll need to also verify the tag
+                {
+                    if (!_tagsToComponents.ContainsKey(tag)) // Make sure some item of the proper tag exists
+                        return false;
 
-        /// <summary>
-        /// Gets the first component of type T found, or default(T) if no component of that type has been added
-        /// to the object.
-        /// </summary>
-        /// <typeparam name="T">Type of component to retrieve.</typeparam>
-        /// <returns>The first component of Type T that was added to the ComponentContainer, or default(T) if no
-        /// components of the given type have been added.</returns>
+                    if (!_components[type].Contains(_tagsToComponents[tag])) // Make sure the item with the tag is the correct type
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public bool HasComponent(Type componentType, string? tag = null) => HasComponents((componentType, tag));
+
+        /// <inheritdoc/>
+        public bool HasComponent<T>(string? tag = null) where T : notnull => HasComponents((typeof(T), tag));
+
+        /// <inheritdoc/>
         [return: MaybeNull]
-        public T GetComponent<T>()
+        public T GetComponent<T>(string? tag = null) where T : notnull
         {
             Type typeOfT = typeof(T);
 
-            if (!_components.ContainsKey(typeOfT))
-                return default!; // Can override null check safely here because MaybeNull enforces that the return value may be null 
+            if (tag == null)
+            {
+                if (!_components.ContainsKey(typeOfT))
+                    return default;
 
-            // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
-            // Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
-            return (T)(_components[typeOfT][0]);
+                // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
+                // Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
+                return (T)(_components[typeOfT][0]);
+            }
+            else // Simply check the item with the proper tag
+            {
+                if (!_tagsToComponents.ContainsKey(tag))
+                    return default;
+
+                if (_tagsToComponents[tag] is T item)
+                    return item;
+
+                return default;
+            }
         }
 
-        /// <summary>
-        /// Gets all components of type T that are attached to the given object.
-        /// </summary>
-        /// <typeparam name="T">Type of components to retrieve.</typeparam>
-        /// <returns>All components of Type T that are in the ComponentContainer.</returns>
-        public IEnumerable<T> GetComponents<T>()
+        /// <inheritdoc/>
+        public IEnumerable<T> GetComponents<T>() where T : notnull
         {
             Type typeOfT = typeof(T);
 
             if (_components.ContainsKey(typeOfT))
             {
-                // Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
+                // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
                 foreach (var component in _components[typeOfT])
                     yield return (T)component;
             }

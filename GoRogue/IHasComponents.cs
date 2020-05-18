@@ -5,12 +5,42 @@ using System.Diagnostics.CodeAnalysis;
 namespace GoRogue
 {
     /// <summary>
+    /// Arguments for events fired when components are added/removed from an object.
+    /// </summary>
+    public class ComponentChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The component that was added or removed.
+        /// </summary>
+        public object Component { get; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="component">The component that was added/removed.</param>
+        public ComponentChangedEventArgs(object component)
+        {
+            Component = component;
+        }
+    }
+
+    /// <summary>
     /// Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
     /// you would implement this via a backing field of type <see cref="ComponentContainer"/>, which implements the logic for
     /// these functions.
     /// </summary>
     public interface IHasComponents
     {
+        /// <summary>
+        /// Fired when a component is added to the component container.
+        /// </summary>
+        public event EventHandler<ComponentChangedEventArgs>? ComponentAdded;
+
+        /// <summary>
+        /// Fired when a component is removed from the component container.
+        /// </summary>
+        public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
+
         /// <summary>
         /// Adds the given object as a component.  Throws ArgumentException if the specific instance has already been added.
         /// </summary>
@@ -24,15 +54,15 @@ namespace GoRogue
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <returns>The first component of Type T that was attached, or default(T) if no components of the given type
         /// have been attached.</returns>
-        [return: MaybeNull]
-        T GetComponent<T>();
+        [return:MaybeNull]
+        T GetComponent<T>() where T : notnull;
 
         /// <summary>
         /// Gets all components of type T that are added.
         /// </summary>
         /// <typeparam name="T">Type of components to retrieve.</typeparam>
         /// <returns>All components of Type T that are attached.</returns>
-        IEnumerable<T> GetComponents<T>();
+        IEnumerable<T> GetComponents<T>() where T : notnull;
 
         /// <summary>
         /// Returns whether or not there is at least one component of the specified type attached.  Type may be specified
@@ -47,7 +77,7 @@ namespace GoRogue
         /// </summary>
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <returns>True if the implemented has at least one component of the specified type attached, false otherwise.</returns>
-        bool HasComponent<T>();
+        bool HasComponent<T>() where T : notnull;
 
         /// <summary>
         /// Returns whether or not the implementer has at least one of all of the given types of components attached.  Types may be specified by
