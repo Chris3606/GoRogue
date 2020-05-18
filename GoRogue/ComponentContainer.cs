@@ -129,8 +129,10 @@ namespace GoRogue
             }
         }
 
+        /// <inheritdoc/>
         public void RemoveComponent(string tag) => RemoveComponents(tag);
 
+        /// <inheritdoc/>
         public void RemoveComponents(params string[] tags)
         {
             foreach (var tag in tags)
