@@ -16,20 +16,19 @@ namespace GoRogue.MapGeneration.Steps
     /// <list type="table">
     /// <listheader>
     /// <term>Component</term>
-    /// <term>Default Tag</term>
-    /// <term>Existing Used if Absent</term>
+    /// <description>Default Tag</description>
     /// </listheader>
     /// <item>
     /// <term><see cref="ContextComponents.ItemList{Rectangle}"/></term>
-    /// <term>"Rooms"</term>
-    /// <term>Yes</term>
+    /// <description>"Rooms"</description>
     /// </item>
     /// <item>
     /// <term><see cref="ISettableMapView{T}"/> where T is bool</term>
-    /// <term>"WallFloor"</term>
-    /// <term>Yes</term>
+    /// <description>"WallFloor"</description>
     /// </item>
     /// </list>
+    ///
+    /// In the case of both components, existing components are used if they are present; new ones are added if not.
     /// </summary>
     /// <remarks>
     /// This generation step generates rooms, and adds the rooms generated to the <see cref="ContextComponents.ItemList{Rectangle}"/> context component with the given tag

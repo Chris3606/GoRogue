@@ -14,23 +14,23 @@ namespace GoRogue.MapGeneration.Steps
     /// Context Components Required:
     ///     - None
     ///
+    /// Context Components Added/Used:
     /// <list type="table">
     /// <listheader>
     /// <term>Component</term>
-    /// <term>Default Tag</term>
-    /// <term>Existing Used if Absent</term>
+    /// <description>Default Tag</description>
     /// </listheader>
     /// <item>
     /// <term><see cref="ContextComponents.ItemList{Area}"/></term>
-    /// <term>"Tunnels"</term>
-    /// <term>Yes</term>
+    /// <description>"Tunnels"</description>
     /// </item>
     /// <item>
     /// <term><see cref="ISettableMapView{T}"/> where T is bool</term>
-    /// <term>"WallFloor"</term>
-    /// <term>Yes</term>
+    /// <description>"WallFloor"</description>
     /// </item>
     /// </list>
+    ///
+    /// In the case of both components, existing components are used if they are present; new ones are added if not.
     /// </summary>
     /// <remarks>
     /// This generation steps generates mazes, and adds the tunnels made to the <see cref="ContextComponents.ItemList{Area}"/> context component with
