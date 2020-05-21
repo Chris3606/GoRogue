@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GoRogue.MapGeneration
 {
@@ -8,24 +9,42 @@ namespace GoRogue.MapGeneration
     /// </summary>
     public abstract class GenerationStep
     {
-        private readonly Type[] _requiredComponents;
+        private readonly (Type type, string? tag)[] _requiredComponents;
 
         /// <summary>
         /// Components that are required and enforced to be on the <see cref="GenerationContext"/> when it is passed to <see cref="OnPerform(GenerationContext)"/>.
+        /// Each component may optionally have a required tag.
         /// </summary>
-        public IEnumerable<Type> RequiredComponents => _requiredComponents;
+        public IEnumerable<(Type type, string? tag)> RequiredComponents => _requiredComponents;
 
         /// <summary>
         /// The name of the generation step.
         /// </summary>
         public readonly string Name;
 
+        // This constructor is required to remove ambiguous constructor call issues because both of the other ones use params
+        /// <summary>
+        /// Creates a generation step, optionally with a custom name.
+        /// </summary>
+        /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
+        public GenerationStep(string? name = null)
+            : this(name, Array.Empty<Type>()) { }
+
         /// <summary>
         /// Creates a generation step that requires the given component(s) on the <see cref="GenerationContext"/> to function.
         /// </summary>
-        /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will use from the context.</param>
+        /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will require from the context.</param>
         /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
         public GenerationStep(string? name = null, params Type[] requiredComponents)
+            : this(name, requiredComponents.Select<Type, (Type, string?)>(i => (i, null)).ToArray()) { }
+
+        /// <summary>
+        /// Creates a generation step that requires the given component(s) on the <see cref="GenerationContext"/> to function.
+        /// </summary>
+        /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will require from the context, and the tag
+        /// required for each component.  Null means no particular tag is required.</param>
+        /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
+        public GenerationStep(string? name = null, params (Type type, string? tag)[] requiredComponents)
         {
             Name = name ?? GetType().Name;
             _requiredComponents = requiredComponents;
@@ -39,10 +58,13 @@ namespace GoRogue.MapGeneration
         /// <param name="context">Context to perform the generation step on.</param>
         public void PerformStep(GenerationContext context)
         {
-            foreach (var componentType in _requiredComponents)
+            foreach (var (componentType, tag) in _requiredComponents)
             {
-                if (!context.HasComponent(componentType))
-                    throw new InvalidOperationException($"Map generation step {GetType().Name} requires component of type {componentType.Name} in the context it is given, but no component of that type was found.");
+                if (!context.HasComponent(componentType, tag))
+                    if (tag != null)
+                        throw new InvalidOperationException($"Map generation step {GetType().Name} requires component of type {componentType.Name} with tag {tag} in the context it is given, but no component of that type with that tag was found.");
+                    else
+                        throw new InvalidOperationException($"Map generation step {GetType().Name} requires component of type {componentType.Name} in the context it is given, but no component of that type was found.");
             }
 
             OnPerform(context);

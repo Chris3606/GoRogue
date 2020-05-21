@@ -65,11 +65,12 @@ namespace GoRogue
         public virtual void AddComponent(object component, string? tag = null)
         {
             var realType = component.GetType();
-            if (realType.IsValueType)
-                throw new ArgumentException("Cannot use value-types as a component.");
 
             if (_components.ContainsKey(realType) && _components[realType].Contains(component))
                 throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
+
+            if (tag != null && _tagsToComponents.ContainsKey(tag))
+                throw new ArgumentException($"Tried to add two components with the same tag \"{tag}\" to an instance of an object.");
 
             foreach (var type in ReflectionAddons.GetTypeTree(realType))
             {

@@ -27,6 +27,12 @@ namespace GoRogue.MapGeneration
         /// <param name="height">The height of the map this context represents.</param>
         public GenerationContext(int width, int height)
         {
+            if (width <= 0)
+                throw new ArgumentException("Width for generation context must be greater than 0.", nameof(width));
+
+            if (height <= 0)
+                throw new ArgumentException("Height for generation context must be greater than 0.", nameof(height));
+
             Width = width;
             Height = height;
         }
