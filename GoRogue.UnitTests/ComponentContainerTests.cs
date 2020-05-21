@@ -2,7 +2,7 @@ using System;
 using GoRogue;
 using Xunit;
 
-namespace GoRogue_UnitTests
+namespace GoRogue.UnitTests
 {
     class IComponent
     { }

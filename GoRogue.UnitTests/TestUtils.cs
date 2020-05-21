@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Xunit;
+﻿using System;
+using System.Collections.Generic;
 
-namespace GoRogue_UnitTests
+namespace GoRogue.UnitTests
 {
     /// <summary>
     /// Static/extension methods to help with creating test variables/enumerables for XUnit
@@ -62,5 +61,21 @@ namespace GoRogue_UnitTests
         /// <param name="objs"/>Input values to have within the resulting enumerable.
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
+    }
+
+    public class IncrementOnlyValue
+    {
+        private int _value;
+        public int Value
+        {
+            get => _value;
+            set
+            {
+                if (value - _value != 1)
+                    throw new InvalidOperationException($"{nameof(IncrementOnlyValue)} is expected only to have its value incremented by one.  Should have been changed to {value + 1}, but was changed to {_value}.");
+
+                _value = value;
+            }
+        }
     }
 }

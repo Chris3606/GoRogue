@@ -35,10 +35,11 @@ namespace GoRogue.MapGeneration
         /// Adds a component to the context this generator is applying generation steps to.
         /// </summary>
         /// <param name="component">Component to add to the map context.</param>
+        /// <param name="tag">An optional tag to give the component.  Defaults to no tag.</param>
         /// <returns>This generator (for chaining).</returns>
-        public Generator AddComponent(object component)
+        public Generator AddComponent(object component, string? tag = null)
         {
-            Context.AddComponent(component);
+            Context.AddComponent(component, tag);
             return this;
         }
 
@@ -46,7 +47,7 @@ namespace GoRogue.MapGeneration
         /// Adds a generation step.  Steps are executed in the order they are added.
         /// </summary>
         /// <param name="step">The generation step to add.</param>
-        /// <returns>THis generator (for chaining).</returns>
+        /// <returns>This generator (for chaining).</returns>
         public Generator AddStep(GenerationStep step)
         {
             _generationSteps.Add(step);

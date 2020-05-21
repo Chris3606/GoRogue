@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogue", "GoRogue\GoRogue.csproj", "{EB951D27-AE60-4991-B63A-2DF34F0CB3E0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogue_UnitTests", "GoRogue_UnitTests\GoRogue_UnitTests.csproj", "{1AAADC50-56F5-4363-B377-C9B02936ED82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogue.UnitTests", "GoRogue.UnitTests\GoRogue.UnitTests.csproj", "{1AAADC50-56F5-4363-B377-C9B02936ED82}"
 	ProjectSection(ProjectDependencies) = postProject
 		{EB951D27-AE60-4991-B63A-2DF34F0CB3E0} = {EB951D27-AE60-4991-B63A-2DF34F0CB3E0}
 	EndProjectSection

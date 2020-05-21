@@ -4,7 +4,7 @@ using GoRogue.MapGeneration;
 using Xunit;
 using XUnit.ValueTuples;
 
-namespace GoRogue_UnitTests.MapGeneration
+namespace GoRogue.UnitTests.MapGeneration
 {
 
     public class GenerationContextTests
@@ -52,6 +52,7 @@ namespace GoRogue_UnitTests.MapGeneration
         {
             GenerationContext? context = null;
             Assert.Throws<ArgumentException>(() => context = new GenerationContext(width, height));
+            Assert.Null(context);
         }
 
         [Fact]

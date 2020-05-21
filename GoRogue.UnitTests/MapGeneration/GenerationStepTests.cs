@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 using GoRogue.MapGeneration;
 using Xunit;
 
-namespace GoRogue_UnitTests.MapGeneration
+namespace GoRogue.UnitTests.MapGeneration
 {
 
     public class GenerationStepTests

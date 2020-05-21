@@ -2,7 +2,7 @@
 
 using GoRogue.MapGeneration;
 
-namespace GoRogue_UnitTests.MapGeneration
+namespace GoRogue.UnitTests.MapGeneration
 {
     #region Map ContextComponents
     interface IMapContextComponent { }
@@ -14,10 +14,10 @@ namespace GoRogue_UnitTests.MapGeneration
     #region Generation Steps
     class TestGenerationStep : GenerationStep
     {
-        private readonly Action _onPerform;
+        private readonly Action? _onPerform;
 
         // Necessary to avoid constructor ambiguity
-        public TestGenerationStep(Action onPerform, string? name = null)
+        public TestGenerationStep(Action? onPerform, string? name = null)
             : base(name)
         {
             _onPerform = onPerform;
@@ -37,7 +37,7 @@ namespace GoRogue_UnitTests.MapGeneration
 
         protected override void OnPerform(GenerationContext context)
         {
-            _onPerform();
+            _onPerform?.Invoke();
         }
     }
     #endregion
