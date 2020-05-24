@@ -17,7 +17,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Generation step that had a misconfigured parameter.
         /// </summary>
-        public GenerationStep? GenerationStep { get; }
+        public GenerationStep? Step { get; }
 
         /// <summary>
         /// Creates a configuration exception with a customized message.
@@ -37,23 +37,81 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Creates a configuration exception with a helpful message.
         /// </summary>
-        /// <param name="generationStep">The generation step that the misconfigured parameter was encountered in.</param>
+        /// <param name="step">The generation step that the misconfigured parameter was encountered in.</param>
         /// <param name="parameterName">The name of the misconfigured parameter.</param>
         /// <param name="message">A message explaining the requirements for the parameter's value.</param>
-        public InvalidConfigurationException(GenerationStep generationStep, string parameterName, string message)
+        public InvalidConfigurationException(GenerationStep step, string parameterName, string message)
             : base($"Invalid configuration encountered for generation step parameter:\n" +
-                   $"    Generation Step: ${generationStep.GetType().Name} (name: {generationStep.Name}){message}\n" +
+                   $"    Generation Step: ${step.GetType().Name} (name: {step.Name})\n" +
                    $"    Parameter Name : ${parameterName}\n" +
                    $"    Message        : ${message}")
         {
             ParameterName = parameterName;
-            GenerationStep = generationStep;
+            Step = step;
         }
 
         /// <summary>
         /// Creates an empty configuration exception.
         /// </summary>
         public InvalidConfigurationException()
+            : base() { }
+    }
+
+    /// <summary>
+    /// Raised by <see cref="GenerationStep"/> when required components are not present when <see cref="GenerationStep.PerformStep(GenerationContext)"/> is called.
+    /// </summary>
+    public class MissingContextComponentException : Exception
+    {
+        /// <summary>
+        /// Generation step that failed to find its required components.
+        /// </summary>
+        public readonly GenerationStep? Step;
+
+        /// <summary>
+        /// Type of the required component that was not found.
+        /// </summary>
+        public readonly Type? RequiredComponentType;
+
+        /// <summary>
+        /// Tag of the required component that was not found, or null if no tag was required.
+        /// </summary>
+        public readonly string? RequiredComponentTag;
+
+        /// <summary>
+        /// Creates a new exception with a helpful error message.
+        /// </summary>
+        /// <param name="step">Generation step that failed to find its required components.</param>
+        /// <param name="requiredComponentType">Type of the required component that was not found.</param>
+        /// <param name="requiredComponentTag">Tag of the required component that was not found, or null if no tag was required.</param>
+        public MissingContextComponentException(GenerationStep step, Type requiredComponentType, string? requiredComponentTag)
+            : base($"Generation step was performed on a context that did not have the required components:\n" +
+                   $"    Generation Step   : {step.GetType().Name} (name: {step.Name})\n" +
+                   $"    Required Component: {requiredComponentType.Name} " + ((requiredComponentTag != null) ? $"(tag: {requiredComponentTag})" : "") + "\n")
+        {
+            Step = step;
+            RequiredComponentType = requiredComponentType;
+            RequiredComponentTag = requiredComponentTag;
+        }
+
+        /// <summary>
+        /// Creates an exception with a fully customized message.
+        /// </summary>
+        /// <param name="message"/>
+        public MissingContextComponentException(string message)
+            : base(message) { }
+
+        /// <summary>
+        /// Creates an exception with a fully customized message and inner exception.
+        /// </summary>
+        /// <param name="message"/>
+        /// <param name="innerException"/>
+        public MissingContextComponentException(string message, Exception innerException)
+            : base(message, innerException) { }
+
+        /// <summary>
+        /// Creates an empty exception.
+        /// </summary>
+        public MissingContextComponentException()
             : base() { }
     }
 
@@ -112,13 +170,8 @@ namespace GoRogue.MapGeneration
         public void PerformStep(GenerationContext context)
         {
             foreach (var (componentType, tag) in _requiredComponents)
-            {
                 if (!context.HasComponent(componentType, tag))
-                    if (tag != null)
-                        throw new InvalidOperationException($"Map generation step {GetType().Name} requires component of type {componentType.Name} with tag {tag} in the context it is given, but no component of that type with that tag was found.");
-                    else
-                        throw new InvalidOperationException($"Map generation step {GetType().Name} requires component of type {componentType.Name} in the context it is given, but no component of that type was found.");
-            }
+                    throw new MissingContextComponentException(this, componentType, tag);
 
             OnPerform(context);
         }
