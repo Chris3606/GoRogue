@@ -117,14 +117,20 @@ namespace GoRogue.MapGeneration.Steps
         protected override void OnPerform(GenerationContext context)
         {
             // Validate configuration
-            if (MaxSidesToConnect > 4)
-                throw new Exception($"{nameof(MaxSidesToConnect)} cannot be greater than 4.");
-
-            if (MaxSidesToConnect <= 0)
-                throw new Exception($"{nameof(MaxSidesToConnect)} must be greater than 0.");
+            if (MaxSidesToConnect > 4 || MaxSidesToConnect <= 0)
+                throw new InvalidConfigurationException(this, nameof(MaxSidesToConnect), "The value must be in range [1, 4].");
 
             if (MinSidesToConnect > MaxSidesToConnect)
-                throw new Exception($"{nameof(MinSidesToConnect)} must be greater than ${MaxSidesToConnect}");
+                throw new InvalidConfigurationException(this, nameof(MinSidesToConnect), $"The value must be less than or equal to {nameof(MaxSidesToConnect)}.");
+
+            if (CancelSideConnectionSelectChance > 100)
+                throw new InvalidConfigurationException(this, nameof(CancelSideConnectionSelectChance), "The value must be a valid percent (between 0 and 100).");
+
+            if (CancelConnectionPlacementChance > 100)
+                throw new InvalidConfigurationException(this, nameof(CancelConnectionPlacementChance), "The value must be a valid percent (between 0 and 100).");
+
+            if (CancelConnectionPlacementChanceIncrease > 100)
+                throw new InvalidConfigurationException(this, nameof(CancelConnectionPlacementChanceIncrease), "The value must be a valid percent (between 0 and 100).");
 
             // Get required existing components
             var rooms = context.GetComponent<ItemList<Rectangle>>(RoomsComponentTag)!; // Known to not be null since Perform checked for us

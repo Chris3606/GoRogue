@@ -5,6 +5,59 @@ using System.Linq;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
+    /// Raised by generation steps in <see cref="GenerationStep.OnPerform(GenerationContext)"/> when a parameter has been misconfigured.
+    /// </summary>
+    public class InvalidConfigurationException : Exception
+    {
+        /// <summary>
+        /// Name of parameter that was misconfigured.
+        /// </summary>
+        public string? ParameterName { get; }
+
+        /// <summary>
+        /// Generation step that had a misconfigured parameter.
+        /// </summary>
+        public GenerationStep? GenerationStep { get; }
+
+        /// <summary>
+        /// Creates a configuration exception with a customized message.
+        /// </summary>
+        /// <param name="message"/>
+        public InvalidConfigurationException(string message)
+            : base(message) { }
+
+        /// <summary>
+        /// Creates a configuration exception with a customized message an inner exception.
+        /// </summary>
+        /// <param name="message"/>
+        /// <param name="innerException"/>
+        public InvalidConfigurationException(string message, Exception innerException)
+            : base(message, innerException) { }
+
+        /// <summary>
+        /// Creates a configuration exception with a helpful message.
+        /// </summary>
+        /// <param name="generationStep">The generation step that the misconfigured parameter was encountered in.</param>
+        /// <param name="parameterName">The name of the misconfigured parameter.</param>
+        /// <param name="message">A message explaining the requirements for the parameter's value.</param>
+        public InvalidConfigurationException(GenerationStep generationStep, string parameterName, string message)
+            : base($"Invalid configuration encountered for generation step parameter:\n" +
+                   $"    Generation Step: ${generationStep.GetType().Name} (name: {generationStep.Name}){message}\n" +
+                   $"    Parameter Name : ${parameterName}\n" +
+                   $"    Message        : ${message}")
+        {
+            ParameterName = parameterName;
+            GenerationStep = generationStep;
+        }
+
+        /// <summary>
+        /// Creates an empty configuration exception.
+        /// </summary>
+        public InvalidConfigurationException()
+            : base() { }
+    }
+
+    /// <summary>
     /// Base class for implementing custom map generation steps.
     /// </summary>
     public abstract class GenerationStep

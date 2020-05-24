@@ -113,16 +113,16 @@ namespace GoRogue.MapGeneration.Steps
         {
             // Validate configuration
             if (MinRooms > MaxRooms)
-                throw new Exception("The minimum amount of rooms must be less than or equal to the maximum amount of rooms.");
+                throw new InvalidConfigurationException(this, nameof(MinRooms), $"The value must be less than or equal to the value of {nameof(MaxRooms)}.");
 
             if (RoomMinSize > RoomMaxSize)
-                throw new Exception("The minimum size of a room must be less than or equal to the maximum size of a room.");
+                throw new InvalidConfigurationException(this, nameof(RoomMinSize), $"The value must be less than or equal to the value of ${nameof(RoomMaxSize)}.");
 
             if (RoomSizeRatioX <= 0f)
-                throw new Exception("X-value room size ratio must be greater than 0.");
+                throw new InvalidConfigurationException(this, nameof(RoomSizeRatioX), "The value must be greater than 0.");
 
             if (RoomSizeRatioY <= 0f)
-                throw new Exception("Y-value room size ratio must be greater than 0.");
+                throw new InvalidConfigurationException(this, nameof(RoomSizeRatioY), "The value must be greater than 0.");
 
             // Get or create/add a wall-floor context component
             var wallFloorContext = context.GetComponentOrNew<ISettableMapView<bool>>(

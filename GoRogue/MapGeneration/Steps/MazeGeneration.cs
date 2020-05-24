@@ -81,7 +81,7 @@ namespace GoRogue.MapGeneration.Steps
         {
             // Validate configuration
             if (CrawlerChangeDirectionImprovement > 100)
-                throw new Exception("Crawler direction change chance must be in range [0, 100].");
+                throw new InvalidConfigurationException(this, nameof(CrawlerChangeDirectionImprovement), "The value must be a valid percent (between 0 and 100).");
 
             // Logic implemented from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
