@@ -39,7 +39,7 @@ namespace GoRogue.DiceNotation
         public int Roll(IGenerator? rng = null)
         {
             if (rng == null)
-                rng = SingletonRandom.DefaultRNG;
+                rng = GlobalRandom.DefaultRNG;
 
             return _termToEvaluate.GetResult(rng);
         }

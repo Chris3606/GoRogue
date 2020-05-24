@@ -48,7 +48,7 @@ namespace GoRogue.DiceNotation
         /// <returns>The result of evaluating the dice expression given.</returns>
         public static int Roll(string expression, IGenerator? random = null)
         {
-            if (random == null) random = SingletonRandom.DefaultRNG;
+            if (random == null) random = GlobalRandom.DefaultRNG;
             return DiceParser.Parse(expression).Roll(random);
         }
     }

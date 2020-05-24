@@ -50,7 +50,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha1" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha3" />
     <PackageReference Include="Troschuetz.Random" Version="4.3.1" />
   </ItemGroup>
   

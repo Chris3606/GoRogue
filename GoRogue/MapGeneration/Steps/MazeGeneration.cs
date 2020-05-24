@@ -5,6 +5,7 @@ using SadRogue.Primitives;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using GoRogue.MapViews;
+using GoRogue.Random;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -34,7 +35,7 @@ namespace GoRogue.MapGeneration.Steps
     /// </summary>
     /// <remarks>
     /// This generation steps generates mazes, and adds the tunnels made to the <see cref="ContextComponents.ItemList{Area}"/> context component with
-    /// the proper tag (if one is specified) on the <see cref="GenerationContext"/>, that has the given tag if a tag is given.  If no such component exists,
+    /// the proper tag (if one is specified) on the <see cref="GenerationContext"/>.  If no such component exists,
     /// one is created.  It also sets the all locations inside the tunnels to true in the map's "WallFloor" map view context component.  If the
     /// GenerationContext has an existing "WallFloor" context component, that component is used.  If not, an <see cref="ArrayMap{T}"/> where T is bool is
     /// created and added to the map context, whose width/height match <see cref="GenerationContext.Width"/>/<see cref="GenerationContext.Height"/>.
@@ -44,7 +45,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for maze generation.
         /// </summary>
-        public IGenerator? RNG = null;
+        public IGenerator RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Out of 100, how much to increase the chance of a crawler changing direction each step.  Once it changes direction, it resets to 0 and increases
@@ -78,10 +79,6 @@ namespace GoRogue.MapGeneration.Steps
         /// <inheritdoc/>
         protected override void OnPerform(GenerationContext context)
         {
-            // Use proper RNG
-            if (RNG == null)
-                RNG = Random.SingletonRandom.DefaultRNG;
-
             // Validate configuration
             if (CrawlerChangeDirectionImprovement > 100)
                 throw new Exception("Crawler direction change chance must be in range [0, 100].");
@@ -110,7 +107,7 @@ namespace GoRogue.MapGeneration.Steps
                 crawlers.Add(crawler);
                 crawler.MoveTo(empty);
                 var startedCrawler = true;
-                var percentChangeDirection = 0;
+                ushort percentChangeDirection = 0;
 
                 while (crawler.Path.Count != 0)
                 {
@@ -151,7 +148,7 @@ namespace GoRogue.MapGeneration.Steps
                             // Increase probablity we change direction
                             percentChangeDirection += CrawlerChangeDirectionImprovement;
 
-                            if (PercentageCheck(percentChangeDirection, RNG))
+                            if (RNG.PercentageCheck(percentChangeDirection))
                             {
                                 index = GetDirectionIndex(valids, RNG);
                                 crawler.Facing = directions[index];
@@ -295,9 +292,6 @@ namespace GoRogue.MapGeneration.Steps
 
             return true;
         }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool PercentageCheck(int outOfHundred, IGenerator rng) => outOfHundred > 0 && rng.Next(101) < outOfHundred;
 
         private class Crawler
         {

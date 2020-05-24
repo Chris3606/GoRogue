@@ -55,7 +55,7 @@ namespace GoRogue.Random
         /// deviations away from the mean.
         /// </summary>
         /// <param name="generator">
-        /// Generator to use. If null is specified, the <see cref="SingletonRandom.DefaultRNG"/> will be used.
+        /// Generator to use. If null is specified, the <see cref="GlobalRandom.DefaultRNG"/> will be used.
         /// </param>
         /// <param name="lower">Lower value by which to define the distribution.</param>
         /// <param name="upper">Upper value by which to define the distribution.</param>
@@ -70,7 +70,7 @@ namespace GoRogue.Random
         public static NormalDistribution CreateNormalDistribution(IGenerator? generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
         {
             if (generator == null)
-                generator = SingletonRandom.DefaultRNG;
+                generator = GlobalRandom.DefaultRNG;
 
             return new NormalDistribution(generator, lower + (upper - lower) / 2.0, (upper - lower) / 2.0 / deviationsFromMean);
         }

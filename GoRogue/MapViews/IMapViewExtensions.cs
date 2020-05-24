@@ -181,7 +181,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="mapView"/>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>The item at a random position in the IMapView.</returns>
         public static T RandomItem<T>(this IMapView<T> mapView, IGenerator? rng = null)
             => mapView[RandomPosition(mapView, rng)];
@@ -196,7 +196,7 @@ namespace GoRogue.MapViews
         /// Function that takes a position, and the value at that position, and returns true if it is an
         /// acceptable selection, and false if not.
         /// </param>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>
         /// The item at a random position in the IMapView for which the selector returns true.
         /// </returns>
@@ -212,7 +212,7 @@ namespace GoRogue.MapViews
         /// <param name="validValue">
         /// A value to look for in the IMapView to determine whether or not a generated position is valid.
         /// </param>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>A random position whose value in the current IMapView is equal to the one specified.</returns>
         public static Point RandomPosition<T>(this IMapView<T> mapView, T validValue, IGenerator? rng = null)
             => mapView.RandomPosition((c, i) => i?.Equals(validValue) ?? validValue == null, rng);
@@ -228,7 +228,7 @@ namespace GoRogue.MapViews
         /// A set of values to look for in the IMapView to determine whether or not a generated position
         /// is valid.
         /// </param>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>
         /// A random position whose value in this IMapView is equal to one of the values specified.
         /// </returns>
@@ -246,7 +246,7 @@ namespace GoRogue.MapViews
         /// A set of values to look for in the IMapView to determine whether or not a generated position
         /// is valid.
         /// </param>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>
         /// A random position whose value in this IMapView is equal to one of the values specified.
         /// </returns>
@@ -260,7 +260,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="mapView"/>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <param name="validValues">
         /// A set of values to look for in the IMapView to determine whether or not a generated position
         /// is valid.
@@ -281,12 +281,12 @@ namespace GoRogue.MapViews
         /// Function that takes a position and the value at that position, and returns true if it is an
         /// acceptable selection, and false if not.
         /// </param>
-        /// <param name="rng">The rng to use. Defaults to<see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to<see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>A random position in the IMapView for which the selector returns true.</returns>
         public static Point RandomPosition<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator? rng = null)
         {
             if (rng == null)
-                rng = SingletonRandom.DefaultRNG;
+                rng = GlobalRandom.DefaultRNG;
 
             var c = new Point(rng.Next(mapView.Width), rng.Next(mapView.Height));
 
@@ -301,12 +301,12 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="mapView"/>
-        /// <param name="rng">The rng to use. Defaults to <see cref="SingletonRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <returns>A random position within the IMapView.</returns>
         public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator? rng = null)
         {
             if (rng == null)
-                rng = SingletonRandom.DefaultRNG;
+                rng = GlobalRandom.DefaultRNG;
 
             return new Point(rng.Next(mapView.Width), rng.Next(mapView.Height));
         }

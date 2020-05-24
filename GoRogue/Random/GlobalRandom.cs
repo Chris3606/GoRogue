@@ -8,7 +8,7 @@ namespace GoRogue.Random
     /// rng by other features (dice, etc) wherever needed, and can also be used if you need a random
     /// number generator for your own code.
     /// </summary>
-    public static class SingletonRandom
+    public static class GlobalRandom
     {
         /// <summary>
         /// Settable field that specifies what <see cref="IGenerator"/> instance should be considered the default

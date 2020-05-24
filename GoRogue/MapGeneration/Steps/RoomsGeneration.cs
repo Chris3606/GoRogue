@@ -41,7 +41,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for room creation/placement.
         /// </summary>
-        public IGenerator? RNG = null;
+        public IGenerator RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Minimum amount of rooms to generate.  Defaults to 4.
@@ -111,10 +111,6 @@ namespace GoRogue.MapGeneration.Steps
         /// <inheritdoc/>
         protected override void OnPerform(GenerationContext context)
         {
-            // Use proper RNG
-            if (RNG == null)
-                RNG = SingletonRandom.DefaultRNG;
-
             // Validate configuration
             if (MinRooms > MaxRooms)
                 throw new Exception("The minimum amount of rooms must be less than or equal to the maximum amount of rooms.");

@@ -249,11 +249,11 @@ namespace GoRogue
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
+        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
         /// to be used</param>
         public static void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (rng == null) rng = GlobalRandom.DefaultRNG;
 
             int n = list.Count;
             while (n > 1)
@@ -280,12 +280,12 @@ namespace GoRogue
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
+        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
         /// to be used.</param>
         /// <returns>The index selected.</returns>
         public static int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (rng == null) rng = GlobalRandom.DefaultRNG;
 
             if (list.Count == 0)
                 return -1;
@@ -303,12 +303,12 @@ namespace GoRogue
         /// <param name="selector">
         /// Function that returns true if the given index is valid selection, false otherwise.
         /// </param>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
+        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
         /// to be used.</param>
         /// <returns>Index selected.</returns>
         public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (rng == null) rng = GlobalRandom.DefaultRNG;
 
             if (list.Count == 0)
                 return -1;
@@ -326,12 +326,12 @@ namespace GoRogue
         /// </summary>
         /// <typeparam name="T"/>
         /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
+        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
         /// to be used.</param>
         /// <returns>Item selected.</returns>
         public static T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (rng == null) rng = GlobalRandom.DefaultRNG;
 
             if (list.Count == 0)
                 throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
@@ -347,12 +347,12 @@ namespace GoRogue
         /// <typeparam name="T"/>
         /// <param name="list"/>
         /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="SingletonRandom.DefaultRNG"/>
+        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
         /// to be used.</param>
         /// <returns>Item selected.</returns>
         public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
         {
-            if (rng == null) rng = SingletonRandom.DefaultRNG;
+            if (rng == null) rng = GlobalRandom.DefaultRNG;
 
             if (list.Count == 0)
                 throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
@@ -400,6 +400,19 @@ namespace GoRogue
         {
             foreach (var value in values)
                 yield return value;
+        }
+
+        /// <summary>
+        /// Takes multiple enumerables of items, and flattens them into a single IEnumerable.
+        /// </summary>
+        /// <typeparam name="T"/>
+        /// <param name="lists">Lists to "flatten".</param>
+        /// <returns>An IEnumerable containing the items of all the enumerables passed in.</returns>
+        public static IEnumerable<T> Flatten<T>(params IEnumerable<T>[] lists)
+        {
+            foreach (var list in lists)
+                foreach (var i in list)
+                    yield return i;
         }
     }
 }
