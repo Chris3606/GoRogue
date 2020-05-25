@@ -55,6 +55,24 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
+        /// Adds the given generation steps.  Steps are executed in the order they are added.
+        /// </summary>
+        /// <param name="steps">The generation steps to add.</param>
+        /// <returns>This generator (for chaining).</returns>
+        public Generator AddSteps(params GenerationStep[] steps) => AddSteps((IEnumerable<GenerationStep>)steps);
+
+        /// <summary>
+        /// Adds the given generation steps.  Steps are executed in the order they are added.
+        /// </summary>
+        /// <param name="steps">The generation steps to add.</param>
+        /// <returns>This generator (for chaining).</returns>
+        public Generator AddSteps(IEnumerable<GenerationStep> steps)
+        {
+            _generationSteps.AddRange(steps);
+            return this;
+        }
+
+        /// <summary>
         /// Applies the generation steps added, in the order in which they were added. to the <see cref="Context"/> to generate the map.
         /// </summary>
         public void Generate()

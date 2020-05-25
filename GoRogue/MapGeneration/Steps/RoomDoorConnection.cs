@@ -164,8 +164,10 @@ namespace GoRogue.MapGeneration.Steps
 
             foreach (var room in rooms.Items)
             {
-                // Holds positions that are valid options to carve out as doors to this room
-                var validPositions = new RectangleEdgePositionsList(room);
+                // Holds positions that are valid options to carve out as doors to this room.
+                // We're recording wall positions, and the room rectangle is only interior, so
+                // we expand by one so we can store positions that are walls
+                var validPositions = new RectangleEdgePositionsList(room.Expand(1, 1));
 
                 // For each side, add any valid carving positions
                 foreach (var side in AdjacencyRule.Cardinals.DirectionsOfNeighbors())

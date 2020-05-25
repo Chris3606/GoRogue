@@ -128,7 +128,7 @@ namespace GoRogue.MapGeneration.Steps
             // Get or create/add a wall-floor context component
             var wallFloorContext = context.GetComponentOrNew<ISettableMapView<bool>>(
                 newFunc: () => new ArrayMap<bool>(context.Width, context.Height),
-                tag: RoomsComponentTag
+                tag: WallFloorComponentTag
             );
             
             // Determine how many rooms to generate
@@ -137,7 +137,7 @@ namespace GoRogue.MapGeneration.Steps
             // Get or create/add a rooms context component
             var roomsContext = context.GetComponentOrNew(
                 newFunc: () => new ContextComponents.ItemList<Rectangle>(roomCounter),
-                tag: WallFloorComponentTag
+                tag: RoomsComponentTag
             );
 
             // Try to place all the rooms
@@ -233,9 +233,6 @@ namespace GoRogue.MapGeneration.Steps
 
                 roomCounter--;
             }
-
-            // Add RoomsList context to the map context
-            context.AddComponent(roomsContext);
         }
     }
 }

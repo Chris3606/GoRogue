@@ -115,6 +115,7 @@ namespace GoRogue.MapGeneration
             : base() { }
     }
 
+    // TODO: Figure out way to check for tags AND types that are the same (for some generation steps)?  This wrecks ClosestMapAreaConnector
     /// <summary>
     /// Base class for implementing custom map generation steps.
     /// </summary>

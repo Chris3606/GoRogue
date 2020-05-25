@@ -97,6 +97,7 @@ namespace GoRogue.MapGeneration.Steps
         {
             WallFloorComponentTag = wallFloorComponentTag;
             AreasComponentTag = areasComponentTag;
+            TunnelsComponentTag = tunnelsComponentTag;
         }
 
         /// <inheritdoc/>

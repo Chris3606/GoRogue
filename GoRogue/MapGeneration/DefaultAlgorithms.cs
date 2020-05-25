@@ -69,14 +69,18 @@ namespace GoRogue.MapGeneration
             //
             // This connection steps would default to connecting areas in the list with the tag "Areas", but since we want to
             // connect the tunnels left by the maze generation step (which added its areas to a "Tunnels" component, we change
-            // this tag appropriately
-            yield return new Steps.ClosestMapAreaConnection(areasComponentTag: "Tunnels")
+            // this tag appropriately.  Similarly, ClosestMapAreaConnection can't store its results in the same area as it takes from,
+            // so we give it a different tag.
+            yield return new Steps.ClosestMapAreaConnection(areasComponentTag: "Tunnels", tunnelsComponentTag: "MazeConnections")
             {
                 ConnectionPointSelector = new ConnectionPointSelectors.ClosestConnectionPointSelector(Distance.Manhattan),
                 TunnelCreator = new TunnelCreators.HorizontalVerticalTunnelCreator(rng)
             };
 
-            // 4. Open up walls of rooms to connect them to the maze
+            // 4. So that the tunnels are all in one component, merge the MazeConnections in
+            yield return new Steps.MergeAreaComponents(areaList1Tag: "Tunnels", areaList2Tag: "MazeConnections", areaListResultTag: "Tunnels");
+
+            // 5. Open up walls of rooms to connect them to the maze
             yield return new Steps.RoomDoorConnection()
             {
                 RNG = rng,
@@ -87,7 +91,7 @@ namespace GoRogue.MapGeneration
                 CancelConnectionPlacementChanceIncrease = cancelConnectionPlacementChanceIncrease
             };
 
-            // 5. Trim back dead ends in the maze to reduce the maze density
+            // 6. Trim back dead ends in the maze to reduce the maze density
             yield return new Steps.TunnelDeadEndTrimming()
             {
                 RNG = rng,

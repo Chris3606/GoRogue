@@ -105,59 +105,54 @@ namespace GoRogue.MapGeneration.Steps
                 {
                     foreach (var point in area.Positions)
                     {
-                        var points = AdjacencyRule.EightWay.NeighborsClockwise(point).ToArray();
-                        var directions = AdjacencyRule.EightWay.DirectionsOfNeighborsClockwise(Direction.None).ToList();
-
-                        for (int i = 0; i < 8; i += 2)
+                        foreach (var direction in AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise())
                         {
-                            if (wallFloor[points[i]])
-                            {
-                                var oppDir = directions[i] + 4;
+                            Point neighbor = point + direction;
+
+                            if (wallFloor[neighbor])
+                            {   
+                                var oppositeNeighborDir = direction + 4;
                                 bool found = false;
 
                                 // If we get here, source direction is a floor, opposite direction
                                 // should be wall
-                                if (!wallFloor[points[(int)oppDir.Type]])
+                                if (!wallFloor[point + oppositeNeighborDir])
                                 {
-                                    switch (oppDir.Type)
+                                    // Check for a wall pattern in the map. Where X is a wall,
+                                    // checks the appropriately rotated version of:
+                                    // XXX
+                                    // X X
+                                    found = oppositeNeighborDir.Type switch
                                     {
-                                        // Check for a wall pattern in the map. In this case
-                                        // something like where X is a wall XXX X X
-                                        case Direction.Types.Up:
-                                            found = !wallFloor[points[(int)Direction.Types.UpLeft]] &&
-                                                    !wallFloor[points[(int)Direction.Types.UpRight]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Left]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Right]];
-                                            break;
+                                        Direction.Types.Up =>    !wallFloor[point + Direction.UpLeft] &&
+                                                                 !wallFloor[point + Direction.UpRight] &&
+                                                                 !wallFloor[point + Direction.Left] &&
+                                                                 !wallFloor[point + Direction.Right],
 
-                                        case Direction.Types.Down:
-                                            found = !wallFloor[points[(int)Direction.Types.DownLeft]] &&
-                                                    !wallFloor[points[(int)Direction.Types.DownRight]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Left]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Right]];
-                                            break;
+                                        Direction.Types.Down =>  !wallFloor[point + Direction.DownLeft] &&
+                                                                 !wallFloor[point + Direction.DownRight] &&
+                                                                 !wallFloor[point + Direction.Left] &&
+                                                                 !wallFloor[point + Direction.Right],
 
-                                        case Direction.Types.Right:
-                                            found = !wallFloor[points[(int)Direction.Types.UpRight]] &&
-                                                    !wallFloor[points[(int)Direction.Types.DownRight]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Up]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Down]];
-                                            break;
+                                        Direction.Types.Right => !wallFloor[point + Direction.UpRight] &&
+                                                                 !wallFloor[point + Direction.DownRight] &&
+                                                                 !wallFloor[point + Direction.Up] &&
+                                                                 !wallFloor[point + Direction.Down],
 
-                                        case Direction.Types.Left:
-                                            found = !wallFloor[points[(int)Direction.Types.UpLeft]] &&
-                                                    !wallFloor[points[(int)Direction.Types.DownLeft]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Up]] &&
-                                                    !wallFloor[points[(int)Direction.Types.Down]];
-                                            break;
-                                    }
+                                        Direction.Types.Left =>  !wallFloor[point + Direction.UpLeft] &&
+                                                                 !wallFloor[point + Direction.DownLeft] &&
+                                                                 !wallFloor[point + Direction.Up] &&
+                                                                 !wallFloor[point + Direction.Down],
+
+                                        _ => throw new System.Exception("Cannot occur since original neighbor direction was a cardinal.")
+                                    };
                                 }
 
                                 // If we found a dead end and it's not already safe, then add it to the list
                                 if (found && !safeDeadEnds.Contains(point))
                                     deadEnds.Add(point);
 
-                                break;
+                                break; // Even if it is already saved, we know it's a dead end so we can stop processing this point
                             }
                         }
                     }

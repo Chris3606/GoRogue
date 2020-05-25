@@ -49,7 +49,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             // Requires a single component that isn't present so will throw and will not call OnPerform
             var stepSingleComponent = new TestGenerationStep(() => _timesOnPerformCalled++, null, typeof(MapContextComponent1));
-            Assert.Throws<InvalidOperationException>(() => stepSingleComponent.PerformStep(context));
+            Assert.Throws<MissingContextComponentException>(() => stepSingleComponent.PerformStep(context));
             Assert.Equal(0, _timesOnPerformCalled);
 
             // When the required component is there, it runs as normal
@@ -59,7 +59,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             // Requires 2 components, one of which isn't there so will throw and not call OnPerform
             var stepMultipleComponents = new TestGenerationStep(() => _timesOnPerformCalled++, null, typeof(MapContextComponent1), typeof(MapContextComponent2));
-            Assert.Throws<InvalidOperationException>(() => stepMultipleComponents.PerformStep(context));
+            Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Add the second component and it runs appropriately.  Components with tags count if the requirement is for no particular tag
@@ -82,7 +82,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             // Requires a single component with a tag that isn't present so will throw and will not call OnPerform
             var stepSingleComponent = new TestGenerationStep(() => _timesOnPerformCalled++, null, (typeof(MapContextComponent1), tag1));
-            Assert.Throws<InvalidOperationException>(() => stepSingleComponent.PerformStep(context));
+            Assert.Throws<MissingContextComponentException>(() => stepSingleComponent.PerformStep(context));
             Assert.Equal(0, _timesOnPerformCalled);
 
             // When the required component is there, it runs as normal
@@ -92,13 +92,13 @@ namespace GoRogue.UnitTests.MapGeneration
 
             // Requires 2 components, one of which is a type/tag combo that isn't there so will throw and not call OnPerform
             var stepMultipleComponents = new TestGenerationStep(() => _timesOnPerformCalled++, null, (typeof(MapContextComponent1), tag1), (typeof(MapContextComponent2), tag2));
-            Assert.Throws<InvalidOperationException>(() => stepMultipleComponents.PerformStep(context));
+            Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Both of these objects have the wrong tag (or no tag) so we'll again throw exception
             context.AddComponent(new MapContextComponent2(), tag3);
             context.AddComponent(new MapContextComponent2());
-            Assert.Throws<InvalidOperationException>(() => stepMultipleComponents.PerformStep(context));
+            Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Add the second component with the proper tag and it runs appropriately.
