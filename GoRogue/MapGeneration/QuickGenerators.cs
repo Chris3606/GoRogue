@@ -86,10 +86,6 @@ namespace GoRogue.MapGeneration
 		/// during maze generation. Once it changes direction, the chance resets to 0 and increases
 		/// by this amount. Defaults to 10.
 		/// </param>
-		/// <param name="saveDeadEndChance">
-		/// After the maze generation finishes, the small dead ends will be trimmed out. This value
-		/// indicates the chance out of 100 that the dead end remains. Defaults to 0.
-		/// </param>
 		/// <param name="minSidesToConnect">Minimum sides of the room to process. Defaults to 1.</param>
 		/// <param name="maxSidesToConnect">Maximum sides of the room to process. Defaults to 4.</param>
 		/// <param name="cancelSideConnectionSelectChance">
@@ -104,14 +100,22 @@ namespace GoRogue.MapGeneration
 		/// Increase the <paramref name="cancelConnectionPlacementChance"/> value by this amount each
 		/// time a door is placed (per room) during the connection process. Defaults to 10.
 		/// </param>
+		/// <param name="saveDeadEndChance">
+		/// After the maze generation finishes, the small dead ends will be trimmed out. This value
+		/// indicates the chance out of 100 that the dead end remains. Defaults to 0.
+		/// </param>
+		/// <param name="maxTrimIterations">
+		/// Maximum number of passes to make looking for dead ends when trimming.  Defaults to infinity.
+		/// </param>
 		/// <returns>A list of the interior of rooms generated, and the connections placed.</returns>
 		public static IEnumerable<(Rectangle Room, Coord[][] Connections)> GenerateDungeonMazeMap(ISettableMapView<bool> map, int minRooms,
 			int maxRooms, int roomMinSize, int roomMaxSize, float roomSizeRatioX = 1f, float roomSizeRatioY = 1f, int maxCreationAttempts = 10,
-			int maxPlacementAttempts = 10, int crawlerChangeDirectionImprovement = 10, int saveDeadEndChance = 0, int minSidesToConnect = 1, int maxSidesToConnect = 4,
-			int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10)
+			int maxPlacementAttempts = 10, int crawlerChangeDirectionImprovement = 10, int minSidesToConnect = 1, int maxSidesToConnect = 4,
+			int cancelSideConnectionSelectChance = 50, int cancelConnectionPlacementChance = 70, int cancelConnectionPlacementChanceIncrease = 10,
+			int saveDeadEndChance = 0, int maxTrimIterations = -1)
 			=> GenerateDungeonMazeMap(map, null, minRooms, maxRooms, roomMinSize, roomMaxSize, roomSizeRatioX, roomSizeRatioY, maxCreationAttempts, maxPlacementAttempts,
-									  crawlerChangeDirectionImprovement, saveDeadEndChance, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance,
-									  cancelConnectionPlacementChance, cancelConnectionPlacementChanceIncrease);
+									  crawlerChangeDirectionImprovement, minSidesToConnect, maxSidesToConnect, cancelSideConnectionSelectChance,
+									  cancelConnectionPlacementChance, cancelConnectionPlacementChanceIncrease, saveDeadEndChance, maxTrimIterations);
 
 		/// <summary>
 		/// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
