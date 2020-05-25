@@ -43,7 +43,7 @@ namespace GoRogue.MapGeneration.Steps
     public class TunnelDeadEndTrimming : GenerationStep
     {
         /// <summary>
-        /// The chance out of 100 that a given dead end is left alone.  Defaults to 40.
+        /// The chance out of 100 that a dead end is left alone.  Defaults to 40.
         /// </summary>
         public ushort SaveDeadEndChance = 40;
 

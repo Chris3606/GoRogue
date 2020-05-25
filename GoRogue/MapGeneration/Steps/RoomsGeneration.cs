@@ -6,6 +6,7 @@ using GoRogue.MapViews;
 
 namespace GoRogue.MapGeneration.Steps
 {
+    // TODO: Fix docs on ratios
     /// <summary>
     /// Carves out non-overlapping rooms in a map.  Rooms generated will not overlap with themselves, or any existing open areas in the map.
     ///
