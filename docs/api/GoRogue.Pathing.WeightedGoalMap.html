@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Class WeightedGoalMap
    ">
-    <meta name="generator" content="docfx 2.41.0.0">
+    <meta name="generator" content="docfx 2.52.0.0">
     
     <link rel="shortcut icon" href="../favicon.ico">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
@@ -115,7 +115,7 @@ the ability to combine multiple goal maps with different weights.</p>
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_Pathing_WeightedGoalMap_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class WeightedGoalMap : IMapView&lt;double? &gt;</code></pre>
+    <pre><code class="lang-csharp hljs">public class WeightedGoalMap : IMapView&lt;double?&gt;</code></pre>
   </div>
   <h5 id="GoRogue_Pathing_WeightedGoalMap_remarks"><strong>Remarks</strong></h5>
   <div class="markdown level0 remarks"><p>This class encapsulates the work of building one overall goal map out of multiple existing
@@ -141,7 +141,7 @@ concept of global vs. local avoidance.  For that functionality, see <a class="xr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IMapView&lt;double? &gt; map)</code></pre>
+    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IMapView&lt;double?&gt; map)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -175,7 +175,7 @@ concept of global vs. local avoidance.  For that functionality, see <a class="xr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IDictionary&lt;IMapView&lt;double? &gt;, double&gt; maps)</code></pre>
+    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IDictionary&lt;IMapView&lt;double?&gt;, double&gt; maps)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -209,7 +209,7 @@ concept of global vs. local avoidance.  For that functionality, see <a class="xr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IEnumerable&lt;IMapView&lt;double? &gt;&gt; maps)</code></pre>
+    <pre><code class="lang-csharp hljs">public WeightedGoalMap(IEnumerable&lt;IMapView&lt;double?&gt;&gt; maps)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -244,7 +244,7 @@ concept of global vs. local avoidance.  For that functionality, see <a class="xr
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;IMapView&lt;double? &gt;, double&gt; Weights</code></pre>
+    <pre><code class="lang-csharp hljs">public readonly Dictionary&lt;IMapView&lt;double?&gt;, double&gt; Weights</code></pre>
   </div>
   <h5 class="fieldValue">Field Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -496,7 +496,7 @@ This may be useful in situations where the goals are shared between many charact
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ArrayMap&lt;double? &gt; Combine()</code></pre>
+    <pre><code class="lang-csharp hljs">public ArrayMap&lt;double?&gt; Combine()</code></pre>
   </div>
   <h5 class="returns">Returns</h5>
   <table class="table table-bordered table-striped table-condensed">

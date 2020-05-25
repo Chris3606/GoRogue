@@ -3,14 +3,14 @@
     <!-- Basic package info -->
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>GoRogue</PackageId>
-    <Version>2.6.1</Version>
+    <Version>2.6.2</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
     <Authors>Chris3606</Authors>
     <Description>Roguelike/2D game utility library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>See https://github.com/Chris3606/GoRogue/releases/tag/2.6.1 for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>Bugfix.  Minor compatibility-breaking changes; see https://github.com/Chris3606/GoRogue/releases/tag/2.6.2 for details.</PackageReleaseNotes>
     <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
