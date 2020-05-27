@@ -8,44 +8,36 @@ namespace GoRogue.MapGeneration.Steps.Translation
     /// Removes all points from an area list that are in any of the areas present in another list.
     ///
     ///  Context Components Required:
-    /// <list type="table">
-    /// <listheader>
-    /// <term>Component</term>
-    /// <description>Default Tag</description>
-    /// </listheader>
-    /// <item>
-    /// <term><see cref="ItemList{Area}"/></term>
-    /// <description>"UnmodifiedAreaList"</description>
-    /// </item>
-    /// <item>
-    /// <term><see cref="ItemList{Area}"/></term>
-    /// <description>"ModifiedAreaList"</description>
-    /// </item>
-    /// </list>
+    ///      - <see cref="ItemList{Area}"/> (tag <see cref="UnmodifiedAreaListTag"/>: The list of areas that will not be modified, but will serve as a basis for points to remove from areas in
+    ///        the other list.
+    ///      - <see cref="ItemList{Area}"/> (tag <see cref="ModifiedAreaListTag"/>: The list of areas that will be modified; all areas in this list will have any points that also appear in
+    ///        areas in the other list removed.  If an area ends up with no remaining points, it is removed from the list.
     /// </summary>
     /// <remarks>
     /// This component will removes all positions from any areas in the the modified area list, that are also present in one or more areas in
-    /// the unmodified area list.  This ensures that the two lists do not contain any positions that overlap with each other.
+    /// the unmodified area list.  If an area is modified such that it has no remaining points, it is removed from the list entirely.
+    ///
+    /// This ensures that the two lists do not contain any positions that overlap with each other.
     /// </remarks>
     public class RemoveDuplicatePoints : GenerationStep
     {
         /// <summary>
-        /// Optional tag that must be associated with the component used as the unmodified area list.  Defaults to "AreaList1".
+        /// Tag that must be associated with the component used as the unmodified area list.
         /// </summary>
-        public readonly string? UnmodifiedAreaListTag;
+        public readonly string UnmodifiedAreaListTag;
 
         /// <summary>
-        /// Optional tag that must be associated with the component used as the area list from which duplicates are removed.  Defaults to "AreaList2".
+        /// Tag that must be associated with the component used as the area list from which duplicates are removed.
         /// </summary>
-        public readonly string? ModifiedAreaListTag;
+        public readonly string ModifiedAreaListTag;
 
         /// <summary>
         /// Creates a new area duplicate point remover step.
         /// </summary>
-        /// <param name="name">The name of the generation step.  Defaults to <see cref="RemoveDuplicatePoints"/>.</param>
-        /// <param name="unmodifiedAreaListTag">Optional tag that must be associated with the component used as the unmodified area list.  Defaults to "AreaList1".</param>
-        /// <param name="modifiedAreaListTag">Optional tag that must be associated with the component used as the area list from which duplicates are removed.  Defaults to "AreaList2".</param>
-        public RemoveDuplicatePoints(string? name = null, string? unmodifiedAreaListTag = "UnmodifiedAreaList", string? modifiedAreaListTag = "ModifiedAreaList")
+        /// <param name="name">The name of the generation step.</param>
+        /// <param name="unmodifiedAreaListTag">Tag that must be associated with the component used as the unmodified area list.</param>
+        /// <param name="modifiedAreaListTag">Tag that must be associated with the component used as the area list from which duplicates are removed.</param>
+        public RemoveDuplicatePoints(string? name, string unmodifiedAreaListTag, string modifiedAreaListTag)
             : base(name, (typeof(ItemList<Area>), unmodifiedAreaListTag), (typeof(ItemList<Area>), modifiedAreaListTag))
         {
             UnmodifiedAreaListTag = unmodifiedAreaListTag;
@@ -55,6 +47,14 @@ namespace GoRogue.MapGeneration.Steps.Translation
             if (ModifiedAreaListTag == UnmodifiedAreaListTag)
                 throw new InvalidConfigurationException(this, nameof(ModifiedAreaListTag), $"The value must be different than the value of {nameof(UnmodifiedAreaListTag)}.");
         }
+
+        /// <summary>
+        /// Creates a new area duplicate point remover step, with the name <see cref="RemoveDuplicatePoints"/>.
+        /// </summary>
+        /// <param name="unmodifiedAreaListTag">Tag that must be associated with the component used as the unmodified area list.</param>
+        /// <param name="modifiedAreaListTag">Tag that must be associated with the component used as the area list from which duplicates are removed.</param>
+        public RemoveDuplicatePoints(string unmodifiedAreaListTag, string modifiedAreaListTag)
+            : this(null, unmodifiedAreaListTag, modifiedAreaListTag) { }
 
         /// <inheritdoc/>
         protected override void OnPerform(GenerationContext context)

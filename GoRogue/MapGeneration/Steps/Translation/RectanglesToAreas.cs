@@ -8,40 +8,22 @@ namespace GoRogue.MapGeneration.Steps.Translation
     /// Can optionally remove the <see cref="ItemList{Rectangle}"/> from the context.
     ///
     /// Context Components Required:
-    /// <list type="table">
-    /// <listheader>
-    /// <term>Component</term>
-    /// <description>Default Tag</description>
-    /// </listheader>
-    /// <item>
-    /// <term><see cref="ItemList{Rectangle}"/></term>
-    /// <description>"Rooms"</description>
-    /// </item>
-    /// </list>
+    ///     - <see cref="ItemList{Rectangle}"/> (tag <see cref="RectanglesComponentTag"/>): The list of rectangles to translate to areas
     ///
-    /// Context Components Added/Used:
-    /// <list type="table">
-    /// <listheader>
-    /// <term>Component</term>
-    /// <description>Default Tag</description>
-    /// </listheader>
-    /// <item>
-    /// <term><see cref="ItemList{Area}"/></term>
-    /// <description>"Areas"</description>
-    /// </item>
-    /// </list>
+    /// Context Components Added/Used
+    ///     - <see cref="ItemList{Area}"/> (tag <see cref="AreasComponentTag"/>): The list of areas to add the areas representing the rectangles to.  If it does not exist, it will be created.
     /// </summary>
     public class RectanglesToAreas : GenerationStep
     {
         /// <summary>
-        /// Optional tag that must be associated with the component used as input rectangles.
+        /// Tag that must be associated with the component used as input rectangles.
         /// </summary>
-        public readonly string? RectanglesComponentTag;
+        public readonly string RectanglesComponentTag;
 
         /// <summary>
-        /// Optional tag that must be associated with the component used to store the resulting areas.
+        /// Tag that must be associated with the component used to store the resulting areas.
         /// </summary>
-        public readonly string? AreasComponentTag;
+        public readonly string AreasComponentTag;
 
         /// <summary>
         /// Whether or not to remove the input list of rectangles from the context.  Defaults to false.
@@ -52,14 +34,22 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// Creates a new step for translation of <see cref="Rectangle"/> lists to <see cref="Area"/> lists.
         /// </summary>
         /// <param name="name">The name of the generation step.  Defaults to <see cref="RectanglesToAreas"/>.</param>
-        /// <param name="rectanglesComponentTag">Optional tag that must be associated with the component used as input rectangles.  Defaults to "Rooms".</param>
-        /// <param name="areasComponentTag">Optional tag that must be associated with the component used to store the resulting areas.  Defaults to "Areas".</param>
-        public RectanglesToAreas(string? name = null, string? rectanglesComponentTag = "Rooms", string? areasComponentTag = "Areas")
+        /// <param name="rectanglesComponentTag">Tag that must be associated with the component used as input rectangles.</param>
+        /// <param name="areasComponentTag">Tag that must be associated with the component used to store the resulting areas.</param>
+        public RectanglesToAreas(string? name, string rectanglesComponentTag, string areasComponentTag)
             : base(name, (typeof(ItemList<Rectangle>), rectanglesComponentTag))
         {
             RectanglesComponentTag = rectanglesComponentTag;
             AreasComponentTag = areasComponentTag;
         }
+
+        /// <summary>
+        /// Creates a new step for translation of <see cref="Rectangle"/> lists to <see cref="Area"/> lists, with the name <see cref="RectanglesToAreas"/>.
+        /// </summary>
+        /// <param name="rectanglesComponentTag">Tag that must be associated with the component used as input rectangles.</param>
+        /// <param name="areasComponentTag">Tag that must be associated with the component used to store the resulting areas.</param>
+        public RectanglesToAreas(string rectanglesComponentTag, string areasComponentTag)
+            : this(null, rectanglesComponentTag, areasComponentTag) { }
 
         /// <inheritdoc/>
         protected override void OnPerform(GenerationContext context)
