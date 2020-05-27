@@ -123,19 +123,19 @@ have changed, or <a class="xref" href="GoRogue.Pathing.GoalMap.html#GoRogue_Path
 <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where <span class="xref">null</span> indicates a square is an obstacle,
 and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
 contains a goal.</p>
-<p>For items following the GoalMap, they can simply call <a class="xref" href="GoRogue.Pathing.GoalMap.html#GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_GoRogue_Coord_">GetDirectionOfMinValue(Coord)</a></p>
+<p>For items following the GoalMap, they can simply call <a class="xref" href="GoRogue.Pathing.GoalMap.html#GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_SadRogue_Primitives_Point_">GetDirectionOfMinValue(Point)</a></p>
 </div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap__ctor_GoRogue_MapViews_IMapView_GoRogue_Pathing_GoalState__GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.%23ctor(GoRogue.MapViews.IMapView%7BGoRogue.Pathing.GoalState%7D%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap__ctor_GoRogue_MapViews_IMapView_GoRogue_Pathing_GoalState__SadRogue_Primitives_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.%23ctor(GoRogue.MapViews.IMapView%7BGoRogue.Pathing.GoalState%7D%2CSadRogue.Primitives.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L44">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L45">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap__ctor_" data-uid="GoRogue.Pathing.GoalMap.#ctor*"></a>
-  <h4 id="GoRogue_Pathing_GoalMap__ctor_GoRogue_MapViews_IMapView_GoRogue_Pathing_GoalState__GoRogue_Distance_" data-uid="GoRogue.Pathing.GoalMap.#ctor(GoRogue.MapViews.IMapView{GoRogue.Pathing.GoalState},GoRogue.Distance)">GoalMap(IMapView&lt;GoalState&gt;, Distance)</h4>
+  <h4 id="GoRogue_Pathing_GoalMap__ctor_GoRogue_MapViews_IMapView_GoRogue_Pathing_GoalState__SadRogue_Primitives_Distance_" data-uid="GoRogue.Pathing.GoalMap.#ctor(GoRogue.MapViews.IMapView{GoRogue.Pathing.GoalState},SadRogue.Primitives.Distance)">GoalMap(IMapView&lt;GoalState&gt;, Distance)</h4>
   <div class="markdown level1 summary"><p>Constructor. Takes a base map and a distance measurement to use for calculation.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -161,9 +161,9 @@ contains a goal.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
-        <td><p>The distance measurement (and implicitly the <a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a>) to use for calculation.</p>
+        <td><p>The distance measurement (and implicitly the <span class="xref">SadRogue.Primitives.AdjacencyRule</span>) to use for calculation.</p>
 </td>
       </tr>
     </tbody>
@@ -172,10 +172,10 @@ contains a goal.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_BaseMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.BaseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_BaseMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.BaseMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L61">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L62">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_BaseMap_" data-uid="GoRogue.Pathing.GoalMap.BaseMap*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_BaseMap" data-uid="GoRogue.Pathing.GoalMap.BaseMap">BaseMap</h4>
@@ -203,10 +203,10 @@ contains a goal.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L66">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L67">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_DistanceMeasurement_" data-uid="GoRogue.Pathing.GoalMap.DistanceMeasurement*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_DistanceMeasurement" data-uid="GoRogue.Pathing.GoalMap.DistanceMeasurement">DistanceMeasurement</h4>
@@ -227,17 +227,17 @@ contains a goal.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Height.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Height.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L71">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L72">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Height_" data-uid="GoRogue.Pathing.GoalMap.Height*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_Height" data-uid="GoRogue.Pathing.GoalMap.Height">Height</h4>
@@ -265,19 +265,19 @@ contains a goal.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L100">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L101">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Item_" data-uid="GoRogue.Pathing.GoalMap.Item*"></a>
-  <h4 id="GoRogue_Pathing_GoalMap_Item_GoRogue_Coord_" data-uid="GoRogue.Pathing.GoalMap.Item(GoRogue.Coord)">Item[Coord]</h4>
+  <h4 id="GoRogue_Pathing_GoalMap_Item_SadRogue_Primitives_Point_" data-uid="GoRogue.Pathing.GoalMap.Item(SadRogue.Primitives.Point)">Item[Point]</h4>
   <div class="markdown level1 summary"><p>Returns the goal-map value for the given position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public double? this[Coord pos] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public double? this[Point pos] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -290,7 +290,7 @@ contains a goal.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">pos</span></td>
         <td><p>The position to return the goal-map value for.</p>
 </td>
@@ -315,10 +315,10 @@ contains a goal.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L85">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L86">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Item_" data-uid="GoRogue.Pathing.GoalMap.Item*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_Item_System_Int32_" data-uid="GoRogue.Pathing.GoalMap.Item(System.Int32)">Item[Int32]</h4>
@@ -365,10 +365,10 @@ contains a goal.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L93">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L94">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Item_" data-uid="GoRogue.Pathing.GoalMap.Item*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_Item_System_Int32_System_Int32_" data-uid="GoRogue.Pathing.GoalMap.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -392,13 +392,13 @@ contains a goal.</p>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">x</span></td>
-        <td><p>X-coordinate of the position to return the goal-map value for.</p>
+        <td><p>X-Pointinate of the position to return the goal-map value for.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">y</span></td>
-        <td><p>Y-coordinate of the position to return the goal-map value for.</p>
+        <td><p>Y-Pointinate of the position to return the goal-map value for.</p>
 </td>
       </tr>
     </tbody>
@@ -421,10 +421,10 @@ contains a goal.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Width.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Width.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L76">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L77">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Width_" data-uid="GoRogue.Pathing.GoalMap.Width*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_Width" data-uid="GoRogue.Pathing.GoalMap.Width">Width</h4>
@@ -454,19 +454,19 @@ contains a goal.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L110">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L111">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_" data-uid="GoRogue.Pathing.GoalMap.GetDirectionOfMinValue*"></a>
-  <h4 id="GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_GoRogue_Coord_" data-uid="GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(GoRogue.Coord)">GetDirectionOfMinValue(Coord)</h4>
+  <h4 id="GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_SadRogue_Primitives_Point_" data-uid="GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(SadRogue.Primitives.Point)">GetDirectionOfMinValue(Point)</h4>
   <div class="markdown level1 summary"><p>Gets the direction of the neighbor with the minimum goal-map value from the given position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public Direction GetDirectionOfMinValue(Coord position)</code></pre>
+    <pre><code class="lang-csharp hljs">public Direction GetDirectionOfMinValue(Point position)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -479,7 +479,7 @@ contains a goal.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The position to get the minimum value for.</p>
 </td>
@@ -496,8 +496,8 @@ contains a goal.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
-        <td><p>The direction that has the minimum value in the goal-map, or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> if the
+        <td><span class="xref">SadRogue.Primitives.Direction</span></td>
+        <td><p>The direction that has the minimum value in the goal-map, or <span class="xref">SadRogue.Primitives.Direction.None</span> if the
 neighbors are all obstacles.</p>
 </td>
       </tr>
@@ -505,10 +505,10 @@ neighbors are all obstacles.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L121">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L122">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_" data-uid="GoRogue.Pathing.GoalMap.GetDirectionOfMinValue*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_GetDirectionOfMinValue_System_Int32_System_Int32_" data-uid="GoRogue.Pathing.GoalMap.GetDirectionOfMinValue(System.Int32,System.Int32)">GetDirectionOfMinValue(Int32, Int32)</h4>
@@ -553,8 +553,8 @@ neighbors are all obstacles.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
-        <td><p>The direction that has the minimum value in the goal-map, or <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_NONE">NONE</a> if the
+        <td><span class="xref">SadRogue.Primitives.Direction</span></td>
+        <td><p>The direction that has the minimum value in the goal-map, or <span class="xref">SadRogue.Primitives.Direction.None</span> if the
 neighbors are all obstacles.</p>
 </td>
       </tr>
@@ -562,10 +562,10 @@ neighbors are all obstacles.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L128">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L129">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_ToString_" data-uid="GoRogue.Pathing.GoalMap.ToString*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_ToString" data-uid="GoRogue.Pathing.GoalMap.ToString">ToString()</h4>
@@ -596,10 +596,10 @@ neighbors are all obstacles.</p>
   <div><span class="xref">System.Object.ToString()</span></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L145">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L146">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_ToString_" data-uid="GoRogue.Pathing.GoalMap.ToString*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_ToString_System_Int32_" data-uid="GoRogue.Pathing.GoalMap.ToString(System.Int32)">ToString(Int32)</h4>
@@ -646,10 +646,10 @@ neighbors are all obstacles.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_Int32_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.Int32%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_Int32_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.Int32%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L155">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L156">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_ToString_" data-uid="GoRogue.Pathing.GoalMap.ToString*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_ToString_System_Int32_System_String_" data-uid="GoRogue.Pathing.GoalMap.ToString(System.Int32,System.String)">ToString(Int32, String)</h4>
@@ -703,10 +703,10 @@ size, and any non-null values formatted using the given format string.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_ToString_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.ToString(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L137">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L138">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_ToString_" data-uid="GoRogue.Pathing.GoalMap.ToString*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_ToString_System_String_" data-uid="GoRogue.Pathing.GoalMap.ToString(System.String)">ToString(String)</h4>
@@ -754,10 +754,10 @@ isn't null is formatted as per the specified format string.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Update.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Update%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Update.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Update%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L163">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L164">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_Update_" data-uid="GoRogue.Pathing.GoalMap.Update*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_Update" data-uid="GoRogue.Pathing.GoalMap.Update">Update()</h4>
@@ -787,10 +787,10 @@ obstacles have not changed but the goals have, call <a class="xref" href="GoRogu
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_UpdatePathsOnly.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.UpdatePathsOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_UpdatePathsOnly.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.UpdatePathsOnly%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L189">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L190">View Source</a>
   </span>
   <a id="GoRogue_Pathing_GoalMap_UpdatePathsOnly_" data-uid="GoRogue.Pathing.GoalMap.UpdatePathsOnly*"></a>
   <h4 id="GoRogue_Pathing_GoalMap_UpdatePathsOnly" data-uid="GoRogue.Pathing.GoalMap.UpdatePathsOnly">UpdatePathsOnly()</h4>
@@ -822,10 +822,10 @@ but the obstacles haven't.  If the obstacles have also changed, call <a class="x
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Updated.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Updated%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap_Updated.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap.Updated%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L56">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L57">View Source</a>
   </span>
   <h4 id="GoRogue_Pathing_GoalMap_Updated" data-uid="GoRogue.Pathing.GoalMap.Updated">Updated</h4>
   <div class="markdown level1 summary"><p>Triggers when the GoalMap is updated.</p>
@@ -865,7 +865,7 @@ but the obstacles haven't.  If the obstacles have also changed, call <a class="x
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__System_Int32_System_Int32_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Int32, Int32)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__GoRogue_Coord_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Coord)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__SadRogue_Primitives_Point_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Point)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
@@ -880,7 +880,7 @@ but the obstacles haven't.  If the obstacles have also changed, call <a class="x
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0____0_Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, T, IGenerator)</a>
@@ -895,16 +895,16 @@ but the obstacles haven't.  If the obstacles have also changed, call <a class="x
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator___0___">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator, T[])</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___GoRogue_Coord_GoRogue_AdjacencyRule_">GoalMapExtensions.GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Coord, AdjacencyRule)</a>
+      <a class="xref" href="GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___SadRogue_Primitives_Point_SadRogue_Primitives_AdjacencyRule_">GoalMapExtensions.GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Point, AdjacencyRule)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___System_Int32_System_Int32_GoRogue_AdjacencyRule_">GoalMapExtensions.GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Int32, Int32, AdjacencyRule)</a>
+      <a class="xref" href="GoRogue.Pathing.GoalMapExtensions.html#GoRogue_Pathing_GoalMapExtensions_GetDirectionOfMinValue_GoRogue_MapViews_IMapView_System_Nullable_System_Double___System_Int32_System_Int32_SadRogue_Primitives_AdjacencyRule_">GoalMapExtensions.GetDirectionOfMinValue(IMapView&lt;Nullable&lt;Double&gt;&gt;, Int32, Int32, AdjacencyRule)</a>
   </div>
 </article>
           </div>
@@ -914,10 +914,10 @@ but the obstacles haven't.  If the obstacles have also changed, call <a class="x
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_GoalMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_GoalMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.GoalMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/GoalMap.cs/#L26" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/GoalMap.cs/#L27" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

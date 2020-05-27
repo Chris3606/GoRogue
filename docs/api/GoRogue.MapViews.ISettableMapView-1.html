@@ -121,19 +121,19 @@ pass to it.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/ISettableMapView.cs/#L33">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/ISettableMapView.cs/#L35">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ISettableMapView_1_Item_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item*"></a>
-  <h4 id="GoRogue_MapViews_ISettableMapView_1_Item_GoRogue_Coord_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item(GoRogue.Coord)">Item[Coord]</h4>
+  <h4 id="GoRogue_MapViews_ISettableMapView_1_Item_SadRogue_Primitives_Point_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item(SadRogue.Primitives.Point)">Item[Point]</h4>
   <div class="markdown level1 summary"><p>Given a position, returns/sets the &quot;value&quot; associated with that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">T this[Coord pos] { get; set; }</code></pre>
+    <pre><code class="lang-csharp hljs">T this[Point pos] { get; set; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -146,7 +146,7 @@ pass to it.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">pos</span></td>
         <td><p>Location to get/set the value for.</p>
 </td>
@@ -171,10 +171,10 @@ pass to it.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/ISettableMapView.cs/#L47">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/ISettableMapView.cs/#L49">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ISettableMapView_1_Item_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item(System.Int32)">Item[Int32]</h4>
@@ -221,17 +221,17 @@ in the map view.</p>
     </tbody>
   </table>
   <h5 id="GoRogue_MapViews_ISettableMapView_1_Item_System_Int32__remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>Typically, this may be implemented in terms of <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html#GoRogue_MapViews_ISettableMapView_1_Item_GoRogue_Coord_">Item[Coord]</a> by using
-<a class="xref" href="GoRogue.Coord.html#GoRogue_Coord_ToCoord_System_Int32_System_Int32_">ToCoord(Int32, Int32)</a> to calculate the 2D position represented by that
-1D index, and passing that position to the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html#GoRogue_MapViews_ISettableMapView_1_Item_GoRogue_Coord_">Item[Coord]</a> indexer to get/set
+  <div class="markdown level1 remarks"><p>Typically, this may be implemented in terms of <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html#GoRogue_MapViews_ISettableMapView_1_Item_SadRogue_Primitives_Point_">Item[Point]</a> by using
+<span class="xref">SadRogue.Primitives.Point.FromIndex(System.Int32,System.Int32)</span> to calculate the 2D position represented by that
+1D index, and passing that position to the <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html#GoRogue_MapViews_ISettableMapView_1_Item_SadRogue_Primitives_Point_">Item[Point]</a> indexer to get/set
 the value associated with the position.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/ISettableMapView.cs/#L26">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/ISettableMapView.cs/#L28">View Source</a>
   </span>
   <a id="GoRogue_MapViews_ISettableMapView_1_Item_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item*"></a>
   <h4 id="GoRogue_MapViews_ISettableMapView_1_Item_System_Int32_System_Int32_" data-uid="GoRogue.MapViews.ISettableMapView`1.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -296,7 +296,7 @@ the value associated with the position.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__System_Int32_System_Int32_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Int32, Int32)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__GoRogue_Coord_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Coord)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__SadRogue_Primitives_Point_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Point)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
@@ -311,7 +311,7 @@ the value associated with the position.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0____0_Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, T, IGenerator)</a>
@@ -326,7 +326,7 @@ the value associated with the position.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator___0___">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator, T[])</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
@@ -339,10 +339,10 @@ the value associated with the position.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_ISettableMapView_1.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.ISettableMapView%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/ISettableMapView.cs/#L18" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/ISettableMapView.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

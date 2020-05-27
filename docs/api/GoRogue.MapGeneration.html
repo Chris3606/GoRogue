@@ -77,23 +77,35 @@
   <div class="markdown level0 remarks"></div>
     <h3 id="classes">Classes
   </h3>
-      <h4><a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a></h4>
-      <section><p>Represents an arbitrarily-shaped area of a map. Stores and provides access to a list of each
-unique position considered connected.</p>
+      <h4><a class="xref" href="GoRogue.MapGeneration.DefaultAlgorithms.html">DefaultAlgorithms</a></h4>
+      <section><p>A collection of functions that return pre-defined series of generation steps that generate particular types
+of maps.  For more customizable map generation, see documentation for the individual steps in <a class="xref" href="GoRogue.MapGeneration.Steps.html">GoRogue.MapGeneration.Steps</a> and use AddStep
+to add them to a generator.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.GenerationContext.html">GenerationContext</a></h4>
+      <section><p>A context object used for map generation.  Map generation steps will require and retrieve components that have been added to this context
+when they need to get previously generated data about the map.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.GenerationStep.html">GenerationStep</a></h4>
+      <section><p>Base class for implementing custom map generation steps.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Generator.html">Generator</a></h4>
+      <section><p>Map generator that applies a series of <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html">GenerationStep</a> instances to a <a class="xref" href="GoRogue.MapGeneration.GenerationContext.html">GenerationContext</a>
+to generate a map.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.InvalidConfigurationException.html">InvalidConfigurationException</a></h4>
+      <section><p>Raised by generation steps in <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_OnPerform_GoRogue_MapGeneration_GenerationContext_">OnPerform(GenerationContext)</a> when a parameter has been misconfigured.</p>
 </section>
       <h4><a class="xref" href="GoRogue.MapGeneration.MapAreaFinder.html">MapAreaFinder</a></h4>
       <section><p>Class designed to calculate and produce a list of MapAreas representing each unique connected
 area of the map.</p>
 </section>
-      <h4><a class="xref" href="GoRogue.MapGeneration.QuickGenerators.html">QuickGenerators</a></h4>
-      <section><p>Collection of algorithms that put map generation pieces together, in ways that allow you to
-quickly and easily generate a given type of map in a single function call. The implementation
-of these functions may also be used as the basis for implementing more customized generation processes.</p>
+      <h4><a class="xref" href="GoRogue.MapGeneration.MissingContextComponentException.html">MissingContextComponentException</a></h4>
+      <section><p>Raised by <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html">GenerationStep</a> when required components are not present when <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_PerformStep_GoRogue_MapGeneration_GenerationContext_">PerformStep(GenerationContext)</a> is called.</p>
 </section>
-    <h3 id="interfaces">Interfaces
-  </h3>
-      <h4><a class="xref" href="GoRogue.MapGeneration.IReadOnlyMapArea.html">IReadOnlyMapArea</a></h4>
-      <section><p>Read-only interface for an arbitrarily-shaped area of the map.</p>
+      <h4><a class="xref" href="GoRogue.MapGeneration.RectangleEdgePositionsList.html">RectangleEdgePositionsList</a></h4>
+      <section><p>An arbitrary list of any number of positions on the perimeter of a rectangle.  Commonly used to represent a list of doors or edges of rooms by
+some map generation steps.</p>
 </section>
 </article>
           </div>

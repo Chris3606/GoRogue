@@ -1,0 +1,545 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class RoomDoorConnection
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class RoomDoorConnection
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection">
+  
+  
+  <h1 id="GoRogue_MapGeneration_Steps_RoomDoorConnection" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection" class="text-break">Class RoomDoorConnection
+  </h1>
+  <div class="markdown level0 summary"><p>Selects and opens walls of rectangular rooms to connect them to adjacent open spaces (typically mazes/tunnels).</p>
+<p>Components Required:</p>
+<table><thead><tr><th>Component</th><th>Default Tag</th></tr></thead><tbody><tr><td><a class="xref" href="GoRogue.MapGeneration.ContextComponents.ItemList-1.html">ItemList&lt;TItem&gt;</a></td><td>&quot;Rooms&quot;</td></tr><tr><td><a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> where T is bool</td><td>&quot;WallFloor&quot;</td></tr></tbody></table>
+<p>Components Added/Used:</p>
+<table><thead><tr><th>Component</th><th>Default Tag</th></tr></thead><tbody><tr><td><a class="xref" href="GoRogue.MapGeneration.ContextComponents.DoorList.html">DoorList</a></td><td>&quot;Doors&quot;</td></tr></tbody></table>
+<p>In the case of the DoorsList component, an existing component is used if an apppropriate one is present; a new one is added if not.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="GoRogue.MapGeneration.GenerationStep.html">GenerationStep</a></div>
+    <div class="level2"><span class="xref">RoomDoorConnection</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_RequiredComponents">GenerationStep.RequiredComponents</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_Name">GenerationStep.Name</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_PerformStep_GoRogue_MapGeneration_GenerationContext_">GenerationStep.PerformStep(GenerationContext)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.MapGeneration.Steps.html">GoRogue.MapGeneration.Steps</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class RoomDoorConnection : GenerationStep</code></pre>
+  </div>
+  <h5 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This algorithm goes through each room specified in the <a class="xref" href="GoRogue.MapGeneration.ContextComponents.ItemList-1.html">ItemList&lt;TItem&gt;</a> context component, and selects a random number of sides
+to place connections on (within the parameters specified).  For each side, it then selects randomly from the valid connection points on that side, and
+carves out the selected location by setting its value to true in the &quot;WallFloor&quot; map view, and adding it to the list of doors associated with the
+appropriate room in the <a class="xref" href="GoRogue.MapGeneration.ContextComponents.DoorList.html">DoorList</a> context component.  It continues to select connection points on a side until the <a class="xref" href="GoRogue.MapGeneration.Steps.RoomDoorConnection.html#GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChance">CancelConnectionPlacementChance</a>
+succeeds.  <a class="xref" href="GoRogue.MapGeneration.Steps.RoomDoorConnection.html#GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChance">CancelConnectionPlacementChance</a> is increased by <a class="xref" href="GoRogue.MapGeneration.Steps.RoomDoorConnection.html#GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChanceIncrease">CancelConnectionPlacementChanceIncrease</a> each time a point is selected.</p>
+<p>The algorithm will never select two adjacent points on a side as connection points.  Similarly, it will never break through the edges of the map. If an existing
+<a class="xref" href="GoRogue.MapGeneration.ContextComponents.DoorList.html">DoorList</a> component exists on the map context with the proper tag, that component is used to record the doors generated; if not, a new one is created.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection__ctor_System_String_System_String_System_String_System_String_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.%23ctor(System.String%2CSystem.String%2CSystem.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L108">View Source</a>
+  </span>
+  <a id="GoRogue_MapGeneration_Steps_RoomDoorConnection__ctor_" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.#ctor*"></a>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection__ctor_System_String_System_String_System_String_System_String_" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.#ctor(System.String,System.String,System.String,System.String)">RoomDoorConnection(String, String, String, String)</h4>
+  <div class="markdown level1 summary"><p>Creates a new maze generation step.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public RoomDoorConnection(string name = null, string roomsComponentTag = &quot;Rooms&quot;, string wallFloorComponentTag = &quot;WallFloor&quot;, string doorsListComponentTag = &quot;Doors&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>The name of the generation step.  Defaults to <a class="xref" href="GoRogue.MapGeneration.Steps.RoomDoorConnection.html">RoomDoorConnection</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">roomsComponentTag</span></td>
+        <td><p>Optional tag that must be associated with the component that contains the rooms being connected by this algorithm.  Defaults to &quot;Rooms&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">wallFloorComponentTag</span></td>
+        <td><p>Optional tag that must be associated with the component used to set wall/floor status of tiles changed by this algorithm.  Defaults to &quot;WallFloor&quot;.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">doorsListComponentTag</span></td>
+        <td><p>Optional tag that must be associated with the component created/used to record the locations of doors created by this algorithm.  Defaults to &quot;Doors&quot;.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChance.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelConnectionPlacementChance%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L79">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChance" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelConnectionPlacementChance">CancelConnectionPlacementChance</h4>
+  <div class="markdown level1 summary"><p>A chance out of 100 to cancel placing a door on a side after one has been placed (per side). Defaults to 70.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort CancelConnectionPlacementChance</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChanceIncrease.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelConnectionPlacementChanceIncrease%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L84">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChanceIncrease" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelConnectionPlacementChanceIncrease">CancelConnectionPlacementChanceIncrease</h4>
+  <div class="markdown level1 summary"><p>Increase the <a class="xref" href="GoRogue.MapGeneration.Steps.RoomDoorConnection.html#GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelConnectionPlacementChance">CancelConnectionPlacementChance</a> value by this amount each time a door is placed (per side). Defaults to 10.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort CancelConnectionPlacementChanceIncrease</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelSideConnectionSelectChance.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelSideConnectionSelectChance%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L74">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_CancelSideConnectionSelectChance" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.CancelSideConnectionSelectChance">CancelSideConnectionSelectChance</h4>
+  <div class="markdown level1 summary"><p>A chance out of 100 to cancel selecting sides to process (per room). Defaults to 50.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort CancelSideConnectionSelectChance</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_DoorsListComponentTag.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.DoorsListComponentTag%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L99">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_DoorsListComponentTag" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.DoorsListComponentTag">DoorsListComponentTag</h4>
+  <div class="markdown level1 summary"><p>Optional tag that must be associated with the component created/used to record the locations of doors created by this algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string DoorsListComponentTag</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_MaxSidesToConnect.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.MaxSidesToConnect%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L69">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_MaxSidesToConnect" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.MaxSidesToConnect">MaxSidesToConnect</h4>
+  <div class="markdown level1 summary"><p>Maximum sides of each room to process. Defaults to 4.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort MaxSidesToConnect</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_MinSidesToConnect.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.MinSidesToConnect%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L64">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_MinSidesToConnect" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.MinSidesToConnect">MinSidesToConnect</h4>
+  <div class="markdown level1 summary"><p>Minimum sides of each room to process.  Defaults to 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ushort MinSidesToConnect</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt16</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_RNG.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.RNG%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L59">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_RNG" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.RNG">RNG</h4>
+  <div class="markdown level1 summary"><p>The RNG to use for connections.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IGenerator RNG</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Troschuetz.Random.IGenerator</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_RoomsComponentTag.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.RoomsComponentTag%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L89">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_RoomsComponentTag" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.RoomsComponentTag">RoomsComponentTag</h4>
+  <div class="markdown level1 summary"><p>Optional tag that must be associated with the component that contains the rooms being connected by this algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string RoomsComponentTag</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_WallFloorComponentTag.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.WallFloorComponentTag%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L94">View Source</a>
+  </span>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_WallFloorComponentTag" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.WallFloorComponentTag">WallFloorComponentTag</h4>
+  <div class="markdown level1 summary"><p>Optional tag that must be associated with the component used to set wall/floor status of tiles changed by this algorithm.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public readonly string WallFloorComponentTag</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection_OnPerform_GoRogue_MapGeneration_GenerationContext_.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection.OnPerform(GoRogue.MapGeneration.GenerationContext)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L117">View Source</a>
+  </span>
+  <a id="GoRogue_MapGeneration_Steps_RoomDoorConnection_OnPerform_" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.OnPerform*"></a>
+  <h4 id="GoRogue_MapGeneration_Steps_RoomDoorConnection_OnPerform_GoRogue_MapGeneration_GenerationContext_" data-uid="GoRogue.MapGeneration.Steps.RoomDoorConnection.OnPerform(GoRogue.MapGeneration.GenerationContext)">OnPerform(GenerationContext)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnPerform(GenerationContext context)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapGeneration.GenerationContext.html">GenerationContext</a></td>
+        <td><span class="parametername">context</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="GoRogue.MapGeneration.GenerationStep.html#GoRogue_MapGeneration_GenerationStep_OnPerform_GoRogue_MapGeneration_GenerationContext_">GenerationStep.OnPerform(GenerationContext)</a></div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapGeneration_Steps_RoomDoorConnection.md&amp;value=---%0Auid%3A%20GoRogue.MapGeneration.Steps.RoomDoorConnection%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapGeneration/Steps/RoomDoorConnection.cs/#L54" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -85,6 +85,14 @@ and mode(s) are exactly the same as its underlying <span class="xref">Troschuetz
       <h4><a class="xref" href="GoRogue.Random.DistributionHelpers.html">DistributionHelpers</a></h4>
       <section><p>Defines functions that assist in dealing with RNG distributions.</p>
 </section>
+      <h4><a class="xref" href="GoRogue.Random.GeneratorExtensions.html">GeneratorExtensions</a></h4>
+      <section><p>Class containing some extension methods for <span class="xref">Troschuetz.Random.IGenerator</span> instances.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Random.GlobalRandom.html">GlobalRandom</a></h4>
+      <section><p>Static class that contains 1 variable, which is a an RNG instance that is used as the default
+rng by other features (dice, etc) wherever needed, and can also be used if you need a random
+number generator for your own code.</p>
+</section>
       <h4><a class="xref" href="GoRogue.Random.KnownSeriesGenerator.html">KnownSeriesGenerator</a></h4>
       <section><p>&quot;Random number generator&quot; that takes in a series of values, and simply returns them
 sequentially when RNG functions are called.</p>
@@ -98,11 +106,6 @@ be useful in testing, testing the upper range or repeatedly returning a value. A
       <section><p>A &quot;random&quot; number generator that always returns the minValue parameter given, or 0 on the
 Next overload that only takes maxValue. Again, may be useful for testing. Also used in
 <a class="xref" href="GoRogue.DiceNotation.DiceExpression.html">DiceExpression</a> for certain minimum roll functions.</p>
-</section>
-      <h4><a class="xref" href="GoRogue.Random.SingletonRandom.html">SingletonRandom</a></h4>
-      <section><p>Static class that contains 1 variable, which is a an RNG instance that is used as the default
-rng by other features (dice, etc) wherever needed, and can also be used if you need a random
-number generator for your own code.</p>
 </section>
 </article>
           </div>
