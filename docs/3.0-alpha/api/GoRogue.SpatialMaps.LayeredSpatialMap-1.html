@@ -1,0 +1,432 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class LayeredSpatialMap&lt;T&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class LayeredSpatialMap&lt;T&gt;
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.SpatialMaps.LayeredSpatialMap`1">
+  
+  
+  <h1 id="GoRogue_SpatialMaps_LayeredSpatialMap_1" data-uid="GoRogue.SpatialMaps.LayeredSpatialMap`1" class="text-break">Class LayeredSpatialMap&lt;T&gt;
+  </h1>
+  <div class="markdown level0 summary"><p><a class="xref" href="GoRogue.SpatialMaps.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> implementation that can be used to efficiently represent multiple
+&quot;layers&quot; of objects, with each layer represented as an <a class="xref" href="GoRogue.SpatialMaps.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> instance.
+It provides the regular spatial map functionality, as well as adds layer masking functionality
+that allow functions to operate on specific layers only.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html">AdvancedLayeredSpatialMap</a>&lt;T&gt;</div>
+    <div class="level2"><span class="xref">LayeredSpatialMap&lt;T&gt;</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="GoRogue.SpatialMaps.ISpatialMap-1.html">ISpatialMap</a>&lt;T&gt;</div>
+    <div><a class="xref" href="GoRogue.SpatialMaps.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap</a>&lt;T&gt;</div>
+    <div><a class="xref" href="GoRogue.SpatialMaps.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap</a>&lt;T&gt;</div>
+    <div><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.SpatialMaps.ISpatialTuple-1.html">ISpatialTuple</a>&lt;T&gt;&gt;</div>
+    <div><span class="xref">System.Collections.IEnumerable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_ItemAdded">AdvancedLayeredSpatialMap&lt;T&gt;.ItemAdded</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_ItemMoved">AdvancedLayeredSpatialMap&lt;T&gt;.ItemMoved</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_ItemRemoved">AdvancedLayeredSpatialMap&lt;T&gt;.ItemRemoved</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Count">AdvancedLayeredSpatialMap&lt;T&gt;.Count</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Items">AdvancedLayeredSpatialMap&lt;T&gt;.Items</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_LayerMasker">AdvancedLayeredSpatialMap&lt;T&gt;.LayerMasker</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Layers">AdvancedLayeredSpatialMap&lt;T&gt;.Layers</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_NumberOfLayers">AdvancedLayeredSpatialMap&lt;T&gt;.NumberOfLayers</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Positions">AdvancedLayeredSpatialMap&lt;T&gt;.Positions</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_StartingLayer">AdvancedLayeredSpatialMap&lt;T&gt;.StartingLayer</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Add__0_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.Add(T, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Add__0_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.Add(T, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__AsReadOnly">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.AsReadOnly()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_AsReadOnly">AdvancedLayeredSpatialMap&lt;T&gt;.AsReadOnly()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Clear">AdvancedLayeredSpatialMap&lt;T&gt;.Clear()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Contains__0_">AdvancedLayeredSpatialMap&lt;T&gt;.Contains(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__Contains_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.Contains(Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Contains_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.Contains(Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__Contains_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.Contains(Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Contains_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.Contains(Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetEnumerator">AdvancedLayeredSpatialMap&lt;T&gt;.GetEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_System_Collections_IEnumerable_GetEnumerator">AdvancedLayeredSpatialMap&lt;T&gt;.IEnumerable.GetEnumerator()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__GetItemsAt_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.GetItemsAt(Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetItemsAt_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.GetItemsAt(Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__GetItemsAt_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.GetItemsAt(Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetItemsAt_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.GetItemsAt(Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetLayer_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.GetLayer(Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetLayersInMask_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.GetLayersInMask(UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GetPositionOf__0_">AdvancedLayeredSpatialMap&lt;T&gt;.GetPositionOf(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Move__0_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.Move(T, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Move__0_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.Move(T, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__MoveValid_SadRogue_Primitives_Point_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.MoveValid(Point, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_MoveValid_SadRogue_Primitives_Point_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.MoveValid(Point, Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__MoveValid_System_Int32_System_Int32_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.MoveValid(Int32, Int32, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_MoveValid_System_Int32_System_Int32_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.MoveValid(Int32, Int32, Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Remove__0_">AdvancedLayeredSpatialMap&lt;T&gt;.Remove(T)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__Remove_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.Remove(Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Remove_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.Remove(Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__Remove_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.Remove(Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_Remove_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.Remove(Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_ToString">AdvancedLayeredSpatialMap&lt;T&gt;.ToString()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_ToString_System_Func__0_System_String__">AdvancedLayeredSpatialMap&lt;T&gt;.ToString(Func&lt;T, String&gt;)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanAdd__0_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.CanAdd(T, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanAdd__0_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.CanAdd(T, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanMove__0_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.CanMove(T, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanMove__0_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.CanMove(T, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanMoveAll_SadRogue_Primitives_Point_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.CanMoveAll(Point, Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__CanMoveAll_SadRogue_Primitives_Point_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.CanMoveAll(Point, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_CanMoveAll_System_Int32_System_Int32_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.CanMoveAll(Int32, Int32, Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_IReadOnlySpatialMap_T__CanMoveAll_System_Int32_System_Int32_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.IReadOnlySpatialMap&lt;T&gt;.CanMoveAll(Int32, Int32, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__MoveAll_SadRogue_Primitives_Point_SadRogue_Primitives_Point_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.MoveAll(Point, Point)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_GoRogue_SpatialMaps_ISpatialMap_T__MoveAll_System_Int32_System_Int32_System_Int32_System_Int32_">AdvancedLayeredSpatialMap&lt;T&gt;.ISpatialMap&lt;T&gt;.MoveAll(Int32, Int32, Int32, Int32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_MoveAll_SadRogue_Primitives_Point_SadRogue_Primitives_Point_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.MoveAll(Point, Point, UInt32)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.SpatialMaps.AdvancedLayeredSpatialMap-1.html#GoRogue_SpatialMaps_AdvancedLayeredSpatialMap_1_MoveAll_System_Int32_System_Int32_System_Int32_System_Int32_System_UInt32_">AdvancedLayeredSpatialMap&lt;T&gt;.MoveAll(Int32, Int32, Int32, Int32, UInt32)</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.SpatialMaps.html">GoRogue.SpatialMaps</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_SpatialMaps_LayeredSpatialMap_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class LayeredSpatialMap&lt;T&gt; : AdvancedLayeredSpatialMap&lt;T&gt;, ISpatialMap&lt;T&gt;, IReadOnlyLayeredSpatialMap&lt;T&gt;, IReadOnlySpatialMap&lt;T&gt;, IEnumerable&lt;ISpatialTuple&lt;T&gt;&gt;, IEnumerable where T : class, IHasLayer, IHasID</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of items stored in the layers. Type T must implement <a class="xref" href="GoRogue.IHasID.html">IHasID</a> and <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>,
+must be a reference type, and its <a class="xref" href="GoRogue.IHasLayer.html#GoRogue_IHasLayer_Layer">Layer</a> value MUST NOT change while the item is in the
+spatial map.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_SpatialMaps_LayeredSpatialMap_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>See the <a class="xref" href="GoRogue.SpatialMaps.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> for documentation on the practical purpose of spatial
+maps.</p>
+<p>The objects stored in a LayeredSpatialMap must be reference types and implement both <a class="xref" href="GoRogue.IHasID.html">IHasID</a>
+and <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>.  Each object in a spatial map is presumed to have a &quot;layer&quot;, which is assumed
+to remain constant once the item is added to the layer mask.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_SpatialMaps_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.SpatialMaps.LayeredSpatialMap%601.%23ctor(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/SpatialMaps/LayeredSpatialMap.cs/#L535">View Source</a>
+  </span>
+  <a id="GoRogue_SpatialMaps_LayeredSpatialMap_1__ctor_" data-uid="GoRogue.SpatialMaps.LayeredSpatialMap`1.#ctor*"></a>
+  <h4 id="GoRogue_SpatialMaps_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.SpatialMaps.LayeredSpatialMap`1.#ctor(System.Int32,System.Int32,System.UInt32)">LayeredSpatialMap(Int32, Int32, UInt32)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0U)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">numberOfLayers</span></td>
+        <td><p>Number of layers to include.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startingLayer</span></td>
+        <td><p>Index to use for the first layer.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><span class="parametername">layersSupportingMultipleItems</span></td>
+        <td><p>A layer mask indicating which layers should support multiple items residing at the same
+location on that layer. Defaults to no layers.  Generate this layer mask via <a class="xref" href="GoRogue.SpatialMaps.LayerMasker.html#GoRogue_SpatialMaps_LayerMasker_DEFAULT">DEFAULT</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_SpatialMaps_LayeredSpatialMap_1__ctor_System_Int32_System_Int32_System_UInt32__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This class allows you to specify the starting index for layers in order to make it easy to
+combine with other structures in a map which may represent other layers. For example, if a
+<code data-dev-comment-type="paramref" class="paramref">startingLayer</code> of 0 is specified, layers in the spatial map will have numbers
+in range[0, numberOfLayers - 1]. If 1 is specified, layers will have numbers in range [1-numberOfLayers],
+and anything to do with layer 0 will be ignored. For example, If a layer-mask that includes layers 0,
+2, and 3 is passed to a function, only layers 2 and 3 are considered (since they are the only ones that would
+be included in the spatial map.</p>
+</div>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="GoRogue.SpatialMaps.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.SpatialMaps.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap&lt;T&gt;</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.SpatialMaps.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap&lt;T&gt;</a>
+  </div>
+  <div>
+      <span class="xref">System.Collections.Generic.IEnumerable&lt;T&gt;</span>
+  </div>
+  <div>
+      <span class="xref">System.Collections.IEnumerable</span>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_ExtendToString__1_System_Collections_Generic_IEnumerable___0__System_String_System_Func___0_System_String__System_String_System_String_">Utility.ExtendToString&lt;T&gt;(IEnumerable&lt;T&gt;, String, Func&lt;T, String&gt;, String, String)</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_SpatialMaps_LayeredSpatialMap_1.md&amp;value=---%0Auid%3A%20GoRogue.SpatialMaps.LayeredSpatialMap%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/SpatialMaps/LayeredSpatialMap.cs/#L515" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

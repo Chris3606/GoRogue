@@ -104,7 +104,7 @@ valid path will still be produced, but it is not guaranteed to be the shortest p
       <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_MinimumWeight">AStar.MinimumWeight</a>
     </div>
     <div>
-      <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_">AStar.ShortestPath(Coord, Coord, Boolean)</a>
+      <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_ShortestPath_SadRogue_Primitives_Point_SadRogue_Primitives_Point_System_Boolean_">AStar.ShortestPath(Point, Point, Boolean)</a>
     </div>
     <div>
       <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_">AStar.ShortestPath(Int32, Int32, Int32, Int32, Boolean)</a>
@@ -138,7 +138,7 @@ valid path will still be produced, but it is not guaranteed to be the shortest p
     <pre><code class="lang-csharp hljs">public class FastAStar : AStar</code></pre>
   </div>
   <h5 id="GoRogue_Pathing_FastAStar_remarks"><strong>Remarks</strong></h5>
-  <div class="markdown level0 remarks"><p>This class is exactly like a regular <a class="xref" href="GoRogue.Pathing.AStar.html">AStar</a> instance, but sets the heuristic by default to the <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_MANHATTAN">MANHATTAN</a>
+  <div class="markdown level0 remarks"><p>This class is exactly like a regular <a class="xref" href="GoRogue.Pathing.AStar.html">AStar</a> instance, but sets the heuristic by default to the <span class="xref">SadRogue.Primitives.Distance.Manhattan</span>
 calculate function (with the same tiebreaking/smoothing element as regular AStar. In the case that euclidean or chebyshev distance is used, this
 heuristic is over-estimating -- that is, it may in some cases produce a value that is greater than the actual shortest path between two points.
 As such, this means that, while the algorithm will still produce valid paths, the algorithm is no longer guaranteed to produce fully shortest paths.
@@ -151,13 +151,13 @@ in most cases.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__SadRogue_Primitives_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CSadRogue.Primitives.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/FastAStar.cs/#L29">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/FastAStar.cs/#L30">View Source</a>
   </span>
   <a id="GoRogue_Pathing_FastAStar__ctor_" data-uid="GoRogue.Pathing.FastAStar.#ctor*"></a>
-  <h4 id="GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_" data-uid="GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)">FastAStar(IMapView&lt;Boolean&gt;, Distance)</h4>
+  <h4 id="GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__SadRogue_Primitives_Distance_" data-uid="GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},SadRogue.Primitives.Distance)">FastAStar(IMapView&lt;Boolean&gt;, Distance)</h4>
   <div class="markdown level1 summary"><p>Constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -183,7 +183,7 @@ and false indicates it cannot.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
         <td><p>Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
 how to calculate the distance between points.</p>
@@ -193,13 +193,13 @@ how to calculate the distance between points.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CGoRogue.MapViews.IMapView%7BSystem.Double%7D%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__SadRogue_Primitives_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CSadRogue.Primitives.Distance%2CGoRogue.MapViews.IMapView%7BSystem.Double%7D%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/FastAStar.cs/#L44">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/FastAStar.cs/#L42">View Source</a>
   </span>
   <a id="GoRogue_Pathing_FastAStar__ctor_" data-uid="GoRogue.Pathing.FastAStar.#ctor*"></a>
-  <h4 id="GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_" data-uid="GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)">FastAStar(IMapView&lt;Boolean&gt;, Distance, IMapView&lt;Double&gt;, Double)</h4>
+  <h4 id="GoRogue_Pathing_FastAStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__SadRogue_Primitives_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_" data-uid="GoRogue.Pathing.FastAStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},SadRogue.Primitives.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)">FastAStar(IMapView&lt;Boolean&gt;, Distance, IMapView&lt;Double&gt;, Double)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -222,7 +222,7 @@ how to calculate the distance between points.</p>
         <td></td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
         <td></td>
       </tr>
@@ -254,10 +254,10 @@ this condition is not met.  If this minimum changes after construction, it may b
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_FastAStar.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Pathing_FastAStar.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.FastAStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/FastAStar.cs/#L20" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Pathing/FastAStar.cs/#L21" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

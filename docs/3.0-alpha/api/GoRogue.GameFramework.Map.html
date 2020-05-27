@@ -132,13 +132,13 @@ point in the case where you would like to use the components in a different way 
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.%23ctor(GoRogue.MapViews.ISettableMapView%7BGoRogue.GameFramework.IGameObject%7D%2CSystem.Int32%2CGoRogue.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.%23ctor(GoRogue.MapViews.ISettableMapView%7BGoRogue.GameFramework.IGameObject%7D%2CSystem.Int32%2CSadRogue.Primitives.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L177">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L179">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map__ctor_" data-uid="GoRogue.GameFramework.Map.#ctor*"></a>
-  <h4 id="GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.#ctor(GoRogue.MapViews.ISettableMapView{GoRogue.GameFramework.IGameObject},System.Int32,GoRogue.Distance,System.UInt32,System.UInt32,System.UInt32)">Map(ISettableMapView&lt;IGameObject&gt;, Int32, Distance, UInt32, UInt32, UInt32)</h4>
+  <h4 id="GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.#ctor(GoRogue.MapViews.ISettableMapView{GoRogue.GameFramework.IGameObject},System.Int32,SadRogue.Primitives.Distance,System.UInt32,System.UInt32,System.UInt32)">Map(ISettableMapView&lt;IGameObject&gt;, Int32, Distance, UInt32, UInt32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Constructor.  Constructs map with the given terrain layer, determining width/height based on the width/height of that terrain layer.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -173,9 +173,9 @@ enforced.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
-        <td><p><a class="xref" href="GoRogue.Distance.html">Distance</a> measurement to use for pathing/measuring distance on the map.</p>
+        <td><p><span class="xref">SadRogue.Primitives.Distance</span> measurement to use for pathing/measuring distance on the map.</p>
 </td>
       </tr>
       <tr>
@@ -201,21 +201,21 @@ location on the same layer.  Defaults to no layers.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32__remarks">Remarks</h5>
+  <h5 id="GoRogue_GameFramework_Map__ctor_GoRogue_MapViews_ISettableMapView_GoRogue_GameFramework_IGameObject__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Because of the way polymorphism works for custom classes in C#, the <code data-dev-comment-type="paramref" class="paramref">terrainLayer</code> parameter MUST be of type
 <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a>, rather than <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> where T is a type that derives from or implements
 <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  If you need to use a map view storing type T rather than IGameObject, use the
-<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_">CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt;, Int32, Distance, UInt32, UInt32, UInt32)</a> function to create the map.</p>
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_">CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt;, Int32, Distance, UInt32, UInt32, UInt32)</a> function to create the map.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Int32%2CGoRogue.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map__ctor_System_Int32_System_Int32_System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.%23ctor(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSadRogue.Primitives.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L149">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L151">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map__ctor_" data-uid="GoRogue.GameFramework.Map.#ctor*"></a>
-  <h4 id="GoRogue_GameFramework_Map__ctor_System_Int32_System_Int32_System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.#ctor(System.Int32,System.Int32,System.Int32,GoRogue.Distance,System.UInt32,System.UInt32,System.UInt32)">Map(Int32, Int32, Int32, Distance, UInt32, UInt32, UInt32)</h4>
+  <h4 id="GoRogue_GameFramework_Map__ctor_System_Int32_System_Int32_System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.#ctor(System.Int32,System.Int32,System.Int32,SadRogue.Primitives.Distance,System.UInt32,System.UInt32,System.UInt32)">Map(Int32, Int32, Int32, Distance, UInt32, UInt32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Constructor.  Constructs terrain map as <a class="xref" href="GoRogue.MapViews.ArrayMap-1.html">ArrayMap&lt;T&gt;</a>; with the given width/height.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
@@ -252,9 +252,9 @@ location on the same layer.  Defaults to no layers.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
-        <td><p><a class="xref" href="GoRogue.Distance.html">Distance</a> measurement to use for pathing/measuring distance on the map.</p>
+        <td><p><span class="xref">SadRogue.Primitives.Distance</span> measurement to use for pathing/measuring distance on the map.</p>
 </td>
       </tr>
       <tr>
@@ -284,10 +284,10 @@ location on the same layer.  Defaults to no layers.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Explored.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Explored%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Explored.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Explored%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L39">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L41">View Source</a>
   </span>
   <h4 id="GoRogue_GameFramework_Map_Explored" data-uid="GoRogue.GameFramework.Map.Explored">Explored</h4>
   <div class="markdown level1 summary"><p>Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as they are within
@@ -317,15 +317,15 @@ a calculated FOV.  This ArrayMap may also have values set to it, to easily allow
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_AStar.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.AStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_AStar.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.AStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L84">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L86">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_AStar_" data-uid="GoRogue.GameFramework.Map.AStar*"></a>
   <h4 id="GoRogue_GameFramework_Map_AStar" data-uid="GoRogue.GameFramework.Map.AStar">AStar</h4>
   <div class="markdown level1 summary"><p>A* pathfinder for the map.  By default, uses <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_WalkabilityView">WalkabilityView</a> to determine which locations can be reached,
-and calculates distance based on the <a class="xref" href="GoRogue.Distance.html">Distance</a> passed to the Map in the constructor.</p>
+and calculates distance based on the <span class="xref">SadRogue.Primitives.Distance</span> passed to the Map in the constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -349,14 +349,14 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L89">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L91">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_DistanceMeasurement_" data-uid="GoRogue.GameFramework.Map.DistanceMeasurement*"></a>
   <h4 id="GoRogue_GameFramework_Map_DistanceMeasurement" data-uid="GoRogue.GameFramework.Map.DistanceMeasurement">DistanceMeasurement</h4>
-  <div class="markdown level1 summary"><p><a class="xref" href="GoRogue.Distance.html">Distance</a> measurement used for pathing and measuring distance on the map.</p>
+  <div class="markdown level1 summary"><p><span class="xref">SadRogue.Primitives.Distance</span> measurement used for pathing and measuring distance on the map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -373,21 +373,21 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Entities.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Entities%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Entities.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Entities%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L45">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L47">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Entities_" data-uid="GoRogue.GameFramework.Map.Entities*"></a>
   <h4 id="GoRogue_GameFramework_Map_Entities" data-uid="GoRogue.GameFramework.Map.Entities">Entities</h4>
-  <div class="markdown level1 summary"><p><a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap&lt;T&gt;</a> of all entities (non-terrain objects) on the map.</p>
+  <div class="markdown level1 summary"><p><a class="xref" href="GoRogue.SpatialMaps.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap&lt;T&gt;</a> of all entities (non-terrain objects) on the map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -404,17 +404,17 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;</td>
+        <td><a class="xref" href="GoRogue.SpatialMaps.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_FOV.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.FOV%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_FOV.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.FOV%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L78">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L80">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_FOV_" data-uid="GoRogue.GameFramework.Map.FOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_FOV" data-uid="GoRogue.GameFramework.Map.FOV">FOV</h4>
@@ -442,10 +442,10 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Height.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Height.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Height%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L107">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L109">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Height_" data-uid="GoRogue.GameFramework.Map.Height*"></a>
   <h4 id="GoRogue_GameFramework_Map_Height" data-uid="GoRogue.GameFramework.Map.Height">Height</h4>
@@ -473,19 +473,19 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L126">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L128">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Item_" data-uid="GoRogue.GameFramework.Map.Item*"></a>
-  <h4 id="GoRogue_GameFramework_Map_Item_GoRogue_Coord_" data-uid="GoRogue.GameFramework.Map.Item(GoRogue.Coord)">Item[Coord]</h4>
+  <h4 id="GoRogue_GameFramework_Map_Item_SadRogue_Primitives_Point_" data-uid="GoRogue.GameFramework.Map.Item(SadRogue.Primitives.Point)">Item[Point]</h4>
   <div class="markdown level1 summary"><p>Gets all objects at the given location, from the highest layer (layer with the highest number) down.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; this[Coord pos] { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; this[Point pos] { get; }</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -498,7 +498,7 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">pos</span></td>
         <td><p>The position to retrieve objects for.</p>
 </td>
@@ -523,10 +523,10 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L119">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L121">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Item_" data-uid="GoRogue.GameFramework.Map.Item*"></a>
   <h4 id="GoRogue_GameFramework_Map_Item_System_Int32_" data-uid="GoRogue.GameFramework.Map.Item(System.Int32)">Item[Int32]</h4>
@@ -573,10 +573,10 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Item_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Item(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L134">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L136">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Item_" data-uid="GoRogue.GameFramework.Map.Item*"></a>
   <h4 id="GoRogue_GameFramework_Map_Item_System_Int32_System_Int32_" data-uid="GoRogue.GameFramework.Map.Item(System.Int32,System.Int32)">Item[Int32, Int32]</h4>
@@ -629,10 +629,10 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_LayerMasker.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayerMasker%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_LayerMasker.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayerMasker%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L50">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L52">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_LayerMasker_" data-uid="GoRogue.GameFramework.Map.LayerMasker*"></a>
   <h4 id="GoRogue_GameFramework_Map_LayerMasker" data-uid="GoRogue.GameFramework.Map.LayerMasker">LayerMasker</h4>
@@ -653,17 +653,17 @@ and calculates distance based on the <a class="xref" href="GoRogue.Distance.html
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.LayerMasker.html">LayerMasker</a></td>
+        <td><a class="xref" href="GoRogue.SpatialMaps.LayerMasker.html">LayerMasker</a></td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_LayersBlockingTransparency.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayersBlockingTransparency%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_LayersBlockingTransparency.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayersBlockingTransparency%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L61">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L63">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_LayersBlockingTransparency_" data-uid="GoRogue.GameFramework.Map.LayersBlockingTransparency*"></a>
   <h4 id="GoRogue_GameFramework_Map_LayersBlockingTransparency" data-uid="GoRogue.GameFramework.Map.LayersBlockingTransparency">LayersBlockingTransparency</h4>
@@ -692,10 +692,10 @@ map if the layer it is on is contained within this layer mask.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_LayersBlockingWalkability.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayersBlockingWalkability%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_LayersBlockingWalkability.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.LayersBlockingWalkability%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L56">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L58">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_LayersBlockingWalkability_" data-uid="GoRogue.GameFramework.Map.LayersBlockingWalkability*"></a>
   <h4 id="GoRogue_GameFramework_Map_LayersBlockingWalkability" data-uid="GoRogue.GameFramework.Map.LayersBlockingWalkability">LayersBlockingWalkability</h4>
@@ -724,10 +724,10 @@ map if the layer it resides on is contained within this layer mask.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Terrain.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Terrain%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Terrain.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Terrain%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L33">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L35">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Terrain_" data-uid="GoRogue.GameFramework.Map.Terrain*"></a>
   <h4 id="GoRogue_GameFramework_Map_Terrain" data-uid="GoRogue.GameFramework.Map.Terrain">Terrain</h4>
@@ -755,10 +755,10 @@ map if the layer it resides on is contained within this layer mask.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_TransparencyView.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.TransparencyView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_TransparencyView.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.TransparencyView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L67">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L69">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_TransparencyView_" data-uid="GoRogue.GameFramework.Map.TransparencyView*"></a>
   <h4 id="GoRogue_GameFramework_Map_TransparencyView" data-uid="GoRogue.GameFramework.Map.TransparencyView">TransparencyView</h4>
@@ -787,10 +787,10 @@ map if the layer it resides on is contained within this layer mask.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_WalkabilityView.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.WalkabilityView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_WalkabilityView.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.WalkabilityView%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L72">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L74">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_WalkabilityView_" data-uid="GoRogue.GameFramework.Map.WalkabilityView*"></a>
   <h4 id="GoRogue_GameFramework_Map_WalkabilityView" data-uid="GoRogue.GameFramework.Map.WalkabilityView">WalkabilityView</h4>
@@ -819,10 +819,10 @@ no non-walkable objects at that location), and false otherwise.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_Width.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_Width.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.Width%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L112">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L114">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_Width_" data-uid="GoRogue.GameFramework.Map.Width*"></a>
   <h4 id="GoRogue_GameFramework_Map_Width" data-uid="GoRogue.GameFramework.Map.Width">Width</h4>
@@ -852,20 +852,20 @@ no non-walkable objects at that location), and false otherwise.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_AddEntity_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.AddEntity(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_AddEntity_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.AddEntity(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L316">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L317">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_AddEntity_" data-uid="GoRogue.GameFramework.Map.AddEntity*"></a>
   <h4 id="GoRogue_GameFramework_Map_AddEntity_GoRogue_GameFramework_IGameObject_" data-uid="GoRogue.GameFramework.Map.AddEntity(GoRogue.GameFramework.IGameObject)">AddEntity(IGameObject)</h4>
-  <div class="markdown level1 summary"><p>Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part of.  Returns true if the
-entity was added, and false otherwise (eg., collision detection would not allow it, etc.)</p>
+  <div class="markdown level1 summary"><p>Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part of.  Throws InvalidOperationException if the entity could not be added
+(eg., collision detection would not allow it, etc.)</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool AddEntity(IGameObject entity)</code></pre>
+    <pre><code class="lang-csharp hljs">public void AddEntity(IGameObject entity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -885,28 +885,12 @@ entity was added, and false otherwise (eg., collision detection would not allow 
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>True if the entity was successfully added to the map, false otherwise.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_ApplyTerrainOverlay_GoRogue_MapViews_IMapView_GoRogue_GameFramework_IGameObject__.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView%7BGoRogue.GameFramework.IGameObject%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_ApplyTerrainOverlay_GoRogue_MapViews_IMapView_GoRogue_GameFramework_IGameObject__.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView%7BGoRogue.GameFramework.IGameObject%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L299">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L301">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_ApplyTerrainOverlay_" data-uid="GoRogue.GameFramework.Map.ApplyTerrainOverlay*"></a>
   <h4 id="GoRogue_GameFramework_Map_ApplyTerrainOverlay_GoRogue_MapViews_IMapView_GoRogue_GameFramework_IGameObject__" data-uid="GoRogue.GameFramework.Map.ApplyTerrainOverlay(GoRogue.MapViews.IMapView{GoRogue.GameFramework.IGameObject})">ApplyTerrainOverlay(IMapView&lt;IGameObject&gt;)</h4>
@@ -939,20 +923,20 @@ the overlay and IGameObject is required, see the overloads of this function that
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_ApplyTerrainOverlay__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_GoRogue_GameFramework_IGameObject__.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ApplyTerrainOverlay%60%601(GoRogue.MapViews.IMapView%7B%60%600%7D%2CSystem.Func%7BGoRogue.Coord%2C%60%600%2CGoRogue.GameFramework.IGameObject%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_ApplyTerrainOverlay__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_GoRogue_GameFramework_IGameObject__.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ApplyTerrainOverlay%60%601(GoRogue.MapViews.IMapView%7B%60%600%7D%2CSystem.Func%7BSadRogue.Primitives.Point%2C%60%600%2CGoRogue.GameFramework.IGameObject%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L285">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L287">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_ApplyTerrainOverlay_" data-uid="GoRogue.GameFramework.Map.ApplyTerrainOverlay*"></a>
-  <h4 id="GoRogue_GameFramework_Map_ApplyTerrainOverlay__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_GoRogue_GameFramework_IGameObject__" data-uid="GoRogue.GameFramework.Map.ApplyTerrainOverlay``1(GoRogue.MapViews.IMapView{``0},System.Func{GoRogue.Coord,``0,GoRogue.GameFramework.IGameObject})">ApplyTerrainOverlay&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, IGameObject&gt;)</h4>
+  <h4 id="GoRogue_GameFramework_Map_ApplyTerrainOverlay__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_GoRogue_GameFramework_IGameObject__" data-uid="GoRogue.GameFramework.Map.ApplyTerrainOverlay``1(GoRogue.MapViews.IMapView{``0},System.Func{SadRogue.Primitives.Point,``0,GoRogue.GameFramework.IGameObject})">ApplyTerrainOverlay&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, IGameObject&gt;)</h4>
   <div class="markdown level1 summary"><p>Sets all terrain on the map to the result of running the given translator on the value in <code data-dev-comment-type="paramref" class="paramref">overlay</code> at the
 corresponding position.  Useful, for example, for applying the map view resulting from map generation to a Map as terrain.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void ApplyTerrainOverlay&lt;T&gt;(IMapView&lt;T&gt; overlay, Func&lt;Coord, T, IGameObject&gt; translator)</code></pre>
+    <pre><code class="lang-csharp hljs">public void ApplyTerrainOverlay&lt;T&gt;(IMapView&lt;T&gt; overlay, Func&lt;Point, T, IGameObject&gt; translator)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -971,7 +955,7 @@ corresponding position.  Useful, for example, for applying the map view resultin
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T, <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">SadRogue.Primitives.Point</span>, T, <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;</td>
         <td><span class="parametername">translator</span></td>
         <td><p>Function that translates values of the type that <code data-dev-comment-type="paramref" class="paramref">overlay</code> exposes to values of type IGameObject.</p>
 </td>
@@ -996,21 +980,21 @@ corresponding position.  Useful, for example, for applying the map view resultin
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L528">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L528">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double)">CalculateFOV(Coord, Double)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point,System.Double)">CalculateFOV(Point, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles
 that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CalculateFOV(Coord position, double radius = 1.7976931348623157E+308)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CalculateFOV(Point position, double radius = 1.7976931348623157E+308)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1023,7 +1007,7 @@ that are in the resulting FOV are marked as explored.  This function calls the v
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The center point of the new FOV to calculate.</p>
 </td>
@@ -1038,21 +1022,21 @@ that are in the resulting FOV are marked as explored.  This function calls the v
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_SadRogue_Primitives_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point%2CSystem.Double%2CSadRogue.Primitives.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L549">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L549">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double,GoRogue.Distance)">CalculateFOV(Coord, Double, Distance)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_SadRogue_Primitives_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point,System.Double,SadRogue.Primitives.Distance)">CalculateFOV(Point, Double, Distance)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles that are in the
 resulting FOV are marked as explored.  This function calls the virtual overload
-<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CalculateFOV(Coord position, double radius, Distance radiusShape)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CalculateFOV(Point position, double radius, Distance radiusShape)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1065,7 +1049,7 @@ resulting FOV are marked as explored.  This function calls the virtual overload
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The center point of the new FOV to calculate.</p>
 </td>
@@ -1077,9 +1061,9 @@ resulting FOV are marked as explored.  This function calls the virtual overload
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">radiusShape</span></td>
-        <td><p>The shape of the FOV to calculate.  Can be specified as either <a class="xref" href="GoRogue.Distance.html">Distance</a> or <a class="xref" href="GoRogue.Radius.html">Radius</a> types
+        <td><p>The shape of the FOV to calculate.  Can be specified as either <span class="xref">SadRogue.Primitives.Distance</span> or <span class="xref">SadRogue.Primitives.Radius</span> types
 (they are implicitly convertible).</p>
 </td>
       </tr>
@@ -1087,22 +1071,22 @@ resulting FOV are marked as explored.  This function calls the virtual overload
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_SadRogue_Primitives_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point%2CSystem.Double%2CSadRogue.Primitives.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L582">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L582">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_GoRogue_Coord_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(GoRogue.Coord,System.Double,GoRogue.Distance,System.Double,System.Double)">CalculateFOV(Coord, Double, Distance, Double, Double)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_SadRogue_Primitives_Point_System_Double_SadRogue_Primitives_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(SadRogue.Primitives.Point,System.Double,SadRogue.Primitives.Distance,System.Double,System.Double)">CalculateFOV(Point, Double, Distance, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a>
 property. All tiles that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</a>, so if you need to override this functionality, override that
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_System_Double_System_Double_">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</a>, so if you need to override this functionality, override that
 overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void CalculateFOV(Coord position, double radius, Distance radiusShape, double angle, double span)</code></pre>
+    <pre><code class="lang-csharp hljs">public void CalculateFOV(Point position, double radius, Distance radiusShape, double angle, double span)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1115,7 +1099,7 @@ overload instead.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The center point of the new FOV to calculate.</p>
 </td>
@@ -1127,9 +1111,9 @@ overload instead.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">radiusShape</span></td>
-        <td><p>The shape of the FOV to calculate.  Can be specified as either <a class="xref" href="GoRogue.Distance.html">Distance</a> or <a class="xref" href="GoRogue.Radius.html">Radius</a> types
+        <td><p>The shape of the FOV to calculate.  Can be specified as either <span class="xref">SadRogue.Primitives.Distance</span> or <span class="xref">SadRogue.Primitives.Radius</span> types
 (they are implicitly convertible).</p>
 </td>
       </tr>
@@ -1150,16 +1134,16 @@ in the cone.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L538">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L538">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
   <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double)">CalculateFOV(Int32, Int32, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius (of shape circle), and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles
 that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
+<a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_">CalculateFOV(Int32, Int32, Double, Distance)</a>, so if you need to override this functionality, override that overload instead.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -1198,13 +1182,13 @@ that are in the resulting FOV are marked as explored.  This function calls the v
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CSadRogue.Primitives.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L561">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L561">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,GoRogue.Distance)">CalculateFOV(Int32, Int32, Double, Distance)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,SadRogue.Primitives.Distance)">CalculateFOV(Int32, Int32, Double, Distance)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a> property.  All tiles that are in the
 resulting FOV are marked as explored.  Other non-angle-based overloads call this one, so if you need to override functionality, override
 this function.</p>
@@ -1243,9 +1227,9 @@ this function.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">radiusShape</span></td>
-        <td><p>The shape of the FOV to calculate.  Can be specified as either <a class="xref" href="GoRogue.Distance.html">Distance</a> or <a class="xref" href="GoRogue.Radius.html">Radius</a> types
+        <td><p>The shape of the FOV to calculate.  Can be specified as either <span class="xref">SadRogue.Primitives.Distance</span> or <span class="xref">SadRogue.Primitives.Radius</span> types
 (they are implicitly convertible).</p>
 </td>
       </tr>
@@ -1253,13 +1237,13 @@ this function.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CGoRogue.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_System_Double_System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CalculateFOV(System.Int32%2CSystem.Int32%2CSystem.Double%2CSadRogue.Primitives.Distance%2CSystem.Double%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L598">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L598">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CalculateFOV_" data-uid="GoRogue.GameFramework.Map.CalculateFOV*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_GoRogue_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,GoRogue.Distance,System.Double,System.Double)">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CalculateFOV_System_Int32_System_Int32_System_Double_SadRogue_Primitives_Distance_System_Double_System_Double_" data-uid="GoRogue.GameFramework.Map.CalculateFOV(System.Int32,System.Int32,System.Double,SadRogue.Primitives.Distance,System.Double,System.Double)">CalculateFOV(Int32, Int32, Double, Distance, Double, Double)</h4>
   <div class="markdown level1 summary"><p>Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in the <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_FOV">FOV</a>
 property.  All tiles that are in the resulting FOV are marked as explored.  Other angle-based overloads call this one, so if you need to
 override functionality, override this function.</p>
@@ -1298,9 +1282,9 @@ override functionality, override this function.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">radiusShape</span></td>
-        <td><p>The shape of the FOV to calculate.  Can be specified as either <a class="xref" href="GoRogue.Distance.html">Distance</a> or <a class="xref" href="GoRogue.Radius.html">Radius</a> types
+        <td><p>The shape of the FOV to calculate.  Can be specified as either <span class="xref">SadRogue.Primitives.Distance</span> or <span class="xref">SadRogue.Primitives.Radius</span> types
 (they are implicitly convertible).</p>
 </td>
       </tr>
@@ -1321,13 +1305,13 @@ in the cone.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CreateMap%60%601(GoRogue.MapViews.ISettableMapView%7B%60%600%7D%2CSystem.Int32%2CGoRogue.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.CreateMap%60%601(GoRogue.MapViews.ISettableMapView%7B%60%600%7D%2CSystem.Int32%2CSadRogue.Primitives.Distance%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L637">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L637">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_CreateMap_" data-uid="GoRogue.GameFramework.Map.CreateMap*"></a>
-  <h4 id="GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.CreateMap``1(GoRogue.MapViews.ISettableMapView{``0},System.Int32,GoRogue.Distance,System.UInt32,System.UInt32,System.UInt32)">CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt;, Int32, Distance, UInt32, UInt32, UInt32)</h4>
+  <h4 id="GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.CreateMap``1(GoRogue.MapViews.ISettableMapView{``0},System.Int32,SadRogue.Primitives.Distance,System.UInt32,System.UInt32,System.UInt32)">CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt;, Int32, Distance, UInt32, UInt32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Effectively a helper-constructor.  Constructs a map using an <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> for the terrain map, where type T can
 be any type that implements <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  Note that a Map that is constructed using this function will throw an
 <span class="xref">System.InvalidCastException</span> if any IGameObject is given to <a class="xref" href="GoRogue.GameFramework.Map.html#GoRogue_GameFramework_Map_SetTerrain_GoRogue_GameFramework_IGameObject_">SetTerrain(IGameObject)</a> that cannot be casted to type T.</p>
@@ -1336,7 +1320,8 @@ be any type that implements <a class="xref" href="GoRogue.GameFramework.IGameObj
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
     <pre><code class="lang-csharp hljs">public static Map CreateMap&lt;T&gt;(ISettableMapView&lt;T&gt; terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement, uint layersBlockingWalkability = 4294967295U, uint layersBlockingTransparency = 4294967295U, uint entityLayersSupportingMultipleItems = 0U)
-    where T : IGameObject</code></pre>
+
+    where T : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1365,9 +1350,9 @@ enforced.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="xref">SadRogue.Primitives.Distance</span></td>
         <td><span class="parametername">distanceMeasurement</span></td>
-        <td><p><a class="xref" href="GoRogue.Distance.html">Distance</a> measurement to use for pathing/measuring distance on the map.</p>
+        <td><p><span class="xref">SadRogue.Primitives.Distance</span> measurement to use for pathing/measuring distance on the map.</p>
 </td>
       </tr>
       <tr>
@@ -1425,7 +1410,7 @@ location on the same layer.  Defaults to no layers.</p>
       </tr>
     </tbody>
   </table>
-  <h5 id="GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_GoRogue_Distance_System_UInt32_System_UInt32_System_UInt32__remarks">Remarks</h5>
+  <h5 id="GoRogue_GameFramework_Map_CreateMap__1_GoRogue_MapViews_ISettableMapView___0__System_Int32_SadRogue_Primitives_Distance_System_UInt32_System_UInt32_System_UInt32__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Suppose you have a class MyTerrain that inherits from BaseClass and implements <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>.  This construction function allows
 you to construct your map using an <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> instance as the terrain map, which you cannot do with the regular
 constructor since <a class="xref" href="GoRogue.MapViews.ISettableMapView-1.html">ISettableMapView&lt;T&gt;</a> does not satisfy the constructor's type requirement of
@@ -1436,21 +1421,22 @@ ISettableMapView.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntities__1_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntities%60%601(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntitiesAt__1_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntitiesAt%60%601(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L377">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L381">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetEntities_" data-uid="GoRogue.GameFramework.Map.GetEntities*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetEntities__1_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntities``1(GoRogue.Coord,System.UInt32)">GetEntities&lt;EntityType&gt;(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetEntitiesAt_" data-uid="GoRogue.GameFramework.Map.GetEntitiesAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetEntitiesAt__1_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntitiesAt``1(SadRogue.Primitives.Point,System.UInt32)">GetEntitiesAt&lt;TEntity&gt;(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
 in the layer mask downward.  Layer mask defaults to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityType&gt; GetEntities&lt;EntityType&gt;(Coord position, uint layerMask = 4294967295U)
-    where EntityType : IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TEntity&gt; GetEntitiesAt&lt;TEntity&gt;(Point position, uint layerMask = 4294967295U)
+
+    where TEntity : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1463,7 +1449,7 @@ in the layer mask downward.  Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to get entities for.</p>
 </td>
@@ -1486,7 +1472,7 @@ in the layer mask downward.  Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;EntityType&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
         <td><p>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
 in the mask downward.</p>
 </td>
@@ -1503,7 +1489,7 @@ in the mask downward.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">EntityType</span></td>
+        <td><span class="parametername">TEntity</span></td>
         <td><p>Type of entities to return.</p>
 </td>
       </tr>
@@ -1511,21 +1497,22 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntities__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntities%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntitiesAt__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntitiesAt%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L390">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L394">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetEntities_" data-uid="GoRogue.GameFramework.Map.GetEntities*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetEntities__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntities``1(System.Int32,System.Int32,System.UInt32)">GetEntities&lt;EntityType&gt;(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetEntitiesAt_" data-uid="GoRogue.GameFramework.Map.GetEntitiesAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetEntitiesAt__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntitiesAt``1(System.Int32,System.Int32,System.UInt32)">GetEntitiesAt&lt;TEntity&gt;(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from the highest existing layer
 in the layer mask downward.  Layer mask defaults to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;EntityType&gt; GetEntities&lt;EntityType&gt;(int x, int y, uint layerMask = 4294967295U)
-    where EntityType : IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TEntity&gt; GetEntitiesAt&lt;TEntity&gt;(int x, int y, uint layerMask = 4294967295U)
+
+    where TEntity : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1567,7 +1554,7 @@ in the layer mask downward.  Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;EntityType&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TEntity&gt;</td>
         <td><p>All entities encountered at the given position that are castable to the given type, in order from the highest existing layer
 in the mask downward.</p>
 </td>
@@ -1584,7 +1571,7 @@ in the mask downward.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">EntityType</span></td>
+        <td><span class="parametername">TEntity</span></td>
         <td><p>Type of entities to return.</p>
 </td>
       </tr>
@@ -1592,13 +1579,13 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntity__1_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntity%60%601(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntityAt__1_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntityAt%60%601(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L351">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L355">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetEntity_" data-uid="GoRogue.GameFramework.Map.GetEntity*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetEntity__1_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntity``1(GoRogue.Coord,System.UInt32)">GetEntity&lt;EntityType&gt;(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetEntityAt_" data-uid="GoRogue.GameFramework.Map.GetEntityAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetEntityAt__1_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntityAt``1(SadRogue.Primitives.Point,System.UInt32)">GetEntityAt&lt;TEntity&gt;(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
 layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
 there are no entities at the location.</p>
@@ -1606,8 +1593,9 @@ there are no entities at the location.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EntityType GetEntity&lt;EntityType&gt;(Coord position, uint layerMask = 4294967295U)
-    where EntityType : IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TEntity GetEntityAt&lt;TEntity&gt;(Point position, uint layerMask = 4294967295U)
+
+    where TEntity : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1620,7 +1608,7 @@ there are no entities at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to check get entity for.</p>
 </td>
@@ -1643,7 +1631,7 @@ there are no entities at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EntityType</span></td>
+        <td><span class="xref">TEntity</span></td>
         <td><p>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
 the specified type are found.</p>
 </td>
@@ -1660,7 +1648,7 @@ the specified type are found.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">EntityType</span></td>
+        <td><span class="parametername">TEntity</span></td>
         <td><p>Type of entities to return.</p>
 </td>
       </tr>
@@ -1668,13 +1656,13 @@ the specified type are found.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntity__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntity%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetEntityAt__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetEntityAt%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L365">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L369">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetEntity_" data-uid="GoRogue.GameFramework.Map.GetEntity*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetEntity__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntity``1(System.Int32,System.Int32,System.UInt32)">GetEntity&lt;EntityType&gt;(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetEntityAt_" data-uid="GoRogue.GameFramework.Map.GetEntityAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetEntityAt__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetEntityAt``1(System.Int32,System.Int32,System.UInt32)">GetEntityAt&lt;TEntity&gt;(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
 layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
 there are no entities at the location.</p>
@@ -1682,8 +1670,9 @@ there are no entities at the location.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public EntityType GetEntity&lt;EntityType&gt;(int x, int y, uint layerMask = 4294967295U)
-    where EntityType : IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TEntity GetEntityAt&lt;TEntity&gt;(int x, int y, uint layerMask = 4294967295U)
+
+    where TEntity : IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1725,7 +1714,7 @@ there are no entities at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">EntityType</span></td>
+        <td><span class="xref">TEntity</span></td>
         <td><p>The first entity encountered, moving from the highest existing layer in the layer mask downward, or null if there are no entities of
 the specified type are found.</p>
 </td>
@@ -1742,7 +1731,7 @@ the specified type are found.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">EntityType</span></td>
+        <td><span class="parametername">TEntity</span></td>
         <td><p>Type of entities to return.</p>
 </td>
       </tr>
@@ -1750,20 +1739,20 @@ the specified type are found.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObject_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObject(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectAt_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectAt(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L420">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L420">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObject_" data-uid="GoRogue.GameFramework.Map.GetObject*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObject_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObject(GoRogue.Coord,System.UInt32)">GetObject(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectAt_" data-uid="GoRogue.GameFramework.Map.GetObjectAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectAt_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectAt(SadRogue.Primitives.Point,System.UInt32)">GetObjectAt(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first object encountered at the given position, moving from the highest existing layer in the layer mask downward.  Layer mask defaults
 to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IGameObject GetObject(Coord position, uint layerMask = 4294967295U)</code></pre>
+    <pre><code class="lang-csharp hljs">public IGameObject GetObjectAt(Point position, uint layerMask = 4294967295U)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1776,7 +1765,7 @@ to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to get object for.</p>
 </td>
@@ -1807,13 +1796,13 @@ to all layers.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObject_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObject(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectAt_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectAt(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L445">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L445">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObject_" data-uid="GoRogue.GameFramework.Map.GetObject*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObject_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObject(System.Int32,System.Int32,System.UInt32)">GetObject(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectAt_" data-uid="GoRogue.GameFramework.Map.GetObjectAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectAt_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectAt(System.Int32,System.Int32,System.UInt32)">GetObjectAt(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
 layer mask downward. Layer mask defaults to all layers. null is returned if no objects of the specified type are found, or if there are no
 objects at the location.</p>
@@ -1821,7 +1810,7 @@ objects at the location.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IGameObject GetObject(int x, int y, uint layerMask = 4294967295U)</code></pre>
+    <pre><code class="lang-csharp hljs">public IGameObject GetObjectAt(int x, int y, uint layerMask = 4294967295U)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1871,13 +1860,13 @@ objects at the location.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObject__1_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObject%60%601(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectAt__1_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectAt%60%601(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L433">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L433">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObject_" data-uid="GoRogue.GameFramework.Map.GetObject*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObject__1_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObject``1(GoRogue.Coord,System.UInt32)">GetObject&lt;ObjectType&gt;(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectAt_" data-uid="GoRogue.GameFramework.Map.GetObjectAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectAt__1_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectAt``1(SadRogue.Primitives.Point,System.UInt32)">GetObjectAt&lt;TObject&gt;(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first object encountered at the given position that can be casted to the type specified, moving from the highest existing layer in the
 layer mask downward. Layer mask defaults to all layers.  null is returned if no objects of the specified type are found, or if there are no
 objects at the location.</p>
@@ -1885,8 +1874,9 @@ objects at the location.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObjectType GetObject&lt;ObjectType&gt;(Coord position, uint layerMask = 4294967295U)
-    where ObjectType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TObject GetObjectAt&lt;TObject&gt;(Point position, uint layerMask = 4294967295U)
+
+    where TObject : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -1899,7 +1889,7 @@ objects at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to get object for.</p>
 </td>
@@ -1922,7 +1912,7 @@ objects at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ObjectType</span></td>
+        <td><span class="xref">TObject</span></td>
         <td><p>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of
 the specified type are found.</p>
 </td>
@@ -1939,7 +1929,7 @@ the specified type are found.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">ObjectType</span></td>
+        <td><span class="parametername">TObject</span></td>
         <td><p>Type of objects to return.</p>
 </td>
       </tr>
@@ -1947,13 +1937,13 @@ the specified type are found.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObject__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObject%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectAt__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectAt%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L458">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L458">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObject_" data-uid="GoRogue.GameFramework.Map.GetObject*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObject__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObject``1(System.Int32,System.Int32,System.UInt32)">GetObject&lt;ObjectType&gt;(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectAt_" data-uid="GoRogue.GameFramework.Map.GetObjectAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectAt__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectAt``1(System.Int32,System.Int32,System.UInt32)">GetObjectAt&lt;TObject&gt;(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
 layer mask downward. Layer mask defaults to all layers. null is returned if no objects of the specified type are found, or if there are no
 objects at the location.</p>
@@ -1961,8 +1951,9 @@ objects at the location.</p>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public ObjectType GetObject&lt;ObjectType&gt;(int x, int y, uint layerMask = 4294967295U)
-    where ObjectType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TObject GetObjectAt&lt;TObject&gt;(int x, int y, uint layerMask = 4294967295U)
+
+    where TObject : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2004,7 +1995,7 @@ objects at the location.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">ObjectType</span></td>
+        <td><span class="xref">TObject</span></td>
         <td><p>The first object encountered, moving from the highest existing layer in the layer mask downward, or null if there are no objects of
 the specified type are found.</p>
 </td>
@@ -2021,7 +2012,7 @@ the specified type are found.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">ObjectType</span></td>
+        <td><span class="parametername">TObject</span></td>
         <td><p>Type of objects to return.</p>
 </td>
       </tr>
@@ -2029,20 +2020,20 @@ the specified type are found.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjects_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjects(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectsAt_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectsAt(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L468">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L468">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObjects_" data-uid="GoRogue.GameFramework.Map.GetObjects*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObjects_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjects(GoRogue.Coord,System.UInt32)">GetObjects(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectsAt_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectsAt_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt(SadRogue.Primitives.Point,System.UInt32)">GetObjectsAt(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults
 to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; GetObjects(Coord position, uint layerMask = 4294967295U)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; GetObjectsAt(Point position, uint layerMask = 4294967295U)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2055,7 +2046,7 @@ to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to get objects for.</p>
 </td>
@@ -2086,20 +2077,20 @@ to all layers.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjects_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjects(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectsAt_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectsAt(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L490">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L490">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObjects_" data-uid="GoRogue.GameFramework.Map.GetObjects*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObjects_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjects(System.Int32,System.Int32,System.UInt32)">GetObjects(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectsAt_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectsAt_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt(System.Int32,System.Int32,System.UInt32)">GetObjectsAt(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask downward.  Layer mask defaults
 to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; GetObjects(int x, int y, uint layerMask = 4294967295U)</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;IGameObject&gt; GetObjectsAt(int x, int y, uint layerMask = 4294967295U)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2149,21 +2140,22 @@ to all layers.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjects__1_GoRogue_Coord_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjects%60%601(GoRogue.Coord%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectsAt__1_SadRogue_Primitives_Point_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectsAt%60%601(SadRogue.Primitives.Point%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L479">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L479">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObjects_" data-uid="GoRogue.GameFramework.Map.GetObjects*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObjects__1_GoRogue_Coord_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjects``1(GoRogue.Coord,System.UInt32)">GetObjects&lt;ObjectType&gt;(Coord, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectsAt_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectsAt__1_SadRogue_Primitives_Point_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt``1(SadRogue.Primitives.Point,System.UInt32)">GetObjectsAt&lt;TObject&gt;(Point, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer
 mask downward. Layer mask defaults to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ObjectType&gt; GetObjects&lt;ObjectType&gt;(Coord position, uint layerMask = 4294967295U)
-    where ObjectType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TObject&gt; GetObjectsAt&lt;TObject&gt;(Point position, uint layerMask = 4294967295U)
+
+    where TObject : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2176,7 +2168,7 @@ mask downward. Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position to get objects for.</p>
 </td>
@@ -2199,7 +2191,7 @@ mask downward. Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;ObjectType&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TObject&gt;</td>
         <td><p>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
 in the mask downward.</p>
 </td>
@@ -2216,7 +2208,7 @@ in the mask downward.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">ObjectType</span></td>
+        <td><span class="parametername">TObject</span></td>
         <td><p>Type of objects to return.</p>
 </td>
       </tr>
@@ -2224,21 +2216,22 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjects__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjects%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetObjectsAt__1_System_Int32_System_Int32_System_UInt32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetObjectsAt%60%601(System.Int32%2CSystem.Int32%2CSystem.UInt32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L509">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L509">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetObjects_" data-uid="GoRogue.GameFramework.Map.GetObjects*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetObjects__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjects``1(System.Int32,System.Int32,System.UInt32)">GetObjects&lt;ObjectType&gt;(Int32, Int32, UInt32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetObjectsAt_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetObjectsAt__1_System_Int32_System_Int32_System_UInt32_" data-uid="GoRogue.GameFramework.Map.GetObjectsAt``1(System.Int32,System.Int32,System.UInt32)">GetObjectsAt&lt;TObject&gt;(Int32, Int32, UInt32)</h4>
   <div class="markdown level1 summary"><p>Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest existing layer in the layer
 mask downward. Layer mask defaults to all layers.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IEnumerable&lt;ObjectType&gt; GetObjects&lt;ObjectType&gt;(int x, int y, uint layerMask = 4294967295U)
-    where ObjectType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;TObject&gt; GetObjectsAt&lt;TObject&gt;(int x, int y, uint layerMask = 4294967295U)
+
+    where TObject : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2280,7 +2273,7 @@ mask downward. Layer mask defaults to all layers.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;ObjectType&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;TObject&gt;</td>
         <td><p>All objects encountered at the given position that are castable to the given type, in order from the highest existing layer
 in the mask downward.</p>
 </td>
@@ -2297,7 +2290,7 @@ in the mask downward.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">ObjectType</span></td>
+        <td><span class="parametername">TObject</span></td>
         <td><p>Type of objects to return.</p>
 </td>
       </tr>
@@ -2305,19 +2298,19 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrain_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrain(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrainAt_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrainAt(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L212">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L214">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetTerrain_" data-uid="GoRogue.GameFramework.Map.GetTerrain*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetTerrain_GoRogue_Coord_" data-uid="GoRogue.GameFramework.Map.GetTerrain(GoRogue.Coord)">GetTerrain(Coord)</h4>
+  <a id="GoRogue_GameFramework_Map_GetTerrainAt_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetTerrainAt_SadRogue_Primitives_Point_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt(SadRogue.Primitives.Point)">GetTerrainAt(Point)</h4>
   <div class="markdown level1 summary"><p>Gets the terrain object at the given location, or null if no terrain is set to that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IGameObject GetTerrain(Coord position)</code></pre>
+    <pre><code class="lang-csharp hljs">public IGameObject GetTerrainAt(Point position)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2330,7 +2323,7 @@ in the mask downward.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The position to get the terrain for.</p>
 </td>
@@ -2355,19 +2348,19 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrain_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrain(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrainAt_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrainAt(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L230">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L232">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetTerrain_" data-uid="GoRogue.GameFramework.Map.GetTerrain*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetTerrain_System_Int32_System_Int32_" data-uid="GoRogue.GameFramework.Map.GetTerrain(System.Int32,System.Int32)">GetTerrain(Int32, Int32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetTerrainAt_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetTerrainAt_System_Int32_System_Int32_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt(System.Int32,System.Int32)">GetTerrainAt(Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Gets the terrain object at the given location, or null if no terrain is set to that location.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public IGameObject GetTerrain(int x, int y)</code></pre>
+    <pre><code class="lang-csharp hljs">public IGameObject GetTerrainAt(int x, int y)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2411,21 +2404,22 @@ in the mask downward.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrain__1_GoRogue_Coord_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrain%60%601(GoRogue.Coord)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrainAt__1_SadRogue_Primitives_Point_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrainAt%60%601(SadRogue.Primitives.Point)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L222">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L224">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetTerrain_" data-uid="GoRogue.GameFramework.Map.GetTerrain*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetTerrain__1_GoRogue_Coord_" data-uid="GoRogue.GameFramework.Map.GetTerrain``1(GoRogue.Coord)">GetTerrain&lt;TerrainType&gt;(Coord)</h4>
+  <a id="GoRogue_GameFramework_Map_GetTerrainAt_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetTerrainAt__1_SadRogue_Primitives_Point_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt``1(SadRogue.Primitives.Point)">GetTerrainAt&lt;TTerrain&gt;(Point)</h4>
   <div class="markdown level1 summary"><p>Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
 cannot be casted to the type specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TerrainType GetTerrain&lt;TerrainType&gt;(Coord position)
-    where TerrainType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TTerrain GetTerrainAt&lt;TTerrain&gt;(Point position)
+
+    where TTerrain : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2438,7 +2432,7 @@ cannot be casted to the type specified.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>The position to get the terrain for.</p>
 </td>
@@ -2455,7 +2449,7 @@ cannot be casted to the type specified.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TerrainType</span></td>
+        <td><span class="xref">TTerrain</span></td>
         <td><p>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 TerrainType.</p>
 </td>
@@ -2472,7 +2466,7 @@ TerrainType.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TerrainType</span></td>
+        <td><span class="parametername">TTerrain</span></td>
         <td><p>Type to check for/return the terrain as.</p>
 </td>
       </tr>
@@ -2480,21 +2474,22 @@ TerrainType.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrain__1_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrain%60%601(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_GetTerrainAt__1_System_Int32_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.GetTerrainAt%60%601(System.Int32%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L241">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L243">View Source</a>
   </span>
-  <a id="GoRogue_GameFramework_Map_GetTerrain_" data-uid="GoRogue.GameFramework.Map.GetTerrain*"></a>
-  <h4 id="GoRogue_GameFramework_Map_GetTerrain__1_System_Int32_System_Int32_" data-uid="GoRogue.GameFramework.Map.GetTerrain``1(System.Int32,System.Int32)">GetTerrain&lt;TerrainType&gt;(Int32, Int32)</h4>
+  <a id="GoRogue_GameFramework_Map_GetTerrainAt_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt*"></a>
+  <h4 id="GoRogue_GameFramework_Map_GetTerrainAt__1_System_Int32_System_Int32_" data-uid="GoRogue.GameFramework.Map.GetTerrainAt``1(System.Int32,System.Int32)">GetTerrainAt&lt;TTerrain&gt;(Int32, Int32)</h4>
   <div class="markdown level1 summary"><p>Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
 cannot be casted to the type specified.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public TerrainType GetTerrain&lt;TerrainType&gt;(int x, int y)
-    where TerrainType : class, IGameObject</code></pre>
+    <pre><code class="lang-csharp hljs">public TTerrain GetTerrainAt&lt;TTerrain&gt;(int x, int y)
+
+    where TTerrain : class, IGameObject</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2530,7 +2525,7 @@ cannot be casted to the type specified.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TerrainType</span></td>
+        <td><span class="xref">TTerrain</span></td>
         <td><p>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
 TerrainType.</p>
 </td>
@@ -2547,7 +2542,7 @@ TerrainType.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TerrainType</span></td>
+        <td><span class="parametername">TTerrain</span></td>
         <td><p>Type to return the terrain as.</p>
 </td>
       </tr>
@@ -2555,19 +2550,19 @@ TerrainType.</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_RemoveEntity_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.RemoveEntity(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_RemoveEntity_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.RemoveEntity(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L402">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L405">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_RemoveEntity_" data-uid="GoRogue.GameFramework.Map.RemoveEntity*"></a>
   <h4 id="GoRogue_GameFramework_Map_RemoveEntity_GoRogue_GameFramework_IGameObject_" data-uid="GoRogue.GameFramework.Map.RemoveEntity(GoRogue.GameFramework.IGameObject)">RemoveEntity(IGameObject)</h4>
-  <div class="markdown level1 summary"><p>Removes the given entity (non-terrain object) from the map, returning true if it was successfully removed, and false otherwise.</p>
+  <div class="markdown level1 summary"><p>Removes the given entity (non-terrain object) from the map.  Throws InvalidOperationException if the entity was not part of this map.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool RemoveEntity(IGameObject entity)</code></pre>
+    <pre><code class="lang-csharp hljs">public void RemoveEntity(IGameObject entity)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -2587,28 +2582,12 @@ TerrainType.</p>
       </tr>
     </tbody>
   </table>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>True if the entity was removed successfully, false otherwise (eg, the entity was not part of this map).</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_SetTerrain_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.SetTerrain(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_SetTerrain_GoRogue_GameFramework_IGameObject_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.SetTerrain(GoRogue.GameFramework.IGameObject)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L248">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L250">View Source</a>
   </span>
   <a id="GoRogue_GameFramework_Map_SetTerrain_" data-uid="GoRogue.GameFramework.Map.SetTerrain*"></a>
   <h4 id="GoRogue_GameFramework_Map_SetTerrain_GoRogue_GameFramework_IGameObject_" data-uid="GoRogue.GameFramework.Map.SetTerrain(GoRogue.GameFramework.IGameObject)">SetTerrain(IGameObject)</h4>
@@ -2642,10 +2621,10 @@ TerrainType.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectAdded.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectAdded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectAdded.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectAdded%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L94">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L96">View Source</a>
   </span>
   <h4 id="GoRogue_GameFramework_Map_ObjectAdded" data-uid="GoRogue.GameFramework.Map.ObjectAdded">ObjectAdded</h4>
   <div class="markdown level1 summary"><p>Event that is fired whenever some object is added to the map.</p>
@@ -2665,17 +2644,17 @@ TerrainType.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.SpatialMaps.ItemEventArgs-1.html">ItemEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectMoved.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectMoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectMoved.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectMoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L102">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L104">View Source</a>
   </span>
   <h4 id="GoRogue_GameFramework_Map_ObjectMoved" data-uid="GoRogue.GameFramework.Map.ObjectMoved">ObjectMoved</h4>
   <div class="markdown level1 summary"><p>Event that is fired whenever some object that is part of the map is successfully moved.</p>
@@ -2695,17 +2674,17 @@ TerrainType.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.SpatialMaps.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectRemoved.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectRemoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map_ObjectRemoved.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map.ObjectRemoved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L98">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L100">View Source</a>
   </span>
   <h4 id="GoRogue_GameFramework_Map_ObjectRemoved" data-uid="GoRogue.GameFramework.Map.ObjectRemoved">ObjectRemoved</h4>
   <div class="markdown level1 summary"><p>Event that is fired whenever some object is removed from the map.</p>
@@ -2725,7 +2704,7 @@ TerrainType.</p>
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.SpatialMaps.ItemEventArgs-1.html">ItemEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
         <td></td>
       </tr>
     </tbody>
@@ -2745,7 +2724,7 @@ TerrainType.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__System_Int32_System_Int32_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Int32, Int32)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__GoRogue_Coord_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Coord)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__SadRogue_Primitives_Point_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Point)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
@@ -2760,7 +2739,7 @@ TerrainType.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0____0_Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, T, IGenerator)</a>
@@ -2775,7 +2754,7 @@ TerrainType.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator___0___">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator, T[])</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
@@ -2788,10 +2767,10 @@ TerrainType.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_Map.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_GameFramework_Map.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.Map%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/Map.cs/#L27" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/GameFramework/Map.cs/#L29" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

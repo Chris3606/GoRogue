@@ -116,20 +116,20 @@ for generating points closest to a line between two points on a grid.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Lines_Get_GoRogue_Coord_GoRogue_Coord_GoRogue_Lines_Algorithm_.md&amp;value=---%0Auid%3A%20GoRogue.Lines.Get(GoRogue.Coord%2CGoRogue.Coord%2CGoRogue.Lines.Algorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Lines_Get_SadRogue_Primitives_Point_SadRogue_Primitives_Point_GoRogue_Lines_Algorithm_.md&amp;value=---%0Auid%3A%20GoRogue.Lines.Get(SadRogue.Primitives.Point%2CSadRogue.Primitives.Point%2CGoRogue.Lines.Algorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Lines.cs/#L64">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Lines.cs/#L65">View Source</a>
   </span>
   <a id="GoRogue_Lines_Get_" data-uid="GoRogue.Lines.Get*"></a>
-  <h4 id="GoRogue_Lines_Get_GoRogue_Coord_GoRogue_Coord_GoRogue_Lines_Algorithm_" data-uid="GoRogue.Lines.Get(GoRogue.Coord,GoRogue.Coord,GoRogue.Lines.Algorithm)">Get(Coord, Coord, Lines.Algorithm)</h4>
+  <h4 id="GoRogue_Lines_Get_SadRogue_Primitives_Point_SadRogue_Primitives_Point_GoRogue_Lines_Algorithm_" data-uid="GoRogue.Lines.Get(SadRogue.Primitives.Point,SadRogue.Primitives.Point,GoRogue.Lines.Algorithm)">Get(Point, Point, Lines.Algorithm)</h4>
   <div class="markdown level1 summary"><p>Returns an IEnumerable of every point, in order, closest to a line between the two points
 specified, using the line drawing algorithm given. The start and end points will be included.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Coord&gt; Get(Coord start, Coord end, Lines.Algorithm type = Lines.Algorithm.BRESENHAM)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Point&gt; Get(Point start, Point end, Lines.Algorithm type = Lines.Algorithm.Bresenham)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -142,13 +142,13 @@ specified, using the line drawing algorithm given. The start and end points will
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">start</span></td>
         <td><p>The start point of the line.</p>
 </td>
       </tr>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">end</span></td>
         <td><p>The end point of the line.</p>
 </td>
@@ -171,7 +171,7 @@ specified, using the line drawing algorithm given. The start and end points will
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">SadRogue.Primitives.Point</span>&gt;</td>
         <td><p>An IEnumerable of every point, in order, closest to a line between the two points
 specified (according to the algorithm given).</p>
 </td>
@@ -180,10 +180,10 @@ specified (according to the algorithm given).</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Lines_Get_System_Int32_System_Int32_System_Int32_System_Int32_GoRogue_Lines_Algorithm_.md&amp;value=---%0Auid%3A%20GoRogue.Lines.Get(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CGoRogue.Lines.Algorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Lines_Get_System_Int32_System_Int32_System_Int32_System_Int32_GoRogue_Lines_Algorithm_.md&amp;value=---%0Auid%3A%20GoRogue.Lines.Get(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CGoRogue.Lines.Algorithm)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Lines.cs/#L80">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Lines.cs/#L81">View Source</a>
   </span>
   <a id="GoRogue_Lines_Get_" data-uid="GoRogue.Lines.Get*"></a>
   <h4 id="GoRogue_Lines_Get_System_Int32_System_Int32_System_Int32_System_Int32_GoRogue_Lines_Algorithm_" data-uid="GoRogue.Lines.Get(System.Int32,System.Int32,System.Int32,System.Int32,GoRogue.Lines.Algorithm)">Get(Int32, Int32, Int32, Int32, Lines.Algorithm)</h4>
@@ -193,7 +193,7 @@ specified, using the line drawing algorithm given. The start and end points will
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Coord&gt; Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Lines.Algorithm.BRESENHAM)</code></pre>
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;Point&gt; Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Lines.Algorithm.Bresenham)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -208,25 +208,25 @@ specified, using the line drawing algorithm given. The start and end points will
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">startX</span></td>
-        <td><p>X-coordinate of the starting point of the line.</p>
+        <td><p>X-Pointinate of the starting point of the line.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">startY</span></td>
-        <td><p>Y-coordinate of the starting point of the line.</p>
+        <td><p>Y-Pointinate of the starting point of the line.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">endX</span></td>
-        <td><p>X-coordinate of the ending point of the line.</p>
+        <td><p>X-Pointinate of the ending point of the line.</p>
 </td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">endY</span></td>
-        <td><p>Y-coordinate of the ending point of the line.</p>
+        <td><p>Y-Pointinate of the ending point of the line.</p>
 </td>
       </tr>
       <tr>
@@ -247,7 +247,7 @@ specified, using the line drawing algorithm given. The start and end points will
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>&gt;</td>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;<span class="xref">SadRogue.Primitives.Point</span>&gt;</td>
         <td><p>An IEnumerable of every point, in order, closest to a line between the two points
 specified (according to the algorithm given).</p>
 </td>
@@ -262,10 +262,10 @@ specified (according to the algorithm given).</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Lines.md&amp;value=---%0Auid%3A%20GoRogue.Lines%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Lines.md&amp;value=---%0Auid%3A%20GoRogue.Lines%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Lines.cs/#L11" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Lines.cs/#L12" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

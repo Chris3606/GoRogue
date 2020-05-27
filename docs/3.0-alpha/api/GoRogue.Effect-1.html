@@ -5,10 +5,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Class Effect&lt;TriggerArgs&gt;
+    <title>Class Effect&lt;TTriggerArgs&gt;
    </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Class Effect&lt;TriggerArgs&gt;
+    <meta name="title" content="Class Effect&lt;TTriggerArgs&gt;
    ">
     <meta name="generator" content="docfx 2.52.0.0">
     
@@ -71,7 +71,7 @@
             <article class="content wrap" id="_content" data-uid="GoRogue.Effect`1">
   
   
-  <h1 id="GoRogue_Effect_1" data-uid="GoRogue.Effect`1" class="text-break">Class Effect&lt;TriggerArgs&gt;
+  <h1 id="GoRogue_Effect_1" data-uid="GoRogue.Effect`1" class="text-break">Class Effect&lt;TTriggerArgs&gt;
   </h1>
   <div class="markdown level0 summary"><p>Class designed to represent any sort of in-game effect. This could be anything from a simple
 physical damage effect to a heal effect or permanent effects.  These might include AOE effects,
@@ -81,7 +81,7 @@ damage over time effects, or even potentially a special effect that simply boost
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
-    <div class="level1"><span class="xref">Effect&lt;TriggerArgs&gt;</span></div>
+    <div class="level1"><span class="xref">Effect&lt;TTriggerArgs&gt;</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -108,8 +108,9 @@ damage over time effects, or even potentially a special effect that simply boost
   <h6><strong>Assembly</strong>: GoRogue.dll</h6>
   <h5 id="GoRogue_Effect_1_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public abstract class Effect&lt;TriggerArgs&gt;
-    where TriggerArgs : EffectArgs</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class Effect&lt;TTriggerArgs&gt;
+
+    where TTriggerArgs : EffectArgs</code></pre>
   </div>
   <h5 class="typeParameters">Type Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -121,8 +122,8 @@ damage over time effects, or even potentially a special effect that simply boost
     </thead>
     <tbody>
       <tr>
-        <td><span class="parametername">TriggerArgs</span></td>
-        <td><p>The type of the parameter that will be specified to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function when called.</p>
+        <td><span class="parametername">TTriggerArgs</span></td>
+        <td><p>The type of the parameter that will be specified to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TTriggerArgs)</a> function when called.</p>
 </td>
       </tr>
     </tbody>
@@ -132,16 +133,16 @@ damage over time effects, or even potentially a special effect that simply boost
 happens, potentially instantaneously or potentially one or more times on a certain event
 (beginning of a turn, end of a turn, on taking damage, etc). The standard way to use the
 Effect class is to create a subclass of Effect, that at the very least implements the
-<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function, which should accomplish whatever the effect should
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a> function, which should accomplish whatever the effect should
 do when it is triggered. The subclass can specify what parameter(s) the OnTrigger function
 needs to take in via the class's type parameter. If multiple arguments are needed, one should create
 a class that subclasses <a class="xref" href="GoRogue.EffectArgs.html">EffectArgs</a> that contains all the parameters, and the effect subclass
 should then take an instance of the EffectArgs subclass as the single parameter. If no arguments are needed,
 then one may pass null as the parameter to Trigger.</p>
 <p>The concept of a duration is also built into the interface, and is considered to be in arbitrary units.  The duration
-concept is designed to be used with <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a> instances, and has no effect when an effect is not
+concept is designed to be used with <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TTriggerArgs&gt;</a> instances, and has no effect when an effect is not
 utilized with an EffectTrigger.  The duration is interpreted as simply the number of times the effect's
-<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>) function will be called before it will be removed from an EffectTrigger. If the effect
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TTriggerArgs)</a>) function will be called before it will be removed from an EffectTrigger. If the effect
 is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant damage
 effect), then the duration specified in the constructor should be the static class constant
 <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_INSTANT">INSTANT</a>. If the effect is meant to have an infinite duration, or the effect wears off on some
@@ -154,10 +155,10 @@ appropriately to 0 when the effect has expired.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1__ctor_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.%23ctor(System.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1__ctor_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.%23ctor(System.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L121">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L121">View Source</a>
   </span>
   <a id="GoRogue_Effect_1__ctor_" data-uid="GoRogue.Effect`1.#ctor*"></a>
   <h4 id="GoRogue_Effect_1__ctor_System_String_System_Int32_" data-uid="GoRogue.Effect`1.#ctor(System.String,System.Int32)">Effect(String, Int32)</h4>
@@ -196,10 +197,10 @@ appropriately to 0 when the effect has expired.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_INFINITE.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INFINITE%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_INFINITE.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INFINITE%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L69">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L69">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_INFINITE" data-uid="GoRogue.Effect`1.INFINITE">INFINITE</h4>
   <div class="markdown level1 summary"><p>The value one should specify as the effect duration for an infinite effect, eg. an effect
@@ -228,15 +229,15 @@ other than the passing of time).</p>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_INSTANT.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INSTANT%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_INSTANT.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.INSTANT%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L76">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L76">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_INSTANT" data-uid="GoRogue.Effect`1.INSTANT">INSTANT</h4>
   <div class="markdown level1 summary"><p>The value one should specify as the effect duaration for an instantaneous effect, eg. an
 effect that only occurs when Trigger is manually called, and thus cannot be added to an
-<a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a>.</p>
+<a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TTriggerArgs&gt;</a>.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -262,10 +263,10 @@ effect that only occurs when Trigger is manually called, and thus cannot be adde
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_Duration.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Duration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_Duration.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Duration%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L95">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L95">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Duration_" data-uid="GoRogue.Effect`1.Duration*"></a>
   <h4 id="GoRogue_Effect_1_Duration" data-uid="GoRogue.Effect`1.Duration">Duration</h4>
@@ -292,16 +293,16 @@ effect that only occurs when Trigger is manually called, and thus cannot be adde
     </tbody>
   </table>
   <h5 id="GoRogue_Effect_1_Duration_remarks">Remarks</h5>
-  <div class="markdown level1 remarks"><p>When the duration reaches 0, the Effect will be automatically removed from an <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a>.
-The duration can be changed from a subclass, which can be used in <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> to
+  <div class="markdown level1 remarks"><p>When the duration reaches 0, the Effect will be automatically removed from an <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TTriggerArgs&gt;</a>.
+The duration can be changed from a subclass, which can be used in <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a> to
 cause an effect to be &quot;cancelled&quot;, eg. immediately expire, or to extend/reduce its duration.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_Name.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_Name.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L83">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L83">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Name_" data-uid="GoRogue.Effect`1.Name*"></a>
   <h4 id="GoRogue_Effect_1_Name" data-uid="GoRogue.Effect`1.Name">Name</h4>
@@ -331,20 +332,20 @@ cause an effect to be &quot;cancelled&quot;, eg. immediately expire, or to exten
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_OnTrigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.OnTrigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_OnTrigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.OnTrigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L149">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L149">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_OnTrigger_" data-uid="GoRogue.Effect`1.OnTrigger*"></a>
-  <h4 id="GoRogue_Effect_1_OnTrigger__0_" data-uid="GoRogue.Effect`1.OnTrigger(`0)">OnTrigger(TriggerArgs)</h4>
+  <h4 id="GoRogue_Effect_1_OnTrigger__0_" data-uid="GoRogue.Effect`1.OnTrigger(`0)">OnTrigger(TTriggerArgs)</h4>
   <div class="markdown level1 summary"><p>Implement to take whatever action(s) the effect is supposed to accomplish.
-This function is called automatically when <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> is called.</p>
+This function is called automatically when <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TTriggerArgs)</a> is called.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected abstract void OnTrigger(TriggerArgs e)</code></pre>
+    <pre><code class="lang-csharp hljs">protected abstract void OnTrigger(TTriggerArgs e)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -357,19 +358,19 @@ This function is called automatically when <a class="xref" href="GoRogue.Effect-
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TriggerArgs</span></td>
+        <td><span class="xref">TTriggerArgs</span></td>
         <td><span class="parametername">e</span></td>
-        <td><p>Class containing all arguments <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> requires to function.</p>
+        <td><p>Class containing all arguments <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a> requires to function.</p>
 </td>
       </tr>
     </tbody>
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L155">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L155">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_ToString_" data-uid="GoRogue.Effect`1.ToString*"></a>
   <h4 id="GoRogue_Effect_1_ToString" data-uid="GoRogue.Effect`1.ToString">ToString()</h4>
@@ -400,19 +401,19 @@ This function is called automatically when <a class="xref" href="GoRogue.Effect-
   <div><span class="xref">System.Object.ToString()</span></div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_Trigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Trigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_Trigger__0_.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Trigger(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L136">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L136">View Source</a>
   </span>
   <a id="GoRogue_Effect_1_Trigger_" data-uid="GoRogue.Effect`1.Trigger*"></a>
-  <h4 id="GoRogue_Effect_1_Trigger__0_" data-uid="GoRogue.Effect`1.Trigger(`0)">Trigger(TriggerArgs)</h4>
+  <h4 id="GoRogue_Effect_1_Trigger__0_" data-uid="GoRogue.Effect`1.Trigger(`0)">Trigger(TTriggerArgs)</h4>
   <div class="markdown level1 summary"><p>Should be called on instantaneous effects to trigger the effect.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public void Trigger(TriggerArgs args)</code></pre>
+    <pre><code class="lang-csharp hljs">public void Trigger(TTriggerArgs args)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -425,9 +426,9 @@ This function is called automatically when <a class="xref" href="GoRogue.Effect-
     </thead>
     <tbody>
       <tr>
-        <td><span class="xref">TriggerArgs</span></td>
+        <td><span class="xref">TTriggerArgs</span></td>
         <td><span class="parametername">args</span></td>
-        <td><p>Parameters that are passed to <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a>.
+        <td><p>Parameters that are passed to <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a>.
 Can be null.</p>
 </td>
       </tr>
@@ -435,21 +436,21 @@ Can be null.</p>
   </table>
   <h5 id="GoRogue_Effect_1_Trigger__0__remarks">Remarks</h5>
   <div class="markdown level1 remarks"><p>Any effect that has INSTANT duration or duration 0 when this function is called
-will still have its <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function called.</p>
+will still have its <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a> function called.</p>
 </div>
   <h3 id="events">Events
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1_Expired.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Expired%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1_Expired.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601.Expired%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L114">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L114">View Source</a>
   </span>
   <h4 id="GoRogue_Effect_1_Expired" data-uid="GoRogue.Effect`1.Expired">Expired</h4>
   <div class="markdown level1 summary"><p>Event that fires as soon as the effect is about to expire. Fires after the
-<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TriggerArgs)</a> function has been called but before it is
-removed from any <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a> instances.</p>
+<a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_OnTrigger__0_">OnTrigger(TTriggerArgs)</a> function has been called but before it is
+removed from any <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TTriggerArgs&gt;</a> instances.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
@@ -483,10 +484,10 @@ removed from any <a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigg
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Effect_1.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_Effect_1.md&amp;value=---%0Auid%3A%20GoRogue.Effect%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Effect.cs/#L60" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/Effect.cs/#L60" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>

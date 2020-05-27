@@ -74,7 +74,7 @@
   <h1 id="GoRogue_MapViews_LambdaTranslationMap_2" data-uid="GoRogue.MapViews.LambdaTranslationMap`2" class="text-break">Class LambdaTranslationMap&lt;T1, T2&gt;
   </h1>
   <div class="markdown level0 summary"><p>A simple <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html">TranslationMap&lt;T1, T2&gt;</a> implementation that allows you to provide a function/lambda
-at construction to use as the TranslateGet implementation. For a version offering &quot;set&quot; functionality,
+at construction to use as the <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_TranslateGet_SadRogue_Primitives_Point__0_">TranslateGet(Point, T1)</a> implementation. For a version offering &quot;set&quot; functionality,
 see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">LambdaSettableTranslationMap&lt;T1, T2&gt;</a>.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
@@ -106,7 +106,7 @@ see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">
       <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_Item_System_Int32_System_Int32_">TranslationMap&lt;T1, T2&gt;.Item[Int32, Int32]</a>
     </div>
     <div>
-      <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_Item_GoRogue_Coord_">TranslationMap&lt;T1, T2&gt;.Item[Coord]</a>
+      <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_Item_SadRogue_Primitives_Point_">TranslationMap&lt;T1, T2&gt;.Item[Point]</a>
     </div>
     <div>
       <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_ToString">TranslationMap&lt;T1, T2&gt;.ToString()</a>
@@ -121,7 +121,7 @@ see <a class="xref" href="GoRogue.MapViews.LambdaSettableTranslationMap-2.html">
       <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_TranslateGet__0_">TranslationMap&lt;T1, T2&gt;.TranslateGet(T1)</a>
     </div>
     <div>
-      <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_TranslateGet_GoRogue_Coord__0_">TranslationMap&lt;T1, T2&gt;.TranslateGet(Coord, T1)</a>
+      <a class="xref" href="GoRogue.MapViews.TranslationMap-2.html#GoRogue_MapViews_TranslationMap_2_TranslateGet_SadRogue_Primitives_Point__0_">TranslationMap&lt;T1, T2&gt;.TranslateGet(Point, T1)</a>
     </div>
     <div>
       <span class="xref">System.Object.Equals(System.Object)</span>
@@ -183,10 +183,10 @@ class infrastructure.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7B%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/LambdaTranslationMap.cs/#L33">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/LambdaTranslationMap.cs/#L34">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor*"></a>
   <h4 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func__0__1__" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor(GoRogue.MapViews.IMapView{`0},System.Func{`0,`1})">LambdaTranslationMap(IMapView&lt;T1&gt;, Func&lt;T1, T2&gt;)</h4>
@@ -228,20 +228,20 @@ corresponding function.</p>
 </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_GoRogue_Coord__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7BGoRogue.Coord%2C%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_SadRogue_Primitives_Point__0__1__.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.%23ctor(GoRogue.MapViews.IMapView%7B%600%7D%2CSystem.Func%7BSadRogue.Primitives.Point%2C%600%2C%601%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/LambdaTranslationMap.cs/#L48">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/LambdaTranslationMap.cs/#L49">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor*"></a>
-  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_GoRogue_Coord__0__1__" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor(GoRogue.MapViews.IMapView{`0},System.Func{GoRogue.Coord,`0,`1})">LambdaTranslationMap(IMapView&lt;T1&gt;, Func&lt;Coord, T1, T2&gt;)</h4>
+  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2__ctor_GoRogue_MapViews_IMapView__0__System_Func_SadRogue_Primitives_Point__0__1__" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.#ctor(GoRogue.MapViews.IMapView{`0},System.Func{SadRogue.Primitives.Point,`0,`1})">LambdaTranslationMap(IMapView&lt;T1&gt;, Func&lt;Point, T1, T2&gt;)</h4>
   <div class="markdown level1 summary"><p>Constructor. Takes an existing map view to create a view from and a getter function
 taking a value of type T1 and its corresponding position.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public LambdaTranslationMap(IMapView&lt;T1&gt; baseMap, Func&lt;Coord, T1, T2&gt; getter)</code></pre>
+    <pre><code class="lang-csharp hljs">public LambdaTranslationMap(IMapView&lt;T1&gt; baseMap, Func&lt;Point, T1, T2&gt; getter)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -260,7 +260,7 @@ taking a value of type T1 and its corresponding position.</p>
 </td>
       </tr>
       <tr>
-        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, T1, T2&gt;</td>
+        <td><span class="xref">System.Func</span>&lt;<span class="xref">SadRogue.Primitives.Point</span>, T1, T2&gt;</td>
         <td><span class="parametername">getter</span></td>
         <td><p>The TranslateGet implementation.</p>
 </td>
@@ -271,20 +271,20 @@ taking a value of type T1 and its corresponding position.</p>
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_GoRogue_Coord__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.TranslateGet(GoRogue.Coord%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_SadRogue_Primitives_Point__0_.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602.TranslateGet(SadRogue.Primitives.Point%2C%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/LambdaTranslationMap.cs/#L61">View Source</a>
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/LambdaTranslationMap.cs/#L59">View Source</a>
   </span>
   <a id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet*"></a>
-  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_GoRogue_Coord__0_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(GoRogue.Coord,`0)">TranslateGet(Coord, T1)</h4>
+  <h4 id="GoRogue_MapViews_LambdaTranslationMap_2_TranslateGet_SadRogue_Primitives_Point__0_" data-uid="GoRogue.MapViews.LambdaTranslationMap`2.TranslateGet(SadRogue.Primitives.Point,`0)">TranslateGet(Point, T1)</h4>
   <div class="markdown level1 summary"><p>Translates your map data into the view type by calling the getter function specified in the
 class constructor.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">protected override T2 TranslateGet(Coord position, T1 value)</code></pre>
+    <pre><code class="lang-csharp hljs">protected override T2 TranslateGet(Point position, T1 value)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -297,7 +297,7 @@ class constructor.</p>
     </thead>
     <tbody>
       <tr>
-        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="xref">SadRogue.Primitives.Point</span></td>
         <td><span class="parametername">position</span></td>
         <td><p>Position corresponding to given data value of your map.</p>
 </td>
@@ -327,7 +327,7 @@ class constructor.</p>
     </tbody>
   </table>
   <h5 class="overrides">Overrides</h5>
-  <div><span class="xref">GoRogue.MapViews.TranslationMap&lt;T1, T2&gt;.TranslateGet(GoRogue.Coord, T1)</span></div>
+  <div><span class="xref">GoRogue.MapViews.TranslationMap&lt;T1, T2&gt;.TranslateGet(SadRogue.Primitives.Point, T1)</span></div>
   <h3 id="implements">Implements</h3>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>
@@ -343,7 +343,7 @@ class constructor.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__System_Int32_System_Int32_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Int32, Int32)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__GoRogue_Coord_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Coord)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_Contains__1_GoRogue_MapViews_IMapView___0__SadRogue_Primitives_Point_">IMapViewExtensions.Contains&lt;T&gt;(IMapView&lt;T&gt;, Point)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_ExtendToString__1_GoRogue_MapViews_IMapView___0__System_String_System_String_System_Func___0_System_String__System_String_System_String_System_String_System_String_">IMapViewExtensions.ExtendToString&lt;T&gt;(IMapView&lt;T&gt;, String, String, Func&lt;T, String&gt;, String, String, String, String)</a>
@@ -358,7 +358,7 @@ class constructor.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomItem__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomItem&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0____0_Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, T, IGenerator)</a>
@@ -373,7 +373,7 @@ class constructor.</p>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator___0___">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator, T[])</a>
   </div>
   <div>
-      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_GoRogue_Coord___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Coord, T, Boolean&gt;, IGenerator)</a>
+      <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__System_Func_SadRogue_Primitives_Point___0_System_Boolean__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, Func&lt;Point, T, Boolean&gt;, IGenerator)</a>
   </div>
   <div>
       <a class="xref" href="GoRogue.MapViews.IMapViewExtensions.html#GoRogue_MapViews_IMapViewExtensions_RandomPosition__1_GoRogue_MapViews_IMapView___0__Troschuetz_Random_IGenerator_">IMapViewExtensions.RandomPosition&lt;T&gt;(IMapView&lt;T&gt;, IGenerator)</a>
@@ -386,10 +386,10 @@ class constructor.</p>
               <div class="contribution">
                 <ul class="nav">
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop-3.0/apiSpec/new?filename=GoRogue_MapViews_LambdaTranslationMap_2.md&amp;value=---%0Auid%3A%20GoRogue.MapViews.LambdaTranslationMap%602%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/MapViews/LambdaTranslationMap.cs/#L19" class="contribution-link">View Source</a>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue/MapViews/LambdaTranslationMap.cs/#L20" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
