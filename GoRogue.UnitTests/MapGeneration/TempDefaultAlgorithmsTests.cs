@@ -19,7 +19,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             var rng = new Troschuetz.Random.Generators.XorShift128Generator(12345);
 
-            var generator = new Generator(40, 50);
+            var generator = new Generator(40, 30);
             generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng: rng, saveDeadEndChance: 10));
             generator.Generate();
 

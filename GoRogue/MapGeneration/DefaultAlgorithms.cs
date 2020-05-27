@@ -77,8 +77,9 @@ namespace GoRogue.MapGeneration
                 TunnelCreator = new TunnelCreators.HorizontalVerticalTunnelCreator(rng)
             };
 
-            // 4. So that the tunnels are all in one component, merge the MazeConnections in
-            yield return new Steps.MergeAreaComponents(areaList1Tag: "Tunnels", areaList2Tag: "MazeConnections", areaListResultTag: "Tunnels");
+            // 4. So that the tunnels are all in one component, add the MazeConnections to the tunnels, minus any overlapping points
+            yield return new Steps.Translation.RemoveDuplicatePoints(unmodifiedAreaListTag: "Tunnels", modifiedAreaListTag: "MazeConnections");
+            yield return new Steps.Translation.AppendItemLists<Area>("Tunnels", "MazeConnections") { RemoveAppendedComponent = true };
 
             // 5. Open up walls of rooms to connect them to the maze
             yield return new Steps.RoomDoorConnection()

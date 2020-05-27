@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GoRogue.MapGeneration.ContextComponents
 {
@@ -63,6 +65,41 @@ namespace GoRogue.MapGeneration.ContextComponents
                 _items.Add(item);
                 _itemToStepMapping.Add(item, generationStepName);
             }
+        }
+
+        /// <summary>
+        /// Removes the given item from the list.
+        /// </summary>
+        /// <param name="item">Item to remove.</param>
+        public void RemoveItem(TItem item) => RemoveItems(item.Yield());
+
+        /// <summary>
+        /// Removes the given items from the list.
+        /// </summary>
+        /// <param name="items">Items to remove.</param>
+        public void RemoveItems(IEnumerable<TItem> items)
+        {
+            foreach (var item in items)
+            {
+                if (!_itemToStepMapping.ContainsKey(item))
+                    throw new ArgumentException($"Tried to remove a value from an {nameof(ItemList<TItem>)} that was not present.");
+
+                _items.Remove(item);
+                _itemToStepMapping.Remove(item);
+            }
+        }
+
+        /// <summary>
+        /// Removes all items from the list for which the given function returns true.
+        /// </summary>
+        /// <param name="predicate">Predicate to determine which elements to remove.</param>
+        public void RemoveItems(Func<TItem, bool> predicate)
+        {
+            var toRemove = _items.Where(predicate).ToList();
+
+            _items.RemoveAll(i => predicate(i));
+            foreach (var item in toRemove)
+                _itemToStepMapping.Remove(item);
         }
     }
 }
