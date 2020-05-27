@@ -17,3 +17,5 @@
       href: grid_components/measuring-distance.md
 - name: Game Framework
   href: game-framework.md
+- name: GoRogue 3.0 Alpha Map Generation
+  href: gr3-map-gen.md
