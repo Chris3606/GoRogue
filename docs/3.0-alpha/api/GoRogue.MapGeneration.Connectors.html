@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace GoRogue.MapGeneration.Connectors
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace GoRogue.MapGeneration.Connectors
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.MapGeneration.Connectors">
+  
+  <h1 id="GoRogue_MapGeneration_Connectors" data-uid="GoRogue.MapGeneration.Connectors" class="text-break">Namespace GoRogue.MapGeneration.Connectors
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.CenterBoundsConnectionPointSelector.html">CenterBoundsConnectionPointSelector</a></h4>
+      <section><p>Selects the center points of the bounding boxes of each map area. On concave map areas,
+because the center point of the bounding box is not actually guaranteed to be among the
+MapArea's walkable tiles, connecting these two points is not guaranteed to actually connect
+the entirety of the two areas.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.ClosestConnectionPointSelector.html">ClosestConnectionPointSelector</a></h4>
+      <section><p>Point selector that selects the two points from the <a class="xref" href="GoRogue.MapGeneration.MapArea.html">MapArea</a> instances that are closest to each other,
+according to the given distance calculation.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.html">ClosestMapAreaConnector</a></h4>
+      <section><p>Implements a connection algorithm that connects all unique map areas in the given map by
+connecting each area with the one closest to it, based on closeness of the area's center points.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.DeadEndTrimmer.html">DeadEndTrimmer</a></h4>
+      <section><p>Implements an algorithm that will prune small dead-end locations (locations surrounded by 3 walls), from a map/list of map areas.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.DirectLineTunnelCreator.html">DirectLineTunnelCreator</a></h4>
+      <section><p>Implements a tunnel creation algorithm that sets as walkable a direct line between the two
+points. In the case that <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_MANHATTAN">MANHATTAN</a> is being used, the line is calculated via the
+<a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_ORTHO">ORTHO</a> algorithm.  Otherwise, the line is calculated using
+<a class="xref" href="GoRogue.Lines.Algorithm.html#GoRogue_Lines_Algorithm_BRESENHAM">BRESENHAM</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.HorizontalVerticalTunnelCreator.html">HorizontalVerticalTunnelCreator</a></h4>
+      <section><p>Implements a tunnel creation algorithm that creates a tunnel that performs all needed
+vertical movement before horizontal movement, or vice versa (depending on rng).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.OrderedMapAreaConnector.html">OrderedMapAreaConnector</a></h4>
+      <section><p>Same as <a class="xref" href="GoRogue.MapGeneration.Connectors.ClosestMapAreaConnector.html">ClosestMapAreaConnector</a>, but connects random rooms instead of determining the closest
+one, or connects rooms in the order specified if you give it a list of areas.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.RandomConnectionPointSelector.html">RandomConnectionPointSelector</a></h4>
+      <section><p>Implements a the selection algorithm that simply selects random points from the given
+areas' positions lists, using the RNG specified, or the default rng if null is given.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.RoomDoorConnector.html">RoomDoorConnector</a></h4>
+      <section><p>Opens up room walls to connect tunnels that are placed near rooms.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.IAreaConnectionPointSelector.html">IAreaConnectionPointSelector</a></h4>
+      <section><p>Interface for implementing an algorithm for selecting the positions to connect in order to
+connect two given map areas.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MapGeneration.Connectors.ITunnelCreator.html">ITunnelCreator</a></h4>
+      <section><p>Interface for implementing an algorithm for creating a tunnel between two positions on a
+walkability map.</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

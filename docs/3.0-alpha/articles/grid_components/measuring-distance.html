@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Measuring Distance </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Measuring Distance ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../../favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="../toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="measuring-distance">Measuring Distance</h1>
+
+<p>The <code>Distance</code> class provides ways to measure the distance between two points, using various distance calculation algorithms.</p>
+<p>Like many grid-related classes, the <code>Distance</code> class cannot be instantiated by the user; instead, three instances are provided as static fields of the <code>Distance</code> class, which represent the possible ways of calculating <code>Distance</code> on an integer-based grid.  These calculations and their GoRogue representations are detailed below.</p>
+<h1 id="methods-of-calculating-distance">Methods of Calculating Distance</h1>
+<p>There are generally 3 ways to measure the distance between two points on an integer-based 2D grid. Each method defines space in a different way, affecting not only the distance between two specific points, but as a result, the shape of a &quot;radius&quot; around any given point -- eg. which tiles are within x units of a given position.</p>
+<h2 id="manhattan-distance">Manhattan Distance</h2>
+<p>The Manhattan distance calculation measures grid distance in terms of only horizontal and vertical movement. The most direct path between two points is the shortest one that moves only in horizontal or vertical steps.</p>
+<p>In the image below, the red square represents an arbitrary starting location. The blue squares indicate locations within 1 distance unit of the starting location, according to Manhattan distance. Similarly, the grey squares indicate those locations within 2 units, and the black squares represent those within 3:</p>
+<p><img src="../../images/measuring_distance/manhattan_distance.PNG" alt="manhattan distance"></p>
+<p>As a result of this definition, the radius around a given point ends up forming a diamond shape. Manhattan distance is generally a useful distance measurement in games that only allow 4-way movement, since the distance measurement by definition aligns with possible movement directions.</p>
+<h2 id="chebyshev-distance">Chebyshev Distance</h2>
+<p>The Chebyshev distance calculation, commonly known as the &quot;maximum metric&quot; in mathematics, measures distance between two points as the maximum difference over any of their axis values. In a 2D grid, for instance, if we have two points (x1, y1), and (x2, y2), the Chebyshev distance between is <em>max(y2 - y1, x2 - x1)</em>.</p>
+<p><img src="../../images/measuring_distance/chebyshev_distance_def.PNG" alt="chebyshev distance definition"></p>
+<p>On the above grid, the difference in the x-value of the two red points is <em>2-0=<strong>2</strong></em>, and the difference in the y-values is <em>3-0=<strong>3</strong></em>. The maximum of 2 and 3 is 3, and thus the Chebyshev distance between the two points is 3 units.</p>
+<p>Practically, on a grid, Chebyshev distance represents distance measured as if the shortest path between two points can take steps in any of the 8 grid directions at equal cost. In the image below, the red square represents an arbitrary starting location. The blue squares indicate locations within 1 distance unit of the starting location, according to Chebyshev distance. Similarly, the grey squares indicate those locations within 2 units, and the black squares represent those within 3:</p>
+<p><img src="../../images/measuring_distance/chebyshev_distance.PNG" alt="chebyshev distance"></p>
+<p>The resulting shape of the radius formed is a square. Thus, by definition, Chebyshev distance is generally a useful distance measurement in games that allow unrestricted 8-way movement, where moving diagonally costs no more than moving in a cardinal direction.</p>
+<h2 id="euclidean-distance">Euclidean Distance</h2>
+<p>The Euclidean distance measurement is the most common definition of distance according a mathematical (Euclidean) coordinate plane. Distance between two points is defined as the length of a line segment connecting them. In 2D, given 2 points (x1, y1) and (x2, y2), the Euclidean distance between them is defined as <em>sqrt((x2-x1)^2 + (y2-y1)^2)</em>.</p>
+<p>In the image below, the red square represents an arbitrary starting location. The blue squares indicate locations within 1 distance unit of the starting location, according to Euclidean distance. Similarly, the grey squares indicate those locations within 2 units, and the black squares represent those within 3:</p>
+<p><img src="../../images/measuring_distance/euclidean_distance.PNG" alt="euclidean distance"></p>
+<p>Note that the diagonal neighbors of the starting location are considered to be approximately 1.41 units away from the starting location, while cardinal neighbors are 1 unit away. Thus, the radius shape formed by Euclidean distance is a circle (or in the case of a integer-based grid, a close approximation). While Euclidean distance does not generally match a particular movement scheme on an integer-based grid, it can be useful in any case where straight-line distance is desired.</p>
+<h2 id="gorogue-representations">GoRogue Representations</h2>
+<p>GoRogue representations of these distance calculation methods are straightforward. The <code>Distance.MANHATTAN</code> instance represents the <a href="#manhattan-distance">Manhattan distance</a> calculation, <code>Distance.CHEBYSHEV</code> represents the <a href="#chebyshev-distance">Chebyshev distance</a> calculation, and <code>Distance.EUCLIDEAN</code> represents the <a href="#euclidean-distance">Euclidean distance</a> calculation.</p>
+<h1 id="getting-distance-between-locations">Getting Distance Between Locations</h1>
+<p>Calculating distances using these instances is straightforward -- each instance has a <code>Calculate</code> method that takes two points in some form (or the delta-x/delta-y values between two points), and returns the distance between them:</p>
+<pre><code class="lang-CSharp">Coord start = (0, 0);
+Coord end = (2, 3);
+double distance = Distance.MANHATTAN.Calculate(start, end);
+// Takes two points as integers instead of Coords
+double distance2 = Distance.CHEBYSHEV.Calculate(0, 0, 2, 3);
+// Takes dx/dy between two points
+double distance3 = Distance.EUCLIDEAN.Calculate(end - start);
+</code></pre>
+<h1 id="implicit-conversions-for-related-types">Implicit Conversions for Related Types</h1>
+<p>For any given <code>Radius</code> instance, a method of calculating <code>Distance</code> is implied, based on the definition of a radius.  Therefore, <code>Radius</code> instances may be implicitly converted to their corresponding <code>Distance</code> instances.  As a result of this, any function that accepts a parameter of type <code>Distance</code> may also simply be passed a <code>Radius</code> instance, and that instance will be converted to the corresponding <code>Distance</code> automatically.</p>
+<p>The correspondance between <code>Radius</code> instances and <code>Distance</code> instances is as follows:</p>
+<ul>
+<li><code>Radius.CIRCLE</code> or <code>Radius.SPHERE</code> -&gt; <code>Distance.EUCLIDEAN</code></li>
+<li><code>Radius.SQUARE</code> or <code>Radius.CUBE</code> -&gt; <code>Distance.CHEBYSHEV</code></li>
+<li><code>Radius.DIAMOND</code> or <code>Radius.OCTAHEDRON</code> -&gt; <code>Distance.DIAMOND</code></li>
+</ul>
+<p>A demonstration of some of these conversions can be seen via the following code:</p>
+<pre><code class="lang-CSharp">// This code functions without compiler error, since implicit conversions are defined.
+Distance distanceCalc = Radius.SQUARE;
+
+// Assuming a function MyFunc(Distance distanceCalc) is defined
+MyFunc(Radius.DIAMOND);
+</code></pre>
+<p>Since the definition of distance also implies a method for determining adjacent locations, <code>Distance</code> also implicitly converts to corresponding <code>AdjacencyRule</code> instances.  Those conversions are covered in the <a href="adjacency-and-neighbors.html#implicit-conversion-for-related-types">AdjacencyRule documentation</a>.</p>
+<h1 id="explicit-conversions-for-related-types">Explicit Conversions for Related Types</h1>
+<p>As discussed <a href="#implicit-conversions-for-related-types">above</a>, a <code>Radius</code> instance, by definition of what it represents, implies a corresponding <code>Distance</code> instance.  Similarly, it is also true that a <code>Distance</code> instance by definition implies a 2D radius shape.  Becuase GoRogue has <code>Radius</code> instances for both 2D and 3D shapes, the conversion cannot be implicit, however this conversion can be performed via a provided explicit conversion operator.</p>
+<p>The correspondance between <code>Radius</code> instances and <code>Distance</code> instances is as follows:</p>
+<ul>
+<li><code>Distance.EUCLIDEAN</code> -&gt; <code>Radius.CIRCLE</code></li>
+<li><code>Distance.CHEBYSHEV</code> -&gt; <code>Radius.SQUARE</code></li>
+<li><code>Distance.MANHATTAN</code> -&gt; <code>Radius.DIAMOND</code></li>
+</ul>
+<p>A demonstration of some of these conversions can be seen via the following code:</p>
+<pre><code class="lang-CSharp">// This code functions without compiler error, since implicit conversions are defined.
+Radius shape = (Radius)Distance.MANHATTAN;
+
+// Assuming a function MyFunc(Radius shape) is defined
+MyFunc((Radius)Distance.CHEBYSHEV);
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue.Docs/articles/grid_components/measuring-distance.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>

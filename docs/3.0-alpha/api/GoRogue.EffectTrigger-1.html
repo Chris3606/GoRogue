@@ -1,0 +1,401 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class EffectTrigger&lt;TriggerArgs&gt;
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class EffectTrigger&lt;TriggerArgs&gt;
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.EffectTrigger`1">
+  
+  
+  <h1 id="GoRogue_EffectTrigger_1" data-uid="GoRogue.EffectTrigger`1" class="text-break">Class EffectTrigger&lt;TriggerArgs&gt;
+  </h1>
+  <div class="markdown level0 summary"><p>Represents an &quot;event&quot; that can automatically trigger and manage one or more
+<a class="xref" href="GoRogue.Effect-1.html">Effect&lt;TriggerArgs&gt;</a> instances, and acts as part of the implementation of
+duration in Effect.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">EffectTrigger&lt;TriggerArgs&gt;</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_EffectTrigger_1_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class EffectTrigger&lt;TriggerArgs&gt;
+    where TriggerArgs : EffectArgs</code></pre>
+  </div>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">TriggerArgs</span></td>
+        <td><p>The type of argument that must be accepted by the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function of any Effect added to this EffectTrigger.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_EffectTrigger_1_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>EffectTrigger's primary purpose is to represent an event that can trigger one or more effects, and
+automatically remove those effects from the list when their duration reaches 0.  Each EffectTrigger
+instance can have one or more (non-instantaneous) effects added to it. All Effects must take the same
+type of argument to their <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function, as specified by this class's type parameter.</p>
+<p>Each time the <a class="xref" href="GoRogue.EffectTrigger-1.html#GoRogue_EffectTrigger_1_TriggerEffects__0_">TriggerEffects(TriggerArgs)</a> function is called, every Effect has its
+Trigger function called (provided its duration is not 0). Each Effect may, via the TriggerArgs
+<a class="xref" href="GoRogue.EffectArgs.html#GoRogue_EffectArgs_CancelTrigger">CancelTrigger</a> member, stop the effect from
+being sent to subsequent effects in the EffectTrigger's list. Once either all effects in the list
+have had their Trigger function called, or some effect has cancelled the triggering, any effect
+whose duration has reached 0 is removed from the EffectTrigger automatically.</p>
+<p>Typically, one instance of this class is created per &quot;event&quot; that can trigger effects, and then the
+instance's TriggerEffects function is called whenever that event happens. For example, in a
+typical roguelike, all damageable creatures might have an instance of this class called
+OnDamageTakenEffects. Any effect that should trigger when that creature takes damage would then be
+added to that creature's OnDamageTakenEffects EffectTrigger. The TakeDamage function of that
+creature would then need to call OnDamageTakenEffects.TriggerEffects(...). In this way, all effects
+added to the OnDamageTakenEffects EffectTrigger would be triggered automatically whenever the
+creature takes damage.</p>
+<p>For some complex game mechanics, it may be desireable to control how effects stack, the order they appear
+in the effects list of EffectTriggers, etc. In these cases, subclassing EffectTrigger and overriding the
+add and remove functions can allow this functionality.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1__ctor.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L48">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1__ctor_" data-uid="GoRogue.EffectTrigger`1.#ctor*"></a>
+  <h4 id="GoRogue_EffectTrigger_1__ctor" data-uid="GoRogue.EffectTrigger`1.#ctor">EffectTrigger()</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public EffectTrigger()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1_Effects.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Effects%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L56">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1_Effects_" data-uid="GoRogue.EffectTrigger`1.Effects*"></a>
+  <h4 id="GoRogue_EffectTrigger_1_Effects" data-uid="GoRogue.EffectTrigger`1.Effects">Effects</h4>
+  <div class="markdown level1 summary"><p>List of all effects that are part of this EffectTrigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;Effect&lt;TriggerArgs&gt;&gt; Effects { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IReadOnlyList</span>&lt;<a class="xref" href="GoRogue.Effect-1.html">Effect</a>&lt;TriggerArgs&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1_Add_GoRogue_Effect__0__.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Add(GoRogue.Effect%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L63">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1_Add_" data-uid="GoRogue.EffectTrigger`1.Add*"></a>
+  <h4 id="GoRogue_EffectTrigger_1_Add_GoRogue_Effect__0__" data-uid="GoRogue.EffectTrigger`1.Add(GoRogue.Effect{`0})">Add(Effect&lt;TriggerArgs&gt;)</h4>
+  <div class="markdown level1 summary"><p>Adds the given effect to this EffectTrigger, provided the effect's duration is not 0. If
+the effect's duration is 0, an ArgumentException is thrown.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Add(Effect&lt;TriggerArgs&gt; effect)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Effect-1.html">Effect</a>&lt;TriggerArgs&gt;</td>
+        <td><span class="parametername">effect</span></td>
+        <td><p>The effect to add to this trigger.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1_Remove_GoRogue_Effect__0__.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.Remove(GoRogue.Effect%7B%600%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L75">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1_Remove_" data-uid="GoRogue.EffectTrigger`1.Remove*"></a>
+  <h4 id="GoRogue_EffectTrigger_1_Remove_GoRogue_Effect__0__" data-uid="GoRogue.EffectTrigger`1.Remove(GoRogue.Effect{`0})">Remove(Effect&lt;TriggerArgs&gt;)</h4>
+  <div class="markdown level1 summary"><p>Removes the given effect from this EffectTrigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void Remove(Effect&lt;TriggerArgs&gt; effect)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Effect-1.html">Effect</a>&lt;TriggerArgs&gt;</td>
+        <td><span class="parametername">effect</span></td>
+        <td><p>The effect to remove</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1_ToString.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.ToString%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L83">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1_ToString_" data-uid="GoRogue.EffectTrigger`1.ToString*"></a>
+  <h4 id="GoRogue_EffectTrigger_1_ToString" data-uid="GoRogue.EffectTrigger`1.ToString">ToString()</h4>
+  <div class="markdown level1 summary"><p>Yields a string representation of each effect that has been added to the effect trigger.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override string ToString()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>A string representation of each effect that has been added to the effect trigger.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Object.ToString()</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1_TriggerEffects__0_.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601.TriggerEffects(%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L100">View Source</a>
+  </span>
+  <a id="GoRogue_EffectTrigger_1_TriggerEffects_" data-uid="GoRogue.EffectTrigger`1.TriggerEffects*"></a>
+  <h4 id="GoRogue_EffectTrigger_1_TriggerEffects__0_" data-uid="GoRogue.EffectTrigger`1.TriggerEffects(`0)">TriggerEffects(TriggerArgs)</h4>
+  <div class="markdown level1 summary"><p>Calls the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function of each effect
+in the <a class="xref" href="GoRogue.EffectTrigger-1.html#GoRogue_EffectTrigger_1_Effects">Effects</a> list (as long as its duration is not 0), then
+removes any effect that has duration 0.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void TriggerEffects(TriggerArgs args)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TriggerArgs</span></td>
+        <td><span class="parametername">args</span></td>
+        <td><p>Argument to pass to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a> function
+of each effect.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_EffectTrigger_1_TriggerEffects__0__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The argument given is passed along to the <a class="xref" href="GoRogue.Effect-1.html#GoRogue_Effect_1_Trigger__0_">Trigger(TriggerArgs)</a>
+function of each effect that has Trigger called. If some effect sets the <a class="xref" href="GoRogue.EffectArgs.html#GoRogue_EffectArgs_CancelTrigger">CancelTrigger</a>
+flag in the argument to true, the loop will be broken and no subsequent effects in the list will have
+Trigger called. After either this occurs or all effects have had Trigger called, any effect in the list
+that has a duration of 0 is automatically removed from the list.  It is valid to pass null
+as the argument to this function, if the effects need no actual parameters.</p>
+</div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_EffectTrigger_1.md&amp;value=---%0Auid%3A%20GoRogue.EffectTrigger%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/EffectTrigger.cs/#L41" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

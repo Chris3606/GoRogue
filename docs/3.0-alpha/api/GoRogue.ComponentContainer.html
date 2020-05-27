@@ -1,0 +1,560 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ComponentContainer
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ComponentContainer
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.ComponentContainer">
+  
+  
+  <h1 id="GoRogue_ComponentContainer" data-uid="GoRogue.ComponentContainer" class="text-break">Class ComponentContainer
+  </h1>
+  <div class="markdown level0 summary"><p>A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either give your
+object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access components,
+you may either inherit from ComponentContainer, or have your object implement <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>via a backing field of
+type ComponentContainer.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ComponentContainer</span></div>
+      <div class="level2"><a class="xref" href="GoRogue.GameFramework.GameObject.html">GameObject</a></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.html">GoRogue</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_ComponentContainer_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ComponentContainer : IHasComponents</code></pre>
+  </div>
+  <h5 id="GoRogue_ComponentContainer_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>The component system is designed to be as efficient as possible at run-time for accessing components and determining if a
+ComponentContainer possesses one or more given types of components, and as well remains flexible and type-safe.
+Components may be of any type, although it is recommended that you <em>not</em> use value-types.  The system also remains accurate
+with respect to types, even when the components added implement interfaces or have an inheritance heirarchy.</p>
+<p>For example, suppose we have the following structure:</p>
+<pre><code>interface ITickable
+{
+    void Tick();
+}
+
+public class PlayerTickable : ITickable
+{
+    public void Tick() => Console.WriteLine(&quot;Player ticked!&quot;);
+}</code></pre>
+<p>If we then add a component of type PlayerTickable to an object called obj.  obj.GetComponent&lt;PlayerTickable&gt;() will return
+the instance we added, as will obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
+obj.HasComponent(typeof(PlayerTickable)) both return true.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer__ctor.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L42">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer__ctor_" data-uid="GoRogue.ComponentContainer.#ctor*"></a>
+  <h4 id="GoRogue_ComponentContainer__ctor" data-uid="GoRogue.ComponentContainer.#ctor">ComponentContainer()</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ComponentContainer()</code></pre>
+  </div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_AddComponent_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.AddComponent(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L51">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_AddComponent_" data-uid="GoRogue.ComponentContainer.AddComponent*"></a>
+  <h4 id="GoRogue_ComponentContainer_AddComponent_System_Object_" data-uid="GoRogue.ComponentContainer.AddComponent(System.Object)">AddComponent(Object)</h4>
+  <div class="markdown level1 summary"><p>Adds the given object as a component.  Throws an exception if that specific instance is already in this ComponentContainer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void AddComponent(object component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>Component to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_GetComponent__1.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.GetComponent%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L140">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_GetComponent_" data-uid="GoRogue.ComponentContainer.GetComponent*"></a>
+  <h4 id="GoRogue_ComponentContainer_GetComponent__1" data-uid="GoRogue.ComponentContainer.GetComponent``1">GetComponent&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Gets the first component of type T found, or default(T) if no component of that type has been added
+to the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public T GetComponent&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><p>The first component of Type T that was added to the ComponentContainer, or default(T) if no
+components of the given type have been added.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of component to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_GetComponents__1.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.GetComponents%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L157">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_GetComponents_" data-uid="GoRogue.ComponentContainer.GetComponents*"></a>
+  <h4 id="GoRogue_ComponentContainer_GetComponents__1" data-uid="GoRogue.ComponentContainer.GetComponents``1">GetComponents&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Gets all components of type T that are attached to the given object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IEnumerable&lt;T&gt; GetComponents&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Collections.Generic.IEnumerable</span>&lt;T&gt;</td>
+        <td><p>All components of Type T that are in the ComponentContainer.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of components to retrieve.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_HasComponent_System_Type_.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.HasComponent(System.Type)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L124">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_HasComponent_" data-uid="GoRogue.ComponentContainer.HasComponent*"></a>
+  <h4 id="GoRogue_ComponentContainer_HasComponent_System_Type_" data-uid="GoRogue.ComponentContainer.HasComponent(System.Type)">HasComponent(Type)</h4>
+  <div class="markdown level1 summary"><p>Returns whether or not the current ComponentContainer has at least one component of the specified type.  Type may be specified
+by using typeof(MyComponentType).</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasComponent(Type componentType)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Type</span></td>
+        <td><span class="parametername">componentType</span></td>
+        <td><p>The type of component to check for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the ComponentContainer has at least one component of the specified type, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_HasComponent__1.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.HasComponent%60%601%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L131">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_HasComponent_" data-uid="GoRogue.ComponentContainer.HasComponent*"></a>
+  <h4 id="GoRogue_ComponentContainer_HasComponent__1" data-uid="GoRogue.ComponentContainer.HasComponent``1">HasComponent&lt;T&gt;()</h4>
+  <div class="markdown level1 summary"><p>Returns whether or not the current ComponentContainer has at least one component of type T.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasComponent&lt;T&gt;()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the ComponentContainer has at least one component of the specified type, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T</span></td>
+        <td><p>Type of component to check for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_HasComponents_System_Type___.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.HasComponents(System.Type%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L109">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_HasComponents_" data-uid="GoRogue.ComponentContainer.HasComponents*"></a>
+  <h4 id="GoRogue_ComponentContainer_HasComponents_System_Type___" data-uid="GoRogue.ComponentContainer.HasComponents(System.Type[])">HasComponents(Type[])</h4>
+  <div class="markdown level1 summary"><p>Returns whether or not the current ComponentContainer has all the given types of components.  Types may be specified by
+using typeof(MyComponentType)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HasComponents(params Type[] componentTypes)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Type</span>[]</td>
+        <td><span class="parametername">componentTypes</span></td>
+        <td><p>One or more component types to check for.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the ComponentContainer has at least one component of each specified type, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_RemoveComponent_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.RemoveComponent(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L74">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_RemoveComponent_" data-uid="GoRogue.ComponentContainer.RemoveComponent*"></a>
+  <h4 id="GoRogue_ComponentContainer_RemoveComponent_System_Object_" data-uid="GoRogue.ComponentContainer.RemoveComponent(System.Object)">RemoveComponent(Object)</h4>
+  <div class="markdown level1 summary"><p>Removes the given component.  Throws an exception if the component does not exist in the ComponentContainer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RemoveComponent(object component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>Component to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer_RemoveComponents_System_Object___.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer.RemoveComponents(System.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L80">View Source</a>
+  </span>
+  <a id="GoRogue_ComponentContainer_RemoveComponents_" data-uid="GoRogue.ComponentContainer.RemoveComponents*"></a>
+  <h4 id="GoRogue_ComponentContainer_RemoveComponents_System_Object___" data-uid="GoRogue.ComponentContainer.RemoveComponents(System.Object[])">RemoveComponents(Object[])</h4>
+  <div class="markdown level1 summary"><p>Removes the given component(s).  Throws an exception if a component given does not exist in the ComponentContainer.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void RemoveComponents(params object[] components)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">components</span></td>
+        <td><p>One or more component instances to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_ComponentContainer.md&amp;value=---%0Auid%3A%20GoRogue.ComponentContainer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/ComponentContainer.cs/#L35" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

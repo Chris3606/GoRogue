@@ -1,0 +1,317 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Namespace GoRogue
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Namespace GoRogue
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue">
+  
+  <h1 id="GoRogue" data-uid="GoRogue" class="text-break">Namespace GoRogue
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="markdown level0 remarks"></div>
+    <h3 id="classes">Classes
+  </h3>
+      <h4><a class="xref" href="GoRogue.AdjacencyRule.html">AdjacencyRule</a></h4>
+      <section><p>Class representing a method for determining which coordinates are adjacent to a given
+coordinate, and which directions those neighbors are in. Cannot be instantiated -- premade
+static instances are provided.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedLayeredSpatialMap-1.html">AdvancedLayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p>A more complex version of <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a> that does not require the items in it to implement
+<a class="xref" href="GoRogue.IHasID.html">IHasID</a>, instead requiring the specification of a custom <span class="xref">System.Collections.Generic.IEqualityComparer&lt;T&gt;</span> to use
+for hashing and comparison of items.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedMultiSpatialMap-1.html">AdvancedMultiSpatialMap&lt;T&gt;</a></h4>
+      <section><p>A more complex version of <a class="xref" href="GoRogue.MultiSpatialMap-1.html">MultiSpatialMap&lt;T&gt;</a> that does not require the items in it to implement
+<a class="xref" href="GoRogue.IHasID.html">IHasID</a>, instead requiring the specification of a custom <span class="xref">System.Collections.Generic.IEqualityComparer&lt;T&gt;</span> to use
+for hashing and comparison of items.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.AdvancedSpatialMap-1.html">AdvancedSpatialMap&lt;T&gt;</a></h4>
+      <section><p>A more complex version of <a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a> that does not require the items in it to implement
+<a class="xref" href="GoRogue.IHasID.html">IHasID</a>, instead requiring the specification of a custom <span class="xref">System.Collections.Generic.IEqualityComparer&lt;T&gt;</span>
+to use for hashing and comparison of items.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.BoundedRectangle.html">BoundedRectangle</a></h4>
+      <section><p>This class defines a rectanglar area, whose position is automatically &quot;locked&quot; to
+being inside a rectangular bounding box as it is changed. A typical use might be
+keeping track of a camera's view area.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ComponentContainer.html">ComponentContainer</a></h4>
+      <section><p>A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either give your
+object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access components,
+you may either inherit from ComponentContainer, or have your object implement <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>via a backing field of
+type ComponentContainer.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Direction.html">Direction</a></h4>
+      <section><p>Represents the concept of a &quot;direction&quot; on a grid, and &quot;defines&quot; the coordinate plane GoRogue
+uses via the <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_YIncreasesUpward">YIncreasesUpward</a> flag. Interacts with Coord and other
+supported library's equivalent types to allow easy translation of positions in a direction, and
+contains numerous helper functions for retrieving directions in various orders, getting direction
+closest to a line, etc.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.DisjointSet.html">DisjointSet</a></h4>
+      <section><p>Basic representation of a disjoint set data structure.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Distance.html">Distance</a></h4>
+      <section><p>Class representing methods of calculating distance on a grid. You cannot create instances of this
+class using a constructor -- instead this class contains static instances representing the
+various distance calculations.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Effect-1.html">Effect&lt;TriggerArgs&gt;</a></h4>
+      <section><p>Class designed to represent any sort of in-game effect. This could be anything from a simple
+physical damage effect to a heal effect or permanent effects.  These might include AOE effects,
+damage over time effects, or even potentially a special effect that simply boosts a stat.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.EffectArgs.html">EffectArgs</a></h4>
+      <section><p>Default argument for any effect. Any class that is used as the template argument for an
+effect must inherit from this class.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.EffectTrigger-1.html">EffectTrigger&lt;TriggerArgs&gt;</a></h4>
+      <section><p>Represents an &quot;event&quot; that can automatically trigger and manage one or more
+<a class="xref" href="GoRogue.Effect-1.html">Effect&lt;TriggerArgs&gt;</a> instances, and acts as part of the implementation of
+duration in Effect.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.FOV.html">FOV</a></h4>
+      <section><p>Implements the capability to calculate a grid-based field of view for a map.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IDGenerator.html">IDGenerator</a></h4>
+      <section><p>Class designed as a helper for situations where you need to generate and assign a unique
+integer to each instance of a class, eg. for a class implementing <a class="xref" href="GoRogue.IHasID.html">IHasID</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ItemEventArgs-1.html">ItemEventArgs&lt;T&gt;</a></h4>
+      <section><p>Event arguments for spatial map events pertaining to an item (<a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemAdded">ItemAdded</a>,
+<a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemRemoved">ItemRemoved</a>, etc.)</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs&lt;T&gt;</a></h4>
+      <section><p>Event arguments for spatial maps <a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html#GoRogue_IReadOnlySpatialMap_1_ItemMoved">ItemMoved</a> event.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> implementation that can be used to efficiently represent multiple
+&quot;layers&quot; of objects, with each layer represented as an <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> instance.
+It provides the regular spatial map functionality, as well as adds layer masking functionality
+that allow functions to operate on specific layers only.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.LayerMasker.html">LayerMasker</a></h4>
+      <section><p>Allows convenient interpretation and creation of layer masks (bit-masks) that can be used
+to interact with <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a> and <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Lines.html">Lines</a></h4>
+      <section><p>Provides implementations of various (line-drawing) algorithms which are useful for
+for generating points closest to a line between two points on a grid.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MathHelpers.html">MathHelpers</a></h4>
+      <section><p>Static class consisting of mathematical &quot;helper&quot; functions and constants -- things like angle
+unit conversions, and other helpful functions.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.MultiSpatialMap-1.html">MultiSpatialMap&lt;T&gt;</a></h4>
+      <section><p>An implementation of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> that allows multiple items to reside
+at any given position at the same time.  If you wish to allow only one item to reside
+at each location at a time, use <a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a> instead.  For a situation
+involving different categories or layers of items, you may want to look at
+<a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Radius.html">Radius</a></h4>
+      <section><p>Class representing different shapes that define the concept of a radius on a grid. You cannot
+create instances of this class using a constructor -- instead, this class contains static instances
+representing the various radius shapes.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a></h4>
+      <section><p>Class containing functions capable of returning all unique positions inside of a given radius
+and (optional) bounds.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Reflection.html">Reflection</a></h4>
+      <section><p>Contains a series of functions that complement the reflection capabilities of C#, to conveniently allow for things like
+iterating over all types that a given type can be casted to.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.SpatialMap-1.html">SpatialMap&lt;T&gt;</a></h4>
+      <section><p>An implementation of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> that allows only one item at each position
+at a time.  If you need multiple items to be able to reside at one location at the same time,
+use <a class="xref" href="GoRogue.MultiSpatialMap-1.html">MultiSpatialMap&lt;T&gt;</a> or <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a> instead.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Utility.html">Utility</a></h4>
+      <section><p>Static class containing extension helper methods for various built-in C# classes, as well as a
+static helper method for &quot;swapping&quot; references.</p>
+</section>
+    <h3 id="structs">Structs
+  </h3>
+      <h4><a class="xref" href="GoRogue.Coord.html">Coord</a></h4>
+      <section><p>A structure that represents a standard 2D grid coordinate.  Provides numerous static functions,
+operators, and implicit converstions that enable common grid/position-related math and operations,
+as well as enable interoperability with position representations from other libraries.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Rectangle.html">Rectangle</a></h4>
+      <section><p>Represents a rectangle in terms of grid squares. Provides numerous static functions that enable
+creation and common operations involving rectangles, as well as implicit conversion operators that
+enable interoperability with rectangle representations from other libraries.</p>
+</section>
+    <h3 id="interfaces">Interfaces
+  </h3>
+      <h4><a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a></h4>
+      <section><p>Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
+you would implement this via a backing field of type <a class="xref" href="GoRogue.ComponentContainer.html">ComponentContainer</a>, which implements the logic for
+these functions.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IHasID.html">IHasID</a></h4>
+      <section><p>Interface for a class that has an ID value, typically used for items in a spatial map, or generally
+for purposes of hashing.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a></h4>
+      <section><p>Interface to be implemented by objects that will be added to a <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyDisjointSet.html">IReadOnlyDisjointSet</a></h4>
+      <section><p>Read-only representation of <a class="xref" href="GoRogue.DisjointSet.html">DisjointSet</a></p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyFOV.html">IReadOnlyFOV</a></h4>
+      <section><p>Read-only interface of the <a class="xref" href="GoRogue.FOV.html">FOV</a> class.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyLayeredSpatialMap-1.html">IReadOnlyLayeredSpatialMap&lt;T&gt;</a></h4>
+      <section><p>Interface implementing only the read-only functions for <a class="xref" href="GoRogue.LayeredSpatialMap-1.html">LayeredSpatialMap&lt;T&gt;</a>/
+<a class="xref" href="GoRogue.AdvancedLayeredSpatialMap-1.html">AdvancedLayeredSpatialMap&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlyRadiusAreaProvider.html">IReadOnlyRadiusAreaProvider</a></h4>
+      <section><p>Read-only interface of <a class="xref" href="GoRogue.RadiusAreaProvider.html">RadiusAreaProvider</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.IReadOnlySpatialMap-1.html">IReadOnlySpatialMap&lt;T&gt;</a></h4>
+      <section><p>Implements the read-only interface of <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ISortedComponent.html">ISortedComponent</a></h4>
+      <section><p>Optional interface that may be implemented by components to ensure they are returned in a specific order
+when <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_GetComponent__1">GetComponent&lt;T&gt;()</a> is called.  Components are not required to implement
+this interface, however components that do not will be returned after any components that do.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a></h4>
+      <section><p>Interface common to spatial map implementations provided with GoRogue, which are designed
+to be a convenient way to store items that reside on a map.  TLDR; If you're about
+to use a List to store all the objects on a map, consider using a (GoRogue-provided) ISpatialMap
+implementation instead.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.ISpatialTuple-1.html">ISpatialTuple&lt;T&gt;</a></h4>
+      <section><p>Interface specifying return type for item-location pairs in spatial maps.</p>
+</section>
+    <h3 id="enums">Enums
+  </h3>
+      <h4><a class="xref" href="GoRogue.AdjacencyRule.Types.html">AdjacencyRule.Types</a></h4>
+      <section><p>Enum representing AdjacencyRule types. Each AdjacencyRule instance has a <a class="xref" href="GoRogue.AdjacencyRule.html#GoRogue_AdjacencyRule_Type">Type</a> field
+which contains the corresponding value from this enum.  Useful for easy mapping of AdjacencyRule
+types to a primitive type (for cases like a switch statement).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Direction.Types.html">Direction.Types</a></h4>
+      <section><p>Enum representing Direction types. Each Direction instance has a <a class="xref" href="GoRogue.Direction.html#GoRogue_Direction_Type">Type</a> field
+which contains the corresponding value from this enum.  Useful for easy mapping of Direction
+types to a primitive type (for cases like a switch statement).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Distance.Types.html">Distance.Types</a></h4>
+      <section><p>Enum representing Distance types. Each Distance instance has a <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_Type">Type</a> field
+which contains the corresponding value from this enum.  Useful for easy mapping of Distance
+types to a primitive type (for cases like a switch statement).</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Lines.Algorithm.html">Lines.Algorithm</a></h4>
+      <section><p>Various supported line-drawing algorithms.</p>
+</section>
+      <h4><a class="xref" href="GoRogue.Radius.Types.html">Radius.Types</a></h4>
+      <section><p>Enum representing Radius types. Each Radius instance has a <a class="xref" href="GoRogue.Radius.html#GoRogue_Radius_Type">Type</a> field
+which contains the corresponding value from this enum.  Useful for easy mapping of Radius
+types to a primitive type (for cases like a switch statement).</p>
+</section>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

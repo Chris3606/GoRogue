@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>1.x to 2.0 Upgrade Guide </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="1.x to 2.0 Upgrade Guide ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="1x-to-20-upgrade-guide">1.x To 2.0 Upgrade Guide</h1>
+
+<p>This article is intended to be a useful resource for those that are familiar with GoRogue 1.8.2 (the last 1.x release), and are looking to upgrade to 2.0.</p>
+<h1 id="breaking-changes">Breaking Changes</h1>
+<p>The following are changes to the way things function that may break existing code.  Completely new features, unless they pertain to the discussion, are not covered in this section.</p>
+<h2 id="coord-is-a-value-type">Coord is a Value Type</h2>
+<p><code>Coord</code> has been changed from a reference type (C# class) to a value type (C# struct).  That produces the following breaking changes:</p>
+<ol>
+<li>The <code>Coord.Get</code> function no longer exists; you should just use <code>new</code>, eg. <code>Coord c = new Coord(1, 2)</code>.  There are some syntactic shortcuts for this covered in the New Features section.</li>
+<li><code>Coord</code> is no longer nullable, so if you need to assign a &quot;None&quot; value, you'll need to use <code>Coord?</code>, or use the new <code>Coord.NONE</code> static field, which is set to (x, y) values <code>(int.MinValue, int.MinValue)</code>.  This also means a <code>Coord</code> with those coordinates is technically indistinguishable from <code>NONE</code> to GoRogue functions.  Basically, replace <code>Coord c = null</code> with <code>Coord c = Coord.NONE</code>, or <code>Coord? c = null</code> if you absolutely need nullable types.</li>
+<li>Generally minor: If you are exposing <code>Coord</code> instances as properties (not fields), the change to value type means there is very likely some unintended copying going on when you access that property.  Consider making the property of type <code>ref Coord</code> or <code>ref readonly Coord</code> if that copy absolutely matters.  If you're not sure about that C# feature set, or don't know whether its necessary, generally speaking just leave it -- the type is so small it really doesn't matter most of the time, though it <em>can</em> have performance implications in that 1% of cases.</li>
+</ol>
+<h2 id="gameobjectmap-changes">GameObject/Map Changes</h2>
+<p>This system has changed its structure significantly.</p>
+<ol>
+<li><code>GameObject</code> and <code>Map</code> no longer take template parameters.  A GoRogue 1.0 implementation of:</li>
+</ol>
+<pre><code class="lang-CSharp">class MyGameObject : GameObject&lt;MyGameObject&gt; { ... }
+// Stored in instance of Map&lt;MyGameObject&gt;
+</code></pre>
+<p>in 2.0 becomes simply:</p>
+<pre><code class="lang-CSharp">class MyGameObject : GameObject { ... }
+// Store in instance of Map
+</code></pre>
+<p>This also means that all functions of <code>Map</code> that return objects from the map (<code>GetObjects</code>, etc) now return objects of base type <code>IGameObject</code> (this is functionally equivalent to <code>GameObject</code> in interface; see number 2 below).  If you need them as your derived type, each function that returns an object also provides a templated overload that automatically performs the cast, and returns the object if and only if it is castable to the type you give it.  So, if you have <code>foreach (var mObject in myMap.GetObjects(myPos))</code> in 1.0, and you are OK with <code>mObject</code> being of type <code>IGameObject</code> instead of <code>WhateverMyDerivedTypeIs</code>, it can stay as it is.  If you need access to things from the derived type, this line becomes <code>foreach (var mObject in myMap.GetObjects&lt;WhateverMyDerivedTypeIs&gt;(myPos))</code>.  This also has the advantage that this will work even if not <em>all</em> the objects at <code>myPos</code> are of type <code>WhateverMyDerivedTypeIs</code>.  If that's the case, you get only the ones that can successfully cast to <code>WhateverMyDerivedTypeIs</code>.</p>
+<ol start="2">
+<li><p><code>GameObject</code> now has its entire interface implemented as <code>IGameObject</code>, and <code>Map</code> holds and returns <code>IGameObject</code> instances from functions.  Because every bit of the public interface was pulled from <code>GameObject</code> to <code>IGameObject</code>, this shouldn't break code in itself, except for explicit type declarations, eg. <code>foreach (GameObject myObj in myMap.GetObjects(myPos))</code> must now be <code>foreach (IGameObject myObj in myMap.GetObjects(myPos))</code>.  This interface change also may make it <em>much</em>, <em>much</em> easier to implement the <code>GameObject</code>/<code>Map</code> system in an environment where your game's basic map object type needs to inherit from some type other than <code>GameObject</code>.  This is covered in detail in the New Features section.</p>
+</li>
+<li><p>Finally, <code>GameObject</code> now takes an extra constructor argument -- its &quot;parent&quot; object.  This argument will be <code>this</code>, in cases where you are either inheriting from <code>GameObject</code>, or using a <code>GameObject</code> as a private backing field to implement <code>IGameObject</code> (as is suggested in the New Features section).  If you are creating plain old base <code>GameObject</code> instances and adding those to a <code>Map</code>, then the parameter will be <code>null</code>.  If this argument is configured improperly, an <code>Exception</code> will be raised as soon as you attempt to add the <code>GameObject</code> to a <code>Map</code>.</p>
+</li>
+</ol>
+<h2 id="fov-accepts-only-boolean-inputs">FOV Accepts Only Boolean Inputs</h2>
+<p>Previously, <code>FOV</code> constructors accepted either <code>IMapView&lt;bool&gt;</code>, where <code>true</code> indicated a tile was see-through and <code>false</code> indicated a sight-blocking tile, or an <code>IMapView&lt;double&gt;</code> where the definitions of values were the same as a resistance map for <code>SenseMap</code>.  In 2.0, <code>FOV</code> accepts only <code>IMapView&lt;bool&gt;</code>.  Because the <code>SenseMap</code>'s definition of a resistance map has been expanded (see new New Features section for details), it no longer makes sense to provide this interpretation in <code>FOV</code>, and in most cases was excessive anyway.  If you absolutely must use GoRogue 1.0-style double values for the input data, you can hand <code>FOV</code> a <code>LambdaTranslationMap</code> that performs the translation:</p>
+<pre><code class="lang-CSharp">// This is something you could hand FOV before, but now can't
+var oldResistanceMap = new ArrayMap&lt;double&gt;(10, 10);
+
+var fovMap = new LambdaTranslationMap&lt;double, bool&gt;(oldResistanceMap, d =&gt; d &lt; 1.0 : true : false);
+var fov = new FOV(fovMap);
+</code></pre>
+<h2 id="rectangle-creationmodification-functions-refactored">Rectangle Creation/Modification Functions Refactored</h2>
+<p>A number of <code>Rectangle</code> functions changed names:</p>
+<pre><code>Rectangle.CreateWithExtents =&gt; Rectangle.WithExtents
+Rectangle.CreateWithRadius =&gt; Rectangle.WithRadius
+Rectangle.CreateWithSize =&gt; Rectangle.WithPositionAndSize
+Rectangle.CenterOn =&gt; Rectangle.WithCenter
+Rectangle.Move =&gt; Rectangle.WithPosition
+Rectangle.MoveX =&gt; Rectangle.WithX
+Rectangle.MoveY =&gt; Rectangle.WithY
+Rectangle.SetHeight =&gt; Rectangle.WithHeight
+Rectangle.SetMaxExtent =&gt; Rectangle.WithMaxExtent
+Rectangle.SetMaxExtentX =&gt; Rectangle.WithMaxExtentX
+Rectangle.SetMaxExtentY = Rectangle.WithMaxExtentY
+Rectangle.SetMinExtent =&gt; Rectangle.WithMinExtent
+Rectangle.SetMaxExtentX =&gt; Rectangle.WithMinExtentX
+Rectangle.SetMaxExtentY = Rectangle.WithMinExtentY
+Rectangle.SetSize =&gt; Rectangle.WithSize
+Rectangle.SetWidth =&gt; Rectangle.WithWidth
+Rectangle.MoveIn =&gt; Rectangle.Translate
+</code></pre>
+<h2 id="basicroomsgenerator-returns-rectangles-representing-interior-of-rooms">BasicRoomsGenerator Returns Rectangles Representing Interior of Rooms</h2>
+<p>This one is straightforward -- <code>BasicRoomsGenerator</code> and <code>QuickGenerators.GenerateRandomRoomsMap</code> used to return an <code>IEnumerable&lt;Rectangle&gt;</code> where the <code>Rectangle</code> instances represented the rooms created, including their walls all around the outside.  The <code>Rectangle</code> instances returned now represent only the floor area of each room.  This means it now matches the convention used by <code>RoomsGenerator</code>, for maximum compatibility.  For code accessing these return values, if you need the room including walls, simply expand the rectangle by one on each side -- there's a built in function for that.  For example: <code>var roomIncludingWalls = returnedRect.Expand(1, 1);</code>.</p>
+<h2 id="imapview-now-requires-implementation-of-1d-indexer">IMapView Now Requires Implementation of 1D Indexer</h2>
+<p>This is also straightforward -- <code>IMapView</code> and <code>ISettableMapView</code> now require the implementation of a <code>this</code> indexer that takes a 1D array index and returns the value.  Thus, you will need to add such a function to any custom <code>IMapView</code> or <code>ISettableMapView</code> implementation you have.
+Because GoRogue offers functions to convert 2D to 1D array indexes, this should be straightforward:</p>
+<pre><code class="lang-CSharp">class MyMapView : IMapView&lt;bool&gt; {
+    /* Existing functions from implementation using GoRogue 1.0 here */
+    public bool this[int array1DIndex] =&gt; this[Coord.ToCoord(array1DIndex, Width)];
+}
+</code></pre>
+<p>Unfortunately, since default interface implementations do not exist in C# until C# 8.0, and extension methods cannot be indexers, this functionality cannot be provided automatically.  However, all built in objects implementing <code>IMapView</code> (<code>FOV</code>, <code>SenseMap</code>, along with everything in the <code>GoRogue.MapViews</code> namespace) now possess this indexer, and can thus be accessed like both 1D arrays and 2D arrays.</p>
+<h1 id="new-features">New Features</h1>
+<p>The following are completely new features in GoRogue 2.0.0.  They may change the preferred way of doing things, but in and of themselves will not break existing code that uses GoRogue 1.8.2 (the last 1.x release).</p>
+<h2 id="coord-syntactic-sugar">Coord Syntactic Sugar</h2>
+<p>Since <code>Coord</code> is a value type now, GoRogue now provides a bunch of syntactic sugar to make them easier to deal with:</p>
+<ol>
+<li><code>Coords</code> are implicitly convertible to value-tuples of two ints, and tuples are implicitly convertible to <code>Coord</code> instances.  So, when the type is obvious, say because of an explicit type declaration or a function definition, we can omit <code>new Coord</code> part of the syntax involved in creating one:</li>
+</ol>
+<pre><code class="lang-CSharp">Coord c = (1, 2);
+// Assuming I have a function Process(Coord position) that I can call
+Process((5, 6));
+</code></pre>
+<ol start="2">
+<li><code>Coords</code> also offer a deconstructor now, which can simplify code that intends to use a <code>Coord</code>'s x/y values as local parameters:</li>
+</ol>
+<pre><code class="lang-CSharp">// Assuming myEntity has a Position field that is of type Coord
+var (x, y) = myEntity.Position;
+// Do processing on x and y as local variables.  Example is printing to keep it succinct
+Console.WriteLine(&quot;Printing X: &quot; + x); 
+</code></pre>
+<h2 id="rectangle-syntactic-sugar">Rectangle Syntactic Sugar</h2>
+<p>Similarly to <code>Coord</code>, <code>Rectangle</code> also now offers implicit conversions from tuple to <code>Rectangle</code> and back, and a deconstructor.</p>
+<ol>
+<li>We can omit the <code>new Rectangle</code> part of creating a rectangle when the type is obvious:</li>
+</ol>
+<pre><code class="lang-CSharp">Rectangle rect = (1, 2, 5, 10); // Rectangle with pos (1, 2), width/height of 5/10
+// Assuming we have a function Process(Rectangle rect) we can call
+Process((1, 2, 10, 15));
+
+// Currently we can't do Rectangle rect = (minExtent, maxExtent), nor
+// Rectangle rect = (center, horizontalRadius, verticalRadius).
+// These will be added in later releases.
+</code></pre>
+<ol start="2">
+<li>We can also deconstruct into local variables, as we can with <code>Coord</code>:</li>
+</ol>
+<pre><code class="lang-CSharp">// Assuming myMap as a property BoundingBox of type Rectangle
+var (x, y, width, height) = myMap.BoundingBox;
+// Do processing on x, y, width, and height as local variables.  Example is printing to keep it succinct
+Console.WriteLine(&quot;Printing X: &quot; + x); 
+</code></pre>
+<h2 id="primitive-type-implicit-conversion-tofrom-other-common-libraries">Primitive-Type Implicit Conversion to/from other Common Libraries</h2>
+<p>GoRogue now allows its primitive types to be implicitly converted to and from equivalent types from (some) other libraries.  Currently, GoRogue <code>Coord</code>/<code>Rectangle</code> are implicitly convertible to and from both MonoGame's equivalent types, and equivalent types from the <code>System.Drawing</code> namespace.  Long story short, if you have a function or variable, either in your own code or in some other library that you're using, that takes MonoGame's <code>Point</code>, <code>System.Drawing.Point</code>, or <code>System.Drawing.Size</code>, feel free to pass it a GoRogue <code>Coord</code> and it will just work (and vice versa!).  The same goes for <code>GoRogue.Rectangle</code> and MonoGame's <code>Rectangle</code>, or System.Drawing's <code>Rectangle</code>.</p>
+<p>In the case of <code>System.Drawing</code>, you can also pass <code>GoRogue.Coord</code> to a function or variable taking <code>System.Drawing.PointF</code>, but NOT the other way around (since the floating point values would be truncated).  The same goes for <code>GoRogue.Rectangle</code> and <code>System.Drawing.RectangleF</code>.</p>
+<p>Similarly, you may add values of type <code>Coord</code> to values of Monogame's <code>Point</code> type, or <code>System.Drawing.Point</code> (and vice versa).  As well, you may add a <code>GoRogue.Direction</code> instance to an instance of MonoGame's <code>Point</code> or <code>System.Drawing.Point</code>, just like you could with <code>Coord</code>.</p>
+<p>Even in the case of the <code>MonoGame</code> conversions/operators, GoRogue 2.0 DOES NOT depend on MonoGame in any way.  The conversions simply work if any appropriate <code>MonoGame</code> assembly is present, and affect nothing if no such assembly is present in a project.</p>
+<h3 id="a-code-example">A Code Example</h3>
+<p>If using GoRogue in a MonoGame project, we can convert implicitly to/from MonoGame Point/Rectangle:</p>
+<pre><code class="lang-CSharp">Microsoft.Xna.Point p = new Point(1, 2);
+p = new GoRogue.Coord(1, 5); // This works fine.
+p += new GoRogue.Coord(1, 1); // As does this, where we are adding a value of type Coord to a value of type Point
+// Assuming we have a function Process(Microsoft.Xna.Point p) we can call
+Process(new GoRogue.Coord(1, 2));
+
+// Assuming myEntity has a Position property of type Microsoft.Xna.Point.
+myEntity.Position = new GoRogue.Coord(3, 5);
+myEntity.Position += GoRogue.Direction.UP;
+
+ArrayMap&lt;bool&gt; map = new ArrayMap(10, 10);
+map[new Microsoft.Xna.Point(1, 3)] = true; // This indexer takes Coord, but we can give it Point
+</code></pre>
+<h2 id="sourcelink-and-debugging-symbols-now-available">SourceLink and Debugging Symbols Now Available</h2>
+<p>Starting in GoRogue 2.0, the library supports <a href="https://github.com/dotnet/sourcelink">SourceLink</a>.  This functionality allows you to step into the source of GoRogue while using the debugger, just as if it was your own code.  As part of this functionality, GoRogue now also distributes debugging symbols packages with each release, in the form of <em>.snuget</em> packages.</p>
+<p>The use of these packages requires Visual Studio 2017 version 15.9 or greater, and also requries that you add a symbols source to your Visual Studio debugging settings.  See the &quot;Consume snupkg from NuGet.org in Visual Studio&quot; section of <a href="https://blog.nuget.org/20181116/Improved-debugging-experience-with-the-NuGet-org-symbol-server-and-snupkg.html">this webpage</a> for instructions on this process.  As well, ensure that in your debugging options (Tools-&gt;Options-&gt;Debugging) you have disabled &quot;Just My Code&quot;, and enabled &quot;SourceLink Support&quot;.  Once these steps have been completed, the appropriate symbols and source files will be downloaded automatically as soon as you try to step into a GoRogue method.</p>
+<h2 id="debug-build-of-gorogue-now-available">Debug Build of GoRogue Now Available</h2>
+<p>The addition of SourceLink and symbols package support in GoRogue 2.0 can make debugging code much easier.  However, since the default GoRogue package for each version is still a &quot;Release&quot; build, it can still be challenging to debug code involving GoRogue function calls, as optimizations that occur during the release build process can limit the usefulness of debugging symbols.  Thus, starting with GoRogue 2.0, with each version of GoRogue, a &quot;Debug&quot; build is also provided. The debug build is categorized as a prerelease by nuget, so you will need to enable prereleases to see it.  Once you do so, if you look at versions of GoRogue available, you will see two listings for each version -- x.y.z, which is the release build and x.y.z-debug, which is categorized as a prerelease, and is the debug build.  If you need to perform debugging involving stepping into GoRogue code, simply switch your package version to the &quot;-debug&quot; version corresponding to the GoRogue version you are using.  Then, you can switch back to the regular version when debugging is complete.</p>
+<h2 id="imapview-and-isettablemapview-implementations-and-1d-indexers">IMapView and ISettableMapView Implementations and 1D Indexers</h2>
+<p>All <code>IMapView</code> and <code>ISettableMapView</code> implementations now have 1D-array style indexers, in addition to the 2d ones present previously.  This actually requires the addition of this indexer in custom implementations; see the appropriate portion of the Breaking Changes section for details.  However, this also means that all built in implementations also have these indexers:</p>
+<pre><code class="lang-CSharp">ArrayMap&lt;bool&gt; boolMap = new ArrayMap&lt;bool&gt;(10, 10);
+int index = Coord.ToIndex(2, 3, boolMap.Width); // 1D index for position (2, 3)
+Console.WriteLine(boolMap[index]);
+
+// This indexer is present in all IMapViews and ISettableMapViews, not just ArrayMap
+LambdaTranslationMap&lt;bool, int&gt; intMap = new LambdaTranslationMap(boolMap, b =&gt; b ? 1 : 0);
+Console.WriteLine(intMap[index]);
+</code></pre>
+<p>Built-in objects implementing <code>IMapView</code>/<code>ISettableMapView</code> include <code>FOV</code>, <code>SenseMap</code>, and everything in the <code>GoRogue.MapViews</code> namespace.</p>
+<h2 id="igameobject-interface">IGameObject Interface</h2>
+<p>The <code>Map</code> class now holds objects of type <code>IGameObject</code>, rather than <code>GameObject</code>, while <code>GameObject</code> implements <code>IGameObject</code>.  This, along with the lack of the template parameters to <code>Map</code> and <code>GameObject</code>, creates breaking changes; see the appropriate portion of the Breaking Changes section for details.  However, while it doesn't force you to change an existing structure where you inherit from <code>GameObject</code>, this feature can make it much easier to integrate with object structures that make inheriting from <code>GameObject</code> difficult.</p>
+<p>Before continuing, is worthy of note that, although it is possible, the intent is for you <em>never</em> to need to create the code for implementing <code>IGameObject</code> functionality manually, as the necessary code can be non-trivial.  Instead, if you implement <code>IGameObject</code> on your object, use a private backing field of type <code>GameObject</code> to provide the actual implementations, and simply write (or let your IDE generate for you) functions that forward appropriate calls to that field's methods, as is shown in the example below.  <code>GameObject</code> is specifically designed to support this, and is implemented in such a way that it avoids many of the traditional issues you might encounter with implementations like this, namely references that point to the backing field when you expect them to point to the object.</p>
+<p>Consider a case where you want to create a base map object type for your game, but you cannot or do not want to inherit from <code>GameObject</code>.  This could occur, for instance, because you need to inherit from some other class, as C# does not allow multiple inheritance.  SadConsole's <code>Entity</code> class, for instance, is a good example of this, or any other class you may want to create or use from an existing structure.  In this case, to use the <code>GameObject</code>/<code>Map</code> system in GoRogue 1.0, you would need to have either <code>GameObject</code>, or the other class that you wanted to inherit from, be a public &quot;component&quot; of your base object.  However, then you need to have a way to get back to the &quot;parent&quot; object from the component, and your architecture can get unnecessarily complicated.</p>
+<p>In GoRogue 2.0, we can simply implement <code>IGameObject</code> instead, which allows you to inherit from whatever other <em>class</em> you need to.  Then, to avoid providing your own implementations of <code>IGameObject</code> functions, you can simply implement <code>IGameObject</code> by forwarding its functions/properties to those of a (private) backing field of type <code>GameObject</code> -- something most IDEs can do for you automatically:</p>
+<pre><code class="lang-CSharp">class MyBaseObject : ClassINeedToInheritFrom, IGameObject
+{
+    private IGameObject _backingField;
+
+    public MyBaseObject(Coord pos, int layer, bool isStatic, bool isWalkable, bool isTransparent)
+    {
+        _backingField = new GameObject(pos, layer, this, isStatic, isWalkable, isTransparent)
+    }
+    /* Implements IGameObject by forwarding the function calls to the corresponding function in _backingField.
+     * Many IDEs can generate these automatically. */
+}
+</code></pre>
+<h2 id="component-system">Component System</h2>
+<p>GoRogue 2.0 now offers an extremely flexible, type-safe system that allows you to efficiently attach components to your objects.  It offers functions for attaching and removing components, retrieving components, and checking whether a given object has one or more components.  <code>GameObject</code> is set up to use this system automatically, however the components system itself can be easily interfaced and used with any object.</p>
+<h3 id="overview">Overview</h3>
+<p>The bulk of the code relevant to the component system is in the <code>GameFramework.ComponentContainer</code> class.  This class is a container for components, and contains all the functions for adding, removing, querying, and retrieving components.  To implement the component system in your own structure, you may simply give your object a public field of type <code>ComponentContainer</code>, and access that field whenever you do anything related to components.  However, if you wish to avoid having to access that field each time, you may also choose to inherit from <code>ComponentContainer</code>.</p>
+<p>If you cannot inherit from <code>ComponentContainer</code>, the entire public interface of <code>ComponentContainer</code> is contained within the <code>IHasComponents</code> interface.  Thus, you may have your object implement <code>IHasComponents</code> via a private backing field of type <code>ComponentContainer</code>, exactly as can would do with <code>IGameObject</code> and <code>GameObject</code>.  These &quot;forwarding functions&quot; can be generated automatically by many IDEs, and in this way, your object has the component-related functions as direct members, so you don't have to access them through a field every time you want to use them.</p>
+<pre><code class="lang-CSharp">class MyObject : IHasComponents
+{
+    private ComponentContainer _backingField;
+
+    public MyObject() { _backingField = new ComponentContainer(); }
+    
+     /* Implements IHasComponents by forwarding the function calls to the corresponding function in _backingField.
+     * Many IDEs can generate these automatically. */
+}
+</code></pre>
+<p>The API documentation for <code>ComponentContainer</code> is relatively complete, and most of the functions are self-explanatory.  The system is extremely robust, as it requires no base class for components, and is capable of dealing with components with inheritance hierarchies and components that implement interfaces effectively.  For example, suppose you have the following class structure:</p>
+<pre><code class="lang-CSharp">interface IZ {}
+class A : IZ {}
+class B : A {}
+</code></pre>
+<p>After you add a component of type <code>B</code> to an object <code>myObj</code>, <code>myObj.GetComponent&lt;A&gt;()</code>, <code>myObj.GetComponent&lt;B&gt;()</code>, and <code>myObj.GetComponent&lt;IZ&gt;()</code> all return the instance of <code>B</code> that you added.  The same applies to the <code>HasComponent</code> and <code>HasComponents</code> functions -- in the case of the previous example, <code>myObj.HasComponent(typeof(A))</code>, <code>myObj.HasComponents(typeof(A), typeof(B))</code>, and <code>myObj.HasComponent&lt;IZ&gt;()</code> also return true.</p>
+<h3 id="implementation-in-gameobject">Implementation in <code>GameObject</code></h3>
+<p>The component system is already baked into a setup based on <code>IGameObject</code>/<code>GameObject</code>, as both <code>IGameObject</code> and <code>GameObject</code> implement <code>IHasComponent</code>.  Therefore, if you either inherit from <code>GameObject</code>, or use a private backing field of type <code>GameObject</code> to implement <code>IGameObject</code> on your own objects, your object will have the functions from <code>ComponentContainer</code> directly as class members (<code>AddComponent</code>, <code>RemoveComponent</code>, etc), just as if you had inherited from <code>ComponentContainer</code> directly.</p>
+<p>Although these functions, like the ones that <code>ComponentContainer</code> possesses, will accept an object of any type as a component, you may optionally implement <code>IGameObjectComponent</code> on your component classes.  This interface contains a single field, <code>Parent</code>.  This field should not be assigned to manually.  Instead, when you call the <code>GameObject.AddComponent</code> or <code>GameObject.RemoveComponent(s)</code> functions, and pass them an object that implements <code>IGameObjectComponent</code>, this <code>Parent</code> field is updated automatically to point to the object it was added as a component to.  This applies even if you are using <code>GameObject</code> as a backing field to implement <code>IGameObject</code> on your own objects -- the <code>Parent</code> field will point to your object, not the backing field.  This can be useful if you need a component to know what it is attached to.</p>
+<h2 id="map-has-virtual-calculatefov-functions">Map Has Virtual CalculateFOV Functions</h2>
+<p>In GoRogue 1.0, the <code>Map</code> class had non-virtual <code>CalculateFOV</code> methods.  This combined with the fact that the <code>FOV</code> class itself does not have any events or overridable functions allowing you to respond to <code>FOV</code> calculation made it cumbersome to add functionality.  In GoRogue 2.0, the <code>Map.CalculateFOV</code> functions are virtual, allowing you to easily override their implementation and add functionality on top of the existing functions.</p>
+<p>Only the <code>CalculateFOV</code> functions that accept <code>int x, int y</code> to indicate the starting position have been made virtual, not the ones that accept <code>Coord</code> as the starting position.  This is because the non-virtual functions call the virtual ones under the hood, so overriding all virtual <code>CalculateFOV</code> functions is sufficient to change the functionality of all of them.</p>
+<h2 id="map-creation-method">Map Creation Method</h2>
+<p>In GoRogue 1.0, <code>Map</code> provided two different constructors for map creation -- one that simply took width/height (along with the other optional parameters), and one that took <code>ISettableMapView&lt;GameObject&gt;</code>.  These constructors still exist in GoRogue 2.0, although the parameter of the latter has changed to <code>ISettableMapView&lt;IGameObject&gt;</code>.  That much said, the fact that the constructor must take <code>ISettableMapView&lt;IGameObject&gt;</code>, rather than <code>ISettableMapView&lt;T&gt;</code> where <code>T</code> is any type that <em>implements</em> <code>IGameObject</code>, can be limiting and difficult to work around.  GoRogue 2.0's implicit conversion of <code>ArrayMap&lt;T&gt;</code> to <code>T[]</code> helps a little, because this type of polymorphism <em>is</em> allowed with arrays, however this still has issues, and obviously this implicit conversion only applies if you are using <code>ArrayMap</code>.</p>
+<p>Thus, to solve this issue, in GoRogue 2.0 a method is provided that takes <code>ISettableMapView&lt;T&gt;</code>, where <code>T</code> can be any type that implements <code>IGameObject</code>. This can be very useful for integrating with an inheritance tree, or other code that requires that your map objects inherit from a given class:</p>
+<pre><code class="lang-CSharp">class BaseClass
+{
+    public int BaseInt;
+    public BaseClass(int baseInt) { BaseInt = baseInt; }
+}
+
+class DerivedClass : BaseClass, IGameObject
+{
+    public int DerivedInt;
+    public DerivedClass(int baseInt, int derivedInt) : base(baseInt) { DerivedInt = derivedInt; }
+}
+
+class Program
+{
+    public static void Main(string[] args)
+    {
+        ArrayMap&lt;DerivedClass&gt; terrain = new ArrayMap&lt;DerivedClass&gt;(10, 10);
+        // We can't pass terrain to anything accepting `ISettableMapView&lt;IGameObject&gt;`, so we can't do
+        // Map map = new Map(terrain).  But, since DerivedClass implements `IGameObject`, we can use 
+        // the static CreateMap function:
+        Map map = Map.CreateMap(terrain);
+    }
+}
+</code></pre>
+<p>This function is implemented in such a way that the <code>Map</code> returned gets the <em>actual</em> data you gave it.  The data isn't first copied into a separate array.  in the example above, this means that if, after you create the <code>Map</code>, you assign some value in <code>terrain</code> a new value, eg. <code>terrain[1, 2] = new Tile(1, 2);</code>, that change is automatically reflected in the <code>Terrain</code> property of the <code>Map</code>, and vice versa.</p>
+<p>Note that this functionality, like the functionality allowed by the constructor taking <code>ISettableMapView</code>, can be dangerous.  It is recommended that you <em>do not</em> set the value of the original map view after creation, but rather use the <code>Map</code>'s <code>SetTerrain</code> function.  This function is responsible for ensuring the <code>ObjectAdded</code> and <code>ObjectRemoved</code> events are fired for you, so if you do not use the <code>SetTerrain</code> function these events will not be fired.  In addition, <code>SetTerrain</code> performs a number of checks for you, ensuring that you do not place a terrain tile in a way that violates walkability for example, or that you do not place a tile that violates the principal that all terrain must have a <code>Layer</code> value of 0.  If you set values to the <code>terrain</code> view you gave the <code>Map</code> after creation, these invariants aren't guaranteed, and it can lead to unexpected behavior.  The functionality is nonetheless allowed for maximum compatibility, and if you are careful to not violate the invariants enforced by <code>SetTerrain</code>, then it is functional.</p>
+<p>In addition, if you use <code>SetTerrain</code> to set an <code>IGameObject</code> that is not castable to the type <code>T</code> of the map view you gave to <code>CreateMap</code>, then an <code>InvalidCastException</code> will be thrown.</p>
+<h2 id="sensesource-now-has-configurable-arbitrary-starting-intensity-and-resistance-map-values">SenseSource now has Configurable (Arbitrary) Starting Intensity and Resistance Map Values</h2>
+<p>In GoRogue 1.0, sense maps had all sources starting at a value of 1.0 at their origin.  The resistance map values also varied between <code>0.0</code> and <code>1.0</code>.  In the case of sources using <code>RIPPLE</code> and variations, values between 0.0 and 1.0 mattered -- it indicated &quot;partial&quot; resistance to the source spreading.  When using <code>SHADOW</code> sources, any value less than 1.0 didn't block, and a value of 1.0 did block (since shadowcasting must use on-off blocking).</p>
+<p>In GoRogue 2.0, you can think of this functionality as exactly the same, except the maximum &quot;source intensity&quot; of 1.0 can now be an arbitrary value.  <code>SenseSource</code> instances now have an <code>Intensity</code> property, which defaults to 1.0 if unspecified, that determines the starting intensity.  The resistance maps, then, can have any positive double value for a given square.</p>
+<p>In the case of sources that use <code>RIPPLE</code> and variations, the resistance value is, like before, subtracted from the source value as it spreads.  So,  a source with an <code>Intensity</code> of 2.5 can potentially go through two cells where the resistance is 1.0 (although its intensity, and thus its spreading distance in that direction, would be significantly reduced), but a third cell with that resistance value would block it completely.</p>
+<p>In the case of sources using <code>SHADOW</code>, any cell with a resistance value greater than or equal to the source's starting intensity will block the source, and any value less than the source's starting intensity will not block it.</p>
+<h2 id="arraymap-implicit-conversion-to-1d-array">ArrayMap Implicit Conversion to 1D Array</h2>
+<p>In order to increase ease of use with libraries that use traditional data structures, GoRogue's <code>ArrayMap</code> is now implictly convertible to a 1-dimensional array.  The values are not copied into a new array when this is done -- any modification of the array will also modify the <code>ArrayMap</code>.  If you already have a 1D array, because the width is needed to convert it to an array map, it will not implicitly convert.  However, there is a constructor of <code>ArrayMap</code> that takes a 1D array.</p>
+<pre><code class="lang-CSharp">ArrayMap&lt;bool&gt; map = new ArrayMap&lt;bool&gt;(10, 10);
+bool[] array = map;
+
+// Assuming we have a function Process(bool[] array1D, int width)
+Process(map, map.Width);
+
+bool[] otherArray = new bool[10*15];
+ArrayMap&lt;bool&gt; otherMap = new ArrayMap&lt;bool&gt;(otherArray, 10);
+</code></pre>
+<h2 id="addition-of-arraymap2d">Addition of ArrayMap2D</h2>
+<p><code>ArrayMap</code> was sufficient for all cases where you needed an array-like structure in GoRogue 1.0.  In GoRogue 2.0, however, <code>ArrayMap</code> implicitly converts to a 1D array.  This is useful for cases where you want to interact with code that expects 1D arrays, however it may also be useful to have the capability for implicit conversions to 2D arrays.  Unfortunately, it is not possible to have <code>ArrayMap</code> convert to both 1D array and 2D array, and still guarantee that changes made to the resulting arrays also show up in the <code>ArrayMap</code>.  Thus, for cases where you need to interact with 2D arrays, <code>ArrayMap2D</code> has been added.  It is identical to <code>ArrayMap</code>, except that it implicitly converts to <em>2D</em> arrays, and the overload of its constructor that takes an array takes a <em>2D</em> array:</p>
+<pre><code class="lang-CSharp">ArrayMap2D&lt;bool&gt; map = new ArrayMap2D&lt;bool&gt;(10, 10);
+bool[,] array = map;
+
+// Assuming we have a function Process(bool[,] array)
+Process(map);
+
+bool[,] otherArray = new bool[10, 10];
+ArrayMap2D&lt;bool&gt; otherMap = new ArrayMap2D&lt;bool&gt;(otherArray);
+</code></pre>
+<p>There is no difference between <code>ArrayMap</code> and <code>ArrayMap2D</code>, other than the underlying data structure used and thus the types it implicitly converts to.  Thus, if you aren't interacting with code that expects any sort of actual array, feel free to just use <code>ArrayMap</code>.</p>
+<h2 id="addition-of-unboundedviewport">Addition of UnboundedViewport</h2>
+<p>In GoRogue 1.0, there was the <code>Viewport</code> class, which is an <code>IMapView</code> implementation that exposed a section of the underlying map view.  The area of the map exposed was automatically bounded to the edges of the underlying map, so that no part of the exposed rectangle could ever be &quot;off the map&quot;.</p>
+<p>This is useful in many situations, however in other cases the bounding behavior is undesireable, and you would rather it just return a default value for any position out of range of the underlying map.  This is precisely what <code>UnboundedViewport</code> does:</p>
+<pre><code class="lang-CSharp">ArrayMap&lt;bool&gt; map = new ArrayMap&lt;bool&gt;(100, 100);
+map[0, 0] = true;
+// False will be returned for any value accessed that's outside the actual map.
+// If this value isn't specified, it defaults to default(T)
+UnboundedViewport&lt;bool&gt; viewport = new UnboundedViewport&lt;bool&gt;(map, new Rectangle(-4, -4, 10, 10), false);
+
+// Accesses (-4, -4) of the underlying map, which doesn't exist, so we get false
+Console.WriteLine(viewport[0, 0]);
+// Accesses 0, 0 of the underlying map, so we get true
+Console.WriteLine(viewport[4, 4]);
+</code></pre>
+<p>This might be useful, for instance, if you are creating a system wherein you have one <code>FOV</code> instance per monster, and want to minimize the amount of memory used for each instance.  You would simply hand each <code>FOV</code> instance an <code>UnboundedViewport&lt;bool&gt;</code> where the area is restricted to a fov-radius sized-area around the corresponding monster.  If you did this with <code>Viewport</code>, the <code>FOV</code>s wouldn't follow their respective monsters properly to the edge of the map.</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue.Docs/articles/1-to-2-upgrade-guide.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

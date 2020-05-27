@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class AStar
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class AStar
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.Pathing.AStar">
+  
+  
+  <h1 id="GoRogue_Pathing_AStar" data-uid="GoRogue.Pathing.AStar" class="text-break">Class AStar
+  </h1>
+  <div class="markdown level0 summary"><p>Implements an optimized AStar pathfinding algorithm. Optionally supports custom heuristics, and custom weights for each tile.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">AStar</span></div>
+      <div class="level2"><a class="xref" href="GoRogue.Pathing.FastAStar.html">FastAStar</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.Pathing.html">GoRogue.Pathing</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_Pathing_AStar_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class AStar</code></pre>
+  </div>
+  <h5 id="GoRogue_Pathing_AStar_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map.
+Specifically, it takes an <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>, where true indicates that a tile should be
+considered walkable, and false indicates that a tile should be considered impassable.</p>
+<p>For details on the map view system in general, see <a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView&lt;T&gt;</a>.  As well, there is an article
+explaining the map view system at the GoRogue documentation page
+<a href="https://chris3606.github.io/GoRogue/articles">here</a></p>
+<p>If truly shortest paths are not strictly necessary, you may want to consider <a class="xref" href="GoRogue.Pathing.FastAStar.html">FastAStar</a> instead.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L100">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar__ctor_" data-uid="GoRogue.Pathing.AStar.#ctor*"></a>
+  <h4 id="GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_" data-uid="GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance)">AStar(IMapView&lt;Boolean&gt;, Distance)</h4>
+  <div class="markdown level1 summary"><p>Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
+tiebreaking/smoothing element which will produce guaranteed shortest paths.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AStar(IMapView&lt;bool&gt; walkabilityMap, Distance distanceMeasurement)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">walkabilityMap</span></td>
+        <td><p>Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+and false indicates it cannot.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceMeasurement</span></td>
+        <td><p>Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+how to calculate the distance between points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CGoRogue.MapViews.IMapView%7BSystem.Double%7D%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L126">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar__ctor_" data-uid="GoRogue.Pathing.AStar.#ctor*"></a>
+  <h4 id="GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_GoRogue_MapViews_IMapView_System_Double__System_Double_" data-uid="GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,GoRogue.MapViews.IMapView{System.Double},System.Double)">AStar(IMapView&lt;Boolean&gt;, Distance, IMapView&lt;Double&gt;, Double)</h4>
+  <div class="markdown level1 summary"><p>Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
+tiebreaking/smoothing element which will produce guaranteed shortest paths, provided <code data-dev-comment-type="paramref" class="paramref">minimumWeight</code> is correct.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AStar(IMapView&lt;bool&gt; walkabilityMap, Distance distanceMeasurement, IMapView&lt;double&gt; weights, double minimumWeight)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">walkabilityMap</span></td>
+        <td><p>Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+and false indicates it cannot.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceMeasurement</span></td>
+        <td><p>Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+how to calculate the distance between points.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">weights</span></td>
+        <td><p>A map view indicating the weights of each location (see <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_Weights">Weights</a>.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td><span class="parametername">minimumWeight</span></td>
+        <td><p>The minimum value that will be present in <code data-dev-comment-type="paramref" class="paramref">weights</code>.  It must be greater than 0.0 and
+must be less than or equal to the minimum value present in the weights view -- the algorithm may not produce truly shortest paths if
+this condition is not met.  If this minimum changes after construction, it may be updated via the <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_MinimumWeight">MinimumWeight</a> property.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CSystem.Func%7BGoRogue.Coord%2CGoRogue.Coord%2CSystem.Double%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L111">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar__ctor_" data-uid="GoRogue.Pathing.AStar.#ctor*"></a>
+  <h4 id="GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__" data-uid="GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,System.Func{GoRogue.Coord,GoRogue.Coord,System.Double})">AStar(IMapView&lt;Boolean&gt;, Distance, Func&lt;Coord, Coord, Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AStar(IMapView&lt;bool&gt; walkabilityMap, Distance distanceMeasurement, Func&lt;Coord, Coord, double&gt; heuristic)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">walkabilityMap</span></td>
+        <td><p>Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+and false indicates it cannot.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceMeasurement</span></td>
+        <td><p>Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+how to calculate the distance between points.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, <a class="xref" href="GoRogue.Coord.html">Coord</a>, <span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">heuristic</span></td>
+        <td><p>Function used to estimate the distance between two given points.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__GoRogue_MapViews_IMapView_System_Double__.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.%23ctor(GoRogue.MapViews.IMapView%7BSystem.Boolean%7D%2CGoRogue.Distance%2CSystem.Func%7BGoRogue.Coord%2CGoRogue.Coord%2CSystem.Double%7D%2CGoRogue.MapViews.IMapView%7BSystem.Double%7D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L138">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar__ctor_" data-uid="GoRogue.Pathing.AStar.#ctor*"></a>
+  <h4 id="GoRogue_Pathing_AStar__ctor_GoRogue_MapViews_IMapView_System_Boolean__GoRogue_Distance_System_Func_GoRogue_Coord_GoRogue_Coord_System_Double__GoRogue_MapViews_IMapView_System_Double__" data-uid="GoRogue.Pathing.AStar.#ctor(GoRogue.MapViews.IMapView{System.Boolean},GoRogue.Distance,System.Func{GoRogue.Coord,GoRogue.Coord,System.Double},GoRogue.MapViews.IMapView{System.Double})">AStar(IMapView&lt;Boolean&gt;, Distance, Func&lt;Coord, Coord, Double&gt;, IMapView&lt;Double&gt;)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public AStar(IMapView&lt;bool&gt; walkabilityMap, Distance distanceMeasurement, Func&lt;Coord, Coord, double&gt; heuristic, IMapView&lt;double&gt; weights)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td><span class="parametername">walkabilityMap</span></td>
+        <td><p>Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+and false indicates it cannot.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td><span class="parametername">distanceMeasurement</span></td>
+        <td><p>Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
+how to calculate the distance between points.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, <a class="xref" href="GoRogue.Coord.html">Coord</a>, <span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">heuristic</span></td>
+        <td><p>Function used to estimate the distance between two given points.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td><span class="parametername">weights</span></td>
+        <td><p>A map view indicating the weights of each location (see <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_Weights">Weights</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="fields">Fields
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_MinimumWeight.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.MinimumWeight%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L88">View Source</a>
+  </span>
+  <h4 id="GoRogue_Pathing_AStar_MinimumWeight" data-uid="GoRogue.Pathing.AStar.MinimumWeight">MinimumWeight</h4>
+  <div class="markdown level1 summary"><p>The minimum value that is allowed to occur in the <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_Weights">Weights</a> map view.  This value is only used with the default heuristic
+for AStar and <a class="xref" href="GoRogue.Pathing.FastAStar.html">FastAStar</a>, so if a custom heuristic is used, the value is also ignored.  Must be greater than 0.0 and less
+than or equal to the minimum value in the <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_Weights">Weights</a> map view.  Defaults to 1.0 in cases where the default heuristic is used.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MinimumWeight</code></pre>
+  </div>
+  <h5 class="fieldValue">Field Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_DistanceMeasurement.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.DistanceMeasurement%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L44">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_DistanceMeasurement_" data-uid="GoRogue.Pathing.AStar.DistanceMeasurement*"></a>
+  <h4 id="GoRogue_Pathing_AStar_DistanceMeasurement" data-uid="GoRogue.Pathing.AStar.DistanceMeasurement">DistanceMeasurement</h4>
+  <div class="markdown level1 summary"><p>The distance calculation being used to determine distance between points. <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_MANHATTAN">MANHATTAN</a>
+implies 4-way connectivity, while <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_CHEBYSHEV">CHEBYSHEV</a> or <a class="xref" href="GoRogue.Distance.html#GoRogue_Distance_EUCLIDEAN">EUCLIDEAN</a> imply
+8-way connectivity for the purpose of determining adjacent coordinates.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Distance DistanceMeasurement { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Distance.html">Distance</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_Heuristic.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.Heuristic%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L57">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_Heuristic_" data-uid="GoRogue.Pathing.AStar.Heuristic*"></a>
+  <h4 id="GoRogue_Pathing_AStar_Heuristic" data-uid="GoRogue.Pathing.AStar.Heuristic">Heuristic</h4>
+  <div class="markdown level1 summary"><p>The heuristic used to estimate distance from nodes to the end point.  If unspecified or specified as null,
+it defaults to using the distance calculation specified by <a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_DistanceMeasurement">DistanceMeasurement</a>, with a safe/efficient
+tie-breaking multiplier added on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Func&lt;Coord, Coord, double&gt; Heuristic { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Func</span>&lt;<a class="xref" href="GoRogue.Coord.html">Coord</a>, <a class="xref" href="GoRogue.Coord.html">Coord</a>, <span class="xref">System.Double</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_MaxEuclideanMultiplier.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.MaxEuclideanMultiplier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L81">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_MaxEuclideanMultiplier_" data-uid="GoRogue.Pathing.AStar.MaxEuclideanMultiplier*"></a>
+  <h4 id="GoRogue_Pathing_AStar_MaxEuclideanMultiplier" data-uid="GoRogue.Pathing.AStar.MaxEuclideanMultiplier">MaxEuclideanMultiplier</h4>
+  <div class="markdown level1 summary"><p>Multiplier that is used in the tiebreaking/smoothing element of the default heuristic. This value is based on the
+maximum possible <a class="xref" href="GoRogue.Coord.html#GoRogue_Coord_EuclideanDistanceMagnitude_GoRogue_Coord_GoRogue_Coord_">EuclideanDistanceMagnitude(Coord, Coord)</a> between two points on the map.</p>
+<p>Typically you dont' need this value unless you're creating a custom heuristic an introducing the same
+tiebreaking/smoothing element as the default heuristic.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public double MaxEuclideanMultiplier { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Double</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_WalkabilityMap.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.WalkabilityMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L49">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_WalkabilityMap_" data-uid="GoRogue.Pathing.AStar.WalkabilityMap*"></a>
+  <h4 id="GoRogue_Pathing_AStar_WalkabilityMap" data-uid="GoRogue.Pathing.AStar.WalkabilityMap">WalkabilityMap</h4>
+  <div class="markdown level1 summary"><p>The map view being used to determine whether or not each tile is walkable.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMapView&lt;bool&gt; WalkabilityMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Boolean</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_Weights.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.Weights%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L71">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_Weights_" data-uid="GoRogue.Pathing.AStar.Weights*"></a>
+  <h4 id="GoRogue_Pathing_AStar_Weights" data-uid="GoRogue.Pathing.AStar.Weights">Weights</h4>
+  <div class="markdown level1 summary"><p>Weights given to each tile.  The weight is multiplied by the cost of a tile, so a tile with weight 2 is twice as hard to
+enter as a tile with weight 1.  If unspecified or specified as null, all tiles have weight 1.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IMapView&lt;double&gt; Weights { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.MapViews.IMapView-1.html">IMapView</a>&lt;<span class="xref">System.Double</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.ShortestPath(GoRogue.Coord%2CGoRogue.Coord%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L177">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_ShortestPath_" data-uid="GoRogue.Pathing.AStar.ShortestPath*"></a>
+  <h4 id="GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean_" data-uid="GoRogue.Pathing.AStar.ShortestPath(GoRogue.Coord,GoRogue.Coord,System.Boolean)">ShortestPath(Coord, Coord, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Finds the shortest path between the two specified points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Path ShortestPath(Coord start, Coord end, bool assumeEndpointsWalkable = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">start</span></td>
+        <td><p>The starting point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">end</span></td>
+        <td><p>The ending point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">assumeEndpointsWalkable</span></td>
+        <td><p>Whether or not to assume the start and end points are walkable, regardless of what the
+<a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_WalkabilityMap">WalkabilityMap</a> reports. Defaults to <span class="xref">true</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Pathing.Path.html">Path</a></td>
+        <td><p>The shortest path between the two points, or <span class="xref">null</span> if no valid path exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_Pathing_AStar_ShortestPath_GoRogue_Coord_GoRogue_Coord_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns <span class="xref">null</span> if there is no path between the specified points. Will still return an
+appropriate path object if the start point is equal to the end point.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar.ShortestPath(System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L302">View Source</a>
+  </span>
+  <a id="GoRogue_Pathing_AStar_ShortestPath_" data-uid="GoRogue.Pathing.AStar.ShortestPath*"></a>
+  <h4 id="GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_" data-uid="GoRogue.Pathing.AStar.ShortestPath(System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean)">ShortestPath(Int32, Int32, Int32, Int32, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Finds the shortest path between the two specified points.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Path ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startX</span></td>
+        <td><p>The x-coordinate of the starting point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">startY</span></td>
+        <td><p>The y-coordinate of the starting point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">endX</span></td>
+        <td><p>The x-coordinate of the ending point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">endY</span></td>
+        <td><p>The y-coordinate of the ending point of the path.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">assumeEndpointsWalkable</span></td>
+        <td><p>Whether or not to assume the start and end points are walkable, regardless of what the
+<a class="xref" href="GoRogue.Pathing.AStar.html#GoRogue_Pathing_AStar_WalkabilityMap">WalkabilityMap</a> reports. Defaults to <span class="xref">true</span>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Pathing.Path.html">Path</a></td>
+        <td><p>The shortest path between the two points, or <span class="xref">null</span> if no valid path exists.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_Pathing_AStar_ShortestPath_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean__remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>Returns <span class="xref">null</span> if there is no path between the specified points. Will still return an
+appropriate path object if the start point is equal to the end point.</p>
+</div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_Pathing_AStar.md&amp;value=---%0Auid%3A%20GoRogue.Pathing.AStar%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/Pathing/AStar.cs/#L23" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

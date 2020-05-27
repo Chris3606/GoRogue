@@ -1,0 +1,753 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class GameObject
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class GameObject
+   ">
+    <meta name="generator" content="docfx 2.52.0.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="GoRogue.GameFramework.GameObject">
+  
+  
+  <h1 id="GoRogue_GameFramework_GameObject" data-uid="GoRogue.GameFramework.GameObject" class="text-break">Class GameObject
+  </h1>
+  <div class="markdown level0 summary"><p>Base class for any object that has a grid position and can be added to a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.  Implements basic attributes generally common to all objects
+on a map, as well as properties/methods that the Map class needs to function.  It also implements <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>, which means you can attach
+components to it.  In cases where this class cannot be inherited from, have your class implement <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a> via a private GameObject field.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><a class="xref" href="GoRogue.ComponentContainer.html">ComponentContainer</a></div>
+    <div class="level2"><span class="xref">GameObject</span></div>
+  </div>
+  <div classs="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a></div>
+    <div><a class="xref" href="GoRogue.IHasID.html">IHasID</a></div>
+    <div><a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a></div>
+    <div><a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_RemoveComponent_System_Object_">ComponentContainer.RemoveComponent(Object)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_HasComponents_System_Type___">ComponentContainer.HasComponents(Type[])</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_HasComponent_System_Type_">ComponentContainer.HasComponent(Type)</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_HasComponent__1">ComponentContainer.HasComponent&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_GetComponent__1">ComponentContainer.GetComponent&lt;T&gt;()</a>
+    </div>
+    <div>
+      <a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_GetComponents__1">ComponentContainer.GetComponents&lt;T&gt;()</a>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="GoRogue.GameFramework.html">GoRogue.GameFramework</a></h6>
+  <h6><strong>Assembly</strong>: GoRogue.dll</h6>
+  <h5 id="GoRogue_GameFramework_GameObject_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class GameObject : ComponentContainer, IGameObject, IHasID, IHasLayer, IHasComponents</code></pre>
+  </div>
+  <h5 id="GoRogue_GameFramework_GameObject_remarks"><strong>Remarks</strong></h5>
+  <div class="markdown level0 remarks"><p>This class is designed to serve as a base class for your own game objects in your game.  It implements basic common functionality such as
+walkability and transparency, provides some infrastructure that allows it to be added to instances of <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>, and implements the
+framework for GoRogue's component system.  It also implements the necessary functionality that allows GameObjects to be added to an
+<a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> implementation.</p>
+<p>Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one (GameObject), or implement
+<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a> by composition using a private field of this class, and use that as
+the base class for your game's objects.  There is an example of doing this <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
+If you utilize the component system, a subclass of GameObject isn't strictly necessary, as you could just construct basic GameObject instances and add
+components to them.  In either case, a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a> instance can be used to store these objects efficiently. As well, Map provides functionality that will allow you to retrieve your
+objects as references of their derived type (MyGameObject or MyTerrain, in the example above), meaning that you can implement any common, game-specific functionality you need and have
+easy access to that information when objects are retrieved from the map.  This also means that if you prefer an inheritance-based approach, you can simply not utilize
+the component system, and you are still able to use these Map functions to differentiate functionality.</p>
+<p>Although the component system will accept items of any type as components, there is an optional <a class="xref" href="GoRogue.GameFramework.Components.IGameObjectComponent.html">IGameObjectComponent</a> interface that GoRogue provides,
+that has a field for the parent, eg. the IGameObject that it is attached to.  This field is automatically kept up to date as you add/remove components
+if you implement this interface for your components.</p>
+</div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject__ctor_GoRogue_Coord_System_Int32_GoRogue_GameFramework_IGameObject_System_Boolean_System_Boolean_System_Boolean_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.%23ctor(GoRogue.Coord%2CSystem.Int32%2CGoRogue.GameFramework.IGameObject%2CSystem.Boolean%2CSystem.Boolean%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L140">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject__ctor_" data-uid="GoRogue.GameFramework.GameObject.#ctor*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject__ctor_GoRogue_Coord_System_Int32_GoRogue_GameFramework_IGameObject_System_Boolean_System_Boolean_System_Boolean_" data-uid="GoRogue.GameFramework.GameObject.#ctor(GoRogue.Coord,System.Int32,GoRogue.GameFramework.IGameObject,System.Boolean,System.Boolean,System.Boolean)">GameObject(Coord, Int32, IGameObject, Boolean, Boolean, Boolean)</h4>
+  <div class="markdown level1 summary"><p>Constructor.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public GameObject(Coord position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td><span class="parametername">position</span></td>
+        <td><p>Position to start the object at.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">layer</span></td>
+        <td><p>The layer of of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a> the object is assigned to.</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a></td>
+        <td><span class="parametername">parentObject</span></td>
+        <td><p>Object holding this GameObject instance. If you are inheriting from GameObject,
+or using a backing field of type GameObject to implement <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>, for example, you would pass <span class="xref">langword_csharp_this</span> at construction.
+Otherwise, if you are simply instantiating base GameObject instances and adding them to a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>, you would pass null.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isStatic</span></td>
+        <td><p>Whether or not the object can be moved (true if the object CANNOT be moved,
+false otherwise).</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isWalkable</span></td>
+        <td><p>Whether or not the object is to be considered &quot;walkable&quot;, eg. whether or not the square it resides
+on can be traversed by other, non-walkable objects on the same <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.  Effectively, whether or not this
+object collides.</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">isTransparent</span></td>
+        <td><p>Whether or not the object is considered &quot;transparent&quot;, eg. whether or not light passes through it
+for the sake of calculating the FOV of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_CurrentMap.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.CurrentMap%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L123">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_CurrentMap_" data-uid="GoRogue.GameFramework.GameObject.CurrentMap*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_CurrentMap" data-uid="GoRogue.GameFramework.GameObject.CurrentMap">CurrentMap</h4>
+  <div class="markdown level1 summary"><p>The current <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a> which this object resides on.  Returns null if the object has not been added to a map.
+A GameObject is allowed to reside on only one map.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Map CurrentMap { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.GameFramework.Map.html">Map</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_ID.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.ID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L112">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_ID_" data-uid="GoRogue.GameFramework.GameObject.ID*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_ID" data-uid="GoRogue.GameFramework.GameObject.ID">ID</h4>
+  <div class="markdown level1 summary"><p>ID of the object.  Used for the sake of putting instances of this class in an <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a> implementation,
+and is NOT guaranteed to be entirely unique, though this can be modified by overriding the <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_GenerateID">GenerateID()</a>
+function.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public uint ID { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_IsStatic.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.IsStatic%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L105">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_IsStatic_" data-uid="GoRogue.GameFramework.GameObject.IsStatic*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_IsStatic" data-uid="GoRogue.GameFramework.GameObject.IsStatic">IsStatic</h4>
+  <div class="markdown level1 summary"><p>Whether or not the object is &quot;static&quot;.  Static objects CANNOT be moved, and only static objects may
+be placed on layer 0 of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsStatic { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_IsTransparent.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.IsTransparent%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L99">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_IsTransparent_" data-uid="GoRogue.GameFramework.GameObject.IsTransparent*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_IsTransparent" data-uid="GoRogue.GameFramework.GameObject.IsTransparent">IsTransparent</h4>
+  <div class="markdown level1 summary"><p>Whether or not the object is considered &quot;transparent&quot;, eg. whether or not light passes through it
+for the sake of calculating the FOV of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool IsTransparent { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_IsWalkable.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.IsWalkable%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L78">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_IsWalkable_" data-uid="GoRogue.GameFramework.GameObject.IsWalkable*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_IsWalkable" data-uid="GoRogue.GameFramework.GameObject.IsWalkable">IsWalkable</h4>
+  <div class="markdown level1 summary"><p>Whether or not the object is to be considered &quot;walkable&quot;, eg. whether or not the square it resides
+on can be traversed by other, non-walkable objects on the same <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.  Effectively, whether or not this
+object collides.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual bool IsWalkable { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_Layer.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.Layer%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L117">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_Layer_" data-uid="GoRogue.GameFramework.GameObject.Layer*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_Layer" data-uid="GoRogue.GameFramework.GameObject.Layer">Layer</h4>
+  <div class="markdown level1 summary"><p>Layer of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a> that this object will reside on.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int Layer { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_Position.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.Position%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L44">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_Position_" data-uid="GoRogue.GameFramework.GameObject.Position*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_Position" data-uid="GoRogue.GameFramework.GameObject.Position">Position</h4>
+  <div class="markdown level1 summary"><p>The position of this object on the grid. Any time this value is changed, the <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_Moved">Moved</a> event is fired.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual Coord Position { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Coord.html">Coord</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_GameFramework_GameObject_Position_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>This property may be overriden to implement custom functionality, however it is highly recommended
+that you call the base set in the overridden setter, as it performs collision detection.</p>
+</div>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_AddComponent_System_Object_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.AddComponent(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L216">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_AddComponent_" data-uid="GoRogue.GameFramework.GameObject.AddComponent*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_AddComponent_System_Object_" data-uid="GoRogue.GameFramework.GameObject.AddComponent(System.Object)">AddComponent(Object)</h4>
+  <div class="markdown level1 summary"><p>Adds the given object as a component.  Throws an exception if that specific instance is already attached to this GameObject.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void AddComponent(object component)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">component</span></td>
+        <td><p>Component to add.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_AddComponent_System_Object_">ComponentContainer.AddComponent(Object)</a></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_GenerateID.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.GenerateID%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L180">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_GenerateID_" data-uid="GoRogue.GameFramework.GameObject.GenerateID*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_GenerateID" data-uid="GoRogue.GameFramework.GameObject.GenerateID">GenerateID()</h4>
+  <div class="markdown level1 summary"><p>Function used at construction to assign an ID to the object.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual uint GenerateID()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.UInt32</span></td>
+        <td><p>An ID to assign to the current object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="GoRogue_GameFramework_GameObject_GenerateID_remarks">Remarks</h5>
+  <div class="markdown level1 remarks"><p>The default implementation simply assigns a random number in range of valid uints. This
+is sufficiently distinct for the purposes of placing the objects in an <a class="xref" href="GoRogue.ISpatialMap-1.html">ISpatialMap&lt;T&gt;</a>
+implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
+implementation is required, override this function to return an appropriate ID. Keep in
+mind a relatively high degree of uniqueness is necessary for efficient placement in an
+ISpatialMap implementation.</p>
+</div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_MoveIn_GoRogue_Direction_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.MoveIn(GoRogue.Direction)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L160">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_MoveIn_" data-uid="GoRogue.GameFramework.GameObject.MoveIn*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_MoveIn_GoRogue_Direction_" data-uid="GoRogue.GameFramework.GameObject.MoveIn(GoRogue.Direction)">MoveIn(Direction)</h4>
+  <div class="markdown level1 summary"><p>Attempts to move the object in the given direction, and returns true if the object was successfully
+moved, false otherwise.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool MoveIn(Direction direction)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.Direction.html">Direction</a></td>
+        <td><span class="parametername">direction</span></td>
+        <td><p>The direction in which to try to move the object.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><p>True if the object was successfully moved, false otherwise.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_OnMapChanged_GoRogue_GameFramework_Map_.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.OnMapChanged(GoRogue.GameFramework.Map)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L187">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_OnMapChanged_" data-uid="GoRogue.GameFramework.GameObject.OnMapChanged*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_OnMapChanged_GoRogue_GameFramework_Map_" data-uid="GoRogue.GameFramework.GameObject.OnMapChanged(GoRogue.GameFramework.Map)">OnMapChanged(Map)</h4>
+  <div class="markdown level1 summary"><p>Internal use only, do not call manually!  Must, at minimum, update the <a class="xref" href="GoRogue.GameFramework.GameObject.html#GoRogue_GameFramework_GameObject_CurrentMap">CurrentMap</a> field of the
+GameObject to reflect the change.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void OnMapChanged(Map newMap)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="GoRogue.GameFramework.Map.html">Map</a></td>
+        <td><span class="parametername">newMap</span></td>
+        <td><p>New map to which the GameObject has been added.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_RemoveComponents_System_Object___.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.RemoveComponents(System.Object%5B%5D)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L235">View Source</a>
+  </span>
+  <a id="GoRogue_GameFramework_GameObject_RemoveComponents_" data-uid="GoRogue.GameFramework.GameObject.RemoveComponents*"></a>
+  <h4 id="GoRogue_GameFramework_GameObject_RemoveComponents_System_Object___" data-uid="GoRogue.GameFramework.GameObject.RemoveComponents(System.Object[])">RemoveComponents(Object[])</h4>
+  <div class="markdown level1 summary"><p>Removes the given component(s) from the GameObject.  Throws an exception if a component given is not attached to
+the GameObject.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override void RemoveComponents(params object[] components)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><span class="parametername">components</span></td>
+        <td><p>One or more component instances to remove.</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><a class="xref" href="GoRogue.ComponentContainer.html#GoRogue_ComponentContainer_RemoveComponents_System_Object___">ComponentContainer.RemoveComponents(Object[])</a></div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject_Moved.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject.Moved%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L69">View Source</a>
+  </span>
+  <h4 id="GoRogue_GameFramework_GameObject_Moved" data-uid="GoRogue.GameFramework.GameObject.Moved">Moved</h4>
+  <div class="markdown level1 summary"><p>Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
+the object is part of a <a class="xref" href="GoRogue.GameFramework.Map.html">Map</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler&lt;ItemMovedEventArgs&lt;IGameObject&gt;&gt; Moved</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span>&lt;<a class="xref" href="GoRogue.ItemMovedEventArgs-1.html">ItemMovedEventArgs</a>&lt;<a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>&gt;&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="GoRogue.GameFramework.IGameObject.html">IGameObject</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.IHasID.html">IHasID</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.IHasLayer.html">IHasLayer</a>
+  </div>
+  <div>
+      <a class="xref" href="GoRogue.IHasComponents.html">IHasComponents</a>
+  </div>
+  <h3 id="extensionmethods">Extension Methods</h3>
+  <div>
+      <a class="xref" href="GoRogue.Utility.html#GoRogue_Utility_Yield__1___0_">Utility.Yield&lt;T&gt;(T)</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/new/develop/apiSpec/new?filename=GoRogue_GameFramework_GameObject.md&amp;value=---%0Auid%3A%20GoRogue.GameFramework.GameObject%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/Chris3606/GoRogue/blob/develop/GoRogue/GameFramework/GameObject.cs/#L31" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
