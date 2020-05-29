@@ -2,7 +2,7 @@
 
 using GoRogue.MapGeneration;
 
-namespace GoRogue.UnitTests.MapGeneration
+namespace GoRogue.UnitTests.Mocks
 {
     #region Map ContextComponents
     interface IMapContextComponent { }
@@ -12,24 +12,24 @@ namespace GoRogue.UnitTests.MapGeneration
     #endregion
 
     #region Generation Steps
-    class TestGenerationStep : GenerationStep
+    class MockGenerationStep : GenerationStep
     {
         private readonly Action? _onPerform;
 
         // Necessary to avoid constructor ambiguity
-        public TestGenerationStep(Action? onPerform, string? name = null)
+        public MockGenerationStep(Action? onPerform, string? name = null)
             : base(name)
         {
             _onPerform = onPerform;
         }
 
-        public TestGenerationStep(Action onPerform, string? name = null, params Type[] requiredComponents)
+        public MockGenerationStep(Action onPerform, string? name = null, params Type[] requiredComponents)
             : base(name, requiredComponents)
-         {
+        {
             _onPerform = onPerform;
-         }
+        }
 
-        public TestGenerationStep(Action onPerform, string? name = null, params (Type type, string? tag)[] requiredComponents)
+        public MockGenerationStep(Action onPerform, string? name = null, params (Type type, string? tag)[] requiredComponents)
             : base(name, requiredComponents)
         {
             _onPerform = onPerform;
