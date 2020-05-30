@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Equal(32, sm.NumberOfLayers);
             Assert.Equal(0, sm.StartingLayer);
             foreach (var layer in sm.Layers)
-                Assert.Equal(true, layer is AdvancedSpatialMap<MockSpatialMapItem>);
+                Assert.True(layer is AdvancedSpatialMap<MockSpatialMapItem>);
 
             // Test multiple item layers
             uint multipleItemLayerMask = LayerMasker.DEFAULT.Mask(0, 2, 5);
@@ -103,7 +103,7 @@ namespace GoRogue.UnitTests.SpatialMaps
                 sm.Add(i, (1, 2));
                 Assert.Equal(previousCount + 1, sm.Items.Count());
             }
-
+            
             List<MockSpatialMapItem> itemsRemoved = sm.Remove((5, 6)).ToList();
             Assert.Empty(itemsRemoved);
 

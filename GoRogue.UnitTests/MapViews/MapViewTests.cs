@@ -9,11 +9,12 @@ namespace GoRogue.UnitTests.MapViews
 {
     public class MapViewTests
     {
+        private int width = 50;
+        private int height = 50;
         [Fact]
         public void ApplyOverlayTest()
         {
-            var map = new ArrayMap<bool>(100, 100);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
 
             var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
 
@@ -27,7 +28,7 @@ namespace GoRogue.UnitTests.MapViews
         public void LambaMapViewTest()
         {
             var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
             checkMaps(map, lambdaMapView);
@@ -48,7 +49,7 @@ namespace GoRogue.UnitTests.MapViews
         public void LambdaSettableTranslationMapTest()
         {
             var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
 
             var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
             checkMaps(map, settable);
@@ -63,7 +64,7 @@ namespace GoRogue.UnitTests.MapViews
         public void LambdaTranslationMapTest()
         {
             var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
             checkMaps(map, lambdaMap);

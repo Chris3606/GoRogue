@@ -105,9 +105,9 @@ namespace GoRogue.UnitTests
                 for (int y = 0; y < map.Height; y++)
                 {
                     if (fov[x, y] > 0.0)
-                        Assert.Equal(true, currentFov.Contains((x, y)));
+                        Assert.True(currentFov.Contains((x, y)));
                     else
-                        Assert.Equal(false, currentFov.Contains((x, y)));
+                        Assert.False(currentFov.Contains((x, y))); //... I think?
                 }
         }
 
@@ -129,17 +129,17 @@ namespace GoRogue.UnitTests
             foreach (var pos in prevFov)
             {
                 if (!curFov.Contains(pos))
-                    Assert.Equal(true, newlyUnseen.Contains(pos));
+                    Assert.True(newlyUnseen.Contains(pos));
                 else
-                    Assert.Equal(false, newlyUnseen.Contains(pos));
+                    Assert.False(newlyUnseen.Contains(pos));
             }
 
             foreach (var pos in curFov)
             {
                 if (!prevFov.Contains(pos))
-                    Assert.Equal(true, newlySeen.Contains(pos));
+                    Assert.True(newlySeen.Contains(pos));
                 else
-                    Assert.Equal(false, newlySeen.Contains(pos));
+                    Assert.False(newlySeen.Contains(pos));
             }
         }
 
@@ -186,9 +186,9 @@ namespace GoRogue.UnitTests
                 for (int y = 0; y < map.Height; y++)
                 {
                     if (senseMap[x, y] > 0.0)
-                        Assert.Equal(true, currentSenseMap.Contains((x, y)));
+                        Assert.True(currentSenseMap.Contains((x, y)));
                     else
-                        Assert.Equal(false, currentSenseMap.Contains((x, y)));
+                        Assert.False(currentSenseMap.Contains((x, y)));
                 }
 
         }
@@ -196,8 +196,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void FOVSenseMapEquivalency()
         {
-            ArrayMap<bool> map = new ArrayMap<bool>(100, 100);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            ArrayMap<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             var positions = Enumerable.Range(0, 100).Select(x => map.RandomPosition(true)).ToList();
 
             // Make 2-layer thick walls to verify wall-lighting is working properly
@@ -233,7 +232,7 @@ namespace GoRogue.UnitTests
                         Console.WriteLine($"Distance between source and fail point: {Distance.Euclidean.Calculate(senseSource.Position, pos)}, source radius: {senseSource.Radius}");
                     }
 
-                    Assert.Equal(true, success);
+                    Assert.True(success);
                 }
             }
 
@@ -286,7 +285,7 @@ namespace GoRogue.UnitTests
         public void FOVBooleanOutput()
         {
             var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             var fov = new FOV(map);
             fov.Calculate(5, 5, 3);
 
@@ -411,7 +410,7 @@ namespace GoRogue.UnitTests
             var map = new ArrayMap<bool>(mapWidth, mapHeight);
             var resMap = new ArrayMap<double>(mapWidth, mapHeight);
 
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
 
             for (int x = 0; x < map.Width; x++)
                 for (int y = 0; y < map.Height; y++)
@@ -423,7 +422,7 @@ namespace GoRogue.UnitTests
         private bool testLOS(Radius shape)
         {
             var map = new ArrayMap<bool>(width, height);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             // Start out at false
             bool[,] radiusMap = new bool[width, height];
             bool[,] losMap = new bool[width, height];

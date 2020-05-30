@@ -14,8 +14,7 @@ namespace GoRogue.UnitTests.Mocks
     {
         public static IMapView<double> BoxResMap(int width, int height)
         {
-            var map = new ArrayMap<bool>(width, height);
-            map = (ArrayMap<bool>)Rectangle(map);
+            var map = (ArrayMap<bool>)Rectangle(width, height);
             return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
         }
 
@@ -30,54 +29,59 @@ namespace GoRogue.UnitTests.Mocks
 
             return map;
         }
-        internal static ISettableMapView<bool> Rectangle(ISettableMapView<bool> map)
+        internal static ISettableMapView<bool> Rectangle(int width, int height)
         {
+            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
             for (int i = 0; i < map.Width; i++)
             {
                 for (int j = 0; j < map.Height; j++)
                 {
-                    map[i, j] = true;
+                    if (i == 0 || i == map.Width - 1 || j == 0 || j == map.Height - 1)
+                        map[i, j] = false;
+                    else
+                        map[i, j] = true;
                 }
             }
 
             return map;
         }
-        internal static ISettableMapView<bool> Spiral(ISettableMapView<bool> map)
-        {
-            int center = map.Width / 2;
-            int dx = 0;
-            int dy = 1;
-            int x = 0;
-            int y = 0;
+        //internal static ISettableMapView<bool> Spiral(int width, int height)
+        //{
+        //    int center = map.Width / 2;
+        //    int dx = 0;
+        //    int dy = 1;
+        //    int x = 0;
+        //    int y = 0;
 
-            for (var i = 0; i < map.Width; i++)
-            {
-                for (var j = 0; j < map.Height; j++)
-                {
+        //    for (var i = 0; i < map.Width; i++)
+        //    {
+        //        for (var j = 0; j < map.Height; j++)
+        //        {
 
-                    if (-center / 2 < i && i < center / 2)
-                        if (-center / 2 < j && j < center / 2)
-                            if (map.Contains(x, y))
-                                map[x, y] = false;
+        //            if (-center / 2 < i && i < center / 2)
+        //                if (-center / 2 < j && j < center / 2)
+        //                    if (map.Contains(x, y))
+        //                        map[x, y] = false;
 
-                    if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1 - y))
-                    {
-                        var temp = dx;
-                        dx = -dy;
-                        dy = temp;
-                    }
-                    x += dx;
-                    y += dy;
-                }
-            }
-            return map;
-        }
-        internal static ISettableMapView<bool> DisconnectedSquares(ISettableMapView<bool> map)
+        //            if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1 - y))
+        //            {
+        //                var temp = dx;
+        //                dx = -dy;
+        //                dy = temp;
+        //            }
+        //            x += dx;
+        //            y += dy;
+        //        }
+        //    }
+        //    return map;
+        //}
+        internal static ISettableMapView<bool> DisconnectedSquares(int width, int height)
         {
             var r1 = new Rectangle(3, 3, 10, 10);
             var r2 = new Rectangle(30, 3, 10, 10);
             var r3 = new Rectangle(3, 30, 10, 10);
             var r4 = new Rectangle(30, 30, 10, 10);
+            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
             {
@@ -97,8 +101,10 @@ namespace GoRogue.UnitTests.Mocks
             }
             return map;
         }
-        internal static ISettableMapView<bool> CardinalBisection(ISettableMapView<bool> map, int timesToBisect)
+        internal static ISettableMapView<bool> CardinalBisection(int width, int height, int timesToBisect)
         {
+            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+
             for (var i = 0; i < map.Width; i++)
             {
                 for (var j = 0; j < map.Height; j++)
@@ -115,8 +121,10 @@ namespace GoRogue.UnitTests.Mocks
             }
             return map;
         }
-        internal static ISettableMapView<bool> DiagonalBisection(ISettableMapView<bool> map, int timesToBisect)
+        internal static ISettableMapView<bool> DiagonalBisection(int width, int height, int timesToBisect)
         {
+            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+
             for (var i = 0; i < map.Width; i++)
             {
                 for (var j = 0; j < map.Height; j++)

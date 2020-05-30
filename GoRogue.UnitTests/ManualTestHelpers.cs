@@ -16,6 +16,14 @@ namespace GoRogue.UnitTests
 {
     public class ManualTestHelpers
     {
+        const int width = 50;
+        const int height = 50;
+        [Fact]
+        public void ManualPrintMockMap()
+        {
+            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            Console.Write(map.ToString());
+        }
         [Fact]
         public void ManualPrint2DArray()
         {
@@ -23,12 +31,13 @@ namespace GoRogue.UnitTests
             var i = 0;
 
             for (var x = 0; x < 10; x++)
+            {
                 for (var y = 0; y < 10; y++)
                 {
                     array[x, y] = i;
                     i++;
                 }
-
+            }
             Console.WriteLine(array.ExtendToString());
             Console.WriteLine("\nIn Grid:");
             Console.WriteLine(array.ExtendToStringGrid());
@@ -38,7 +47,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(array.ExtendToStringGrid(-5));
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintAdjacencyRule()
         {
             Console.WriteLine(AdjacencyRule.Cardinals);
@@ -46,7 +55,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(AdjacencyRule.Diagonals);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintDiceExpression()
         {
             var expr = Dice.Parse("1d(1d12+4)+5*3");
@@ -54,7 +63,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(expr);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintDictionary()
         {
             var myDict = new Dictionary<int, string>();
@@ -67,7 +76,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(myDict.ExtendToString());
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintDisjointSet()
         {
             var s = new DisjointSet(5);
@@ -78,11 +87,11 @@ namespace GoRogue.UnitTests
             Console.WriteLine(s);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintFOV()
         {
             var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             var myFov = new FOV(map);
             myFov.Calculate(5, 5, 3);
 
@@ -91,7 +100,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(myFov.ToString(3));
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintList()
         {
             var myList = new List<int>();
@@ -106,7 +115,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(myList.ExtendToString(separator: " | "));
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintMultiSpatialMap()
         {
             var sm = new MultiSpatialMap<MyIDImpl>();
@@ -119,18 +128,18 @@ namespace GoRogue.UnitTests
             Console.WriteLine(sm);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintPath()
         {
             var map = new ArrayMap<bool>(30, 30);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(1, 2, 5, 6);
 
             Console.WriteLine(path);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintRadius()
         {
             Console.WriteLine(Radius.Circle);
@@ -138,8 +147,8 @@ namespace GoRogue.UnitTests
             Console.WriteLine(Radius.Diamond);
         }
 
-        [Fact(Skip = "Used for manual testing")]
-        public void ManualPrintRadiusAreaProvider()
+        [Fact]
+        public void ManualPrintRadiusLocationContext()
         {
             var boundlessAreaProv = new RadiusLocationContext((5, 4), 10);
             var boundedAreaProv = new RadiusLocationContext((5, 4), 10, new Rectangle(0, 0, 10, 10));
@@ -148,18 +157,18 @@ namespace GoRogue.UnitTests
             Console.WriteLine(boundedAreaProv + " is bounded...");
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintRectangle()
         {
             var rect = new Rectangle(0, 0, 10, 10);
             Console.WriteLine(rect);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintSenseMap()
         {
             var map = new ArrayMap<bool>(30, 30);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(map);
+            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
 
             var resMap = new ResMap(map);
             var senseMap = new SenseMap(resMap);
@@ -178,7 +187,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(source);
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintSet()
         {
             var mySet = new HashSet<int>();
@@ -193,7 +202,7 @@ namespace GoRogue.UnitTests
             Console.WriteLine(mySet.ExtendToString(separator: " | "));
         }
 
-        [Fact(Skip = "Used for manual testing")]
+        [Fact]
         public void ManualPrintSpatialMap()
         {
             var sm = new SpatialMap<MyIDImpl>();

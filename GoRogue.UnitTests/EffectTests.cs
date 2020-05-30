@@ -22,25 +22,25 @@ namespace GoRogue.UnitTests
         public void EffectDurationDecrement()
         {
             var effect = new IntEffect("Test effect", 2);
-            Assert.Equal(effect.Duration, 2);
+            Assert.Equal(2, effect.Duration);
 
             effect.Trigger(null);
-            Assert.Equal(effect.Duration, 1);
+            Assert.Equal(1, effect.Duration);
 
             effect.Trigger(null);
-            Assert.Equal(effect.Duration, 0);
+            Assert.Equal(0, effect.Duration);
 
             effect.Trigger(null);
-            Assert.Equal(effect.Duration, 0);
+            Assert.Equal(0, effect.Duration);
 
             var effect2 = new IntEffect("Test Effect", IntEffect.INFINITE);
-            Assert.Equal(effect2.Duration, IntEffect.INFINITE);
+            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
 
             effect2.Trigger(null);
-            Assert.Equal(effect2.Duration, IntEffect.INFINITE);
+            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
 
             effect2.Trigger(null);
-            Assert.Equal(effect2.Duration, IntEffect.INFINITE);
+            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
         }
 
         [Fact]

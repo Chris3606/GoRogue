@@ -11,35 +11,47 @@ namespace GoRogue.UnitTests.MapGeneration
 {
     public class MapAreaFinderTests
     {
-        public static readonly List<(MockMap, AdjacencyRule, int)> TestData = new List<(MockMap, AdjacencyRule, int)>()
+        const int width = 50;
+        const int height = 50;
+        public static readonly List<(IMapView<bool>, AdjacencyRule, int)> TestData = new List<(IMapView<bool>, AdjacencyRule, int)>()
         {
 
         };
-        public readonly MockMap[] Maps =
+        private readonly IMapView<bool>[] _maps =
         {
-            new MockMap(),
-            new MockMap().CardinalBisection(1),
-            new MockMap().DiagonalBisection(1),
-            new MockMap().CardinalBisection(2),
-            new MockMap().DiagonalBisection(2),
-            new MockMap().DisconnectedSquares(),
-            new MockMap().Spiral(),
+           MockFactory.Rectangle(width, height),
+           MockFactory.CardinalBisection(width, height, 1),
+           MockFactory.DiagonalBisection(width, height, 1),
+           MockFactory.CardinalBisection(width, height, 2),
+           MockFactory.DiagonalBisection(width, height, 2),
+           MockFactory.DisconnectedSquares(width, height),
         };
 
-        public readonly AdjacencyRule[] Adjacencies =
+        private readonly AdjacencyRule[] _adjacencies =
         {
             AdjacencyRule.Cardinals,
             AdjacencyRule.Diagonals,
             AdjacencyRule.EightWay
         };
 
+        private readonly int[] _expected =
+        {
+            1,1,1, //single rectangle
+            2,2,2, //single cardinal
+            2,1,1, //single diagonal
+            4,4,4, //double cardinal
+            4,1,1, //double diagonal
+            5,5,5, //disconnected squares
+        };
+
         public MapAreaFinderTests()
         {
-            foreach(MockMap map in Maps)
+            int i = 0;
+            foreach(IMapView<bool> map in _maps)
             {
-                foreach(AdjacencyRule rule in Adjacencies)
+                foreach(AdjacencyRule rule in _adjacencies)
                 {
-
+                    //... combinate?
                 }
             }
         }
@@ -47,13 +59,12 @@ namespace GoRogue.UnitTests.MapGeneration
 
         //[Theory]
         //[MemberData(nameof(TestData))]
-        public void MapAreasTest(MockMap map, AdjacencyRule adjacency)
+        public void MapAreasTest(IMapView<bool> map, AdjacencyRule adjacency, int expected)
         {
-            map.SetExpectations(adjacency);
-            MapAreaFinder maf = new MapAreaFinder(map.WalkabilityView, adjacency);
+            MapAreaFinder maf = new MapAreaFinder(map, adjacency);
             List<Area> answer = maf.MapAreas().ToList();
-            //expected areas lovingly crafted by hand
-            Assert.Equal(1, answer.Count);
+            
+            Assert.Equal(expected, answer.Count);
         }
     }
 }
