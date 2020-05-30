@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapGeneration;
+using GoRogue.UnitTests.Mocks;
 using Xunit;
 using XUnit.ValueTuples;
 

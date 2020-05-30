@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
+using GoRogue.UnitTests.Mocks;
 using Xunit;
 using XUnit.ValueTuples;
 
@@ -119,20 +120,20 @@ namespace GoRogue.UnitTests.MapGeneration
         public void AddStepReturnsThis()
         {
             // Verify AddStep returns its instance (for chaining)
-            var ret = _generator.AddStep(new TestGenerationStep(null));
+            var ret = _generator.AddStep(new MockGenerationStep(null));
             Assert.Same(_generator, ret);
         }
 
         [Fact]
         public void AddStepAddsToList()
         {
-            var step = new TestGenerationStep(null);
+            var step = new MockGenerationStep(null);
 
             _generator.AddStep(step);
             Assert.Equal(1, _generator.GenerationSteps.Count);
             Assert.Same(step, _generator.GenerationSteps[0]);
 
-            var step2 = new TestGenerationStep(null);
+            var step2 = new MockGenerationStep(null);
             _generator.AddStep(step2);
             Assert.Equal(TestUtils.Enumerable(step, step2), _generator.GenerationSteps);
         }
@@ -141,9 +142,9 @@ namespace GoRogue.UnitTests.MapGeneration
         public void GenerateCompletesStepsInOrder()
         {
             // Add steps that will trigger an exception if they're completed out of order
-            _generator.AddStep(new TestGenerationStep(GetOnPerform(1)))
-                .AddStep(new TestGenerationStep(GetOnPerform(2)))
-                .AddStep(new TestGenerationStep(GetOnPerform(3)));
+            _generator.AddStep(new MockGenerationStep(GetOnPerform(1)))
+                .AddStep(new MockGenerationStep(GetOnPerform(2)))
+                .AddStep(new MockGenerationStep(GetOnPerform(3)));
 
             // We directly assert that all the steps were called; IncrementOnlyValue will throw if any were executed out of order or duplicated.
             _generator.Generate();
