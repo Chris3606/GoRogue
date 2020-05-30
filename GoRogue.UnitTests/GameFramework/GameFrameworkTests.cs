@@ -5,12 +5,13 @@ using GoRogue.MapViews;
 using Xunit;
 using System;
 using SadRogue.Primitives;
+using System.Collections.Generic;
 
 namespace GoRogue.UnitTests.GameFramework
 {
     public class GameFrameworkTests
     {
-        //[Fact]
+        [Fact]
         public void ApplyTerrainOverlay()
         {
             var grMap = new ArrayMap<bool>(10, 10);
@@ -28,11 +29,11 @@ namespace GoRogue.UnitTests.GameFramework
 
             Assert.Equal(grMap.Width, map.Width);
             Assert.Equal(grMap.Height, map.Height);
-            //foreach (var pos in map.Positions())
-            //    Assert.Equal(tempMap[pos], map.GetTerrain(pos));
+            foreach (var pos in map.Positions())
+                Assert.Equal(tempMap[pos], map.GetTerrainAt(pos));
         }
 
-        //[Fact]
+        [Fact]
         public void ApplyTerrainOverlayTranslation()
         {
             var grMap = new ArrayMap<bool>(10, 10);
@@ -42,14 +43,14 @@ namespace GoRogue.UnitTests.GameFramework
             map.ApplyTerrainOverlay(grMap, (pos, b) => b ? new GameObject(pos, 0, null, true, true, true) : new GameObject(pos, 0, null, true, false, false));
 
             // If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
-            //foreach (var pos in grMap.Positions())
-            //    if (grMap[pos])
-            //        Assert.IsTrue(map.GetTerrain(pos).IsWalkable == true);
-            //    else
-            //        Assert.IsTrue(map.GetTerrain(pos).IsWalkable == false);
+            foreach (var pos in grMap.Positions())
+                if (grMap[pos])
+                    Assert.True(map.GetTerrainAt(pos).IsWalkable);
+                else
+                    Assert.False(map.GetTerrainAt(pos).IsWalkable);
         }
 
-        //[Fact]
+        [Fact]
         public void OutOfBoundsTerrainAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
@@ -58,51 +59,49 @@ namespace GoRogue.UnitTests.GameFramework
             Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
         }
 
-        //[Fact]
+        [Fact]
         public void OutOfBoundsEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((-1, -1), 1, null, false, true, true);
 
-            //map.AddEntity(obj);
-            //Assert.Equal();
+            Assert.Throws<InvalidOperationException>(()=> map.AddEntity(obj));
+            Assert.Empty(map.Entities);
         }
 
-        //[Fact]
+        [Fact]
         public void OutOfBoundsMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((1, 1), 1, null, false, true, true);
 
-            //bool added = map.AddEntity(obj);
-            //Assert.Equal(true, added);
+            map.AddEntity(obj);
 
-            //var oldPos = obj.Position;
-            //obj.Position = (-1, -1);
-            //Assert.AreEqual(oldPos, obj.Position);
+            var oldPos = obj.Position;
+            Assert.Throws<InvalidOperationException>(() => obj.Position = (-1, -1));
+            Assert.Equal(oldPos, obj.Position);
         }
 
-        //[Fact]
+        [Fact]
         public void ValidEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((1, 1), 1, null, false, true, true);
 
-            //bool added = map.AddEntity(obj);
-            //Assert.AreEqual(true, added);
+            map.AddEntity(obj);
+            Assert.Single(map.Entities);
         }
 
-        //[Fact]
+        [Fact]
         public void ValidEntityMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((1, 1), 1, null, false, true, true);
+            Point five = new Point(5, 5);
+            map.AddEntity(obj);
 
-            //bool added = map.AddEntity(obj);
-            //Assert.Equal(true, added);
-
-            //obj.Position = (5, 5);
-            //Assert.Equal((5, 5), obj.Position);
+            obj.Position = five;
+            Assert.Equal(five, obj.Position);
         }
     }
 }
