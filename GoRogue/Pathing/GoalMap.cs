@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
@@ -18,12 +19,13 @@ namespace GoRogue.Pathing
     /// have changed, or <see cref="UpdatePathsOnly"/> if the goals have changed but not the obstacles.
     /// 
     /// This class exposes the resulting goal map to you via indexers -- GoalMap implements
-    /// <see cref="IMapView{Double}"/>, where <see langword="null"/> indicates a square is an obstacle,
+    /// <see cref="IMapView{T}"/>, where <see langword="null"/> indicates a square is an obstacle,
     /// and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
     /// contains a goal.
     /// 
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)"/>
     /// </remarks>
+    [PublicAPI]
     public class GoalMap : IMapView<double?>
     {
         private readonly HashSet<Point> _closedSet = new HashSet<Point>();
@@ -88,8 +90,8 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Returns the goal-map value for the given position.
         /// </summary>
-        /// <param name="x">X-Pointinate of the position to return the goal-map value for.</param>
-        /// <param name="y">Y-Pointinate of the position to return the goal-map value for.</param>
+        /// <param name="x">X-coordinate of the position to return the goal-map value for.</param>
+        /// <param name="y">Y-coordinate of the position to return the goal-map value for.</param>
         /// <returns>The goal-map value for the given position.</returns>
         public double? this[int x, int y] => _goalMap[x, y];
 
@@ -108,7 +110,7 @@ namespace GoRogue.Pathing
         /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
         /// neighbors are all obstacles.
         /// </returns>
-        public Direction GetDirectionOfMinValue(Point position) => ((IMapView<double?>)this).GetDirectionOfMinValue(position, DistanceMeasurement);
+        public Direction GetDirectionOfMinValue(Point position) => this.GetDirectionOfMinValue(position, DistanceMeasurement);
 
         /// <summary>
         /// Gets the direction of the neighbor with the minimum goal-map value from the given position.
@@ -120,13 +122,14 @@ namespace GoRogue.Pathing
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(int positionX, int positionY)
-            => ((IMapView<double?>)this).GetDirectionOfMinValue(positionX, positionY, DistanceMeasurement);
+            => this.GetDirectionOfMinValue(positionX, positionY, DistanceMeasurement);
 
         /// <summary>
         /// Returns the goal-map values represented as a 2D grid-style string.
         /// </summary>
         /// <returns>A string representing the goal map values.</returns>
         public override string ToString() =>
+            // ReSharper disable once SpecifyACultureInStringConversionExplicitly
             _goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
 
         /// <summary>
@@ -194,17 +197,17 @@ namespace GoRogue.Pathing
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _edgeSet.Clear();
             _closedSet.Clear();
-            foreach (var Point in _walkable)
+            foreach (var point in _walkable)
             {
-                var state = BaseMap[Point];
+                var state = BaseMap[point];
                 if (state == GoalState.Clear)
                 {
-                    _goalMap[Point] = highVal;
+                    _goalMap[point] = highVal;
                 }
                 else
                 {
-                    _goalMap[Point] = 0.0;
-                    _edgeSet.Add(Point);
+                    _goalMap[point] = 0.0;
+                    _edgeSet.Add(point);
                 }
             }
             while (_edgeSet.Count > 0)

@@ -1,11 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
     /// <summary>
     /// Viewport is a class that effectively creates and maintains a "viewport", or subsection, of the map.
-    /// Its indexers perform relative to absolute Pointinate translations, and return the proper value of
+    /// Its indexers perform relative to absolute coordinate translations, and return the proper value of
     /// type T from the underlying map.
     /// </summary>
     /// <remarks>
@@ -21,6 +22,7 @@ namespace GoRogue.MapViews
     /// a default value for locations outside the parent map, see <see cref="UnboundedViewport{T}"/>.
     /// </remarks>
     /// <typeparam name="T">The type being exposed by the Viewport.</typeparam>
+    [PublicAPI]
     public class Viewport<T> : IMapView<T>
     {
         private readonly BoundedRectangle _boundedRect;
@@ -133,7 +135,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number

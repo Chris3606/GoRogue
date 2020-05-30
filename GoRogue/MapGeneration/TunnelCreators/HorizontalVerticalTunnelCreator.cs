@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
@@ -10,6 +11,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
     /// Implements a tunnel creation algorithm that creates a tunnel that performs all needed
     /// vertical movement before horizontal movement, or vice versa (depending on rng).
     /// </summary>
+    [PublicAPI]
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
         private readonly IGenerator _rng;
@@ -30,13 +32,13 @@ namespace GoRogue.MapGeneration.TunnelCreators
 
             if (_rng.NextBoolean())
             {
-                tunnel.Add(createHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelStart.Y));
-                tunnel.Add(createVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelEnd.X));
+                tunnel.Add(CreateHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelStart.Y));
+                tunnel.Add(CreateVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelEnd.X));
             }
             else
             {
-                tunnel.Add(createVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelStart.X));
-                tunnel.Add(createHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelEnd.Y));
+                tunnel.Add(CreateVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelStart.X));
+                tunnel.Add(CreateHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelEnd.Y));
             }
 
             return tunnel;
@@ -44,7 +46,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
 
         /// <inheritdoc/>
         public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
-        private static IEnumerable<Point> createHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
+        private static IEnumerable<Point> CreateHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
         {
             for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
             {
@@ -53,7 +55,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
             }
         }
 
-        private static IEnumerable<Point> createVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
+        private static IEnumerable<Point> CreateVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
         {
             for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
             {

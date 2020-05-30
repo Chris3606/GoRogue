@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
+using GoRogue.DiceNotation.Exceptions;
 using GoRogue.DiceNotation.Terms;
+using JetBrains.Annotations;
 
 namespace GoRogue.DiceNotation
 {
     /// <summary>
     /// Default class for parsing a string representing a dice expression into an <see cref="IDiceExpression"/> instance.
     /// </summary>
+    [PublicAPI]
     public class Parser : IParser
     {
         // Defines operator priorities
-        private static readonly Dictionary<char, int> s_operatorPrecedence = new Dictionary<char, int>()
+        private static readonly Dictionary<char, int> s_operatorPrecedence = new Dictionary<char, int>
         {
             ['('] = 1,
             ['+'] = 2,
@@ -21,7 +24,7 @@ namespace GoRogue.DiceNotation
         };
 
         /// <summary>
-        /// Parses the dice expression spcified into an <see cref="IDiceExpression"/> instance.
+        /// Parses the dice expression specified into an <see cref="IDiceExpression"/> instance.
         /// </summary>
         /// <remarks>
         /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
@@ -33,15 +36,15 @@ namespace GoRogue.DiceNotation
         /// </returns>
         public IDiceExpression Parse(string expression)
         {
-            var postfix = toPostfix(expression);
-            var lastTerm = evaluatePostfix(postfix);
+            var postfix = ToPostfix(expression);
+            var lastTerm = EvaluatePostfix(postfix);
 
             return new DiceExpression(lastTerm);
         }
 
         // Evaluates the postfix expression, returning the final term (the one to evaluate to roll
         // the expression)
-        private static ITerm evaluatePostfix(List<string> postfix)
+        private static ITerm EvaluatePostfix(IEnumerable<string> postfix)
         {
             var operands = new Stack<ITerm>();
 
@@ -93,7 +96,7 @@ namespace GoRogue.DiceNotation
                             op1 = operands.Pop();
                             // Must be preceded by a dice term
                             if (!(op1 is DiceTerm diceOp))
-                                throw new Exceptions.InvalidSyntaxException();
+                                throw new InvalidSyntaxException();
 
                             operands.Push(new KeepTerm(op2, diceOp));
                             break;
@@ -102,13 +105,13 @@ namespace GoRogue.DiceNotation
             }
 
             if (operands.Count != 1) // Something went awry
-                throw new Exceptions.InvalidSyntaxException();
+                throw new InvalidSyntaxException();
 
             return operands.Pop(); // Last thing is the answer!
         }
 
         // Converts dice notation to postfix notation
-        private static List<string> toPostfix(string infix)
+        private static IEnumerable<string> ToPostfix(string infix)
         {
             var output = new List<string>();
             var operators = new Stack<char>();
@@ -129,25 +132,36 @@ namespace GoRogue.DiceNotation
                 }
                 else // Separate so we can increment charIndex differently
                 {
-                    if (infix[charIndex] == '(')
-                        operators.Push(infix[charIndex]);
-                    else if (infix[charIndex] == ')')
+                    switch (infix[charIndex])
                     {
-                        var op = operators.Pop();
-                        while (op != '(')
+                        case '(':
+                            operators.Push(infix[charIndex]);
+                            break;
+                        case ')':
                         {
-                            output.Add(op.ToString());
-                            op = operators.Pop();
-                        }
-                    }
-                    else if (s_operatorPrecedence.ContainsKey(infix[charIndex]))
-                    {
-                        while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >= s_operatorPrecedence[infix[charIndex]])
-                        {
-                            output.Add(operators.Pop().ToString());
-                        }
+                            var op = operators.Pop();
+                            while (op != '(')
+                            {
+                                output.Add(op.ToString());
+                                op = operators.Pop();
+                            }
 
-                        operators.Push(infix[charIndex]);
+                            break;
+                        }
+                        default:
+                        {
+                            if (s_operatorPrecedence.ContainsKey(infix[charIndex]))
+                            {
+                                while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >= s_operatorPrecedence[infix[charIndex]])
+                                {
+                                    output.Add(operators.Pop().ToString());
+                                }
+
+                                operators.Push(infix[charIndex]);
+                            }
+
+                            break;
+                        }
                     }
 
                     charIndex++;

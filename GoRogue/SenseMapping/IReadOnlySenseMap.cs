@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SenseMapping
@@ -7,6 +8,7 @@ namespace GoRogue.SenseMapping
     /// <summary>
     /// Read-only interface of a <see cref="SenseMap"/>.
     /// </summary>
+    [PublicAPI]
     public interface IReadOnlySenseMap : IEnumerable<double>, IMapView<double>
     {
         /// <summary>

@@ -3,22 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using GoRogue.Random;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Extensions for <see cref="IMapView{T}"/> implementaions that provide basic utility functions
+    /// Extensions for <see cref="IMapView{T}"/> implementations that provide basic utility functions
     /// for them.
     /// </summary>
     /// <remarks>
     /// By providing these as extension methods, they effectively act as interface methods that have implementations
-    /// already defined.  If these were regular interface implemenations, all interface implementers would be forced
-    /// to implement them manually, which is undesireable as the implementation should clearly be the same and is based
+    /// already defined.  If these were regular interface implementations, all interface implementers would be forced
+    /// to implement them manually, which is undesirable as the implementation should clearly be the same and is based
     /// only on functions/properties defined in IMapView.
     /// </remarks>
-    public static class IMapViewExtensions
+    [PublicAPI]
+    public static class MapViewExtensions
     {
         /// <summary>
         /// Sets all the values of the current map to be equal to the corresponding values from
@@ -85,12 +87,11 @@ namespace GoRogue.MapViews
         /// <param name="elementSeparator">Character(s) to separate each element from the next.</param>
         /// <param name="endRow">Character(s) that should follow each row.</param>
         /// <param name="end">Character(s) that should follow the IMapView printout.</param>
-        /// <returns>A string representation of the map, as viewd by the given map view.</returns>
+        /// <returns>A string representation of the map, as viewed by the given map view.</returns>
         public static string ExtendToString<T>(this IMapView<T> map, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
                                                       string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
         {
-            if (elementStringifier == null)
-                elementStringifier = (T obj) => obj?.ToString() ?? "null";
+            elementStringifier ??= obj => obj?.ToString() ?? "null";
 
             var result = new StringBuilder(begin);
             for (int y = 0; y < map.Height; y++)
@@ -136,12 +137,11 @@ namespace GoRogue.MapViews
         /// <param name="elementSeparator">Character(s) to separate each element from the next.</param>
         /// <param name="endRow">Character(s) that should follow each row.</param>
         /// <param name="end">Character(s) that should follow the IMapView printout.</param>
-        /// <returns>A string representation of the map, as viewd by the given map view.</returns>
+        /// <returns>A string representation of the map, as viewed by the given map view.</returns>
         public static string ExtendToString<T>(this IMapView<T> map, int fieldSize, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
                                                       string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "")
         {
-            if (elementStringifier == null)
-                elementStringifier = (T obj) => obj?.ToString() ?? "null";
+            elementStringifier ??= obj => obj?.ToString() ?? "null";
 
             var result = new StringBuilder(begin);
             for (int y = 0; y < map.Height; y++)
@@ -285,8 +285,7 @@ namespace GoRogue.MapViews
         /// <returns>A random position in the IMapView for which the selector returns true.</returns>
         public static Point RandomPosition<T>(this IMapView<T> mapView, Func<Point, T, bool> selector, IGenerator? rng = null)
         {
-            if (rng == null)
-                rng = GlobalRandom.DefaultRNG;
+            rng ??= GlobalRandom.DefaultRNG;
 
             var c = new Point(rng.Next(mapView.Width), rng.Next(mapView.Height));
 
@@ -305,8 +304,7 @@ namespace GoRogue.MapViews
         /// <returns>A random position within the IMapView.</returns>
         public static Point RandomPosition<T>(this IMapView<T> mapView, IGenerator? rng = null)
         {
-            if (rng == null)
-                rng = GlobalRandom.DefaultRNG;
+            rng ??= GlobalRandom.DefaultRNG;
 
             return new Point(rng.Next(mapView.Width), rng.Next(mapView.Height));
         }

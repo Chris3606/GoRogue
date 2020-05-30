@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -17,6 +18,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
+    [PublicAPI]
     public sealed class LambdaTranslationMap<T1, T2> : TranslationMap<T1, T2>
     {
         private readonly Func<Point, T1, T2> _getter;

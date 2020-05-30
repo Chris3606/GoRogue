@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
 
@@ -17,6 +18,7 @@ namespace GoRogue.Pathing
     /// that it is disposed of properly after use.
     /// </remarks>
 #pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
+    [PublicAPI]
     public class FleeMap : IMapView<double?>, IDisposable
 #pragma warning restore CA1063
     {
@@ -109,6 +111,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <returns>A string representing the flee map values.</returns>
         public override string ToString() =>
+            // ReSharper disable once SpecifyACultureInStringConversionExplicitly
             _goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
 
         /// <summary>
@@ -191,7 +194,7 @@ namespace GoRogue.Pathing
 
         #region IDisposable Support
 
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Destructor for IDisposable implementation.
@@ -204,7 +207,7 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// Function called to dispose of the class, automatically unlinking it from its goal map.
+        /// Function called to dispose of the class, automatically un-linking it from its goal map.
         /// </summary>
 #pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
         public void Dispose()

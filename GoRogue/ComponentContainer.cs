@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Reflection.Emit;
+using System.Linq;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -16,7 +17,7 @@ namespace GoRogue
     /// ComponentContainer possesses one or more given types of components (or if it has a component with a specific tag), and as well
     /// remains flexible and type-safe.  Components may be of any type, although it is recommended that you _do not_ use value types.
     /// The system also remains accurate with respect to types, even when the components added implement interfaces or have an inheritance
-    /// heirarchy.
+    /// hierarchy.
     /// 
     /// For example, suppose we have the following structure:
     /// <code>
@@ -35,6 +36,7 @@ namespace GoRogue
     /// the instance we added, as will obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
     /// obj.HasComponent(typeof(PlayerTickable)) both return true.
     /// </remarks>
+    [PublicAPI]
     public class ComponentContainer : IHasTaggableComponents
     {
         private readonly Dictionary<Type, List<object>> _components;
@@ -67,7 +69,7 @@ namespace GoRogue
             var realType = component.GetType();
 
             if (_components.ContainsKey(realType) && _components[realType].Contains(component))
-                throw new ArgumentException($"Tried to add the same component instance to an object twice.", nameof(component));
+                throw new ArgumentException("Tried to add the same component instance to an object twice.", nameof(component));
 
             if (tag != null && _tagsToComponents.ContainsKey(tag))
                 throw new ArgumentException($"Tried to add two components with the same tag \"{tag}\" to an instance of an object.");
@@ -147,13 +149,7 @@ namespace GoRogue
 
         /// <inheritdoc/>
         public bool HasComponents(params Type[] componentTypes)
-        {
-            foreach (var component in componentTypes)
-                if (!_components.ContainsKey(component))
-                    return false;
-
-            return true;
-        }
+            => componentTypes.All(component => _components.ContainsKey(component));
 
         /// <inheritdoc/>
         public bool HasComponents(params (Type type, string? tag)[] componentTypesAndTags)
@@ -163,14 +159,13 @@ namespace GoRogue
                 if (!_components.ContainsKey(type)) // Make sure we have one or more components of the proper types
                     return false;
 
-                if (tag != null) // We'll need to also verify the tag
-                {
-                    if (!_tagsToComponents.ContainsKey(tag)) // Make sure some item of the proper tag exists
-                        return false;
+                if (tag == null) continue;
 
-                    if (!_components[type].Contains(_tagsToComponents[tag])) // Make sure the item with the tag is the correct type
-                        return false;
-                }
+                if (!_tagsToComponents.ContainsKey(tag)) // Make sure some item of the proper tag exists
+                    return false;
+
+                if (!_components[type].Contains(_tagsToComponents[tag])) // Make sure the item with the tag is the correct type
+                    return false;
             }
 
             return true;
@@ -194,19 +189,17 @@ namespace GoRogue
                     return default;
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
-                // Cast will succeed because the dicationary is literally keyed by types and type can't change after compile-time
+                // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
                 return (T)(_components[typeOfT][0]);
             }
-            else // Simply check the item with the proper tag
-            {
-                if (!_tagsToComponents.ContainsKey(tag))
-                    return default;
 
-                if (_tagsToComponents[tag] is T item)
-                    return item;
-
+            if (!_tagsToComponents.ContainsKey(tag))
                 return default;
-            }
+
+            if (_tagsToComponents[tag] is T item)
+                return item;
+
+            return default;
         }
 
         /// <inheritdoc/>
@@ -214,12 +207,11 @@ namespace GoRogue
         {
             Type typeOfT = typeof(T);
 
-            if (_components.ContainsKey(typeOfT))
-            {
-                // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-                foreach (var component in _components[typeOfT])
-                    yield return (T)component;
-            }
+            if (!_components.ContainsKey(typeOfT)) yield break;
+
+            // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
+            foreach (var component in _components[typeOfT])
+                yield return (T)component;
         }
 
         // Insert in appropriate order to list based on what its SortOrder is

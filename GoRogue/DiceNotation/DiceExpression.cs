@@ -1,5 +1,6 @@
 ﻿using GoRogue.DiceNotation.Terms;
 using GoRogue.Random;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation
@@ -7,6 +8,7 @@ namespace GoRogue.DiceNotation
     /// <summary>
     /// The default class for representing a parsed dice expression.
     /// </summary>
+    [PublicAPI]
     public class DiceExpression : IDiceExpression
     {
         private readonly ITerm _termToEvaluate;
@@ -38,8 +40,7 @@ namespace GoRogue.DiceNotation
         /// <returns>The result obtained by rolling the dice expression.</returns>
         public int Roll(IGenerator? rng = null)
         {
-            if (rng == null)
-                rng = GlobalRandom.DefaultRNG;
+            rng ??= GlobalRandom.DefaultRNG;
 
             return _termToEvaluate.GetResult(rng);
         }
@@ -47,7 +48,7 @@ namespace GoRogue.DiceNotation
         /// <summary>
         /// Returns a parenthesized string representing the dice expression in dice notation
         /// </summary>
-        /// <returns>A paranethesized string representing the expression.</returns>
+        /// <returns>A parenthesized string representing the expression.</returns>
         public override string ToString() => _termToEvaluate.ToString();
     }
 }

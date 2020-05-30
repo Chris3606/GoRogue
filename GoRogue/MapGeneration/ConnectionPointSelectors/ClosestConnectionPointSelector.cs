@@ -1,10 +1,12 @@
-﻿using SadRogue.Primitives;
+﻿using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.ConnectionPointSelectors
 {
     /// <summary>
     /// Implements a the selection algorithm that selects the two points closest to each other in the given <see cref="Area"/> instances.
     /// </summary>
+    [PublicAPI]
     public class ClosestConnectionPointSelector : IConnectionPointSelector
     {
         /// <summary>

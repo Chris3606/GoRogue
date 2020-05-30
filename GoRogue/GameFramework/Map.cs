@@ -4,6 +4,7 @@ using System.Linq;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SpatialMaps;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
@@ -22,10 +23,11 @@ namespace GoRogue.GameFramework
     /// on the map, along with which of all the layers participate in collision detection, etc., can be specified in the constructor.
     /// 
     /// While this class has some flexibility, it does, unlike the rest of the library, tend to impose itself on your architecture.  In cases where this is
-    /// undesireable, each component of this map class exists as a separate component (layer masking, the SpatialMap(s) storing the entity layers, FOV, and pathfinding
+    /// undesirable, each component of this map class exists as a separate component (layer masking, the SpatialMap(s) storing the entity layers, FOV, and pathfinding
     /// all exist as their own (more flexible) components).  This class is not intended to cover every possible use case, but instead may act as an example or starting
     /// point in the case where you would like to use the components in a different way or within a different architecture.
     /// </remarks>
+    [PublicAPI]
     public class Map : IMapView<IEnumerable<IGameObject>>
     {
         private readonly ISettableMapView<IGameObject?> _terrain;
@@ -86,7 +88,7 @@ namespace GoRogue.GameFramework
         public AStar AStar { get; set; }
 
         /// <summary>
-        /// <see cref="Distance"/> measurement used for pathing and measuring distance on the map.
+        /// <see cref="Distance"/> measurement used for pathfinding and measuring distance on the map.
         /// </summary>
         public Distance DistanceMeasurement => AStar.DistanceMeasurement;
 
@@ -141,7 +143,7 @@ namespace GoRogue.GameFramework
         /// <param name="width">Width of the map.</param>
         /// <param name="height">Height of the map.</param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
-        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathing/measuring distance on the map.</param>
+        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathfinding/measuring distance on the map.</param>
         /// <param name="layersBlockingWalkability">Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.</param>
         /// <param name="layersBlockingTransparency">Layer mask containing those layers that should be allowed to have items that block FOV.
@@ -169,7 +171,7 @@ namespace GoRogue.GameFramework
         /// <see cref="ObjectAdded"/>/<see cref="ObjectRemoved"/> events are NOT guaranteed to be called, and many invariants of map may not be properly
         /// enforced.</param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
-        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathing/measuring distance on the map.</param>
+        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathfinding/measuring distance on the map.</param>
         /// <param name="layersBlockingWalkability">Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.</param>
         /// <param name="layersBlockingTransparency">Layer mask containing those layers that should be allowed to have items that block FOV.
@@ -191,15 +193,13 @@ namespace GoRogue.GameFramework
             _entities.ItemRemoved += (s, e) => ObjectRemoved?.Invoke(this, e);
             _entities.ItemMoved += (s, e) => ObjectMoved?.Invoke(this, e);
 
-            if (layersBlockingTransparency == 1) // Only terrain so we optimize
-                TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsTransparent ?? true);
-            else
-                TransparencyView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsTransparent);
+            TransparencyView = layersBlockingTransparency == 1 ?
+                new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsTransparent ?? true)
+                : new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsTransparent);
 
-            if (layersBlockingWalkability == 1) // Similar, only terrain blocks, so optimize
-                WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true);
-            else
-                WalkabilityView = new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
+            WalkabilityView = layersBlockingWalkability == 1 ?
+                new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
+                : new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
             _fov = new FOV(TransparencyView);
             AStar = new AStar(WalkabilityView, distanceMeasurement);
@@ -210,16 +210,16 @@ namespace GoRogue.GameFramework
         /// Gets the terrain object at the given location, or null if no terrain is set to that location.
         /// </summary>
         /// <param name="position">The position to get the terrain for.</param>
-        /// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
+        /// <returns>The terrain at the given position, or null if no terrain exists at that location.</returns>
         public IGameObject? GetTerrainAt(Point position) => _terrain[position];
 
         /// <summary>
         /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
-        /// cannot be casted to the type specified.
+        /// cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to check for/return the terrain as.</typeparam>
         /// <param name="position">The position to get the terrain for.</param>
-        /// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
+        /// <returns>The terrain at the given position, or null if either no terrain exists at that location or the terrain was not castable to type
         /// TerrainType.</returns>
         public TTerrain? GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject => _terrain[position] as TTerrain;
 
@@ -228,17 +228,17 @@ namespace GoRogue.GameFramework
         /// </summary>
         /// <param name="x">X-value of the position to get the terrain for.</param>
         /// <param name="y">Y-value of the position to get the terrain for.</param>
-        /// <returns>The terrain at the given postion, or null if no terrain exists at that location.</returns>
+        /// <returns>The terrain at the given position, or null if no terrain exists at that location.</returns>
         public IGameObject? GetTerrainAt(int x, int y) => _terrain[x, y];
 
         /// <summary>
         /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or the terrain
-        /// cannot be casted to the type specified.
+        /// cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to return the terrain as.</typeparam>
         /// <param name="x">X-value of the position to get the terrain for.</param>
         /// <param name="y">Y-value of the position to get the terrain for.</param>
-        /// <returns>The terrain at the given postion, or null if either no terrain exists at that location or the terrain was not castable to type
+        /// <returns>The terrain at the given position, or null if either no terrain exists at that location or the terrain was not castable to type
         /// TerrainType.</returns>
         public TTerrain? GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject => _terrain[x, y] as TTerrain;
 
@@ -250,7 +250,7 @@ namespace GoRogue.GameFramework
         public void SetTerrain(IGameObject terrain)
         {
             if (terrain.Layer != 0)
-                throw new ArgumentException($"Terrain for Map must reside on layer 0.", nameof(terrain));
+                throw new ArgumentException("Terrain for Map must reside on layer 0.", nameof(terrain));
 
             if (!terrain.IsStatic)
                 throw new ArgumentException($"Terrain for Map must be marked static via its {nameof(IGameObject.IsStatic)} flag.", nameof(terrain));
@@ -259,7 +259,7 @@ namespace GoRogue.GameFramework
                 throw new ArgumentException($"Cannot add terrain to more than one {nameof(Map)}.", nameof(terrain));
 
             if (!this.Contains(terrain.Position))
-                throw new ArgumentException($"Terrain added to map must be within the bounds of that map.");
+                throw new ArgumentException("Terrain added to map must be within the bounds of that map.");
 
             if (!terrain.IsWalkable)
             {
@@ -328,7 +328,7 @@ namespace GoRogue.GameFramework
             if (!entity.IsWalkable)
             {
                 if (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer))
-                    throw new InvalidOperationException($"Tried to add a non-walkable entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block walkablity.");
+                    throw new InvalidOperationException($"Tried to add a non-walkable entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block walkability.");
                 if (!WalkabilityView[entity.Position])
                     throw new InvalidOperationException($"Tried to add a non-walkable entity to a {GetType().Name}, but that map already has a non-walkable object at the entity's location.");
             }
@@ -343,7 +343,7 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
+        /// Gets the first (non-terrain) entity encountered at the given position that can be cast to the specified type, moving from the highest existing
         /// layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
         /// there are no entities at the location.
         /// </summary>
@@ -356,7 +356,7 @@ namespace GoRogue.GameFramework
             => GetEntitiesAt<TEntity>(position.X, position.Y, layerMask).FirstOrDefault();
 
         /// <summary>
-        /// Gets the first (non-terrain) entity encountered at the given position that can be casted to the specified type, moving from the highest existing
+        /// Gets the first (non-terrain) entity encountered at the given position that can be cast to the specified type, moving from the highest existing
         /// layer in the layer mask downward. Layer mask defaults to all layers. null is returned if no entities of the specified type are found, or if
         /// there are no entities at the location.
         /// </summary>
@@ -421,7 +421,7 @@ namespace GoRogue.GameFramework
 
 
         /// <summary>
-        /// Gets the first object encountered at the given position that can be casted to the type specified, moving from the highest existing layer in the
+        /// Gets the first object encountered at the given position that can be cast to the type specified, moving from the highest existing layer in the
         /// layer mask downward. Layer mask defaults to all layers.  null is returned if no objects of the specified type are found, or if there are no
         /// objects at the location.
         /// </summary>
@@ -434,7 +434,7 @@ namespace GoRogue.GameFramework
             => GetObjectsAt<TObject>(position.X, position.Y, layerMask).FirstOrDefault();
 
         /// <summary>
-        /// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
+        /// Gets the first object encountered at the given position that can be cast to the specified type, moving from the highest existing layer in the
         /// layer mask downward. Layer mask defaults to all layers. null is returned if no objects of the specified type are found, or if there are no
         /// objects at the location.
         /// </summary>
@@ -445,7 +445,7 @@ namespace GoRogue.GameFramework
         public IGameObject GetObjectAt(int x, int y, uint layerMask = uint.MaxValue) => GetObjectsAt(x, y, layerMask).FirstOrDefault();
 
         /// <summary>
-        /// Gets the first object encountered at the given position that can be casted to the specified type, moving from the highest existing layer in the
+        /// Gets the first object encountered at the given position that can be cast to the specified type, moving from the highest existing layer in the
         /// layer mask downward. Layer mask defaults to all layers. null is returned if no objects of the specified type are found, or if there are no
         /// objects at the location.
         /// </summary>
@@ -607,7 +607,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableMapView{T}"/> for the terrain map, where type T can
         /// be any type that implements <see cref="IGameObject"/>.  Note that a Map that is constructed using this function will throw an
-        /// <see cref="InvalidCastException"/> if any IGameObject is given to <see cref="SetTerrain(IGameObject)"/> that cannot be casted to type T.
+        /// <see cref="InvalidCastException"/> if any IGameObject is given to <see cref="SetTerrain(IGameObject)"/> that cannot be cast to type T.
         /// </summary>
         /// <remarks>
         /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject"/>.  This construction function allows
@@ -626,7 +626,7 @@ namespace GoRogue.GameFramework
         /// <see cref="ObjectAdded"/>/<see cref="ObjectRemoved"/> events are NOT guaranteed to be called, and many invariants of map may not be properly
         /// enforced.</param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
-        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathing/measuring distance on the map.</param>
+        /// <param name="distanceMeasurement"><see cref="Distance"/> measurement to use for pathfinding/measuring distance on the map.</param>
         /// <param name="layersBlockingWalkability">Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.</param>
         /// <param name="layersBlockingTransparency">Layer mask containing those layers that should be allowed to have items that block FOV.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace GoRogue.Messaging
 {
@@ -8,6 +9,7 @@ namespace GoRogue.Messaging
     /// A messaging system that can have subscribers added to it, and send messages.  When messages are sent, it will call any handlers that requested to handle messages
     /// of the proper types, based on the type-tree/interface-tree of the messages.
     /// </summary>
+    [PublicAPI]
     public class MessageBus
     {
         private readonly Dictionary<Type, List<ISubscriberRef>> _subscriberRefs;

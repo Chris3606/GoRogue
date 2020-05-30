@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue.DiceNotation.Exceptions
 {
     /// <summary>
     /// Exception that is thrown when a die is attempted to be constructed with an invalid number of sides.
     /// </summary>
+    [PublicAPI]
     public class ImpossibleDieException : Exception
     {
         /// <summary>

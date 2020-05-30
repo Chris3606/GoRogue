@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue
@@ -9,10 +10,11 @@ namespace GoRogue
     /// Provides implementations of various (line-drawing) algorithms which are useful for
     /// for generating points closest to a line between two points on a grid.
     /// </summary>
+    [PublicAPI]
     public static class Lines
     {
-        private const int MODIFIER_X = 0x7fff;
-        private const int MODIFIER_Y = 0x7fff;
+        private const int ModifierX = 0x7fff;
+        private const int ModifierY = 0x7fff;
 
         /// <summary>
         /// Various supported line-drawing algorithms.
@@ -20,35 +22,35 @@ namespace GoRogue
         public enum Algorithm
         {
             /// <summary>
-            /// Bresenham's line algorithm.
+            /// Bresenham line algorithm.
             /// </summary>
             Bresenham,
 
             /// <summary>
-            /// Bresenham's line algorithm, with the points guaranteed to be in start to finish
+            /// Bresenham line algorithm, with the points guaranteed to be in start to finish
             /// order. This may be significantly slower than <see cref="Algorithm.Bresenham"/>, so if you really
-            /// need ordering, consider<see cref="Algorithm.DDA"/> instead, as it is both faster than Bresenham's
+            /// need ordering, consider<see cref="Algorithm.DDA"/> instead, as it is both faster than Bresenham
             /// and implicitly ordered.
             /// </summary>
             BresenhamOrdered,
 
             /// <summary>
-            /// DDA line algorithm -- effectively an optimized algorithm for producing Brensham-like
+            /// DDA line algorithm -- effectively an optimized algorithm for producing Bresenham-like
             /// lines. There may be slight differences in appearance when compared to lines created
-            /// with Bresenham's, however this algorithm may also be measurably faster. Based on the
+            /// with Bresenham, however this algorithm may also be measurably faster. Based on the
             /// algorithm <a href="https://hbfs.wordpress.com/2009/07/28/faster-than-bresenhams-algorithm/">here</a>,
-            /// , as well as the Java library Squidlib's implementation.  Points are guaranteed to be in order from
+            /// as well as the Java library SquidLib's implementation.  Points are guaranteed to be in order from
             /// start to finish.
             /// </summary>
             DDA,
 
             /// <summary>
-            /// Line algorithm that takes only orthoganal steps (each grid location on the line
+            /// Line algorithm that takes only orthogonal steps (each grid location on the line
             /// returned is within one cardinal direction of the previous one). Potentially useful
             /// for LOS in games that use MANHATTAN distance. Based on the algorithm
             /// <a href="http://www.redblobgames.com/grids/line-drawing.html#stepping">here</a>.
             /// </summary>
-            Ortho
+            Orthogonal
         }
 
         /// <summary>
@@ -62,48 +64,48 @@ namespace GoRogue
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).
         /// </returns>
-        public static IEnumerable<Point> Get(Point start, Point end, Lines.Algorithm type = Algorithm.Bresenham) => Get(start.X, start.Y, end.X, end.Y, type);
+        public static IEnumerable<Point> Get(Point start, Point end, Algorithm type = Algorithm.Bresenham) => Get(start.X, start.Y, end.X, end.Y, type);
 
         /// <summary>
         /// Returns an IEnumerable of every point, in order, closest to a line between the two points
         /// specified, using the line drawing algorithm given. The start and end points will be included.
         /// </summary>
-        /// <param name="startX">X-Pointinate of the starting point of the line.</param>
-        /// <param name="startY">Y-Pointinate of the starting point of the line.</param>
-        /// <param name="endX">X-Pointinate of the ending point of the line.</param>
+        /// <param name="startX">X-coordinate of the starting point of the line.</param>
+        /// <param name="startY">Y-coordinate of the starting point of the line.</param>
+        /// <param name="endX">X-coordinate of the ending point of the line.</param>
         /// ///
-        /// <param name="endY">Y-Pointinate of the ending point of the line.</param>
+        /// <param name="endY">Y-coordinate of the ending point of the line.</param>
         /// <param name="type">The line-drawing algorithm to use to generate the line.</param>
         /// <returns>
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).
         /// </returns>
-        public static IEnumerable<Point> Get(int startX, int startY, int endX, int endY, Lines.Algorithm type = Algorithm.Bresenham)
+        public static IEnumerable<Point> Get(int startX, int startY, int endX, int endY, Algorithm type = Algorithm.Bresenham)
         {
             switch (type)
             {
                 case Algorithm.Bresenham:
-                    return bresenham(startX, startY, endX, endY);
+                    return Bresenham(startX, startY, endX, endY);
 
                 case Algorithm.BresenhamOrdered:
-                    var line = bresenham(startX, startY, endX, endY).Reverse();
-                    if (line.First() == new Point(startX, startY))
+                    var line = Bresenham(startX, startY, endX, endY).Reverse().ToArray();
+                    if (line.Length == 0)
                         return line;
-                    else
-                        return line.Reverse();
+
+                    return line[0] == new Point(startX, startY) ? line : line.Reverse();
 
                 case Algorithm.DDA:
-                    return dda(startX, startY, endX, endY);
+                    return DDA(startX, startY, endX, endY);
 
-                case Algorithm.Ortho:
-                    return ortho(startX, startY, endX, endY);
+                case Algorithm.Orthogonal:
+                    return Ortho(startX, startY, endX, endY);
 
                 default:
                     throw new Exception("Unsupported line-drawing algorithm.");  // Should not occur
             }
         }
 
-        private static IEnumerable<Point> bresenham(int startX, int startY, int endX, int endY)
+        private static IEnumerable<Point> Bresenham(int startX, int startY, int endX, int endY)
         {
             bool steep = Math.Abs(endY - startY) > Math.Abs(endX - startX);
             if (steep)
@@ -141,7 +143,7 @@ namespace GoRogue
             }
         }
 
-        private static IEnumerable<Point> dda(int startX, int startY, int endX, int endY)
+        private static IEnumerable<Point> DDA(int startX, int startY, int endX, int endY)
         {
             int dx = endX - startX;
             int dy = endY - startY;
@@ -151,7 +153,7 @@ namespace GoRogue
 
             // Calculate octant value
             int octant = ((dy < 0) ? 4 : 0) | ((dx < 0) ? 2 : 0) | ((ny > nx) ? 1 : 0);
-            int frac = 0;
+            int fraction = 0;
             int mn = Math.Max(nx, ny);
 
             int move;
@@ -190,55 +192,55 @@ namespace GoRogue
             {
                 case 0: // +x, +y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary <= endX; primary++, frac += move)
-                        yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
+                    for (int primary = startX; primary <= endX; primary++, fraction += move)
+                        yield return new Point(primary, startY + ((fraction + ModifierY) >> 16));
                     break;
 
                 case 1:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary <= endY; primary++, frac += move)
-                        yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
+                    for (int primary = startY; primary <= endY; primary++, fraction += move)
+                        yield return new Point(startX + ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 2: // -x, +y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary >= endX; primary--, frac += move)
-                        yield return new Point(primary, startY + ((frac + MODIFIER_Y) >> 16));
+                    for (int primary = startX; primary >= endX; primary--, fraction += move)
+                        yield return new Point(primary, startY + ((fraction + ModifierY) >> 16));
                     break;
 
                 case 3:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary <= endY; primary++, frac += move)
-                        yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
+                    for (int primary = startY; primary <= endY; primary++, fraction += move)
+                        yield return new Point(startX - ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 6: // -x, -y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary >= endX; primary--, frac += move)
-                        yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
+                    for (int primary = startX; primary >= endX; primary--, fraction += move)
+                        yield return new Point(primary, startY - ((fraction + ModifierY) >> 16));
                     break;
 
                 case 7:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary >= endY; primary--, frac += move)
-                        yield return new Point(startX - ((frac + MODIFIER_X) >> 16), primary);
+                    for (int primary = startY; primary >= endY; primary--, fraction += move)
+                        yield return new Point(startX - ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 4: // +x, -y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary <= endX; primary++, frac += move)
-                        yield return new Point(primary, startY - ((frac + MODIFIER_Y) >> 16));
+                    for (int primary = startX; primary <= endX; primary++, fraction += move)
+                        yield return new Point(primary, startY - ((fraction + ModifierY) >> 16));
                     break;
 
                 case 5:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary >= endY; primary--, frac += move)
-                        yield return new Point(startX + ((frac + MODIFIER_X) >> 16), primary);
+                    for (int primary = startY; primary >= endY; primary--, fraction += move)
+                        yield return new Point(startX + ((fraction + ModifierX) >> 16), primary);
                     break;
             }
         }
 
-        private static IEnumerable<Point> ortho(int startX, int startY, int endX, int endY)
+        private static IEnumerable<Point> Ortho(int startX, int startY, int endX, int endY)
         {
             int dx = endX - startX;
             int dy = endY - startY;

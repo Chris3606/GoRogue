@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
     /// Term representing the multiplication operator -- multiplies <see cref="Term1"/> and <see cref="Term2"/>.
     /// </summary>
+    [PublicAPI]
     public class MultiplyTerm : ITerm
     {
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.Random
@@ -13,6 +14,7 @@ namespace GoRogue.Random
     /// This class may be useful for testing, when you want to specify the numbers returned by an RNG
     /// without drastically modifying any code using the RNG.
     /// </remarks>
+    [PublicAPI]
     public class KnownSeriesGenerator : IGenerator
     {
         private int _boolIndex;
@@ -34,30 +36,15 @@ namespace GoRogue.Random
         /// </summary>
         public KnownSeriesGenerator(IEnumerable<int>? intSeries = null, IEnumerable<uint>? uintSeries = null, IEnumerable<double>? doubleSeries = null, IEnumerable<bool>? boolSeries = null, IEnumerable<byte>? byteSeries = null)
         {
-            if (intSeries == null)
-                _intSeries = new List<int>();
-            else
-                _intSeries = intSeries.ToList();
+            _intSeries = intSeries == null ? new List<int>() : intSeries.ToList();
 
-            if (uintSeries == null)
-                _uintSeries = new List<uint>();
-            else
-                _uintSeries = uintSeries.ToList();
+            _uintSeries = uintSeries == null ? new List<uint>() : uintSeries.ToList();
 
-            if (doubleSeries == null)
-                _doubleSeries = new List<double>();
-            else
-                _doubleSeries = doubleSeries.ToList();
+            _doubleSeries = doubleSeries == null ? new List<double>() : doubleSeries.ToList();
 
-            if (boolSeries == null)
-                _boolSeries = new List<bool>();
-            else
-                _boolSeries = boolSeries.ToList();
+            _boolSeries = boolSeries == null ? new List<bool>() : boolSeries.ToList();
 
-            if (byteSeries == null)
-                _byteSeries = new List<byte>();
-            else
-                _byteSeries = byteSeries.ToList();
+            _byteSeries = byteSeries == null ? new List<byte>() : byteSeries.ToList();
         }
 
         /// <summary>
@@ -86,7 +73,7 @@ namespace GoRogue.Random
         /// <param name="minValue">Minimum allowable number that can be returned.</param>
         /// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
         /// <returns>The appropriate number from the series.</returns>
-        public int Next(int minValue, int maxValue) => returnIfRange(minValue, maxValue, _intSeries, ref _intIndex);
+        public int Next(int minValue, int maxValue) => ReturnIfRange(minValue, maxValue, _intSeries, ref _intIndex);
 
         /// <summary>
         /// Gets the next integer in the underlying series. If the integer is equal to <see cref="int.MaxValue"/>,
@@ -99,7 +86,7 @@ namespace GoRogue.Random
         /// Returns the next boolean in the underlying series.
         /// </summary>
         /// <returns>The next boolean value in the underlying series.</returns>
-        public bool NextBoolean() => returnValueFrom(_boolSeries, ref _boolIndex);
+        public bool NextBoolean() => ReturnValueFrom(_boolSeries, ref _boolIndex);
 
         /// <summary>
 		/// Fills the specified buffer with values from the underlying byte series.
@@ -108,7 +95,7 @@ namespace GoRogue.Random
 		public void NextBytes(byte[] buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
-                buffer[i] = returnValueFrom(_byteSeries, ref _byteIndex);
+                buffer[i] = ReturnValueFrom(_byteSeries, ref _byteIndex);
         }
 
         /// <summary>
@@ -118,7 +105,7 @@ namespace GoRogue.Random
         public void NextBytes(Span<byte> buffer)
         {
             for (int i = 0; i < buffer.Length; i++)
-                buffer[i] = returnValueFrom(_byteSeries, ref _byteIndex);
+                buffer[i] = ReturnValueFrom(_byteSeries, ref _byteIndex);
         }
 
         /// <summary>
@@ -143,13 +130,13 @@ namespace GoRogue.Random
         /// <param name="minValue">Minimum value for the returned number, inclusive.</param>
         /// <param name="maxValue">Maximum value for the returned number, exclusive.</param>
         /// <returns>The next double in the underlying series.</returns>
-        public double NextDouble(double minValue, double maxValue) => returnIfRange(minValue, maxValue, _doubleSeries, ref _doubleIndex);
+        public double NextDouble(double minValue, double maxValue) => ReturnIfRange(minValue, maxValue, _doubleSeries, ref _doubleIndex);
 
         /// <summary>
         /// Returns the next integer in the underlying series. If the value is less than 0, throws an exception.
         /// </summary>
         /// <returns>The next integer in the underlying series.</returns>
-        public int NextInclusiveMaxValue() => returnIfRangeInclusive(0, int.MaxValue, _intSeries, ref _intIndex);
+        public int NextInclusiveMaxValue() => ReturnIfRangeInclusive(0, int.MaxValue, _intSeries, ref _intIndex);
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is equal to
@@ -173,7 +160,7 @@ namespace GoRogue.Random
         /// <param name="minValue">The minimum value for the returned number, inclusive.</param>
         /// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
         /// <returns>The next unsigned integer in the underlying series.</returns>
-        public uint NextUInt(uint minValue, uint maxValue) => returnIfRange(minValue, maxValue, _uintSeries, ref _uintIndex);
+        public uint NextUInt(uint minValue, uint maxValue) => ReturnIfRange(minValue, maxValue, _uintSeries, ref _uintIndex);
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is equal to
@@ -185,8 +172,8 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns the next unsigned integer in the underlying series.
         /// </summary>
-        /// <returns>The next unsinged integer in the underlying series.</returns>
-        public uint NextUIntInclusiveMaxValue() => returnIfRangeInclusive((uint)0, uint.MaxValue, _uintSeries, ref _uintIndex);
+        /// <returns>The next unsigned integer in the underlying series.</returns>
+        public uint NextUIntInclusiveMaxValue() => ReturnIfRangeInclusive((uint)0, uint.MaxValue, _uintSeries, ref _uintIndex);
 
         /// <summary>
         /// Resets the random number generator, such that it starts returning values from the
@@ -212,9 +199,9 @@ namespace GoRogue.Random
         /// <returns>True, since the reset cannot fail.</returns>
         public bool Reset(uint seed) => Reset();
 
-        private static T returnIfRange<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
+        private static T ReturnIfRange<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
         {
-            T value = returnValueFrom(series, ref seriesIndex);
+            T value = ReturnValueFrom(series, ref seriesIndex);
 
             if (minValue.CompareTo(value) < 0)
                 throw new ArgumentException("Value returned is less than minimum value.");
@@ -225,9 +212,9 @@ namespace GoRogue.Random
             return value;
         }
 
-        private static T returnIfRangeInclusive<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
+        private static T ReturnIfRangeInclusive<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
         {
-            T value = returnValueFrom(series, ref seriesIndex);
+            T value = ReturnValueFrom(series, ref seriesIndex);
 
             if (minValue.CompareTo(value) < 0)
                 throw new ArgumentException("Value returned is less than minimum value.");
@@ -238,7 +225,7 @@ namespace GoRogue.Random
             return value;
         }
 
-        private static T returnValueFrom<T>(List<T> series, ref int seriesIndex)
+        private static T ReturnValueFrom<T>(List<T> series, ref int seriesIndex)
         {
             if (series.Count == 0)
                 throw new NotSupportedException("Tried to get value of type " + typeof(T).Name + ", but the KnownSeriesGenerator was not given any values of that type.");

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SpatialMaps
@@ -21,6 +22,7 @@ namespace GoRogue.SpatialMaps
     /// it will in large part determine the performance of AdvancedSpatialMap!
     /// </remarks>
     /// <typeparam name="T">The type of object that will be contained by this AdvancedSpatialMap.</typeparam>
+    [PublicAPI]
     public class AdvancedSpatialMap<T> : ISpatialMap<T>
     {
         private readonly Dictionary<T, SpatialTuple<T>> _itemMapping;
@@ -150,7 +152,7 @@ namespace GoRogue.SpatialMaps
         /// Intended to be a more convenient function as compared to <see cref="GetItemsAt(Point)"/>, since
         /// this spatial map implementation only allows a single item to at any given location at a time.
         /// </remarks>
-        /// <param name="position">The postiion to return the item for.</param>
+        /// <param name="position">The position to return the item for.</param>
         /// <returns>
         /// The item at the given position, or default(T) if no item exists at that location.
         /// </returns>
@@ -368,7 +370,7 @@ namespace GoRogue.SpatialMaps
         /// Returns a string representation of the spatial map.
         /// </summary>
         /// <returns>A string representation of the spatial map.</returns>
-        public override string ToString() => ToString((T obj) => obj?.ToString() ?? "null");
+        public override string ToString() => ToString(obj => obj?.ToString() ?? "null");
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the spatial map's
@@ -377,7 +379,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the spatial map.</returns>
         public string ToString(Func<T, string> itemStringifier)
-            => _positionMapping.ExtendToString(valueStringifier: (SpatialTuple<T> obj) => itemStringifier(obj.Item), pairSeparator: "; ");
+            => _positionMapping.ExtendToString(valueStringifier: obj => itemStringifier(obj.Item), pairSeparator: "; ");
 
         /// <summary>
         /// Returns true if the given item can be added at the given position, eg. the item is not already in the
@@ -405,22 +407,16 @@ namespace GoRogue.SpatialMaps
         public bool CanAdd(T newItem, int x, int y) => CanAdd(newItem, new Point(x, y));
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one, eg. if the item
+        /// Returns true if the given item can be moved from its current location to the specified one, eg. if the item
         /// does exists in the spatial map and if the new position is not already filled by some other item; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="target">Location to move item to.</param>
         /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
-        public bool CanMove(T item, Point target)
-        {
-            if (!_itemMapping.ContainsKey(item) || _positionMapping.ContainsKey(target))
-                return false;
-
-            return true;
-        }
+        public bool CanMove(T item, Point target) => _itemMapping.ContainsKey(item) && !_positionMapping.ContainsKey(target);
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one, eg. if the item
+        /// Returns true if the given item can be moved from its current location to the specified one, eg. if the item
         /// exists in the spatial map and if the new position is not already filled by some other item; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -469,6 +465,7 @@ namespace GoRogue.SpatialMaps
                 throw new InvalidOperationException($"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.");
 
             // This spatial map can only have one item at each location so this is fine.  We force immediate execution by calling ToArray
+            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
             MoveValid(current, target).ToArray();
         }
 
@@ -493,12 +490,13 @@ namespace GoRogue.SpatialMaps
     /// maps.
     /// 
     /// The objects stored in a SpatialMap must implement <see cref="IHasID"/>. This is used
-    /// internally to keep track of the objects, since uints are easily (and efficiently) hashable.
+    /// internally to keep track of the objects, since uints are easily (and efficiently) hash-able.
     /// </remarks>
     /// <typeparam name="T">
     /// The type of object that will be contained by this SpatialMap. Must implement <see cref="IHasID"/>
     /// and be a reference-type.
     /// </typeparam>
+    [PublicAPI]
     public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
     {
         /// <summary>
@@ -521,9 +519,10 @@ namespace GoRogue.SpatialMaps
             Position = position;
         }
 
-        public T Item { get; set; }
+        public T Item { get; }
         public Point Position { get; set; }
 
+        [UsedImplicitly]
         public string ToString(Func<T, string> itemStringifier) => Position + " : " + itemStringifier(Item);
 
         public override string ToString() => Position + " : " + Item;

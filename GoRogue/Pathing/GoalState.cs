@@ -1,8 +1,11 @@
-﻿namespace GoRogue.Pathing
+﻿using JetBrains.Annotations;
+
+namespace GoRogue.Pathing
 {
     /// <summary>
     /// Used to determine the status of a tile for goal-mapping purposes.
     /// </summary>
+    [PublicAPI]
     public enum GoalState
     {
         /// <summary>

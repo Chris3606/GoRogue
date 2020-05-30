@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation
 {
     /// <summary>
     /// Interface for class representing a parsed dice expression. Returned by <see cref="IParser"/> implementations.
     /// </summary>
+    [PublicAPI]
     public interface IDiceExpression
     {
         /// <summary>
@@ -13,7 +15,7 @@ namespace GoRogue.DiceNotation
         /// <remarks>
         /// Typically this can be implemented by calling <see cref="Roll(IGenerator)"/> and passing in a <see cref="GoRogue.Random.MaxRandom"/> instance.
         /// </remarks>
-        /// <returns>The maxiumum possible value that could be returned by this dice expression.</returns>
+        /// <returns>The maximum possible value that could be returned by this dice expression.</returns>
         int MaxRoll();
 
         /// <summary>
@@ -22,7 +24,7 @@ namespace GoRogue.DiceNotation
         /// <remarks>
         /// Typically this can be implemented by calling <see cref="Roll(IGenerator)"/> and passing in a <see cref="GoRogue.Random.MinRandom"/> instance.
         /// </remarks>
-        /// <returns>The miniumum possible value that could be returned by this dice expression.</returns>
+        /// <returns>The minimum possible value that could be returned by this dice expression.</returns>
         int MinRoll();
 
         /// <summary>

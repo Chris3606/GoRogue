@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SpatialMaps
@@ -11,6 +12,7 @@ namespace GoRogue.SpatialMaps
     /// <typeparam name="T">
     /// Type of element stored in the layered spatial map -- must implement <see cref="IHasLayer"/>.
     /// </typeparam>
+    [PublicAPI]
     public interface IReadOnlyLayeredSpatialMap<T> : IReadOnlySpatialMap<T> where T : IHasLayer
     {
         /// <summary>
@@ -130,7 +132,7 @@ namespace GoRogue.SpatialMaps
         public bool CanMoveAll(Point current, Point target, uint layerMask = uint.MaxValue);
 
         /// <summary>
-        /// Returns true if there are items at the current postion on one or more of the layers specified by the layer mask,
+        /// Returns true if there are items at the current position on one or more of the layers specified by the layer mask,
         /// and all items on those layers at that position can be moved to the target position; false otherwise.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
@@ -156,12 +158,13 @@ namespace GoRogue.SpatialMaps
     /// those classes, use <see cref="LayerMasker.DEFAULT"/>.  There are also constants defined in 
     /// LayerMasker to represent "all layers" and "no layers".
     /// </remarks>
+    [PublicAPI]
     public sealed class LayerMasker
     {
         /// <summary>
         /// Default layer masker, that excludes no possible layers from its results.
         /// </summary>
-        public static readonly LayerMasker DEFAULT = new LayerMasker(32);
+        public static readonly LayerMasker DEFAULT = new LayerMasker();
 
         /// <summary>
         /// Layer-mask representing all layers.

@@ -1,5 +1,6 @@
-﻿using SadRogue.Primitives;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
+using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.TunnelCreators
 {
@@ -7,6 +8,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
     /// Interface for implementing an algorithm for creating a tunnel between two positions on a
     /// walkability map.
     /// </summary>
+    [PublicAPI]
     public interface ITunnelCreator
     {
         /// <summary>
@@ -16,7 +18,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// <param name="map">Map to create the tunnel on.</param>
         /// <param name="tunnelStart">Start position to connect.</param>
         /// <param name="tunnelEnd">End position to connect.</param>
-        /// <returns>An area contining all points that are part of the tunnel.</returns>
+        /// <returns>An area containing all points that are part of the tunnel.</returns>
         Area CreateTunnel(ISettableMapView<bool> map, Point tunnelStart, Point tunnelEnd);
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// <param name="startY">Y-value of the start position to connect.</param>
         /// <param name="endX">X-value of the end position to connect.</param>
         /// <param name="endY">Y-value of the end position to connect.</param>
-        /// <returns>An area contining all points that are part of the tunnel.</returns>
+        /// <returns>An area containing all points that are part of the tunnel.</returns>
         Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY);
     }
 }

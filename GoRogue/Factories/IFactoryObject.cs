@@ -1,9 +1,12 @@
-﻿namespace GoRogue.Factories
+﻿using JetBrains.Annotations;
+
+namespace GoRogue.Factories
 {
     /// <summary>
     /// Interface that can optionally be implemented by objects created via a <see cref="Factory{TProduced}"/> or <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>.  The <see cref="DefinitionId"/> property
     /// will be automatically set to the ID of the blueprint used to create the object when the factory's Create function is called.
     /// </summary>
+    [PublicAPI]
     public interface IFactoryObject
     {
         /// <summary>

@@ -1,9 +1,12 @@
-﻿namespace GoRogue.Factories
+﻿using JetBrains.Annotations;
+
+namespace GoRogue.Factories
 {
     /// <summary>
     /// Defines how to create a <typeparamref name="TProduced"/> object for use in an <see cref="Factory{TProduced}"/>.
     /// </summary>
     /// <typeparam name="TProduced">The type of object to create.</typeparam>
+    [PublicAPI]
     public interface IFactoryBlueprint<out TProduced>
     {
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -8,6 +9,7 @@ namespace GoRogue
     /// string.  Typically, you would implement this via a backing field of type <see cref="ComponentContainer"/>, which implements the
     /// logic for these functions.
     /// </summary>
+    [PublicAPI]
     public interface IHasTaggableComponents : IHasComponents
     {
         /// <summary>
@@ -57,7 +59,7 @@ namespace GoRogue
         bool HasComponent<T>(string? tag = null) where T : notnull;
 
         /// <summary>
-        /// Gets the first component of type T that was added andhas the given tag associated with it, if one is specified, or default(T) if no component of that type
+        /// Gets the first component of type T that was added and has the given tag associated with it, if one is specified, or default(T) if no component of that type
         /// that meets the tag and and type requirements has been added. If null is specified for the tag, no particular tag is checked for; the function will get the first
         /// component it encounters that meets the type requirement.
         /// </summary>
@@ -67,16 +69,16 @@ namespace GoRogue
         T GetComponent<T>(string? tag = null) where T : notnull;
 
         /// <inheritdoc/>
-        void IHasComponents.AddComponent(object component) => AddComponent(this, null);
+        void IHasComponents.AddComponent(object component) => AddComponent(this);
 
         /// <inheritdoc/>
         [return: MaybeNull]
-        T IHasComponents.GetComponent<T>() => GetComponent<T>(null);
+        T IHasComponents.GetComponent<T>() => GetComponent<T>();
 
         /// <inheritdoc/>
-        bool IHasComponents.HasComponent(Type componentType) => HasComponent(componentType, null);
+        bool IHasComponents.HasComponent(Type componentType) => HasComponent(componentType);
 
         /// <inheritdoc/>
-        bool IHasComponents.HasComponent<T>() => HasComponent<T>(null);
+        bool IHasComponents.HasComponent<T>() => HasComponent<T>();
     }
 }

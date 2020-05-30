@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
     /// Base term -- represents a numerical constant.
     /// </summary>
+    [PublicAPI]
     public class ConstantTerm : ITerm
     {
         private readonly int _value;

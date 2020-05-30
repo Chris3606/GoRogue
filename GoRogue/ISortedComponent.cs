@@ -1,4 +1,6 @@
-﻿namespace GoRogue
+﻿using JetBrains.Annotations;
+
+namespace GoRogue
 {
     /// <summary>
     /// Optional interface that may be implemented by components to ensure they are returned in a specific order
@@ -10,8 +12,9 @@
     /// system (such as <see cref="GameFramework.IGameObject"/> is called, any components with a lower <see cref="SortOrder"/>
     /// are guaranteed to be returned BEFORE any components with a higher SortOrder.  This can be useful to enforce that certain
     /// types of or instances of components are processed before some other type of or instance of components.  Components that
-    /// do not implement ISortedComponent will always be retorned AFTER any components that do implement that interface. 
+    /// do not implement ISortedComponent will always be returned AFTER any components that do implement that interface. 
     /// </remarks>
+    [PublicAPI]
     public interface ISortedComponent
     {
         /// <summary>

@@ -3,6 +3,7 @@ using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapGeneration.TunnelCreators;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Steps
@@ -38,7 +39,7 @@ namespace GoRogue.MapGeneration.Steps
     /// </item>
     /// </list>
     ///
-    /// In the case of the tunnels component, an existing component is used if an apppropriate one is present; a new one is added if not.
+    /// In the case of the tunnels component, an existing component is used if an appropriate one is present; a new one is added if not.
     /// </summary>
     /// <remarks>
     /// This generation steps takes as input a <see cref="ItemList{Area}"/> context component (with the tag "Areas", by default) containing areas to connect, and "WallFloor" map view context component
@@ -51,6 +52,7 @@ namespace GoRogue.MapGeneration.Steps
     /// Areas are connected by drawing a tunnel between each Area and its closest neighboring area, based on based on distance between the center points of the areas.  The actual points selected in each area
     /// to connect, as well as the method for drawing tunnels between those areas, is customizable via the <see cref="ConnectionPointSelector"/> and <see cref="TunnelCreator"/> parameters.
     /// </remarks>
+    [PublicAPI]
     public class ClosestMapAreaConnection : GenerationStep
     {
         /// <summary>
@@ -81,7 +83,7 @@ namespace GoRogue.MapGeneration.Steps
         public readonly string? WallFloorComponentTag;
 
         /// <summary>
-        /// Optional tag that must be associated wiht the component created/used to store the tunnels created by this connection method.
+        /// Optional tag that must be associated with the component created/used to store the tunnels created by this connection method.
         /// </summary>
         public readonly string? TunnelsComponentTag;
 
@@ -91,7 +93,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <param name="name">>The name of the generation step.  Defaults to <see cref="ClosestMapAreaConnection"/>.</param>
         /// <param name="wallFloorComponentTag">Optional tag that must be associated with the map view component used to store/set floor/wall status.  Defaults to "WallFloor".</param>
         /// <param name="areasComponentTag">Optional tag that must be associated with the component used to store map areas connected by this algorithm.  Defaults to "Areas".</param>
-        /// <param name="tunnelsComponentTag">Optional tag that must be associated wiht the component created/used to store the tunnels created by this connection method.  Defaults to "Tunnels".</param>
+        /// <param name="tunnelsComponentTag">Optional tag that must be associated with the component created/used to store the tunnels created by this connection method.  Defaults to "Tunnels".</param>
         public ClosestMapAreaConnection(string? name = null, string? wallFloorComponentTag = "WallFloor", string? areasComponentTag = "Areas", string? tunnelsComponentTag = "Tunnels")
             : base(name, (typeof(ISettableMapView<bool>), wallFloorComponentTag), (typeof(ItemList<Area>), areasComponentTag))
         {
@@ -115,7 +117,7 @@ namespace GoRogue.MapGeneration.Steps
             {
                 for (int i = 0; i < areasToConnect.Items.Count; i++)
                 {
-                    int iClosest = findNearestMapArea(areasToConnect.Items, DistanceCalc, i, ds);
+                    int iClosest = FindNearestMapArea(areasToConnect.Items, DistanceCalc, i, ds);
 
                     var (area1Position, area2Position) = ConnectionPointSelector.SelectConnectionPoints(areasToConnect.Items[i], areasToConnect.Items[iClosest]);
 
@@ -127,7 +129,7 @@ namespace GoRogue.MapGeneration.Steps
             }
         }
 
-        private static int findNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
+        private static int FindNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, int mapAreaIndex, DisjointSet ds)
         {
             int closestIndex = mapAreaIndex;
             double distance = double.MaxValue;

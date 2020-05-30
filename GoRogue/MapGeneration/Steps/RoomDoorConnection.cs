@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapViews;
 using GoRogue.Random;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
@@ -39,7 +39,7 @@ namespace GoRogue.MapGeneration.Steps
     /// </item>
     /// </list>
     ///
-    /// In the case of the DoorsList component, an existing component is used if an apppropriate one is present; a new one is added if not.
+    /// In the case of the DoorsList component, an existing component is used if an appropriate one is present; a new one is added if not.
     /// </summary>
     /// <remarks>
     /// This algorithm goes through each room specified in the <see cref="ItemList{Rectangle}"/> context component, and selects a random number of sides
@@ -51,6 +51,7 @@ namespace GoRogue.MapGeneration.Steps
     /// The algorithm will never select two adjacent points on a side as connection points.  Similarly, it will never break through the edges of the map. If an existing
     /// <see cref="DoorList"/> component exists on the map context with the proper tag, that component is used to record the doors generated; if not, a new one is created.
     /// </remarks>
+    [PublicAPI]
     public class RoomDoorConnection : GenerationStep
     {
         /// <summary>
@@ -152,7 +153,7 @@ namespace GoRogue.MapGeneration.Steps
 			- if total sides marked > min
 			  - loop sides
 				- CHECK side placement cancel check OK
-				  - unmark side
+				  - un-mark side
 				- if total sides marked == min
 				  -break loop
 			- Loop sides

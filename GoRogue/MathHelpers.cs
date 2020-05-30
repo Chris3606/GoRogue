@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -6,6 +7,7 @@ namespace GoRogue
     /// Static class consisting of mathematical "helper" functions and constants -- things like angle
     /// unit conversions, and other helpful functions.
     /// </summary>
+    [PublicAPI]
     public static class MathHelpers
     {
         /// <summary>
@@ -14,7 +16,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="number">Number to round.</param>
         /// <param name="toMultipleOf">Number given is rounded up to nearest multiple of this number.</param>
-        /// <returns>The number parameter, rouded up to the nearest multiple of <paramref name="toMultipleOf"/>.</returns>
+        /// <returns>The number parameter, rounded up to the nearest multiple of <paramref name="toMultipleOf"/>.</returns>
         public static int RoundToMultiple(int number, int toMultipleOf)
         {
             int isPositive = (number >= 0) ? 1 : 0;
@@ -62,7 +64,7 @@ namespace GoRogue
         /// <returns>A value representing the angle to the given point, scaled to range [0.0, 1.0].</returns>
         public static double ScaledAtan2Approx(double y, double x)
         {
-            if (y == 0.0 && x >= 0.0)
+            if (Math.Abs(y) < 0.0000000001 && x >= 0.0)
                 return 0.0;
 
             double ax = Math.Abs(x);

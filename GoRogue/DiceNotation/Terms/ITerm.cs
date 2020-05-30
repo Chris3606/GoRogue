@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
-    /// Interface for an evaluatable term of a dice expression.
+    /// Interface for a term of a dice expression that can be evaluated.
     /// </summary>
+    [PublicAPI]
     public interface ITerm
     {
         /// <summary>

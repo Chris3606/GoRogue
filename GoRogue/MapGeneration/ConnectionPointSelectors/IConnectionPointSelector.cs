@@ -1,4 +1,5 @@
-﻿using SadRogue.Primitives;
+﻿using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.ConnectionPointSelectors
 {
@@ -6,6 +7,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
     /// Interface for implementing an algorithm for selecting the positions to connect in order to
     /// connect two given areas.
     /// </summary>
+    [PublicAPI]
     public interface IConnectionPointSelector
     {
         /// <summary>

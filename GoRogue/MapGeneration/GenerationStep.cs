@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration
 {
     /// <summary>
     /// Raised by generation steps in <see cref="GenerationStep.OnPerform(GenerationContext)"/> when a parameter has been misconfigured.
     /// </summary>
+    [PublicAPI]
     public class InvalidConfigurationException : Exception
     {
         /// <summary>
@@ -41,7 +43,7 @@ namespace GoRogue.MapGeneration
         /// <param name="parameterName">The name of the misconfigured parameter.</param>
         /// <param name="message">A message explaining the requirements for the parameter's value.</param>
         public InvalidConfigurationException(GenerationStep step, string parameterName, string message)
-            : base($"Invalid configuration encountered for generation step parameter:\n" +
+            : base("Invalid configuration encountered for generation step parameter:\n" +
                    $"    Generation Step: ${step.GetType().Name} (name: {step.Name})\n" +
                    $"    Parameter Name : ${parameterName}\n" +
                    $"    Message        : ${message}")
@@ -54,12 +56,13 @@ namespace GoRogue.MapGeneration
         /// Creates an empty configuration exception.
         /// </summary>
         public InvalidConfigurationException()
-            : base() { }
+        { }
     }
 
     /// <summary>
     /// Raised by <see cref="GenerationStep"/> when required components are not present when <see cref="GenerationStep.PerformStep(GenerationContext)"/> is called.
     /// </summary>
+    [PublicAPI]
     public class MissingContextComponentException : Exception
     {
         /// <summary>
@@ -84,7 +87,7 @@ namespace GoRogue.MapGeneration
         /// <param name="requiredComponentType">Type of the required component that was not found.</param>
         /// <param name="requiredComponentTag">Tag of the required component that was not found, or null if no tag was required.</param>
         public MissingContextComponentException(GenerationStep step, Type requiredComponentType, string? requiredComponentTag)
-            : base($"Generation step was performed on a context that did not have the required components:\n" +
+            : base("Generation step was performed on a context that did not have the required components:\n" +
                    $"    Generation Step   : {step.GetType().Name} (name: {step.Name})\n" +
                    $"    Required Component: {requiredComponentType.Name} " + ((requiredComponentTag != null) ? $"(tag: {requiredComponentTag})" : "") + "\n")
         {
@@ -112,13 +115,14 @@ namespace GoRogue.MapGeneration
         /// Creates an empty exception.
         /// </summary>
         public MissingContextComponentException()
-            : base() { }
+        { }
     }
 
     // TODO: Figure out way to check for tags AND types that are the same (for some generation steps)?  This wrecks ClosestMapAreaConnector
     /// <summary>
     /// Base class for implementing custom map generation steps.
     /// </summary>
+    [PublicAPI]
     public abstract class GenerationStep
     {
         private readonly (Type type, string? tag)[] _requiredComponents;
@@ -139,7 +143,7 @@ namespace GoRogue.MapGeneration
         /// Creates a generation step, optionally with a custom name.
         /// </summary>
         /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
-        public GenerationStep(string? name = null)
+        protected GenerationStep(string? name = null)
             : this(name, Array.Empty<Type>()) { }
 
         /// <summary>
@@ -147,7 +151,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will require from the context.</param>
         /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
-        public GenerationStep(string? name = null, params Type[] requiredComponents)
+        protected GenerationStep(string? name = null, params Type[] requiredComponents)
             : this(name, requiredComponents.Select<Type, (Type, string?)>(i => (i, null)).ToArray()) { }
 
         /// <summary>
@@ -156,7 +160,7 @@ namespace GoRogue.MapGeneration
         /// <param name="requiredComponents">Components that <see cref="OnPerform(GenerationContext)"/> will require from the context, and the tag
         /// required for each component.  Null means no particular tag is required.</param>
         /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
-        public GenerationStep(string? name = null, params (Type type, string? tag)[] requiredComponents)
+        protected GenerationStep(string? name = null, params (Type type, string? tag)[] requiredComponents)
         {
             Name = name ?? GetType().Name;
             _requiredComponents = requiredComponents;
@@ -165,7 +169,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Performs the generation step on the given map context.  Throws exception if a required component is missing.
         ///
-        /// This function is not virtual -- to implement actual geneation logic, implement <see cref="OnPerform(GenerationContext)"/>.
+        /// This function is not virtual -- to implement actual generation logic, implement <see cref="OnPerform(GenerationContext)"/>.
         /// </summary>
         /// <param name="context">Context to perform the generation step on.</param>
         public void PerformStep(GenerationContext context)

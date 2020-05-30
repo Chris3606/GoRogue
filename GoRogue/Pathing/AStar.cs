@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
 
@@ -20,12 +21,13 @@ namespace GoRogue.Pathing
     /// 
     /// If truly shortest paths are not strictly necessary, you may want to consider <see cref="FastAStar"/> instead.
     /// </remarks>
+    [PublicAPI]
     public class AStar
     {
         // Node objects used under the hood for the priority queue
         private AStarNode[] _nodes;
 
-        // Stored as seperate array for performance reasons since it must be cleared at each run
+        // Stored as separate array for performance reasons since it must be cleared at each run
         private bool[] _closed;
 
         // Width and of the walkability map at the last path -- used to determine whether
@@ -69,11 +71,11 @@ namespace GoRogue.Pathing
 
         // NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
         /// <summary>
-        /// Multiplier that is used in the tiebreaking/smoothing element of the default heuristic. This value is based on the
+        /// Multiplier that is used in the tie-breaking/smoothing element of the default heuristic. This value is based on the
         /// maximum possible <see cref="Point.EuclideanDistanceMagnitude(Point, Point)"/> between two points on the map.
         /// 
-        /// Typically you dont' need this value unless you're creating a custom heuristic an introducing the same
-        /// tiebreaking/smoothing element as the default heuristic.
+        /// Typically you don't need this value unless you're creating a custom heuristic an introducing the same
+        /// tie-breaking/smoothing element as the default heuristic.
         /// </summary>
         public double MaxEuclideanMultiplier { get; private set; }
 
@@ -88,9 +90,9 @@ namespace GoRogue.Pathing
 
         /// <summary>
         /// Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
-        /// tiebreaking/smoothing element which will produce guaranteed shortest paths.
+        /// tie-breaking/smoothing element which will produce guaranteed shortest paths.
         /// </summary>
-        /// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+        /// <param name="walkabilityMap">Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.</param>
         /// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.</param>
@@ -100,7 +102,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+        /// <param name="walkabilityMap">Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.</param>
         /// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.</param>
@@ -110,9 +112,9 @@ namespace GoRogue.Pathing
 
         /// <summary>
         /// Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
-        /// tiebreaking/smoothing element which will produce guaranteed shortest paths, provided <paramref name="minimumWeight"/> is correct.
+        /// tie-breaking/smoothing element which will produce guaranteed shortest paths, provided <paramref name="minimumWeight"/> is correct.
         /// </summary>
-        /// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+        /// <param name="walkabilityMap">Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.</param>
         /// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.</param>
@@ -126,7 +128,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+        /// <param name="walkabilityMap">Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.</param>
         /// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.</param>
@@ -175,7 +177,7 @@ namespace GoRogue.Pathing
         /// <returns>The shortest path between the two points, or <see langword="null"/> if no valid path exists.</returns>
         public Path? ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
         {
-            // Don't waste initialization time if there is definately no path
+            // Don't waste initialization time if there is definitely no path
             if (!assumeEndpointsWalkable && (!WalkabilityMap[start] || !WalkabilityMap[end]))
                 return null; // There is no path
 
@@ -187,6 +189,7 @@ namespace GoRogue.Pathing
             }
 
             // Update min weight if it has changed
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (MinimumWeight != _cachedMinWeight)
             {
                 _cachedMinWeight = MinimumWeight;
@@ -211,8 +214,7 @@ namespace GoRogue.Pathing
             var result = new List<Point>();
             int index = start.ToIndex(WalkabilityMap.Width);
 
-            if (_nodes[index] == null)
-                _nodes[index] = new AStarNode(start, null);
+            _nodes[index] ??= new AStarNode(start);
 
             _nodes[index].G = 0;
             _nodes[index].F = (float)Heuristic(start, end); // Completely heuristic for first node
@@ -246,7 +248,7 @@ namespace GoRogue.Pathing
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width || neighborPos.Y >= WalkabilityMap.Height)
                         continue;
 
-                    if (!checkWalkability(neighborPos, start, end, assumeEndpointsWalkable)) // Not part of walkable node "graph", ignore
+                    if (!CheckWalkability(neighborPos, start, end, assumeEndpointsWalkable)) // Not part of walkable node "graph", ignore
                         continue;
 
                     int neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
@@ -255,11 +257,11 @@ namespace GoRogue.Pathing
                     var isNeighborOpen = IsOpen(neighbor, _openNodes);
 
                     if (neighbor == null) // Can't be closed because never visited
-                        _nodes[neighborIndex] = neighbor = new AStarNode(neighborPos, null);
+                        _nodes[neighborIndex] = neighbor = new AStarNode(neighborPos);
                     else if (_closed[neighborIndex]) // This neighbor has already been evaluated at shortest possible path, don't re-add
                         continue;
 
-                    float newDistance = current.G + (float)DistanceMeasurement.Calculate(current.Position, neighbor.Position) * (float)(Weights == null ? 1.0 : Weights[neighbor.Position]);
+                    float newDistance = current.G + (float)DistanceMeasurement.Calculate(current.Position, neighbor.Position) * (float)(Weights?[neighbor.Position] ?? 1.0);
                     if (isNeighborOpen && newDistance >= neighbor.G) // Not a better path
                         continue;
 
@@ -289,10 +291,10 @@ namespace GoRogue.Pathing
         /// Returns <see langword="null"/> if there is no path between the specified points. Will still return an
         /// appropriate path object if the start point is equal to the end point.
         /// </remarks>
-        /// <param name="startX">The x-Pointinate of the starting point of the path.</param>
-        /// <param name="startY">The y-Pointinate of the starting point of the path.</param>
-        /// <param name="endX">The x-Pointinate of the ending point of the path.</param>
-        /// <param name="endY">The y-Pointinate of the ending point of the path.</param>
+        /// <param name="startX">The x-coordinate of the starting point of the path.</param>
+        /// <param name="startY">The y-coordinate of the starting point of the path.</param>
+        /// <param name="endX">The x-coordinate of the ending point of the path.</param>
+        /// <param name="endY">The y-coordinate of the ending point of the path.</param>
         /// <param name="assumeEndpointsWalkable">
         /// Whether or not to assume the start and end points are walkable, regardless of what the
         /// <see cref="WalkabilityMap"/> reports. Defaults to <see langword="true"/>.
@@ -303,7 +305,7 @@ namespace GoRogue.Pathing
 
         private static bool IsOpen(AStarNode node, FastPriorityQueue<AStarNode> openSet) => node != null && openSet.Contains(node);
 
-        private bool checkWalkability(Point pos, Point start, Point end, bool assumeEndpointsWalkable)
+        private bool CheckWalkability(Point pos, Point start, Point end, bool assumeEndpointsWalkable)
         {
             if (!assumeEndpointsWalkable)
                 return WalkabilityMap[pos];
@@ -319,6 +321,7 @@ namespace GoRogue.Pathing
     /// Provides various functions to iterate through/access steps of the path, as well as
     /// constant-time reversing functionality.
     /// </remarks>
+    [PublicAPI]
     public class Path
     {
         private readonly IReadOnlyList<Point> _steps;
@@ -346,16 +349,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Ending point of the path.
         /// </summary>
-        public Point End
-        {
-            get
-            {
-                if (_inOriginalOrder)
-                    return _steps[0];
-
-                return _steps[_steps.Count - 1];
-            }
-        }
+        public Point End => _inOriginalOrder ? _steps[0] : _steps[^1];
 
         /// <summary>
         /// The length of the path, NOT including the starting point.
@@ -370,16 +364,9 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Starting point of the path.
         /// </summary>
-        public Point Start
-        {
-            get
-            {
-                if (_inOriginalOrder)
-                    return _steps[_steps.Count - 1];
+        public Point Start => _inOriginalOrder ? _steps[^1] : _steps[0];
 
-                return _steps[0];
-            }
-        }
+
 
         /// <summary>
         /// The coordinates that constitute the path (in order), NOT including the starting point.
@@ -416,8 +403,8 @@ namespace GoRogue.Pathing
                 }
                 else
                 {
-                    for (int i = 0; i < _steps.Count; i++)
-                        yield return _steps[i];
+                    foreach (var step in _steps)
+                        yield return step;
                 }
             }
         }
@@ -426,7 +413,7 @@ namespace GoRogue.Pathing
         /// Gets the nth step along the path, where 0 is the step AFTER the starting point.
         /// </summary>
         /// <param name="stepNum">The (array-like index) of the step to get.</param>
-        /// <returns>The Pointinate consituting the step specified.</returns>
+        /// <returns>The coordinate constituting the step specified.</returns>
         public Point GetStep(int stepNum)
         {
             if (_inOriginalOrder)
@@ -439,13 +426,11 @@ namespace GoRogue.Pathing
         /// Gets the nth step along the path, where 0 IS the starting point.
         /// </summary>
         /// <param name="stepNum">The (array-like index) of the step to get.</param>
-        /// <returns>The Pointinate consituting the step specified.</returns>
+        /// <returns>The coordinate constituting the step specified.</returns>
         public Point GetStepWithStart(int stepNum)
         {
-            if (_inOriginalOrder)
-                return _steps[(_steps.Count - 1) - stepNum];
-
-            return _steps[stepNum];
+            // TODO: Revisit array-from-end syntax here
+            return _inOriginalOrder ? _steps[(_steps.Count - 1) - stepNum] : _steps[stepNum];
         }
 
         /// <summary>

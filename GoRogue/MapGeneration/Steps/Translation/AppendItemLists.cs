@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapGeneration.ContextComponents;
+using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.Steps.Translation
 {
@@ -10,6 +11,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
     ///     - <see cref="ItemList{TItem}"/> (tag <see cref="ListToAppendTag"/>: The list whose items are appended onto the base list.  This component will be removed from the context if <see cref="RemoveAppendedComponent"/> is true.
     /// </summary>
     /// <typeparam name="TItem">Type of item in the lists being appended.</typeparam>
+    [PublicAPI]
     public class AppendItemLists<TItem> : GenerationStep
     {
         /// <summary>
@@ -25,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// <summary>
         /// Whether or not to remove the component with the tag <see cref="ListToAppendTag"/> after its items have been added to the base list.  Defaults to false. 
         /// </summary>
-        public bool RemoveAppendedComponent = false;
+        public bool RemoveAppendedComponent;
 
         /// <summary>
         /// Creates a new generation component that appends lists.

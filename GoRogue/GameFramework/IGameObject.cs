@@ -1,5 +1,6 @@
 ﻿using System;
 using GoRogue.SpatialMaps;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
@@ -14,6 +15,7 @@ namespace GoRogue.GameFramework
     /// <see cref="GameObject"/>. There is an example of this type of implementation
     /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
     /// </remarks>
+    [PublicAPI]
     public interface IGameObject : IHasID, IHasLayer, IHasComponents
     {
         /// <summary>

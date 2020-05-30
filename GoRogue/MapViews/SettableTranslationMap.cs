@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -14,6 +15,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
+    [PublicAPI]
     public abstract class SettableTranslationMap<T1, T2> : ISettableMapView<T2>
     {
         /// <summary>
@@ -124,7 +126,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number
@@ -145,7 +147,7 @@ namespace GoRogue.MapViews
         /// <param name="value">The data value from your map.</param>
         /// <returns>A value of the mapped data type</returns>
         protected virtual T2 TranslateGet(T1 value) =>
-            throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates your map data into the view type. Takes a value from the underlying map and
@@ -165,7 +167,7 @@ namespace GoRogue.MapViews
         /// <param name="value">A value of the mapped data type</param>
         /// <returns>The data value for your map.</returns>
         protected virtual T1 TranslateSet(T2 value) =>
-            throw new NotImplementedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Point, T2) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Point, T2) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates the view type into the appropriate form for your map data. Takes a value from

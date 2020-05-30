@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -16,6 +17,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
+    [PublicAPI]
     public sealed class ArrayMap<T> : ISettableMapView<T>, ICloneable, IEquatable<ArrayMap<T>>
     {
         private readonly T[] _array;
@@ -51,13 +53,15 @@ namespace GoRogue.MapViews
         /// <inheritdoc/>
         public int Width { get; }
 
-        /// <inheritdoc/>
+        // ReSharper disable once InheritdocInvalidUsage
+        /// <inheritdoc />
         public T this[int index1D]
         {
             get => _array[index1D];
             set => _array[index1D] = value;
         }
 
+        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc/>
         public T this[int x, int y]
         {
@@ -65,6 +69,7 @@ namespace GoRogue.MapViews
             set => _array[Point.ToIndex(x, y, Width)] = value;
         }
 
+        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc/>
         public T this[Point pos]
         {
@@ -106,7 +111,7 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Sets each element in the ArrayMap to the default for type T.
         /// </summary>
-        public void SetToDefault() => System.Array.Clear(_array, 0, _array.Length);
+        public void SetToDefault() => Array.Clear(_array, 0, _array.Length);
 
         /// <summary>
         /// Compares the current ArrayMap to the object given.
@@ -126,7 +131,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="other"/>
         /// <returns>True if the given ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-        public bool Equals(ArrayMap<T>? other) => other is object && _array == other._array;
+        public bool Equals(ArrayMap<T>? other) => !(other is null) && _array == other._array;
 
         /// <summary>
         /// Returns a hash-value for this object.
@@ -177,7 +182,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.ContextComponents
@@ -6,6 +7,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     /// <summary>
     /// A list of openings in room walls, categorized by side they're on.  Typically created via a <see cref="DoorList"/>.
     /// </summary>
+    [PublicAPI]
     public class RoomDoors
     {
         private readonly RectangleEdgePositionsList _positionsList;
@@ -46,7 +48,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         public IEnumerable<Point> Doors => _positionsList.Positions;
 
         /// <summary>
-        /// Retrieves a read-onlylist of doors on the given side.  Direction specified must be a cardinal.
+        /// Retrieves a read-only list of doors on the given side.  Direction specified must be a cardinal.
         /// </summary>
         /// <param name="side">Side to get doors for.</param>
         /// <returns>A read-only list of doors on the given side.</returns>
@@ -85,6 +87,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     /// A list of rooms and entry/exit points of those rooms, generated/added by map generation components, that tracks what generation step
     /// created/recorded which opening.
     /// </summary>
+    [PublicAPI]
     public class DoorList
     {
         private readonly Dictionary<Rectangle, RoomDoors> _doorsPerRoom;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using JetBrains.Annotations;
 
 namespace GoRogue.Factories
 {
@@ -7,6 +8,7 @@ namespace GoRogue.Factories
     /// Exception thrown by <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/> or <see cref="Factory{TProduced}"/> objects when a blueprint that doesn't exist is used.
     /// </summary>
     [Serializable]
+    [PublicAPI]
     public class ItemNotDefinedException : Exception
     {
         /// <summary>

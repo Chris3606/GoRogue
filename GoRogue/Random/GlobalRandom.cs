@@ -1,4 +1,5 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 using Troschuetz.Random.Generators;
 
 namespace GoRogue.Random
@@ -8,6 +9,7 @@ namespace GoRogue.Random
     /// rng by other features (dice, etc) wherever needed, and can also be used if you need a random
     /// number generator for your own code.
     /// </summary>
+    [PublicAPI]
     public static class GlobalRandom
     {
         /// <summary>

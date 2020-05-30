@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -30,14 +32,15 @@ namespace GoRogue
     /// added to the OnDamageTakenEffects EffectTrigger would be triggered automatically whenever the
     /// creature takes damage.
     ///
-    /// For some complex game mechanics, it may be desireable to control how effects stack, the order they appear
-    /// in the effects list of EffectTriggers, etc. In these cases, subclassing EffectTrigger and overriding the
+    /// For some complex game mechanics, it may be desirable to control how effects stack, the order they appear
+    /// in the effects list of EffectTriggers, etc. In these cases, sub-classing EffectTrigger and overriding the
     /// add and remove functions can allow this functionality.
     /// </remarks>
     /// <typeparam name="TTriggerArgs">
     /// The type of argument that must be accepted by the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)"/> 
     /// function of any Effect added to this EffectTrigger.
     /// </typeparam>
+    [PublicAPI]
     public class EffectTrigger<TTriggerArgs> where TTriggerArgs : EffectArgs
     {
         private readonly List<Effect<TTriggerArgs>> _effects;
@@ -60,7 +63,7 @@ namespace GoRogue
         public virtual void Add(Effect<TTriggerArgs> effect)
         {
             if (effect.Duration == 0)
-                throw new System.ArgumentException($"Tried to add effect {effect.Name} to an EffectTrigger, but it has duration 0!", nameof(effect));
+                throw new ArgumentException($"Tried to add effect {effect.Name} to an EffectTrigger, but it has duration 0!", nameof(effect));
 
             _effects.Add(effect);
         }

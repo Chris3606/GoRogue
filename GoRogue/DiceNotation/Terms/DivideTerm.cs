@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
@@ -6,6 +7,7 @@ namespace GoRogue.DiceNotation.Terms
     /// <summary>
     /// Term representing the division operator -- divides the first term by the second.
     /// </summary>
+    [PublicAPI]
     public class DivideTerm : ITerm
     {
         /// <summary>

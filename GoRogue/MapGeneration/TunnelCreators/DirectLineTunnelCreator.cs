@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.TunnelCreators
@@ -6,16 +7,17 @@ namespace GoRogue.MapGeneration.TunnelCreators
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two
     /// points. In the case that <see cref="Distance.Manhattan"/> is being used, the line is calculated via the
-    /// <see cref="Lines.Algorithm.Ortho"/> algorithm.  Otherwise, the line is calculated using
+    /// <see cref="Lines.Algorithm.Orthogonal"/> algorithm.  Otherwise, the line is calculated using
     /// <see cref="Lines.Algorithm.Bresenham"/>.
     /// </summary>
+    [PublicAPI]
     public class DirectLineTunnelCreator : ITunnelCreator
     {
         private readonly AdjacencyRule _adjacencyRule;
         private readonly bool _doubleWideVertical;
 
         /// <summary>
-        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Ortho"/>
+        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Orthogonal"/>
         /// or <see cref="Lines.Algorithm.Bresenham"/> is used to create the tunnel.
         /// </summary>
         /// <param name="adjacencyRule">
@@ -32,7 +34,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// <inheritdoc/>
         public Area CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
         {
-            var lineAlgorithm = (_adjacencyRule == AdjacencyRule.Cardinals) ? Lines.Algorithm.Ortho : Lines.Algorithm.Bresenham;
+            var lineAlgorithm = (_adjacencyRule == AdjacencyRule.Cardinals) ? Lines.Algorithm.Orthogonal : Lines.Algorithm.Bresenham;
             var area = new Area();
 
             Point previous = Point.None;

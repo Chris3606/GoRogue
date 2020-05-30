@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -16,6 +17,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
+    [PublicAPI]
     public sealed class ArrayMap2D<T> : ISettableMapView<T>, ICloneable, IEquatable<ArrayMap2D<T>>
     {
         private readonly T[,] _array;
@@ -41,6 +43,7 @@ namespace GoRogue.MapViews
         /// <inheritdoc/>
         public int Width => _array.GetLength(0);
 
+        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc/>
         public T this[int index1D]
         {
@@ -48,6 +51,7 @@ namespace GoRogue.MapViews
             set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
         }
 
+        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc/>
         public T this[int x, int y]
         {
@@ -55,6 +59,7 @@ namespace GoRogue.MapViews
             set => _array[x, y] = value;
         }
 
+        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc/>
         public T this[Point pos]
         {
@@ -116,7 +121,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="other"/>
         /// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-        public bool Equals(ArrayMap2D<T> other) => other is object && _array == other._array;
+        public bool Equals(ArrayMap2D<T> other) => !(other is null) && _array == other._array;
 
         /// <summary>
         /// Returns a hash-value for this object.
@@ -167,7 +172,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number

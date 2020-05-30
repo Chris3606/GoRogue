@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
     /// <summary>
     /// Contains a series of functions that complement the reflection capabilities of C#, to conveniently allow for things like
-    /// iterating over all types that a given type can be casted to.
+    /// iterating over all types that a given type can be cast to.
     /// </summary>
+    [PublicAPI]
     public static class ReflectionAddons
     {
         /// <summary>

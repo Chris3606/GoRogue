@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue.Factories
 {
@@ -8,6 +9,7 @@ namespace GoRogue.Factories
     /// </summary>
     /// <typeparam name="TBlueprintConfig">The type of parameter passed to the <see cref="Create(string, TBlueprintConfig)"/> function each time an object is created.</typeparam>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
+    [PublicAPI]
     public class AdvancedFactory<TBlueprintConfig, TProduced> : IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
     {
         private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints = new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();

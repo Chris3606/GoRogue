@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration
@@ -8,6 +9,7 @@ namespace GoRogue.MapGeneration
     /// An arbitrary list of any number of positions on the perimeter of a rectangle.  Commonly used to represent a list of doors or edges of rooms by
     /// some map generation steps.
     /// </summary>
+    [PublicAPI]
     public class RectangleEdgePositionsList
     {
         private readonly List<Point> _topPositions;
@@ -55,6 +57,7 @@ namespace GoRogue.MapGeneration
         /// <param name="side">Side to get stored positions for.</param>
         /// <returns>A read-only list of stored positions on the given side.</returns>
         public IReadOnlyList<Point> this[Direction side]
+            // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
             => side.Type switch
             {
                 Direction.Types.Up => TopPositions,
@@ -107,7 +110,7 @@ namespace GoRogue.MapGeneration
                 if (_positions.Contains(pos))
                     continue;
 
-                // Add to collection of positions and appropriate sublists
+                // Add to collection of positions and appropriate sub-lists
                 _positions.Add(pos);
 
                 if (Rectangle.IsOnTopEdge(pos))
@@ -147,7 +150,7 @@ namespace GoRogue.MapGeneration
                 if (!_positions.Contains(pos))
                     throw new ArgumentException($"Tried to remove a position from a ${nameof(RectangleEdgePositionsList)} that was not present.");
 
-                // Remove from collection of positions and appropriate sublists
+                // Remove from collection of positions and appropriate sub-lists
                 _positions.Remove(pos);
 
                 if (Rectangle.IsOnTopEdge(pos))

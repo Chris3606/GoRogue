@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
     /// Term representing the subtraction operator -- subtracts the second term from the first.
     /// </summary>
+    [PublicAPI]
     public class SubtractTerm : ITerm
     {
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
@@ -9,7 +10,7 @@ namespace GoRogue.Pathing
     /// </summary>
     /// <remarks>
     /// This class is exactly like a regular <see cref="AStar"/> instance, but sets the heuristic by default to the <see cref="Distance.Manhattan"/>
-    /// calculate function (with the same tiebreaking/smoothing element as regular AStar. In the case that euclidean or chebyshev distance is used, this
+    /// calculate function (with the same tie-breaking/smoothing element as regular AStar. In the case that euclidean or chebyshev distance is used, this
     /// heuristic is over-estimating -- that is, it may in some cases produce a value that is greater than the actual shortest path between two points.
     /// As such, this means that, while the algorithm will still produce valid paths, the algorithm is no longer guaranteed to produce fully shortest paths.
     /// In exchange, however, the algorithm may perform significantly faster than an AStar instance with its default heuristic.
@@ -18,12 +19,13 @@ namespace GoRogue.Pathing
     /// in length between the path that the algorithm returns and the actual shortest path is often very small (less than 5%).  As such, it may be viable for use
     /// in most cases.
     /// </remarks>
+    [PublicAPI]
     public class FastAStar : AStar
     {
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">Map view used to deterine whether or not each location can be traversed -- true indicates a tile can be traversed,
+        /// <param name="walkabilityMap">Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.</param>
         /// <param name="distanceMeasurement">Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.</param>

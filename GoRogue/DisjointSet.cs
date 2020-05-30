@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -13,6 +14,7 @@ namespace GoRogue
     /// to add and map them appropriately.
     /// </remarks>
     [Serializable]
+    [PublicAPI]
     public class DisjointSet : IReadOnlyDisjointSet
     {
         private readonly int[] _parents;
@@ -97,7 +99,7 @@ namespace GoRogue
 
             for (int i = 0; i < _parents.Length; i++)
             {
-                int parentOf = findNoCompression(i);
+                int parentOf = FindNoCompression(i);
                 if (!values.ContainsKey(parentOf))
                 {
                     values[parentOf] = new List<int>
@@ -110,11 +112,11 @@ namespace GoRogue
                     values[parentOf].Add(i);
             }
 
-            return values.ExtendToString("", valueStringifier: (List<int> obj) => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
+            return values.ExtendToString("", valueStringifier: obj => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
         }
 
         // Used to ensure ToString doesn't affect the performance of future operations
-        private int findNoCompression(int obj)
+        private int FindNoCompression(int obj)
         {
             while (_parents[obj] != obj)
                 obj = _parents[obj];

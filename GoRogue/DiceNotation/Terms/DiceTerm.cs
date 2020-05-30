@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
@@ -6,6 +7,7 @@ namespace GoRogue.DiceNotation.Terms
     /// <summary>
     /// Represents a dice term, eg 1d4 or 2d6.
     /// </summary>
+    [PublicAPI]
     public class DiceTerm : ITerm
     {
         private readonly List<int> _diceResults;

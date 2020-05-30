@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SpatialMaps
@@ -19,7 +20,7 @@ namespace GoRogue.SpatialMaps
     /// for terrain) for all object lists. This is even less ideal, as in that case, the time to
     /// iterate over all objects becomes proportional to the size of the map (since one has to do
     /// that for rendering, that's bad!), which is typically much larger than the number of objects in a
-    /// list. This is the problem spatial map implementions are designed to solve. They provide fast,
+    /// list. This is the problem spatial map implementations are designed to solve. They provide fast,
     /// near-constant-time operations for getting the item(s) at a location, adding items, and removing
     /// items.  As well, they allow you to iterate through all objects in the spatial map in time
     /// proportional to the number of objects in it (the best possible). Effectively, it is a more efficient
@@ -28,7 +29,7 @@ namespace GoRogue.SpatialMaps
     /// 
     /// Spatial maps have to keep track of the position of each item in them in order to provide
     /// their fast-lookup functionality.  Spatial maps can be used as the primary authority for what an item's
-    /// position is in some cases -- however, in many cases, this may be undesireable, particularly when interfacing
+    /// position is in some cases -- however, in many cases, this may be undesirable, particularly when interfacing
     /// with more traditional infrastructures from other libraries, which likely record each item's position as a field
     /// or property of the item itself.  In these cases, where the item itself records its position, you will need to
     /// call the <see cref="Move(T, Point)"/> function (or a similar overload) whenever an object moves, to keep the
@@ -40,6 +41,7 @@ namespace GoRogue.SpatialMaps
     /// The Move function documentation for each implementation clearly states in what cases a call to Move can fail.
     /// </remarks>
     /// <typeparam name="T">The type of object that will be contained by the spatial map.</typeparam>
+    [PublicAPI]
     public interface ISpatialMap<T> : IReadOnlySpatialMap<T>
     {
         /// <summary>
@@ -142,6 +144,7 @@ namespace GoRogue.SpatialMaps
     /// <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>, etc.)
     /// </summary>
     /// <typeparam name="T">Type of item.</typeparam>
+    [PublicAPI]
     public class ItemEventArgs<T> : EventArgs
     {
         /// <summary>
@@ -179,6 +182,7 @@ namespace GoRogue.SpatialMaps
     /// Event arguments for spatial maps <see cref="IReadOnlySpatialMap{T}.ItemMoved"/> event.
     /// </summary>
     /// <typeparam name="T">Type of item being stored.</typeparam>
+    [PublicAPI]
     public class ItemMovedEventArgs<T> : EventArgs
     {
         /// <summary>

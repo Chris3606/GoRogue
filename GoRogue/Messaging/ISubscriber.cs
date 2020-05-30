@@ -1,4 +1,6 @@
-﻿namespace GoRogue.Messaging
+﻿using JetBrains.Annotations;
+
+namespace GoRogue.Messaging
 {
     /// <summary>
     /// Interface representing subscribers to messages sent over a <see cref="MessageBus"/>.  Classes wishing to respond to one or more message types as they are sent across
@@ -15,13 +17,14 @@
     /// <code>
     /// class MultipleSubscriber : ISubscriber&lt;string&gt;, ISubscriber&lt;string[]&gt;
     /// {
-    ///		/* Explicit interface definitions are not required but are recommened for code clarity
+    ///		/* Explicit interface definitions are not required but are recommend for code clarity
     ///		void ISubscriber&lt;string&gt;.Handle(string message) => Console.WriteLine(message);
     ///		void ISubscriber&lt;string[]&gt;.Handle(string[] message) => Console.WriteLine(message.ExtendToString());
     /// }
     /// 
-    /// /* Later, when we add the subscriber to our message bus, we add each subscriber interface seperately */
+    /// /* Later, when we add the subscriber to our message bus, we add each subscriber interface separately */
     /// var messageBus = new MessageBus();
+    /// 
     /// var multiSubber = new MultipleSubscriber();
     /// messageBus.RegisterSubscriber&lt;string&gt;(multiSubber);
     /// messageBus.RegisterSubscriber&lt;string[]&gt;(multiSubber);
@@ -30,7 +33,8 @@
     /// </remarks>
     /// <typeparam name="TMessage">The type of message that the subscriber wants to handle.  Any and all messages sent over the event bus you subscribe to
     /// that can cast to this type will be passed the <see cref="Handle(TMessage)"/> function when they are sent.</typeparam>
-    public interface ISubscriber<TMessage>
+    [PublicAPI]
+    public interface ISubscriber<in TMessage>
     {
         /// <summary>
         /// Function that should handle the specified type of message in whatever manner it needs to.  Called automatically any time a message is sent

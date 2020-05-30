@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration
@@ -15,6 +16,7 @@ namespace GoRogue.MapGeneration
     /// classic roguelike dungeon example, this might be a walkability map where floors return a
     /// value of true and walls a value of false.
     /// </remarks>
+    [PublicAPI]
     public class MapAreaFinder
     {
         /// <summary>
@@ -73,14 +75,14 @@ namespace GoRogue.MapGeneration
             for (int x = 0; x < Map.Width; x++)
                 for (int y = 0; y < Map.Height; y++)
                 {
-                    var area = visit(new Point(x, y));
+                    var area = Visit(new Point(x, y));
 
                     if (area != null && area.Count != 0)
                         yield return area;
                 }
         }
 
-        private Area? visit(Point position)
+        private Area? Visit(Point position)
         {
             // Don't bother allocating a MapArea, because the starting point isn't valid.
             if (!Map[position])

@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.Random
@@ -6,6 +7,7 @@ namespace GoRogue.Random
     /// <summary>
     /// Class containing some extension methods for <see cref="IGenerator"/> instances.
     /// </summary>
+    [PublicAPI]
     public static class GeneratorExtensions
     {
         /// <summary>

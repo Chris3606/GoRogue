@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
     /// <summary>
     /// Arguments for events fired when components are added/removed from an object.
     /// </summary>
+    [PublicAPI]
     public class ComponentChangedEventArgs : EventArgs
     {
         /// <summary>
@@ -29,6 +31,7 @@ namespace GoRogue
     /// you would implement this via a backing field of type <see cref="ComponentContainer"/>, which implements the logic for
     /// these functions.
     /// </summary>
+    [PublicAPI]
     public interface IHasComponents
     {
         /// <summary>

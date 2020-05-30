@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation
@@ -7,6 +8,7 @@ namespace GoRogue.DiceNotation
     /// The most important <see cref="DiceNotation"/> class -- contains functions to roll dice, and to retrieve an
     /// <see cref="IDiceExpression"/> instance representing a given expression.
     /// </summary>
+    [PublicAPI]
     public static class Dice
     {
         /// <summary>
@@ -23,7 +25,7 @@ namespace GoRogue.DiceNotation
         /// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IGenerator)"/> method is extremely fast.  However, if
         /// you are repeating a dice roll many times, in a case where maximum performance is absolutely necessary, there is some benefit to
         /// retrieving an <see cref="IDiceExpression"/> instance instead
-        /// of using the Roll function, and calling that expressions's <see cref="IDiceExpression.Roll(IGenerator)"/> method whenever a result
+        /// of using the Roll function, and calling that expression's <see cref="IDiceExpression.Roll(IGenerator)"/> method whenever a result
         /// is required.
         /// </remarks>
         /// <param name="expression">The string dice expression to parse.</param>
@@ -48,7 +50,7 @@ namespace GoRogue.DiceNotation
         /// <returns>The result of evaluating the dice expression given.</returns>
         public static int Roll(string expression, IGenerator? random = null)
         {
-            if (random == null) random = GlobalRandom.DefaultRNG;
+            random ??= GlobalRandom.DefaultRNG;
             return DiceParser.Parse(expression).Roll(random);
         }
     }

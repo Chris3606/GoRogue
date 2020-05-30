@@ -1,4 +1,5 @@
 ﻿using GoRogue.Random;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
@@ -8,6 +9,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
     /// Implements a the selection algorithm that simply selects random points from the given
     /// areas' positions lists, using the RNG specified, or the default rng if null is given.
     /// </summary>
+    [PublicAPI]
     public class RandomConnectionPointSelector : IConnectionPointSelector
     {
         private readonly IGenerator _rng;
@@ -18,10 +20,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
         /// <param name="rng">The RNG to use, or null if the default RNG should be used.</param>
         public RandomConnectionPointSelector(IGenerator? rng = null)
         {
-            if (rng == null)
-                _rng = GlobalRandom.DefaultRNG;
-            else
-                _rng = rng;
+            _rng = rng ?? GlobalRandom.DefaultRNG;
         }
 
         /// <inheritdoc/>

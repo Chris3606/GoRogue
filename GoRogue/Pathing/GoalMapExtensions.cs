@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
@@ -6,6 +7,7 @@ namespace GoRogue.Pathing
     /// <summary>
     /// Contains extensions for <see cref="IMapView{Double}"/>, that pertain generally to goal maps.
     /// </summary>
+    [PublicAPI]
     public static class GoalMapExtensions
     {
         /// <summary>

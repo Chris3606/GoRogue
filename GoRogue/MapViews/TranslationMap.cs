@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -9,7 +10,7 @@ namespace GoRogue.MapViews
     /// </summary>
     /// <remarks>
     /// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
-    /// poor match for your game's actual map data. For example, map generation works with bools, and
+    /// poor match for your game's actual map data. For example, map generation works with booleans, and
     /// SenseMap calculation with doubles, while your map data may model each map cell as a class or
     /// struct containing many different member values. This class allows you to build descendant
     /// classes that override the TranslateGet method(s) for simple mapping, or the "this" indexers
@@ -22,6 +23,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
+    [PublicAPI]
     public abstract class TranslationMap<T1, T2> : IMapView<T2>
     {
         /// <summary>
@@ -108,7 +110,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number
@@ -129,7 +131,7 @@ namespace GoRogue.MapViews
         /// <param name="value">The data value from your map.</param>
         /// <returns>A value of the mapped data type</returns>
         protected virtual T2 TranslateGet(T1 value) =>
-            throw new NotImplementedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates your map data into the view type using the position and the map data value. If

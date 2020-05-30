@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue.Factories
 {
@@ -7,6 +8,7 @@ namespace GoRogue.Factories
     /// A simple factory that produces a type of object based on a blueprint.
     /// </summary>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
+    [PublicAPI]
     public class Factory<TProduced> : IEnumerable<IFactoryBlueprint<TProduced>>
     {
         private readonly Dictionary<string, IFactoryBlueprint<TProduced>> _blueprints = new Dictionary<string, IFactoryBlueprint<TProduced>>();

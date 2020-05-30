@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.ContextComponents
 {
@@ -8,6 +9,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     /// A generic list of items added by map generation steps, that tracks what generation step added what item.
     /// </summary>
     /// <typeparam name="TItem">Type of item being stored.</typeparam>
+    [PublicAPI]
     public class ItemList<TItem>
     {
         private readonly List<TItem> _items;

@@ -1,4 +1,5 @@
-﻿using SadRogue.Primitives;
+﻿using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -7,6 +8,7 @@ namespace GoRogue.MapViews
     /// "set" functionality via relative coordinates.
     /// </summary>
     /// <typeparam name="T">Type being exposed by map view.</typeparam>
+    [PublicAPI]
     public class SettableViewport<T> : Viewport<T>, ISettableMapView<T>
     {
         /// <summary>

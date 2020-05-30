@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.Random
@@ -8,9 +9,10 @@ namespace GoRogue.Random
     /// be useful in testing, testing the upper range or repeatedly returning a value. Also used in
     /// <see cref="DiceNotation.DiceExpression"/> instances for certain max roll functions.
     /// </summary>
+    [PublicAPI]
     public class MaxRandom : IGenerator
     {
-        private const double DOUBLE_EPSILON = 1 - 0.99999999999999978;
+        private const double DoubleEpsilon = 1 - 0.99999999999999978;
 
         /// <summary>
         /// Whether or not the RNG is capable of resetting, such that it will return the same series
@@ -77,14 +79,14 @@ namespace GoRogue.Random
         /// </summary>
         /// <remarks>Value returned is 0.99999999999999978.</remarks>
         /// <returns>A number very close to (but still less than) 1.0.</returns>
-        public double NextDouble() => 1 - DOUBLE_EPSILON;
+        public double NextDouble() => 1 - DoubleEpsilon;
 
         /// <summary>
         /// Returns a double very close to (but still less than) <paramref name="maxValue"/>.
         /// </summary>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
         /// <returns>A double very close to (but still less than) <paramref name="maxValue"/>.</returns>
-        public double NextDouble(double maxValue) => maxValue - DOUBLE_EPSILON;
+        public double NextDouble(double maxValue) => maxValue - DoubleEpsilon;
 
         /// <summary>
         /// Returns a double very close to (but still less than) <paramref name="maxValue"/>.
@@ -95,7 +97,7 @@ namespace GoRogue.Random
         /// </param>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
         /// <returns>A double very close to (but still less than) <paramref name="maxValue"/>.</returns>
-        public double NextDouble(double minValue, double maxValue) => maxValue - DOUBLE_EPSILON;
+        public double NextDouble(double minValue, double maxValue) => maxValue - DoubleEpsilon;
 
         /// <summary>
         /// Returns <see cref="int.MaxValue"/>.

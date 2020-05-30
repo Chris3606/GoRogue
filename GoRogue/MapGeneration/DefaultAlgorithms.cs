@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GoRogue.Random;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
@@ -14,12 +15,13 @@ namespace GoRogue.MapGeneration
     /// These algorithms serve as a quick way to generate a map and demonstrate how generation steps may be used together. Feel free to look at the source,
     /// and copy the generation steps into a custom generator.
     /// </remarks>
+    [PublicAPI]
     public static class DefaultAlgorithms
     {
         /// <summary>
         /// Generates a dungeon map based on the process outlined here: http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
         /// </summary>
-        /// <param name="rng">The RNG to use for map generation.  Defaults to <see cref="Random.GlobalRandom.DefaultRNG"/>.</param>
+        /// <param name="rng">The RNG to use for map generation.  Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
         /// <param name="minRooms">Minimum amount of rooms to generate on the map.  Defaults to 4.</param>
         /// <param name="maxRooms">Maximum amount of rooms to generate on the map.  Defaults to 10.</param>
         /// <param name="roomMinSize">The minimum size allowed for generated rooms.  Rounded up to an odd number.  Defaults to 3.</param>
@@ -78,7 +80,7 @@ namespace GoRogue.MapGeneration
             };
 
             // 4. So that the tunnels are all in one component, add the MazeConnections to the tunnels, minus any overlapping points
-            yield return new Steps.Translation.RemoveDuplicatePoints(unmodifiedAreaListTag: "Tunnels", modifiedAreaListTag: "MazeConnections");
+            yield return new Steps.Translation.RemoveDuplicatePoints("Tunnels", "MazeConnections");
             yield return new Steps.Translation.AppendItemLists<Area>("Tunnels", "MazeConnections") { RemoveAppendedComponent = true };
 
             // 5. Open up walls of rooms to connect them to the maze

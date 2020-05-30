@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue.DiceNotation.Exceptions
 {
     /// <summary>
     /// Exception that is thrown when a the syntax of a dice notation string is determined to be invalid.
     /// </summary>
+    [PublicAPI]
     public class InvalidSyntaxException : Exception
     {
         /// <summary>

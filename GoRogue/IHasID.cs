@@ -1,4 +1,6 @@
-﻿namespace GoRogue
+﻿using JetBrains.Annotations;
+
+namespace GoRogue
 {
     /// <summary>
     /// Interface for a class that has an ID value, typically used for items in a spatial map, or generally
@@ -24,6 +26,7 @@
     /// </code>
     /// </example>
     /// </remarks>
+    [PublicAPI]
     public interface IHasID
     {
         /// <summary>

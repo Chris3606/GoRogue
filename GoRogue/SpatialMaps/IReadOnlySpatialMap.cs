@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SpatialMaps
@@ -13,6 +14,7 @@ namespace GoRogue.SpatialMaps
     /// property of type IReadOnlySpatialMap, without allowing such an exposure to break data
     /// encapsulation principles of something like a game map.
     /// </remarks>
+    [PublicAPI]
     public interface IReadOnlySpatialMap<T> : IEnumerable<ISpatialTuple<T>>
     {
         /// <summary>
@@ -21,7 +23,7 @@ namespace GoRogue.SpatialMaps
         event EventHandler<ItemEventArgs<T>> ItemAdded;
 
         /// <summary>
-        /// Event that is fired directly after an item in the sptial map has been moved.
+        /// Event that is fired directly after an item in the spatial map has been moved.
         /// </summary>
         event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
 
@@ -70,7 +72,7 @@ namespace GoRogue.SpatialMaps
         bool CanAdd(T newItem, int x, int y);
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
+        /// Returns true if the given item can be moved from its current location to the specified one; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="target">Location to move item to.</param>
@@ -78,7 +80,7 @@ namespace GoRogue.SpatialMaps
         bool CanMove(T item, Point target);
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one; false otherwise.
+        /// Returns true if the given item can be moved from its current location to the specified one; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="targetX">X-value of the location to move item to.</param>
@@ -175,7 +177,8 @@ namespace GoRogue.SpatialMaps
     /// Interface specifying return type for item-location pairs in spatial maps.
     /// </summary>
     /// <typeparam name="T">Type of the item associated with locations.</typeparam>
-    public interface ISpatialTuple<T>
+    [PublicAPI]
+    public interface ISpatialTuple<out T>
     {
         /// <summary>
         /// The item associated with this pair.

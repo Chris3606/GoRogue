@@ -1,7 +1,9 @@
 ﻿using System;
 using GoRogue.GameFramework.Components;
 using GoRogue.MapViews;
+using GoRogue.Random;
 using GoRogue.SpatialMaps;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
@@ -30,6 +32,7 @@ namespace GoRogue.GameFramework
     /// that has a field for the parent, eg. the IGameObject that it is attached to.  This field is automatically kept up to date as you add/remove components
     /// if you implement this interface for your components.
     /// </remarks>
+    [PublicAPI]
     public class GameObject : ComponentContainer, IGameObject
     {
         // Use the value of this variable instead of the "this" keyword from within GameObject
@@ -58,7 +61,6 @@ namespace GoRogue.GameFramework
 
                 var oldPos = _position;
 
-                // TODO: We need to integrate this into a CanMove/Move function as well, as the spatial map can kick this back by throwing exception here...
                 CurrentMap?.AttemptEntityMove(_parentObject, value);
 
                 _position = value;
@@ -72,25 +74,24 @@ namespace GoRogue.GameFramework
         private bool _isWalkable;
 
         /// <inheritdoc/>
-        public virtual bool IsWalkable
+        public bool IsWalkable
         {
             get => _isWalkable;
 
             set
             {
-                if (_isWalkable != value)
-                {
-                    // Would violate walkability
-                    if (!value && CurrentMap != null && !CurrentMap.WalkabilityView[Position])
-                        throw new ArgumentException("Cannot set walkability of object to false; this would violate walkability of the map the object resides on.", nameof(IsWalkable));
+                if (_isWalkable == value) return;
 
-                    _isWalkable = value;
-                }
+                // Would violate walkability
+                if (!value && CurrentMap != null && !CurrentMap.WalkabilityView[Position])
+                    throw new ArgumentException("Cannot set walkability of object to false; this would violate walkability of the map the object resides on.", nameof(IsWalkable));
+
+                _isWalkable = value;
             }
         }
 
         /// <inheritdoc/>
-        public virtual bool IsTransparent { get; set; }
+        public bool IsTransparent { get; set; }
 
         /// <inheritdoc/>
         public bool IsStatic { get; }
@@ -132,7 +133,7 @@ namespace GoRogue.GameFramework
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor remarks for details.</param>
         public GameObject(Point position, int layer, IGameObject parentObject, bool isStatic = false, bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null)
         {
-            idGenerator ??= Random.GlobalRandom.DefaultRNG.NextUInt;
+            idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
             _parentObject = parentObject ?? this;
             _position = position;
@@ -155,7 +156,7 @@ namespace GoRogue.GameFramework
         /// 2. If the object is added to the map and either:
         ///     a. The position specified is not within the bounds of the map
         ///     b. The object is not walkable and there is already a non-walkable item at the specified location
-        ///     c. The object's layer cannot support mulitple items at one location and there is already an item at that location on that layer.
+        ///     c. The object's layer cannot support multiple items at one location and there is already an item at that location on that layer.
         /// </remarks>
         /// <param name="position">The position to check.</param>
         /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
@@ -214,16 +215,15 @@ namespace GoRogue.GameFramework
         /// <inheritdoc/>
         public override void AddComponent(object component, string? tag = null)
         {
-            base.AddComponent(component);
+            base.AddComponent(component, tag);
 
             // If no exception was thrown, the above add succeeded.
-            if (component is IGameObjectComponent c)
-            {
-                if (c.Parent != null)
-                    throw new ArgumentException($"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple objects at once.");
+            if (!(component is IGameObjectComponent c)) return;
 
-                c.Parent = _parentObject;
-            }
+            if (c.Parent != null)
+                throw new ArgumentException($"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple objects at once.");
+
+            c.Parent = _parentObject;
         }
 
         /// <inheritdoc/>

@@ -1,10 +1,12 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
     /// Term representing the addition operator -- adds two terms together.
     /// </summary>
+    [PublicAPI]
     public class AddTerm : ITerm
     {
         /// <summary>

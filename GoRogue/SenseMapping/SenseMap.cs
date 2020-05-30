@@ -4,18 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SenseMapping
 {
     /// <summary>
     /// Class responsible for calculating a map for senses (sound, light, etc), or generally anything
-    /// that can be modeled as sources propegating through a map that has degrees of resistance to spread.
+    /// that can be modeled as sources propagating through a map that has degrees of resistance to spread.
     /// </summary>
     /// <remarks>
-    /// Generally, this class can be used to model the result of applying ripple-like or shadowcasting-like
+    /// Generally, this class can be used to model the result of applying ripple-like or shadow-casting like
     /// "spreading" of values from one or more sources through a map.  This can include modeling the spreading
-    /// of light, sound, heat for a heatmap, etc. through a map.  You create one or more <see cref="SenseSource"/>
+    /// of light, sound, heat for a heat-map, etc. through a map.  You create one or more <see cref="SenseSource"/>
     /// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate"/>
     /// when you wish to re-calculate the SenseMap.
     /// 
@@ -25,7 +26,7 @@ namespace GoRogue.SenseMapping
     /// where 0.0 means that a location has no resistance to spreading of source values, and greater values represent greater
     /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="SenseSource.Intensity"/> of
     /// your sources.  As a source spreads through a given location, a value equal to the resistance value of that location
-    /// is subtracted from the source's value (plus the normal fallof for distance).
+    /// is subtracted from the source's value (plus the normal fall-of for distance).
     /// 
     /// The map can be calculated by calling the <see cref="Calculate"/> function.
     /// 
@@ -34,7 +35,8 @@ namespace GoRogue.SenseMapping
     /// stopped or fell off due to distance), and a value greater than 0.0 indicates the combined intensity of any sources
     /// that reached the given location.
     /// </remarks>
-    public class SenseMap : IReadOnlySenseMap, IEnumerable<double>, IMapView<double>
+    [PublicAPI]
+    public class SenseMap : IReadOnlySenseMap
     {
         private readonly List<SenseSource> _senseSources;
 
@@ -108,8 +110,8 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Returns the "sensory value" for the given position.
         /// </summary>
-        /// <param name="x">X-Pointinate of the position to return the sensory value for.</param>
-        /// <param name="y">Y-Pointinate of the position to return the sensory value for.</param>
+        /// <param name="x">X-coordinate of the position to return the sensory value for.</param>
+        /// <param name="y">Y-coordinate of the position to return the sensory value for.</param>
         /// <returns>The sensory value for the given position.</returns>
         public double this[int x, int y] => _senseMap[x, y];
 
@@ -129,7 +131,7 @@ namespace GoRogue.SenseMapping
         public IReadOnlySenseMap AsReadOnly() => this;
 
         /// <summary>
-        /// Calcuates the map.  For each enabled source in the source list, it calculates
+        /// Calculates the map.  For each enabled source in the source list, it calculates
         /// the source's spreading, and puts them all together in the sense map's output.
         /// </summary>
         public void Calculate()
@@ -150,16 +152,16 @@ namespace GoRogue.SenseMapping
             {
                 Parallel.ForEach(_senseSources, senseSource =>
                 {
-                    senseSource.calculateLight();
+                    senseSource.CalculateLight();
                 });
             }
             else
                 foreach (var senseSource in _senseSources)
-                    senseSource.calculateLight();
+                    senseSource.CalculateLight();
 
             // Flush sources to actual senseMap
             foreach (var senseSource in _senseSources)
-                blitSenseSource(senseSource, _senseMap, _currentSenseMap, _resMap);
+                BlitSenseSource(senseSource, _senseMap, _currentSenseMap, _resMap);
         }
 
         /// <summary>
@@ -179,6 +181,7 @@ namespace GoRogue.SenseMapping
         // is of no harm.
 #pragma warning disable RECS0137
 
+        // ReSharper disable once MethodOverloadWithOptionalParameter
         /// <summary>
         /// ToString that customizes the characters used to represent the map.
         /// </summary>
@@ -201,7 +204,7 @@ namespace GoRogue.SenseMapping
                 for (int x = 0; x < _resMap.Width; x++)
                 {
                     if (_senseMap[x, y] > 0.0)
-                        result += (isACenter(x, y)) ? center : sourceValue;
+                        result += (IsACenter(x, y)) ? center : sourceValue;
                     else
                         result += normal;
 
@@ -232,7 +235,7 @@ namespace GoRogue.SenseMapping
         /// A string representation of the map, rounded to the given number of decimal places.
         /// </returns>
         public string ToString(int decimalPlaces)
-        => _senseMap.ExtendToStringGrid(elementStringifier: (double obj) => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+        => _senseMap.ExtendToStringGrid(elementStringifier: obj => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
         /// Generic enumerator.
@@ -241,7 +244,7 @@ namespace GoRogue.SenseMapping
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        /// Removes the given source from the list of sources. Genearlly, use this if a source is permanently removed
+        /// Removes the given source from the list of sources. Generally, use this if a source is permanently removed
         /// from a map. For temporary disabling, you should generally use the <see cref="SenseSource.Enabled"/> flag.
         /// </summary>
         /// <remarks>
@@ -255,7 +258,7 @@ namespace GoRogue.SenseMapping
             senseSource._resMap = null;
         }
 
-        private bool isACenter(int x, int y)
+        private bool IsACenter(int x, int y)
         {
             foreach (var source in _senseSources)
                 if (source.Position.X == x && source.Position.Y == y)
@@ -264,8 +267,8 @@ namespace GoRogue.SenseMapping
             return false;
         }
 
-        // Blits given source's lightMap onto the global lightmap given
-        private static void blitSenseSource(SenseSource source, double[,] destination, HashSet<Point> sourceMap, IMapView<double> resMap)
+        // Blits given source's lightMap onto the global light-map given
+        private static void BlitSenseSource(SenseSource source, double[,] destination, HashSet<Point> sourceMap, IMapView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
             int minX = Math.Min((int)source.Radius, source.Position.X);
@@ -273,11 +276,11 @@ namespace GoRogue.SenseMapping
             int maxX = Math.Min((int)source.Radius, resMap.Width - 1 - source.Position.X);
             int maxY = Math.Min((int)source.Radius, resMap.Height - 1 - source.Position.Y);
 
-            // Use radius bounds to extrapalate global Pointinate scheme mins and maxes
+            // Use radius bounds to extrapolate global coordinate scheme mins and maxes
             Point gMin = source.Position - new Point(minX, minY);
             //Point gMax = source.Position + Point.Get(maxX, maxY);
 
-            // Use radius bound to extrapalate light-local Pointinate scheme min and max bounds that
+            // Use radius bound to extrapolate light-local coordinate scheme min and max bounds that
             // are actually blitted
             Point lMin = new Point((int)source.Radius - minX, (int)source.Radius - minY);
             Point lMax = new Point((int)source.Radius + maxX, (int)source.Radius + maxY);
@@ -287,7 +290,7 @@ namespace GoRogue.SenseMapping
             {
                 for (int yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
                 {
-                    // Offset local/current by proper amount, and update lightmap
+                    // Offset local/current by proper amount, and update light-map
                     Point c = new Point(xOffset, yOffset);
                     Point gCur = gMin + c;
                     Point lCur = lMin + c;

@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue
 {
@@ -10,6 +11,7 @@ namespace GoRogue
     /// These arguments allow cancellation of the triggering of a chain of effects when triggered by
     /// an <see cref="EffectTrigger{T}"/>, as detailed in that class's documentation.
     /// </remarks>
+    [PublicAPI]
     public class EffectArgs
     {
         /// <summary>
@@ -47,8 +49,8 @@ namespace GoRogue
     /// <see cref="Effect{T}.Trigger(T)"/>) function will be called before it will be removed from an EffectTrigger. If the effect
     /// is instantaneous, eg. it happens only when Trigger is called, on no particular event (such as a simple instant damage
     /// effect), then the duration specified in the constructor should be the static class constant
-    /// <see cref="Effect{T}.INSTANT"/>. If the effect is meant to have an infinite duration, or the effect wears off on some
-    /// condition other than time passing, the duration may be set to <see cref="Effect{T}.INFINITE"/>, and then manipulated
+    /// <see cref="Instant"/>. If the effect is meant to have an infinite duration, or the effect wears off on some
+    /// condition other than time passing, the duration may be set to <see cref="Infinite"/>, and then manipulated
     /// appropriately to 0 when the effect has expired.
     ///
     /// More explanation of Effects and EffectTriggers, and usage examples, can be found at the GoRogue documentation site
@@ -57,25 +59,22 @@ namespace GoRogue
     /// <typeparam name="TTriggerArgs">
     /// The type of the parameter that will be specified to the <see cref="Effect{T}.Trigger(T)"/> function when called.
     /// </typeparam>
+    [PublicAPI]
     public abstract class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs
     {
-#pragma warning disable RECS0108
-
         /// <summary>
         /// The value one should specify as the effect duration for an infinite effect, eg. an effect
         /// that will never expire or whose expiration time is arbitrary (for example, based on a condition
         /// other than the passing of time).
         /// </summary>
-        public static readonly int INFINITE = -1;
+        public const int Infinite = -1;
 
         /// <summary>
-        /// The value one should specify as the effect duaration for an instantaneous effect, eg. an
+        /// The value one should specify as the effect duration for an instantaneous effect, eg. an
         /// effect that only occurs when Trigger is manually called, and thus cannot be added to an 
         /// <see cref="EffectTrigger{TriggerArgs}"/>.
         /// </summary>
-        public static readonly int INSTANT = 0;
-
-#pragma warning restore RECS0108
+        public const int Instant = 0;
 
         /// <summary>
         /// The name of the effect.
@@ -118,7 +117,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="name">Name for the effect.</param>
         /// <param name="startingDuration">Starting duration for the effect.</param>
-        public Effect(string name, int startingDuration)
+        protected Effect(string name, int startingDuration)
         {
             Name = name;
             _duration = startingDuration;
@@ -138,7 +137,7 @@ namespace GoRogue
             OnTrigger(args);
 
             if (Duration != 0)
-                Duration = (Duration == INFINITE) ? INFINITE : Duration - 1;
+                Duration = (Duration == Infinite) ? Infinite : Duration - 1;
         }
 
         /// <summary>
@@ -154,7 +153,7 @@ namespace GoRogue
         /// <returns>String representation of the effect.</returns>
         public override string ToString()
         {
-            string durationStr = (Duration == INFINITE) ? "Infinite" : Duration.ToString();
+            string durationStr = (Duration == Infinite) ? "Infinite" : Duration.ToString();
             return $"{Name}: {durationStr} duration remaining";
         }
     }

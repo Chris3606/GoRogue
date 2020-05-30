@@ -1,11 +1,11 @@
-﻿using System;
-using Troschuetz.Random;
+﻿using Troschuetz.Random;
 using System.Collections.Generic;
 using SadRogue.Primitives;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using GoRogue.MapViews;
 using GoRogue.Random;
+using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -40,6 +40,7 @@ namespace GoRogue.MapGeneration.Steps
     /// GenerationContext has an existing "WallFloor" context component, that component is used.  If not, an <see cref="ArrayMap{T}"/> where T is bool is
     /// created and added to the map context, whose width/height match <see cref="GenerationContext.Width"/>/<see cref="GenerationContext.Height"/>.
     /// </remarks>
+    [PublicAPI]
     public class MazeGeneration : GenerationStep
     {
         /// <summary>
@@ -114,43 +115,43 @@ namespace GoRogue.MapGeneration.Steps
                     // Dig this position
                     wallFloorContext[crawler.CurrentPosition] = true;
 
-                    // Get valid directions (basically is any position outside the map or not?)
+                    // Get valid directions (basically is any position outside the map or not?
                     var points = AdjacencyRule.Cardinals.NeighborsClockwise(crawler.CurrentPosition).ToArray();
                     var directions = AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise(Direction.None).ToList();
 
-                    var valids = new bool[4];
+                    var validDirections = new bool[4];
 
-                    // Rule out any valids based on their position. Only process NSEW, do not use diagonals
+                    // Rule out any valid directions based on their position. Only process cardinals, do not use diagonals
                     for (var i = 0; i < 4; i++)
-                        valids[i] = IsPointWallsExceptSource(wallFloorContext, points[i], directions[i] + 4);
+                        validDirections[i] = IsPointWallsExceptSource(wallFloorContext, points[i], directions[i] + 4);
 
                     // If not a new crawler, exclude where we came from
                     if (!startedCrawler)
-                        valids[directions.IndexOf(crawler.Facing + 4)] = false;
+                        validDirections[directions.IndexOf(crawler.Facing + 4)] = false;
 
                     // Do we have any valid direction to go?
-                    if (valids[0] || valids[1] || valids[2] || valids[3])
+                    if (validDirections[0] || validDirections[1] || validDirections[2] || validDirections[3])
                     {
-                        var index = 0;
+                        int index;
 
                         // Are we just starting this crawler? OR Is the current crawler facing
                         // direction invalid?
-                        if (startedCrawler || valids[directions.IndexOf(crawler.Facing)] == false)
+                        if (startedCrawler || validDirections[directions.IndexOf(crawler.Facing)] == false)
                         {
                             // Just get anything
-                            index = GetDirectionIndex(valids, RNG);
+                            index = GetDirectionIndex(validDirections, RNG);
                             crawler.Facing = directions[index];
                             percentChangeDirection = 0;
                             startedCrawler = false;
                         }
                         else
                         {
-                            // Increase probablity we change direction
+                            // Increase probability we change direction
                             percentChangeDirection += CrawlerChangeDirectionImprovement;
 
                             if (RNG.PercentageCheck(percentChangeDirection))
                             {
-                                index = GetDirectionIndex(valids, RNG);
+                                index = GetDirectionIndex(validDirections, RNG);
                                 crawler.Facing = directions[index];
                                 percentChangeDirection = 0;
                             }
@@ -194,7 +195,7 @@ namespace GoRogue.MapGeneration.Steps
             return Point.None;
         }
 
-        private static int GetDirectionIndex(bool[] valids, IGenerator rng)
+        private static int GetDirectionIndex(bool[] validDirections, IGenerator rng)
         {
             // 10 tries to find random ok valid
             bool randomSuccess = false;
@@ -203,25 +204,23 @@ namespace GoRogue.MapGeneration.Steps
             for (int randomCounter = 0; randomCounter < 10; randomCounter++)
             {
                 tempDirectionIndex = rng.Next(4);
-                if (valids[tempDirectionIndex])
-                {
-                    randomSuccess = true;
-                    break;
-                }
+                if (!validDirections[tempDirectionIndex]) continue;
+
+                randomSuccess = true;
+                break;
             }
 
-            // Couldn't find an active valid, so just run through each
-            if (!randomSuccess)
-            {
-                if (valids[0])
-                    tempDirectionIndex = 0;
-                else if (valids[1])
-                    tempDirectionIndex = 1;
-                else if (valids[2])
-                    tempDirectionIndex = 2;
-                else
-                    tempDirectionIndex = 3;
-            }
+            if (randomSuccess) return tempDirectionIndex;
+
+            // Couldn't find an active valid, so just run through each one
+            if (validDirections[0])
+                tempDirectionIndex = 0;
+            else if (validDirections[1])
+                tempDirectionIndex = 1;
+            else if (validDirections[2])
+                tempDirectionIndex = 2;
+            else
+                tempDirectionIndex = 3;
 
             return tempDirectionIndex;
         }
@@ -281,12 +280,12 @@ namespace GoRogue.MapGeneration.Steps
             else
                 skipped = new[] { sourceDirection, Direction.DownRight, Direction.DownLeft };
 
-            for (int i = 0; i < index.Length; i++)
+            foreach (var direction in index)
             {
-                if (skipped[0] == index[i] || skipped[1] == index[i] || skipped[2] == index[i])
+                if (skipped[0] == direction || skipped[1] == direction || skipped[2] == direction)
                     continue;
 
-                if (!map.Bounds().Contains(location + index[i]) || map[location + index[i]])
+                if (!map.Bounds().Contains(location + direction) || map[location + direction])
                     return false;
             }
 
@@ -295,11 +294,10 @@ namespace GoRogue.MapGeneration.Steps
 
         private class Crawler
         {
-            public Area AllPositions = new Area();
+            public readonly Area AllPositions = new Area();
             public Point CurrentPosition = new Point(0, 0);
             public Direction Facing = Direction.Up;
-            public bool IsActive = true;
-            public Stack<Point> Path = new Stack<Point>();
+            public readonly Stack<Point> Path = new Stack<Point>();
 
             public void Backtrack()
             {

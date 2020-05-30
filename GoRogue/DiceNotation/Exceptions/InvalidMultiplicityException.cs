@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue.DiceNotation.Exceptions
 {
     /// <summary>
     /// Exception that is thrown when a dice term is constructed with a negative number of dice.
     /// </summary>
+    [PublicAPI]
     public class InvalidMultiplicityException : Exception
     {
         /// <summary>

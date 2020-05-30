@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.Random
@@ -8,6 +9,7 @@ namespace GoRogue.Random
     /// Next overload that only takes maxValue. Again, may be useful for testing. Also used in
     /// <see cref="DiceNotation.DiceExpression"/> for certain minimum roll functions.
     /// </summary>
+    [PublicAPI]
     public class MinRandom : IGenerator
     {
         /// <summary>
@@ -95,7 +97,7 @@ namespace GoRogue.Random
         /// The minimum value for the returned number (always returned since this function always
         /// returns the minimum).
         /// </param>
-        /// <param name="maxValue">The maximum vlaue for the returned number (unused).</param>
+        /// <param name="maxValue">The maximum value for the returned number (unused).</param>
         /// <returns><paramref name="minValue"/></returns>
         public double NextDouble(double minValue, double maxValue) => minValue;
 

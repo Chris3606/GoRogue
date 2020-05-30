@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.Pathing
@@ -18,6 +19,7 @@ namespace GoRogue.Pathing
     /// create a "safety map" as described in the article, as the resulting goal map will show no
     /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap"/>.
     /// </remarks>
+    [PublicAPI]
     public class WeightedGoalMap : IMapView<double?>
     {
         /// <summary>
@@ -75,19 +77,21 @@ namespace GoRogue.Pathing
         public WeightedGoalMap(IDictionary<IMapView<double?>, double> maps)
         {
             Weights = new Dictionary<IMapView<double?>, double>();
-            foreach (var pair in maps)
+
+            // TODO: Fix the debug asserts here, and also fix this interface entirely
+            foreach (var (key, value) in maps)
             {
-                Weights.Add(pair.Key, pair.Value);
+                Weights.Add(key, value);
                 if (Height == 0)
                 {
-                    Width = pair.Key.Width;
-                    Height = pair.Key.Height;
+                    Width = key.Width;
+                    Height = key.Height;
                 }
                 else
                 {
-                    Debug.Assert(Height == pair.Key.Height && Width == pair.Key.Width);
+                    Debug.Assert(Height == key.Height && Width == key.Width);
                 }
-                Debug.Assert(pair.Value != 0.0);
+                Debug.Assert(value != 0.0);
             }
         }
 
@@ -123,7 +127,7 @@ namespace GoRogue.Pathing
                     if (!value.HasValue)
                         return null;
                     var weight = pair.Value;
-                    var weighted = value.Value * weight;
+                    var weighted = value!.Value * weight;
                     if (weight > 0.0)
                     {
                         result = result == 0.0 ? weighted : result * weighted;

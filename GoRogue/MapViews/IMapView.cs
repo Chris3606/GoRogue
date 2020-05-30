@@ -1,4 +1,5 @@
-﻿using SadRogue.Primitives;
+﻿using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
 {
@@ -28,6 +29,7 @@ namespace GoRogue.MapViews
     /// function to retrieve values.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
+    [PublicAPI]
     public interface IMapView<out T>
     {
         /// <summary>

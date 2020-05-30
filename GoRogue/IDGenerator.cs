@@ -1,4 +1,7 @@
-﻿namespace GoRogue
+﻿using System;
+using JetBrains.Annotations;
+
+namespace GoRogue
 {
     /// <summary>
     /// Class designed as a helper for situations where you need to generate and assign a unique
@@ -10,6 +13,7 @@
     /// This class is NOT thread-safe on its own -- if it needs to be, you can simply use a lock to wrap
     /// any calls to UseID.
     /// </remarks>
+    [PublicAPI]
     public class IDGenerator
     {
         private uint _currentInteger;
@@ -37,8 +41,8 @@
         public uint UseID()
         {
             if (_lastAssigned)
-                throw new System.Exception($"An {nameof(IDGenerator)} ran out of IDs to assign, as uint.MaxValue was hit.");
-            else if (_currentInteger == uint.MaxValue) // We're about to assign the last box
+                throw new Exception($"An {nameof(IDGenerator)} ran out of IDs to assign, as uint.MaxValue was hit.");
+            if (_currentInteger == uint.MaxValue) // We're about to assign the last box
                 _lastAssigned = true;
             return _currentInteger++;
         }

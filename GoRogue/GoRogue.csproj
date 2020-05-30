@@ -44,13 +44,16 @@
   
   <!-- Dependencies -->
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+	  <PrivateAssets>all</PrivateAssets>
+	</PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha3" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha4" />
     <PackageReference Include="Troschuetz.Random" Version="4.3.1" />
   </ItemGroup>
   

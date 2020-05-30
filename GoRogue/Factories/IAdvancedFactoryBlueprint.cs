@@ -1,10 +1,13 @@
-﻿namespace GoRogue.Factories
+﻿using JetBrains.Annotations;
+
+namespace GoRogue.Factories
 {
     /// <summary>
     /// Defines how to create a <typeparamref name="TProduced"/> object for use in an <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>.
     /// </summary>
     /// <typeparam name="TBlueprintConfig">The type of the parameter to pass to the <see cref="Create(TBlueprintConfig)"/> function.</typeparam>
     /// <typeparam name="TProduced">The type of object to create.</typeparam>
+    [PublicAPI]
     public interface IAdvancedFactoryBlueprint<in TBlueprintConfig, out TProduced>
     {
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue
@@ -7,6 +8,7 @@ namespace GoRogue
     /// <summary>
     /// Read-only interface of the <see cref="FOV"/> class.
     /// </summary>
+    [PublicAPI]
     public interface IReadOnlyFOV : IMapView<double>
     {
         /// <summary>

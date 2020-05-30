@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.Random
@@ -15,6 +16,7 @@ namespace GoRogue.Random
     /// <typeparam name="T">
     /// The type of continuous distribution being wrapped. Must implement <see cref="IContinuousDistribution"/>.
     /// </typeparam>
+    [PublicAPI]
     public class DiscreteConverter<T> : IDiscreteDistribution where T : IContinuousDistribution
     {
         /// <summary>

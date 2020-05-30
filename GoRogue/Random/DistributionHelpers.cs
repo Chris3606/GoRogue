@@ -1,4 +1,5 @@
-﻿using Troschuetz.Random;
+﻿using JetBrains.Annotations;
+using Troschuetz.Random;
 using Troschuetz.Random.Distributions.Continuous;
 using Troschuetz.Random.Generators;
 
@@ -7,6 +8,7 @@ namespace GoRogue.Random
     /// <summary>
     /// Defines functions that assist in dealing with RNG distributions.
     /// </summary>
+    [PublicAPI]
     public static class DistributionHelpers
     {
         /// <summary>
@@ -22,7 +24,7 @@ namespace GoRogue.Random
         /// </param>
         /// <returns>
         /// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
-        /// upper values given, and the lower and upper values are exatly the specified number of
+        /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>
         public static NormalDistribution CreateNormalDistribution(double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
@@ -42,7 +44,7 @@ namespace GoRogue.Random
         /// </param>
         /// <returns>
         /// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
-        /// upper values given, and the lower and upper values are exatly the specified number of
+        /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>
         public static NormalDistribution CreateNormalDistribution(uint seed, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
@@ -64,13 +66,12 @@ namespace GoRogue.Random
         /// </param>
         /// <returns>
         /// A <see cref="NormalDistribution"/> constructed such that the mean is precisely in between the lower and
-        /// upper values given, and the lower and upper values are exatly the specified number of
+        /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>
         public static NormalDistribution CreateNormalDistribution(IGenerator? generator = null, double lower = -1.0, double upper = 1.0, double deviationsFromMean = 3.5)
         {
-            if (generator == null)
-                generator = GlobalRandom.DefaultRNG;
+            generator ??= GlobalRandom.DefaultRNG;
 
             return new NormalDistribution(generator, lower + (upper - lower) / 2.0, (upper - lower) / 2.0 / deviationsFromMean);
         }

@@ -1,11 +1,14 @@
 ﻿using System.Linq;
+using GoRogue.DiceNotation.Exceptions;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {
     /// <summary>
-    /// Term represnting the keep operator -- keeping only the n highest dice from a dice term.
+    /// Term representing the keep operator -- keeping only the n highest dice from a dice term.
     /// </summary>
+    [PublicAPI]
     public class KeepTerm : ITerm
     {
         private readonly DiceTerm _diceTerm;
@@ -37,12 +40,12 @@ namespace GoRogue.DiceNotation.Terms
             int keepVal = _keep.GetResult(rng);
 
             if (keepVal < 0)
-                throw new Exceptions.InvalidChooseException();
+                throw new InvalidChooseException();
 
             _diceTerm.GetResult(rng); // Roll so we can check chooses
 
             if (keepVal > _diceTerm.LastMultiplicity)
-                throw new Exceptions.InvalidChooseException();
+                throw new InvalidChooseException();
 
             return _diceTerm.DiceResults.OrderByDescending(value => value).Take(keepVal).Sum();
         }

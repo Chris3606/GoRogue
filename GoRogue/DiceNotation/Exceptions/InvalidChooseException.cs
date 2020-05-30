@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace GoRogue.DiceNotation.Exceptions
 {
@@ -6,6 +7,7 @@ namespace GoRogue.DiceNotation.Exceptions
     /// Exception that is thrown when a dice term is constructed with a 'k' choose operation to keep
     /// an invalid number of dice.
     /// </summary>
+    [PublicAPI]
     public class InvalidChooseException : Exception
     {
         /// <summary>

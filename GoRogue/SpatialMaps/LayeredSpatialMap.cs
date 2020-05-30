@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.SpatialMaps
@@ -23,6 +24,7 @@ namespace GoRogue.SpatialMaps
     /// Type of items in the layers. Type T must implement <see cref="IHasLayer"/>, and its <see cref="IHasLayer.Layer"/> value
     /// MUST NOT change while the item is in the AdvancedLayeredSpatialMap.
     /// </typeparam>
+    [PublicAPI]
     public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasLayer
     {
         // Same as above but startingLayers less layers, for actual use, since we view our layers as
@@ -234,7 +236,7 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc/>
         public IEnumerable<IReadOnlySpatialMap<T>> GetLayersInMask(uint layerMask = uint.MaxValue)
         {
-            foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer)) // LayerMasking will ignore layers that dont' actually exist
+            foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer)) // LayerMasking will ignore layers that don't actually exist
                 yield return _layers[num - StartingLayer];
         }
 
@@ -291,7 +293,7 @@ namespace GoRogue.SpatialMaps
         public IEnumerable<T> MoveValid(Point current, Point target, uint layerMask = uint.MaxValue) => MoveValid(current.X, current.Y, target.X, target.Y, layerMask);
 
         /// <inheritdoc/>
-        IEnumerable<T> ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY) => MoveValid(currentX, currentY, targetX, targetY, uint.MaxValue);
+        IEnumerable<T> ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY) => MoveValid(currentX, currentY, targetX, targetY);
 
         /// <summary>
         /// Moves all items that can be moved, that are at the given position and on any layer specified by the given layer
@@ -300,7 +302,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="currentX">X-value of the position to move items from.</param>
         /// <param name="currentY">Y-value of the position to move items from.</param>
         /// <param name="targetX">X-value of the position to move items to.</param>
-        /// <param name="targetY">Y-value of the position to move itesm from.</param>
+        /// <param name="targetY">Y-value of the position to move items from.</param>
         /// <param name="layerMask">
         /// Layer mask specifying which layers to search for items on. Defaults to all layers.
         /// </param>
@@ -406,7 +408,7 @@ namespace GoRogue.SpatialMaps
         public bool CanAdd(T newItem, int x, int y) => CanAdd(newItem, new Point(x, y));
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one, eg. it is in the spatial map and its layer will
+        /// Returns true if the given item can be moved from its current location to the specified one, eg. it is in the spatial map and its layer will
         /// accept it at the new position; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -419,7 +421,7 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        /// Returns true if the given item can be moved from its current location to the specfied one, eg. it is in the spatial map and its layer will
+        /// Returns true if the given item can be moved from its current location to the specified one, eg. it is in the spatial map and its layer will
         /// accept it at the new position; false otherwise.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -512,6 +514,7 @@ namespace GoRogue.SpatialMaps
     /// must be a reference type, and its <see cref="IHasLayer.Layer"/> value MUST NOT change while the item is in the
     /// spatial map.
     /// </typeparam>
+    [PublicAPI]
     public class LayeredSpatialMap<T> : AdvancedLayeredSpatialMap<T> where T : class, IHasLayer, IHasID
     {
         /// <summary>

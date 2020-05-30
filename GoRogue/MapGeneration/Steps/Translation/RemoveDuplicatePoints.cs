@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using GoRogue.MapGeneration.ContextComponents;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Steps.Translation
@@ -19,6 +20,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
     ///
     /// This ensures that the two lists do not contain any positions that overlap with each other.
     /// </remarks>
+    [PublicAPI]
     public class RemoveDuplicatePoints : GenerationStep
     {
         /// <summary>

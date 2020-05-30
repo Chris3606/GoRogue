@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapViews
@@ -9,6 +10,7 @@ namespace GoRogue.MapViews
     /// default value is returned.
     /// </summary>
     /// <typeparam name="T">The type being exposed by the UnboundedViewport.</typeparam>
+    [PublicAPI]
     public class UnboundedViewport<T> : IMapView<T>
     {
         /// <summary>
@@ -152,7 +154,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
         /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
-        /// is less than the length of the element's string represention.
+        /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
         /// The size of the field to give each value.  A positive-number

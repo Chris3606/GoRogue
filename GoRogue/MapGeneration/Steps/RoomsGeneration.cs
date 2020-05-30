@@ -3,6 +3,7 @@ using GoRogue.Random;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 using GoRogue.MapViews;
+using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -37,6 +38,7 @@ namespace GoRogue.MapGeneration.Steps
     /// map view with the given tag.  If the GenerationContext has an existing map view context component, that component is used.  If not, an <see cref="MapViews.ArrayMap{T}"/>
     /// where T is bool is created and added to the map context, whose width/height match <see cref="GenerationContext.Width"/>/<see cref="GenerationContext.Height"/>.
     /// </remarks>
+    [PublicAPI]
     public class RoomsGeneration : GenerationStep
     {
         /// <summary>
@@ -150,7 +152,7 @@ namespace GoRogue.MapGeneration.Steps
                 while (tryCounterCreate != 0)
                 {
                     int roomSize = RNG.Next(RoomMinSize, RoomMaxSize + 1);
-                    int width = (int)(roomSize * RoomSizeRatioX);  // This helps with non square fonts. So rooms dont look odd
+                    int width = (int)(roomSize * RoomSizeRatioX);  // This helps with non square fonts. So rooms don't look odd
                     int height = (int)(roomSize * RoomSizeRatioY);
 
                     // When accounting for font ratios, these adjustments help prevent all rooms

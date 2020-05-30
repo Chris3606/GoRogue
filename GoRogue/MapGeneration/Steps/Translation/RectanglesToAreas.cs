@@ -1,4 +1,5 @@
 ﻿using GoRogue.MapGeneration.ContextComponents;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration.Steps.Translation
@@ -13,6 +14,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
     /// Context Components Added/Used
     ///     - <see cref="ItemList{Area}"/> (tag <see cref="AreasComponentTag"/>): The list of areas to add the areas representing the rectangles to.  If it does not exist, it will be created.
     /// </summary>
+    [PublicAPI]
     public class RectanglesToAreas : GenerationStep
     {
         /// <summary>
@@ -28,7 +30,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// <summary>
         /// Whether or not to remove the input list of rectangles from the context.  Defaults to false.
         /// </summary>
-        public bool RemoveSourceComponent = false;
+        public bool RemoveSourceComponent;
 
         /// <summary>
         /// Creates a new step for translation of <see cref="Rectangle"/> lists to <see cref="Area"/> lists.

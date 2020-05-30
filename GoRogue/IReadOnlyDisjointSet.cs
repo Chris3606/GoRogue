@@ -1,8 +1,11 @@
-﻿namespace GoRogue
+﻿using JetBrains.Annotations;
+
+namespace GoRogue
 {
     /// <summary>
     /// Read-only representation of <see cref="DisjointSet"/>
     /// </summary>
+    [PublicAPI]
     public interface IReadOnlyDisjointSet
     {
         /// <summary>

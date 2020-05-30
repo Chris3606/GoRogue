@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapViews;
 using GoRogue.Random;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
 
@@ -19,7 +20,7 @@ namespace GoRogue.MapGeneration.Steps
     /// <description>Default Tag</description>
     /// </listheader>
     /// <item>
-    /// <term><see cref="ItemList{Area}"/></term>
+    /// <term><see cref="ItemList{TItem}"/></term>
     /// <description>"Tunnels"</description>
     /// </item>
     /// <item>
@@ -34,12 +35,13 @@ namespace GoRogue.MapGeneration.Steps
     /// <remarks>
     /// This algorithm iterates over all map areas in the <see cref="ItemList{Area}"/> context component with the given tag.  For each area, it scans for dead ends
     /// (locations that, according to the "WallFloor" component given, are surrounded by 3 walls).  For each dead end, if that dead end is not currently
-    /// and hasn't previously been selected as "saved", based on percentage checks, it proceeds to fill it in.  It will remove the dead end location, from the approprate
+    /// and hasn't previously been selected as "saved", based on percentage checks, it proceeds to fill it in.  It will remove the dead end location, from the appropriate
     /// area, and set the location in the "WallFloor" map to true.
     ///
     /// It proceeds in this manner until either no more (non-saved) dead ends are found, or the given maximum iterations is reached, then proceeds to the next area in the ItemList
     /// until it has processed all of the areas.
     /// </remarks>
+    [PublicAPI]
     public class TunnelDeadEndTrimming : GenerationStep
     {
         /// <summary>
@@ -144,7 +146,7 @@ namespace GoRogue.MapGeneration.Steps
                                                                  !wallFloor[point + Direction.Up] &&
                                                                  !wallFloor[point + Direction.Down],
 
-                                        _ => throw new System.Exception("Cannot occur since original neighbor direction was a cardinal.")
+                                        _ => throw new Exception("Cannot occur since original neighbor direction was a cardinal.")
                                     };
                                 }
 
