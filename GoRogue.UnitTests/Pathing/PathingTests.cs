@@ -170,7 +170,7 @@ namespace GoRogue.UnitTests.Pathing
             var pather = new AStar(map, Distance.Chebyshev, Distance.Euclidean.Calculate);
             var path = pather.ShortestPath(START, END);
 
-            TestUtils.PrintHightlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
                 Console.WriteLine(point);
@@ -184,7 +184,7 @@ namespace GoRogue.UnitTests.Pathing
             var pather = new AStar(map, Distance.Euclidean);
             var path = pather.ShortestPath(START, END);
 
-            TestUtils.PrintHightlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
                 Console.WriteLine(point);
@@ -198,7 +198,7 @@ namespace GoRogue.UnitTests.Pathing
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(START, END);
 
-            TestUtils.PrintHightlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
                 Console.WriteLine(point);

@@ -33,14 +33,14 @@ namespace GoRogue.UnitTests
             effect.Trigger(null);
             Assert.Equal(0, effect.Duration);
 
-            var effect2 = new IntEffect("Test Effect", IntEffect.INFINITE);
-            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
+            var effect2 = new IntEffect("Test Effect", IntEffect.Infinite);
+            Assert.Equal(IntEffect.Infinite, effect2.Duration);
 
             effect2.Trigger(null);
-            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
+            Assert.Equal(IntEffect.Infinite, effect2.Duration);
 
             effect2.Trigger(null);
-            Assert.Equal(IntEffect.INFINITE, effect2.Duration);
+            Assert.Equal(IntEffect.Infinite, effect2.Duration);
         }
 
         [Fact]
@@ -64,7 +64,7 @@ namespace GoRogue.UnitTests
             effectTrigger.Add(new IntEffect("Test Effect 2", 2));
             Assert.Equal(2, effectTrigger.Effects.Count);
 
-            effectTrigger.Add(new IntEffect("Test Effect Inf", IntEffect.INFINITE));
+            effectTrigger.Add(new IntEffect("Test Effect Inf", IntEffect.Infinite));
             Assert.Equal(3, effectTrigger.Effects.Count);
 
             Assert.Throws<ArgumentException>(() => effectTrigger.Add(new IntEffect("Test Effect 0", 0)));
@@ -79,7 +79,7 @@ namespace GoRogue.UnitTests
             var effect1 = new IntEffect("Int Effect 1", 1);
             var effect2 = new IntEffect("Int Effect 3", MULTI_DURATION);
 
-            var effectInf = new IntEffect("Int Effect Inf", IntEffect.INFINITE);
+            var effectInf = new IntEffect("Int Effect Inf", IntEffect.Infinite);
 
             effectTrigger.Add(effect2);
             effectTrigger.TriggerEffects(null); // Test with null arguments
@@ -94,7 +94,7 @@ namespace GoRogue.UnitTests
             effectTrigger.TriggerEffects(null);
             Assert.Equal(2, effectTrigger.Effects.Count);
             Assert.Equal(MULTI_DURATION - 2, effectTrigger.Effects[0].Duration);
-            Assert.Equal(IntEffect.INFINITE, effectTrigger.Effects[1].Duration);
+            Assert.Equal(IntEffect.Infinite, effectTrigger.Effects[1].Duration);
 
             var secEffectTrigger = new EffectTrigger<EffectArgs>();
             var testEffect = new IntEffect("Int effect dummy", 1);

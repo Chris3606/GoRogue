@@ -20,7 +20,7 @@ namespace GoRogue.UnitTests
         public void ManualDDATest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.DDA);
 
         [Fact]
-        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.Ortho);
+        public void ManualOrthoTest() => DrawLine(START, END, MAP_WIDTH, MAP_HEIGHT, Lines.Algorithm.Orthogonal);
 
         [Fact]
         public void OrderedBresenhamTest()

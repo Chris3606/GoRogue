@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests
         private static readonly int width = 30;
         private static readonly Point Center = (width / 2, height / 2);
         private static readonly int radius = 10;
-        #region lighting tests
+        #region Lighting Tests
         [Fact]
         public void TestAccessBeforeCalculate()
         {
@@ -302,68 +302,57 @@ namespace GoRogue.UnitTests
         #endregion
 
 
-        // !!!BIG PROBLEM!!!
-        //I think that Radius.PositionsInRadius is failing and hiding the error.
-        //To see for yourself, uncomment this:
-        [Fact(Skip = "This test proves that PositionsInRadius() is untrustworthy.")]
-        public void PositionsInRadiusAreNull()
-        {
-            Radius shape = Radius.Diamond;//any will do
-            List<Point> radArea = (List<Point>)shape.PositionsInRadius(Center, radius);
-        }
-
-
 
         #region radius
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void CircleLosShape()
         {
             Assert.True(testLOS(Radius.Circle));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void DiamondLosShape()
         {
             Assert.True(testLOS(Radius.Diamond));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void RippleSenseMapCircleShape()
         {
             Assert.True(testSenseMap(SourceType.Ripple, Radius.Circle));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void RippleSenseMapDiamondShape()
         {
             Assert.True(testSenseMap(SourceType.Ripple, Radius.Diamond));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void RippleSenseMapSquareShape()
         {
             Assert.True(testSenseMap(SourceType.Ripple, Radius.Square));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void ShadowSenseMapCircleShape()
         {
             Assert.True(testSenseMap(SourceType.Shadow, Radius.Circle));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void ShadowSenseMapDiamondShape()
         {
             Assert.True(testSenseMap(SourceType.Shadow, Radius.Diamond));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void ShadowSenseMapSquareShape()
         {
             Assert.True(testSenseMap(SourceType.Shadow, Radius.Square));
         }
 
-        [Fact(Skip = "Unable to Test these because `Radius.PositionsInSenseMap()` is failing.")]
+        [Fact]
         public void SquareLosShape()
         {
             Assert.True(testLOS(Radius.Square));
@@ -421,8 +410,7 @@ namespace GoRogue.UnitTests
 
         private bool testLOS(Radius shape)
         {
-            var map = new ArrayMap<bool>(width, height);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(width, height);
             // Start out at false
             bool[,] radiusMap = new bool[width, height];
             bool[,] losMap = new bool[width, height];
@@ -435,7 +423,7 @@ namespace GoRogue.UnitTests
                     if (los[x, y] > 0)
                         losMap[x, y] = true;
 
-            List<Point> radArea = (List<Point>)shape.PositionsInRadius(Center, radius);
+            List<Point> radArea = shape.PositionsInRadius(Center, radius).ToList();
             foreach (var pos in radArea)
                 radiusMap[pos.X, pos.Y] = true;
 
@@ -466,7 +454,7 @@ namespace GoRogue.UnitTests
                     if (los[x, y] > 0)
                         losMap[x, y] = true;
 
-            var radArea = shape.PositionsInRadius(Center, radius);
+            var radArea = shape.PositionsInRadius(Center, radius).ToList();
             foreach (var pos in radArea)
                 radiusMap[pos.X, pos.Y] = true;
 

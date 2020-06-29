@@ -11,23 +11,6 @@ namespace GoRogue.UnitTests
     public class SerializationTests
     {
         [Fact]
-        public void SerializeAdjacencyRule() => TestSerialization(AdjacencyRule.EightWay);
-
-        private void TestSerialization(object eIGHT_WAY)
-        {
-            throw new NotImplementedException();
-        }
-
-        [Fact]
-        public void SerializeBoundedRectangle() => TestSerialization(new BoundedRectangle((1, 2, 3, 4), (10, 10, 10, 10)));
-
-        [Fact]
-        public void SerializeCoord() => TestSerialization<Point>((1, 2));
-
-        [Fact]
-        public void SerializeDirection() => TestSerialization(Direction.DownRight);
-
-        [Fact]
         public void SerializeDisjointSet()
         {
             var dj = new DisjointSet(10);
@@ -36,17 +19,6 @@ namespace GoRogue.UnitTests
 
             TestSerialization(dj, DisjointSetEquality);
         }
-
-        [Fact]
-        public void TestDistance() => TestSerialization(Distance.Chebyshev);
-
-
-        [Fact]
-        public void TestRadius() => TestSerialization(Radius.Circle);
-
-
-        [Fact]
-        public void TestRectangle() => TestSerialization(new Rectangle(2, 1, 5, 8));
 
         private bool DisjointSetEquality(DisjointSet t1, DisjointSet t2)
         {

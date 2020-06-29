@@ -4,13 +4,13 @@ using Xunit;
 
 namespace GoRogue.UnitTests
 {
-    class IComponent
+    class ComponentBase
     { }
 
-    class Component1 : IComponent
+    class Component1 : ComponentBase
     { }
 
-    class Component2 : IComponent
+    class Component2 : ComponentBase
     { }
 
     class SortedComponent : Component1, ISortedComponent
@@ -70,12 +70,10 @@ namespace GoRogue.UnitTests
             Assert.Equal(1, _addedCount);
 
             // Should throw exception because it's a duplicate tag
-            
             Assert.Throws<ArgumentException>(() => _componentContainer.AddComponent(component2, "Tag1"));
             Assert.Equal(1, _addedCount);
 
             // Duplicate types are still allowed, however
-            var component3 = new Component1();
             _componentContainer.AddComponent(component2, "Tag2");
             Assert.Equal(2, _addedCount);
         }
@@ -183,7 +181,7 @@ namespace GoRogue.UnitTests
 
             // Component1 qualifies as both of these types, so both should be true.
             Assert.True(_componentContainer.HasComponent<Component1>());
-            Assert.True(_componentContainer.HasComponent<IComponent>());
+            Assert.True(_componentContainer.HasComponent<ComponentBase>());
             // Component1 is NOT this type, so this is false
             Assert.False(_componentContainer.HasComponent<Component2>());
 
@@ -193,13 +191,13 @@ namespace GoRogue.UnitTests
 
             // Now all 3 should be true
             Assert.True(_componentContainer.HasComponent<Component1>());
-            Assert.True(_componentContainer.HasComponent<IComponent>());
+            Assert.True(_componentContainer.HasComponent<ComponentBase>());
             Assert.True(_componentContainer.HasComponent<Component2>());
 
             _componentContainer.RemoveComponent(component);
 
             Assert.False(_componentContainer.HasComponent<Component1>());
-            Assert.True(_componentContainer.HasComponent<IComponent>()); // Component2 qualifies
+            Assert.True(_componentContainer.HasComponent<ComponentBase>()); // Component2 qualifies
             Assert.True(_componentContainer.HasComponent<Component2>());
         }
 
@@ -215,12 +213,12 @@ namespace GoRogue.UnitTests
 
             // Component1 qualifies as both of these types, so both should be true when we're not looking for tags.
             Assert.True(_componentContainer.HasComponent<Component1>());
-            Assert.True(_componentContainer.HasComponent<IComponent>());
+            Assert.True(_componentContainer.HasComponent<ComponentBase>());
             // Component1 is NOT this type, so this is false
             Assert.False(_componentContainer.HasComponent<Component2>());
             // Should be true because the component has the tag we're looking for
             Assert.True(_componentContainer.HasComponent<Component1>(tag1));
-            Assert.True(_componentContainer.HasComponent<IComponent>(tag1));
+            Assert.True(_componentContainer.HasComponent<ComponentBase>(tag1));
             // False because the object with the tag doesn't match the type requirement
             Assert.False(_componentContainer.HasComponent<Component2>(tag1));
             // False because the object with the correct type doesn't have the tag
@@ -243,7 +241,7 @@ namespace GoRogue.UnitTests
 
             // Component1 qualifies as both of these types, so both should return the object.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
-            Assert.Same(component, _componentContainer.GetComponent<IComponent>());
+            Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
             // Component1 is NOT this type, so this should be null
             Assert.Null(_componentContainer.GetComponent<Component2>());
 
@@ -254,7 +252,7 @@ namespace GoRogue.UnitTests
             // Component1 should return the same instance as before
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
 
-            IComponent? retrievedComponent = _componentContainer.GetComponent<IComponent>();
+            ComponentBase? retrievedComponent = _componentContainer.GetComponent<ComponentBase>();
             // Should be one of the two, since both are the proper type.  Order is not enforced since we don't have priorities set to the components
             Assert.True(retrievedComponent == component || retrievedComponent == component2);
             // Should now return component2
@@ -265,7 +263,7 @@ namespace GoRogue.UnitTests
 
             // Now component1 should be null, but the others should return component2
             Assert.Null(_componentContainer.GetComponent<Component1>());
-            Assert.Same(component2, _componentContainer.GetComponent<IComponent>()); // Component2 qualifies
+            Assert.Same(component2, _componentContainer.GetComponent<ComponentBase>()); // Component2 qualifies
             Assert.Same(component2, _componentContainer.GetComponent<Component2>());
         }
 
@@ -281,12 +279,12 @@ namespace GoRogue.UnitTests
 
             // Component1 qualifies as both of these types, so both should return the component we added when we're not looking for tags.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
-            Assert.Same(component, _componentContainer.GetComponent<IComponent>());
+            Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
             // Component1 is NOT this type, so this is null
             Assert.Null(_componentContainer.GetComponent<Component2>());
             // Should return the component because the component has the tag we're looking for
             Assert.Same(component, _componentContainer.GetComponent<Component1>(tag1));
-            Assert.Same(component, _componentContainer.GetComponent<IComponent>(tag1));
+            Assert.Same(component, _componentContainer.GetComponent<ComponentBase>(tag1));
             // Null because the object with the tag doesn't match the type requirement
             Assert.Null(_componentContainer.GetComponent<Component2>(tag1));
             // False because the object with the correct type doesn't have the tag
@@ -316,13 +314,13 @@ namespace GoRogue.UnitTests
             _componentContainer.AddComponent(component3);
 
             // Lowest priority of all the components of a type is always returned here
-            Assert.Same(component, _componentContainer.GetComponent<IComponent>());
+            Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
             Assert.Same(component, _componentContainer.GetComponent<SortedComponent>());
 
             // In order of priority, with objects that have no priority at the end
             Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<Component1>());
-            Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<IComponent>());
+            Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<ComponentBase>());
 
             // Same difference but we omit the Component1 that does not meet the type requirement
             Assert.Equal(TestUtils.Enumerable(component, component2, component3), _componentContainer.GetComponents<SortedComponent>());
@@ -345,7 +343,7 @@ namespace GoRogue.UnitTests
 
             // Returned in order of priority, with objects that have no priority at the end
             Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<Component1>());
-            Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<IComponent>());
+            Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4), _componentContainer.GetComponents<ComponentBase>());
 
             // Same difference but we omit the Component1 that does not meet the type requirement
             Assert.Equal(TestUtils.Enumerable(component, component2, component3), _componentContainer.GetComponents<SortedComponent>());

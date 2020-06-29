@@ -2,11 +2,11 @@
 
 namespace GoRogue.PerformanceTests
 {
-	class Program
+	internal static class Program
 	{
-		static void Main(string[] args)
+		private static void Main()
 		{
-            var summary = BenchmarkRunner.Run<MapGenDefaultAlgorithms>();
+            BenchmarkRunner.Run<MapGenDefaultAlgorithms>();
         }
 	}
 }

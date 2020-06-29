@@ -14,7 +14,7 @@ namespace GoRogue.UnitTests.Mocks
     {
         public static IMapView<double> BoxResMap(int width, int height)
         {
-            var map = (ArrayMap<bool>)Rectangle(width, height);
+            var map = Rectangle(width, height);
             return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
         }
 

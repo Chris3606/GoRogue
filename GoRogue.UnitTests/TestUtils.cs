@@ -60,13 +60,13 @@ namespace GoRogue.UnitTests
         /// <summary>
         /// Creates an enumerable of the input parameters.
         /// </summary>
-        /// <typeparam name="T"/></typeparam>
+        /// <typeparam name="T"/>
         /// <param name="objs"/>Input values to have within the resulting enumerable.
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
 
 
-        public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#', char floor = '.', char path = '*')
+        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#', char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];
             for (var y = 0; y < map.Height; y++)
@@ -86,14 +86,14 @@ namespace GoRogue.UnitTests
 
         public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
         {
-            using (var reader = new StreamReader(filePath))
-                for (var row = 0; row < map.Height; row++)
-                {
-                    var line = reader.ReadLine();
+            using var reader = new StreamReader(filePath);
+            for (var row = 0; row < map.Height; row++)
+            {
+                var line = reader.ReadLine() ?? throw new InvalidOperationException("Couldn't read map: invalid format.");
 
-                    for (var col = 0; col < map.Width; col++)
-                        map[col, row] = line[col] == wallChar ? false : true;
-                }
+                for (var col = 0; col < map.Width; col++)
+                    map[col, row] = line[col] != wallChar;
+            }
         }
 
         public static Tuple<Point, Point> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
@@ -106,7 +106,7 @@ namespace GoRogue.UnitTests
                 var row = 0;
                 while (!reader.EndOfStream)
                 {
-                    var line = reader.ReadLine();
+                    var line = reader.ReadLine() ?? throw new InvalidOperationException("Couldn't read map: invalid format.");
 
                     for (var col = 0; col < line.Length; col++)
                     {

@@ -27,34 +27,37 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambaMapViewTest()
         {
-            var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(width, height);
             IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
             checkMaps(map, lambdaMapView);
         }
 
-        [Fact(Skip = "LambdaSettableMapView might be throwing an error?")]
+        [Fact]
         public void LambdaSettableMapViewTest()
         {
-            var map = new ArrayMap<double>(10, 10);
-            map = (ArrayMap<double>)MockFactory.TestResMap(10,10);
+            var map = MockFactory.TestResMap(10,10);
+            var lambdaSettable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0, (c, b) => map[c] = b ? 1.0 : 0.0);
+            checkMaps(lambdaSettable, map);
 
-            var controlMap = new ArrayMap<bool>(10, 10);
-            var settable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0, (c, b) => map[c] = b ? 1.0 : 0.0);
-            checkMaps(settable, map);
+            // TODO: Test settable portion
         }
 
         [Fact]
         public void LambdaSettableTranslationMapTest()
         {
-            var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(width, height);
 
             var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
             checkMaps(map, settable);
 
-            // Check other constructor.  Intentaionally "misusing" the position parameter, to make sure we ensure the position
+            // Change the map via the settable, and re-check
+            settable[0, 0] = 1.0;
+
+            Assert.True(map[0, 0]);
+            checkMaps(map, settable);
+
+            // Check other constructor.  Intentionally "misusing" the position parameter, to make sure we ensure the position
             // parameter is correct without complicating our test case
             settable = new LambdaSettableTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0, (pos, d) => d > 0.0);
             checkMaps(map, settable);
@@ -63,13 +66,12 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaTranslationMapTest()
         {
-            var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(width, height);
             var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
             checkMaps(map, lambdaMap);
 
-            // Check other constructor.  Intentaionally "misusing" the position parameter, to make sure we ensure the position
+            // Check other constructor.  Intentionally "misusing" the position parameter, to make sure we ensure the position
             // parameter is correct without complicating our test case
             lambdaMap = new LambdaTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0);
             checkMaps(map, lambdaMap);
