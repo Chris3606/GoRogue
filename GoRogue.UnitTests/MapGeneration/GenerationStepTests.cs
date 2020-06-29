@@ -1,27 +1,14 @@
-﻿using System;
-using System.Net.NetworkInformation;
-using GoRogue.MapGeneration;
+﻿using GoRogue.MapGeneration;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
-
     public class GenerationStepTests
     {
-        private int _timesOnPerformCalled = 0;
+        public GenerationStepTests() => _timesOnPerformCalled = 0; // Reset before each test
 
-        public GenerationStepTests()
-        {
-            _timesOnPerformCalled = 0; // Reset before each test
-        }
-
-        [Fact]
-        public void ConstructionWithName()
-        {
-            var step = new MockGenerationStep(() => _timesOnPerformCalled++, name: "name");
-            Assert.Equal("name", step.Name);
-        }
+        private int _timesOnPerformCalled;
 
         [Fact]
         public void ConstructionDefaultName()
@@ -33,14 +20,10 @@ namespace GoRogue.UnitTests.MapGeneration
         }
 
         [Fact]
-        public void PerformNoComponentRequirements()
+        public void ConstructionWithName()
         {
-            var context = new GenerationContext(10, 15);
-
-            // Requires no components so should not throw and should call OnPerform once
-            var stepNoComponents = new MockGenerationStep(() => _timesOnPerformCalled++);
-            stepNoComponents.PerformStep(context);
-            Assert.Equal(1, _timesOnPerformCalled);
+            var step = new MockGenerationStep(() => _timesOnPerformCalled++, "name");
+            Assert.Equal("name", step.Name);
         }
 
         [Fact]
@@ -49,7 +32,8 @@ namespace GoRogue.UnitTests.MapGeneration
             var context = new GenerationContext(10, 15);
 
             // Requires a single component that isn't present so will throw and will not call OnPerform
-            var stepSingleComponent = new MockGenerationStep(() => _timesOnPerformCalled++, null, typeof(MapContextComponent1));
+            var stepSingleComponent =
+                new MockGenerationStep(() => _timesOnPerformCalled++, null, typeof(MapContextComponent1));
             Assert.Throws<MissingContextComponentException>(() => stepSingleComponent.PerformStep(context));
             Assert.Equal(0, _timesOnPerformCalled);
 
@@ -59,7 +43,8 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Requires 2 components, one of which isn't there so will throw and not call OnPerform
-            var stepMultipleComponents = new MockGenerationStep(() => _timesOnPerformCalled++, null, typeof(MapContextComponent1), typeof(MapContextComponent2));
+            var stepMultipleComponents = new MockGenerationStep(() => _timesOnPerformCalled++, null,
+                typeof(MapContextComponent1), typeof(MapContextComponent2));
             Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 
@@ -67,6 +52,17 @@ namespace GoRogue.UnitTests.MapGeneration
             context.AddComponent(new MapContextComponent2(), "tag1");
             stepMultipleComponents.PerformStep(context);
             Assert.Equal(2, _timesOnPerformCalled);
+        }
+
+        [Fact]
+        public void PerformNoComponentRequirements()
+        {
+            var context = new GenerationContext(10, 15);
+
+            // Requires no components so should not throw and should call OnPerform once
+            var stepNoComponents = new MockGenerationStep(() => _timesOnPerformCalled++);
+            stepNoComponents.PerformStep(context);
+            Assert.Equal(1, _timesOnPerformCalled);
         }
 
         [Fact]
@@ -82,7 +78,8 @@ namespace GoRogue.UnitTests.MapGeneration
             context.AddComponent(new MapContextComponent1());
 
             // Requires a single component with a tag that isn't present so will throw and will not call OnPerform
-            var stepSingleComponent = new MockGenerationStep(() => _timesOnPerformCalled++, null, (typeof(MapContextComponent1), tag1));
+            var stepSingleComponent = new MockGenerationStep(() => _timesOnPerformCalled++, null,
+                (typeof(MapContextComponent1), tag1));
             Assert.Throws<MissingContextComponentException>(() => stepSingleComponent.PerformStep(context));
             Assert.Equal(0, _timesOnPerformCalled);
 
@@ -92,7 +89,8 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Requires 2 components, one of which is a type/tag combo that isn't there so will throw and not call OnPerform
-            var stepMultipleComponents = new MockGenerationStep(() => _timesOnPerformCalled++, null, (typeof(MapContextComponent1), tag1), (typeof(MapContextComponent2), tag2));
+            var stepMultipleComponents = new MockGenerationStep(() => _timesOnPerformCalled++, null,
+                (typeof(MapContextComponent1), tag1), (typeof(MapContextComponent2), tag2));
             Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 

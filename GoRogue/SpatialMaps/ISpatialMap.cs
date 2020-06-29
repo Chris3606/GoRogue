@@ -26,17 +26,16 @@ namespace GoRogue.SpatialMaps
     /// proportional to the number of objects in it (the best possible). Effectively, it is a more efficient
     /// list for objects that have a position associated with them.  Spatial maps also provide events for when
     /// things are added, removed, etc., to allow you to conveniently respond to those types of actions.
-    /// 
     /// Spatial maps have to keep track of the position of each item in them in order to provide
     /// their fast-lookup functionality.  Spatial maps can be used as the primary authority for what an item's
     /// position is in some cases -- however, in many cases, this may be undesirable, particularly when interfacing
     /// with more traditional infrastructures from other libraries, which likely record each item's position as a field
     /// or property of the item itself.  In these cases, where the item itself records its position, you will need to
-    /// call the <see cref="Move(T, Point)"/> function (or a similar overload) whenever an object moves, to keep the
+    /// call the <see cref="Move(T, Point)" /> function (or a similar overload) whenever an object moves, to keep the
     /// spatial map's position for that item in sync with its actual position.
-    /// 
-    /// It is also worthy of note, that some implementations of ISpatialMap (such as <see cref="SpatialMap{T}"/>) have implemented
-    /// <see cref="Move(T, Point)"/> in such a way that it could fail in some cases.  Move will return false in cases where it
+    /// It is also worthy of note, that some implementations of ISpatialMap (such as <see cref="SpatialMap{T}" />) have
+    /// implemented
+    /// <see cref="Move(T, Point)" /> in such a way that it could fail in some cases.  Move will return false in cases where it
     /// fails, so if you are using an implementation where that may happen, you may need to check this to avoid desync issues.
     /// The Move function documentation for each implementation clearly states in what cases a call to Move can fail.
     /// </remarks>
@@ -65,14 +64,16 @@ namespace GoRogue.SpatialMaps
         void Clear();
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item cannot be moved.
+        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item
+        /// cannot be moved.
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="target">Location to move item to.</param>
         void Move(T item, Point target);
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item cannot be moved.
+        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item
+        /// cannot be moved.
         /// </summary>
         /// <param name="item">Item to move</param>
         /// <param name="targetX">X-value of the location to move item to.</param>
@@ -80,25 +81,28 @@ namespace GoRogue.SpatialMaps
         void Move(T item, int targetX, int targetY);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// more items cannot be moved or there are
         /// no items to be moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
-		/// <param name="target">Location to move items to.</param>
+        /// <param name="target">Location to move items to.</param>
         void MoveAll(Point current, Point target);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or more items cannot be moved or there are no items
+        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// more items cannot be moved or there are no items
         /// to be moved.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
-		/// <param name="currentY">Y-value of the location to move items from.</param>
-		/// <param name="targetX">X-value of the location to move items to.</param>
-		/// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
         void MoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
-        /// Moves all items at the specified source location that can be moved to the target location. Returns all items that were moved.
+        /// Moves all items at the specified source location that can be moved to the target location. Returns all items that were
+        /// moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
         /// <param name="target">Location to move items to.</param>
@@ -140,8 +144,8 @@ namespace GoRogue.SpatialMaps
     }
 
     /// <summary>
-    /// Event arguments for spatial map events pertaining to an item (<see cref="IReadOnlySpatialMap{T}.ItemAdded"/>,
-    /// <see cref="IReadOnlySpatialMap{T}.ItemRemoved"/>, etc.)
+    /// Event arguments for spatial map events pertaining to an item (<see cref="IReadOnlySpatialMap{T}.ItemAdded" />,
+    /// <see cref="IReadOnlySpatialMap{T}.ItemRemoved" />, etc.)
     /// </summary>
     /// <typeparam name="T">Type of item.</typeparam>
     [PublicAPI]
@@ -165,7 +169,8 @@ namespace GoRogue.SpatialMaps
         /// <param name="x">X-value of the current position of the item.</param>
         /// <param name="y">Y-value of the current position of the item.</param>
         public ItemEventArgs(T item, int x, int y)
-            : this(item, new Point(x, y)) { }
+            : this(item, new Point(x, y))
+        { }
 
         /// <summary>
         /// Item being represented.
@@ -179,7 +184,7 @@ namespace GoRogue.SpatialMaps
     }
 
     /// <summary>
-    /// Event arguments for spatial maps <see cref="IReadOnlySpatialMap{T}.ItemMoved"/> event.
+    /// Event arguments for spatial maps <see cref="IReadOnlySpatialMap{T}.ItemMoved" /> event.
     /// </summary>
     /// <typeparam name="T">Type of item being stored.</typeparam>
     [PublicAPI]
@@ -207,7 +212,8 @@ namespace GoRogue.SpatialMaps
         /// <param name="newPositionX">X-value of the position of item after it has been moved.</param>
         /// <param name="newPositionY">Y-value of the position of item after it has been moved.</param>
         public ItemMovedEventArgs(T item, int oldPositionX, int oldPositionY, int newPositionX, int newPositionY)
-            : this(item, new Point(oldPositionX, oldPositionY), new Point(newPositionX, newPositionY)) { }
+            : this(item, new Point(oldPositionX, oldPositionY), new Point(newPositionX, newPositionY))
+        { }
 
         /// <summary>
         /// Item being represented.
@@ -227,16 +233,16 @@ namespace GoRogue.SpatialMaps
 
     // Class for dictionary-hashing of things that implement IHasID
     /// <summary>
-    /// Class intended for comparing/hashing objects that implement <see cref="IHasID"/>. Type T must be a
+    /// Class intended for comparing/hashing objects that implement <see cref="IHasID" />. Type T must be a
     /// reference type.
     /// </summary>
     /// <typeparam name="T">
-    /// Type of object being compared. Type T must be a reference type that implements <see cref="IHasID"/>.
+    /// Type of object being compared. Type T must be a reference type that implements <see cref="IHasID" />.
     /// </typeparam>
     internal class IDComparer<T> : IEqualityComparer<T> where T : class, IHasID
     {
         /// <summary>
-        /// Equality comparison. Performs comparison via the object's <see cref="object.ReferenceEquals(object, object)"/>
+        /// Equality comparison. Performs comparison via the object's <see cref="object.ReferenceEquals(object, object)" />
         /// function.
         /// </summary>
         /// <param name="x">First object to compare.</param>

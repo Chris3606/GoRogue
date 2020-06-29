@@ -1,11 +1,8 @@
-﻿using GoRogue;
+﻿using System;
 using GoRogue.GameFramework;
-using GoRogue.MapGeneration;
 using GoRogue.MapViews;
-using Xunit;
-using System;
 using SadRogue.Primitives;
-using System.Collections.Generic;
+using Xunit;
 
 namespace GoRogue.UnitTests.GameFramework
 {
@@ -18,7 +15,7 @@ namespace GoRogue.UnitTests.GameFramework
             //QuickGenerators.GenerateRectangleMap(grMap);
 
             var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap, (pos, val) =>
-                val ? new GameObject(pos, 0, null, true, true, true) : new GameObject(pos, 0, null, true, false, false));
+                val ? new GameObject(pos, 0, null, true) : new GameObject(pos, 0, null, true, false, false));
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
 
             // Normally you shouldn't need tempMap, could just use translationMap directly.  But we want ref equality comparison
@@ -40,7 +37,8 @@ namespace GoRogue.UnitTests.GameFramework
             //QuickGenerators.GenerateRectangleMap(grMap);
 
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
-            map.ApplyTerrainOverlay(grMap, (pos, b) => b ? new GameObject(pos, 0, null, true, true, true) : new GameObject(pos, 0, null, true, false, false));
+            map.ApplyTerrainOverlay(grMap,
+                (pos, b) => b ? new GameObject(pos, 0, null, true) : new GameObject(pos, 0, null, true, false, false));
 
             // If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
             foreach (var pos in grMap.Positions())
@@ -51,21 +49,12 @@ namespace GoRogue.UnitTests.GameFramework
         }
 
         [Fact]
-        public void OutOfBoundsTerrainAdd()
-        {
-            var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((-1, -1), 0, null, true, true, true);
-
-            Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
-        }
-
-        [Fact]
         public void OutOfBoundsEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((-1, -1), 1, null, false, true, true);
+            var obj = new GameObject((-1, -1), 1, null);
 
-            Assert.Throws<InvalidOperationException>(()=> map.AddEntity(obj));
+            Assert.Throws<InvalidOperationException>(() => map.AddEntity(obj));
             Assert.Empty(map.Entities);
         }
 
@@ -73,7 +62,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void OutOfBoundsMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null, false, true, true);
+            var obj = new GameObject((1, 1), 1, null);
 
             map.AddEntity(obj);
 
@@ -83,10 +72,19 @@ namespace GoRogue.UnitTests.GameFramework
         }
 
         [Fact]
+        public void OutOfBoundsTerrainAdd()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((-1, -1), 0, null, true);
+
+            Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
+        }
+
+        [Fact]
         public void ValidEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null, false, true, true);
+            var obj = new GameObject((1, 1), 1, null);
 
             map.AddEntity(obj);
             Assert.Single(map.Entities);
@@ -96,8 +94,8 @@ namespace GoRogue.UnitTests.GameFramework
         public void ValidEntityMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null, false, true, true);
-            Point five = new Point(5, 5);
+            var obj = new GameObject((1, 1), 1, null);
+            var five = new Point(5, 5);
             map.AddEntity(obj);
 
             obj.Position = five;

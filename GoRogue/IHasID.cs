@@ -9,15 +9,15 @@ namespace GoRogue
     /// <remarks>
     /// The ID assigned should be unique or close to unique over all instances of the class (to avoid hash collisions).
     /// A typical implementation could be simply randomly generating the ID value.  To assign completely unique IDs, an
-    /// <see cref="IDGenerator"/> can be used:
+    /// <see cref="IDGenerator" /> can be used:
     /// <example>
-    /// <code>
+    ///     <code>
     /// class SomeClass : IHasID
     /// {
     ///     // Static instance used to assign IDs to ANY new SomeClass instance
     ///     private static IDGenerator generator = new IDGenerator();
     ///     public uint ID { get; }
-    ///
+    /// 
     ///     public SomeClass(...)
     ///     {
     ///         ID = generator.UseID();

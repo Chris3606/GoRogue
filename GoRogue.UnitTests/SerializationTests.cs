@@ -1,25 +1,12 @@
-﻿using GoRogue;
-using GoRogue.MapGeneration;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Xunit;
-using SadRogue.Primitives;
-using System;
 
 namespace GoRogue.UnitTests
 {
     public class SerializationTests
     {
-        [Fact]
-        public void SerializeDisjointSet()
-        {
-            var dj = new DisjointSet(10);
-            dj.MakeUnion(1, 2);
-            dj.MakeUnion(2, 6);
-
-            TestSerialization(dj, DisjointSetEquality);
-        }
-
         private bool DisjointSetEquality(DisjointSet t1, DisjointSet t2)
         {
             if (t1.Count != t2.Count)
@@ -31,6 +18,7 @@ namespace GoRogue.UnitTests
 
             return true;
         }
+
         private void TestSerialization<T>(T typeToSerialize, Func<T, T, bool> equality = null)
         {
             if (equality == null)
@@ -47,6 +35,16 @@ namespace GoRogue.UnitTests
                 reSerialized = (T)formatter.Deserialize(stream);
 
             Assert.True(equality(typeToSerialize, reSerialized));
+        }
+
+        [Fact]
+        public void SerializeDisjointSet()
+        {
+            var dj = new DisjointSet(10);
+            dj.MakeUnion(1, 2);
+            dj.MakeUnion(2, 6);
+
+            TestSerialization(dj, DisjointSetEquality);
         }
     }
 }

@@ -1,29 +1,21 @@
-﻿using GoRogue;
+﻿using System;
+using System.Collections.Generic;
 using GoRogue.DiceNotation;
-using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
-using System;
-using System.Collections.Generic;
-//using System.Drawing;
-using Xunit;
+using Xunit; //using System.Drawing;
 
 namespace GoRogue.UnitTests
 {
     public class ManualTestHelpers
     {
-        const int width = 50;
-        const int height = 50;
-        [Fact]
-        public void ManualPrintMockMap()
-        {
-            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
-            Console.Write(map.ToString());
-        }
+        private const int width = 50;
+        private const int height = 50;
+
         [Fact]
         public void ManualPrint2DArray()
         {
@@ -31,13 +23,12 @@ namespace GoRogue.UnitTests
             var i = 0;
 
             for (var x = 0; x < 10; x++)
+            for (var y = 0; y < 10; y++)
             {
-                for (var y = 0; y < 10; y++)
-                {
-                    array[x, y] = i;
-                    i++;
-                }
+                array[x, y] = i;
+                i++;
             }
+
             Console.WriteLine(array.ExtendToString());
             Console.WriteLine("\nIn Grid:");
             Console.WriteLine(array.ExtendToStringGrid());
@@ -113,6 +104,13 @@ namespace GoRogue.UnitTests
             Console.WriteLine(myList.ExtendToString());
             Console.WriteLine("\nWith bar separators:");
             Console.WriteLine(myList.ExtendToString(separator: " | "));
+        }
+
+        [Fact]
+        public void ManualPrintMockMap()
+        {
+            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            Console.Write(map.ToString());
         }
 
         [Fact]

@@ -6,7 +6,7 @@ using SadRogue.Primitives;
 namespace GoRogue.SenseMapping
 {
     /// <summary>
-    /// Read-only interface of a <see cref="SenseMap"/>.
+    /// Read-only interface of a <see cref="SenseMap" />.
     /// </summary>
     [PublicAPI]
     public interface IReadOnlySenseMap : IEnumerable<double>, IMapView<double>
@@ -33,7 +33,7 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Read-only list of all sources currently considered part of the sense map. Some may have their
-        /// <see cref="SenseSource.Enabled"/> flag set to false, so all of these may or may not be counted
+        /// <see cref="SenseSource.Enabled" /> flag set to false, so all of these may or may not be counted
         /// when Calculate is called.
         /// </summary>
         IReadOnlyList<SenseSource> SenseSources { get; }
@@ -41,7 +41,7 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Returns a read-only representation of the sensory map.
         /// </summary>
-        /// <returns>This sensory map object as <see cref="IReadOnlySenseMap"/>.</returns>
+        /// <returns>This sensory map object as <see cref="IReadOnlySenseMap" />.</returns>
         public IReadOnlySenseMap AsReadOnly() => this;
     }
 }

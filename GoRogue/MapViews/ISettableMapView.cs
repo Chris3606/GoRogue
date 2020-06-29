@@ -8,13 +8,12 @@ namespace GoRogue.MapViews
     /// modifications to data on a map.
     /// </summary>
     /// <remarks>
-    /// See <see cref="IMapView{T}"/>. Algorithms such as map generation may need to modify their
+    /// See <see cref="IMapView{T}" />. Algorithms such as map generation may need to modify their
     /// inputs. Again, creating an actual 2D array can be tedious, depending on the application. As
     /// such, this interface extends IMapView to provide the capability to "set" values
-    /// 
     /// Like IMapView, a number of implementations of this interface to cover common cases are provided.  For example,
-    /// in case an actual array is desired, <see cref="ArrayMap{T}"/> implements this interface for you via an actual
-    /// array. Similarly, <see cref="LambdaSettableMapView{T}"/> implements the interface for you via a function you
+    /// in case an actual array is desired, <see cref="ArrayMap{T}" /> implements this interface for you via an actual
+    /// array. Similarly, <see cref="LambdaSettableMapView{T}" /> implements the interface for you via a function you
     /// pass to it.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned/set by the indexer functions.</typeparam>
@@ -41,9 +40,9 @@ namespace GoRogue.MapViews
         /// in the map view.
         /// </summary>
         /// <remarks>
-        /// Typically, this may be implemented in terms of <see cref="this[Point]"/> by using
-        /// <see cref="Point.FromIndex(int, int)"/> to calculate the 2D position represented by that
-        /// 1D index, and passing that position to the <see cref="this[Point]"/> indexer to get/set
+        /// Typically, this may be implemented in terms of <see cref="this[Point]" /> by using
+        /// <see cref="Point.FromIndex(int, int)" /> to calculate the 2D position represented by that
+        /// 1D index, and passing that position to the <see cref="this[Point]" /> indexer to get/set
         /// the value associated with the position.
         /// </remarks>
         /// <param name="index1D">1D index of location to get/set the "value" for.</param>

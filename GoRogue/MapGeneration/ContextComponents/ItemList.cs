@@ -13,17 +13,8 @@ namespace GoRogue.MapGeneration.ContextComponents
     public class ItemList<TItem>
     {
         private readonly List<TItem> _items;
-        /// <summary>
-        /// The list of items added.
-        /// </summary>
-        public IReadOnlyList<TItem> Items => _items;
 
         private readonly Dictionary<TItem, string> _itemToStepMapping;
-
-        /// <summary>
-        /// A mapping of each item to the <see cref="GenerationStep.Name"/> of the generation step that created the item.
-        /// </summary>
-        public IReadOnlyDictionary<TItem, string> ItemToStepMapping => _itemToStepMapping.AsReadOnly();
 
         /// <summary>
         /// Creates an empty item list.
@@ -45,10 +36,20 @@ namespace GoRogue.MapGeneration.ContextComponents
         }
 
         /// <summary>
+        /// The list of items added.
+        /// </summary>
+        public IReadOnlyList<TItem> Items => _items;
+
+        /// <summary>
+        /// A mapping of each item to the <see cref="GenerationStep.Name" /> of the generation step that created the item.
+        /// </summary>
+        public IReadOnlyDictionary<TItem, string> ItemToStepMapping => _itemToStepMapping.AsReadOnly();
+
+        /// <summary>
         /// Adds an item to to the list.
         /// </summary>
         /// <param name="item">The item to add.</param>
-        /// <param name="generationStepName">The <see cref="GenerationStep.Name"/> of the generation step that created the item.</param>
+        /// <param name="generationStepName">The <see cref="GenerationStep.Name" /> of the generation step that created the item.</param>
         public void AddItem(TItem item, string generationStepName)
         {
             _items.Add(item);
@@ -59,7 +60,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// Adds the given items to the list.
         /// </summary>
         /// <param name="items">The items to add.</param>
-        /// <param name="generationStepName">The <see cref="GenerationStep.Name"/> of the generation step that created the items.</param>
+        /// <param name="generationStepName">The <see cref="GenerationStep.Name" /> of the generation step that created the items.</param>
         public void AddItems(IEnumerable<TItem> items, string generationStepName)
         {
             foreach (var item in items)
@@ -84,7 +85,8 @@ namespace GoRogue.MapGeneration.ContextComponents
             foreach (var item in items)
             {
                 if (!_itemToStepMapping.ContainsKey(item))
-                    throw new ArgumentException($"Tried to remove a value from an {nameof(ItemList<TItem>)} that was not present.");
+                    throw new ArgumentException(
+                        $"Tried to remove a value from an {nameof(ItemList<TItem>)} that was not present.");
 
                 _items.Remove(item);
                 _itemToStepMapping.Remove(item);

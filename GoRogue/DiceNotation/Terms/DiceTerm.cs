@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
 using Troschuetz.Random;
 
@@ -37,12 +38,14 @@ namespace GoRogue.DiceNotation.Terms
         public IEnumerable<int> DiceResults => _diceResults;
 
         /// <summary>
-        /// The result of evaluating the <see cref="Multiplicity"/> term that was used during the last call to <see cref="GetResult(IGenerator)"/>.
+        /// The result of evaluating the <see cref="Multiplicity" /> term that was used during the last call to
+        /// <see cref="GetResult(IGenerator)" />.
         /// </summary>
         public int LastMultiplicity { get; private set; }
 
         /// <summary>
-        /// The result of evaluating the <see cref="Sides"/> term that was used during the last call to <see cref="GetResult(IGenerator)"/>.
+        /// The result of evaluating the <see cref="Sides" /> term that was used during the last call to
+        /// <see cref="GetResult(IGenerator)" />.
         /// </summary>
         public int LastSidedness { get; private set; }
 
@@ -64,19 +67,19 @@ namespace GoRogue.DiceNotation.Terms
         public int GetResult(IGenerator rng)
         {
             _diceResults.Clear();
-            int sum = 0;
+            var sum = 0;
             LastMultiplicity = Multiplicity.GetResult(rng);
             LastSidedness = Sides.GetResult(rng);
 
             if (LastMultiplicity < 0)
-                throw new Exceptions.InvalidMultiplicityException();
+                throw new InvalidMultiplicityException();
 
             if (LastSidedness <= 0)
-                throw new Exceptions.ImpossibleDieException();
+                throw new ImpossibleDieException();
 
-            for (int i = 0; i < LastMultiplicity; i++)
+            for (var i = 0; i < LastMultiplicity; i++)
             {
-                int diceVal = rng.Next(1, LastSidedness + 1);
+                var diceVal = rng.Next(1, LastSidedness + 1);
                 sum += diceVal;
                 _diceResults.Add(diceVal);
             }

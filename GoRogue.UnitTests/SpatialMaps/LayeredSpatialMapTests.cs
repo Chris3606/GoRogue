@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
@@ -10,108 +9,6 @@ namespace GoRogue.UnitTests.SpatialMaps
 {
     public class LayeredSpatialMapTests
     {
-        [Fact]
-        public void TestConstruction()
-        {
-            // No multiple item layers, 32 layers, starting at 0
-            var sm = new LayeredSpatialMap<MockSpatialMapItem>(32);
-            Assert.Equal(32, sm.NumberOfLayers);
-            Assert.Equal(0, sm.StartingLayer);
-            foreach (var layer in sm.Layers)
-                Assert.True(layer is AdvancedSpatialMap<MockSpatialMapItem>);
-
-            // Test multiple item layers
-            uint multipleItemLayerMask = LayerMasker.DEFAULT.Mask(0, 2, 5);
-            sm = new LayeredSpatialMap<MockSpatialMapItem>(10, 0, multipleItemLayerMask);
-            Assert.Equal(10, sm.NumberOfLayers);
-            Assert.Equal(0, sm.StartingLayer);
-
-            int layerNum = 0;
-            foreach (var layer in sm.Layers)
-            {
-                Assert.Equal(LayerMasker.DEFAULT.HasLayer(multipleItemLayerMask, layerNum), layer is AdvancedMultiSpatialMap<MockSpatialMapItem>);
-                layerNum++;
-            }
-
-            // Test arbitrary starting layer (initial values)
-            int startingLayer = 1;
-            int numberOfLayers = 5;
-            sm = new LayeredSpatialMap<MockSpatialMapItem>(numberOfLayers, startingLayer);
-
-            Assert.Equal(numberOfLayers, sm.NumberOfLayers);
-            Assert.Equal(startingLayer, sm.StartingLayer);
-        }
-
-        [Fact]
-        public void TestAdd()
-        {
-            IEnumerable<MockSpatialMapItem> answer;
-            var sm = new LayeredSpatialMap<MockSpatialMapItem>(5);
-            int previousCount = 0;
-            for (int i = 0; i < 5; i++)
-            {
-                previousCount = sm.GetItemsAt(1, 2).Count();
-                var item = new MockSpatialMapItem(i);
-                sm.Add(item, (1, 2));
-                answer = sm.GetItemsAt((1, 2));
-                Assert.Equal(previousCount + 1, answer.Count());
-            }
-
-            Assert.Throws<InvalidOperationException>(() => sm.Add(new MockSpatialMapItem(5), (2, 3)));
-
-            sm = new LayeredSpatialMap<MockSpatialMapItem>(5, 1);
-            Assert.Throws<InvalidOperationException>(() => sm.Add(new MockSpatialMapItem(0), (5, 6)));
-            answer = sm.GetItemsAt((5, 6));
-            Assert.Empty(answer);
-        }
-
-        [Fact]
-        public void TestRemove()
-        {
-            IEnumerable<MockSpatialMapItem> answer;
-            var itemsAdded = new List<MockSpatialMapItem>();
-            var sm = new LayeredSpatialMap<MockSpatialMapItem>(5);
-            int previousCount = 0;
-            for (int i = 0; i < 5; i++)
-            {
-                var item = new MockSpatialMapItem(i);
-                itemsAdded.Add(item);
-                sm.Add(item, (1, 2));
-                answer = sm.GetItemsAt((1, 2));
-            }
-
-
-            var nonAddedItem = new MockSpatialMapItem(2);
-
-            Assert.Throws<InvalidOperationException>(()=>sm.Remove(nonAddedItem));
-            previousCount = sm.GetItemsAt((1, 2)).Count();
-            answer = sm.GetItemsAt((1, 2));
-            Assert.NotEmpty(answer);
-            Assert.Equal(previousCount, answer.Count());
-
-            foreach (var i in itemsAdded)
-            {
-                previousCount = sm.Items.Count();
-                sm.Remove(i);
-                Assert.Equal(previousCount - 1, sm.Items.Count());
-            }
-
-
-            foreach (var i in itemsAdded)
-            {
-                previousCount = sm.Items.Count();
-                sm.Add(i, (1, 2));
-                Assert.Equal(previousCount + 1, sm.Items.Count());
-            }
-            
-            List<MockSpatialMapItem> itemsRemoved = sm.Remove((5, 6)).ToList();
-            Assert.Empty(itemsRemoved);
-
-            itemsRemoved = sm.Remove((1, 2)).ToList();
-            Assert.Equal(itemsAdded.Count, itemsRemoved.Count);
-
-        }
-
         //[Fact]
         //public void TestMove()
         //{
@@ -177,6 +74,108 @@ namespace GoRogue.UnitTests.SpatialMaps
             Console.WriteLine(map);
 
             Console.WriteLine("No need to test stringifier, as used by impl of regular ToString()");
+        }
+
+        [Fact]
+        public void TestAdd()
+        {
+            IEnumerable<MockSpatialMapItem> answer;
+            var sm = new LayeredSpatialMap<MockSpatialMapItem>(5);
+            var previousCount = 0;
+            for (var i = 0; i < 5; i++)
+            {
+                previousCount = sm.GetItemsAt(1, 2).Count();
+                var item = new MockSpatialMapItem(i);
+                sm.Add(item, (1, 2));
+                answer = sm.GetItemsAt((1, 2));
+                Assert.Equal(previousCount + 1, answer.Count());
+            }
+
+            Assert.Throws<InvalidOperationException>(() => sm.Add(new MockSpatialMapItem(5), (2, 3)));
+
+            sm = new LayeredSpatialMap<MockSpatialMapItem>(5, 1);
+            Assert.Throws<InvalidOperationException>(() => sm.Add(new MockSpatialMapItem(0), (5, 6)));
+            answer = sm.GetItemsAt((5, 6));
+            Assert.Empty(answer);
+        }
+
+        [Fact]
+        public void TestConstruction()
+        {
+            // No multiple item layers, 32 layers, starting at 0
+            var sm = new LayeredSpatialMap<MockSpatialMapItem>(32);
+            Assert.Equal(32, sm.NumberOfLayers);
+            Assert.Equal(0, sm.StartingLayer);
+            foreach (var layer in sm.Layers)
+                Assert.True(layer is AdvancedSpatialMap<MockSpatialMapItem>);
+
+            // Test multiple item layers
+            var multipleItemLayerMask = LayerMasker.DEFAULT.Mask(0, 2, 5);
+            sm = new LayeredSpatialMap<MockSpatialMapItem>(10, 0, multipleItemLayerMask);
+            Assert.Equal(10, sm.NumberOfLayers);
+            Assert.Equal(0, sm.StartingLayer);
+
+            var layerNum = 0;
+            foreach (var layer in sm.Layers)
+            {
+                Assert.Equal(LayerMasker.DEFAULT.HasLayer(multipleItemLayerMask, layerNum),
+                    layer is AdvancedMultiSpatialMap<MockSpatialMapItem>);
+                layerNum++;
+            }
+
+            // Test arbitrary starting layer (initial values)
+            var startingLayer = 1;
+            var numberOfLayers = 5;
+            sm = new LayeredSpatialMap<MockSpatialMapItem>(numberOfLayers, startingLayer);
+
+            Assert.Equal(numberOfLayers, sm.NumberOfLayers);
+            Assert.Equal(startingLayer, sm.StartingLayer);
+        }
+
+        [Fact]
+        public void TestRemove()
+        {
+            IEnumerable<MockSpatialMapItem> answer;
+            var itemsAdded = new List<MockSpatialMapItem>();
+            var sm = new LayeredSpatialMap<MockSpatialMapItem>(5);
+            var previousCount = 0;
+            for (var i = 0; i < 5; i++)
+            {
+                var item = new MockSpatialMapItem(i);
+                itemsAdded.Add(item);
+                sm.Add(item, (1, 2));
+                answer = sm.GetItemsAt((1, 2));
+            }
+
+
+            var nonAddedItem = new MockSpatialMapItem(2);
+
+            Assert.Throws<InvalidOperationException>(() => sm.Remove(nonAddedItem));
+            previousCount = sm.GetItemsAt((1, 2)).Count();
+            answer = sm.GetItemsAt((1, 2));
+            Assert.NotEmpty(answer);
+            Assert.Equal(previousCount, answer.Count());
+
+            foreach (var i in itemsAdded)
+            {
+                previousCount = sm.Items.Count();
+                sm.Remove(i);
+                Assert.Equal(previousCount - 1, sm.Items.Count());
+            }
+
+
+            foreach (var i in itemsAdded)
+            {
+                previousCount = sm.Items.Count();
+                sm.Add(i, (1, 2));
+                Assert.Equal(previousCount + 1, sm.Items.Count());
+            }
+
+            List<MockSpatialMapItem> itemsRemoved = sm.Remove((5, 6)).ToList();
+            Assert.Empty(itemsRemoved);
+
+            itemsRemoved = sm.Remove((1, 2)).ToList();
+            Assert.Equal(itemsAdded.Count, itemsRemoved.Count);
         }
 
         // TODO: Implement

@@ -1,6 +1,4 @@
-﻿using GoRogue;
-using GoRogue.MapGeneration;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using Xunit;
@@ -9,8 +7,50 @@ namespace GoRogue.UnitTests.MapViews
 {
     public class MapViewTests
     {
-        private int width = 50;
-        private int height = 50;
+        private readonly int width = 50;
+        private readonly int height = 50;
+
+        private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
+        {
+            for (var x = 0; x < genMap.Width; x++)
+            for (var y = 0; y < genMap.Height; y++)
+            {
+                var properValue = genMap[x, y] ? 1.0 : 0.0;
+                Assert.Equal(properValue, fovMap[x, y]);
+            }
+        }
+
+        private static void checkViewportBounds(Viewport<bool> viewport, Point expectedMinCorner,
+                                                Point expectedMaxCorner)
+        {
+            Assert.Equal(expectedMaxCorner, viewport.ViewArea.MaxExtent);
+            Assert.Equal(expectedMinCorner, viewport.ViewArea.MinExtent);
+            Assert.True(viewport.ViewArea.X >= 0);
+            Assert.True(viewport.ViewArea.Y >= 0);
+            Assert.True(viewport.ViewArea.X < viewport.MapView.Width);
+            Assert.True(viewport.ViewArea.Y < viewport.MapView.Height);
+
+            foreach (var pos in viewport.ViewArea.Positions())
+            {
+                Assert.True(pos.X >= viewport.ViewArea.X);
+                Assert.True(pos.Y >= viewport.ViewArea.Y);
+                Assert.True(pos.X <= viewport.ViewArea.MaxExtentX);
+                Assert.True(pos.Y <= viewport.ViewArea.MaxExtentY);
+                Assert.True(pos.X >= 0);
+                Assert.True(pos.Y >= 0);
+                Assert.True(pos.X < viewport.MapView.Width);
+                Assert.True(pos.Y < viewport.MapView.Height);
+
+                // Utterly stupid way to access things via viewport, but verifies that the coordinate
+                // translation is working properly.
+                if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 ||
+                    pos.Y == viewport.MapView.Height - 1)
+                    Assert.False(viewport[pos - viewport.ViewArea.MinExtent]);
+                else
+                    Assert.True(viewport[pos - viewport.ViewArea.MinExtent]);
+            }
+        }
+
         [Fact]
         public void ApplyOverlayTest()
         {
@@ -25,7 +65,7 @@ namespace GoRogue.UnitTests.MapViews
         }
 
         [Fact]
-        public void LambaMapViewTest()
+        public void LambdaMapViewTest()
         {
             var map = MockFactory.Rectangle(width, height);
             IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
@@ -36,8 +76,9 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaSettableMapViewTest()
         {
-            var map = MockFactory.TestResMap(10,10);
-            var lambdaSettable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0, (c, b) => map[c] = b ? 1.0 : 0.0);
+            var map = MockFactory.TestResMap(10, 10);
+            var lambdaSettable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0,
+                (c, b) => map[c] = b ? 1.0 : 0.0);
             checkMaps(lambdaSettable, map);
 
             // TODO: Test settable portion
@@ -59,7 +100,8 @@ namespace GoRogue.UnitTests.MapViews
 
             // Check other constructor.  Intentionally "misusing" the position parameter, to make sure we ensure the position
             // parameter is correct without complicating our test case
-            settable = new LambdaSettableTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0, (pos, d) => d > 0.0);
+            settable = new LambdaSettableTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0,
+                (pos, d) => d > 0.0);
             checkMaps(map, settable);
         }
 
@@ -138,45 +180,6 @@ namespace GoRogue.UnitTests.MapViews
                     Assert.Equal(0, unboundedViewport[pos]);
                 else
                     Assert.Equal(1, unboundedViewport[pos]);
-        }
-
-        private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
-        {
-            for (var x = 0; x < genMap.Width; x++)
-                for (var y = 0; y < genMap.Height; y++)
-                {
-                    var properValue = genMap[x, y] ? 1.0 : 0.0;
-                    Assert.Equal(properValue, fovMap[x, y]);
-                }
-        }
-
-        private static void checkViewportBounds(Viewport<bool> viewport, Point expectedMinCorner, Point expectedMaxCorner)
-        {
-            Assert.Equal(expectedMaxCorner, viewport.ViewArea.MaxExtent);
-            Assert.Equal(expectedMinCorner, viewport.ViewArea.MinExtent);
-            Assert.True(viewport.ViewArea.X >= 0);
-            Assert.True(viewport.ViewArea.Y >= 0);
-            Assert.True(viewport.ViewArea.X < viewport.MapView.Width);
-            Assert.True(viewport.ViewArea.Y < viewport.MapView.Height);
-
-            foreach (var pos in viewport.ViewArea.Positions())
-            {
-                Assert.True(pos.X >= viewport.ViewArea.X);
-                Assert.True(pos.Y >= viewport.ViewArea.Y);
-                Assert.True(pos.X <= viewport.ViewArea.MaxExtentX);
-                Assert.True(pos.Y <= viewport.ViewArea.MaxExtentY);
-                Assert.True(pos.X >= 0);
-                Assert.True(pos.Y >= 0);
-                Assert.True(pos.X < viewport.MapView.Width);
-                Assert.True(pos.Y < viewport.MapView.Height);
-
-                // Utterly stupid way to access things via viewport, but verifies that the coordinate
-                // translation is working properly.
-                if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 || pos.Y == viewport.MapView.Height - 1)
-                    Assert.False(viewport[pos - viewport.ViewArea.MinExtent]);
-                else
-                    Assert.True(viewport[pos - viewport.ViewArea.MinExtent]);
-            }
         }
     }
 }

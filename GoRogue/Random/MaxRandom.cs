@@ -7,7 +7,7 @@ namespace GoRogue.Random
     /// <summary>
     /// A "random" number generator that always returns the maxValue parameter given. Again this may
     /// be useful in testing, testing the upper range or repeatedly returning a value. Also used in
-    /// <see cref="DiceNotation.DiceExpression"/> instances for certain max roll functions.
+    /// <see cref="DiceNotation.DiceExpression" /> instances for certain max roll functions.
     /// </summary>
     [PublicAPI]
     public class MaxRandom : IGenerator
@@ -22,30 +22,30 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Since this RNG returns the maximum possible value, this field will always return 0.
-        ///</summary>
+        /// </summary>
         public uint Seed => 0;
 
         /// <summary>
-        /// Returns <see cref="int.MaxValue"/> - 1.
+        /// Returns <see cref="int.MaxValue" /> - 1.
         /// </summary>
-        /// <returns><see cref="int.MaxValue"/> - 1.</returns>
+        /// <returns><see cref="int.MaxValue" /> - 1.</returns>
         public int Next() => int.MaxValue - 1;
 
         /// <summary>
-        /// Returns <paramref name="maxValue"/> - 1.
+        /// Returns <paramref name="maxValue" /> - 1.
         /// </summary>
         /// <param name="maxValue">Maximum bound of the returned number, exclusive.</param>
-        /// <returns><paramref name="maxValue"/> - 1.</returns>
+        /// <returns><paramref name="maxValue" /> - 1.</returns>
         public int Next(int maxValue) => maxValue - 1;
 
         /// <summary>
-        /// Returns <paramref name="maxValue"/> - 1.
+        /// Returns <paramref name="maxValue" /> - 1.
         /// </summary>
         /// <param name="minValue">
         /// The minimum value that can be returned (unused since this generator always returns the maximum).
         /// </param>
         /// <param name="maxValue">The maximum value of the returned number, exclusive.</param>
-        /// <returns><paramref name="maxValue"/> - 1.</returns>
+        /// <returns><paramref name="maxValue" /> - 1.</returns>
         public int Next(int minValue, int maxValue) => maxValue - 1;
 
         /// <summary>
@@ -55,22 +55,22 @@ namespace GoRogue.Random
         public bool NextBoolean() => true;
 
         /// <summary>
-        /// Fills the given buffer with bytes of value <see cref="byte.MaxValue"/>.
+        /// Fills the given buffer with bytes of value <see cref="byte.MaxValue" />.
         /// </summary>
         /// <param name="buffer">Buffer to fill.</param>
         public void NextBytes(byte[] buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = byte.MaxValue;
         }
 
         /// <summary>
-		/// Fills the given buffer with bytes of value <see cref="byte.MaxValue"/>.
-		/// </summary>
-		/// <param name="buffer">Buffer to fill.</param>
-		public void NextBytes(Span<byte> buffer)
+        /// Fills the given buffer with bytes of value <see cref="byte.MaxValue" />.
+        /// </summary>
+        /// <param name="buffer">Buffer to fill.</param>
+        public void NextBytes(Span<byte> buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = byte.MaxValue;
         }
 
@@ -82,62 +82,62 @@ namespace GoRogue.Random
         public double NextDouble() => 1 - DoubleEpsilon;
 
         /// <summary>
-        /// Returns a double very close to (but still less than) <paramref name="maxValue"/>.
+        /// Returns a double very close to (but still less than) <paramref name="maxValue" />.
         /// </summary>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
-        /// <returns>A double very close to (but still less than) <paramref name="maxValue"/>.</returns>
+        /// <returns>A double very close to (but still less than) <paramref name="maxValue" />.</returns>
         public double NextDouble(double maxValue) => maxValue - DoubleEpsilon;
 
         /// <summary>
-        /// Returns a double very close to (but still less than) <paramref name="maxValue"/>.
+        /// Returns a double very close to (but still less than) <paramref name="maxValue" />.
         /// </summary>
         /// <param name="minValue">
         /// Minimum value for the returned value. Unused since this generator always returns the
         /// maximum value.
         /// </param>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
-        /// <returns>A double very close to (but still less than) <paramref name="maxValue"/>.</returns>
+        /// <returns>A double very close to (but still less than) <paramref name="maxValue" />.</returns>
         public double NextDouble(double minValue, double maxValue) => maxValue - DoubleEpsilon;
 
         /// <summary>
-        /// Returns <see cref="int.MaxValue"/>.
+        /// Returns <see cref="int.MaxValue" />.
         /// </summary>
         /// <returns>int.MaxValue</returns>
         public int NextInclusiveMaxValue() => int.MaxValue;
 
         /// <summary>
-        /// Returns <see cref="uint.MaxValue"/>.
+        /// Returns <see cref="uint.MaxValue" />.
         /// </summary>
-        /// <returns><see cref="uint.MaxValue"/> - 1.</returns>
+        /// <returns><see cref="uint.MaxValue" /> - 1.</returns>
         public uint NextUInt() => uint.MaxValue - 1;
 
         /// <summary>
-        /// Returns <paramref name="maxValue"/> - 1.
+        /// Returns <paramref name="maxValue" /> - 1.
         /// </summary>
         /// <param name="maxValue">The maximum bound for the returned number, exclusive.</param>
-        /// <returns><paramref name="maxValue"/> - 1</returns>
+        /// <returns><paramref name="maxValue" /> - 1</returns>
         public uint NextUInt(uint maxValue) => maxValue - 1;
 
         /// <summary>
-        /// Returns <paramref name="maxValue"/> - 1.
+        /// Returns <paramref name="maxValue" /> - 1.
         /// </summary>
         /// <param name="minValue">
         /// The minimum value that can be returned (unused since this generator always returns the maximum).
         /// </param>
         /// <param name="maxValue">The maximum bound for the returned number, exclusive.</param>
-        /// <returns><paramref name="maxValue"/> - 1</returns>
+        /// <returns><paramref name="maxValue" /> - 1</returns>
         public uint NextUInt(uint minValue, uint maxValue) => maxValue - 1;
 
         /// <summary>
-        /// Returns <see cref="uint.MaxValue"/> - 1.
+        /// Returns <see cref="uint.MaxValue" /> - 1.
         /// </summary>
-        /// <returns><see cref="uint.MaxValue"/> - 1.</returns>
+        /// <returns><see cref="uint.MaxValue" /> - 1.</returns>
         public uint NextUIntExclusiveMaxValue() => NextUInt();
 
         /// <summary>
-        /// Returns <see cref="uint.MaxValue"/>.
+        /// Returns <see cref="uint.MaxValue" />.
         /// </summary>
-        /// <returns><see cref="uint.MaxValue"/>.</returns>
+        /// <returns><see cref="uint.MaxValue" />.</returns>
         public uint NextUIntInclusiveMaxValue() => uint.MaxValue;
 
         /// <summary>

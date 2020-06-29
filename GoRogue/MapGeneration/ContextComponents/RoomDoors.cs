@@ -5,12 +5,19 @@ using SadRogue.Primitives;
 namespace GoRogue.MapGeneration.ContextComponents
 {
     /// <summary>
-    /// A list of openings in room walls, categorized by side they're on.  Typically created via a <see cref="DoorList"/>.
+    /// A list of openings in room walls, categorized by side they're on.  Typically created via a <see cref="DoorList" />.
     /// </summary>
     [PublicAPI]
     public class RoomDoors
     {
         private readonly RectangleEdgePositionsList _positionsList;
+
+
+        /// <summary>
+        /// Creates a new list of doors for a given room.
+        /// </summary>
+        /// <param name="room">The room having its doors tracked.</param>
+        public RoomDoors(Rectangle room) => _positionsList = new RectangleEdgePositionsList(room.Expand(1, 1));
 
         /// <summary>
         /// Positions of doors on the top wall of the room.
@@ -54,16 +61,6 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// <returns>A read-only list of doors on the given side.</returns>
         public IReadOnlyList<Point> this[Direction side] => _positionsList[side];
 
-
-        /// <summary>
-        /// Creates a new list of doors for a given room.
-        /// </summary>
-        /// <param name="room">The room having its doors tracked.</param>
-        public RoomDoors(Rectangle room)
-        {
-            _positionsList = new RectangleEdgePositionsList(room.Expand(1, 1));
-        }
-
         /// <summary>
         /// Adds the given position to the appropriate lists of doors.
         /// </summary>
@@ -84,7 +81,8 @@ namespace GoRogue.MapGeneration.ContextComponents
     }
 
     /// <summary>
-    /// A list of rooms and entry/exit points of those rooms, generated/added by map generation components, that tracks what generation step
+    /// A list of rooms and entry/exit points of those rooms, generated/added by map generation components, that tracks what
+    /// generation step
     /// created/recorded which opening.
     /// </summary>
     [PublicAPI]
@@ -92,16 +90,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     {
         private readonly Dictionary<Rectangle, RoomDoors> _doorsPerRoom;
 
-        /// <summary>
-        /// A dictionary associating rooms to their lists of doors.
-        /// </summary>
-        public IReadOnlyDictionary<Rectangle, RoomDoors> DoorsPerRoom => _doorsPerRoom.AsReadOnly();
-
         private readonly Dictionary<Point, string> _doorToStepMapping;
-        /// <summary>
-        /// A dictionary associating rooms with the generation step that recorded/created them.
-        /// </summary>
-        public IReadOnlyDictionary<Point, string> DoorToStepMapping => _doorToStepMapping.AsReadOnly();
 
         /// <summary>
         /// Creates a new door manager context component.
@@ -113,12 +102,23 @@ namespace GoRogue.MapGeneration.ContextComponents
         }
 
         /// <summary>
+        /// A dictionary associating rooms to their lists of doors.
+        /// </summary>
+        public IReadOnlyDictionary<Rectangle, RoomDoors> DoorsPerRoom => _doorsPerRoom.AsReadOnly();
+
+        /// <summary>
+        /// A dictionary associating rooms with the generation step that recorded/created them.
+        /// </summary>
+        public IReadOnlyDictionary<Point, string> DoorToStepMapping => _doorToStepMapping.AsReadOnly();
+
+        /// <summary>
         /// Records a new opening in the given room at the given position.
         /// </summary>
         /// <param name="generationStepName">The name of the generation step recording the door position.</param>
         /// <param name="room">The room the door is a part of.</param>
         /// <param name="doorPosition">The location of the door to add.</param>
-        public void AddDoor(string generationStepName, Rectangle room, Point doorPosition) => AddDoors(generationStepName, room, doorPosition);
+        public void AddDoor(string generationStepName, Rectangle room, Point doorPosition)
+            => AddDoors(generationStepName, room, doorPosition);
 
         /// <summary>
         /// Records new openings in the given room at the given positions.
@@ -126,7 +126,8 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// <param name="generationStepName">The name of the generation step recording the door positions.</param>
         /// <param name="room">The room the doors are part of.</param>
         /// <param name="doorPositions">The locations of the door to add.</param>
-        public void AddDoors(string generationStepName, Rectangle room, params Point[] doorPositions) => AddDoors(generationStepName, room, (IEnumerable<Point>)doorPositions);
+        public void AddDoors(string generationStepName, Rectangle room, params Point[] doorPositions)
+            => AddDoors(generationStepName, room, (IEnumerable<Point>)doorPositions);
 
         /// <summary>
         /// Records new openings in the given room at the given positions.

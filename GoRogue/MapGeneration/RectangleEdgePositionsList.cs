@@ -6,46 +6,62 @@ using SadRogue.Primitives;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// An arbitrary list of any number of positions on the perimeter of a rectangle.  Commonly used to represent a list of doors or edges of rooms by
+    /// An arbitrary list of any number of positions on the perimeter of a rectangle.  Commonly used to represent a list of
+    /// doors or edges of rooms by
     /// some map generation steps.
     /// </summary>
     [PublicAPI]
     public class RectangleEdgePositionsList
     {
-        private readonly List<Point> _topPositions;
-
-        /// <summary>
-        /// Positions on the top edge of the rectangle.
-        /// </summary>
-        public IReadOnlyList<Point> TopPositions => _topPositions.AsReadOnly();
-
-        private readonly List<Point> _rightPositions;
-
-        /// <summary>
-        /// Positions of doors on the right wall of the rectangle.
-        /// </summary>
-        public IReadOnlyList<Point> RightPositions => _rightPositions.AsReadOnly();
-
         private readonly List<Point> _bottomPositions;
-
-        /// <summary>
-        /// Positions of doors on the bottom wall of the rectangle.
-        /// </summary>
-        public IReadOnlyList<Point> BottomPositions => _bottomPositions.AsReadOnly();
 
         private readonly List<Point> _leftPositions;
 
-        /// <summary>
-        /// Positions of doors on the bottom wall of the rectangle.
-        /// </summary>
-        public IReadOnlyList<Point> LeftPositions => _leftPositions.AsReadOnly();
+        private readonly HashSet<Point> _positions;
+
+        private readonly List<Point> _rightPositions;
+        private readonly List<Point> _topPositions;
 
         /// <summary>
         /// The rectangle whose edge positions are being stored.
         /// </summary>
         public readonly Rectangle Rectangle;
 
-        private readonly HashSet<Point> _positions;
+
+        /// <summary>
+        /// Creates a empty list of perimeter for a given rectangle.
+        /// </summary>
+        /// <param name="rectangle">The rectangle the structure stores perimeter positions for.</param>
+        public RectangleEdgePositionsList(Rectangle rectangle)
+        {
+            Rectangle = rectangle;
+            _topPositions = new List<Point>();
+            _rightPositions = new List<Point>();
+            _bottomPositions = new List<Point>();
+            _leftPositions = new List<Point>();
+            _positions = new HashSet<Point>();
+        }
+
+        /// <summary>
+        /// Positions on the top edge of the rectangle.
+        /// </summary>
+        public IReadOnlyList<Point> TopPositions => _topPositions.AsReadOnly();
+
+        /// <summary>
+        /// Positions of doors on the right wall of the rectangle.
+        /// </summary>
+        public IReadOnlyList<Point> RightPositions => _rightPositions.AsReadOnly();
+
+        /// <summary>
+        /// Positions of doors on the bottom wall of the rectangle.
+        /// </summary>
+        public IReadOnlyList<Point> BottomPositions => _bottomPositions.AsReadOnly();
+
+        /// <summary>
+        /// Positions of doors on the bottom wall of the rectangle.
+        /// </summary>
+        public IReadOnlyList<Point> LeftPositions => _leftPositions.AsReadOnly();
+
         /// <summary>
         /// Positions being stored, with no duplicate locations.
         /// </summary>
@@ -67,21 +83,6 @@ namespace GoRogue.MapGeneration
                 _ => throw new ArgumentException("Side of a room must be a cardinal direction.", nameof(side))
             };
 
-
-        /// <summary>
-        /// Creates a empty list of perimeter for a given rectangle.
-        /// </summary>
-        /// <param name="rectangle">The rectangle the structure stores perimeter positions for.</param>
-        public RectangleEdgePositionsList(Rectangle rectangle)
-        {
-            Rectangle = rectangle;
-            _topPositions = new List<Point>();
-            _rightPositions = new List<Point>();
-            _bottomPositions = new List<Point>();
-            _leftPositions = new List<Point>();
-            _positions = new HashSet<Point>();
-        }
-
         /// <summary>
         /// Adds the given position to the appropriate lists of positions.
         /// </summary>
@@ -92,7 +93,8 @@ namespace GoRogue.MapGeneration
         /// Adds the given positions to the appropriate lists of positions.
         /// </summary>
         /// <param name="perimeterPositions">Positions to add.</param>
-        public void AddPositions(params Point[] perimeterPositions) => AddPositions((IEnumerable<Point>)perimeterPositions);
+        public void AddPositions(params Point[] perimeterPositions)
+            => AddPositions((IEnumerable<Point>)perimeterPositions);
 
         /// <summary>
         /// Adds the given positions to the appropriate lists of positions.
@@ -103,8 +105,11 @@ namespace GoRogue.MapGeneration
             foreach (var pos in perimeterPositions)
             {
                 // Not directly on perimeter of rectangle
-                if (!Rectangle.IsOnTopEdge(pos) && !Rectangle.IsOnRightEdge(pos) && !Rectangle.IsOnBottomEdge(pos) && !Rectangle.IsOnLeftEdge(pos))
-                    throw new ArgumentException($"Positions added to a {nameof(RectangleEdgePositionsList)} must be on one of the edges of the rectangle.", nameof(perimeterPositions));
+                if (!Rectangle.IsOnTopEdge(pos) && !Rectangle.IsOnRightEdge(pos) && !Rectangle.IsOnBottomEdge(pos) &&
+                    !Rectangle.IsOnLeftEdge(pos))
+                    throw new ArgumentException(
+                        $"Positions added to a {nameof(RectangleEdgePositionsList)} must be on one of the edges of the rectangle.",
+                        nameof(perimeterPositions));
 
                 // Allowed but it won't record it multiple times
                 if (_positions.Contains(pos))
@@ -137,7 +142,8 @@ namespace GoRogue.MapGeneration
         /// Removes the given positions from the data structure.
         /// </summary>
         /// <param name="perimeterPositions">Positions to remove.</param>
-        public void RemovePositions(params Point[] perimeterPositions) => RemovePositions((IEnumerable<Point>)perimeterPositions);
+        public void RemovePositions(params Point[] perimeterPositions)
+            => RemovePositions((IEnumerable<Point>)perimeterPositions);
 
         /// <summary>
         /// Removes the given positions from the data structure.
@@ -148,7 +154,8 @@ namespace GoRogue.MapGeneration
             foreach (var pos in perimeterPositions)
             {
                 if (!_positions.Contains(pos))
-                    throw new ArgumentException($"Tried to remove a position from a ${nameof(RectangleEdgePositionsList)} that was not present.");
+                    throw new ArgumentException(
+                        $"Tried to remove a position from a ${nameof(RectangleEdgePositionsList)} that was not present.");
 
                 // Remove from collection of positions and appropriate sub-lists
                 _positions.Remove(pos);
@@ -170,7 +177,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Returns whether or not the structure contains the given position.
         /// </summary>
-        /// <param name="position"/>
+        /// <param name="position" />
         /// <returns>Whether or not the structure contains the position specified.</returns>
         public bool Contains(Point position) => _positions.Contains(position);
     }

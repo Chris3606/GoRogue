@@ -22,7 +22,7 @@ namespace GoRogue
         private readonly int[] _sizes;
 
         /// <summary>
-        /// Constructor. The disjoint set will contain all values in range [0, <paramref name="size"/> - 1].
+        /// Constructor. The disjoint set will contain all values in range [0, <paramref name="size" /> - 1].
         /// </summary>
         /// <param name="size">(Max) size of the disjoint set.</param>
         public DisjointSet(int size)
@@ -31,23 +31,17 @@ namespace GoRogue
             _parents = new int[size];
             _sizes = new int[size];
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
                 _parents[i] = i;
                 _sizes[i] = 1;
             }
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Count { get; private set; }
 
-        /// <summary>
-        /// Returns a read-only representation of the disjoint set.
-        /// </summary>
-        /// <returns>A read-only representation of the disjoint set.</returns>
-        public IReadOnlyDisjointSet AsReadOnly() => this;
-
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Find(int obj)
         {
             // Find base parent, and path compress
@@ -57,20 +51,26 @@ namespace GoRogue
             return _parents[obj];
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public bool InSameSet(int obj1, int obj2) => Find(obj1) == Find(obj2); // In same set; same parent
+
+        /// <summary>
+        /// Returns a read-only representation of the disjoint set.
+        /// </summary>
+        /// <returns>A read-only representation of the disjoint set.</returns>
+        public IReadOnlyDisjointSet AsReadOnly() => this;
 
         /// <summary>
         /// Performs a union of the sets containing the two objects specified. After this operation,
         /// every element in the sets containing the two objects specified will be part of one larger set.
         /// </summary>
         /// <remarks>If the two elements are already in the same set, nothing is done.</remarks>
-        /// <param name="obj1"/>
-        /// <param name="obj2"/>
+        /// <param name="obj1" />
+        /// <param name="obj2" />
         public void MakeUnion(int obj1, int obj2)
         {
-            int i = Find(obj1);
-            int j = Find(obj2);
+            var i = Find(obj1);
+            var j = Find(obj2);
 
             if (i == j) return; // Two elements are already in same set; same parent
 
@@ -85,6 +85,7 @@ namespace GoRogue
                 _parents[j] = i;
                 _sizes[i] += _sizes[j];
             }
+
             Count--;
         }
 
@@ -97,22 +98,21 @@ namespace GoRogue
         {
             var values = new Dictionary<int, List<int>>();
 
-            for (int i = 0; i < _parents.Length; i++)
+            for (var i = 0; i < _parents.Length; i++)
             {
-                int parentOf = FindNoCompression(i);
+                var parentOf = FindNoCompression(i);
                 if (!values.ContainsKey(parentOf))
-                {
                     values[parentOf] = new List<int>
                     {
                         parentOf // Parent is the first element in each child list
                     };
-                }
 
                 if (parentOf != i) // We already added the parent, so don't double add
                     values[parentOf].Add(i);
             }
 
-            return values.ExtendToString("", valueStringifier: obj => obj.ExtendToString(), kvSeparator: ": ", pairSeparator: "\n", end: "");
+            return values.ExtendToString("", valueStringifier: obj => obj.ExtendToString(), kvSeparator: ": ",
+                pairSeparator: "\n", end: "");
         }
 
         // Used to ensure ToString doesn't affect the performance of future operations

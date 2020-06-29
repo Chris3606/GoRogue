@@ -5,13 +5,14 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// A simple <see cref="TranslationMap{T1, T2}"/> implementation that allows you to provide a function/lambda
-    /// at construction to use as the <see cref="TranslationMap{T1, T2}.TranslateGet(Point, T1)"/> implementation. For a version offering "set" functionality,
-    /// see <see cref="LambdaSettableTranslationMap{T1, T2}"/>.
+    /// A simple <see cref="TranslationMap{T1, T2}" /> implementation that allows you to provide a function/lambda
+    /// at construction to use as the <see cref="TranslationMap{T1, T2}.TranslateGet(Point, T1)" /> implementation. For a
+    /// version offering "set" functionality,
+    /// see <see cref="LambdaSettableTranslationMap{T1, T2}" />.
     /// </summary>
     /// <remarks>
     /// If you have a view that simply exposes a simple property of your underlying data, it
-    /// can be tedious to write a <see cref="TranslationMap{T1, T2}"/> implementation for
+    /// can be tedious to write a <see cref="TranslationMap{T1, T2}" /> implementation for
     /// all of them. This class simplifies that task by letting you just provide the
     /// translation method as a function/lambda, without needing to build the rest of the
     /// class infrastructure.

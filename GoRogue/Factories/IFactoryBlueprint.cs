@@ -3,7 +3,7 @@
 namespace GoRogue.Factories
 {
     /// <summary>
-    /// Defines how to create a <typeparamref name="TProduced"/> object for use in an <see cref="Factory{TProduced}"/>.
+    /// Defines how to create a <typeparamref name="TProduced" /> object for use in an <see cref="Factory{TProduced}" />.
     /// </summary>
     /// <typeparam name="TProduced">The type of object to create.</typeparam>
     [PublicAPI]
@@ -15,7 +15,7 @@ namespace GoRogue.Factories
         string Id { get; }
 
         /// <summary>
-        /// Creates a <typeparamref name="TProduced"/> object.
+        /// Creates a <typeparamref name="TProduced" /> object.
         /// </summary>
         /// <returns>The created object.</returns>
         TProduced Create();

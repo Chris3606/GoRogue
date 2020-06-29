@@ -47,16 +47,16 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// Height of the flee map.
-        /// </summary>
-        public int Height => _goalMap.Height;
-
-        /// <summary>
         /// The degree to which entities following this flee-map will prefer global safety to local
         /// safety. Higher values will make entities try to move past an approaching "threat" from
         /// farther away.
         /// </summary>
         public double Magnitude { get; set; }
+
+        /// <summary>
+        /// Height of the flee map.
+        /// </summary>
+        public int Height => _goalMap.Height;
 
         /// <summary>
         /// Width of the flee map.
@@ -90,10 +90,11 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="position">The position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
-        public Direction GetDirectionOfMinValue(Point position) => _goalMap.GetDirectionOfMinValue(position, _baseMap.DistanceMeasurement);
+        public Direction GetDirectionOfMinValue(Point position)
+            => _goalMap.GetDirectionOfMinValue(position, _baseMap.DistanceMeasurement);
 
         /// <summary>
         /// Gets the direction of the neighbor with the minimum flee-map value from the given position.
@@ -101,10 +102,11 @@ namespace GoRogue.Pathing
         /// <param name="positionX">The x-value of the position to get the minimum value for.</param>
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None"/> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
-        public Direction GetDirectionOfMinValue(int positionX, int positionY) => _goalMap.GetDirectionOfMinValue(positionX, positionY, _baseMap.DistanceMeasurement);
+        public Direction GetDirectionOfMinValue(int positionX, int positionY)
+            => _goalMap.GetDirectionOfMinValue(positionX, positionY, _baseMap.DistanceMeasurement);
 
         /// <summary>
         /// Returns the flee-map values represented as a 2D grid-style string.
@@ -148,11 +150,14 @@ namespace GoRogue.Pathing
 
             foreach (var point in _baseMap.Walkable)
             {
-                var newPoint = _baseMap[point]!.Value * -Magnitude; // Value won't be null as null only happens for non-walkable squares
+                var newPoint =
+                    _baseMap[point]!.Value *
+                    -Magnitude; // Value won't be null as null only happens for non-walkable squares
                 _goalMap[point] = newPoint;
 
                 openSet.Enqueue(_nodes[point], newPoint);
             }
+
             var edgeSet = new HashSet<Point>();
             var closedSet = new HashSet<Point>();
 
@@ -162,12 +167,9 @@ namespace GoRogue.Pathing
                 closedSet.Add(minNode.Position);
 
                 foreach (var openPoint in adjacencyRule.Neighbors(minNode.Position))
-                {
-                    if ((!closedSet.Contains(openPoint)) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
+                    if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
                         edgeSet.Add(openPoint);
-                }
                 while (edgeSet.Count > 0)
-                {
                     foreach (var point in edgeSet.ToArray())
                     {
                         var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
@@ -184,11 +186,11 @@ namespace GoRogue.Pathing
                                 edgeSet.Add(openPoint);
                             }
                         }
+
                         edgeSet.Remove(point);
                         closedSet.Add(point);
                         openSet.Remove(_nodes[point]);
                     }
-                }
             }
         }
 

@@ -1,5 +1,4 @@
-﻿using GoRogue;
-using System;
+﻿using System;
 using Xunit;
 
 namespace GoRogue.UnitTests
@@ -7,7 +6,8 @@ namespace GoRogue.UnitTests
     public class CancelingIntEffect : IntEffect
     {
         public CancelingIntEffect(string name, int startingDuration)
-            : base(name, startingDuration) { }
+            : base(name, startingDuration)
+        { }
 
         protected override void OnTrigger(EffectArgs e)
         {
@@ -47,7 +47,7 @@ namespace GoRogue.UnitTests
         public void EffectToString()
         {
             string NAME = "Int Effect 1";
-            int DURATION = 5;
+            var DURATION = 5;
             var intEffect = new IntEffect(NAME, DURATION);
             Assert.Equal(intEffect.ToString(), $"{NAME}: {DURATION} duration remaining");
         }
@@ -73,7 +73,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void EffectTriggerEffects()
         {
-            int MULTI_DURATION = 3;
+            var MULTI_DURATION = 3;
             var effectTrigger = new EffectTrigger<EffectArgs>();
 
             var effect1 = new IntEffect("Int Effect 1", 1);
@@ -112,7 +112,8 @@ namespace GoRogue.UnitTests
     public class IntEffect : Effect<EffectArgs>
     {
         public IntEffect(string name, int startingDuration)
-            : base(name, startingDuration) { }
+            : base(name, startingDuration)
+        { }
 
         protected override void OnTrigger(EffectArgs e) => Console.WriteLine($"Effect {Name} triggered.");
     }

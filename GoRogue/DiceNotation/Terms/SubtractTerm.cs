@@ -34,7 +34,7 @@ namespace GoRogue.DiceNotation.Terms
         /// Subtracts the second term from the first, evaluating those two terms as necessary.
         /// </summary>
         /// <param name="rng">The rng to used -- passed to other terms.</param>
-        /// <returns>The result of evaluating <see cref="Term1"/> - <see cref="Term2"/>.</returns>
+        /// <returns>The result of evaluating <see cref="Term1" /> - <see cref="Term2" />.</returns>
         public int GetResult(IGenerator rng) => Term1.GetResult(rng) - Term2.GetResult(rng);
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapViews;
+using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using Troschuetz.Random;
@@ -20,12 +21,9 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// Creates a new tunnel creator.
         /// </summary>
         /// <param name="rng">RNG to use for movement selection.</param>
-        public HorizontalVerticalTunnelCreator(IGenerator? rng = null)
-        {
-            _rng = rng ?? Random.GlobalRandom.DefaultRNG;
-        }
+        public HorizontalVerticalTunnelCreator(IGenerator? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public Area CreateTunnel(ISettableMapView<bool> map, Point tunnelStart, Point tunnelEnd)
         {
             var tunnel = new Area();
@@ -44,11 +42,13 @@ namespace GoRogue.MapGeneration.TunnelCreators
             return tunnel;
         }
 
-        /// <inheritdoc/>
-        public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
+        /// <inheritdoc />
+        public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY)
+            => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
+
         private static IEnumerable<Point> CreateHTunnel(ISettableMapView<bool> map, int xStart, int xEnd, int yPos)
         {
-            for (int x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
+            for (var x = Math.Min(xStart, xEnd); x <= Math.Max(xStart, xEnd); ++x)
             {
                 map[x, yPos] = true;
                 yield return new Point(x, yPos);
@@ -57,12 +57,11 @@ namespace GoRogue.MapGeneration.TunnelCreators
 
         private static IEnumerable<Point> CreateVTunnel(ISettableMapView<bool> map, int yStart, int yEnd, int xPos)
         {
-            for (int y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
+            for (var y = Math.Min(yStart, yEnd); y <= Math.Max(yStart, yEnd); ++y)
             {
                 map[xPos, y] = true;
                 yield return new Point(xPos, y);
             }
         }
-
     }
 }

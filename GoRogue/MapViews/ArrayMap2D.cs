@@ -5,15 +5,14 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Implementation of the <see cref="ISettableMapView{T}"/> interface that uses a
+    /// Implementation of the <see cref="ISettableMapView{T}" /> interface that uses a
     /// 2D array to store data.
     /// </summary>
     /// <remarks>
-    /// An <see cref="ArrayMap2D{T}"/> can be implicitly converted to its underlying 2D array,
+    /// An <see cref="ArrayMap2D{T}" /> can be implicitly converted to its underlying 2D array,
     /// which allows exposing that array to code that works with 2D arrays.  Modifications in the array
     /// appear in the map view as well.
-    /// 
-    /// If you need a 1D array instead of 2D, then you should use <see cref="ArrayMap{T}"/> instead.
+    /// If you need a 1D array instead of 2D, then you should use <see cref="ArrayMap{T}" /> instead.
     /// </remarks>
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
@@ -37,36 +36,6 @@ namespace GoRogue.MapViews
         /// <param name="existingArray">An existing 2D array to use as the data structure.</param>
         public ArrayMap2D(T[,] existingArray) => _array = existingArray;
 
-        /// <inheritdoc/>
-        public int Height => _array.GetLength(1);
-
-        /// <inheritdoc/>
-        public int Width => _array.GetLength(0);
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc/>
-        public T this[int index1D]
-        {
-            get => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
-            set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc/>
-        public T this[int x, int y]
-        {
-            get => _array[x, y];
-            set => _array[x, y] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc/>
-        public T this[Point pos]
-        {
-            get => _array[pos.X, pos.Y];
-            set => _array[pos.X, pos.Y] = value;
-        }
-
         /// <summary>
         /// Performs deep copy of array map.
         /// </summary>
@@ -75,11 +44,48 @@ namespace GoRogue.MapViews
         {
             var newObj = new ArrayMap2D<T>(Width, Height);
 
-            for (int x = 0; x < Width; x++)
-                for (int y = 0; y < Height; y++)
-                    newObj[x, y] = _array[x, y];
+            for (var x = 0; x < Width; x++)
+            for (var y = 0; y < Height; y++)
+                newObj[x, y] = _array[x, y];
 
             return newObj;
+        }
+
+        /// <summary>
+        /// Compares the current ArrayMap2D to the one given.
+        /// </summary>
+        /// <param name="other" />
+        /// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+        public bool Equals(ArrayMap2D<T> other) => !(other is null) && _array == other._array;
+
+        /// <inheritdoc />
+        public int Height => _array.GetLength(1);
+
+        /// <inheritdoc />
+        public int Width => _array.GetLength(0);
+
+        // ReSharper disable once InheritdocInvalidUsage
+        /// <inheritdoc />
+        public T this[int index1D]
+        {
+            get => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
+            set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
+        }
+
+        // ReSharper disable once InheritdocInvalidUsage
+        /// <inheritdoc />
+        public T this[int x, int y]
+        {
+            get => _array[x, y];
+            set => _array[x, y] = value;
+        }
+
+        // ReSharper disable once InheritdocInvalidUsage
+        /// <inheritdoc />
+        public T this[Point pos]
+        {
+            get => _array[pos.X, pos.Y];
+            set => _array[pos.X, pos.Y] = value;
         }
 
 
@@ -106,8 +112,11 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Compares the current ArrayMap2D to the object given.
         /// </summary>
-        /// <param name="obj"/>
-        /// <returns>True if the given object is an ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="obj" />
+        /// <returns>
+        /// True if the given object is an ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false
+        /// otherwise.
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (obj is ArrayMap2D<T> e)
@@ -117,32 +126,31 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
-        /// Compares the current ArrayMap2D to the one given.
-        /// </summary>
-        /// <param name="other"/>
-        /// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-        public bool Equals(ArrayMap2D<T> other) => !(other is null) && _array == other._array;
-
-        /// <summary>
         /// Returns a hash-value for this object.
         /// </summary>
-        /// <returns/>
+        /// <returns />
         public override int GetHashCode() => _array.GetHashCode();
 
         /// <summary>
         /// Compares the two ArrayMap2D instances.
         /// </summary>
-        /// <param name="lhs"/>
-        /// <param name="rhs"/>
-        /// <returns>True if the two given ArrayMap2D&lt;T&gt; instances have a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="lhs" />
+        /// <param name="rhs" />
+        /// <returns>
+        /// True if the two given ArrayMap2D&lt;T&gt; instances have a reference to the same underlying array, false
+        /// otherwise.
+        /// </returns>
         public static bool operator ==(ArrayMap2D<T> lhs, ArrayMap2D<T> rhs) => lhs?.Equals(rhs) ?? rhs is null;
 
         /// <summary>
         /// Compares the two ArrayMap2D instances.
         /// </summary>
-        /// <param name="lhs"/>
-        /// <param name="rhs"/>
-        /// <returns>True if the two given ArrayMap2D&lt;T&gt; instances do NOT have a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="lhs" />
+        /// <param name="rhs" />
+        /// <returns>
+        /// True if the two given ArrayMap2D&lt;T&gt; instances do NOT have a reference to the same underlying array,
+        /// false otherwise.
+        /// </returns>
         public static bool operator !=(ArrayMap2D<T> lhs, ArrayMap2D<T> rhs) => !(lhs == rhs);
 
         /// <summary>
@@ -152,7 +160,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the 2D array, using the <paramref name="elementStringifier"/>
+        /// Returns a string representation of the 2D array, using the <paramref name="elementStringifier" />
         /// function given to determine what string represents which value.
         /// </summary>
         /// <remarks>
@@ -163,7 +171,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the 2D array.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the ArrayMap2D, using the function specified to turn elements into
@@ -171,7 +180,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -183,6 +192,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the ArrayMap2D.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

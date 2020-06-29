@@ -3,7 +3,7 @@
 namespace GoRogue
 {
     /// <summary>
-    /// Read-only representation of <see cref="DisjointSet"/>
+    /// Read-only representation of <see cref="DisjointSet" />
     /// </summary>
     [PublicAPI]
     public interface IReadOnlyDisjointSet
@@ -14,7 +14,8 @@ namespace GoRogue
         int Count { get; }
 
         /// <summary>
-        /// Returns the parent of the set containing <paramref name="objectID"/>, performing path compression as search is completed.
+        /// Returns the parent of the set containing <paramref name="objectID" />, performing path compression as search is
+        /// completed.
         /// </summary>
         /// <param name="objectID">Object to search for.</param>
         /// <returns>The parent of the object given.</returns>
@@ -23,8 +24,8 @@ namespace GoRogue
         /// <summary>
         /// Returns true if the two objects specified are in the same set.
         /// </summary>
-        /// <param name="obj1"/>
-        /// <param name="obj2"/>
+        /// <param name="obj1" />
+        /// <param name="obj2" />
         /// <returns>True if the two objects are in the same set, false otherwise.</returns>
         bool InSameSet(int obj1, int obj2);
     }

@@ -10,16 +10,15 @@ namespace GoRogue.MapViews
     /// type T from the underlying map.
     /// </summary>
     /// <remarks>
-    /// Since some algorithms that use <see cref="IMapView{T}"/> implementations can be expensive to
+    /// Since some algorithms that use <see cref="IMapView{T}" /> implementations can be expensive to
     /// run on large maps (GoalMaps, etc), you can use viewports to present only a relevant subsection of the
-    /// map to that algorithm.  It is generally useful for any case where you want an <see cref="IMapView{T}"/>
-    /// that represents a subsection of some other <see cref="IMapView{T}"/>.
-    /// 
+    /// map to that algorithm.  It is generally useful for any case where you want an <see cref="IMapView{T}" />
+    /// that represents a subsection of some other <see cref="IMapView{T}" />.
     /// This implementation restricts the subsection of the map that is presented in such a way that no part
     /// of the viewport can be outside the boundary of its parent map view.  The viewport cannot be bigger than
     /// the map, and the viewport's position is "locked" to the edge so that it cannot be set in such a way that a portion
     /// of the viewport lies outside the bounds of the parent map.  If you would rather allow this and return
-    /// a default value for locations outside the parent map, see <see cref="UnboundedViewport{T}"/>.
+    /// a default value for locations outside the parent map, see <see cref="UnboundedViewport{T}" />.
     /// </remarks>
     /// <typeparam name="T">The type being exposed by the Viewport.</typeparam>
     [PublicAPI]
@@ -43,12 +42,8 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="mapView">The map view to represent.</param>
         public Viewport(IMapView<T> mapView)
-            : this(mapView, mapView.Bounds()) { }
-
-        /// <summary>
-        /// The height of the area being represented.
-        /// </summary>
-        public int Height => ViewArea.Height;
+            : this(mapView, mapView.Bounds())
+        { }
 
         /// <summary>
         /// The map view that this Viewport is exposing values from.
@@ -56,10 +51,15 @@ namespace GoRogue.MapViews
         public IMapView<T> MapView { get; private set; }
 
         /// <summary>
-        /// The area of <see cref="MapView"/> that this Viewport is exposing.  Use <see cref="SetViewArea(Rectangle)"/>
+        /// The area of <see cref="MapView" /> that this Viewport is exposing.  Use <see cref="SetViewArea(Rectangle)" />
         /// to set the viewing area.
         /// </summary>
         public ref readonly Rectangle ViewArea => ref _boundedRect.Area;
+
+        /// <summary>
+        /// The height of the area being represented.
+        /// </summary>
+        public int Height => ViewArea.Height;
 
         /// <summary>
         /// The width of the area being represented.
@@ -102,7 +102,8 @@ namespace GoRogue.MapViews
         public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
 
         /// <summary>
-        /// Sets the viewing area for the viewport to the value given.  The viewport will automatically be bounded as needed to ensure that
+        /// Sets the viewing area for the viewport to the value given.  The viewport will automatically be bounded as needed to
+        /// ensure that
         /// it remains within the bounds of the underlying IMapView.
         /// </summary>
         /// <param name="viewArea">The new view area.</param>
@@ -115,7 +116,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -126,7 +127,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the Viewport.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the Viewport, using the function specified to turn elements into
@@ -134,7 +136,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -146,6 +148,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the Viewport.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

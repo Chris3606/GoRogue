@@ -18,13 +18,11 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
         /// Constructor. Specifies the RNG to use, or null if the default RNG should be used.
         /// </summary>
         /// <param name="rng">The RNG to use, or null if the default RNG should be used.</param>
-        public RandomConnectionPointSelector(IGenerator? rng = null)
-        {
-            _rng = rng ?? GlobalRandom.DefaultRNG;
-        }
+        public RandomConnectionPointSelector(IGenerator? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
 
-        /// <inheritdoc/>
-        public (Point area1Position, Point area2Position) SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2) =>
+        /// <inheritdoc />
+        public (Point area1Position, Point area2Position) SelectConnectionPoints(
+            IReadOnlyArea area1, IReadOnlyArea area2) =>
             (area1.Positions.RandomItem(_rng), area2.Positions.RandomItem(_rng));
     }
 }

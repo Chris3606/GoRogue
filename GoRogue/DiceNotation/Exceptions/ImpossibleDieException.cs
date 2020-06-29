@@ -13,17 +13,15 @@ namespace GoRogue.DiceNotation.Exceptions
         /// Constructor.
         /// </summary>
         public ImpossibleDieException()
-        {
-        }
+        { }
 
         /// <summary>
         /// Constructor, taking a specified error message.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         public ImpossibleDieException(string message)
-           : base(message)
-        {
-        }
+            : base(message)
+        { }
 
         /// <summary>
         /// Constructor, taking a specified error message and the exception that caused this exception.
@@ -35,8 +33,7 @@ namespace GoRogue.DiceNotation.Exceptions
         /// the inner exception.
         /// </param>
         public ImpossibleDieException(string message, Exception innerException)
-           : base(message, innerException)
-        {
-        }
+            : base(message, innerException)
+        { }
     }
 }

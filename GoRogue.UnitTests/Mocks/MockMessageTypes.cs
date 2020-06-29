@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GoRogue.UnitTests.Mocks
+﻿namespace GoRogue.UnitTests.Mocks
 {
-    interface IMockMessage { }
+    internal interface IMockMessage
+    { }
 
-    class MockMessageBase : IMockMessage { }
+    internal class MockMessageBase : IMockMessage
+    { }
 
-    class MockMessage1 : IMockMessage { }
-    class MockMessage2 : MockMessageBase { }
+    internal class MockMessage1 : IMockMessage
+    { }
+
+    internal class MockMessage2 : MockMessageBase
+    { }
 }

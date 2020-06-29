@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace GoRogue.UnitTests
 {
-    class OrderedComponent : ISortedComponent
+    internal class OrderedComponent : ISortedComponent
     {
-        public uint SortOrder { get; }
+        public OrderedComponent(uint sortOrder) => SortOrder = sortOrder;
 
-        public OrderedComponent(uint sortOrder)
-        {
-            SortOrder = sortOrder;
-        }
+        public uint SortOrder { get; }
     }
 
-    class UnorderedComponent
+    internal class UnorderedComponent
     {
         public int Value;
     }
@@ -37,7 +32,7 @@ namespace GoRogue.UnitTests
                 container.AddComponent(component);
 
             components = components.OrderBy(c => c.SortOrder).ToList();
-            int compIndex = 0;
+            var compIndex = 0;
             foreach (var comp in container.GetComponents<ISortedComponent>())
             {
                 Assert.True(components[compIndex] == comp);
@@ -60,8 +55,8 @@ namespace GoRogue.UnitTests
 
             var container = new ComponentContainer();
 
-            int compIndex = 0;
-            for (int i = 0; i < components.Count; i++)
+            var compIndex = 0;
+            for (var i = 0; i < components.Count; i++)
             {
                 container.AddComponent(components[i]);
                 container.AddComponent(unorderedComponents[i]);

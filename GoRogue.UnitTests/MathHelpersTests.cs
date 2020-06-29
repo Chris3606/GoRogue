@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace GoRogue.UnitTests
 {
@@ -10,7 +7,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void RoundToMultiple()
         {
-            int result = MathHelpers.RoundToMultiple(3, 3);
+            var result = MathHelpers.RoundToMultiple(3, 3);
             Assert.Equal(3, result);
 
             result = MathHelpers.RoundToMultiple(2, 3);

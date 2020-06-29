@@ -12,23 +12,20 @@ namespace GoRogue
     public class ComponentChangedEventArgs : EventArgs
     {
         /// <summary>
-        /// The component that was added or removed.
-        /// </summary>
-        public object Component { get; }
-
-        /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="component">The component that was added/removed.</param>
-        public ComponentChangedEventArgs(object component)
-        {
-            Component = component;
-        }
+        public ComponentChangedEventArgs(object component) => Component = component;
+
+        /// <summary>
+        /// The component that was added or removed.
+        /// </summary>
+        public object Component { get; }
     }
 
     /// <summary>
     /// Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
-    /// you would implement this via a backing field of type <see cref="ComponentContainer"/>, which implements the logic for
+    /// you would implement this via a backing field of type <see cref="ComponentContainer" />, which implements the logic for
     /// these functions.
     /// </summary>
     [PublicAPI]
@@ -55,9 +52,11 @@ namespace GoRogue
         /// been added.
         /// </summary>
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
-        /// <returns>The first component of Type T that was attached, or default(T) if no components of the given type
-        /// have been attached.</returns>
-        [return:MaybeNull]
+        /// <returns>
+        /// The first component of Type T that was attached, or default(T) if no components of the given type
+        /// have been attached.
+        /// </returns>
+        [return: MaybeNull]
         T GetComponent<T>() where T : notnull;
 
         /// <summary>
@@ -83,7 +82,8 @@ namespace GoRogue
         bool HasComponent<T>() where T : notnull;
 
         /// <summary>
-        /// Returns whether or not the implementer has at least one of all of the given types of components attached.  Types may be specified by
+        /// Returns whether or not the implementer has at least one of all of the given types of components attached.  Types may be
+        /// specified by
         /// using typeof(MyComponentType)
         /// </summary>
         /// <param name="componentTypes">One or more component types to check for.</param>

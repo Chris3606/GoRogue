@@ -1,4 +1,5 @@
-﻿using GoRogue.MapViews;
+﻿using System;
+using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -6,9 +7,9 @@ namespace GoRogue.MapGeneration.TunnelCreators
 {
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two
-    /// points. In the case that <see cref="Distance.Manhattan"/> is being used, the line is calculated via the
-    /// <see cref="Lines.Algorithm.Orthogonal"/> algorithm.  Otherwise, the line is calculated using
-    /// <see cref="Lines.Algorithm.Bresenham"/>.
+    /// points. In the case that <see cref="Distance.Manhattan" /> is being used, the line is calculated via the
+    /// <see cref="Lines.Algorithm.Orthogonal" /> algorithm.  Otherwise, the line is calculated using
+    /// <see cref="Lines.Algorithm.Bresenham" />.
     /// </summary>
     [PublicAPI]
     public class DirectLineTunnelCreator : ITunnelCreator
@@ -17,8 +18,8 @@ namespace GoRogue.MapGeneration.TunnelCreators
         private readonly bool _doubleWideVertical;
 
         /// <summary>
-        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Orthogonal"/>
-        /// or <see cref="Lines.Algorithm.Bresenham"/> is used to create the tunnel.
+        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Orthogonal" />
+        /// or <see cref="Lines.Algorithm.Bresenham" /> is used to create the tunnel.
         /// </summary>
         /// <param name="adjacencyRule">
         /// Method of adjacency to respect when creating tunnels. Cannot be diagonal.
@@ -26,18 +27,21 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// <param name="doubleWideVertical">Whether or not to create vertical tunnels as 2-wide.</param>
         public DirectLineTunnelCreator(AdjacencyRule adjacencyRule, bool doubleWideVertical = true)
         {
-            if (adjacencyRule == AdjacencyRule.Diagonals) throw new System.ArgumentException("Cannot use diagonal adjacency to create tunnels", nameof(adjacencyRule));
+            if (adjacencyRule == AdjacencyRule.Diagonals)
+                throw new ArgumentException("Cannot use diagonal adjacency to create tunnels", nameof(adjacencyRule));
             _adjacencyRule = adjacencyRule;
             _doubleWideVertical = doubleWideVertical;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public Area CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
         {
-            var lineAlgorithm = (_adjacencyRule == AdjacencyRule.Cardinals) ? Lines.Algorithm.Orthogonal : Lines.Algorithm.Bresenham;
+            var lineAlgorithm = _adjacencyRule == AdjacencyRule.Cardinals
+                ? Lines.Algorithm.Orthogonal
+                : Lines.Algorithm.Bresenham;
             var area = new Area();
 
-            Point previous = Point.None;
+            var previous = Point.None;
             foreach (var pos in Lines.Get(start, end, lineAlgorithm))
             {
                 map[pos] = true;
@@ -46,7 +50,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
                 // to break rectangles (less than last index)!
                 if (_doubleWideVertical && previous != Point.None && pos.Y != previous.Y && pos.X + 1 < map.Width - 1)
                 {
-                    Point wideningPos = pos + (1, 0);
+                    var wideningPos = pos + (1, 0);
                     map[wideningPos] = true;
                     area.Add(wideningPos);
                 }
@@ -57,7 +61,8 @@ namespace GoRogue.MapGeneration.TunnelCreators
             return area;
         }
 
-        /// <inheritdoc/>
-        public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY) => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
+        /// <inheritdoc />
+        public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY)
+            => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
     }
 }

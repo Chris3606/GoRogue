@@ -6,11 +6,11 @@ namespace GoRogue.MapViews
 {
     /// <summary>
     /// Settable map view class capable of taking complex data and providing a simpler view of it.
-    /// For a version that provides only "get" functionality, see <see cref="TranslationMap{T1, T2}"/>.
+    /// For a version that provides only "get" functionality, see <see cref="TranslationMap{T1, T2}" />.
     /// </summary>
     /// <remarks>
-    /// See <see cref="TranslationMap{T1, T2}"/>.  The use case is the same, except that this class
-    /// implements <see cref="ISettableMapView{T1}"/> instead, and thus also allows you to specify
+    /// See <see cref="TranslationMap{T1, T2}" />.  The use case is the same, except that this class
+    /// implements <see cref="ISettableMapView{T1}" /> instead, and thus also allows you to specify
     /// set-translations via TranslateSet.
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
@@ -34,25 +34,26 @@ namespace GoRogue.MapViews
         /// </remarks>
         /// <param name="baseMap">Your underlying map data.</param>
         /// <param name="overlay">
-        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap"/>.
+        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap" />.
         /// </param>
-        protected SettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay) : this(baseMap) => this.ApplyOverlay(overlay);
+        protected SettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay)
+            : this(baseMap) => this.ApplyOverlay(overlay);
 
         /// <summary>
         /// The underlying map.
         /// </summary>
         public ISettableMapView<T1> BaseMap { get; private set; }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Height => BaseMap.Height;
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Width => BaseMap.Width;
 
         /// <summary>
         /// Given an 1D-array-style index, determines the position associated with that index, and
         /// returns/sets the "value" associated with that location.  This function calls
-        /// <see cref="this[Point]"/>, so override that indexer to change functionality.
+        /// <see cref="this[Point]" />, so override that indexer to change functionality.
         /// </summary>
         /// <param name="index1D">1D-array-style index for location to retrieve/set value for.</param>
         /// <returns>
@@ -87,7 +88,7 @@ namespace GoRogue.MapViews
 
         /// <summary>
         /// Given an X and Y value, translates and returns/sets the "value" associated with that
-        /// location. This function calls <see cref="this[Point]"/>, so override that indexer to
+        /// location. This function calls <see cref="this[Point]" />, so override that indexer to
         /// change functionality.
         /// </summary>
         /// <param name="x">X-value of location.</param>
@@ -106,7 +107,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -117,7 +118,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the SettableTranslationMap.</returns>
-        public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T2, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the map view, using the function specified to turn elements into
@@ -125,7 +127,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -137,22 +139,24 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the SettableTranslationMap.</returns>
-        public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 
         /// <summary>
         /// Translates your map data into the view type. Takes only a value from the underlying map.
-        /// If a position is also needed to perform the translation, use <see cref="TranslateGet(Point, T1)"/>
+        /// If a position is also needed to perform the translation, use <see cref="TranslateGet(Point, T1)" />
         /// instead.
         /// </summary>
         /// <param name="value">The data value from your map.</param>
         /// <returns>A value of the mapped data type</returns>
         protected virtual T2 TranslateGet(T1 value) =>
-            throw new NotSupportedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException(
+                $"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates your map data into the view type. Takes a value from the underlying map and
         /// the corresponding position for that value. If a position is not needed to perform the
-        /// translation, use <see cref="TranslateGet(T1)"/> instead.
+        /// translation, use <see cref="TranslateGet(T1)" /> instead.
         /// </summary>
         /// <param name="position">The position of the given data value from your map.</param>
         /// <param name="value">The data value from your map.</param>
@@ -162,17 +166,18 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Translates the view type into the appropriate form for your map data. Takes only a value
         /// from the underlying map. If a position is also needed to perform the translation, use
-        /// <see cref="TranslateSet(Point, T2)"/> instead.
+        /// <see cref="TranslateSet(Point, T2)" /> instead.
         /// </summary>
         /// <param name="value">A value of the mapped data type</param>
         /// <returns>The data value for your map.</returns>
         protected virtual T1 TranslateSet(T2 value) =>
-            throw new NotSupportedException($"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Point, T2) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException(
+                $"{nameof(TranslateSet)}(T2) was not implemented, and {nameof(TranslateSet)}(Point, T2) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates the view type into the appropriate form for your map data. Takes a value from
         /// the underlying map, and it corresponding position. If a position is not needed to perform
-        /// the translation, use <see cref="TranslateSet(T2)"/> instead.
+        /// the translation, use <see cref="TranslateSet(T2)" /> instead.
         /// </summary>
         /// <param name="position">The position of the given mapped data type.</param>
         /// <param name="value">A value of the mapped data type</param>

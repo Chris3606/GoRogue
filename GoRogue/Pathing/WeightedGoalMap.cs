@@ -17,7 +17,7 @@ namespace GoRogue.Pathing
     /// weight value, the more strongly an AI will attempt to pursue this goal. A negative weight
     /// inverts the map, turning its goal into something to avoid.  Inverting the weight does not
     /// create a "safety map" as described in the article, as the resulting goal map will show no
-    /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap"/>.
+    /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap" />.
     /// </remarks>
     [PublicAPI]
     public class WeightedGoalMap : IMapView<double?>
@@ -26,9 +26,9 @@ namespace GoRogue.Pathing
         /// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
         /// </summary>
         /// <remarks>
-        /// When adding a new goal map, its <see cref="IMapView{Double}.Width"/> and <see cref="IMapView{Double}.Height"/>
-        /// should be identical to the WeightedGoalMap's <see cref="Width"/> and
-        /// <see cref="Height"/>.
+        /// When adding a new goal map, its <see cref="IMapView{Double}.Width" /> and <see cref="IMapView{Double}.Height" />
+        /// should be identical to the WeightedGoalMap's <see cref="Width" /> and
+        /// <see cref="Height" />.
         /// </remarks>
         public readonly Dictionary<IMapView<double?>, double> Weights;
 
@@ -38,10 +38,7 @@ namespace GoRogue.Pathing
         /// <param name="map">The goal map.</param>
         public WeightedGoalMap(IMapView<double?> map)
         {
-            Weights = new Dictionary<IMapView<double?>, double>
-            {
-                { map, 1 }
-            };
+            Weights = new Dictionary<IMapView<double?>, double> { { map, 1 } };
             Width = map.Width;
             Height = map.Height;
         }
@@ -62,9 +59,7 @@ namespace GoRogue.Pathing
                     Height = map.Height;
                 }
                 else
-                {
                     Debug.Assert(Height == map.Height && Width == map.Width);
-                }
             }
         }
 
@@ -88,9 +83,8 @@ namespace GoRogue.Pathing
                     Height = key.Height;
                 }
                 else
-                {
                     Debug.Assert(Height == key.Height && Width == key.Width);
-                }
+
                 Debug.Assert(value != 0.0);
             }
         }
@@ -99,7 +93,6 @@ namespace GoRogue.Pathing
         /// The height of the goal map, and the goal maps that compose it.
         /// </summary>
         public int Height { get; }
-
 
 
         /// <summary>
@@ -129,14 +122,11 @@ namespace GoRogue.Pathing
                     var weight = pair.Value;
                     var weighted = value!.Value * weight;
                     if (weight > 0.0)
-                    {
                         result = result == 0.0 ? weighted : result * weighted;
-                    }
                     else
-                    {
                         negResult = negResult == 0.0 ? weighted : negResult * weighted;
-                    }
                 }
+
                 return result + negResult;
             }
         }
@@ -153,13 +143,9 @@ namespace GoRogue.Pathing
         public ArrayMap<double?> Combine()
         {
             var result = new ArrayMap<double?>(Width, Height);
-            for (int y = 0; y < Height; ++y)
-            {
-                for (int x = 0; x < Width; ++x)
-                {
-                    result[x, y] = this[x, y];
-                }
-            }
+            for (var y = 0; y < Height; ++y)
+            for (var x = 0; x < Width; ++x)
+                result[x, y] = this[x, y];
             return result;
         }
     }

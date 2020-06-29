@@ -14,17 +14,15 @@ namespace GoRogue.DiceNotation.Exceptions
         /// Constructor.
         /// </summary>
         public InvalidChooseException()
-        {
-        }
+        { }
 
         /// <summary>
         /// Constructor, taking a specified error message.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         public InvalidChooseException(string message)
-           : base(message)
-        {
-        }
+            : base(message)
+        { }
 
         /// <summary>
         /// Constructor, taking a specified error message and a reference to the inner exception that
@@ -37,8 +35,7 @@ namespace GoRogue.DiceNotation.Exceptions
         /// the inner exception.
         /// </param>
         public InvalidChooseException(string message, Exception innerException)
-           : base(message, innerException)
-        {
-        }
+            : base(message, innerException)
+        { }
     }
 }

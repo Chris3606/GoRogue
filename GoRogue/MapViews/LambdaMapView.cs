@@ -7,8 +7,8 @@ namespace GoRogue.MapViews
     /// <summary>
     /// Class designed to make implementing simple IMapViews more convenient, by providing the "get"
     /// functionality via a function that is passed in at construction. For a version that
-    /// implements <see cref="ISettableMapView{T}"/> as opposed to <see cref="IMapView{T}"/>, see
-    /// <see cref="LambdaSettableMapView{T}"/>.
+    /// implements <see cref="ISettableMapView{T}" /> as opposed to <see cref="IMapView{T}" />, see
+    /// <see cref="LambdaSettableMapView{T}" />.
     /// </summary>
     /// <remarks>
     /// Despite actual game map representations often consisting of complex types, exposing certain
@@ -44,7 +44,8 @@ namespace GoRogue.MapViews
         /// from a location.
         /// </param>
         public LambdaMapView(int width, int height, Func<Point, T> valueGetter)
-            : this(() => width, () => height, valueGetter) { }
+            : this(() => width, () => height, valueGetter)
+        { }
 
         /// <summary>
         /// Constructor. Takes functions that retrieve the width and height of the map, and the
@@ -53,7 +54,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// This constructor is useful if the width and height of the map being represented may
         /// change -- one can provide lambdas/functions that retrieve the width and height of the map being
-        /// represented, and these functions will be called any time the <see cref="Width"/> and <see cref="Height"/>
+        /// represented, and these functions will be called any time the <see cref="Width" /> and <see cref="Height" />
         /// properties are retrieved.
         /// </remarks>
         /// <param name="widthGetter">
@@ -72,10 +73,10 @@ namespace GoRogue.MapViews
             _valueGetter = valueGetter;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Height => _heightGetter();
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Width => _widthGetter();
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -131,7 +132,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the LambdaMapView.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the LambdaMapView, using the function specified to turn elements into
@@ -139,7 +141,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -151,6 +153,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the LambdaMapView.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

@@ -7,21 +7,42 @@ namespace GoRogue.Factories
     /// <summary>
     /// A more advanced factory that produces a type of object based on a blueprint and a set of configuration parameters.
     /// </summary>
-    /// <typeparam name="TBlueprintConfig">The type of parameter passed to the <see cref="Create(string, TBlueprintConfig)"/> function each time an object is created.</typeparam>
+    /// <typeparam name="TBlueprintConfig">
+    /// The type of parameter passed to the <see cref="Create(string, TBlueprintConfig)" />
+    /// function each time an object is created.
+    /// </typeparam>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
     [PublicAPI]
-    public class AdvancedFactory<TBlueprintConfig, TProduced> : IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
+    public class
+        AdvancedFactory<TBlueprintConfig, TProduced> : IEnumerable<
+            IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
     {
-        private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints = new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();
+        private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints =
+            new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();
+
+        /// <summary>
+        /// Gets an enumerator of all of the blueprints in the factory.
+        /// </summary>
+        /// <returns>An enumeration of the blueprints.</returns>
+        public IEnumerator<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> GetEnumerator()
+            => _blueprints.Values.GetEnumerator();
+
+        /// <summary>
+        /// Gets an enumerator of all of the blueprints in the factory.
+        /// </summary>
+        /// <returns>An enumeration of the blueprints.</returns>
+        IEnumerator IEnumerable.GetEnumerator() => _blueprints.Values.GetEnumerator();
 
         /// <summary>
         /// Adds a blueprint to the factory.
         /// </summary>
         /// <param name="blueprint">The blueprint to add.</param>
-        public void Add(IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> blueprint) => _blueprints[blueprint.Id] = blueprint;
+        public void Add(IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> blueprint)
+            => _blueprints[blueprint.Id] = blueprint;
 
         /// <summary>
-        /// Creates a <typeparamref name="TProduced"/> object using the blueprint with the given factory id, and the given settings object.
+        /// Creates a <typeparamref name="TProduced" /> object using the blueprint with the given factory id, and the given
+        /// settings object.
         /// </summary>
         /// <param name="factoryId">The factory id of a blueprint.</param>
         /// <param name="blueprintConfig">A settings object passed to the Create function of the blueprint.</param>
@@ -31,7 +52,7 @@ namespace GoRogue.Factories
             if (!_blueprints.ContainsKey(factoryId))
                 throw new ItemNotDefinedException(factoryId);
 
-            TProduced obj = _blueprints[factoryId].Create(blueprintConfig);
+            var obj = _blueprints[factoryId].Create(blueprintConfig);
             if (obj is IFactoryObject factoryObj)
                 factoryObj.DefinitionId = factoryId;
 
@@ -42,7 +63,7 @@ namespace GoRogue.Factories
         /// Checks if a blueprint exists.
         /// </summary>
         /// <param name="factoryId">The blueprint to check for.</param>
-        /// <returns>Returns true when the specified <paramref name="factoryId"/> exists; otherwise false.</returns>
+        /// <returns>Returns true when the specified <paramref name="factoryId" /> exists; otherwise false.</returns>
         public bool BlueprintExists(string factoryId) => _blueprints.ContainsKey(factoryId);
 
         /// <summary>
@@ -58,17 +79,5 @@ namespace GoRogue.Factories
 
             return _blueprints[factoryId];
         }
-
-        /// <summary>
-        /// Gets an enumerator of all of the blueprints in the factory.
-        /// </summary>
-        /// <returns>An enumeration of the blueprints.</returns>
-        public IEnumerator<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> GetEnumerator() => _blueprints.Values.GetEnumerator();
-
-        /// <summary>
-        /// Gets an enumerator of all of the blueprints in the factory.
-        /// </summary>
-        /// <returns>An enumeration of the blueprints.</returns>
-        IEnumerator IEnumerable.GetEnumerator() => _blueprints.Values.GetEnumerator();
     }
 }

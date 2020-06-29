@@ -7,7 +7,7 @@ namespace GoRogue.Random
     /// <summary>
     /// A "random" number generator that always returns the minValue parameter given, or 0 on the
     /// Next overload that only takes maxValue. Again, may be useful for testing. Also used in
-    /// <see cref="DiceNotation.DiceExpression"/> for certain minimum roll functions.
+    /// <see cref="DiceNotation.DiceExpression" /> for certain minimum roll functions.
     /// </summary>
     [PublicAPI]
     public class MinRandom : IGenerator
@@ -20,7 +20,7 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Since this RNG returns the maximum possible value, this field will always return 0.
-        ///</summary>
+        /// </summary>
         public uint Seed => 0;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace GoRogue.Random
         public int Next(int maxValue) => 0;
 
         /// <summary>
-        /// Returns <paramref name="minValue"/>.
+        /// Returns <paramref name="minValue" />.
         /// </summary>
         /// <param name="minValue">
         /// The minimum value for the returned number (which is always returned by this generator)
@@ -45,7 +45,9 @@ namespace GoRogue.Random
         /// The maximum value for the returned number (which is unused since this generator always
         /// returns the minimum.
         /// </param>
-        /// <returns><paramref name="minValue"/></returns>
+        /// <returns>
+        ///     <paramref name="minValue" />
+        /// </returns>
         public int Next(int minValue, int maxValue) => minValue;
 
         /// <summary>
@@ -60,17 +62,17 @@ namespace GoRogue.Random
         /// <param name="buffer">The buffer to fill.</param>
         public void NextBytes(byte[] buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = 0;
         }
 
         /// <summary>
-		/// Fills the given buffer with bytes of value 0.
-		/// </summary>
-		/// <param name="buffer">The buffer to fill.</param>
-		public void NextBytes(Span<byte> buffer)
+        /// Fills the given buffer with bytes of value 0.
+        /// </summary>
+        /// <param name="buffer">The buffer to fill.</param>
+        public void NextBytes(Span<byte> buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = 0;
         }
 
@@ -91,14 +93,16 @@ namespace GoRogue.Random
         public double NextDouble(double maxValue) => 0.0;
 
         /// <summary>
-        /// Returns <paramref name="minValue"/>.
+        /// Returns <paramref name="minValue" />.
         /// </summary>
         /// <param name="minValue">
         /// The minimum value for the returned number (always returned since this function always
         /// returns the minimum).
         /// </param>
         /// <param name="maxValue">The maximum value for the returned number (unused).</param>
-        /// <returns><paramref name="minValue"/></returns>
+        /// <returns>
+        ///     <paramref name="minValue" />
+        /// </returns>
         public double NextDouble(double minValue, double maxValue) => minValue;
 
         /// <summary>
@@ -123,13 +127,15 @@ namespace GoRogue.Random
         public uint NextUInt(uint maxValue) => 0;
 
         /// <summary>
-        /// Returns <paramref name="minValue"/>.
+        /// Returns <paramref name="minValue" />.
         /// </summary>
         /// <param name="minValue">
         /// The minimum value for the returned number (this generator always returns the minimum value).
         /// </param>
         /// <param name="maxValue">The maximum value for the returned number (unused).</param>
-        /// <returns><paramref name="minValue"/></returns>
+        /// <returns>
+        ///     <paramref name="minValue" />
+        /// </returns>
         public uint NextUInt(uint minValue, uint maxValue) => minValue;
 
         /// <summary>

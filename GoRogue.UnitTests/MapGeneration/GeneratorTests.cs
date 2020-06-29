@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using GoRogue.MapGeneration;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
@@ -10,7 +9,15 @@ namespace GoRogue.UnitTests.MapGeneration
 {
     public class GeneratorTests
     {
-        #region Test Data
+        public GeneratorTests()
+        {
+            _generator = new Generator(10, 15);
+            _addedCount = 0;
+            _generator.Context.ComponentAdded += (s, e) => _addedCount++;
+
+            _orderChecker = new IncrementOnlyValue();
+        }
+
         public static IEnumerable<(int width, int height)> ValidSizes => TestUtils.Enumerable(
             (1, 2),
             (1, 1),
@@ -28,21 +35,11 @@ namespace GoRogue.UnitTests.MapGeneration
             (-7, 0),
             (0, -2),
             (-3, -9)
-       );
-        #endregion
+        );
 
         private readonly Generator _generator;
         private int _addedCount;
         private readonly IncrementOnlyValue _orderChecker;
-
-        public GeneratorTests()
-        {
-            _generator = new Generator(10, 15);
-            _addedCount = 0;
-            _generator.Context.ComponentAdded += (s, e) => _addedCount++;
-
-            _orderChecker = new IncrementOnlyValue();
-        }
 
         [Theory]
         [MemberDataTuple(nameof(ValidSizes))]
@@ -65,13 +62,11 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Null(generator);
         }
 
-        [Fact]
-        public void AddComponentReturnsThis()
+        private Action GetOnPerform(int id) => () =>
         {
-            // Verify AddComponent returns its instance (for chaining)
-            var ret = _generator.AddComponent(new MapContextComponent1());
-            Assert.Same(_generator, ret);
-        }
+            _addedCount++;
+            _orderChecker.Value = id;
+        };
 
         [Fact]
         public void AddComponentBasic()
@@ -89,6 +84,14 @@ namespace GoRogue.UnitTests.MapGeneration
             // Multiple objects of same type, however, are allowed
             _generator.AddComponent(component2);
             Assert.Equal(2, _addedCount);
+        }
+
+        [Fact]
+        public void AddComponentReturnsThis()
+        {
+            // Verify AddComponent returns its instance (for chaining)
+            var ret = _generator.AddComponent(new MapContextComponent1());
+            Assert.Same(_generator, ret);
         }
 
         [Fact]
@@ -117,14 +120,6 @@ namespace GoRogue.UnitTests.MapGeneration
         }
 
         [Fact]
-        public void AddStepReturnsThis()
-        {
-            // Verify AddStep returns its instance (for chaining)
-            var ret = _generator.AddStep(new MockGenerationStep(null));
-            Assert.Same(_generator, ret);
-        }
-
-        [Fact]
         public void AddStepAddsToList()
         {
             var step = new MockGenerationStep(null);
@@ -139,6 +134,14 @@ namespace GoRogue.UnitTests.MapGeneration
         }
 
         [Fact]
+        public void AddStepReturnsThis()
+        {
+            // Verify AddStep returns its instance (for chaining)
+            var ret = _generator.AddStep(new MockGenerationStep(null));
+            Assert.Same(_generator, ret);
+        }
+
+        [Fact]
         public void GenerateCompletesStepsInOrder()
         {
             // Add steps that will trigger an exception if they're completed out of order
@@ -148,17 +151,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             // We directly assert that all the steps were called; IncrementOnlyValue will throw if any were executed out of order or duplicated.
             _generator.Generate();
-            Assert.Equal(3, _addedCount); 
-        }
-
-        private Action GetOnPerform(int id)
-        {
-
-            return () =>
-            {
-                _addedCount++;
-                _orderChecker.Value = id;
-            };
+            Assert.Equal(3, _addedCount);
         }
     }
 }

@@ -13,9 +13,6 @@ namespace GoRogue
     [PublicAPI]
     public static class Lines
     {
-        private const int ModifierX = 0x7fff;
-        private const int ModifierY = 0x7fff;
-
         /// <summary>
         /// Various supported line-drawing algorithms.
         /// </summary>
@@ -28,8 +25,8 @@ namespace GoRogue
 
             /// <summary>
             /// Bresenham line algorithm, with the points guaranteed to be in start to finish
-            /// order. This may be significantly slower than <see cref="Algorithm.Bresenham"/>, so if you really
-            /// need ordering, consider<see cref="Algorithm.DDA"/> instead, as it is both faster than Bresenham
+            /// order. This may be significantly slower than <see cref="Algorithm.Bresenham" />, so if you really
+            /// need ordering, consider<see cref="Algorithm.DDA" /> instead, as it is both faster than Bresenham
             /// and implicitly ordered.
             /// </summary>
             BresenhamOrdered,
@@ -53,6 +50,9 @@ namespace GoRogue
             Orthogonal
         }
 
+        private const int ModifierX = 0x7fff;
+        private const int ModifierY = 0x7fff;
+
         /// <summary>
         /// Returns an IEnumerable of every point, in order, closest to a line between the two points
         /// specified, using the line drawing algorithm given. The start and end points will be included.
@@ -64,7 +64,8 @@ namespace GoRogue
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).
         /// </returns>
-        public static IEnumerable<Point> Get(Point start, Point end, Algorithm type = Algorithm.Bresenham) => Get(start.X, start.Y, end.X, end.Y, type);
+        public static IEnumerable<Point> Get(Point start, Point end, Algorithm type = Algorithm.Bresenham)
+            => Get(start.X, start.Y, end.X, end.Y, type);
 
         /// <summary>
         /// Returns an IEnumerable of every point, in order, closest to a line between the two points
@@ -80,7 +81,8 @@ namespace GoRogue
         /// An IEnumerable of every point, in order, closest to a line between the two points
         /// specified (according to the algorithm given).
         /// </returns>
-        public static IEnumerable<Point> Get(int startX, int startY, int endX, int endY, Algorithm type = Algorithm.Bresenham)
+        public static IEnumerable<Point> Get(int startX, int startY, int endX, int endY,
+                                             Algorithm type = Algorithm.Bresenham)
         {
             switch (type)
             {
@@ -101,13 +103,13 @@ namespace GoRogue
                     return Ortho(startX, startY, endX, endY);
 
                 default:
-                    throw new Exception("Unsupported line-drawing algorithm.");  // Should not occur
+                    throw new Exception("Unsupported line-drawing algorithm."); // Should not occur
             }
         }
 
         private static IEnumerable<Point> Bresenham(int startX, int startY, int endX, int endY)
         {
-            bool steep = Math.Abs(endY - startY) > Math.Abs(endX - startX);
+            var steep = Math.Abs(endY - startY) > Math.Abs(endX - startX);
             if (steep)
             {
                 Utility.Swap(ref startX, ref startY);
@@ -120,14 +122,14 @@ namespace GoRogue
                 Utility.Swap(ref startY, ref endY);
             }
 
-            int dx = endX - startX;
-            int dy = Math.Abs(endY - startY);
+            var dx = endX - startX;
+            var dy = Math.Abs(endY - startY);
 
-            int err = dx / 2;
-            int yStep = (startY < endY ? 1 : -1);
-            int y = startY;
+            var err = dx / 2;
+            var yStep = startY < endY ? 1 : -1;
+            var y = startY;
 
-            for (int x = startX; x <= endX; x++)
+            for (var x = startX; x <= endX; x++)
             {
                 if (steep)
                     yield return new Point(y, x);
@@ -145,16 +147,16 @@ namespace GoRogue
 
         private static IEnumerable<Point> DDA(int startX, int startY, int endX, int endY)
         {
-            int dx = endX - startX;
-            int dy = endY - startY;
+            var dx = endX - startX;
+            var dy = endY - startY;
 
-            int nx = Math.Abs(dx);
-            int ny = Math.Abs(dy);
+            var nx = Math.Abs(dx);
+            var ny = Math.Abs(dy);
 
             // Calculate octant value
-            int octant = ((dy < 0) ? 4 : 0) | ((dx < 0) ? 2 : 0) | ((ny > nx) ? 1 : 0);
-            int fraction = 0;
-            int mn = Math.Max(nx, ny);
+            var octant = (dy < 0 ? 4 : 0) | (dx < 0 ? 2 : 0) | (ny > nx ? 1 : 0);
+            var fraction = 0;
+            var mn = Math.Max(nx, ny);
 
             int move;
 
@@ -167,10 +169,10 @@ namespace GoRogue
             if (ny == 0)
             {
                 if (dx > 0)
-                    for (int x = startX; x <= endX; x++)
+                    for (var x = startX; x <= endX; x++)
                         yield return new Point(x, startY);
                 else
-                    for (int x = startX; x >= endX; x--)
+                    for (var x = startX; x >= endX; x--)
                         yield return new Point(x, startY);
 
                 yield break;
@@ -179,10 +181,10 @@ namespace GoRogue
             if (nx == 0)
             {
                 if (dy > 0)
-                    for (int y = startY; y <= endY; y++)
+                    for (var y = startY; y <= endY; y++)
                         yield return new Point(startX, y);
                 else
-                    for (int y = startY; y >= endY; y--)
+                    for (var y = startY; y >= endY; y--)
                         yield return new Point(startX, y);
 
                 yield break;
@@ -192,49 +194,49 @@ namespace GoRogue
             {
                 case 0: // +x, +y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary <= endX; primary++, fraction += move)
+                    for (var primary = startX; primary <= endX; primary++, fraction += move)
                         yield return new Point(primary, startY + ((fraction + ModifierY) >> 16));
                     break;
 
                 case 1:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary <= endY; primary++, fraction += move)
+                    for (var primary = startY; primary <= endY; primary++, fraction += move)
                         yield return new Point(startX + ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 2: // -x, +y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary >= endX; primary--, fraction += move)
+                    for (var primary = startX; primary >= endX; primary--, fraction += move)
                         yield return new Point(primary, startY + ((fraction + ModifierY) >> 16));
                     break;
 
                 case 3:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary <= endY; primary++, fraction += move)
+                    for (var primary = startY; primary <= endY; primary++, fraction += move)
                         yield return new Point(startX - ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 6: // -x, -y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary >= endX; primary--, fraction += move)
+                    for (var primary = startX; primary >= endX; primary--, fraction += move)
                         yield return new Point(primary, startY - ((fraction + ModifierY) >> 16));
                     break;
 
                 case 7:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary >= endY; primary--, fraction += move)
+                    for (var primary = startY; primary >= endY; primary--, fraction += move)
                         yield return new Point(startX - ((fraction + ModifierX) >> 16), primary);
                     break;
 
                 case 4: // +x, -y
                     move = (ny << 16) / nx;
-                    for (int primary = startX; primary <= endX; primary++, fraction += move)
+                    for (var primary = startX; primary <= endX; primary++, fraction += move)
                         yield return new Point(primary, startY - ((fraction + ModifierY) >> 16));
                     break;
 
                 case 5:
                     move = (nx << 16) / ny;
-                    for (int primary = startY; primary >= endY; primary--, fraction += move)
+                    for (var primary = startY; primary >= endY; primary--, fraction += move)
                         yield return new Point(startX + ((fraction + ModifierX) >> 16), primary);
                     break;
             }
@@ -242,17 +244,17 @@ namespace GoRogue
 
         private static IEnumerable<Point> Ortho(int startX, int startY, int endX, int endY)
         {
-            int dx = endX - startX;
-            int dy = endY - startY;
+            var dx = endX - startX;
+            var dy = endY - startY;
 
-            int nx = Math.Abs(dx);
-            int ny = Math.Abs(dy);
+            var nx = Math.Abs(dx);
+            var ny = Math.Abs(dy);
 
-            int signX = (dx > 0) ? 1 : -1;
-            int signY = (dy > 0) ? 1 : -1;
+            var signX = dx > 0 ? 1 : -1;
+            var signY = dy > 0 ? 1 : -1;
 
-            int workX = startX;
-            int workY = startY;
+            var workX = startX;
+            var workY = startY;
 
             yield return new Point(startX, startY);
 

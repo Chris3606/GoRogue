@@ -9,7 +9,7 @@ namespace GoRogue.PerformanceTests
 
         //public MapGenDefaultAlgorithms()
         //{
-            //_generator = new Generator(40, 50);
+        //_generator = new Generator(40, 50);
         //}
 
         [Benchmark]
@@ -22,5 +22,4 @@ namespace GoRogue.PerformanceTests
             return generator.Context;
         }
     }
-    
 }

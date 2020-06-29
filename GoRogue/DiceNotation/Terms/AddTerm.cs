@@ -34,7 +34,7 @@ namespace GoRogue.DiceNotation.Terms
         /// Adds its two terms together, evaluating those two terms as necessary.
         /// </summary>
         /// <param name="rng">The rng to use, passed to other terms.</param>
-        /// <returns>The result of adding <see cref="Term1"/> and <see cref="Term2"/>.</returns>
+        /// <returns>The result of adding <see cref="Term1" /> and <see cref="Term2" />.</returns>
         public int GetResult(IGenerator rng) => Term1.GetResult(rng) + Term2.GetResult(rng);
 
         /// <summary>
@@ -42,6 +42,5 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <returns>A parenthesized string representing the term.</returns>
         public override string ToString() => $"({Term1}+{Term2})";
-
     }
 }

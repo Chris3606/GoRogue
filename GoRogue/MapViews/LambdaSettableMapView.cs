@@ -7,11 +7,11 @@ namespace GoRogue.MapViews
     /// <summary>
     /// Class designed to make implementing simple ISettableMapViews more convenient, by providing the
     /// get/set functionality via a function that is passed in at construction. For a version that
-    /// implements <see cref="IMapView{T}"/> as opposed to <see cref="ISettableMapView{T}"/>, see
-    /// <see cref="LambdaMapView{T}"/>.
+    /// implements <see cref="IMapView{T}" /> as opposed to <see cref="ISettableMapView{T}" />, see
+    /// <see cref="LambdaMapView{T}" />.
     /// </summary>
     /// <remarks>
-    /// See <see cref="LambdaMapView{T}"/>.  Identical in nature, but takes both get and set functionality
+    /// See <see cref="LambdaMapView{T}" />.  Identical in nature, but takes both get and set functionality
     /// via functions.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
@@ -41,7 +41,8 @@ namespace GoRogue.MapViews
         /// position to which it was set.
         /// </param>
         public LambdaSettableMapView(int width, int height, Func<Point, T> valueGetter, Action<Point, T> valueSetter)
-            : this(() => width, () => height, valueGetter, valueSetter) { }
+            : this(() => width, () => height, valueGetter, valueSetter)
+        { }
 
         /// <summary>
         /// Constructor. Takes functions that retrieve the width and height of the map, and the
@@ -50,7 +51,7 @@ namespace GoRogue.MapViews
         /// <remarks>
         /// This constructor is useful if the width and height of the map being represented may
         /// change -- one can provide functions that retrieve the width and height of the map being
-        /// represented, and these functions will be called any time the <see cref="Width"/> and <see cref="Height"/>
+        /// represented, and these functions will be called any time the <see cref="Width" /> and <see cref="Height" />
         /// properties are retrieved.
         /// </remarks>
         /// <param name="widthGetter">
@@ -66,7 +67,8 @@ namespace GoRogue.MapViews
         /// A function/lambda that updates the map being represented accordingly, given a type T and
         /// position to which it was set.
         /// </param>
-        public LambdaSettableMapView(Func<int> widthGetter, Func<int> heightGetter, Func<Point, T> valueGetter, Action<Point, T> valueSetter)
+        public LambdaSettableMapView(Func<int> widthGetter, Func<int> heightGetter, Func<Point, T> valueGetter,
+                                     Action<Point, T> valueSetter)
         {
             _widthGetter = widthGetter;
             _heightGetter = heightGetter;
@@ -74,10 +76,10 @@ namespace GoRogue.MapViews
             _valueSetter = valueSetter;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Height => _heightGetter();
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Width => _widthGetter();
 
         /// <summary>
@@ -134,7 +136,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -145,7 +147,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the LambdaSettableMapView.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the LambdaSettableMapView, using the function specified to turn elements into
@@ -153,7 +156,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -165,6 +168,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the LambdaSettableMapView.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

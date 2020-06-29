@@ -6,17 +6,11 @@ using SadRogue.Primitives;
 namespace GoRogue
 {
     /// <summary>
-    /// Read-only interface of the <see cref="FOV"/> class.
+    /// Read-only interface of the <see cref="FOV" /> class.
     /// </summary>
     [PublicAPI]
     public interface IReadOnlyFOV : IMapView<double>
     {
-        /// <summary>
-        /// Returns a read-only representation of the field of view.
-        /// </summary>
-        /// <returns>This FOV object, as an <see cref="IReadOnlyFOV"/> instance.</returns>
-        public IReadOnlyFOV AsReadOnly();
-
         /// <summary>
         /// A view of the calculation results in boolean form, where true indicates a location is in
         /// field of view, and false indicates it is not.
@@ -39,5 +33,11 @@ namespace GoRogue
         /// WERE in field of view after the previous time Calculate was called.
         /// </summary>
         IEnumerable<Point> NewlyUnseen { get; }
+
+        /// <summary>
+        /// Returns a read-only representation of the field of view.
+        /// </summary>
+        /// <returns>This FOV object, as an <see cref="IReadOnlyFOV" /> instance.</returns>
+        public IReadOnlyFOV AsReadOnly();
     }
 }

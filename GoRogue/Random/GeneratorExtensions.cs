@@ -5,7 +5,7 @@ using Troschuetz.Random;
 namespace GoRogue.Random
 {
     /// <summary>
-    /// Class containing some extension methods for <see cref="IGenerator"/> instances.
+    /// Class containing some extension methods for <see cref="IGenerator" /> instances.
     /// </summary>
     [PublicAPI]
     public static class GeneratorExtensions
@@ -19,7 +19,8 @@ namespace GoRogue.Random
         public static bool PercentageCheck(this IGenerator rng, ushort percentage)
         {
             if (percentage > 100)
-                throw new ArgumentException($"Percentage given to {nameof(PercentageCheck)} must be in range [0, 100].", nameof(percentage));
+                throw new ArgumentException($"Percentage given to {nameof(PercentageCheck)} must be in range [0, 100].",
+                    nameof(percentage));
 
             return rng.Next(1, 101) <= percentage;
         }

@@ -6,7 +6,7 @@ namespace GoRogue.MapViews
 {
     /// <summary>
     /// Map view class capable of taking complex data and providing a simpler view of it. For a
-    /// version that provides "set" functionality, see <see cref="SettableTranslationMap{T1, T2}"/>.
+    /// version that provides "set" functionality, see <see cref="SettableTranslationMap{T1, T2}" />.
     /// </summary>
     /// <remarks>
     /// Many GoRogue algorithms work on a IMapView of a simple data type, which is likely to be a
@@ -17,9 +17,8 @@ namespace GoRogue.MapViews
     /// if you need full access to the underlying data for context, in order to present a simplified
     /// view of your data to an algorithm without having to create the large amount of duplicate code
     /// associated with multiple ISettableMapView instances that all extract data from a Cell or Tile class.
-    /// 
     /// If your TranslateGet implementation is simple, or you do not want to create a full subclass, you should
-    /// look at <see cref="LambdaTranslationMap{T1, T2}"/> instead.
+    /// look at <see cref="LambdaTranslationMap{T1, T2}" /> instead.
     /// </remarks>
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
@@ -49,7 +48,7 @@ namespace GoRogue.MapViews
 
         /// <summary>
         /// Given an 1D-array-style index, determines the position associated with that index, and
-        /// returns the "value" associated with that location.  This function calls <see cref="this[Point]"/>,
+        /// returns the "value" associated with that location.  This function calls <see cref="this[Point]" />,
         /// so override that indexer to change functionality.
         /// </summary>
         /// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
@@ -90,7 +89,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -101,7 +100,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the TranslationMap.</returns>
-        public string ToString(Func<T2, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T2, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the map view, using the function specified to turn elements into
@@ -109,7 +109,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -121,21 +121,23 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the TranslationMap.</returns>
-        public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T2, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
 
         /// <summary>
         /// Translates your map data into the view type using just the map data value itself. If you need
-        /// the location as well to perform the translation, implement <see cref="TranslateGet(Point, T1)"/>
+        /// the location as well to perform the translation, implement <see cref="TranslateGet(Point, T1)" />
         /// instead.
         /// </summary>
         /// <param name="value">The data value from your map.</param>
         /// <returns>A value of the mapped data type</returns>
         protected virtual T2 TranslateGet(T1 value) =>
-            throw new NotSupportedException($"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
+            throw new NotSupportedException(
+                $"{nameof(TranslateGet)}(T1) was not implemented, and {nameof(TranslateGet)}(Point, T1) was not re-implemented.  One of these two functions must be implemented.");
 
         /// <summary>
         /// Translates your map data into the view type using the position and the map data value. If
-        /// you need only the data value to perform the translation, implement <see cref="TranslateGet(T1)"/>
+        /// you need only the data value to perform the translation, implement <see cref="TranslateGet(T1)" />
         /// instead.
         /// </summary>
         /// <param name="position">The position of the given data value in your map.</param>

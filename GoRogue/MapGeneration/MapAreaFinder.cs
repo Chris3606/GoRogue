@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration
     /// area of the map.
     /// </summary>
     /// <remarks>
-    /// The class takes in an <see cref="IMapView{Boolean}"/>, where a value of true for a given position indicates it
+    /// The class takes in an <see cref="IMapView{T}" />, where a value of true for a given position indicates it
     /// should be part of a map area, and false indicates it should not be part of any map area. In a
     /// classic roguelike dungeon example, this might be a walkability map where floors return a
     /// value of true and walls a value of false.
@@ -19,6 +19,8 @@ namespace GoRogue.MapGeneration
     [PublicAPI]
     public class MapAreaFinder
     {
+        private bool[,]? _visited;
+
         /// <summary>
         /// The method used for determining connectivity of the grid.
         /// </summary>
@@ -28,8 +30,6 @@ namespace GoRogue.MapGeneration
         /// Map view indicating which cells should be considered part of a map area and which should not.
         /// </summary>
         public IMapView<bool> Map;
-
-        private bool[,]? _visited;
 
         /// <summary>
         /// Constructor.
@@ -47,7 +47,7 @@ namespace GoRogue.MapGeneration
 
         /// <summary>
         /// Convenience function that creates a MapAreaFinder and returns the result of that
-        /// instances <see cref="MapAreas"/> function. Intended to be used for cases in which the area finder
+        /// instances <see cref="MapAreas" /> function. Intended to be used for cases in which the area finder
         /// will never be re-used.
         /// </summary>
         /// <param name="map">
@@ -72,14 +72,14 @@ namespace GoRogue.MapGeneration
             else
                 Array.Clear(_visited, 0, _visited.Length);
 
-            for (int x = 0; x < Map.Width; x++)
-                for (int y = 0; y < Map.Height; y++)
-                {
-                    var area = Visit(new Point(x, y));
+            for (var x = 0; x < Map.Width; x++)
+            for (var y = 0; y < Map.Height; y++)
+            {
+                var area = Visit(new Point(x, y));
 
-                    if (area != null && area.Count != 0)
-                        yield return area;
-                }
+                if (area != null && area.Count != 0)
+                    yield return area;
+            }
         }
 
         private Area? Visit(Point position)
@@ -95,7 +95,8 @@ namespace GoRogue.MapGeneration
             while (stack.Count != 0)
             {
                 position = stack.Pop();
-                if (_visited![position.X, position.Y] || !Map[position]) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
+                if (_visited![position.X, position.Y] || !Map[position]
+                ) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
                     continue;
 
                 area.Add(position);
@@ -103,7 +104,8 @@ namespace GoRogue.MapGeneration
 
                 foreach (var c in AdjacencyMethod.Neighbors(position))
                 {
-                    if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height) // Out of bounds, thus not actually a neighbor
+                    if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height
+                    ) // Out of bounds, thus not actually a neighbor
                         continue;
 
                     if (Map[c] && !_visited[c.X, c.Y])

@@ -16,35 +16,27 @@ namespace GoRogue
     /// field of view (including options for an infinite-radius field of view).  As well, for
     /// non-infinite size fields of view, the result contains built-in linear distance falloff for
     /// the sake of creating lighting/color/fidelity differences based on distance from the center.
-    ///
-    /// Like most GoRogue algorithms, FOV takes as a construction parameter an IMapView representing the map. 
-    /// Specifically, it takes an <see cref="IMapView{T}"/>, where true indicates that a tile should be
+    /// Like most GoRogue algorithms, FOV takes as a construction parameter an IMapView representing the map.
+    /// Specifically, it takes an <see cref="IMapView{T}" />, where true indicates that a tile should be
     /// considered transparent, eg. not blocking to line of sight, and false indicates that a tile should be
     /// considered opaque, eg. blocking to line of sight.
-    ///
     /// The field of view can then be calculated by calling one of the various Calculate overloads.
-    ///
     /// The result of the calculation is exposed in two different forms.  First, the values are exposed to you
-    /// via indexers -- the FOV class itself implements <see cref="IMapView{Double}"/>, where a value of 1.0
+    /// via indexers -- the FOV class itself implements <see cref="IMapView{Double}" />, where a value of 1.0
     /// represents the center of the field of view calculation, and 0.0 indicates a location that is not inside
     /// the resulting field of view at all.  Values in between are representative of linear falloff based on
     /// distance from the source.
-    /// 
     /// Alternatively, if the distance from the source is irrelevant, FOV also provides the result of the calculation
-    /// via <see cref="BooleanFOV"/>, which is an <see cref="IMapView{Boolean}"/> where a value of true indicates
+    /// via <see cref="BooleanFOV" />, which is an <see cref="IMapView{Boolean}" /> where a value of true indicates
     /// that a location is within field of view, and a value of false indicates it is outside of the field of view.
     /// </remarks>
     [PublicAPI]
     public class FOV : IReadOnlyFOV
     {
+        private readonly IMapView<bool> _fovMap;
         private HashSet<Point> _currentFOV;
         private double[,] _light;
         private HashSet<Point> _previousFOV;
-
-        private readonly IMapView<bool> _fovMap;
-
-        /// <inheritdoc/>
-        public IMapView<bool> BooleanFOV { get; private set; }
 
         /// <summary>
         /// Constructor.
@@ -64,19 +56,22 @@ namespace GoRogue
             _previousFOV = new HashSet<Point>();
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
+        public IMapView<bool> BooleanFOV { get; private set; }
+
+        /// <inheritdoc />
         public IEnumerable<Point> CurrentFOV => _currentFOV;
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Height => _fovMap.Height;
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IEnumerable<Point> NewlySeen => _currentFOV.Where(pos => !_previousFOV.Contains(pos));
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Width => _fovMap.Width;
 
         /// <summary>
@@ -101,7 +96,7 @@ namespace GoRogue
         /// <returns>The field of view value for the given position.</returns>
         public double this[int x, int y] => _light[x, y];
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public IReadOnlyFOV AsReadOnly() => this;
 
         // Note: since the values aren't compile-time constants, we have to do it this way (with overloads,
@@ -110,7 +105,7 @@ namespace GoRogue
         /// <summary>
         /// Calculates FOV given an origin point and a radius. If no radius is specified, simply
         /// calculates with a radius of maximum integer value, which is effectively infinite. Radius
-        /// is computed as a circle around the source (type <see cref="Radius.Circle"/>).
+        /// is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
         /// <param name="startX">Coordinate x-value of the origin.</param>
         /// <param name="startY">Coordinate y-value of the origin.</param>
@@ -118,19 +113,21 @@ namespace GoRogue
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
         /// </param>
-        public void Calculate(int startX, int startY, double radius = double.MaxValue) => Calculate(startX, startY, radius, Radius.Circle);
+        public void Calculate(int startX, int startY, double radius = double.MaxValue)
+            => Calculate(startX, startY, radius, Radius.Circle);
 
         /// <summary>
         /// Calculates FOV given an origin point and a radius. If no radius is specified,
         /// simply calculates with a radius of maximum integer value, which is effectively infinite.
-        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle"/>).
+        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
         /// <param name="start">Position of origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
         /// </param>
-        public void Calculate(Point start, double radius = double.MaxValue) => Calculate(start.X, start.Y, radius, Radius.Circle);
+        public void Calculate(Point start, double radius = double.MaxValue)
+            => Calculate(start.X, start.Y, radius, Radius.Circle);
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, and radius shape.
@@ -142,12 +139,12 @@ namespace GoRogue
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance"/>, eg. <see cref="Radius"/>).
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
         public void Calculate(int startX, int startY, double radius, Distance distanceCalc)
         {
             radius = Math.Max(1, radius);
-            double decay = 1.0 / (radius + 1);
+            var decay = 1.0 / (radius + 1);
 
             _previousFOV = _currentFOV;
             _currentFOV = new HashSet<Point>();
@@ -156,10 +153,12 @@ namespace GoRogue
             _light[startX, startY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(startX, startY));
 
-            foreach (Direction d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
+            foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
             {
-                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc);
-                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc);
+                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, _light, _currentFOV,
+                    _fovMap, distanceCalc);
+                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, _light, _currentFOV,
+                    _fovMap, distanceCalc);
             }
         }
 
@@ -172,13 +171,14 @@ namespace GoRogue
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance"/>, eg. <see cref="Radius"/>).
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
-        public void Calculate(Point start, double radius, Distance distanceCalc) => Calculate(start.X, start.Y, radius, distanceCalc);
+        public void Calculate(Point start, double radius, Distance distanceCalc)
+            => Calculate(start.X, start.Y, radius, distanceCalc);
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle"/> and <paramref name="span"/>.  The resulting field of view,
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
         /// if unobstructed, will be a cone defined by the angle and span given.
         /// </summary>
         /// <param name="startX">Coordinate x-value of the origin.</param>
@@ -188,7 +188,7 @@ namespace GoRogue
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance"/>, eg. <see cref="Radius"/>).
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -196,14 +196,15 @@ namespace GoRogue
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="angle"/> / 2 degrees are included on either side of the cone's center line.
+        /// <paramref name="angle" /> / 2 degrees are included on either side of the cone's center line.
         /// </param>
         public void Calculate(int startX, int startY, double radius, Distance distanceCalc, double angle, double span)
         {
             radius = Math.Max(1, radius);
-            double decay = 1.0 / (radius + 1);
+            var decay = 1.0 / (radius + 1);
 
-            angle = ((angle > 360.0 || angle < 0) ? Math.IEEERemainder(angle, 360.0) : angle) * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
+            angle = (angle > 360.0 || angle < 0 ? Math.IEEERemainder(angle, 360.0) : angle) *
+                    SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
             span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
             _previousFOV = _currentFOV;
@@ -213,22 +214,30 @@ namespace GoRogue
             _light[startX, startY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(startX, startY));
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap, distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
         }
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle"/> and <paramref name="span"/>.  The resulting field of view,
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
         /// if unobstructed, will be a cone defined by the angle and span given.
         /// </summary>
         /// <param name="start">Coordinate of the origin.</param>
@@ -237,7 +246,7 @@ namespace GoRogue
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance"/>, eg. <see cref="Radius"/>).
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -245,9 +254,10 @@ namespace GoRogue
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="angle"/> / 2 degrees are included on either side of the span line.
+        /// <paramref name="angle" /> / 2 degrees are included on either side of the span line.
         /// </param>
-        public void Calculate(Point start, double radius, Distance distanceCalc, double angle, double span) => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
+        public void Calculate(Point start, double radius, Distance distanceCalc, double angle, double span)
+            => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
 
         // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
 #pragma warning disable RECS0137
@@ -264,11 +274,11 @@ namespace GoRogue
         {
             string result = "";
 
-            for (int y = 0; y < _fovMap.Height; y++)
+            for (var y = 0; y < _fovMap.Height; y++)
             {
-                for (int x = 0; x < _fovMap.Width; x++)
+                for (var x = 0; x < _fovMap.Width; x++)
                 {
-                    result += (_light[x, y] > 0.0) ? sourceValue : normal;
+                    result += _light[x, y] > 0.0 ? sourceValue : normal;
                     result += " ";
                 }
 
@@ -284,7 +294,8 @@ namespace GoRogue
         /// </summary>
         /// <param name="decimalPlaces">The number of decimal places to round to.</param>
         /// <returns>A string representation of FOV, rounded to the given number of decimal places.</returns>
-        public string ToString(int decimalPlaces) => _light.ExtendToStringGrid(elementStringifier: obj => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+        public string ToString(int decimalPlaces)
+            => _light.ExtendToStringGrid(elementStringifier: obj => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
         /// Returns a string representation of the map, where any location not in FOV is represented
@@ -294,34 +305,36 @@ namespace GoRogue
         public override string ToString() => ToString();
 
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
-                                     double radius, int startX, int startY, double decay, double[,] lightMap, HashSet<Point> fovSet,
-                                     IMapView<bool> map, Distance distanceStrategy)
+                                       double radius, int startX, int startY, double decay, double[,] lightMap,
+                                       HashSet<Point> fovSet,
+                                       IMapView<bool> map, Distance distanceStrategy)
         {
             double newStart = 0;
             if (start < end)
                 return;
 
-            bool blocked = false;
-            for (int distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
+            var blocked = false;
+            for (var distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
             {
-                int deltaY = -distance;
-                for (int deltaX = -distance; deltaX <= 0; deltaX++)
+                var deltaY = -distance;
+                for (var deltaX = -distance; deltaX <= 0; deltaX++)
                 {
-                    int currentX = startX + deltaX * xx + deltaY * xy;
-                    int currentY = startY + deltaX * yx + deltaY * yy;
+                    var currentX = startX + deltaX * xx + deltaY * xy;
+                    var currentY = startY + deltaX * yx + deltaY * yy;
                     double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
                     double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                    if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) || start < rightSlope)
+                    if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) ||
+                        start < rightSlope)
                         continue;
                     if (end > leftSlope)
                         break;
 
-                    double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
+                    var deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
                     // If within lightable area, light if needed
                     if (deltaRadius <= radius)
                     {
-                        double bright = 1 - decay * deltaRadius;
+                        var bright = 1 - decay * deltaRadius;
                         lightMap[currentX, currentY] = bright;
                         if (bright > 0.0)
                             fovSet.Add(new Point(currentX, currentY));
@@ -342,43 +355,47 @@ namespace GoRogue
                         if (map[currentX, currentY] || !(distance < radius)) continue;
 
                         blocked = true;
-                        ShadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy);
+                        ShadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay,
+                            lightMap, fovSet, map, distanceStrategy);
                         newStart = rightSlope;
                     }
                 }
             }
         }
 
-        private static void ShadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy, double radius, int startX, int startY, double decay,
-                                                   double[,] lightMap, HashSet<Point> fovSet, IMapView<bool> map, Distance distanceStrategy, double angle, double span)
+        private static void ShadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy,
+                                              double radius, int startX, int startY, double decay,
+                                              double[,] lightMap, HashSet<Point> fovSet, IMapView<bool> map,
+                                              Distance distanceStrategy, double angle, double span)
         {
             double newStart = 0;
             if (start < end)
                 return;
 
-            bool blocked = false;
-            for (int distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
+            var blocked = false;
+            for (var distance = row; distance <= radius && distance < map.Width + map.Height && !blocked; distance++)
             {
-                int deltaY = -distance;
-                for (int deltaX = -distance; deltaX <= 0; deltaX++)
+                var deltaY = -distance;
+                for (var deltaX = -distance; deltaX <= 0; deltaX++)
                 {
-                    int currentX = startX + deltaX * xx + deltaY * xy;
-                    int currentY = startY + deltaX * yx + deltaY * yy;
+                    var currentX = startX + deltaX * xx + deltaY * xy;
+                    var currentY = startY + deltaX * yx + deltaY * yy;
                     double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
                     double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                    if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) || start < rightSlope)
+                    if (!(currentX >= 0 && currentY >= 0 && currentX < map.Width && currentY < map.Height) ||
+                        start < rightSlope)
                         continue;
                     if (end > leftSlope)
                         break;
 
-                    double deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
-                    double at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - startY, currentX - startX));
+                    var deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
+                    var at2 = Math.Abs(angle - MathHelpers.ScaledAtan2Approx(currentY - startY, currentX - startX));
 
                     // Check if within lightable area, light if needed
                     if (deltaRadius <= radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5))
                     {
-                        double bright = 1 - decay * deltaRadius;
+                        var bright = 1 - decay * deltaRadius;
                         lightMap[currentX, currentY] = bright;
 
                         if (bright > 0.0)
@@ -398,7 +415,8 @@ namespace GoRogue
                     else if (!map[currentX, currentY] && distance < radius) // Wall within line of sight
                     {
                         blocked = true;
-                        ShadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay, lightMap, fovSet, map, distanceStrategy, angle, span);
+                        ShadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay,
+                            lightMap, fovSet, map, distanceStrategy, angle, span);
                         newStart = rightSlope;
                     }
                 }

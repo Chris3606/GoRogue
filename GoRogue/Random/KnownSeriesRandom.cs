@@ -17,16 +17,16 @@ namespace GoRogue.Random
     [PublicAPI]
     public class KnownSeriesGenerator : IGenerator
     {
-        private int _boolIndex;
         private readonly List<bool> _boolSeries;
-        private int _byteIndex;
         private readonly List<byte> _byteSeries;
-        private int _doubleIndex;
         private readonly List<double> _doubleSeries;
-        private int _intIndex;
         private readonly List<int> _intSeries;
-        private int _uintIndex;
         private readonly List<uint> _uintSeries;
+        private int _boolIndex;
+        private int _byteIndex;
+        private int _doubleIndex;
+        private int _intIndex;
+        private int _uintIndex;
 
         /// <summary>
         /// Creates a new known series generator, with parameters to indicate which series to use for
@@ -34,7 +34,9 @@ namespace GoRogue.Random
         /// specified, no values of that type may be returned, and functions that try to return a
         /// value of that type will throw an exception.
         /// </summary>
-        public KnownSeriesGenerator(IEnumerable<int>? intSeries = null, IEnumerable<uint>? uintSeries = null, IEnumerable<double>? doubleSeries = null, IEnumerable<bool>? boolSeries = null, IEnumerable<byte>? byteSeries = null)
+        public KnownSeriesGenerator(IEnumerable<int>? intSeries = null, IEnumerable<uint>? uintSeries = null,
+                                    IEnumerable<double>? doubleSeries = null, IEnumerable<bool>? boolSeries = null,
+                                    IEnumerable<byte>? byteSeries = null)
         {
             _intSeries = intSeries == null ? new List<int>() : intSeries.ToList();
 
@@ -60,15 +62,15 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Gets the next number in the underlying int series. If the value is less than 0 or greater
-        /// than/equal to <paramref name="maxValue"/>, throws an exception.
+        /// than/equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
         /// <returns>The appropriate number from the series.</returns>
         public int Next(int maxValue) => Next(0, maxValue);
 
         /// <summary>
-        /// Gets the next number in the underlying series. If the value is less than <paramref name="minValue"/> or
-        /// greater than/equal to <paramref name="maxValue"/>, throws an exception.
+        /// Gets the next number in the underlying series. If the value is less than <paramref name="minValue" /> or
+        /// greater than/equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="minValue">Minimum allowable number that can be returned.</param>
         /// <param name="maxValue">Maximum allowable number that can be returned (exclusive).</param>
@@ -76,7 +78,7 @@ namespace GoRogue.Random
         public int Next(int minValue, int maxValue) => ReturnIfRange(minValue, maxValue, _intSeries, ref _intIndex);
 
         /// <summary>
-        /// Gets the next integer in the underlying series. If the integer is equal to <see cref="int.MaxValue"/>,
+        /// Gets the next integer in the underlying series. If the integer is equal to <see cref="int.MaxValue" />,
         /// throws an exception.
         /// </summary>
         /// <returns>The next integer in the underlying series.</returns>
@@ -89,12 +91,12 @@ namespace GoRogue.Random
         public bool NextBoolean() => ReturnValueFrom(_boolSeries, ref _boolIndex);
 
         /// <summary>
-		/// Fills the specified buffer with values from the underlying byte series.
-		/// </summary>
-		/// <param name="buffer">Buffer to fill.</param>
-		public void NextBytes(byte[] buffer)
+        /// Fills the specified buffer with values from the underlying byte series.
+        /// </summary>
+        /// <param name="buffer">Buffer to fill.</param>
+        public void NextBytes(byte[] buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = ReturnValueFrom(_byteSeries, ref _byteIndex);
         }
 
@@ -104,7 +106,7 @@ namespace GoRogue.Random
         /// <param name="buffer">Buffer to fill.</param>
         public void NextBytes(Span<byte> buffer)
         {
-            for (int i = 0; i < buffer.Length; i++)
+            for (var i = 0; i < buffer.Length; i++)
                 buffer[i] = ReturnValueFrom(_byteSeries, ref _byteIndex);
         }
 
@@ -117,20 +119,21 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Returns the next double in the underlying series. If the double is less than 0.0 or
-        /// greater than/equal to <paramref name="maxValue"/>, throws an exception.
+        /// greater than/equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="maxValue">The maximum value for the returned value, exclusive.</param>
         /// <returns>The next double in the underlying series.</returns>
         public double NextDouble(double maxValue) => NextDouble(0, maxValue);
 
         /// <summary>
-        /// Returns the next double in the underlying series. If the double is less than <paramref name="minValue"/>
-        /// or greater than/equal to <paramref name="maxValue"/>, throws an exception.
+        /// Returns the next double in the underlying series. If the double is less than <paramref name="minValue" />
+        /// or greater than/equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="minValue">Minimum value for the returned number, inclusive.</param>
         /// <param name="maxValue">Maximum value for the returned number, exclusive.</param>
         /// <returns>The next double in the underlying series.</returns>
-        public double NextDouble(double minValue, double maxValue) => ReturnIfRange(minValue, maxValue, _doubleSeries, ref _doubleIndex);
+        public double NextDouble(double minValue, double maxValue)
+            => ReturnIfRange(minValue, maxValue, _doubleSeries, ref _doubleIndex);
 
         /// <summary>
         /// Returns the next integer in the underlying series. If the value is less than 0, throws an exception.
@@ -140,14 +143,14 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is equal to
-        /// <see cref="uint.MaxValue"/>, throws an exception.
+        /// <see cref="uint.MaxValue" />, throws an exception.
         /// </summary>
         /// <returns>The next unsigned integer in the underlying series.</returns>
         public uint NextUInt() => NextUInt(0, uint.MaxValue);
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is greater than
-        /// or equal to <paramref name="maxValue"/>, throws an exception.
+        /// or equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
         /// <returns>The next unsigned integer in the underlying series.</returns>
@@ -155,16 +158,17 @@ namespace GoRogue.Random
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is less than
-        /// <paramref name="minValue"/>, or greater than/equal to <paramref name="maxValue"/>, throws an exception.
+        /// <paramref name="minValue" />, or greater than/equal to <paramref name="maxValue" />, throws an exception.
         /// </summary>
         /// <param name="minValue">The minimum value for the returned number, inclusive.</param>
         /// <param name="maxValue">The maximum value for the returned number, exclusive.</param>
         /// <returns>The next unsigned integer in the underlying series.</returns>
-        public uint NextUInt(uint minValue, uint maxValue) => ReturnIfRange(minValue, maxValue, _uintSeries, ref _uintIndex);
+        public uint NextUInt(uint minValue, uint maxValue)
+            => ReturnIfRange(minValue, maxValue, _uintSeries, ref _uintIndex);
 
         /// <summary>
         /// Returns the next unsigned integer in the underlying series. If the value is equal to
-        /// <see cref="uint.MaxValue"/>, throws an exception.
+        /// <see cref="uint.MaxValue" />, throws an exception.
         /// </summary>
         /// <returns>The next unsigned integer in the underlying series.</returns>
         public uint NextUIntExclusiveMaxValue() => NextUInt();
@@ -173,7 +177,8 @@ namespace GoRogue.Random
         /// Returns the next unsigned integer in the underlying series.
         /// </summary>
         /// <returns>The next unsigned integer in the underlying series.</returns>
-        public uint NextUIntInclusiveMaxValue() => ReturnIfRangeInclusive((uint)0, uint.MaxValue, _uintSeries, ref _uintIndex);
+        public uint NextUIntInclusiveMaxValue()
+            => ReturnIfRangeInclusive((uint)0, uint.MaxValue, _uintSeries, ref _uintIndex);
 
         /// <summary>
         /// Resets the random number generator, such that it starts returning values from the
@@ -199,9 +204,10 @@ namespace GoRogue.Random
         /// <returns>True, since the reset cannot fail.</returns>
         public bool Reset(uint seed) => Reset();
 
-        private static T ReturnIfRange<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
+        private static T ReturnIfRange<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex)
+            where T : IComparable<T>
         {
-            T value = ReturnValueFrom(series, ref seriesIndex);
+            var value = ReturnValueFrom(series, ref seriesIndex);
 
             if (minValue.CompareTo(value) < 0)
                 throw new ArgumentException("Value returned is less than minimum value.");
@@ -212,9 +218,10 @@ namespace GoRogue.Random
             return value;
         }
 
-        private static T ReturnIfRangeInclusive<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex) where T : IComparable<T>
+        private static T ReturnIfRangeInclusive<T>(T minValue, T maxValue, List<T> series, ref int seriesIndex)
+            where T : IComparable<T>
         {
-            T value = ReturnValueFrom(series, ref seriesIndex);
+            var value = ReturnValueFrom(series, ref seriesIndex);
 
             if (minValue.CompareTo(value) < 0)
                 throw new ArgumentException("Value returned is less than minimum value.");
@@ -228,9 +235,10 @@ namespace GoRogue.Random
         private static T ReturnValueFrom<T>(List<T> series, ref int seriesIndex)
         {
             if (series.Count == 0)
-                throw new NotSupportedException("Tried to get value of type " + typeof(T).Name + ", but the KnownSeriesGenerator was not given any values of that type.");
+                throw new NotSupportedException("Tried to get value of type " + typeof(T).Name +
+                                                ", but the KnownSeriesGenerator was not given any values of that type.");
 
-            T value = series[seriesIndex];
+            var value = series[seriesIndex];
             seriesIndex = MathHelpers.WrapAround(seriesIndex + 1, series.Count);
 
             return value;

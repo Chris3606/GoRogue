@@ -2,11 +2,8 @@
 
 namespace GoRogue.PerformanceTests
 {
-	internal static class Program
-	{
-		private static void Main()
-		{
-            BenchmarkRunner.Run<MapGenDefaultAlgorithms>();
-        }
-	}
+    internal static class Program
+    {
+        private static void Main() => BenchmarkRunner.Run<MapGenDefaultAlgorithms>();
+    }
 }

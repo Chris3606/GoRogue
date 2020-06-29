@@ -14,8 +14,8 @@ namespace GoRogue.UnitTests
         /// <summary>
         /// Returns the object as a single-element enumerable.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="obj"/>
+        /// <typeparam name="T" />
+        /// <param name="obj" />
         /// <returns>The given object as a single-element IEnumerable</returns>
         public static IEnumerable<T> ToEnumerable<T>(this T obj)
         {
@@ -25,53 +25,55 @@ namespace GoRogue.UnitTests
         /// <summary>
         /// Creates a tuple of each possible pairing of elements in the enumerables.
         /// </summary>
-        /// <typeparam name="T1"/>
-        /// <typeparam name="T2"/>
-        /// <param name="l1"/>
-        /// <param name="l2"/>
+        /// <typeparam name="T1" />
+        /// <typeparam name="T2" />
+        /// <param name="l1" />
+        /// <param name="l2" />
         /// <returns>Tuples containing every possible (unique) pairing of elements between the two enumerables.</returns>
         public static IEnumerable<(T1, T2)> Combinate<T1, T2>(this IEnumerable<T1> l1, IEnumerable<T2> l2)
         {
-            foreach (T1 x in l1)
-            {
-                foreach (T2 y in l2)
-                    yield return (x, y);
-            }
+            foreach (var x in l1)
+            foreach (var y in l2)
+                yield return (x, y);
         }
 
         /// <summary>
-        /// Creates a tuple for each pairing of the tuples with the elements from <paramref name="l2"/>.
+        /// Creates a tuple for each pairing of the tuples with the elements from <paramref name="l2" />.
         /// </summary>
-        /// <typeparam name="T1"/>
-        /// <typeparam name="T2"/>
-        /// <typeparam name="T3"/>
-        /// <param name="tuples"/>
-        /// <param name="l2"/>
-        /// <returns>An enumerable of 3-element tuples that collectively represent every unique pairing of the initial tuples with the new values.</returns>
-        public static IEnumerable<(T1, T2, T3)> Combinate<T1, T2, T3>(this IEnumerable<(T1 i1, T2 i2)> tuples, IEnumerable<T3> l2)
+        /// <typeparam name="T1" />
+        /// <typeparam name="T2" />
+        /// <typeparam name="T3" />
+        /// <param name="tuples" />
+        /// <param name="l2" />
+        /// <returns>
+        /// An enumerable of 3-element tuples that collectively represent every unique pairing of the initial tuples with
+        /// the new values.
+        /// </returns>
+        public static IEnumerable<(T1, T2, T3)> Combinate<T1, T2, T3>(this IEnumerable<(T1 i1, T2 i2)> tuples,
+                                                                      IEnumerable<T3> l2)
         {
-            foreach ((T1 i1, T2 i2) in tuples)
-            {
-                foreach (T3 y in l2)
-                    yield return (i1, i2, y);
-            }
+            foreach (var (i1, i2) in tuples)
+            foreach (var y in l2)
+                yield return (i1, i2, y);
         }
 
         /// <summary>
         /// Creates an enumerable of the input parameters.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="objs"/>Input values to have within the resulting enumerable.
+        /// <typeparam name="T" />
+        /// <param name="objs" />
+        /// Input values to have within the resulting enumerable.
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
 
 
-        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#', char floor = '.', char path = '*')
+        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
+                                                  char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];
             for (var y = 0; y < map.Height; y++)
-                for (var x = 0; x < map.Width; x++)
-                    array[x, y] = map[x, y] ? floor : wall;
+            for (var x = 0; x < map.Width; x++)
+                array[x, y] = map[x, y] ? floor : wall;
 
             foreach (var point in points)
                 array[point.X, point.Y] = path;
@@ -89,7 +91,8 @@ namespace GoRogue.UnitTests
             using var reader = new StreamReader(filePath);
             for (var row = 0; row < map.Height; row++)
             {
-                var line = reader.ReadLine() ?? throw new InvalidOperationException("Couldn't read map: invalid format.");
+                var line = reader.ReadLine() ??
+                           throw new InvalidOperationException("Couldn't read map: invalid format.");
 
                 for (var col = 0; col < map.Width; col++)
                     map[col, row] = line[col] != wallChar;
@@ -98,15 +101,16 @@ namespace GoRogue.UnitTests
 
         public static Tuple<Point, Point> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
         {
-            Point start = Point.None;
-            Point end = Point.None;
+            var start = Point.None;
+            var end = Point.None;
 
             using (var reader = new StreamReader(filePath))
             {
                 var row = 0;
                 while (!reader.EndOfStream)
                 {
-                    var line = reader.ReadLine() ?? throw new InvalidOperationException("Couldn't read map: invalid format.");
+                    var line = reader.ReadLine() ??
+                               throw new InvalidOperationException("Couldn't read map: invalid format.");
 
                     for (var col = 0; col < line.Length; col++)
                     {
@@ -116,6 +120,7 @@ namespace GoRogue.UnitTests
                         if (line[col] == endChar)
                             end = (col, row);
                     }
+
                     row++;
                 }
             }
@@ -127,13 +132,15 @@ namespace GoRogue.UnitTests
     public class IncrementOnlyValue
     {
         private int _value;
+
         public int Value
         {
             get => _value;
             set
             {
                 if (value - _value != 1)
-                    throw new InvalidOperationException($"{nameof(IncrementOnlyValue)} is expected only to have its value incremented by one.  Should have been changed to {value + 1}, but was changed to {_value}.");
+                    throw new InvalidOperationException(
+                        $"{nameof(IncrementOnlyValue)} is expected only to have its value incremented by one.  Should have been changed to {value + 1}, but was changed to {_value}.");
 
                 _value = value;
             }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using GoRogue.MapViews;
 using SadRogue.Primitives;
 
@@ -9,12 +8,9 @@ namespace GoRogue.UnitTests.Mocks
 {
     internal class ResMap : IMapView<double>
     {
-        private IMapView<bool> view;
+        private readonly IMapView<bool> view;
 
-        public ResMap(IMapView<bool> view)
-        {
-            this.view = view;
-        }
+        public ResMap(IMapView<bool> view) => this.view = view;
 
         public int Height => view.Height;
         public int Width => view.Width;
@@ -22,12 +18,13 @@ namespace GoRogue.UnitTests.Mocks
         public double this[int x, int y] => view[x, y] ? 0.0 : 1.0;
         public double this[int index1D] => view[index1D] ? 0.0 : 1.0;
 
-        public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#', char floor = '.', char path = '*')
+        public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
+                                                   char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];
             for (var y = 0; y < map.Height; y++)
-                for (var x = 0; x < map.Width; x++)
-                    array[x, y] = map[x, y] ? floor : wall;
+            for (var x = 0; x < map.Width; x++)
+                array[x, y] = map[x, y] ? floor : wall;
 
             foreach (var point in points)
                 array[point.X, point.Y] = path;
@@ -54,8 +51,8 @@ namespace GoRogue.UnitTests.Mocks
 
         public static Tuple<Point, Point> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
         {
-            Point start = Point.None;
-            Point end = Point.None;
+            var start = Point.None;
+            var end = Point.None;
 
             using (var reader = new StreamReader(filePath))
             {
@@ -72,12 +69,12 @@ namespace GoRogue.UnitTests.Mocks
                         if (line[col] == endChar)
                             end = (col, row);
                     }
+
                     row++;
                 }
             }
 
             return new Tuple<Point, Point>(start, end);
         }
-        
     }
 }

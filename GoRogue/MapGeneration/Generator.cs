@@ -4,23 +4,18 @@ using JetBrains.Annotations;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// Map generator that applies a series of <see cref="GenerationStep"/> instances to a <see cref="GenerationContext"/>
+    /// Map generator that applies a series of <see cref="GenerationStep" /> instances to a <see cref="GenerationContext" />
     /// to generate a map.
     /// </summary>
     [PublicAPI]
     public class Generator
     {
-        /// <summary>
-        /// Context for the map this <see cref="Generator"/> is generating.
-        /// </summary>
-        public readonly GenerationContext Context;
-
         private readonly List<GenerationStep> _generationSteps;
 
         /// <summary>
-        /// Steps used to generate the map.
+        /// Context for the map this <see cref="Generator" /> is generating.
         /// </summary>
-        public IReadOnlyList<GenerationStep> GenerationSteps => _generationSteps.AsReadOnly();
+        public readonly GenerationContext Context;
 
         /// <summary>
         /// Creates a generator that will be used to generate a map of the given width/height.
@@ -32,6 +27,11 @@ namespace GoRogue.MapGeneration
             Context = new GenerationContext(width, height);
             _generationSteps = new List<GenerationStep>();
         }
+
+        /// <summary>
+        /// Steps used to generate the map.
+        /// </summary>
+        public IReadOnlyList<GenerationStep> GenerationSteps => _generationSteps.AsReadOnly();
 
         /// <summary>
         /// Adds a component to the context this generator is applying generation steps to.
@@ -75,7 +75,8 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Applies the generation steps added, in the order in which they were added. to the <see cref="Context"/> to generate the map.
+        /// Applies the generation steps added, in the order in which they were added. to the <see cref="Context" /> to generate
+        /// the map.
         /// </summary>
         public void Generate()
         {

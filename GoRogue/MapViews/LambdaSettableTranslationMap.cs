@@ -5,13 +5,13 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// A simple <see cref="SettableTranslationMap{T1, T2}"/> implementation that allows you to provide
+    /// A simple <see cref="SettableTranslationMap{T1, T2}" /> implementation that allows you to provide
     /// functions/lambdas for the translation functions. For a version offering only "get" functionality,
-    /// see <see cref="LambdaTranslationMap{T1, T2}"/>.
+    /// see <see cref="LambdaTranslationMap{T1, T2}" />.
     /// </summary>
     /// <remarks>
     /// If you have a view that simply exposes a property of your underlying data, it
-    /// can be tedious to write a <see cref="SettableTranslationMap{T1, T2}"/> implementation for all of them.
+    /// can be tedious to write a <see cref="SettableTranslationMap{T1, T2}" /> implementation for all of them.
     /// This class simplifies that task by letting you just provide the translation methods as funtions/lambdas
     /// without needing to build the rest of the class infrastructure.
     /// </remarks>
@@ -53,7 +53,8 @@ namespace GoRogue.MapViews
         /// <param name="baseMap">Your underlying map data.</param>
         /// <param name="getter">The TranslateGet implementation.</param>
         /// <param name="setter">The TranslateSet implementation.</param>
-        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, Func<Point, T1, T2> getter, Func<Point, T2, T1> setter)
+        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, Func<Point, T1, T2> getter,
+                                            Func<Point, T2, T1> setter)
             : base(baseMap)
         {
             _getter = getter ?? throw new ArgumentNullException(nameof(getter));
@@ -65,11 +66,12 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="baseMap">Your underlying map data.</param>
         /// <param name="overlay">
-        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap"/>.
+        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap" />.
         /// </param>
         /// <param name="getter">The TranslateGet implementation.</param>
         /// <param name="setter">The TranslateSet implementation.</param>
-        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay, Func<T1, T2> getter, Func<T2, T1> setter)
+        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay,
+                                            Func<T1, T2> getter, Func<T2, T1> setter)
             : this(baseMap, getter, setter) => this.ApplyOverlay(overlay);
 
         /// <summary>
@@ -77,11 +79,12 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="baseMap">Your underlying map data.</param>
         /// <param name="overlay">
-        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap"/>.
+        /// The view data to apply to the map. Must have identical dimensions to <paramref name="baseMap" />.
         /// </param>
         /// <param name="getter">The TranslateGet implementation.</param>
         /// <param name="setter">The TranslateSet implementation.</param>
-        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay, Func<Point, T1, T2> getter, Func<Point, T2, T1> setter)
+        public LambdaSettableTranslationMap(ISettableMapView<T1> baseMap, ISettableMapView<T2> overlay,
+                                            Func<Point, T1, T2> getter, Func<Point, T2, T1> setter)
             : this(baseMap, getter, setter) => this.ApplyOverlay(overlay);
 
         /// <summary>

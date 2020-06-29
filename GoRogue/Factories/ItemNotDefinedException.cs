@@ -5,7 +5,8 @@ using JetBrains.Annotations;
 namespace GoRogue.Factories
 {
     /// <summary>
-    /// Exception thrown by <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/> or <see cref="Factory{TProduced}"/> objects when a blueprint that doesn't exist is used.
+    /// Exception thrown by <see cref="AdvancedFactory{TBlueprintConfig, TProduced}" /> or <see cref="Factory{TProduced}" />
+    /// objects when a blueprint that doesn't exist is used.
     /// </summary>
     [Serializable]
     [PublicAPI]
@@ -30,8 +31,8 @@ namespace GoRogue.Factories
         /// <summary>
         /// Creates an exception based on serialization context.
         /// </summary>
-        /// <param name="info"/>
-        /// <param name="context"/>
+        /// <param name="info" />
+        /// <param name="context" />
         protected ItemNotDefinedException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }

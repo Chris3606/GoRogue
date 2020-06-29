@@ -5,15 +5,14 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Implementation of the <see cref="ISettableMapView{T}"/> interface that uses a
+    /// Implementation of the <see cref="ISettableMapView{T}" /> interface that uses a
     /// 1D array to store data.
     /// </summary>
     /// <remarks>
-    /// An <see cref="ArrayMap{T}"/> can be implicitly converted to its underlying 1D array,
+    /// An <see cref="ArrayMap{T}" /> can be implicitly converted to its underlying 1D array,
     /// which allows exposing that array to code that works with 1D arrays.  Modifications in the array
     /// appear in the map view as well.
-    /// 
-    /// If you need a 2D array instead of 1D, then you should use <see cref="ArrayMap2D{T}"/> instead.
+    /// If you need a 2D array instead of 1D, then you should use <see cref="ArrayMap2D{T}" /> instead.
     /// </remarks>
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
@@ -36,21 +35,44 @@ namespace GoRogue.MapViews
         /// the width of the 2D area represented by that array.
         /// </summary>
         /// <param name="existingArray">Existing 1D array to use as the underlying array.</param>
-        /// <param name="width">The width of the 2D area represented by <paramref name="existingArray"/>.</param>
+        /// <param name="width">The width of the 2D area represented by <paramref name="existingArray" />.</param>
         public ArrayMap(T[] existingArray, int width)
         {
             if (existingArray.Length % width != 0)
-                throw new ArgumentException($"Existing array must have length equal to {nameof(width)}*height.", nameof(existingArray));
+                throw new ArgumentException($"Existing array must have length equal to {nameof(width)}*height.",
+                    nameof(existingArray));
 
             _array = existingArray;
             Width = width;
             Height = existingArray.Length / width;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Performs deep copy of array map.
+        /// </summary>
+        /// <returns>The cloned ArrayMap.</returns>
+        public object Clone()
+        {
+            var newObj = new ArrayMap<T>(Width, Height);
+
+            for (var x = 0; x < Width; x++)
+            for (var y = 0; y < Height; y++)
+                newObj[x, y] = _array[Point.ToIndex(x, y, Width)];
+
+            return newObj;
+        }
+
+        /// <summary>
+        /// Compares the current ArrayMap to the one given.
+        /// </summary>
+        /// <param name="other" />
+        /// <returns>True if the given ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+        public bool Equals(ArrayMap<T>? other) => !(other is null) && _array == other._array;
+
+        /// <inheritdoc />
         public int Height { get; }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public int Width { get; }
 
         // ReSharper disable once InheritdocInvalidUsage
@@ -62,7 +84,7 @@ namespace GoRogue.MapViews
         }
 
         // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public T this[int x, int y]
         {
             get => _array[Point.ToIndex(x, y, Width)];
@@ -70,26 +92,11 @@ namespace GoRogue.MapViews
         }
 
         // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public T this[Point pos]
         {
             get => _array[pos.ToIndex(Width)];
             set => _array[pos.ToIndex(Width)] = value;
-        }
-
-        /// <summary>
-        /// Performs deep copy of array map.
-        /// </summary>
-        /// <returns>The cloned ArrayMap.</returns>
-        public object Clone()
-        {
-            var newObj = new ArrayMap<T>(Width, Height);
-
-            for (int x = 0; x < Width; x++)
-                for (int y = 0; y < Height; y++)
-                    newObj[x, y] = _array[Point.ToIndex(x, y, Width)];
-
-            return newObj;
         }
 
 #pragma warning disable CA2225 // The proper equivalent function is provided, however because the type is [] instead of Array the analyzer cannot determine this properly.
@@ -116,8 +123,11 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Compares the current ArrayMap to the object given.
         /// </summary>
-        /// <param name="obj"/>
-        /// <returns>True if the given object is an ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="obj" />
+        /// <returns>
+        /// True if the given object is an ArrayMap&lt;T&gt; with a reference to the same underlying array, false
+        /// otherwise.
+        /// </returns>
         public override bool Equals(object? obj)
         {
             if (obj is ArrayMap<T> e)
@@ -127,32 +137,31 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
-        /// Compares the current ArrayMap to the one given.
-        /// </summary>
-        /// <param name="other"/>
-        /// <returns>True if the given ArrayMap&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-        public bool Equals(ArrayMap<T>? other) => !(other is null) && _array == other._array;
-
-        /// <summary>
         /// Returns a hash-value for this object.
         /// </summary>
-        /// <returns/>
+        /// <returns />
         public override int GetHashCode() => _array.GetHashCode();
 
         /// <summary>
         /// Compares the two ArrayMap instances.
         /// </summary>
-        /// <param name="lhs"/>
-        /// <param name="rhs"/>
-        /// <returns>True if the two given ArrayMap&lt;T&gt; instances have a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="lhs" />
+        /// <param name="rhs" />
+        /// <returns>
+        /// True if the two given ArrayMap&lt;T&gt; instances have a reference to the same underlying array, false
+        /// otherwise.
+        /// </returns>
         public static bool operator ==(ArrayMap<T>? lhs, ArrayMap<T>? rhs) => lhs?.Equals(rhs) ?? rhs is null;
 
         /// <summary>
         /// Compares the two ArrayMap instances.
         /// </summary>
-        /// <param name="lhs"/>
-        /// <param name="rhs"/>
-        /// <returns>True if the two given ArrayMap&lt;T&gt; instances do NOT have a reference to the same underlying array, false otherwise.</returns>
+        /// <param name="lhs" />
+        /// <param name="rhs" />
+        /// <returns>
+        /// True if the two given ArrayMap&lt;T&gt; instances do NOT have a reference to the same underlying array, false
+        /// otherwise.
+        /// </returns>
         public static bool operator !=(ArrayMap<T>? lhs, ArrayMap<T>? rhs) => !(lhs == rhs);
 
         /// <summary>
@@ -162,7 +171,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map data, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map data, using <paramref name="elementStringifier" />
         /// to determine what string represents which value.
         /// </summary>
         /// <remarks>
@@ -173,7 +182,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the map data.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the ArrayMap, using the function specified to turn elements into
@@ -181,7 +191,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -193,6 +203,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the ArrayMap.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

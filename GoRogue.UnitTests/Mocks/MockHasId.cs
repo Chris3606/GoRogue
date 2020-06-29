@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GoRogue.UnitTests.Mocks
+﻿namespace GoRogue.UnitTests.Mocks
 {
     internal class MyIDImpl : IHasID
     {
-        private static IDGenerator idGen = new IDGenerator();
+        private static readonly IDGenerator idGen = new IDGenerator();
 
         public MyIDImpl(int myInt)
         {
@@ -14,8 +10,9 @@ namespace GoRogue.UnitTests.Mocks
             MyInt = myInt;
         }
 
-        public uint ID { get; private set; }
-        public int MyInt { get; private set; }
+        public int MyInt { get; }
+
+        public uint ID { get; }
 
         public override string ToString() => "Thing " + MyInt;
     }

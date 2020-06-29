@@ -13,8 +13,8 @@ namespace GoRogue.Random
     public static class GlobalRandom
     {
         /// <summary>
-        /// Settable field that specifies what <see cref="IGenerator"/> instance should be considered the default
-        /// RNG. Defaults to an <see cref="XorShift128Generator"/> with a time-dependent value used as a seed.
+        /// Settable field that specifies what <see cref="IGenerator" /> instance should be considered the default
+        /// RNG. Defaults to an <see cref="XorShift128Generator" /> with a time-dependent value used as a seed.
         /// </summary>
         public static IGenerator DefaultRNG = new XorShift128Generator();
     }

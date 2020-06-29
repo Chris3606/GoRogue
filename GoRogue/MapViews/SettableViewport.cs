@@ -4,7 +4,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Similar to <see cref="Viewport{T}"/>, but implements <see cref="ISettableMapView{T}"/>and thus implements
+    /// Similar to <see cref="Viewport{T}" />, but implements <see cref="ISettableMapView{T}" />and thus implements
     /// "set" functionality via relative coordinates.
     /// </summary>
     /// <typeparam name="T">Type being exposed by map view.</typeparam>
@@ -17,13 +17,16 @@ namespace GoRogue.MapViews
         /// <param name="mapView">The map view being represented.</param>
         /// <param name="viewArea">The initial subsection of that map to represent.</param>
         public SettableViewport(ISettableMapView<T> mapView, Rectangle viewArea)
-            : base(mapView, viewArea) { }
+            : base(mapView, viewArea)
+        { }
 
         /// <summary>
         /// Constructor. Takes the map view to represent. The viewport will represent the entire given map view.
         /// </summary>
         /// <param name="mapView">The map view to represent.</param>
-        public SettableViewport(ISettableMapView<T> mapView) : base(mapView) { }
+        public SettableViewport(ISettableMapView<T> mapView)
+            : base(mapView)
+        { }
 
         /// <summary>
         /// The map view that this viewport is exposing values from.
@@ -60,7 +63,6 @@ namespace GoRogue.MapViews
         {
             get => base[relativePosition];
             set => MapView[ViewArea.Position + relativePosition] = value;
-
         }
 
         /// <summary>

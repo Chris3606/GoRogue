@@ -7,10 +7,10 @@ using XUnit.ValueTuples;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
-
     public class GenerationContextTests
     {
-        #region Test Data
+        public GenerationContextTests() => _timesNewCalled = 0;
+
         public static IEnumerable<(int width, int height)> ValidSizes => TestUtils.Enumerable(
             (1, 2),
             (1, 1),
@@ -28,15 +28,9 @@ namespace GoRogue.UnitTests.MapGeneration
             (-7, 0),
             (0, -2),
             (-3, -9)
-       );
-        #endregion
+        );
 
         private int _timesNewCalled;
-
-       public GenerationContextTests()
-       {
-            _timesNewCalled = 0;
-       }
 
         [Theory]
         [MemberDataTuple(nameof(ValidSizes))]
@@ -54,6 +48,29 @@ namespace GoRogue.UnitTests.MapGeneration
             GenerationContext? context = null;
             Assert.Throws<ArgumentException>(() => context = new GenerationContext(width, height));
             Assert.Null(context);
+        }
+
+        private MapContextComponent1 CreateFunc()
+        {
+            _timesNewCalled++;
+            return new MapContextComponent1();
+        }
+
+        [Fact]
+        public void GetComponentOrNewWithExistingComponent()
+        {
+            var context = new GenerationContext(10, 15);
+            var component = new MapContextComponent1();
+            context.AddComponent(component);
+
+            // Existing component should prevent creation
+            var component2 = context.GetComponentOrNew(CreateFunc);
+            Assert.Equal(0, _timesNewCalled);
+            Assert.Same(component, component2);
+
+            var component3 = context.GetComponentOrNew<IMapContextComponent>(CreateFunc);
+            Assert.Equal(0, _timesNewCalled);
+            Assert.Same(component, component3);
         }
 
         [Fact]
@@ -85,29 +102,6 @@ namespace GoRogue.UnitTests.MapGeneration
             component3 = context.GetComponentOrNew(CreateFunc);
             Assert.Equal(2, _timesNewCalled);
             Assert.True(component3 == component2 || component3 == component);
-        }
-
-        [Fact]
-        public void GetComponentOrNewWithExistingComponent()
-        {
-            var context = new GenerationContext(10, 15);
-            var component = new MapContextComponent1();
-            context.AddComponent(component);
-
-            // Existing component should prevent creation
-            var component2 = context.GetComponentOrNew(CreateFunc);
-            Assert.Equal(0, _timesNewCalled);
-            Assert.Same(component, component2);
-
-            var component3 = context.GetComponentOrNew<IMapContextComponent>(CreateFunc);
-            Assert.Equal(0, _timesNewCalled);
-            Assert.Same(component, component3);
-        }
-
-        private MapContextComponent1 CreateFunc()
-        {
-            _timesNewCalled++;
-            return new MapContextComponent1();
         }
     }
 }

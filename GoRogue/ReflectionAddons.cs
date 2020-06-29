@@ -17,8 +17,12 @@ namespace GoRogue
         /// of that runtime type, and each interface that runtime type or one of its superclasses implement.
         /// </summary>
         /// <param name="instance">Object to return type tree for.</param>
-        /// <returns>The complete inheritance/interface tree for the runtime-type of the object passed in, including the runtime type itself,
-        /// and all superclasses of that type, as well as Type objects for each interface that runtime type or its superclasses implement.</returns>
+        /// <returns>
+        /// The complete inheritance/interface tree for the runtime-type of the object passed in, including the runtime type
+        /// itself,
+        /// and all superclasses of that type, as well as Type objects for each interface that runtime type or its superclasses
+        /// implement.
+        /// </returns>
         public static IEnumerable<Type> GetRuntimeTypeTree(object instance) => GetTypeTree(instance.GetType());
 
         /// <summary>
@@ -30,24 +34,29 @@ namespace GoRogue
         /// the results.
         /// </remarks>
         /// <typeparam name="T">Type to get inheritance/interface tree for.</typeparam>
-        /// <returns>The complete interface/inheritance tree of T, including T, all superclasses, and all interfaces T or its
-        /// superclasses implement.</returns>
+        /// <returns>
+        /// The complete interface/inheritance tree of T, including T, all superclasses, and all interfaces T or its
+        /// superclasses implement.
+        /// </returns>
         public static IEnumerable<Type> GetTypeTree<T>() => GetTypeTree(typeof(T));
 
         /// <summary>
-        /// Gets the entire inheritance/interface tree for the type specified.  This will include the <paramref name="type"/> itself, 
-        /// as well as a Type representing each superclass of the type represented by <paramref name="type"/>, and each
-        /// interface that <paramref name="type"/> or its superclasses implement.
+        /// Gets the entire inheritance/interface tree for the type specified.  This will include the <paramref name="type" />
+        /// itself,
+        /// as well as a Type representing each superclass of the type represented by <paramref name="type" />, and each
+        /// interface that <paramref name="type" /> or its superclasses implement.
         /// </summary>
         /// <remarks>
         /// This function may be somewhat expensive to compute, so if you plan to use it frequently it is recommended to cache
         /// the results.
         /// </remarks>
-        /// <returns>The complete interface/inheritance for the type represented by <paramref name="type"/>, including <paramref name="type"/>,
-        /// all superclasses, and all interfaces T or its superclasses implement.</returns>
+        /// <returns>
+        /// The complete interface/inheritance for the type represented by <paramref name="type" />, including
+        /// <paramref name="type" />,
+        /// all superclasses, and all interfaces T or its superclasses implement.
+        /// </returns>
         public static IEnumerable<Type> GetTypeTree(Type type)
         {
-
             var currentType = type;
             while (currentType != null)
             {

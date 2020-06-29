@@ -6,10 +6,10 @@ using SadRogue.Primitives;
 namespace GoRogue.SpatialMaps
 {
     /// <summary>
-    /// Implements the read-only interface of <see cref="ISpatialMap{T}"/>.
+    /// Implements the read-only interface of <see cref="ISpatialMap{T}" />.
     /// </summary>
     /// <remarks>
-    /// Simply exposes only those functions of <see cref="ISpatialMap{T}"/> that do not allow direct modification
+    /// Simply exposes only those functions of <see cref="ISpatialMap{T}" /> that do not allow direct modification
     /// of the data (eg. adding/moving/removing items). This can allow for direct exposure of an ISpatialMap as a
     /// property of type IReadOnlySpatialMap, without allowing such an exposure to break data
     /// encapsulation principles of something like a game map.
@@ -17,21 +17,6 @@ namespace GoRogue.SpatialMaps
     [PublicAPI]
     public interface IReadOnlySpatialMap<T> : IEnumerable<ISpatialTuple<T>>
     {
-        /// <summary>
-        /// Event that is fired directly after an item has been added to the spatial map.
-        /// </summary>
-        event EventHandler<ItemEventArgs<T>> ItemAdded;
-
-        /// <summary>
-        /// Event that is fired directly after an item in the spatial map has been moved.
-        /// </summary>
-        event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
-
-        /// <summary>
-        /// Event that is fired directly after an item has been removed from the spatial map.
-        /// </summary>
-        event EventHandler<ItemEventArgs<T>> ItemRemoved;
-
         /// <summary>
         /// The number of items in the spatial map.
         /// </summary>
@@ -48,6 +33,21 @@ namespace GoRogue.SpatialMaps
         IEnumerable<Point> Positions { get; }
 
         /// <summary>
+        /// Event that is fired directly after an item has been added to the spatial map.
+        /// </summary>
+        event EventHandler<ItemEventArgs<T>> ItemAdded;
+
+        /// <summary>
+        /// Event that is fired directly after an item in the spatial map has been moved.
+        /// </summary>
+        event EventHandler<ItemMovedEventArgs<T>> ItemMoved;
+
+        /// <summary>
+        /// Event that is fired directly after an item has been removed from the spatial map.
+        /// </summary>
+        event EventHandler<ItemEventArgs<T>> ItemRemoved;
+
+        /// <summary>
         /// Returns a read-only reference to the spatial map. Convenient for "safely" exposing the
         /// spatial as a property, without allowing direct modification.
         /// </summary>
@@ -58,7 +58,7 @@ namespace GoRogue.SpatialMaps
         /// Returns true if the given item can be added at the given position; false otherwise.
         /// </summary>
         /// <param name="newItem">Item to add.</param>
-		/// <param name="position">Position to add item to.</param>
+        /// <param name="position">Position to add item to.</param>
         /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
         bool CanAdd(T newItem, Point position);
 
@@ -66,8 +66,8 @@ namespace GoRogue.SpatialMaps
         /// Returns true if the given item can be added at the given position; false otherwise.
         /// </summary>
         /// <param name="newItem">Item to add.</param>
-		/// <param name="x">X-value of the position to add item to.</param>
-		/// <param name="y">Y-value of the position to add item to.</param>
+        /// <param name="x">X-value of the position to add item to.</param>
+        /// <param name="y">Y-value of the position to add item to.</param>
         /// <returns>True if the item can be successfully added at the position given; false otherwise.</returns>
         bool CanAdd(T newItem, int x, int y);
 
@@ -84,17 +84,20 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="item">Item to move.</param>
         /// <param name="targetX">X-value of the location to move item to.</param>
-		/// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <param name="targetY">Y-value of the location to move item to.</param>
         /// <returns>true if the given item can be moved to the given position; false otherwise.</returns>
         bool CanMove(T item, int targetX, int targetY);
 
         /// <summary>
-        /// Returns true if there are items at <paramref name="current"/> and all items at that position
-        /// can be moved to <paramref name="target"/>; false otherwise.
+        /// Returns true if there are items at <paramref name="current" /> and all items at that position
+        /// can be moved to <paramref name="target" />; false otherwise.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
-		/// <param name="target">Location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <param name="target">Location to move items to.</param>
+        /// <returns>
+        /// true if all items at the position current can be moved to the position target; false if one or more items
+        /// cannot be moved or there are no items to move.
+        /// </returns>
         bool CanMoveAll(Point current, Point target);
 
         /// <summary>
@@ -102,10 +105,13 @@ namespace GoRogue.SpatialMaps
         /// can be moved to the target position; false otherwise.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
-		/// <param name="currentY">Y-value of the location to move items from.</param>
-		/// <param name="targetX">X-value of the location to move items to.</param>
-		/// <param name="targetY">Y-value of the location to move items to.</param>
-        /// <returns>true if all items at the position current can be moved to the position target; false if one or more items cannot be moved or there are no items to move.</returns>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <returns>
+        /// true if all items at the position current can be moved to the position target; false if one or more items
+        /// cannot be moved or there are no items to move.
+        /// </returns>
         bool CanMoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
@@ -159,7 +165,7 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="item">The item to get the position for.</param>
         /// <returns>
-        /// The position associated with the given item, if it exists in the spatial map, or <see cref="Point.None"/>
+        /// The position associated with the given item, if it exists in the spatial map, or <see cref="Point.None" />
         /// if the item does not exist.
         /// </returns>
         Point GetPositionOf(T item);

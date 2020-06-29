@@ -37,7 +37,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </returns>
         public int GetResult(IGenerator rng)
         {
-            int keepVal = _keep.GetResult(rng);
+            var keepVal = _keep.GetResult(rng);
 
             if (keepVal < 0)
                 throw new InvalidChooseException();

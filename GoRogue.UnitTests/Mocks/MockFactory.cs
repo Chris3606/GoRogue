@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GoRogue.MapViews;
+﻿using GoRogue.MapViews;
 using GoRogue.Random;
 using SadRogue.Primitives;
 
@@ -10,7 +7,7 @@ namespace GoRogue.UnitTests.Mocks
     /// <summary>
     /// A class that creates Mock Items to use in tests.
     /// </summary>
-    class MockFactory
+    internal class MockFactory
     {
         public static IMapView<double> BoxResMap(int width, int height)
         {
@@ -18,7 +15,8 @@ namespace GoRogue.UnitTests.Mocks
             return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
         }
 
-        public static IMapView<bool> EmptyFOVMap(int width, int height) => new LambdaMapView<bool>(width, height, _ => true);
+        public static IMapView<bool> EmptyFOVMap(int width, int height)
+            => new LambdaMapView<bool>(width, height, _ => true);
 
         public static ISettableMapView<double> TestResMap(int width, int height)
         {
@@ -29,19 +27,16 @@ namespace GoRogue.UnitTests.Mocks
 
             return map;
         }
+
         internal static ISettableMapView<bool> Rectangle(int width, int height)
         {
             ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
-            for (int i = 0; i < map.Width; i++)
-            {
-                for (int j = 0; j < map.Height; j++)
-                {
-                    if (i == 0 || i == map.Width - 1 || j == 0 || j == map.Height - 1)
-                        map[i, j] = false;
-                    else
-                        map[i, j] = true;
-                }
-            }
+            for (var i = 0; i < map.Width; i++)
+            for (var j = 0; j < map.Height; j++)
+                if (i == 0 || i == map.Width - 1 || j == 0 || j == map.Height - 1)
+                    map[i, j] = false;
+                else
+                    map[i, j] = true;
 
             return map;
         }
@@ -84,60 +79,49 @@ namespace GoRogue.UnitTests.Mocks
             ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
-            {
-                for (var j = 0; j < map.Height; j++)
-                {
-                    if (i == r1.MinExtentX || i == r1.MaxExtentX || j == r1.MinExtentY || j == r1.MaxExtentY)
-                        map[i, j] = false;
-                    else if (i == r2.MinExtentX || i == r2.MaxExtentX || j == r2.MinExtentY || j == r2.MaxExtentY)
-                        map[i, j] = false;
-                    else if (i == r3.MinExtentX || i == r3.MaxExtentX || j == r3.MinExtentY || j == r3.MaxExtentY)
-                        map[i, j] = false;
-                    else if (i == r4.MinExtentX || i == r4.MaxExtentX || j == r4.MinExtentY || j == r4.MaxExtentY)
-                        map[i, j] = false;
-                    else
-                        map[i, j] = true;
-                }
-            }
+            for (var j = 0; j < map.Height; j++)
+                if (i == r1.MinExtentX || i == r1.MaxExtentX || j == r1.MinExtentY || j == r1.MaxExtentY)
+                    map[i, j] = false;
+                else if (i == r2.MinExtentX || i == r2.MaxExtentX || j == r2.MinExtentY || j == r2.MaxExtentY)
+                    map[i, j] = false;
+                else if (i == r3.MinExtentX || i == r3.MaxExtentX || j == r3.MinExtentY || j == r3.MaxExtentY)
+                    map[i, j] = false;
+                else if (i == r4.MinExtentX || i == r4.MaxExtentX || j == r4.MinExtentY || j == r4.MaxExtentY)
+                    map[i, j] = false;
+                else
+                    map[i, j] = true;
             return map;
         }
+
         internal static ISettableMapView<bool> CardinalBisection(int width, int height, int timesToBisect)
         {
             ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
-            {
-                for (var j = 0; j < map.Height; j++)
-                {
-                    if (j == 25)
-                        map[i, j] = false;
+            for (var j = 0; j < map.Height; j++)
+                if (j == 25)
+                    map[i, j] = false;
 
-                    else if (timesToBisect > 1 && i == 25)
-                        map[i, j] = false;
+                else if (timesToBisect > 1 && i == 25)
+                    map[i, j] = false;
 
-                    else
-                        map[i, j] = true;
-                }
-            }
+                else
+                    map[i, j] = true;
             return map;
         }
+
         internal static ISettableMapView<bool> DiagonalBisection(int width, int height, int timesToBisect)
         {
             ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
-            {
-                for (var j = 0; j < map.Height; j++)
-                {
-                    if (j == i)
-                        map[i, j] = false;
-                    else if (timesToBisect > 1 && j - 1 == 0)
-                        map[i, j] = false;
-                    else
-                        map[i, j] = true;
-
-                }
-            }
+            for (var j = 0; j < map.Height; j++)
+                if (j == i)
+                    map[i, j] = false;
+                else if (timesToBisect > 1 && j - 1 == 0)
+                    map[i, j] = false;
+                else
+                    map[i, j] = true;
             return map;
         }
     }

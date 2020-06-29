@@ -5,6 +5,23 @@ namespace GoRogue.UnitTests.DiceNotation
 {
     public class DiceNotationTests
     {
+        private void assertMinMaxValues(IDiceExpression expr, int min, int max)
+        {
+            Assert.Equal(min, expr.MinRoll());
+            Assert.Equal(max, expr.MaxRoll());
+        }
+
+        private void assertReturnedInRange(IDiceExpression expr, int min, int max)
+        {
+            for (var i = 0; i < 100; i++)
+            {
+                var result = expr.Roll();
+
+                var inRange = result >= min && result <= max;
+                Assert.Equal(true, inRange);
+            }
+        }
+
         [Fact]
         public void AdvancedDice()
         {
@@ -83,23 +100,6 @@ namespace GoRogue.UnitTests.DiceNotation
             var expr = Dice.Parse("1d6*3");
             assertMinMaxValues(expr, 3, 18);
             assertReturnedInRange(expr, 3, 18);
-        }
-
-        private void assertMinMaxValues(IDiceExpression expr, int min, int max)
-        {
-            Assert.Equal(min, expr.MinRoll());
-            Assert.Equal(max, expr.MaxRoll());
-        }
-
-        private void assertReturnedInRange(IDiceExpression expr, int min, int max)
-        {
-            for (var i = 0; i < 100; i++)
-            {
-                var result = expr.Roll();
-
-                var inRange = result >= min && result <= max;
-                Assert.Equal(true, inRange);
-            }
         }
     }
 }

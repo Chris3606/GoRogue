@@ -5,7 +5,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Class like <see cref="Viewport{T}"/>, however the view area is in no way bounded to the edges of the underlying map.
+    /// Class like <see cref="Viewport{T}" />, however the view area is in no way bounded to the edges of the underlying map.
     /// Instead, if you access a position that cannot map to any valid position in the underlying map view, a (specified)
     /// default value is returned.
     /// </summary>
@@ -14,26 +14,54 @@ namespace GoRogue.MapViews
     public class UnboundedViewport<T> : IMapView<T>
     {
         /// <summary>
+        /// The value to return if a position is accessed that is outside the actual underlying map view.
+        /// </summary>
+        public readonly T DefaultValue;
+
+        // Analyzer misreads this because of ref return
+#pragma warning disable IDE0044
+        private Rectangle _viewArea;
+#pragma warning restore IDE0044
+        /// <summary>
         /// Constructor. Takes the parent map view, and the initial subsection of that map view to represent.
         /// </summary>
         /// <param name="mapView">The map view being represented.</param>
         /// <param name="viewArea">The initial subsection of that map to represent.</param>
-        /// <param name="defaultValue">The value to return if a position is accessed that is outside the actual underlying map view.</param>
+        /// <param name="defaultValue">
+        /// The value to return if a position is accessed that is outside the actual underlying map
+        /// view.
+        /// </param>
         public UnboundedViewport(IMapView<T> mapView, Rectangle viewArea, T defaultValue = default)
         {
             MapView = mapView;
             _viewArea = viewArea;
             DefaultValue = defaultValue;
-
         }
 
         /// <summary>
         /// Constructor. Takes the map view to represent. The viewport will represent the entire given map view.
         /// </summary>
         /// <param name="mapView">The map view to represent.</param>
-        /// <param name="defaultValue">The value to return if a position is accessed that is outside the actual underlying map view.</param>
+        /// <param name="defaultValue">
+        /// The value to return if a position is accessed that is outside the actual underlying map
+        /// view.
+        /// </param>
         public UnboundedViewport(IMapView<T> mapView, T defaultValue = default)
-            : this(mapView, mapView.Bounds(), defaultValue) { }
+            : this(mapView, mapView.Bounds(), defaultValue)
+        { }
+
+        /// <summary>
+        /// The map view that this UnboundedViewport is exposing values from.
+        /// </summary>
+        public IMapView<T> MapView { get; private set; }
+
+        /// <summary>
+        /// The area of the base MapView that this Viewport is exposing. Although this property does
+        /// not explicitly expose a set accessor, it is returning a reference and as such may be
+        /// assigned to. This viewport is NOT bounded to base map edges -- for this functionality, see the
+        /// <see cref="Viewport{T}" /> class.
+        /// </summary>
+        public ref Rectangle ViewArea => ref _viewArea;
 
         /// <summary>
         /// The height of the area being represented.
@@ -41,30 +69,9 @@ namespace GoRogue.MapViews
         public int Height => _viewArea.Height;
 
         /// <summary>
-        /// The map view that this UnboundedViewport is exposing values from.
-        /// </summary>
-        public IMapView<T> MapView { get; private set; }
-
-        // Analyzer misreads this because of ref return
-#pragma warning disable IDE0044
-        private Rectangle _viewArea;
-#pragma warning restore IDE0044
-        /// <summary>
-        /// The area of the base MapView that this Viewport is exposing. Although this property does
-        /// not explicitly expose a set accessor, it is returning a reference and as such may be
-        /// assigned to. This viewport is NOT bounded to base map edges -- for this functionality, see the <see cref="Viewport{T}"/> class.
-        /// </summary>
-        public ref Rectangle ViewArea => ref _viewArea;
-
-        /// <summary>
         /// The height of the area being represented.
         /// </summary>
         public int Width => _viewArea.Width;
-
-        /// <summary>
-        /// The value to return if a position is accessed that is outside the actual underlying map view.
-        /// </summary>
-        public readonly T DefaultValue;
 
         /// <summary>
         /// Given a position in relative 1d-array-index style, returns the "value" associated with that
@@ -75,7 +82,7 @@ namespace GoRogue.MapViews
         /// </param>
         /// <returns>
         /// The "value" associated with the absolute location represented on the underlying map view,
-        /// or <see cref="DefaultValue"/> if the absolute position does not exist in the underlying map view.
+        /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
         /// </returns>
         public T this[int relativeIndex1D] => this[Point.FromIndex(relativeIndex1D, Width)];
 
@@ -88,7 +95,7 @@ namespace GoRogue.MapViews
         /// </param>
         /// <returns>
         /// The "value" associated with the absolute location represented on the underlying map view,
-        /// or <see cref="DefaultValue"/> if the absolute position does not exist in the underlying map view.
+        /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
         /// </returns>
         public virtual T this[Point relativePosition]
         {
@@ -110,15 +117,15 @@ namespace GoRogue.MapViews
         /// <param name="relativeX">Viewport-relative X-value of location.</param>
         /// <param name="relativeY">Viewport-relative Y-value of location.</param>
         /// <returns>
-        /// The "value" associated with the absolute location represented on the underlying map view, 
-        /// or <see cref="DefaultValue"/> if the absolute position does not exist in the underlying map view.
+        /// The "value" associated with the absolute location represented on the underlying map view,
+        /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
         /// </returns>
         public virtual T this[int relativeX, int relativeY]
         {
             get
             {
-                int absX = ViewArea.X + relativeX;
-                int absY = _viewArea.Y + relativeY;
+                var absX = ViewArea.X + relativeX;
+                var absY = _viewArea.Y + relativeY;
 
                 if (MapView.Contains(absX, absY))
                     return MapView[absX, absY];
@@ -134,7 +141,7 @@ namespace GoRogue.MapViews
         public override string ToString() => this.ExtendToString();
 
         /// <summary>
-        /// Returns a string representation of the map view, using <paramref name="elementStringifier"/>
+        /// Returns a string representation of the map view, using <paramref name="elementStringifier" />
         /// to determine what string represents each value.
         /// </summary>
         /// <remarks>
@@ -145,7 +152,8 @@ namespace GoRogue.MapViews
         /// Function determining the string representation of each element.
         /// </param>
         /// <returns>A string representation of the UnboundedViewport.</returns>
-        public string ToString(Func<T, string> elementStringifier) => this.ExtendToString(elementStringifier: elementStringifier);
+        public string ToString(Func<T, string> elementStringifier)
+            => this.ExtendToString(elementStringifier: elementStringifier);
 
         /// <summary>
         /// Prints the values in the UnboundedViewport, using the function specified to turn elements into
@@ -153,7 +161,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <remarks>
         /// Each element of type T will have spaces added to cause it to take up exactly
-        /// <paramref name="fieldSize"/> characters, provided <paramref name="fieldSize"/> 
+        /// <paramref name="fieldSize" /> characters, provided <paramref name="fieldSize" />
         /// is less than the length of the element's string representation.
         /// </remarks>
         /// <param name="fieldSize">
@@ -165,6 +173,7 @@ namespace GoRogue.MapViews
         /// function of type T.
         /// </param>
         /// <returns>A string representation of the UnboundedViewport.</returns>
-        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null) => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
+        public string ToString(int fieldSize, Func<T, string>? elementStringifier = null)
+            => this.ExtendToString(fieldSize, elementStringifier: elementStringifier);
     }
 }

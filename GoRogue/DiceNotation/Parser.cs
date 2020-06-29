@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace GoRogue.DiceNotation
 {
     /// <summary>
-    /// Default class for parsing a string representing a dice expression into an <see cref="IDiceExpression"/> instance.
+    /// Default class for parsing a string representing a dice expression into an <see cref="IDiceExpression" /> instance.
     /// </summary>
     [PublicAPI]
     public class Parser : IParser
@@ -20,19 +20,19 @@ namespace GoRogue.DiceNotation
             ['*'] = 3,
             ['/'] = 3,
             ['k'] = 4,
-            ['d'] = 5,
+            ['d'] = 5
         };
 
         /// <summary>
-        /// Parses the dice expression specified into an <see cref="IDiceExpression"/> instance.
+        /// Parses the dice expression specified into an <see cref="IDiceExpression" /> instance.
         /// </summary>
         /// <remarks>
         /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
-        /// degree necessary to produce the appropriate chain of <see cref="ITerm"/> instances.
+        /// degree necessary to produce the appropriate chain of <see cref="ITerm" /> instances.
         /// </remarks>
         /// <param name="expression">The expression to parse.</param>
         /// <returns>
-        /// An <see cref="IDiceExpression"/> representing the given expression, that can "roll" the expression on command.
+        /// An <see cref="IDiceExpression" /> representing the given expression, that can "roll" the expression on command.
         /// </returns>
         public IDiceExpression Parse(string expression)
         {
@@ -49,11 +49,8 @@ namespace GoRogue.DiceNotation
             var operands = new Stack<ITerm>();
 
             foreach (var str in postfix)
-            {
                 if (char.IsDigit(str[0]))
-                {
                     operands.Push(new ConstantTerm(int.Parse(str)));
-                }
                 else // Is an operator
                 {
                     ITerm op1;
@@ -102,7 +99,6 @@ namespace GoRogue.DiceNotation
                             break;
                     }
                 }
-            }
 
             if (operands.Count != 1) // Something went awry
                 throw new InvalidSyntaxException();
@@ -116,9 +112,8 @@ namespace GoRogue.DiceNotation
             var output = new List<string>();
             var operators = new Stack<char>();
 
-            int charIndex = 0;
+            var charIndex = 0;
             while (charIndex < infix.Length)
-            {
                 if (char.IsDigit(infix[charIndex])) // Is an operand
                 {
                     string number = "";
@@ -152,10 +147,9 @@ namespace GoRogue.DiceNotation
                         {
                             if (s_operatorPrecedence.ContainsKey(infix[charIndex]))
                             {
-                                while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >= s_operatorPrecedence[infix[charIndex]])
-                                {
+                                while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >=
+                                    s_operatorPrecedence[infix[charIndex]])
                                     output.Add(operators.Pop().ToString());
-                                }
 
                                 operators.Push(infix[charIndex]);
                             }
@@ -166,7 +160,6 @@ namespace GoRogue.DiceNotation
 
                     charIndex++;
                 }
-            }
 
             while (operators.Count != 0)
                 output.Add(operators.Pop().ToString());

@@ -1,7 +1,6 @@
-﻿using GoRogue;
-using GoRogue.SpatialMaps;
-using System;
+﻿using System;
 using System.Linq;
+using GoRogue.SpatialMaps;
 using Xunit;
 
 namespace GoRogue.UnitTests.SpatialMaps
@@ -38,7 +37,7 @@ namespace GoRogue.UnitTests.SpatialMaps
         public void Layers()
         {
             var masker = new LayerMasker();
-            var layers = new int[] { 0, 2, 5 };
+            var layers = new[] { 0, 2, 5 };
 
             var mask = masker.Mask(layers);
             var layerReturn = masker.Layers(mask).ToArray();
@@ -113,7 +112,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Equal((uint)6, mask);
 
             mask = masker.MaskAllAbove(3);
-            Assert.Equal((uint)0, mask);  // Layers should be ignored that don't exist
+            Assert.Equal((uint)0, mask); // Layers should be ignored that don't exist
         }
 
         [Fact]

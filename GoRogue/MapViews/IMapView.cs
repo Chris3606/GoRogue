@@ -16,16 +16,15 @@ namespace GoRogue.MapViews
     /// positions, etc. Thus, in practice, maintaining an actual 2D array of boolean values that such
     /// an algorithm could take as input can be difficult. IMapView solves this problem by
     /// providing an interface that all such algorithms can take as input -- pathfinding, for
-    /// instance, would take an <see cref="IMapView{Boolean}"/>; instance, rather than a 2D array of booleans. A
+    /// instance, would take an <see cref="IMapView{Boolean}" />; instance, rather than a 2D array of booleans. A
     /// user of that algorithm might create a class that implements the indexers below to check the
     /// terrain type, if there is a monster at the position, etc., and returns the correct value.
     /// This prevents the need to maintain an actual 2D array in code that pathfinding can use, if
     /// such an array does not fit with your game architecture. If you do want to store the data in an actual 2D
     /// array, IMapView works similarly -- the indexers can simply retrieve values in the array.
-    /// 
     /// Although manually implementing a custom IMapView may be necessary in some cases, GoRogue provides many
-    /// implementations that cater to common cases -- for example, <see cref="ArrayMap{T}"/> is an implementation
-    /// that uses an actual array, while <see cref="LambdaMapView{T}"/> is a built-in implementation that uses a
+    /// implementations that cater to common cases -- for example, <see cref="ArrayMap{T}" /> is an implementation
+    /// that uses an actual array, while <see cref="LambdaMapView{T}" /> is a built-in implementation that uses a
     /// function to retrieve values.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
@@ -62,9 +61,9 @@ namespace GoRogue.MapViews
         /// in the map view.
         /// </summary>
         /// <remarks>
-        /// Typically, this may be implemented in terms of <see cref="this[Point]"/> by using
-        /// <see cref="Point.FromIndex(int, int)"/> to calculate the 2D position represented by that
-        /// 1D index, and passing that position to the <see cref="this[Point]"/> indexer to determine
+        /// Typically, this may be implemented in terms of <see cref="this[Point]" /> by using
+        /// <see cref="Point.FromIndex(int, int)" /> to calculate the 2D position represented by that
+        /// 1D index, and passing that position to the <see cref="this[Point]" /> indexer to determine
         /// the value associated with the position.
         /// </remarks>
         /// <param name="index1D">1D index of location to retrieve the "value" for.</param>

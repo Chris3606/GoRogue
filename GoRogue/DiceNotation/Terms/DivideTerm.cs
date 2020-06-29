@@ -35,7 +35,7 @@ namespace GoRogue.DiceNotation.Terms
         /// Divides the first term by the second, evaluating those two terms as necessary.
         /// </summary>
         /// <param name="rng">The rng to used -- passed to other terms.</param>
-        /// <returns>The result of evaluating <see cref="Term1"/> / <see cref="Term2"/>.</returns>
+        /// <returns>The result of evaluating <see cref="Term1" /> / <see cref="Term2" />.</returns>
         public int GetResult(IGenerator rng) => (int)Math.Round((double)Term1.GetResult(rng) / Term2.GetResult(rng));
 
         /// <summary>

@@ -11,7 +11,20 @@ namespace GoRogue.Factories
     [PublicAPI]
     public class Factory<TProduced> : IEnumerable<IFactoryBlueprint<TProduced>>
     {
-        private readonly Dictionary<string, IFactoryBlueprint<TProduced>> _blueprints = new Dictionary<string, IFactoryBlueprint<TProduced>>();
+        private readonly Dictionary<string, IFactoryBlueprint<TProduced>> _blueprints =
+            new Dictionary<string, IFactoryBlueprint<TProduced>>();
+
+        /// <summary>
+        /// Gets an enumerator of all of the blueprints in the factory.
+        /// </summary>
+        /// <returns>An enumeration of the blueprints.</returns>
+        public IEnumerator<IFactoryBlueprint<TProduced>> GetEnumerator() => _blueprints.Values.GetEnumerator();
+
+        /// <summary>
+        /// Gets an enumerator of all of the blueprints in the factory.
+        /// </summary>
+        /// <returns>An enumeration of the blueprints.</returns>
+        IEnumerator IEnumerable.GetEnumerator() => _blueprints.Values.GetEnumerator();
 
         /// <summary>
         /// Adds a blueprint to the factory.
@@ -20,7 +33,7 @@ namespace GoRogue.Factories
         public void Add(IFactoryBlueprint<TProduced> blueprint) => _blueprints[blueprint.Id] = blueprint;
 
         /// <summary>
-        /// Creates a <typeparamref name="TProduced"/> object using the blueprint with the given factory id.
+        /// Creates a <typeparamref name="TProduced" /> object using the blueprint with the given factory id.
         /// </summary>
         /// <param name="factoryId">The factory id of a blueprint.</param>
         /// <returns>A new object.</returns>
@@ -29,7 +42,7 @@ namespace GoRogue.Factories
             if (!_blueprints.ContainsKey(factoryId))
                 throw new ItemNotDefinedException(factoryId);
 
-            TProduced obj = _blueprints[factoryId].Create();
+            var obj = _blueprints[factoryId].Create();
             if (obj is IFactoryObject factoryObj)
                 factoryObj.DefinitionId = factoryId;
 
@@ -40,7 +53,7 @@ namespace GoRogue.Factories
         /// Checks if a blueprint exists.
         /// </summary>
         /// <param name="factoryId">The blueprint to check for.</param>
-        /// <returns>Returns true when the specified <paramref name="factoryId"/> exists; otherwise false.</returns>
+        /// <returns>Returns true when the specified <paramref name="factoryId" /> exists; otherwise false.</returns>
         public bool BlueprintExists(string factoryId) => _blueprints.ContainsKey(factoryId);
 
         /// <summary>
@@ -56,17 +69,5 @@ namespace GoRogue.Factories
 
             return _blueprints[factoryId];
         }
-
-        /// <summary>
-        /// Gets an enumerator of all of the blueprints in the factory.
-        /// </summary>
-        /// <returns>An enumeration of the blueprints.</returns>
-        public IEnumerator<IFactoryBlueprint<TProduced>> GetEnumerator() => _blueprints.Values.GetEnumerator();
-
-        /// <summary>
-        /// Gets an enumerator of all of the blueprints in the factory.
-        /// </summary>
-        /// <returns>An enumeration of the blueprints.</returns>
-        IEnumerator IEnumerable.GetEnumerator() => _blueprints.Values.GetEnumerator();
     }
 }

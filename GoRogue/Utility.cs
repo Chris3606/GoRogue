@@ -18,29 +18,29 @@ namespace GoRogue
     public static class Utility
     {
         /// <summary>
-        /// Adds an AsReadOnly method to <see cref="IDictionary{K, V}"/>, similar to the AsReadOnly method of
-        /// <see cref="IList{T}"/>, that returns a read-only reference to the dictionary.
+        /// Adds an AsReadOnly method to <see cref="IDictionary{K, V}" />, similar to the AsReadOnly method of
+        /// <see cref="IList{T}" />, that returns a read-only reference to the dictionary.
         /// </summary>
         /// <typeparam name="TKey">Type of keys of the dictionary.</typeparam>
         /// <typeparam name="TValue">Type of values of the dictionary.</typeparam>
-        /// <param name="dictionary"/>
+        /// <param name="dictionary" />
         /// <returns>A ReadOnlyDictionary instance for the specified dictionary.</returns>
-        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary)
             => new ReadOnlyDictionary<TKey, TValue>(dictionary);
 
         /// <summary>
-        /// Extension method for <see cref="IEnumerable{T}"/> that allows retrieving a string
+        /// Extension method for <see cref="IEnumerable{T}" /> that allows retrieving a string
         /// representing the contents.
         /// </summary>
         /// <remarks>
-        /// Built-in C# data structures like <see cref="List{T}"/> implement <see cref="IEnumerable{T}"/>,
+        /// Built-in C# data structures like <see cref="List{T}" /> implement <see cref="IEnumerable{T}" />,
         /// and as such this method can be used to stringify the contents of C# built-in data structures.
-        /// 
         /// When no customization parameters are specified, it defaults to a representation looking something
         /// like [elem1, elem2, elem3].
         /// </remarks>
-        /// <typeparam name="T"/>
-        /// <param name="enumerable"/>
+        /// <typeparam name="T" />
+        /// <param name="enumerable" />
         /// <param name="begin">Character(s) that should precede the string representation of the IEnumerable's elements.</param>
         /// <param name="elementStringifier">
         /// Function to use to get the string representation of each element. Specifying null uses the ToString
@@ -49,12 +49,14 @@ namespace GoRogue
         /// <param name="separator">Characters to separate the IEnumerable's elements by.</param>
         /// <param name="end">Character(s) that should follow the string representation of the IEnumerable's elements.</param>
         /// <returns>A string representation of the IEnumerable.</returns>
-        public static string ExtendToString<T>(this IEnumerable<T> enumerable, string begin = "[", Func<T, string>? elementStringifier = null, string separator = ", ", string end = "]")
+        public static string ExtendToString<T>(this IEnumerable<T> enumerable, string begin = "[",
+                                               Func<T, string>? elementStringifier = null, string separator = ", ",
+                                               string end = "]")
         {
             elementStringifier ??= obj => obj?.ToString() ?? "null";
 
             var result = new StringBuilder(begin);
-            bool first = true;
+            var first = true;
             foreach (var item in enumerable)
             {
                 if (first)
@@ -64,24 +66,24 @@ namespace GoRogue
 
                 result.Append(elementStringifier(item));
             }
+
             result.Append(end);
 
             return result.ToString();
         }
 
         /// <summary>
-        /// Extension method for <see cref="ISet{T}"/> that allows retrieving a string representing the
+        /// Extension method for <see cref="ISet{T}" /> that allows retrieving a string representing the
         /// contents.
         /// </summary>
         /// <remarks>
-        /// Built-in C# data structures like <see cref="HashSet{T}"/> implement <see cref="ISet{T}"/>,
+        /// Built-in C# data structures like <see cref="HashSet{T}" /> implement <see cref="ISet{T}" />,
         /// and as such this method can be used to stringify the contents of C# built-in set structures.
-        /// 
         /// When no customization parameters are specified, it defaults to a representation looking something
         /// like set(elem1, elem2, elem3).
         /// </remarks>
-        /// <typeparam name="T"/>
-        /// <param name="set"/>
+        /// <typeparam name="T" />
+        /// <param name="set" />
         /// <param name="begin">Character(s) that should precede the string representation of the set's elements.</param>
         /// <param name="elementStringifier">
         /// Function to use to get the string representation of each element. Specifying null uses the ToString
@@ -90,22 +92,23 @@ namespace GoRogue
         /// <param name="separator">Characters to separate the set's items by.</param>
         /// <param name="end">Character(s) that should follow the string representation of the set's elements.</param>
         /// <returns>A string representation of the ISet.</returns>
-        public static string ExtendToString<T>(this ISet<T> set, string begin = "set(", Func<T, string>? elementStringifier = null, string separator = ", ", string end = ")")
+        public static string ExtendToString<T>(this ISet<T> set, string begin = "set(",
+                                               Func<T, string>? elementStringifier = null, string separator = ", ",
+                                               string end = ")")
             => ExtendToString((IEnumerable<T>)set, begin, elementStringifier, separator, end);
 
         /// <summary>
         /// Extension method for dictionaries that allows retrieving a string representing the dictionary's contents.
         /// </summary>
         /// <remarks>
-        /// Built-in C# data structures like <see cref="Dictionary{T, V}"/> implement <see cref="IDictionary{T, V}"/>,
+        /// Built-in C# data structures like <see cref="Dictionary{T, V}" /> implement <see cref="IDictionary{T, V}" />,
         /// and as such this method can be used to stringify the contents of C# built-in dictionary structures.
-        /// 
         /// When no customization parameters are specified, it defaults to a representation looking something
         /// like {key1 : value, key2 : value}.
         /// </remarks>
-        /// <typeparam name="TKey"/>
-        /// <typeparam name="TValue"/>
-        /// <param name="dictionary"/>
+        /// <typeparam name="TKey" />
+        /// <typeparam name="TValue" />
+        /// <param name="dictionary" />
         /// <param name="begin">Character(s) that should precede the string representation of the dictionary's elements.</param>
         /// <param name="keyStringifier">
         /// Function to use to get the string representation of each key. Specifying null uses the ToString
@@ -119,15 +122,18 @@ namespace GoRogue
         /// <param name="pairSeparator">Characters used to separate each key-value pair from the next.</param>
         /// <param name="end">Character(s) that should follow the string representation of the dictionary's elements.</param>
         /// <returns>A string representation of the IDictionary.</returns>
-        public static string ExtendToString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, string begin = "{", Func<TKey, string>? keyStringifier = null,
-                                                   Func<TValue, string>? valueStringifier = null, string kvSeparator = " : ", string pairSeparator = ", ", string end = "}")
+        public static string ExtendToString<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, string begin = "{",
+                                                          Func<TKey, string>? keyStringifier = null,
+                                                          Func<TValue, string>? valueStringifier = null,
+                                                          string kvSeparator = " : ", string pairSeparator = ", ",
+                                                          string end = "}")
         {
             keyStringifier ??= obj => obj?.ToString() ?? "null";
 
             valueStringifier ??= obj => obj?.ToString() ?? "null";
 
             var result = new StringBuilder(begin);
-            bool first = true;
+            var first = true;
             foreach (var (key, value) in dictionary)
             {
                 if (first)
@@ -146,8 +152,8 @@ namespace GoRogue
         /// <summary>
         /// Extension method for 2D arrays that allows retrieving a string representing the contents.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="array"/>
+        /// <typeparam name="T" />
+        /// <param name="array" />
         /// <param name="begin">Character(s) that should precede the string representation of the 2D array.</param>
         /// <param name="beginRow">Character(s) that should precede the string representation of each row.</param>
         /// <param name="elementStringifier">
@@ -159,16 +165,18 @@ namespace GoRogue
         /// <param name="endRow">Character(s) that should follow the string representation of each row.</param>
         /// <param name="end">Character(s) that should follow the string representation of the 2D array.</param>
         /// <returns>A string representation of the 2D array.</returns>
-        public static string ExtendToString<T>(this T[,] array, string begin = "[\n", string beginRow = "\t[", Func<T, string>? elementStringifier = null,
-                                                 string rowSeparator = ",\n", string elementSeparator = ", ", string endRow = "]", string end = "\n]")
+        public static string ExtendToString<T>(this T[,] array, string begin = "[\n", string beginRow = "\t[",
+                                               Func<T, string>? elementStringifier = null,
+                                               string rowSeparator = ",\n", string elementSeparator = ", ",
+                                               string endRow = "]", string end = "\n]")
         {
             elementStringifier ??= obj => obj?.ToString() ?? "null";
 
             var result = new StringBuilder(begin);
-            for (int x = 0; x < array.GetLength(0); x++)
+            for (var x = 0; x < array.GetLength(0); x++)
             {
                 result.Append(beginRow);
-                for (int y = 0; y < array.GetLength(1); y++)
+                for (var y = 0; y < array.GetLength(1); y++)
                 {
                     result.Append(elementStringifier(array[x, y]));
                     if (y != array.GetLength(1) - 1) result.Append(elementSeparator);
@@ -187,13 +195,14 @@ namespace GoRogue
         /// formatted as if the 2D array represents a coordinate plane/grid.
         /// </summary>
         /// <remarks>
-        /// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
+        /// This differs from
+        /// <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)" />
         /// in that this method prints the array
         /// such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
         /// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
         /// </remarks>
-        /// <typeparam name="T"/>
-        /// <param name="array"/>
+        /// <typeparam name="T" />
+        /// <param name="array" />
         /// <param name="begin">Character(s) that should precede the string representation of the 2D array.</param>
         /// <param name="beginRow">Character(s) that should precede the string representation of each row.</param>
         /// <param name="elementStringifier">
@@ -207,20 +216,26 @@ namespace GoRogue
         /// <returns>
         /// A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.
         /// </returns>
-        public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
-                                                      string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "") => new ArrayMap2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+        public static string ExtendToStringGrid<T>(this T[,] array, string begin = "", string beginRow = "",
+                                                   Func<T, string>? elementStringifier = null,
+                                                   string rowSeparator = "\n", string elementSeparator = " ",
+                                                   string endRow = "", string end = "")
+            => new ArrayMap2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator,
+                elementSeparator, endRow, end);
 
         /// <summary>
         /// Extension method for 2D arrays that allows retrieving a string representing the contents,
         /// formatted as if the 2D array represents a coordinate plane/grid.
         /// </summary>
         /// <remarks>
-        /// This differs from <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)"/>
-        /// in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW it.
+        /// This differs from
+        /// <see cref="ExtendToString{T}(T[,], string, string, Func{T, string}, string, string, string, string)" />
+        /// in that this method prints the array such that array[x+1, y] is printed to the RIGHT of array[x, y], rather than BELOW
+        /// it.
         /// Effectively it assumes the indexes being used are grid/coordinate plane coordinates.
         /// </remarks>
-        /// <typeparam name="T"/>
-        /// <param name="array"/>
+        /// <typeparam name="T" />
+        /// <param name="array" />
         /// <param name="fieldSize">
         /// The amount of space each element should take up in characters. A positive number aligns
         /// the text to the right of the space, while a negative number aligns the text to the left.
@@ -238,27 +253,33 @@ namespace GoRogue
         /// <returns>
         /// A string representation of the 2D array, formatted as if the array represents a 2D coordinate plane/grid map.
         /// </returns>
-        public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "", string beginRow = "", Func<T, string>? elementStringifier = null,
-                                                      string rowSeparator = "\n", string elementSeparator = " ", string endRow = "", string end = "") => new ArrayMap2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator, elementSeparator, endRow, end);
+        public static string ExtendToStringGrid<T>(this T[,] array, int fieldSize, string begin = "",
+                                                   string beginRow = "", Func<T, string>? elementStringifier = null,
+                                                   string rowSeparator = "\n", string elementSeparator = " ",
+                                                   string endRow = "", string end = "")
+            => new ArrayMap2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator,
+                elementSeparator, endRow, end);
 
         /// <summary>
-        /// Extension method for <see cref="IList{T}"/> that implements a fisher-yates shuffle. Modifies the list it is
+        /// Extension method for <see cref="IList{T}" /> that implements a fisher-yates shuffle. Modifies the list it is
         /// called on to randomly rearrange the elements therein.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
-        /// to be used</param>
+        /// <typeparam name="T" />
+        /// <param name="list" />
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used
+        /// </param>
         public static void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
-            int n = list.Count;
+            var n = list.Count;
             while (n > 1)
             {
                 n--;
-                int k = rng.Next(n + 1);
-                T value = list[k];
+                var k = rng.Next(n + 1);
+                var value = list[k];
                 list[k] = list[n];
                 list[n] = value;
             }
@@ -267,19 +288,21 @@ namespace GoRogue
         /// <summary>
         /// "Multiplies", aka repeats, a string the given number of times.
         /// </summary>
-        /// <param name="str"/>
+        /// <param name="str" />
         /// <param name="numTimes">The number of times to repeat the string.</param>
-        /// <returns>The current string repeated <paramref name="numTimes"/> times.</returns>
+        /// <returns>The current string repeated <paramref name="numTimes" /> times.</returns>
         public static string Multiply(this string str, int numTimes) => string.Concat(Enumerable.Repeat(str, numTimes));
 
         /// <summary>
         /// Extension method that selects and returns a random valid index from the list, using the
         /// rng specified. -1 is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
-        /// to be used.</param>
+        /// <typeparam name="T" />
+        /// <param name="list" />
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
         /// <returns>The index selected.</returns>
         public static int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
         {
@@ -296,13 +319,15 @@ namespace GoRogue
         /// the selector function given returns true, using the rng specified. Indices are repeatedly
         /// selected until a qualifying index is found. -1 is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="list"/>
+        /// <typeparam name="T" />
+        /// <param name="list" />
         /// <param name="selector">
         /// Function that returns true if the given index is valid selection, false otherwise.
         /// </param>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
-        /// to be used.</param>
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
         /// <returns>Index selected.</returns>
         public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
         {
@@ -311,7 +336,7 @@ namespace GoRogue
             if (list.Count == 0)
                 return -1;
 
-            int index = rng.Next(list.Count);
+            var index = rng.Next(list.Count);
             while (!selector(index))
                 index = rng.Next(list.Count);
 
@@ -322,10 +347,12 @@ namespace GoRogue
         /// Extension method that selects and returns a random item from the list, using the rng
         /// specified. default(T) is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="list"/>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
-        /// to be used.</param>
+        /// <typeparam name="T" />
+        /// <param name="list" />
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
         /// <returns>Item selected.</returns>
         public static T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
         {
@@ -342,11 +369,13 @@ namespace GoRogue
         /// selector returns true, using the rng specified. Items are repeatedly selected until a
         /// qualifying item is found. default(T) is returned if the list is empty.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="list"/>
+        /// <typeparam name="T" />
+        /// <param name="list" />
         /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
-        /// <param name="rng">RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG"/>
-        /// to be used.</param>
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
         /// <returns>Item selected.</returns>
         public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
         {
@@ -355,7 +384,7 @@ namespace GoRogue
             if (list.Count == 0)
                 throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
 
-            T item = list[rng.Next(list.Count)];
+            var item = list[rng.Next(list.Count)];
             while (!selector(item))
                 item = list[rng.Next(list.Count)];
 
@@ -363,14 +392,14 @@ namespace GoRogue
         }
 
         /// <summary>
-        /// Swaps the values pointed to by <paramref name="lhs"/> and <paramref name="rhs"/>.
+        /// Swaps the values pointed to by <paramref name="lhs" /> and <paramref name="rhs" />.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="lhs"/>
-        /// <param name="rhs"/>
+        /// <typeparam name="T" />
+        /// <param name="lhs" />
+        /// <param name="rhs" />
         public static void Swap<T>(ref T lhs, ref T rhs)
         {
-            T temp = lhs;
+            var temp = lhs;
             lhs = rhs;
             rhs = temp;
         }
@@ -378,8 +407,8 @@ namespace GoRogue
         /// <summary>
         /// Convenience function that yields the given item as a single-item IEnumerable.
         /// </summary>
-        /// <typeparam name="T"/>
-        /// <param name="item"/>
+        /// <typeparam name="T" />
+        /// <param name="item" />
         /// <returns>An IEnumerable containing only the item the function is called on.</returns>
         public static IEnumerable<T> Yield<T>(this T item)
         {
@@ -389,7 +418,7 @@ namespace GoRogue
         /// <summary>
         /// Takes multiple parameters and converts them to an IEnumerable.
         /// </summary>
-        /// <typeparam name="T"/>
+        /// <typeparam name="T" />
         /// <param name="values">Parameters (specified as multiple parameters to the function).</param>
         /// <returns>
         /// An IEnumerable of all of the given items, in the order they were given to the function.
@@ -403,14 +432,14 @@ namespace GoRogue
         /// <summary>
         /// Takes multiple enumerables of items, and flattens them into a single IEnumerable.
         /// </summary>
-        /// <typeparam name="T"/>
+        /// <typeparam name="T" />
         /// <param name="lists">Lists to "flatten".</param>
         /// <returns>An IEnumerable containing the items of all the enumerables passed in.</returns>
         public static IEnumerable<T> Flatten<T>(params IEnumerable<T>[] lists)
         {
             foreach (var list in lists)
-                foreach (var i in list)
-                    yield return i;
+            foreach (var i in list)
+                yield return i;
         }
     }
 }
