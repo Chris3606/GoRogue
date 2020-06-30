@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using GoRogue.MapViews;
+using AssertionMethodAttribute = JetBrains.Annotations.AssertionMethodAttribute;
 using SadRogue.Primitives;
+using Xunit;
 
 namespace GoRogue.UnitTests
 {
@@ -11,6 +14,11 @@ namespace GoRogue.UnitTests
     /// </summary>
     public static class TestUtils
     {
+        [AssertionMethod]
+        public static void NotNull([NotNull]object? obj)
+        {
+            Assert.NotNull(obj);
+        }
         /// <summary>
         /// Returns the object as a single-element enumerable.
         /// </summary>

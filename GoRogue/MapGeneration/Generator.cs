@@ -78,10 +78,13 @@ namespace GoRogue.MapGeneration
         /// Applies the generation steps added, in the order in which they were added. to the <see cref="Context" /> to generate
         /// the map.
         /// </summary>
-        public void Generate()
+        /// <returns>This generator (for chaining).</returns>
+        public Generator Generate()
         {
             foreach (var step in _generationSteps)
                 step.PerformStep(Context);
+
+            return this;
         }
     }
 }

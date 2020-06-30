@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.Steps;
 using GoRogue.MapGeneration.Steps.Translation;
@@ -141,6 +142,16 @@ namespace GoRogue.MapGeneration
             {
                 RNG = rng, SaveDeadEndChance = saveDeadEndChance, MaxTrimIterations = maxTrimIterations
             };
+        }
+
+        /// <summary>
+        /// Generates a simple map that is a hollowed-out rectangle surrounded by walls.
+        /// </summary>
+        /// <returns>A set of map generation steps that generate a simple map composed of a hollowed out rectangle
+        /// surrounded by walls.</returns>
+        public static IEnumerable<GenerationStep> RectangleMapSteps()
+        {
+            yield return new RectangleGenerator();
         }
     }
 }

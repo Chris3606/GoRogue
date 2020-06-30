@@ -1,5 +1,7 @@
 ﻿using System;
 using GoRogue.GameFramework;
+using GoRogue.MapGeneration;
+using GoRogue.MapGeneration.Steps;
 using GoRogue.MapViews;
 using SadRogue.Primitives;
 using Xunit;
@@ -11,19 +13,31 @@ namespace GoRogue.UnitTests.GameFramework
         [Fact]
         public void ApplyTerrainOverlay()
         {
-            var grMap = new ArrayMap<bool>(10, 10);
-            //QuickGenerators.GenerateRectangleMap(grMap);
+            var grMap = new Generator(10, 10)
+                .AddSteps(DefaultAlgorithms.RectangleMapSteps())
+                .Generate()
+                .Context.GetComponent<ISettableMapView<bool>>();
 
-            var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap, (pos, val) =>
-                val ? new GameObject(pos, 0, null, true) : new GameObject(pos, 0, null, true, false, false));
+            TestUtils.NotNull(grMap);
+
+            var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap,
+                (pos, val) =>
+                    val ?
+                        new GameObject(pos, 0, null, true)
+                        : new GameObject(pos, 0, null, true, false, false));
+
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
 
-            // Normally you shouldn't need tempMap, could just use translationMap directly.  But we want ref equality comparison
-            // capability for testing
+            // Normally you shouldn't need tempMap, as you would do what is done in ApplyTerrainOverlayTransition,
+            // which is define the translation function the the ApplyTerrainOverlay function call.  But here, we want
+            // to test the overload without the translation function, so we rely on a translation map instead.
             var tempMap = new ArrayMap<IGameObject>(grMap.Width, grMap.Height);
             tempMap.ApplyOverlay(translationMap);
+
+            // Apply overlay
             map.ApplyTerrainOverlay(tempMap);
 
+            // Verify tiles match
             Assert.Equal(grMap.Width, map.Width);
             Assert.Equal(grMap.Height, map.Height);
             foreach (var pos in map.Positions())
@@ -33,22 +47,29 @@ namespace GoRogue.UnitTests.GameFramework
         [Fact]
         public void ApplyTerrainOverlayTranslation()
         {
-            var grMap = new ArrayMap<bool>(10, 10);
-            //QuickGenerators.GenerateRectangleMap(grMap);
+            var grMap = new Generator(10, 10)
+                .AddSteps(DefaultAlgorithms.RectangleMapSteps())
+                .Generate()
+                .Context.GetComponent<ISettableMapView<bool>>();
+
+            TestUtils.NotNull(grMap);
 
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
             map.ApplyTerrainOverlay(grMap,
-                (pos, b) => b ? new GameObject(pos, 0, null, true) : new GameObject(pos, 0, null, true, false, false));
+                (pos, b) =>
+                    b ?
+                        new GameObject(pos, 0, null, true)
+                        : new GameObject(pos, 0, null, true, false, false));
 
             // If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
             foreach (var pos in grMap.Positions())
             {
                 var terrain = map.GetTerrainAt(pos);
-                Assert.NotNull(terrain);
+                TestUtils.NotNull(terrain);
                 if (grMap[pos])
-                    Assert.True(terrain!.IsWalkable);
+                    Assert.True(terrain.IsWalkable);
                 else
-                    Assert.False(terrain!.IsWalkable);
+                    Assert.False(terrain.IsWalkable);
             }
         }
 
