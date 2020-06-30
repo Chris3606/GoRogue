@@ -8,15 +8,15 @@ namespace GoRogue.UnitTests.SpatialMaps
 {
     public class SpatialMapTests
     {
-        private Point newPos;
+        private Point _newPos;
 
         // Used to test events
-        private Point oldPos;
+        private Point _oldPos;
 
-        private void onItemMoved(object s, ItemMovedEventArgs<MyIDImpl> e)
+        private void OnItemMoved(object s, ItemMovedEventArgs<MyIDImpl> e)
         {
-            Assert.Equal(oldPos, e.OldPosition);
-            Assert.Equal(newPos, e.NewPosition);
+            Assert.Equal(_oldPos, e.OldPosition);
+            Assert.Equal(_newPos, e.NewPosition);
         }
 
         [Fact]
@@ -41,45 +41,23 @@ namespace GoRogue.UnitTests.SpatialMaps
             retVal = mySpatialMap.Contains(myId2);
             Assert.False(retVal);
 
-            var count = 0;
-            foreach (var item in mySpatialMap.GetItemsAt((1, 2)))
-                count++;
-            Assert.Equal(1, count);
-
-            count = 0;
-            foreach (var item in mySpatialMap.GetItemsAt((2, 3)))
-                count++;
-            Assert.Equal(0, count);
+            Assert.Single(mySpatialMap.GetItemsAt((1, 2)));
+            Assert.Empty(mySpatialMap.GetItemsAt((2, 3)));
 
             Assert.Throws<InvalidOperationException>(() => mySpatialMap.Add(myId2, (1, 2)));
 
-
-            count = 0;
-            foreach (var item in mySpatialMap.GetItemsAt((1, 2)))
-                count++;
-            Assert.Equal(1, count);
+            Assert.Single(mySpatialMap.GetItemsAt((1, 2)));
         }
 
         [Fact]
         public void SpatialMapCreate()
         {
             var mySpatialMap = new SpatialMap<MyIDImpl>();
+
             Assert.Equal(0, mySpatialMap.Count);
-            bool retVal;
             Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(new MyIDImpl(0)));
-
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Remove((1, 2)))
-                retVal = true;
-
-            Assert.False(retVal);
-
-            retVal = false;
-            foreach (var item in mySpatialMap.Items)
-                retVal = true;
-
-            Assert.False(retVal);
+            Assert.Empty(mySpatialMap.Remove((1, 2)));
+            Assert.Empty(mySpatialMap.Items);
         }
 
         [Fact]
@@ -122,11 +100,11 @@ namespace GoRogue.UnitTests.SpatialMaps
             mySpatialMap.Add(myId2, (2, 3));
             mySpatialMap.Add(myId3, (3, 4));
 
-            mySpatialMap.ItemMoved += onItemMoved;
-            oldPos = (1, 2);
-            newPos = (5, 6);
+            mySpatialMap.ItemMoved += OnItemMoved;
+            _oldPos = (1, 2);
+            _newPos = (5, 6);
             mySpatialMap.Move(myId1, (5, 6));
-            mySpatialMap.ItemMoved -= onItemMoved;
+            mySpatialMap.ItemMoved -= OnItemMoved;
         }
 
         [Fact]
@@ -150,21 +128,13 @@ namespace GoRogue.UnitTests.SpatialMaps
             retVal = mySpatialMap.Contains((1, 2));
             Assert.False(retVal);
 
-            var count = 0;
-            foreach (var i in mySpatialMap.Remove((2, 3)))
-                count++;
+            Assert.Single(mySpatialMap.Remove((2, 3)));
 
-            Assert.Equal(1, count);
             Assert.False(mySpatialMap.Contains((2, 3)));
             Assert.False(mySpatialMap.Contains(myId2));
 
             Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(myId1));
-            Assert.Equal(false, retVal);
-
-            count = 0;
-            foreach (var i in mySpatialMap.Remove((5, 6)))
-                count++;
-            Assert.Equal(0, count);
+            Assert.Empty(mySpatialMap.Remove((5, 6)));
         }
     }
 }

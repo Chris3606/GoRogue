@@ -23,8 +23,8 @@ namespace GoRogue.UnitTests.Mocks
         {
             var array = new char[map.Width, map.Height];
             for (var y = 0; y < map.Height; y++)
-            for (var x = 0; x < map.Width; x++)
-                array[x, y] = map[x, y] ? floor : wall;
+                for (var x = 0; x < map.Width; x++)
+                    array[x, y] = map[x, y] ? floor : wall;
 
             foreach (var point in points)
                 array[point.X, point.Y] = path;
@@ -39,14 +39,15 @@ namespace GoRogue.UnitTests.Mocks
 
         public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
         {
-            using (var reader = new StreamReader(filePath))
-                for (var row = 0; row < map.Height; row++)
-                {
-                    var line = reader.ReadLine();
+            using var reader = new StreamReader(filePath);
+            for (var row = 0; row < map.Height; row++)
+            {
+                var line = reader.ReadLine()
+                           ?? throw new InvalidOperationException("Failed to read map: invalid format.");
 
-                    for (var col = 0; col < map.Width; col++)
-                        map[col, row] = line[col] == wallChar ? false : true;
-                }
+                for (var col = 0; col < map.Width; col++)
+                    map[col, row] = line[col] != wallChar;
+            }
         }
 
         public static Tuple<Point, Point> ReadStartEnd(string filePath, char startChar = 's', char endChar = 'e')
@@ -59,7 +60,8 @@ namespace GoRogue.UnitTests.Mocks
                 var row = 0;
                 while (!reader.EndOfStream)
                 {
-                    var line = reader.ReadLine();
+                    var line = reader.ReadLine()
+                               ?? throw new InvalidOperationException("Failed to start-end: invalid format.");
 
                     for (var col = 0; col < line.Length; col++)
                     {

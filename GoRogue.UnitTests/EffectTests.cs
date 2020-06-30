@@ -9,8 +9,10 @@ namespace GoRogue.UnitTests
             : base(name, startingDuration)
         { }
 
-        protected override void OnTrigger(EffectArgs e)
+        protected override void OnTrigger(EffectArgs? e)
         {
+            e = e ?? throw new ArgumentException($"Effect arguments for {nameof(CancelingIntEffect)} may not be null",
+                nameof(e));
             Console.WriteLine($"Effect {Name} triggered, cancelling further triggers:");
             e.CancelTrigger = true;
         }
@@ -115,6 +117,6 @@ namespace GoRogue.UnitTests
             : base(name, startingDuration)
         { }
 
-        protected override void OnTrigger(EffectArgs e) => Console.WriteLine($"Effect {Name} triggered.");
+        protected override void OnTrigger(EffectArgs? e) => Console.WriteLine($"Effect {Name} triggered.");
     }
 }

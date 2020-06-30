@@ -2,20 +2,20 @@
 using System.Linq;
 using GoRogue.MapGeneration;
 using GoRogue.MapViews;
-using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
-using Xunit;
+using Xunit; //using GoRogue.UnitTests.Mocks;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
     public class MapAreaFinderTests
     {
-        private const int width = 50;
-        private const int height = 50;
+        //private const int width = 50;
+        //private const int height = 50;
 
         public static readonly List<(IMapView<bool>, AdjacencyRule, int)> TestData =
             new List<(IMapView<bool>, AdjacencyRule, int)>();
 
+        /*
         private readonly AdjacencyRule[] _adjacencies =
         {
             AdjacencyRule.Cardinals, AdjacencyRule.Diagonals, AdjacencyRule.EightWay
@@ -37,17 +37,19 @@ namespace GoRogue.UnitTests.MapGeneration
             MockFactory.DiagonalBisection(width, height, 1), MockFactory.CardinalBisection(width, height, 2),
             MockFactory.DiagonalBisection(width, height, 2), MockFactory.DisconnectedSquares(width, height)
         };
+        */
 
+        /*
         public MapAreaFinderTests()
         {
             var i = 0;
             foreach (var map in _maps)
-            foreach (var rule in _adjacencies)
-            {
-                //... combinate?
-            }
+                foreach (var rule in _adjacencies)
+                {
+                    //... combinate?
+                }
         }
-
+        */
 
         //[Theory]
         //[MemberData(nameof(TestData))]

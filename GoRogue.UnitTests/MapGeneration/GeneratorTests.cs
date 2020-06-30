@@ -114,7 +114,6 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, _addedCount);
 
             // Duplicate types are still allowed, however
-            var component3 = new MapContextComponent1();
             _generator.AddComponent(component2, "Tag2");
             Assert.Equal(2, _addedCount);
         }

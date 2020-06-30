@@ -13,9 +13,6 @@
         public uint ID { get; }
         public int Layer { get; }
 
-        public override string ToString()
-        {
-            return $"[{ID}, {Layer}]";
-        }
+        public override string ToString() => $"[{ID}, {Layer}]";
     }
 }

@@ -115,8 +115,8 @@ namespace GoRogue.SpatialMaps
         public IEnumerable<T> GetItemsAt(int x, int y, uint layerMask = uint.MaxValue)
         {
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
-            foreach (var item in _layers[relativeLayerNumber].GetItemsAt(x, y))
-                yield return item;
+                foreach (var item in _layers[relativeLayerNumber].GetItemsAt(x, y))
+                    yield return item;
         }
 
         /// <inheritdoc />
@@ -168,8 +168,8 @@ namespace GoRogue.SpatialMaps
             get
             {
                 foreach (var layer in _layers)
-                foreach (var item in layer.Items)
-                    yield return item;
+                    foreach (var item in layer.Items)
+                        yield return item;
             }
         }
 
@@ -179,9 +179,9 @@ namespace GoRogue.SpatialMaps
             get
             {
                 foreach (var layer in _layers)
-                foreach (var pos in layer.Positions)
-                    if (_positionCache.Add(pos))
-                        yield return pos;
+                    foreach (var pos in layer.Positions)
+                        if (_positionCache.Add(pos))
+                            yield return pos;
 
                 _positionCache.Clear();
             }
@@ -249,8 +249,8 @@ namespace GoRogue.SpatialMaps
         public IEnumerator<ISpatialTuple<T>> GetEnumerator()
         {
             foreach (var layer in _layers)
-            foreach (var tuple in layer)
-                yield return tuple;
+                foreach (var tuple in layer)
+                    yield return tuple;
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace GoRogue.SpatialMaps
         IEnumerator IEnumerable.GetEnumerator()
         {
             foreach (var layer in _layers)
-            foreach (var tuple in layer)
-                yield return tuple;
+                foreach (var tuple in layer)
+                    yield return tuple;
         }
 
         /// <inheritdoc />
@@ -449,8 +449,8 @@ namespace GoRogue.SpatialMaps
                                         uint layerMask = uint.MaxValue)
         {
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
-            foreach (var itemMoved in _layers[relativeLayerNumber].MoveValid(currentX, currentY, targetX, targetY))
-                yield return itemMoved;
+                foreach (var itemMoved in _layers[relativeLayerNumber].MoveValid(currentX, currentY, targetX, targetY))
+                    yield return itemMoved;
         }
 
         /// <summary>
@@ -480,8 +480,8 @@ namespace GoRogue.SpatialMaps
         public IEnumerable<T> Remove(int x, int y, uint layerMask = uint.MaxValue)
         {
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
-            foreach (var item in _layers[relativeLayerNumber].Remove(x, y))
-                yield return item;
+                foreach (var item in _layers[relativeLayerNumber].Remove(x, y))
+                    yield return item;
         }
 
         /// <summary>

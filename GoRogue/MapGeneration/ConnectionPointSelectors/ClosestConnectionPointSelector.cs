@@ -31,16 +31,16 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
             var minDist = double.MaxValue;
 
             foreach (var point1 in area1.Positions)
-            foreach (var point2 in area2.Positions)
-            {
-                var distance = DistanceCalculation.Calculate(point1, point2);
-                if (distance < minDist)
+                foreach (var point2 in area2.Positions)
                 {
-                    c1 = point1;
-                    c2 = point2;
-                    minDist = distance;
+                    var distance = DistanceCalculation.Calculate(point1, point2);
+                    if (distance < minDist)
+                    {
+                        c1 = point1;
+                        c2 = point2;
+                        minDist = distance;
+                    }
                 }
-            }
 
             return (c1, c2);
         }

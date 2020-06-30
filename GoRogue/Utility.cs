@@ -438,8 +438,8 @@ namespace GoRogue
         public static IEnumerable<T> Flatten<T>(params IEnumerable<T>[] lists)
         {
             foreach (var list in lists)
-            foreach (var i in list)
-                yield return i;
+                foreach (var i in list)
+                    yield return i;
         }
     }
 }

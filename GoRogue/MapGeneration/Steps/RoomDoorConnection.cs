@@ -203,17 +203,17 @@ namespace GoRogue.MapGeneration.Steps
 
                 // For each side, add any valid carving positions
                 foreach (var side in AdjacencyRule.Cardinals.DirectionsOfNeighbors())
-                foreach (var sidePosition in room.PositionsOnSide(side))
-                {
-                    var wallPoint = sidePosition + side; // Calculate point of wall next to the current position
-                    var testPoint =
-                        wallPoint + side; // Keep going in that direction to see where an opening here would lead
+                    foreach (var sidePosition in room.PositionsOnSide(side))
+                    {
+                        var wallPoint = sidePosition + side; // Calculate point of wall next to the current position
+                        var testPoint =
+                            wallPoint + side; // Keep going in that direction to see where an opening here would lead
 
-                    // If this opening hasn't been carved out already, wouldn't lead to the edge of the map, and WOULD lead to a walkable tile,
-                    // then it's a valid location for us to choose to carve a door
-                    if (!wallFloor[wallPoint] && innerMap.Contains(testPoint) && wallFloor[testPoint])
-                        validPositions.AddPosition(wallPoint);
-                }
+                        // If this opening hasn't been carved out already, wouldn't lead to the edge of the map, and WOULD lead to a walkable tile,
+                        // then it's a valid location for us to choose to carve a door
+                        if (!wallFloor[wallPoint] && innerMap.Contains(testPoint) && wallFloor[testPoint])
+                            validPositions.AddPosition(wallPoint);
+                    }
 
                 // Any side with at least one valid carving position is a valid side to select to start
                 var validSides = AdjacencyRule.Cardinals.DirectionsOfNeighbors()

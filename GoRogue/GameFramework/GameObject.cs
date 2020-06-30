@@ -93,7 +93,7 @@ namespace GoRogue.GameFramework
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor
         /// remarks for details.
         /// </param>
-        public GameObject(Point position, int layer, IGameObject parentObject, bool isStatic = false,
+        public GameObject(Point position, int layer, IGameObject? parentObject, bool isStatic = false,
                           bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;

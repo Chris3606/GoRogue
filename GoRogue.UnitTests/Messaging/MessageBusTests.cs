@@ -1,6 +1,7 @@
 ﻿using System;
 using GoRogue.Messaging;
 using GoRogue.UnitTests.Mocks;
+using JetBrains.Annotations;
 using Xunit;
 
 namespace GoRogue.UnitTests.Messaging
@@ -9,23 +10,25 @@ namespace GoRogue.UnitTests.Messaging
     {
         public MessageBusTests()
         {
-            bus = new MessageBus();
+            _bus = new MessageBus();
             ResetHandleCounts();
         }
 
-        private readonly MessageBus bus;
+        private readonly MessageBus _bus;
 
-        private void AssertHandleCounts(int m1 = 0, int m2 = 0, int mb1 = 0, int mb2 = 0, int mi = 0, int mbase = 0)
+        [AssertionMethod]
+        private static void AssertHandleCounts(int m1 = 0, int m2 = 0, int mb1 = 0, int mb2 = 0, int mi = 0,
+                                               int mBase = 0)
         {
             Assert.Equal(m1, MockSubscriber1.HandleCount);
             Assert.Equal(m2, MockSubscriber2.HandleCount);
             Assert.Equal(mb1, MockSubscribers.Handle1Count);
             Assert.Equal(mb2, MockSubscribers.Handle2Count);
             Assert.Equal(mi, MockIMessageSubscriber.HandleCount);
-            Assert.Equal(mbase, MsgBaseSub.HandleCount);
+            Assert.Equal(mBase, MsgBaseSub.HandleCount);
         }
 
-        private void ResetHandleCounts()
+        private static void ResetHandleCounts()
         {
             MockSubscriber1.HandleCount = 0;
             MockSubscriber2.HandleCount = 0;
@@ -38,42 +41,41 @@ namespace GoRogue.UnitTests.Messaging
         [Fact]
         public void BaseClassHandlers()
         {
-            bus.RegisterSubscriber(new MsgBaseSub());
+            _bus.RegisterSubscriber(new MsgBaseSub());
 
-            bus.Send(new MockMessage2());
-            AssertHandleCounts(mbase: 1);
+            _bus.Send(new MockMessage2());
+            AssertHandleCounts(mBase: 1);
         }
 
         // Test that handlers of concrete types are dispatched appropriately
         [Fact]
         public void BasicHandlers()
         {
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts();
 
             // Add a single handler
-
-            bus.RegisterSubscriber(new MockSubscriber1());
+            _bus.RegisterSubscriber(new MockSubscriber1());
 
             // Message should be handled
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(1);
 
             // Message should NOT be handled, no handlers for this type
-            bus.Send(new MockMessage2());
+            _bus.Send(new MockMessage2());
             AssertHandleCounts(1);
 
             ResetHandleCounts();
 
-            bus.RegisterSubscriber(new MockSubscriber2());
+            _bus.RegisterSubscriber(new MockSubscriber2());
             AssertHandleCounts();
 
             // Handled by the respective handler
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(1);
 
             ResetHandleCounts();
-            bus.Send(new MockMessage2());
+            _bus.Send(new MockMessage2());
             AssertHandleCounts(m2: 1);
         }
 
@@ -81,11 +83,11 @@ namespace GoRogue.UnitTests.Messaging
         [Fact]
         public void InterfaceHandlers()
         {
-            bus.RegisterSubscriber(new MockIMessageSubscriber());
+            _bus.RegisterSubscriber(new MockIMessageSubscriber());
 
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(mi: 1);
-            bus.Send(new MockMessage2());
+            _bus.Send(new MockMessage2());
             AssertHandleCounts(mi: 2);
         }
 
@@ -98,14 +100,14 @@ namespace GoRogue.UnitTests.Messaging
             // Not specifying type causes compiler error as it doesn't know which types to handle, since the subscriber wants multiple types
             //bus.RegisterSubscriber(handler);
 
-            bus.RegisterSubscriber<MockMessage1>(handler);
-            bus.RegisterSubscriber<MockMessage2>(handler);
+            _bus.RegisterSubscriber<MockMessage1>(handler);
+            _bus.RegisterSubscriber<MockMessage2>(handler);
 
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(mb1: 1);
             ResetHandleCounts();
 
-            bus.Send(new MockMessage2());
+            _bus.Send(new MockMessage2());
             AssertHandleCounts(mb2: 1);
         }
 
@@ -113,10 +115,10 @@ namespace GoRogue.UnitTests.Messaging
         [Fact]
         public void MultipleHandlersSameType()
         {
-            bus.RegisterSubscriber(new MockSubscriber1());
-            bus.RegisterSubscriber(new MockSubscriber1());
+            _bus.RegisterSubscriber(new MockSubscriber1());
+            _bus.RegisterSubscriber(new MockSubscriber1());
 
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(2);
         }
 
@@ -124,15 +126,15 @@ namespace GoRogue.UnitTests.Messaging
         [Fact]
         public void RegisterHandler()
         {
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts();
 
-            Assert.Equal(0, bus.SubscriberCount);
-            bus.RegisterSubscriber(new MockSubscriber1());
-            Assert.Equal(1, bus.SubscriberCount);
+            Assert.Equal(0, _bus.SubscriberCount);
+            _bus.RegisterSubscriber(new MockSubscriber1());
+            Assert.Equal(1, _bus.SubscriberCount);
             AssertHandleCounts();
 
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts(1);
         }
 
@@ -141,20 +143,20 @@ namespace GoRogue.UnitTests.Messaging
         public void TestDoubleAdd()
         {
             var sub = new MockSubscriber1();
-            bus.RegisterSubscriber(sub);
+            _bus.RegisterSubscriber(sub);
 
-            Assert.Throws<ArgumentException>(() => bus.RegisterSubscriber(sub));
+            Assert.Throws<ArgumentException>(() => _bus.RegisterSubscriber(sub));
         }
 
-        // Test that double/nonexistant removes throw ArgumentException
+        // Test that double/non-existent removes throw ArgumentException
         [Fact]
         public void TestDoubleRemove()
         {
             var sub = new MockSubscriber1();
-            bus.RegisterSubscriber(sub);
-            bus.UnregisterSubscriber(sub);
+            _bus.RegisterSubscriber(sub);
+            _bus.UnregisterSubscriber(sub);
 
-            Assert.Throws<ArgumentException>(() => bus.UnregisterSubscriber(sub));
+            Assert.Throws<ArgumentException>(() => _bus.UnregisterSubscriber(sub));
         }
 
         // Ensure that if we have class B : A, and we pass message of type A whose runtime type is B, B handler gets called.  Similar for interfaces
@@ -163,19 +165,19 @@ namespace GoRogue.UnitTests.Messaging
         {
             IMockMessage msg = new MockMessage1();
 
-            bus.RegisterSubscriber(new MockSubscriber1());
+            _bus.RegisterSubscriber(new MockSubscriber1());
 
             // Handler wants MyMessage1 types, msg is IMsgInterface but runtime type MyMessage1, so it should still get called
-            bus.Send(msg);
+            _bus.Send(msg);
             AssertHandleCounts(1);
 
             ResetHandleCounts();
 
             MockMessageBase msg2 = new MockMessage2();
-            bus.RegisterSubscriber(new MockSubscriber2());
+            _bus.RegisterSubscriber(new MockSubscriber2());
 
             // Similar here, Msg2Sub should still get called.
-            bus.Send(msg2);
+            _bus.Send(msg2);
             AssertHandleCounts(0, 1);
         }
 
@@ -184,13 +186,13 @@ namespace GoRogue.UnitTests.Messaging
         public void UnregisterHandler()
         {
             var sub = new MockSubscriber1();
-            bus.RegisterSubscriber(sub);
+            _bus.RegisterSubscriber(sub);
 
-            Assert.Equal(1, bus.SubscriberCount);
-            bus.UnregisterSubscriber(sub);
-            Assert.Equal(0, bus.SubscriberCount);
+            Assert.Equal(1, _bus.SubscriberCount);
+            _bus.UnregisterSubscriber(sub);
+            Assert.Equal(0, _bus.SubscriberCount);
 
-            bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage1());
             AssertHandleCounts();
         }
     }

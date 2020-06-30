@@ -45,8 +45,8 @@ namespace GoRogue.MapViews
             var newObj = new ArrayMap2D<T>(Width, Height);
 
             for (var x = 0; x < Width; x++)
-            for (var y = 0; y < Height; y++)
-                newObj[x, y] = _array[x, y];
+                for (var y = 0; y < Height; y++)
+                    newObj[x, y] = _array[x, y];
 
             return newObj;
         }

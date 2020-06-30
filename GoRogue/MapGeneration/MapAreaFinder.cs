@@ -73,13 +73,13 @@ namespace GoRogue.MapGeneration
                 Array.Clear(_visited, 0, _visited.Length);
 
             for (var x = 0; x < Map.Width; x++)
-            for (var y = 0; y < Map.Height; y++)
-            {
-                var area = Visit(new Point(x, y));
+                for (var y = 0; y < Map.Height; y++)
+                {
+                    var area = Visit(new Point(x, y));
 
-                if (area != null && area.Count != 0)
-                    yield return area;
-            }
+                    if (area != null && area.Count != 0)
+                        yield return area;
+                }
         }
 
         private Area? Visit(Point position)

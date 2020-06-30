@@ -169,14 +169,14 @@ namespace GoRogue.Pathing
         {
             _walkable.Clear();
             for (var y = 0; y < BaseMap.Height; ++y)
-            for (var x = 0; x < BaseMap.Width; ++x)
-            {
-                var state = BaseMap[x, y];
-                if (state == GoalState.Obstacle)
-                    _goalMap[x, y] = null;
-                else
-                    _walkable.Add(new Point(x, y));
-            }
+                for (var x = 0; x < BaseMap.Width; ++x)
+                {
+                    var state = BaseMap[x, y];
+                    if (state == GoalState.Obstacle)
+                        _goalMap[x, y] = null;
+                    else
+                        _walkable.Add(new Point(x, y));
+                }
 
             return UpdatePathsOnly();
         }

@@ -22,7 +22,7 @@ namespace GoRogue.UnitTests
         private void TestSerialization<T>(T typeToSerialize, Func<T, T, bool> equality = null)
         {
             if (equality == null)
-                equality = (t1, t2) => t1.Equals(t2);
+                equality = (t1, t2) => t1?.Equals(t2) ?? ReferenceEquals(t2, null);
 
             var name = $"{typeof(T)}.bin";
 
@@ -30,7 +30,7 @@ namespace GoRogue.UnitTests
             using (var stream = new FileStream(name, FileMode.Create, FileAccess.Write))
                 formatter.Serialize(stream, typeToSerialize);
 
-            T reSerialized = default;
+            T reSerialized;
             using (var stream = new FileStream(name, FileMode.Open, FileAccess.Read))
                 reSerialized = (T)formatter.Deserialize(stream);
 

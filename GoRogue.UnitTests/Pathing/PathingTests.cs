@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using Xunit;
+using Xunit.Abstractions;
 
 //using CA = EMK.Cartography;
 
@@ -13,11 +13,17 @@ namespace GoRogue.UnitTests.Pathing
 {
     public class PathingTests
     {
-        private static readonly Point END = (17, 14);
-        private static readonly int ITERATIONS = 100;
-        private static readonly int MAP_HEIGHT = 30;
-        private static readonly int MAP_WIDTH = 30;
-        private static readonly Point START = (1, 2);
+        private static readonly Point _end = (17, 14);
+        //private const int _iterations = 100;
+        private const int _mapHeight = 30;
+        private const int _mapWidth = 30;
+        private static readonly Point _start = (1, 2);
+        private readonly ITestOutputHelper _output;
+
+        public PathingTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
 
         //[Fact]
         //public void PathInitReversing()
@@ -50,7 +56,8 @@ namespace GoRogue.UnitTests.Pathing
         //    checkAgainstPath(expectedPath, actualPath, end, start);
         //}
 
-        private static void checkAdjacency(Path path, Distance distanceCalc)
+        /*
+        private static void CheckAdjacency(Path path, Distance distanceCalc)
         {
             if (path.LengthWithStart == 1)
                 return;
@@ -69,52 +76,52 @@ namespace GoRogue.UnitTests.Pathing
             }
         }
 
-        private static void checkWalkable(Path path, IMapView<bool> map)
+        private static void CheckWalkable(Path path, IMapView<bool> map)
         {
             foreach (var pos in path.StepsWithStart)
                 Assert.True(map[pos]);
         }
 
-        private static IMapView<GoalState> createGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Point> goals)
+        private static IMapView<GoalState> CreateGoalStateMap(IMapView<bool> walkabilityMap, IEnumerable<Point> goals)
         {
             var mapGoals = new ArrayMap<GoalState>(walkabilityMap.Width, walkabilityMap.Height);
             for (var x = 0; x < walkabilityMap.Width; x++)
-            for (var y = 0; y < walkabilityMap.Height; y++)
-                mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
+                for (var y = 0; y < walkabilityMap.Height; y++)
+                    mapGoals[x, y] = walkabilityMap[x, y] ? GoalState.Clear : GoalState.Obstacle;
 
             foreach (var goal in goals)
                 mapGoals[goal] = GoalState.Goal;
 
             return mapGoals;
         }
+        */
 
         [Fact]
         public void AStarAssumeWalkable()
         {
-            var walkabilityMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-            walkabilityMap = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var walkabilityMap = MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var pather = new AStar(walkabilityMap, Distance.Chebyshev);
 
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = true;
+            walkabilityMap[_start] = false;
+            walkabilityMap[_end] = true;
 
-            var path = pather.ShortestPath(START, END);
+            var path = pather.ShortestPath(_start, _end);
             Assert.True(path != null);
 
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END);
+            walkabilityMap[_start] = true;
+            walkabilityMap[_end] = false;
+            path = pather.ShortestPath(_start, _end);
             Assert.True(path != null);
 
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END);
+            walkabilityMap[_start] = false;
+            walkabilityMap[_end] = false;
+            path = pather.ShortestPath(_start, _end);
             Assert.True(path != null);
 
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = true;
-            path = pather.ShortestPath(START, END);
+            walkabilityMap[_start] = true;
+            walkabilityMap[_end] = true;
+            path = pather.ShortestPath(_start, _end);
             Assert.True(path != null);
         }
 
@@ -130,29 +137,29 @@ namespace GoRogue.UnitTests.Pathing
         [Fact]
         public void AStarNoAssumeWalkable()
         {
-            var walkabilityMap = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var walkabilityMap = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var pather = new AStar(walkabilityMap, Distance.Chebyshev);
 
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = true;
+            walkabilityMap[_start] = false;
+            walkabilityMap[_end] = true;
 
-            var path = pather.ShortestPath(START, END, false);
+            var path = pather.ShortestPath(_start, _end, false);
             Assert.False(path != null);
 
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, false);
+            walkabilityMap[_start] = true;
+            walkabilityMap[_end] = false;
+            path = pather.ShortestPath(_start, _end, false);
             Assert.False(path != null);
 
-            walkabilityMap[START] = false;
-            walkabilityMap[END] = false;
-            path = pather.ShortestPath(START, END, false);
+            walkabilityMap[_start] = false;
+            walkabilityMap[_end] = false;
+            path = pather.ShortestPath(_start, _end, false);
             Assert.False(path != null);
 
-            walkabilityMap[START] = true;
-            walkabilityMap[END] = true;
-            path = pather.ShortestPath(START, END, false);
+            walkabilityMap[_start] = true;
+            walkabilityMap[_end] = true;
+            path = pather.ShortestPath(_start, _end, false);
             Assert.True(path != null);
         }
 
@@ -160,7 +167,7 @@ namespace GoRogue.UnitTests.Pathing
         public void FleeMapBasicResult()
         {
             Point goal = (5, 5);
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(
@@ -168,7 +175,7 @@ namespace GoRogue.UnitTests.Pathing
             goalMapData[goal] = GoalState.Goal;
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
-            var fleeMap = new FleeMap(goalMap);
+            using var fleeMap = new FleeMap(goalMap);
             goalMap.Update();
 
             foreach (var startPos in fleeMap.Positions().Where(p => map[p] && p != goal))
@@ -188,9 +195,9 @@ namespace GoRogue.UnitTests.Pathing
                 var success = pos != goal;
                 if (!success)
                 {
-                    Console.WriteLine(
+                    _output.WriteLine(
                         $"Failed starting from {startPos} on flee map.  Found min {fleeMap.GetDirectionOfMinValue(pos)} when calculating from {pos}:");
-                    Console.WriteLine(fleeMap);
+                    _output.WriteLine(fleeMap.ToString());
                 }
 
                 Assert.True(success);
@@ -201,7 +208,7 @@ namespace GoRogue.UnitTests.Pathing
         public void GoalMapBasicResult()
         {
             Point goal = (5, 5);
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(
@@ -225,9 +232,9 @@ namespace GoRogue.UnitTests.Pathing
                 var success = pos == goal;
                 if (!success)
                 {
-                    Console.WriteLine(
+                    _output.WriteLine(
                         $"Failed starting from {startPos} on foal map.  Found min {goalMap.GetDirectionOfMinValue(pos)} when calculating from {pos}:");
-                    Console.WriteLine(goalMap);
+                    _output.WriteLine(goalMap.ToString());
                 }
 
                 Assert.True(success);
@@ -237,63 +244,66 @@ namespace GoRogue.UnitTests.Pathing
         [Fact]
         public void ManualAStarChebyshevTest()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var pather = new AStar(map, Distance.Chebyshev, Distance.Euclidean.Calculate);
-            var path = pather.ShortestPath(START, END);
+            var path = pather.ShortestPath(_start, _end);
+            Assert.NotNull(path);
 
-            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path!.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
-                Console.WriteLine(point);
+                _output.WriteLine(point.ToString());
         }
 
         [Fact]
         public void ManualAStarEuclidianTest()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var pather = new AStar(map, Distance.Euclidean);
-            var path = pather.ShortestPath(START, END);
+            var path = pather.ShortestPath(_start, _end);
+            Assert.NotNull(path);
 
-            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path!.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
-                Console.WriteLine(point);
+                _output.WriteLine(point.ToString());
         }
 
         [Fact]
         public void ManualAStarManhattanTest()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var pather = new AStar(map, Distance.Manhattan);
-            var path = pather.ShortestPath(START, END);
+            var path = pather.ShortestPath(_start, _end);
+            Assert.NotNull(path);
 
-            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
+            TestUtils.PrintHighlightedPoints(map, path!.StepsWithStart);
 
             foreach (var point in path.StepsWithStart)
-                Console.WriteLine(point);
+                _output.WriteLine(point.ToString());
         }
 
         [Fact]
         public void ManualGoalMapTest()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(MAP_WIDTH, MAP_HEIGHT);
+            var map = (ArrayMap<bool>)MockFactory.Rectangle(_mapWidth, _mapHeight);
 
             var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
             foreach (var pos in stateMap.Positions())
                 stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
 
-            stateMap[MAP_WIDTH / 2, MAP_WIDTH / 2] = GoalState.Goal;
-            stateMap[MAP_WIDTH / 2 + 5, MAP_HEIGHT / 2 + 5] = GoalState.Goal;
+            stateMap[_mapWidth / 2, _mapWidth / 2] = GoalState.Goal;
+            stateMap[_mapWidth / 2 + 5, _mapHeight / 2 + 5] = GoalState.Goal;
 
             var goalMap = new GoalMap(stateMap, Distance.Euclidean);
             goalMap.Update();
 
             Assert.Null(goalMap[0, 0]);
 
-            Console.Write(goalMap.ToString(5, "0.00"));
+            _output.WriteLine(goalMap.ToString(5, "0.00"));
         }
 
         [Fact]
@@ -301,8 +311,8 @@ namespace GoRogue.UnitTests.Pathing
         {
             var map = new ArrayMap<bool>(10, 10);
             for (var x = 0; x < map.Width; x++)
-            for (var y = 0; y < map.Height; y++)
-                map[x, y] = true;
+                for (var y = 0; y < map.Height; y++)
+                    map[x, y] = true;
 
             Point start = (1, 6);
             Point end = (0, 1);

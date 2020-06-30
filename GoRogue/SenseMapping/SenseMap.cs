@@ -122,8 +122,8 @@ namespace GoRogue.SenseMapping
         public IEnumerator<double> GetEnumerator()
         {
             for (var y = 0; y < _resMap.Height; y++)
-            for (var x = 0; x < _resMap.Width; x++)
-                yield return _senseMap[x, y];
+                for (var x = 0; x < _resMap.Width; x++)
+                    yield return _senseMap[x, y];
         }
 
         /// <summary>
@@ -281,18 +281,18 @@ namespace GoRogue.SenseMapping
 
             for (var xOffset = 0; xOffset <= lMax.X - lMin.X; xOffset++)
                 //Parallel.For(0, lMax.X - lMin.X + 1, xOffset => // By light radius 30 or so, there is enough work to get benefit here.  Manual thread splitting may also be an option.
-            for (var yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
-            {
-                // Offset local/current by proper amount, and update light-map
-                var c = new Point(xOffset, yOffset);
-                var gCur = gMin + c;
-                var lCur = lMin + c;
+                for (var yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
+                {
+                    // Offset local/current by proper amount, and update light-map
+                    var c = new Point(xOffset, yOffset);
+                    var gCur = gMin + c;
+                    var lCur = lMin + c;
 
-                destination[gCur.X, gCur.Y] =
-                    destination[gCur.X, gCur.Y] + source._light[lCur.X, lCur.Y]; // Add source values,
-                if (destination[gCur.X, gCur.Y] > 0.0)
-                    sourceMap.Add(gCur);
-            }
+                    destination[gCur.X, gCur.Y] =
+                        destination[gCur.X, gCur.Y] + source._light[lCur.X, lCur.Y]; // Add source values,
+                    if (destination[gCur.X, gCur.Y] > 0.0)
+                        sourceMap.Add(gCur);
+                }
         }
     }
 }

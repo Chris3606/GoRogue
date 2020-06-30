@@ -7,14 +7,20 @@ using GoRogue.SenseMapping;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
-using Xunit; //using System.Drawing;
+using Xunit;
+using Xunit.Abstractions;
+
+//using System.Drawing;
 
 namespace GoRogue.UnitTests
 {
     public class ManualTestHelpers
     {
-        private const int width = 50;
-        private const int height = 50;
+        public ManualTestHelpers(ITestOutputHelper output) => _output = output;
+
+        private const int _width = 50;
+        private const int _height = 50;
+        private readonly ITestOutputHelper _output;
 
         [Fact]
         public void ManualPrint2DArray()
@@ -23,35 +29,34 @@ namespace GoRogue.UnitTests
             var i = 0;
 
             for (var x = 0; x < 10; x++)
-            for (var y = 0; y < 10; y++)
-            {
-                array[x, y] = i;
-                i++;
-            }
+                for (var y = 0; y < 10; y++)
+                {
+                    array[x, y] = i;
+                    i++;
+                }
 
-            Console.WriteLine(array.ExtendToString());
-            Console.WriteLine("\nIn Grid:");
-            Console.WriteLine(array.ExtendToStringGrid());
-            Console.WriteLine("\nIn Grid with 5 field size:");
-            Console.WriteLine(array.ExtendToStringGrid(5));
-            Console.WriteLine("\nIn Grid with 5 field size left-align:");
-            Console.WriteLine(array.ExtendToStringGrid(-5));
+            _output.WriteLine(array.ExtendToString());
+            _output.WriteLine("\nIn Grid:");
+            _output.WriteLine(array.ExtendToStringGrid());
+            _output.WriteLine("\nIn Grid with 5 field size:");
+            _output.WriteLine(array.ExtendToStringGrid(5));
+            _output.WriteLine("\nIn Grid with 5 field size left-align:");
+            _output.WriteLine(array.ExtendToStringGrid(-5));
         }
 
         [Fact]
         public void ManualPrintAdjacencyRule()
         {
-            Console.WriteLine(AdjacencyRule.Cardinals);
-            Console.WriteLine(AdjacencyRule.EightWay);
-            Console.WriteLine(AdjacencyRule.Diagonals);
+            _output.WriteLine(AdjacencyRule.Cardinals.ToString());
+            _output.WriteLine(AdjacencyRule.EightWay.ToString());
+            _output.WriteLine(AdjacencyRule.Diagonals.ToString());
         }
 
         [Fact]
         public void ManualPrintDiceExpression()
         {
             var expr = Dice.Parse("1d(1d12+4)+5*3");
-
-            Console.WriteLine(expr);
+            _output.WriteLine(expr.ToString());
         }
 
         [Fact]
@@ -64,7 +69,7 @@ namespace GoRogue.UnitTests
             myDict[1] = "One";
             myDict[2] = "Two";
 
-            Console.WriteLine(myDict.ExtendToString());
+            _output.WriteLine(myDict.ExtendToString());
         }
 
         [Fact]
@@ -75,20 +80,19 @@ namespace GoRogue.UnitTests
             s.MakeUnion(1, 3);
             s.MakeUnion(2, 4);
 
-            Console.WriteLine(s);
+            _output.WriteLine(s.ToString());
         }
 
         [Fact]
         public void ManualPrintFOV()
         {
-            var map = new ArrayMap<bool>(10, 10);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
             var myFov = new FOV(map);
             myFov.Calculate(5, 5, 3);
 
-            Console.WriteLine(myFov);
-            Console.WriteLine();
-            Console.WriteLine(myFov.ToString(3));
+            _output.WriteLine(myFov.ToString());
+            _output.WriteLine("");
+            _output.WriteLine(myFov.ToString(3));
         }
 
         [Fact]
@@ -101,16 +105,16 @@ namespace GoRogue.UnitTests
             myList.Add(3);
             myList.Add(2);
 
-            Console.WriteLine(myList.ExtendToString());
-            Console.WriteLine("\nWith bar separators:");
-            Console.WriteLine(myList.ExtendToString(separator: " | "));
+            _output.WriteLine(myList.ExtendToString());
+            _output.WriteLine("\nWith bar separators:");
+            _output.WriteLine(myList.ExtendToString(separator: " | "));
         }
 
         [Fact]
         public void ManualPrintMockMap()
         {
-            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
-            Console.Write(map.ToString());
+            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(_width, _height);
+            _output.WriteLine(map.ToString());
         }
 
         [Fact]
@@ -123,26 +127,25 @@ namespace GoRogue.UnitTests
 
             sm.Add(new MyIDImpl(3), 4, 5);
 
-            Console.WriteLine(sm);
+            _output.WriteLine(sm.ToString());
         }
 
         [Fact]
         public void ManualPrintPath()
         {
-            var map = new ArrayMap<bool>(30, 30);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(1, 2, 5, 6);
 
-            Console.WriteLine(path);
+            _output.WriteLine(path?.ToString() ?? throw new Exception("Should be a path."));
         }
 
         [Fact]
         public void ManualPrintRadius()
         {
-            Console.WriteLine(Radius.Circle);
-            Console.WriteLine(Radius.Square);
-            Console.WriteLine(Radius.Diamond);
+            _output.WriteLine(Radius.Circle.ToString());
+            _output.WriteLine(Radius.Square.ToString());
+            _output.WriteLine(Radius.Diamond.ToString());
         }
 
         [Fact]
@@ -151,22 +154,21 @@ namespace GoRogue.UnitTests
             var boundlessAreaProv = new RadiusLocationContext((5, 4), 10);
             var boundedAreaProv = new RadiusLocationContext((5, 4), 10, new Rectangle(0, 0, 10, 10));
 
-            Console.WriteLine(boundlessAreaProv + " is boundless!");
-            Console.WriteLine(boundedAreaProv + " is bounded...");
+            _output.WriteLine(boundlessAreaProv + " is boundless!");
+            _output.WriteLine(boundedAreaProv + " is bounded...");
         }
 
         [Fact]
         public void ManualPrintRectangle()
         {
             var rect = new Rectangle(0, 0, 10, 10);
-            Console.WriteLine(rect);
+            _output.WriteLine(rect.ToString());
         }
 
         [Fact]
         public void ManualPrintSenseMap()
         {
-            var map = new ArrayMap<bool>(30, 30);
-            map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
 
             var resMap = new ResMap(map);
             var senseMap = new SenseMap(resMap);
@@ -178,11 +180,11 @@ namespace GoRogue.UnitTests
 
             senseMap.Calculate();
 
-            Console.WriteLine(senseMap);
-            Console.WriteLine();
-            Console.WriteLine(senseMap.ToString(3));
-            Console.WriteLine();
-            Console.WriteLine(source);
+            _output.WriteLine(senseMap.ToString());
+            _output.WriteLine("");
+            _output.WriteLine(senseMap.ToString(3));
+            _output.WriteLine("");
+            _output.WriteLine(source.ToString());
         }
 
         [Fact]
@@ -195,9 +197,9 @@ namespace GoRogue.UnitTests
             mySet.Add(3);
             mySet.Add(2);
 
-            Console.WriteLine(mySet.ExtendToString());
-            Console.WriteLine("\nWith bar separators:");
-            Console.WriteLine(mySet.ExtendToString(separator: " | "));
+            _output.WriteLine(mySet.ExtendToString());
+            _output.WriteLine("\nWith bar separators:");
+            _output.WriteLine(mySet.ExtendToString(separator: " | "));
         }
 
         [Fact]
@@ -209,7 +211,7 @@ namespace GoRogue.UnitTests
             sm.Add(new MyIDImpl(2), 1, 3);
             sm.Add(new MyIDImpl(3), 4, 5);
 
-            Console.WriteLine(sm);
+            _output.WriteLine(sm.ToString());
         }
     }
 }

@@ -42,10 +42,14 @@ namespace GoRogue.UnitTests.GameFramework
 
             // If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
             foreach (var pos in grMap.Positions())
+            {
+                var terrain = map.GetTerrainAt(pos);
+                Assert.NotNull(terrain);
                 if (grMap[pos])
-                    Assert.True(map.GetTerrainAt(pos).IsWalkable);
+                    Assert.True(terrain!.IsWalkable);
                 else
-                    Assert.False(map.GetTerrainAt(pos).IsWalkable);
+                    Assert.False(terrain!.IsWalkable);
+            }
         }
 
         [Fact]

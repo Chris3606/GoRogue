@@ -1,7 +1,6 @@
 ﻿using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
-using SadRogue.Primitives;
-using Xunit;
+using Xunit; //using SadRogue.Primitives;
 
 namespace GoRogue.UnitTests.MapViews
 {
@@ -13,13 +12,14 @@ namespace GoRogue.UnitTests.MapViews
         private static void checkMaps(IMapView<bool> genMap, IMapView<double> fovMap)
         {
             for (var x = 0; x < genMap.Width; x++)
-            for (var y = 0; y < genMap.Height; y++)
-            {
-                var properValue = genMap[x, y] ? 1.0 : 0.0;
-                Assert.Equal(properValue, fovMap[x, y]);
-            }
+                for (var y = 0; y < genMap.Height; y++)
+                {
+                    var properValue = genMap[x, y] ? 1.0 : 0.0;
+                    Assert.Equal(properValue, fovMap[x, y]);
+                }
         }
 
+        /*
         private static void checkViewportBounds(Viewport<bool> viewport, Point expectedMinCorner,
                                                 Point expectedMaxCorner)
         {
@@ -50,6 +50,7 @@ namespace GoRogue.UnitTests.MapViews
                     Assert.True(viewport[pos - viewport.ViewArea.MinExtent]);
             }
         }
+        */
 
         [Fact]
         public void ApplyOverlayTest()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using GoRogue.MapViews;
 using JetBrains.Annotations;
@@ -73,19 +74,22 @@ namespace GoRogue.Pathing
         {
             Weights = new Dictionary<IMapView<double?>, double>();
 
-            // TODO: Fix the debug asserts here, and also fix this interface entirely
             foreach (var (key, value) in maps)
             {
-                Weights.Add(key, value);
+                if (Math.Abs(value) <= 0.0000000001)
+                    throw new ArgumentException(
+                        $"No goal map used in a {nameof(WeightedGoalMap)} may have a weight of 0.0.", nameof(maps));
+
                 if (Height == 0)
                 {
                     Width = key.Width;
                     Height = key.Height;
                 }
-                else
-                    Debug.Assert(Height == key.Height && Width == key.Width);
+                else if (Height != key.Height || Width != key.Width)
+                    throw new ArgumentException(
+                        $"All goal maps used in a {nameof(WeightedGoalMap)} must have the same size.", nameof(maps));
 
-                Debug.Assert(value != 0.0);
+                Weights.Add(key, value);
             }
         }
 
@@ -122,9 +126,9 @@ namespace GoRogue.Pathing
                     var weight = pair.Value;
                     var weighted = value!.Value * weight;
                     if (weight > 0.0)
-                        result = result == 0.0 ? weighted : result * weighted;
+                        result = Math.Abs(result) < 0.0000000001 ? weighted : result * weighted;
                     else
-                        negResult = negResult == 0.0 ? weighted : negResult * weighted;
+                        negResult = Math.Abs(negResult) < 0.0000000001 ? weighted : negResult * weighted;
                 }
 
                 return result + negResult;
@@ -144,8 +148,8 @@ namespace GoRogue.Pathing
         {
             var result = new ArrayMap<double?>(Width, Height);
             for (var y = 0; y < Height; ++y)
-            for (var x = 0; x < Width; ++x)
-                result[x, y] = this[x, y];
+                for (var x = 0; x < Width; ++x)
+                    result[x, y] = this[x, y];
             return result;
         }
     }

@@ -37,8 +37,8 @@ namespace GoRogue.MapViews
                 throw new ArgumentException("Overlay size must match current map size.");
 
             for (var y = 0; y < self.Height; ++y)
-            for (var x = 0; x < self.Width; ++x)
-                self[x, y] = overlay[x, y];
+                for (var x = 0; x < self.Width; ++x)
+                    self[x, y] = overlay[x, y];
         }
 
         /// <summary>
@@ -178,8 +178,8 @@ namespace GoRogue.MapViews
         public static IEnumerable<Point> Positions<T>(this IMapView<T> mapView)
         {
             for (var y = 0; y < mapView.Height; y++)
-            for (var x = 0; x < mapView.Width; x++)
-                yield return new Point(x, y);
+                for (var x = 0; x < mapView.Width; x++)
+                    yield return new Point(x, y);
         }
 
         /// <summary>

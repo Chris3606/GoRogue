@@ -125,55 +125,55 @@ namespace GoRogue.MapGeneration.Steps
                 while (MaxTrimIterations == -1 || iteration <= MaxTrimIterations)
                 {
                     foreach (var point in area.Positions)
-                    foreach (var direction in AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise())
-                    {
-                        var neighbor = point + direction;
-
-                        if (wallFloor[neighbor])
+                        foreach (var direction in AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise())
                         {
-                            var oppositeNeighborDir = direction + 4;
-                            var found = false;
+                            var neighbor = point + direction;
 
-                            // If we get here, source direction is a floor, opposite direction
-                            // should be wall
-                            if (!wallFloor[point + oppositeNeighborDir])
-                                // Check for a wall pattern in the map. Where X is a wall,
-                                // checks the appropriately rotated version of:
-                                // XXX
-                                // X X
-                                found = oppositeNeighborDir.Type switch
-                                {
-                                    Direction.Types.Up => !wallFloor[point + Direction.UpLeft] &&
-                                                          !wallFloor[point + Direction.UpRight] &&
-                                                          !wallFloor[point + Direction.Left] &&
-                                                          !wallFloor[point + Direction.Right],
+                            if (wallFloor[neighbor])
+                            {
+                                var oppositeNeighborDir = direction + 4;
+                                var found = false;
 
-                                    Direction.Types.Down => !wallFloor[point + Direction.DownLeft] &&
-                                                            !wallFloor[point + Direction.DownRight] &&
-                                                            !wallFloor[point + Direction.Left] &&
-                                                            !wallFloor[point + Direction.Right],
+                                // If we get here, source direction is a floor, opposite direction
+                                // should be wall
+                                if (!wallFloor[point + oppositeNeighborDir])
+                                    // Check for a wall pattern in the map. Where X is a wall,
+                                    // checks the appropriately rotated version of:
+                                    // XXX
+                                    // X X
+                                    found = oppositeNeighborDir.Type switch
+                                    {
+                                        Direction.Types.Up => !wallFloor[point + Direction.UpLeft] &&
+                                                              !wallFloor[point + Direction.UpRight] &&
+                                                              !wallFloor[point + Direction.Left] &&
+                                                              !wallFloor[point + Direction.Right],
 
-                                    Direction.Types.Right => !wallFloor[point + Direction.UpRight] &&
-                                                             !wallFloor[point + Direction.DownRight] &&
-                                                             !wallFloor[point + Direction.Up] &&
-                                                             !wallFloor[point + Direction.Down],
+                                        Direction.Types.Down => !wallFloor[point + Direction.DownLeft] &&
+                                                                !wallFloor[point + Direction.DownRight] &&
+                                                                !wallFloor[point + Direction.Left] &&
+                                                                !wallFloor[point + Direction.Right],
 
-                                    Direction.Types.Left => !wallFloor[point + Direction.UpLeft] &&
-                                                            !wallFloor[point + Direction.DownLeft] &&
-                                                            !wallFloor[point + Direction.Up] &&
-                                                            !wallFloor[point + Direction.Down],
+                                        Direction.Types.Right => !wallFloor[point + Direction.UpRight] &&
+                                                                 !wallFloor[point + Direction.DownRight] &&
+                                                                 !wallFloor[point + Direction.Up] &&
+                                                                 !wallFloor[point + Direction.Down],
 
-                                    _ => throw new Exception(
-                                        "Cannot occur since original neighbor direction was a cardinal.")
-                                };
+                                        Direction.Types.Left => !wallFloor[point + Direction.UpLeft] &&
+                                                                !wallFloor[point + Direction.DownLeft] &&
+                                                                !wallFloor[point + Direction.Up] &&
+                                                                !wallFloor[point + Direction.Down],
 
-                            // If we found a dead end and it's not already safe, then add it to the list
-                            if (found && !safeDeadEnds.Contains(point))
-                                deadEnds.Add(point);
+                                        _ => throw new Exception(
+                                            "Cannot occur since original neighbor direction was a cardinal.")
+                                    };
 
-                            break; // Even if it is already saved, we know it's a dead end so we can stop processing this point
+                                // If we found a dead end and it's not already safe, then add it to the list
+                                if (found && !safeDeadEnds.Contains(point))
+                                    deadEnds.Add(point);
+
+                                break; // Even if it is already saved, we know it's a dead end so we can stop processing this point
+                            }
                         }
-                    }
 
                     // No dead ends to process
                     if (deadEnds.Count == 0)

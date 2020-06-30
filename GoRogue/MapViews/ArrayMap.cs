@@ -56,8 +56,8 @@ namespace GoRogue.MapViews
             var newObj = new ArrayMap<T>(Width, Height);
 
             for (var x = 0; x < Width; x++)
-            for (var y = 0; y < Height; y++)
-                newObj[x, y] = _array[Point.ToIndex(x, y, Width)];
+                for (var y = 0; y < Height; y++)
+                    newObj[x, y] = _array[Point.ToIndex(x, y, Width)];
 
             return newObj;
         }

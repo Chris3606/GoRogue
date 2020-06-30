@@ -33,8 +33,8 @@ namespace GoRogue.UnitTests
         public static IEnumerable<(T1, T2)> Combinate<T1, T2>(this IEnumerable<T1> l1, IEnumerable<T2> l2)
         {
             foreach (var x in l1)
-            foreach (var y in l2)
-                yield return (x, y);
+                foreach (var y in l2)
+                    yield return (x, y);
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace GoRogue.UnitTests
                                                                       IEnumerable<T3> l2)
         {
             foreach (var (i1, i2) in tuples)
-            foreach (var y in l2)
-                yield return (i1, i2, y);
+                foreach (var y in l2)
+                    yield return (i1, i2, y);
         }
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace GoRogue.UnitTests
         {
             var array = new char[map.Width, map.Height];
             for (var y = 0; y < map.Height; y++)
-            for (var x = 0; x < map.Width; x++)
-                array[x, y] = map[x, y] ? floor : wall;
+                for (var x = 0; x < map.Width; x++)
+                    array[x, y] = map[x, y] ? floor : wall;
 
             foreach (var point in points)
                 array[point.X, point.Y] = path;

@@ -4,11 +4,19 @@ using System.Linq;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GoRogue.UnitTests.SpatialMaps
 {
     public class LayeredSpatialMapTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public LayeredSpatialMapTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         //[Fact]
         //public void TestMove()
         //{
@@ -70,10 +78,10 @@ namespace GoRogue.UnitTests.SpatialMaps
             map.Add(new MockSpatialMapItem(2), (1, 1));
             map.Add(new MockSpatialMapItem(3), (0, 0));
 
-            Console.WriteLine("SpatialMap: ");
-            Console.WriteLine(map);
+            _output.WriteLine("SpatialMap: ");
+            _output.WriteLine(map.ToString());
 
-            Console.WriteLine("No need to test stringifier, as used by impl of regular ToString()");
+            _output.WriteLine("No need to test stringifier, as used by impl of regular ToString()");
         }
 
         [Fact]
@@ -81,10 +89,9 @@ namespace GoRogue.UnitTests.SpatialMaps
         {
             IEnumerable<MockSpatialMapItem> answer;
             var sm = new LayeredSpatialMap<MockSpatialMapItem>(5);
-            var previousCount = 0;
             for (var i = 0; i < 5; i++)
             {
-                previousCount = sm.GetItemsAt(1, 2).Count();
+                var previousCount = sm.GetItemsAt(1, 2).Count();
                 var item = new MockSpatialMapItem(i);
                 sm.Add(item, (1, 2));
                 answer = sm.GetItemsAt((1, 2));
@@ -152,7 +159,7 @@ namespace GoRogue.UnitTests.SpatialMaps
 
             Assert.Throws<InvalidOperationException>(() => sm.Remove(nonAddedItem));
             previousCount = sm.GetItemsAt((1, 2)).Count();
-            answer = sm.GetItemsAt((1, 2));
+            answer = sm.GetItemsAt((1, 2)).ToList();
             Assert.NotEmpty(answer);
             Assert.Equal(previousCount, answer.Count());
 

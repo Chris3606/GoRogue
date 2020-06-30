@@ -371,7 +371,7 @@ namespace GoRogue.SenseMapping
 
                     break;
                 default:
-                    throw new NotImplementedException("SourceType used that is not supported.");
+                    throw new NotSupportedException("SourceType used that is not supported.");
             }
         }
 

@@ -1,12 +1,19 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using GoRogue.SpatialMaps;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GoRogue.UnitTests.SpatialMaps
 {
     public class LayerMaskTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public LayerMaskTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void AddLayer()
         {
@@ -44,10 +51,10 @@ namespace GoRogue.UnitTests.SpatialMaps
 
             layers = layers.OrderByDescending(i => i).ToArray();
 
-            Console.WriteLine("Actual layers");
-            Console.WriteLine(layers.ExtendToString());
-            Console.WriteLine("Returned layers:");
-            Console.WriteLine(layerReturn.ExtendToString());
+            _output.WriteLine("Actual layers");
+            _output.WriteLine(layers.ExtendToString());
+            _output.WriteLine("Returned layers:");
+            _output.WriteLine(layerReturn.ExtendToString());
 
             Assert.Equal(layers.Length, layerReturn.Length);
             for (var i = 0; i < layers.Length; i++)
