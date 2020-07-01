@@ -7,7 +7,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// Class designed to calculate and produce a list of MapAreas representing each unique connected
+    /// Class designed to calculate and produce a list of Areas representing each unique connected
     /// area of the map.
     /// </summary>
     /// <remarks>

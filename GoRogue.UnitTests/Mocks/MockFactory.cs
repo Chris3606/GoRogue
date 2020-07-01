@@ -118,7 +118,7 @@ namespace GoRogue.UnitTests.Mocks
                 for (var j = 0; j < map.Height; j++)
                     if (j == i)
                         map[i, j] = false;
-                    else if (timesToBisect > 1 && j - 1 == 0)
+                    else if (timesToBisect > 1 && j + i == map.Width - 1)
                         map[i, j] = false;
                     else
                         map[i, j] = true;

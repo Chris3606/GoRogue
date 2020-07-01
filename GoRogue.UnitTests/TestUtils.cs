@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using GoRogue.MapViews;
 using AssertionMethodAttribute = JetBrains.Annotations.AssertionMethodAttribute;
 using SadRogue.Primitives;
@@ -40,8 +42,9 @@ namespace GoRogue.UnitTests
         /// <returns>Tuples containing every possible (unique) pairing of elements between the two enumerables.</returns>
         public static IEnumerable<(T1, T2)> Combinate<T1, T2>(this IEnumerable<T1> l1, IEnumerable<T2> l2)
         {
+            var l2List = l2.ToList();
             foreach (var x in l1)
-                foreach (var y in l2)
+                foreach (var y in l2List)
                     yield return (x, y);
         }
 
@@ -60,10 +63,14 @@ namespace GoRogue.UnitTests
         public static IEnumerable<(T1, T2, T3)> Combinate<T1, T2, T3>(this IEnumerable<(T1 i1, T2 i2)> tuples,
                                                                       IEnumerable<T3> l2)
         {
+            var l2List = l2.ToList();
             foreach (var (i1, i2) in tuples)
-                foreach (var y in l2)
+                foreach (var y in l2List)
                     yield return (i1, i2, y);
         }
+
+        public static IEnumerable<(T item, int index)> Enumerate<T>(this IEnumerable<T> self)
+            => self.Select((item, index) => (item, index));
 
         /// <summary>
         /// Creates an enumerable of the input parameters.
@@ -73,7 +80,6 @@ namespace GoRogue.UnitTests
         /// Input values to have within the resulting enumerable.
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
-
 
         public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
                                                   char floor = '.', char path = '*')

@@ -2,59 +2,67 @@
 using System.Linq;
 using GoRogue.MapGeneration;
 using GoRogue.MapViews;
+using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
-using Xunit; //using GoRogue.UnitTests.Mocks;
+using Xunit;
+using Xunit.Abstractions;
+using XUnit.ValueTuples; //using GoRogue.UnitTests.Mocks;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
     public class MapAreaFinderTests
     {
-        //private const int width = 50;
-        //private const int height = 50;
+        private const int _width = 50;
+        private const int _height = 50;
 
-        public static readonly List<(IMapView<bool>, AdjacencyRule, int)> TestData =
-            new List<(IMapView<bool>, AdjacencyRule, int)>();
-
-        /*
-        private readonly AdjacencyRule[] _adjacencies =
+        private static readonly IMapView<bool>[] _maps =
         {
-            AdjacencyRule.Cardinals, AdjacencyRule.Diagonals, AdjacencyRule.EightWay
+            MockFactory.Rectangle(_width, _height), MockFactory.CardinalBisection(_width, _height, 1),
+            MockFactory.DiagonalBisection(_width, _height, 1), MockFactory.CardinalBisection(_width, _height, 2),
+            MockFactory.DiagonalBisection(_width, _height, 2), MockFactory.DisconnectedSquares(_width, _height)
         };
 
-        private readonly int[] _expected =
+        private static readonly (AdjacencyRule rule, int expectedAreas)[][] _expectedAreas =
         {
-            1, 1, 1, //single rectangle
-            2, 2, 2, //single cardinal
-            2, 1, 1, //single diagonal
-            4, 4, 4, //double cardinal
-            4, 1, 1, //double diagonal
-            5, 5, 5 //disconnected squares
+            // Single rectangle bisection
+            new[] { (AdjacencyRule.Cardinals, 1), (AdjacencyRule.Diagonals, 2), (AdjacencyRule.EightWay, 1) },
+            // Single cardinal bisection
+            new[] { (AdjacencyRule.Cardinals, 2), (AdjacencyRule.Diagonals, 4), (AdjacencyRule.EightWay, 2) },
+            // Single diagonal bisection
+            new[] { (AdjacencyRule.Cardinals, 2), (AdjacencyRule.Diagonals, 3), (AdjacencyRule.EightWay, 1) },
+            // Double cardinal bisection
+            new[] { (AdjacencyRule.Cardinals, 4), (AdjacencyRule.Diagonals, 8), (AdjacencyRule.EightWay, 4) },
+            // Double diagonal bisection
+            new[] { (AdjacencyRule.Cardinals, 4), (AdjacencyRule.Diagonals, 4), (AdjacencyRule.EightWay, 1) },
+            // Disconnected squares
+            new[] { (AdjacencyRule.Cardinals, 25), (AdjacencyRule.Diagonals, 50), (AdjacencyRule.EightWay, 25) }
         };
 
-        private readonly IMapView<bool>[] _maps =
-        {
-            MockFactory.Rectangle(width, height), MockFactory.CardinalBisection(width, height, 1),
-            MockFactory.DiagonalBisection(width, height, 1), MockFactory.CardinalBisection(width, height, 2),
-            MockFactory.DiagonalBisection(width, height, 2), MockFactory.DisconnectedSquares(width, height)
-        };
-        */
+        private readonly ITestOutputHelper _output;
 
-        /*
-        public MapAreaFinderTests()
+        public MapAreaFinderTests(ITestOutputHelper output)
         {
-            var i = 0;
-            foreach (var map in _maps)
-                foreach (var rule in _adjacencies)
-                {
-                    //... combinate?
-                }
+            _output = output;
         }
-        */
 
-        //[Theory]
-        //[MemberData(nameof(TestData))]
+        public static IEnumerable<(IMapView<bool>, AdjacencyRule, int)> TestData
+        {
+            get
+            {
+                Assert.Equal(_maps.Length, _expectedAreas.Length);
+                foreach (var (item, index) in _maps.Enumerate())
+                    foreach (var (rule, expectedAreas) in _expectedAreas[index])
+                        yield return (item, rule, expectedAreas);
+            }
+        }
+
+        [Theory]
+        [MemberDataTuple(nameof(TestData))]
         public void MapAreasTest(IMapView<bool> map, AdjacencyRule adjacency, int expected)
         {
+            _output.WriteLine("Map used:");
+            _output.WriteLine(map.ExtendToString(elementStringifier: val => val ? "." : "#"));
+
             var maf = new MapAreaFinder(map, adjacency);
             var answer = maf.MapAreas().ToList();
 
