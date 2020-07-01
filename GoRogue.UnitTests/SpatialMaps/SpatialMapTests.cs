@@ -13,7 +13,7 @@ namespace GoRogue.UnitTests.SpatialMaps
         // Used to test events
         private Point _oldPos;
 
-        private void OnItemMoved(object s, ItemMovedEventArgs<MyIDImpl> e)
+        private void OnItemMoved(object? s, ItemMovedEventArgs<MyIDImpl> e)
         {
             Assert.Equal(_oldPos, e.OldPosition);
             Assert.Equal(_newPos, e.NewPosition);

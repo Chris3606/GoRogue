@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using GoRogue.MapViews;
-using AssertionMethodAttribute = JetBrains.Annotations.AssertionMethodAttribute;
 using SadRogue.Primitives;
 using Xunit;
 
@@ -15,10 +14,12 @@ namespace GoRogue.UnitTests
     /// </summary>
     public static class TestUtils
     {
-        [AssertionMethod]
         public static void NotNull([NotNull]object? obj)
         {
             Assert.NotNull(obj);
+            if (obj == null)
+                throw new Exception("Can't happen, prevents compiler from complaining.");
+
         }
         /// <summary>
         /// Returns the object as a single-element enumerable.

@@ -19,10 +19,9 @@ namespace GoRogue.UnitTests
             return true;
         }
 
-        private void TestSerialization<T>(T typeToSerialize, Func<T, T, bool> equality = null)
+        private static void TestSerialization<T>(T typeToSerialize, Func<T, T, bool>? equality = null)
         {
-            if (equality == null)
-                equality = (t1, t2) => t1?.Equals(t2) ?? ReferenceEquals(t2, null);
+            equality ??= (t1, t2) => t1?.Equals(t2) ?? ReferenceEquals(t2, null);
 
             var name = $"{typeof(T)}.bin";
 

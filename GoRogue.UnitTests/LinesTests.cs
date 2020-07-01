@@ -20,7 +20,7 @@ namespace GoRogue.UnitTests
             return (x, y);
         }
 
-        private void DrawLine(Point start, Point end, int width, int height, Lines.Algorithm type)
+        private static void DrawLine(Point start, Point end, int width, int height, Lines.Algorithm type)
         {
             var myChars = new char[width, height];
 

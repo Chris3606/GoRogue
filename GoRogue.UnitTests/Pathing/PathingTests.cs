@@ -468,9 +468,9 @@ namespace GoRogue.UnitTests.Pathing
         //}
     }
 
-    internal class GraphReturn
-    {
+    //internal class GraphReturn
+    //{
         //public CA.Graph Graph;
         //public CA.Node[,] Nodes;
-    }
+    //}
 }

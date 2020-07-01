@@ -12,9 +12,7 @@ namespace GoRogue.UnitTests
     }
 
     internal class UnorderedComponent
-    {
-        public int Value;
-    }
+    { }
 
     public class ComponentTests
     {
@@ -54,8 +52,6 @@ namespace GoRogue.UnitTests
             components.FisherYatesShuffle();
 
             var container = new ComponentContainer();
-
-            var compIndex = 0;
             for (var i = 0; i < components.Count; i++)
             {
                 container.AddComponent(components[i]);
@@ -63,12 +59,12 @@ namespace GoRogue.UnitTests
             }
 
             components = components.OrderBy(c => c.SortOrder).ToList();
-            compIndex = 0;
 
             var objects = new List<object>();
             objects.AddRange(components);
             objects.AddRange(unorderedComponents);
 
+            var compIndex = 0;
             foreach (var comp in container.GetComponents<object>())
             {
                 Assert.True(objects[compIndex] == comp);

@@ -1,14 +1,15 @@
 ﻿using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
 using JetBrains.Annotations;
-using Xunit; //using SadRogue.Primitives;
+using SadRogue.Primitives;
+using Xunit;
 
 namespace GoRogue.UnitTests.MapViews
 {
     public class MapViewTests
     {
-        private readonly int width = 50;
-        private readonly int height = 50;
+        private const int _width = 50;
+        private const int _height = 50;
 
         [AssertionMethod]
         private static void CheckMaps(IMapView<bool> genMap, IMapView<double> resMap)
@@ -23,8 +24,8 @@ namespace GoRogue.UnitTests.MapViews
                 }
         }
 
-        /*
-        private static void checkViewportBounds(Viewport<bool> viewport, Point expectedMinCorner,
+        [AssertionMethod]
+        private static void CheckViewportBounds(Viewport<bool> viewport, Point expectedMinCorner,
                                                 Point expectedMaxCorner)
         {
             Assert.Equal(expectedMaxCorner, viewport.ViewArea.MaxExtent);
@@ -54,12 +55,11 @@ namespace GoRogue.UnitTests.MapViews
                     Assert.True(viewport[pos - viewport.ViewArea.MinExtent]);
             }
         }
-        */
 
         [Fact]
         public void ApplyOverlayTest()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
 
             var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
 
@@ -72,7 +72,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaMapViewTest()
         {
-            var map = MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
             IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
             CheckMaps(map, lambdaMapView);
@@ -92,7 +92,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaSettableTranslationMapTest()
         {
-            var map = MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
 
             var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
             CheckMaps(map, settable);
@@ -113,7 +113,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaTranslationMapTest()
         {
-            var map = MockFactory.Rectangle(width, height);
+            var map = MockFactory.Rectangle(_width, _height);
             var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
             CheckMaps(map, lambdaMap);
@@ -124,42 +124,41 @@ namespace GoRogue.UnitTests.MapViews
             CheckMaps(map, lambdaMap);
         }
 
-        //[Fact]
-        //public void ViewportBoundingRectangleTest()
-        //{
-        //    const int VIEWPORT_WIDTH = 1280 / 12;
-        //    const int VIEWPORT_HEIGHT = 768 / 12;
-        //    const int MAP_WIDTH = 250;
-        //    const int MAP_HEIGHT = 250;
+        [Fact]
+        public void ViewportBoundingRectangleTest()
+        {
+            const int viewportWidth = 1280 / 12;
+            const int viewportHeight = 768 / 12;
+            const int mapWidth = 250;
+            const int mapHeight = 250;
 
-        //    var arrayMap = new ArrayMap<bool>(MAP_WIDTH, MAP_HEIGHT);
-        //    arrayMap = (ArrayMap<bool>)MockFactory.Rectangle(arrayMap);
+            var map = MockFactory.Rectangle(mapWidth, mapHeight);
 
-        //    var viewport = new Viewport<bool>(arrayMap, new Rectangle(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT));
-        //    checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
+            var viewport = new Viewport<bool>(map, new Rectangle(0, 0, viewportWidth, viewportHeight));
+            CheckViewportBounds(viewport, (0, 0), (viewportWidth - 1, viewportHeight - 1));
 
-        //    viewport.ViewArea = viewport.ViewArea.WithPosition((-1, 0)); // Should end up being 0, 0 thanks to bounding
-        //    checkViewportBounds(viewport, (0, 0), (VIEWPORT_WIDTH - 1, VIEWPORT_HEIGHT - 1));
+            // Should end up being 0, 0 thanks to bounding
+            viewport.SetViewArea(viewport.ViewArea.WithPosition((-1, 0)));
+            CheckViewportBounds(viewport, (0, 0), (viewportWidth - 1, viewportHeight - 1));
 
-        //    viewport.ViewArea = viewport.ViewArea.WithPosition((5, 5));
-        //    checkViewportBounds(viewport, (5, 5), (VIEWPORT_WIDTH - 1 + 5, VIEWPORT_HEIGHT - 1 + 5));
+            viewport.SetViewArea(viewport.ViewArea.WithPosition((5, 5)));
+            CheckViewportBounds(viewport, (5, 5), (viewportWidth - 1 + 5, viewportHeight - 1 + 5));
 
-        //    // Move outside x-bounds by 1
-        //    Point newCenter = (MAP_WIDTH - VIEWPORT_WIDTH / 2 + 1, MAP_HEIGHT - VIEWPORT_HEIGHT / 2 + 1);
-        //    // viewport.ViewArea = viewport.ViewArea.NewWithMinCorner(Coord.Get(250, 100));
-        //    viewport.ViewArea = viewport.ViewArea.WithCenter(newCenter);
+            // Move outside x-bounds by 1
+            Point newCenter = (mapWidth - viewportWidth / 2 + 1, mapHeight - viewportHeight / 2 + 1);
+            viewport.SetViewArea(viewport.ViewArea.WithCenter(newCenter));
 
-        //    Point minVal = (MAP_WIDTH - VIEWPORT_WIDTH, MAP_HEIGHT - VIEWPORT_HEIGHT);
-        //    Point maxVal = (MAP_WIDTH - 1, MAP_HEIGHT - 1);
-        //    checkViewportBounds(viewport, minVal, maxVal);
-        //}
+            Point minVal = (mapWidth - viewportWidth, mapHeight - viewportHeight);
+            Point maxVal = (mapWidth - 1, mapHeight - 1);
+            CheckViewportBounds(viewport, minVal, maxVal);
+        }
 
         [Fact]
         public void UnboundedViewportTest()
         {
-            const int MAP_WIDTH = 100;
-            const int MAP_HEIGHT = 100;
-            var map = new ArrayMap<int>(MAP_WIDTH, MAP_HEIGHT);
+            const int mapWidth = 100;
+            const int mapHeight = 100;
+            var map = new ArrayMap<int>(mapWidth, mapHeight);
             var unboundedViewport = new UnboundedViewport<int>(map, 1);
 
             foreach (var pos in map.Positions())
@@ -168,7 +167,7 @@ namespace GoRogue.UnitTests.MapViews
             unboundedViewport.ViewArea = unboundedViewport.ViewArea.Translate((5, 5));
 
             foreach (var pos in unboundedViewport.Positions())
-                if (pos.X < MAP_WIDTH - 5 && pos.Y < MAP_HEIGHT - 5)
+                if (pos.X < mapWidth - 5 && pos.Y < mapHeight - 5)
                     Assert.Equal(0, unboundedViewport[pos]);
                 else
                     Assert.Equal(1, unboundedViewport[pos]);
@@ -178,7 +177,7 @@ namespace GoRogue.UnitTests.MapViews
             foreach (var pos in unboundedViewport.Positions())
                 Assert.Equal(0, unboundedViewport[pos]);
 
-            unboundedViewport.ViewArea = unboundedViewport.ViewArea.WithPosition((MAP_WIDTH - 1, MAP_HEIGHT - 1));
+            unboundedViewport.ViewArea = unboundedViewport.ViewArea.WithPosition((mapWidth - 1, mapHeight - 1));
 
             foreach (var pos in unboundedViewport.Positions())
                 if (pos.X == 0 && pos.Y == 0)
