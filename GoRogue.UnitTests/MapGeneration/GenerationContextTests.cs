@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GoRogue.MapGeneration;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
@@ -11,24 +10,12 @@ namespace GoRogue.UnitTests.MapGeneration
     {
         public GenerationContextTests() => _timesNewCalled = 0;
 
-        public static IEnumerable<(int width, int height)> ValidSizes => TestUtils.Enumerable(
-            (1, 2),
-            (1, 1),
-            (5, 6),
-            (10, 20),
-            (1000, 987)
-        );
+        public static (int width, int height)[] ValidSizes = { (1, 2), (1, 1), (5, 6), (10, 20), (1000, 987) };
 
-        public static IEnumerable<(int width, int height)> InvalidSizes => TestUtils.Enumerable(
-            (0, 5),
-            (4, 0),
-            (0, 0),
-            (-1, 6),
-            (7, -1),
-            (-7, 0),
-            (0, -2),
-            (-3, -9)
-        );
+        public static (int width, int height)[] InvalidSizes =
+        {
+            (0, 5), (4, 0), (0, 0), (-1, 6), (7, -1), (-7, 0), (0, -2), (-3, -9)
+        };
 
         private int _timesNewCalled;
 
@@ -50,18 +37,12 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Null(context);
         }
 
-        private MapContextComponent1 CreateFunc()
-        {
-            _timesNewCalled++;
-            return new MapContextComponent1();
-        }
-
         [Fact]
         public void GetComponentOrNewWithExistingComponent()
         {
             var context = new GenerationContext(10, 15);
             var component = new MapContextComponent1();
-            context.AddComponent(component);
+            context.AddComponent(component); // Inherited so tested in the Component system.
 
             // Existing component should prevent creation
             var component2 = context.GetComponentOrNew(CreateFunc);
@@ -102,6 +83,12 @@ namespace GoRogue.UnitTests.MapGeneration
             component3 = context.GetComponentOrNew(CreateFunc);
             Assert.Equal(2, _timesNewCalled);
             Assert.True(component3 == component2 || component3 == component);
+        }
+
+        private MapContextComponent1 CreateFunc()
+        {
+            _timesNewCalled++;
+            return new MapContextComponent1();
         }
     }
 }

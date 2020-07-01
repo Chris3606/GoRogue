@@ -1,7 +1,6 @@
 ﻿using System;
 using GoRogue.GameFramework;
 using GoRogue.MapGeneration;
-using GoRogue.MapGeneration.Steps;
 using GoRogue.MapViews;
 using SadRogue.Primitives;
 using Xunit;

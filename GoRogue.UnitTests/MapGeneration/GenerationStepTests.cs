@@ -24,6 +24,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             var step = new MockGenerationStep(() => _timesOnPerformCalled++, "name");
             Assert.Equal("name", step.Name);
+            Assert.Equal(0, _timesOnPerformCalled); // Does not perform the step
         }
 
         [Fact]

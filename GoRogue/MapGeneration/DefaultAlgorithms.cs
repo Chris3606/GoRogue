@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.Steps;
 using GoRogue.MapGeneration.Steps.Translation;

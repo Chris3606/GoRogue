@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GoRogue.MapGeneration;
 using GoRogue.UnitTests.Mocks;
+using JetBrains.Annotations;
 using Xunit;
 using XUnit.ValueTuples;
 
@@ -18,15 +19,17 @@ namespace GoRogue.UnitTests.MapGeneration
             _orderChecker = new IncrementOnlyValue();
         }
 
-        public static IEnumerable<(int width, int height)> ValidSizes => TestUtils.Enumerable(
+        public static (int width, int height)[] ValidSizes =
+        {
             (1, 2),
             (1, 1),
             (5, 6),
             (10, 20),
             (1000, 987)
-        );
+        };
 
-        public static IEnumerable<(int width, int height)> InvalidSizes => TestUtils.Enumerable(
+        public static (int width, int height)[] InvalidSizes =
+        {
             (0, 5),
             (4, 0),
             (0, 0),
@@ -35,7 +38,7 @@ namespace GoRogue.UnitTests.MapGeneration
             (-7, 0),
             (0, -2),
             (-3, -9)
-        );
+        };
 
         private readonly Generator _generator;
         private int _addedCount;
@@ -151,6 +154,14 @@ namespace GoRogue.UnitTests.MapGeneration
             // We directly assert that all the steps were called; IncrementOnlyValue will throw if any were executed out of order or duplicated.
             _generator.Generate();
             Assert.Equal(3, _addedCount);
+        }
+
+        [Fact]
+        public void GenerateReturnsThis()
+        {
+            // Verify Generate returns its instance (for chaining)
+            var ret = _generator.Generate();
+            Assert.Same(_generator, ret);
         }
     }
 }
