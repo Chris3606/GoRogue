@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.DiceNotation;
+using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using Troschuetz.Random.Generators;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,6 +24,22 @@ namespace GoRogue.UnitTests
         private const int _height = 50;
         private readonly ITestOutputHelper _output;
 
+        [Fact]
+        public void ManualPrintDungeonMazeMap()
+        {
+            var rng = new XorShift128Generator(12345);
+
+            var generator = new Generator(40, 30);
+            generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng, saveDeadEndChance: 10));
+            generator.Generate();
+
+            var wallFloorMap = generator.Context.GetComponent<ISettableMapView<bool>>("WallFloor");
+            Assert.NotNull(wallFloorMap);
+
+            _output.WriteLine("Generated map: ");
+            _output.WriteLine(wallFloorMap!.ExtendToString(elementStringifier: val => val ? "." : "#"));
+        }
+        
         [Fact]
         public void ManualPrint2DArray()
         {

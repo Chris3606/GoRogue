@@ -1,5 +1,6 @@
 ﻿using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
+using JetBrains.Annotations;
 using Xunit; //using SadRogue.Primitives;
 
 namespace GoRogue.UnitTests.MapViews
@@ -9,6 +10,7 @@ namespace GoRogue.UnitTests.MapViews
         private readonly int width = 50;
         private readonly int height = 50;
 
+        [AssertionMethod]
         private static void CheckMaps(IMapView<bool> genMap, IMapView<double> resMap)
         {
             for (var x = 0; x < genMap.Width; x++)
