@@ -11,6 +11,7 @@ using SadRogue.Primitives;
 using Troschuetz.Random.Generators;
 using Xunit;
 using Xunit.Abstractions;
+using XUnit.ValueTuples;
 
 //using System.Drawing;
 
@@ -22,7 +23,45 @@ namespace GoRogue.UnitTests
 
         private const int _width = 50;
         private const int _height = 50;
+        private static readonly Point _start = (1, 2);
+        private static readonly Point _end = (17, 14);
         private readonly ITestOutputHelper _output;
+
+        public static Distance[] Distances = { Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan };
+
+        [Theory]
+        [MemberDataEnumerable(nameof(Distances))]
+        public void ManualPrintAStarPaths(Distance distanceCalc)
+        {
+            var map = MockFactory.Rectangle(_width, _height);
+
+            var pathfinder = new AStar(map, distanceCalc);
+            var path = pathfinder.ShortestPath(_start, _end);
+            TestUtils.NotNull(path);
+
+            TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
+
+            foreach (var point in path.StepsWithStart)
+                _output.WriteLine(point.ToString());
+        }
+
+        [Fact]
+        public void ManualPrintGoalMap()
+        {
+            var map = MockFactory.Rectangle(_width, _height);
+
+            var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
+            foreach (var pos in stateMap.Positions())
+                stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
+
+            stateMap[_width / 2, _height / 2] = GoalState.Goal;
+            stateMap[_width / 2 + 5, _height / 2 + 5] = GoalState.Goal;
+
+            var goalMap = new GoalMap(stateMap, Distance.Euclidean);
+            goalMap.Update();
+
+            _output.WriteLine(goalMap.ToString(5, "0.00"));
+        }
 
         [Fact]
         public void ManualPrintDungeonMazeMap()
@@ -39,7 +78,7 @@ namespace GoRogue.UnitTests
             _output.WriteLine("Generated map: ");
             _output.WriteLine(wallFloorMap!.ExtendToString(elementStringifier: val => val ? "." : "#"));
         }
-        
+
         [Fact]
         public void ManualPrint2DArray()
         {
