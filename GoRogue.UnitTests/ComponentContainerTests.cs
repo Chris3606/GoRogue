@@ -33,9 +33,9 @@ namespace GoRogue.UnitTests
         private readonly ComponentContainer _componentContainer;
         private int _addedCount;
 
+        // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
         [Fact]
-        public void
-            AddComponentBasic() // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
+        public void AddComponentBasic()
         {
             var component = new Component1();
             var component2 = new Component1();
@@ -52,9 +52,9 @@ namespace GoRogue.UnitTests
             Assert.Equal(2, _addedCount);
         }
 
+        // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
         [Fact]
-        public void
-            AddComponentTag() // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
+        public void AddComponentTag()
         {
             var component = new Component1();
             var component2 = new Component1();
