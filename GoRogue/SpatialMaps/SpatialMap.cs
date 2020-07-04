@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -241,18 +240,22 @@ namespace GoRogue.SpatialMaps
         /// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
         /// was moved.
         /// </returns>
-        public IEnumerable<T> MoveValid(Point current, Point target)
+        public List<T> MoveValid(Point current, Point target)
         {
+            var result = new List<T>();
+
             if (_positionMapping.ContainsKey(current) && !_positionMapping.ContainsKey(target))
             {
                 var movingTuple = _positionMapping[current];
                 _positionMapping.Remove(current);
                 movingTuple.Position = target;
                 _positionMapping.Add(target, movingTuple);
-                yield return movingTuple.Item;
+                result.Add(movingTuple.Item);
 
                 ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(movingTuple.Item, current, target));
             }
+
+            return result;
         }
 
         /// <summary>
@@ -273,7 +276,7 @@ namespace GoRogue.SpatialMaps
         /// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
         /// was moved.
         /// </returns>
-        public IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
+        public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
@@ -306,16 +309,20 @@ namespace GoRogue.SpatialMaps
         /// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
         /// was found at that position.
         /// </returns>
-        public IEnumerable<T> Remove(Point position)
+        public List<T> Remove(Point position)
         {
+            var result = new List<T>();
+
             _positionMapping.TryGetValue(position, out var tuple);
             if (tuple != null)
             {
                 _positionMapping.Remove(position);
                 _itemMapping.Remove(tuple.Item);
                 ItemRemoved?.Invoke(this, new ItemEventArgs<T>(tuple.Item, tuple.Position));
-                yield return tuple.Item;
+                result.Add(tuple.Item);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -332,7 +339,7 @@ namespace GoRogue.SpatialMaps
         /// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
         /// was found at that position.
         /// </returns>
-        public IEnumerable<T> Remove(int x, int y) => Remove(new Point(x, y));
+        public List<T> Remove(int x, int y) => Remove(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the spatial map's
@@ -439,9 +446,7 @@ namespace GoRogue.SpatialMaps
                 throw new InvalidOperationException(
                     $"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.");
 
-            // This spatial map can only have one item at each location so this is fine.  We force immediate execution by calling ToArray
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            MoveValid(current, target).ToArray();
+            MoveValid(current, target);
         }
 
         /// <summary>

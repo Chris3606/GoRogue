@@ -29,6 +29,22 @@ namespace GoRogue.UnitTests
 
         public static Distance[] Distances = { Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan };
 
+        [Fact]
+        public void ManualPrintLayeredSpatialMap()
+        {
+            var map = new LayeredSpatialMap<MockSpatialMapItem>(3, 1, LayerMasker.DEFAULT.Mask(2))
+            {
+                { new MockSpatialMapItem(1), (1, 2) },
+                { new MockSpatialMapItem(1), (3, 4) },
+                { new MockSpatialMapItem(2), (1, 1) },
+                { new MockSpatialMapItem(3), (0, 0) }
+            };
+
+
+            _output.WriteLine("LayeredSpatialMap: ");
+            _output.WriteLine(map.ToString());
+        }
+
         [Theory]
         [MemberDataEnumerable(nameof(Distances))]
         public void ManualPrintAStarPaths(Distance distanceCalc)
