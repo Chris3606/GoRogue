@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using Xunit;
+using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
@@ -16,15 +17,47 @@ namespace GoRogue.UnitTests.MapGeneration
         private readonly Point se = new Point(7, 3);
         Region area;
 
-        public RegionTests()
+        private const int _width = 50;
+        private const int _height = 50;
+        private static readonly Point _start = (1, 2);
+        private static readonly Point _end = (17, 14);
+        private readonly ITestOutputHelper _output;
+        public RegionTests(ITestOutputHelper output)
         {
             area = new Region("forbidden zone", se, ne, nw, sw);
+            _output = output;
+            PrintRegion(area);
+        }
+
+        private void PrintRegion(Region region)
+        {
+            var map = new char[region.Width + 1, region.Height + 1];
+            _output.WriteLine(region.Name + ", Width: " + region.Width + ", Height: " + region.Height);
+
+            for (int y = 0; y <= region.Height; y++)
+            {
+                string line = "";
+                for (int x = 0; x <= region.Width; x++)
+                {
+                    Point here = new Point(x, y);
+                    if (region.Connections.Contains(here))
+                        map[x, y] = '+';
+                    else if (region.OuterPoints.Contains(here))
+                        map[x, y] = '#';
+                    else if (region.InnerPoints.Contains(here))
+                        map[x, y] = '.';
+                    else
+                        map[x, y] = ' ';
+                    line += map[x, y];
+                }
+                _output.WriteLine(line);
+            }
         }
         [Fact]
         public void AreaTest()
         {
             Assert.Equal(14, area.OuterPoints.Count());
-            Assert.Equal(22, area.InnerPoints.Count());
+            Assert.Equal(20, area.InnerPoints.Count());
             Assert.Equal(5, area.NorthBoundary.Count());
             Assert.Equal(4, area.WestBoundary.Count());
             Assert.Equal(5, area.SouthBoundary.Count());
@@ -33,12 +66,11 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void ToStringOverrideTest()
         {
-            Assert.Equal("forbidden zone", area.ToString());
+            Assert.Equal("forbidden zone: NW(1,1)=> NE(5,0)=> SE(7,3)=> SW(3,4)", area.ToString());
         }
         [Fact]
         public void ContainsTest()
         {
-            Region area = new Region("forbidden zone", se, ne, nw, sw);
             Assert.False(area.Contains(new Point(-5, -5)));
             Assert.False(area.Contains(new Point(1, 2)));
             Assert.False(area.Contains(new Point(9, 8)));
@@ -56,6 +88,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Point br = new Point(2, 2);
             Point bl = new Point(0, 2);
             Region a2 = new Region("zone of terror", br, tr, tl, bl);
+            PrintRegion(a2);
             List<Point> answer = area.Overlap(a2).ToList();
 
             foreach (Point c in answer)
@@ -143,22 +176,27 @@ namespace GoRogue.UnitTests.MapGeneration
             Point ne = new Point(9, 0);
             Region mainArea = new Region("parent area", ne: ne, nw: nw, se: se, sw: sw);
 
+            PrintRegion(mainArea);
             nw = new Point(1, 1);
             se = new Point(5, 5);
             sw = new Point(1, 5);
             ne = new Point(5, 1);
             Region imposingSubArea = new Region("imposing sub area", ne: ne, nw: nw, se: se, sw: sw);
+            PrintRegion(imposingSubArea);
 
             nw = new Point(4, 4);
             se = new Point(8, 8);
             sw = new Point(4, 8);
             ne = new Point(8, 4);
             Region hostSubArea = new Region("host sub area", ne: ne, nw: nw, se: se, sw: sw);
+            PrintRegion(hostSubArea);
 
             ((List<Region>)mainArea.SubRegions).Add(hostSubArea);
             ((List<Region>)mainArea.SubRegions).Add(imposingSubArea);
+            PrintRegion(mainArea);
 
             mainArea.DistinguishSubRegions();
+            PrintRegion(mainArea);
             hostSubArea = mainArea["imposing sub area"];
             imposingSubArea = mainArea["host sub area"];
             foreach (Point c in imposingSubArea.InnerPoints)
@@ -224,7 +262,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             Assert.Empty(a.OuterPoints);
             Assert.Empty(a.InnerPoints);
-            Assert.Equal(b.OuterPoints.Count(), bCountBefore);
+            Assert.Equal(bCountBefore,b.OuterPoints.Count());
         }
         [Fact]
         public void RotateTest()
@@ -247,10 +285,10 @@ namespace GoRogue.UnitTests.MapGeneration
              *       # (6, 14)
              */
             float degrees = 45.0f;
-            Rectangle rectangle = new Rectangle(new Point(1, 1), new Point(32, 48));
-            Region prior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), new Point(6, 14));
-            Region copyOfPrior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), new Point(6, 14));
-            Region post = prior.Rotate(degrees, false, new Point(6,14));
+            Point centerOfRotation = new Point(6,14);
+            Region prior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), centerOfRotation);
+            Region copyOfPrior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), centerOfRotation);
+            Region post = prior.Rotate(degrees, false, centerOfRotation);
             Assert.Equal(prior.Bottom, post.Bottom);
             Assert.Equal(prior.SouthWestCorner, post.SouthWestCorner);
             Assert.True(prior.Left < post.Left);
@@ -258,11 +296,11 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(prior.SouthEastCorner.X < post.SouthEastCorner.X);
             Assert.True(prior.SouthEastCorner.Y < post.SouthEastCorner.Y);
 
-            //Assert.AreEqual(copyOfPrior, prior);
+            Assert.Equal(copyOfPrior, prior);
 
-            //prior.Rotate(degrees, true, new Point(6, 14));
-
-            //Assert.AreEqual(prior, post);
+            Region rightAnglePost = prior.Rotate(degrees * 2, false, centerOfRotation);
+            post.Rotate(degrees, true, centerOfRotation);
+            Assert.Equal(rightAnglePost, post);
         }
 
         public void Dispose()

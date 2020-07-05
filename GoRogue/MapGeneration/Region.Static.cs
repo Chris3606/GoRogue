@@ -66,7 +66,7 @@ namespace GoRogue.MapGeneration
         public static IEnumerable<Point> InnerFromOuterPoints(IEnumerable<Point> outer)
         {
             outer = outer.OrderBy(x => x.X).ToList();
-            for (int i = outer.First().X; i <= outer.Last().X; i++)
+            for (int i = outer.First().X + 1; i < outer.Last().X; i++)
             {
                 List<Point> chunk = outer.Where(w => w.X == i).OrderBy(o => o.Y).ToList();
                 if(chunk.Count > 0)

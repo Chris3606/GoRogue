@@ -10,6 +10,7 @@ namespace GoRogue.MapGeneration
     /// </summary>
     public partial class Region
     {
+        #region generation
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
@@ -28,17 +29,6 @@ namespace GoRogue.MapGeneration
         /// A private constructor for region that is only used internally
         /// </summary>
         private Region() { }
-
-        #region miscellaneous features
-
-        /// <summary>
-        /// An override of ToString()
-        /// </summary>
-        /// <returns>The regions name (only)</returns>
-        public override string ToString()
-        {
-            return Name;
-        }
 
         /// <summary>
         /// A private function for generating the values of the region based on corners.
@@ -68,7 +58,35 @@ namespace GoRogue.MapGeneration
         }
         #endregion
 
-        #region utilities
+        #region overrides
+        public override string ToString()
+        {
+            return Name + ": NW" + NorthWestCorner +"=> NE" + NorthEastCorner + "=> SE" + SouthEastCorner + "=> SW" + SouthWestCorner;
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != typeof(Region))
+                return false;
+            else
+                return this == (Region)obj;
+        }
+        public static bool operator ==(Region left, Region right)
+        {
+            bool equals = left.Name == right.Name;
+            if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
+            if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
+            if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
+            if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
+            if (left.Center != right.Center) equals = false;
+            return equals;
+        }
+        public static bool operator !=(Region left, Region right)
+        {
+            return !(left == right);
+        }
+        #endregion
+
+        #region management
         /// <summary>
         /// Gets all Points that overlap with another region
         /// </summary>
@@ -87,16 +105,28 @@ namespace GoRogue.MapGeneration
         /// Whether or not this region contains a point
         /// </summary>
         /// <param name="here">The Point to evaluate</param>
-        /// <returns></returns>
+        /// <returns>If this region contains the given point</returns>
         public bool Contains(Point here)
         {
             return InnerPoints.Contains(here);
         }
         /// <summary>
+        /// Is this Point one of the corners of the Region?
+        /// </summary>
+        /// <param name="here">the point to evaluate</param>
+        /// <returns>whether or not the point is within the region</returns>
+        private bool IsCorner(Point here)
+        {
+            return here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
+        }
+        #endregion
+
+        #region transform
+        /// <summary>
         /// Shifts the entire region by performing Point addition
         /// </summary>
         /// <param name="distance">the distance and direction to shift the region</param>
-        /// <returns></returns>
+        /// <returns>This region shifted by the distance</returns>
         public Region Shift(Point distance)
         {
             Region region = new Region(Name, SouthEastCorner + distance, NorthEastCorner + distance, NorthWestCorner + distance, SouthWestCorner + distance);
@@ -106,8 +136,6 @@ namespace GoRogue.MapGeneration
             }
             return region;
         }
-
-
         /// <summary>
         /// Cuts Points out of a parent region if that point exists in a subregion,
         /// and cuts Points out of subregions if that point is already in a subregion
@@ -140,7 +168,6 @@ namespace GoRogue.MapGeneration
                 regionsDistinguished.Add(region);
             }
         }
-
         /// <summary>
         /// Removes a common point from the OuterPoints of both regions
         /// and adds it to the Connections of both Regions
@@ -165,16 +192,6 @@ namespace GoRogue.MapGeneration
             ((List<Point>)a.Connections).Add(connection);
             ((List<Point>)b.OuterPoints).Remove(connection);
             ((List<Point>)b.Connections).Add(connection);
-        }
-
-        /// <summary>
-        /// Is this Point one of the corners of the Region?
-        /// </summary>
-        /// <param name="here">the point to evaluate</param>
-        /// <returns>whether or not the point is within the region</returns>
-        private bool IsCorner(Point here)
-        {
-            return here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
         }
 
         /// <summary>
@@ -237,16 +254,13 @@ namespace GoRogue.MapGeneration
         /// </remarks>
         public virtual Region Rotate(float degrees, bool doToSelf, Point origin = default)
         {
-            Point center;
             Region Region;
             int quarterTurns = 0;
             double radians = SadRogue.Primitives.MathHelpers.ToRadian(degrees);
 
             List<Point> corners = new List<Point>();
             if (origin == default(Point))
-                center = new Point((Left + Right) / 2, (Top + Bottom) / 2);
-            else
-                center = origin;
+                origin = new Point((Left + Right) / 2, (Top + Bottom) / 2);
 
             while (degrees < 0)
                 degrees += 360;
@@ -254,31 +268,32 @@ namespace GoRogue.MapGeneration
             while (degrees > 360)
                 degrees -= 360;
 
-            while (degrees > 90)
+            float d = degrees;
+            while (d > 45)
             {
-                Region = QuarterRotation(doToSelf, origin);
+                d -= 90;
                 quarterTurns++;
-                degrees -= 90;
             }
-            Point sw = SouthWestCorner - center;
-            int x = (int)(sw.X * Math.Cos(radians) - sw.Y * Math.Sin(radians));
-            int y = (int)(sw.X * Math.Sin(radians) + sw.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + center);
 
-            Point se = SouthEastCorner - center;
-            x = (int)(se.X * Math.Cos(radians) - se.Y * Math.Sin(radians));
-            y = (int)(se.X * Math.Sin(radians) + se.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + center);
+            Point sw = SouthWestCorner - origin;
+            int x = (int) Math.Round(sw.X * Math.Cos(radians) - sw.Y * Math.Sin(radians));
+            int y = (int) Math.Round(sw.X * Math.Sin(radians) + sw.Y * Math.Cos(radians));
+            corners.Add(new Point(x, y) + origin);
 
-            Point nw = NorthWestCorner - center;
-            x = (int)(nw.X * Math.Cos(radians) - nw.Y * Math.Sin(radians));
-            y = (int)(nw.X * Math.Sin(radians) + nw.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + center);
+            Point se = SouthEastCorner - origin;
+            x = (int) Math.Round(se.X * Math.Cos(radians) - se.Y * Math.Sin(radians));
+            y = (int) Math.Round(se.X * Math.Sin(radians) + se.Y * Math.Cos(radians));
+            corners.Add(new Point(x, y) + origin);
 
-            Point ne = NorthEastCorner - center;
-            x = (int)(ne.X * Math.Cos(radians) - ne.Y * Math.Sin(radians));
-            y = (int)(ne.X * Math.Sin(radians) + ne.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + center);
+            Point nw = NorthWestCorner - origin;
+            x = (int) Math.Round(nw.X * Math.Cos(radians) - nw.Y * Math.Sin(radians));
+            y = (int) Math.Round(nw.X * Math.Sin(radians) + nw.Y * Math.Cos(radians));
+            corners.Add(new Point(x, y) + origin);
+
+            Point ne = NorthEastCorner - origin;
+            x = (int) Math.Round(ne.X * Math.Cos(radians) - ne.Y * Math.Sin(radians));
+            y = (int) Math.Round(ne.X * Math.Sin(radians) + ne.Y * Math.Cos(radians));
+            corners.Add(new Point(x, y) + origin);
 
             sw = corners.OrderBy(c => -c.Y).ThenBy(c => c.X).First();
             corners.Remove(sw);
@@ -291,40 +306,13 @@ namespace GoRogue.MapGeneration
 
             ne = corners.OrderBy(c => -c.X).First();
 
-            /*
-            List<int> nconnections = new List<int>();
-            List<int> wconnections = new List<int>();
-            List<int> econnections = new List<int>();
-            List<int> sconnections = new List<int>();
-
-            List<Point> boundary = NorthBoundary.OrderBy(x => x.X).ToList(); //from left to right
-            for (int i = 0; i < boundary.Count; i++)
-                if (Connections.Contains(boundary[i]))
-                    nconnections.Add(i);
-
-            boundary = SouthBoundary.OrderBy(x => -x.X).ToList(); //from right to left
-            for (int i = 0; i < boundary.Count; i++)
-                if (Connections.Contains(boundary[i]))
-                    sconnections.Add(i);
-
-            boundary = EastBoundary.OrderBy(x => x.Y).ToList(); //from top to bottom
-            for (int i = 0; i < boundary.Count; i++)
-                if (Connections.Contains(boundary[i]))
-                    econnections.Add(i);
-
-            boundary = WestBoundary.OrderBy(x => -x.Y).ToList(); //from bottom to top
-            for (int i = 0; i < boundary.Count; i++)
-                if (Connections.Contains(boundary[i]))
-                    wconnections.Add(i);
-                    */
-
             if (doToSelf)
             {
                 Generate(se, ne, nw, sw);
 
                 foreach (Region subRegion in SubRegions)
                 {
-                    subRegion.Rotate(degrees, true, center);
+                    subRegion.Rotate(degrees, true, origin);
                 }
                 return this;
             }
@@ -335,10 +323,7 @@ namespace GoRogue.MapGeneration
         private Region QuarterRotation(bool doToSelf, Point origin)
         {
             //transpose
-            //reverse horizontal
-
             int radius = Math.Abs(origin.X - Right);
-
             int nextDiff = Math.Abs(origin.X - Left);
             radius = radius < nextDiff ? nextDiff : radius;
 

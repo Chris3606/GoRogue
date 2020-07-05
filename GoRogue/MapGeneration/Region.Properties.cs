@@ -31,7 +31,7 @@ namespace GoRogue.MapGeneration
         public IEnumerable<Point> OuterPoints { get; private set; } = new List<Point>();
 
         /// <summary>
-        /// All of the points inside this region, including boundary points and connections
+        /// All of the points inside this region, excluding boundary points and connections
         /// </summary>
         public IEnumerable<Point> InnerPoints { get; private set; } = new List<Point>();
 
@@ -118,7 +118,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points in this region
         /// </summary>
-        public IEnumerable<Point> Points { get => OuterPoints.Concat(InnerPoints).ToList(); }
+        public IEnumerable<Point> Points { get => OuterPoints.Concat(InnerPoints).Concat(Connections).ToList(); }
 
         /// <summary>
         /// The Center point of this region
