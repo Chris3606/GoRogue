@@ -54,7 +54,7 @@ namespace GoRogue.MapGeneration
             Point se = origin + new Point(width * 2, height);
             Point sw = origin + new Point(width, height);
             Region area = new Region(name, se, ne, nw, sw);
-            //area = area.Rotate(rotationDegrees);
+            area = area.Rotate(rotationDegrees, true, origin);
             return area;
         }
 

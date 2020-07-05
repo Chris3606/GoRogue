@@ -108,7 +108,7 @@ namespace GoRogue.MapGeneration
         /// <returns>If this region contains the given point</returns>
         public bool Contains(Point here)
         {
-            return InnerPoints.Contains(here);
+            return InnerPoints.Contains(here) || OuterPoints.Contains(here) || Connections.Contains(here);
         }
         /// <summary>
         /// Is this Point one of the corners of the Region?

@@ -22,6 +22,15 @@ namespace GoRogue.UnitTests.MapGeneration
         private static readonly Point _start = (1, 2);
         private static readonly Point _end = (17, 14);
         private readonly ITestOutputHelper _output;
+
+
+        private readonly Point start = new Point(1, 1);
+        private readonly int width = 9;
+        private readonly int height = 7;
+        private readonly int rise = 1;
+        private readonly int run = 4;
+        private readonly double angleRadians = 0.25;
+
         public RegionTests(ITestOutputHelper output)
         {
             area = new Region("forbidden zone", se, ne, nw, sw);
@@ -101,8 +110,8 @@ namespace GoRogue.UnitTests.MapGeneration
         public void LeftAtTest()
         {
             Assert.Equal(nw.X, area.LeftAt(nw.Y));
-            Assert.Equal(4, area.LeftAt(area.Top)); //the rise/run of the top left-right meetx y=0 at x=3
-            Assert.Equal(3, area.LeftAt(area.Bottom));
+            Assert.Equal(4, area.LeftAt(area.Top));
+            Assert.Equal(2, area.LeftAt(area.Bottom));
         }
         [Fact]
         public void RightAtTest()
@@ -303,6 +312,61 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(rightAnglePost, post);
         }
 
+        [Fact]
+        public void RectangleTest()
+        {
+
+            Region room = Region.Rectangle("my office", start, width, height, angleRadians);
+
+            Point nw = room.NorthWestCorner;
+            Point sw = room.SouthWestCorner;
+            Point se = room.SouthEastCorner;
+            Point ne = room.NorthEastCorner;
+
+            Assert.Equal(nw, new Point(1, 1));
+
+            Assert.True(nw.X > sw.X);
+            Assert.True(sw.Y > nw.Y);
+            Assert.True(se.X > sw.X);
+            Assert.True(se.Y > sw.Y);
+            Assert.True(ne.X > nw.X);
+            Assert.True(ne.Y > nw.Y);
+            Assert.True(ne.X > se.X);
+            Assert.True(se.Y > ne.Y);
+
+            double topDiff = MathHelpers.DistanceBetween(nw, ne);
+            double rightDiff = MathHelpers.DistanceBetween(se, ne);
+            double bottomDiff = MathHelpers.DistanceBetween(sw, se);
+            double leftDiff = MathHelpers.DistanceBetween(nw, sw);
+            Assert.Equal(topDiff, bottomDiff);
+            Assert.Equal(leftDiff, rightDiff);
+        }
+        [Fact]
+        public static void FromRectangleTest()
+        {
+            Rectangle rectangle = new Rectangle(new Point(1, 1), new Point(5, 5));
+            Region area = Region.FromRectangle("square", rectangle);
+            Assert.Equal(rectangle.Width + 1, area.Width);
+            Assert.Equal(rectangle.Height + 1, area.Height);
+            Assert.Equal(20, area.OuterPoints.Count());
+            Assert.Equal(6, area.NorthBoundary.Count());
+            Assert.Equal(6, area.SouthBoundary.Count());
+            Assert.Equal(6, area.EastBoundary.Count());
+            Assert.Equal(6, area.WestBoundary.Count());
+        }
+        [Fact]
+        public void RegularParallelogramTest()
+        {
+            int length = 25;
+            Point origin = new Point(length, length);
+            Point horizontalBound = origin + new Point(length, 0);
+            Point verticalBound = origin + new Point(0, length);
+            Region parallelogram = Region.RegularParallelogram("My Parallelogram", origin, length, length, 0);
+            Assert.True(parallelogram.Contains(origin), "Didn't contain the origin.");
+            Assert.True(parallelogram.Contains(origin + length), "Didn't contain expected coordinate of " + (origin + length).ToString());
+            Assert.True(parallelogram.Contains(horizontalBound), "Didn't contain expected top-right corner");
+            Assert.False(parallelogram.Contains(origin + new Point(0, 2)), "Contained unexpected spot due south of the origin.");
+        }
         public void Dispose()
         {
 

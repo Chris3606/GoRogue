@@ -76,13 +76,28 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The top-most Y-value of the region's four corners
         /// </summary>
-        public int Top => NorthEastCorner.Y <= NorthWestCorner.Y ? NorthEastCorner.Y : NorthWestCorner.Y;
+        public int Top
+        {
+            get
+            {
+                return Direction.YIncreasesUpward
+                    ? (NorthEastCorner.Y > NorthWestCorner.Y ? NorthEastCorner.Y : NorthWestCorner.Y):
+                      (NorthEastCorner.Y > NorthWestCorner.Y ? NorthWestCorner.Y : NorthEastCorner.Y);
+            }
+        }
 
         /// <summary>
         /// The bottom-most Y-value of the region's four corners
         /// </summary>
-        public int Bottom => SouthEastCorner.Y <= SouthWestCorner.Y ? SouthWestCorner.Y : SouthEastCorner.Y;
-
+        public int Bottom
+        {
+            get
+            {
+                return Direction.YIncreasesUpward
+                    ? (SouthWestCorner.Y > SouthEastCorner.Y ? SouthEastCorner.Y : SouthWestCorner.Y):
+                      (SouthWestCorner.Y <= SouthEastCorner.Y ? SouthWestCorner.Y : SouthEastCorner.Y);
+            }
+        }
         /// <summary>
         /// The South-East corner of the region
         /// </summary>
@@ -108,17 +123,17 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// How Wide this region is
         /// </summary>
-        public int Width => Right - Left;
+        public int Width => 1 + Right - Left;
 
         /// <summary>
         /// how tall this region is
         /// </summary>
-        public int Height => Bottom - Top;
+        public int Height => 1 + (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top);
 
         /// <summary>
         /// All points in this region
         /// </summary>
-        public IEnumerable<Point> Points { get => OuterPoints.Concat(InnerPoints).Concat(Connections).ToList(); }
+        public IEnumerable<Point> Points => OuterPoints.Concat(InnerPoints).Concat(Connections);
 
         /// <summary>
         /// The Center point of this region
@@ -154,8 +169,17 @@ namespace GoRogue.MapGeneration
         /// Get a SubRegion by its name
         /// </summary>
         /// <param name="name">the name of the region to find</param>
-        public Region this[string name] => SubRegions.FirstOrDefault(r => r.Name == name);
+        public Region this[string name]
+        {
+            get
+            {
+                if(HasRegion(name))
+                    return SubRegions.First(r => r.Name == name);
+                else
+                    throw new KeyNotFoundException("No SubRegion named " + name + " was found");
+            }
+        }
 
-
+        public bool HasRegion(string name) => SubRegions.Where(r => r.Name == name).FirstOrDefault() != null;
     }
 }
