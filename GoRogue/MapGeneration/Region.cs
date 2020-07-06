@@ -44,17 +44,16 @@ namespace GoRogue.MapGeneration
             NorthEastCorner = ne;
             NorthWestCorner = nw;
             SouthWestCorner = sw;
-            Connections = new List<Point>();
-            WestBoundary = Lines.Get(NorthWestCorner, SouthWestCorner);
-            SouthBoundary = Lines.Get(SouthWestCorner, SouthEastCorner);
-            EastBoundary = Lines.Get(SouthEastCorner, NorthEastCorner);
-            NorthBoundary = Lines.Get(NorthEastCorner, NorthWestCorner);
+            _connections = new List<Point>();
+            _westBoundary = Lines.Get(NorthWestCorner, SouthWestCorner).ToList();
+            _southBoundary = Lines.Get(SouthWestCorner, SouthEastCorner).ToList();
+            _eastBoundary = Lines.Get(SouthEastCorner, NorthEastCorner).ToList();
+            _northBoundary = Lines.Get(NorthEastCorner, NorthWestCorner).ToList();
 
             Rise = se.Y - ne.Y;
             Run = se.X - sw.X;
-            OuterPoints = WestBoundary.Concat(EastBoundary).Concat(SouthBoundary).Concat(NorthBoundary);
-            OuterPoints = OuterPoints.Distinct().ToList();
-            InnerPoints = InnerFromOuterPoints(OuterPoints).Distinct().ToList();
+            _outerPoints = _westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary).Distinct().ToList();
+            _innerPoints = InnerFromOuterPoints(OuterPoints).Distinct().ToList();
         }
         #endregion
 

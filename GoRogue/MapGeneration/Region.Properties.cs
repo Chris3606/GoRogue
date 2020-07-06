@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using SadRogue.Primitives;
 
@@ -23,37 +24,44 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The subregions of this region (i.e., rooms in a house)
         /// </summary>
-        public IEnumerable<Region> SubRegions { get; private set; } = new List<Region>();
+        public IReadOnlyList<Region> SubRegions => _subRegions;
+        private List<Region> _subRegions = new List<Region>();
 
         /// <summary>
         /// All of the boundary points of this region
         /// </summary>
-        public IEnumerable<Point> OuterPoints { get; private set; } = new List<Point>();
+        public IReadOnlyList<Point> OuterPoints => _outerPoints;
+        private List<Point> _outerPoints = new List<Point>();
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points and connections
         /// </summary>
-        public IEnumerable<Point> InnerPoints { get; private set; } = new List<Point>();
+        public IReadOnlyList<Point> InnerPoints => _innerPoints;
+        private List<Point> _innerPoints = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the southern boundary
         /// </summary>
-        public IEnumerable<Point> SouthBoundary { get; private set; } //or southeast boundary in the case of diamonds
+        public IReadOnlyList<Point> SouthBoundary => _southBoundary;
+        private List<Point> _southBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the northern boundary
         /// </summary>
-        public IEnumerable<Point> NorthBoundary { get; private set; }
+        public IReadOnlyList<Point> NorthBoundary => _northBoundary;
+        private List<Point> _northBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the eastern boundary
         /// </summary>
-        public IEnumerable<Point> EastBoundary { get; private set; }
+        public IReadOnlyList<Point> EastBoundary => _eastBoundary;
+        private List<Point> _eastBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the western boundary
         /// </summary>
-        public IEnumerable<Point> WestBoundary { get; private set; }
+        public IReadOnlyList<Point> WestBoundary => _westBoundary;
+        private List<Point> _westBoundary = new List<Point>();
 
         /// <summary>
         /// All of the points that are considered "connections" to other regions
@@ -61,7 +69,8 @@ namespace GoRogue.MapGeneration
         /// <remarks>
         /// You should perform transformations (rotation, etc) before Connections are made.
         /// </remarks>
-        public IEnumerable<Point> Connections { get; private set; } = new List<Point>();
+        public IReadOnlyList<Point> Connections => _connections;
+        private List<Point> _connections = new List<Point>();
 
         /// <summary>
         /// The left-most X-value of the region's four corners
@@ -82,7 +91,7 @@ namespace GoRogue.MapGeneration
             {
                 return Direction.YIncreasesUpward
                     ? (NorthEastCorner.Y > NorthWestCorner.Y ? NorthEastCorner.Y : NorthWestCorner.Y):
-                      (NorthEastCorner.Y > NorthWestCorner.Y ? NorthWestCorner.Y : NorthEastCorner.Y);
+                      (NorthEastCorner.Y < NorthWestCorner.Y ? NorthEastCorner.Y : NorthWestCorner.Y);
             }
         }
 
@@ -94,10 +103,11 @@ namespace GoRogue.MapGeneration
             get
             {
                 return Direction.YIncreasesUpward
-                    ? (SouthWestCorner.Y > SouthEastCorner.Y ? SouthEastCorner.Y : SouthWestCorner.Y):
-                      (SouthWestCorner.Y <= SouthEastCorner.Y ? SouthWestCorner.Y : SouthEastCorner.Y);
+                    ? (SouthEastCorner.Y < SouthWestCorner.Y ? SouthEastCorner.Y : SouthWestCorner.Y):
+                      (SouthEastCorner.Y > SouthWestCorner.Y ? SouthEastCorner.Y : SouthWestCorner.Y);
             }
         }
+
         /// <summary>
         /// The South-East corner of the region
         /// </summary>
@@ -180,6 +190,6 @@ namespace GoRogue.MapGeneration
             }
         }
 
-        public bool HasRegion(string name) => SubRegions.Where(r => r.Name == name).FirstOrDefault() != null;
+        public bool HasRegion(string name) => SubRegions.FirstOrDefault(r => r.Name == name) != null;
     }
 }
