@@ -243,7 +243,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             int aCountBefore = a.OuterPoints.Count();
             int bCountBefore = b.OuterPoints.Count();
-            a.RemoveOverlappingOuterpoints(b);
+            a.RemoveOverlappingOuterPoints(b);
             Assert.True(a.OuterPoints.Count() < aCountBefore);
             Assert.Equal(b.OuterPoints.Count(), bCountBefore);
         }
@@ -255,7 +255,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
             int aCountBefore = a.OuterPoints.Count();
             int bCountBefore = b.OuterPoints.Count();
-            a.RemoveOverlappingInnerpoints(b);
+            a.RemoveOverlappingInnerPoints(b);
             Assert.True(a.OuterPoints.Count() < aCountBefore, "No connecting points were removed from Area A");
             Assert.Equal(b.OuterPoints.Count(), bCountBefore);
         }

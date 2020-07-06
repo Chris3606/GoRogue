@@ -199,7 +199,7 @@ namespace GoRogue.MapGeneration
         /// with the imposing region
         /// </summary>
         /// <param name="imposing">the region to check for common outer points</param>
-        public void RemoveOverlappingOuterpoints(Region imposing)
+        public void RemoveOverlappingOuterPoints(Region imposing)
         {
             foreach (Point c in imposing.OuterPoints)
             {
@@ -215,7 +215,7 @@ namespace GoRogue.MapGeneration
         /// with the imposing region
         /// </summary>
         /// <param name="imposing">the region to check for common outer points</param>
-        public void RemoveOverlappingInnerpoints(Region imposing)
+        public void RemoveOverlappingInnerPoints(Region imposing)
         {
             foreach (Point c in imposing.InnerPoints)
             {
