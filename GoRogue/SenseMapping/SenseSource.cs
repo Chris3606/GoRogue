@@ -496,6 +496,11 @@ namespace GoRogue.SenseMapping
             {
                 var x2 = x + di.DeltaX;
                 var y2 = y + di.DeltaY;
+
+                // Out of bounds
+                if (x2 < 0 || y2 < 0 || x2 >= _light.GetLength(0) || y2 >= _light.GetLength(1))
+                    continue;
+
                 var globalX2 = Position.X - (int)Radius + x2;
                 var globalY2 = Position.Y - (int)Radius + y2;
 
@@ -529,6 +534,7 @@ namespace GoRogue.SenseMapping
             {
                 var gpx = Position.X - (int)Radius + pointX;
                 var gpy = Position.Y - (int)Radius + pointY;
+
                 if (_light[pointX, pointY] > 0)
                 {
                     lit++;
