@@ -54,7 +54,7 @@ namespace GoRogue.MapGeneration.Steps
         protected override void OnPerform(GenerationContext context)
         {
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetComponentOrNew<ISettableMapView<bool>>(
+            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
                 () => new ArrayMap<bool>(context.Width, context.Height),
                 WallFloorComponentTag
             );

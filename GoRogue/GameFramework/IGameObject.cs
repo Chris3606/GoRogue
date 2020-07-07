@@ -19,7 +19,7 @@ namespace GoRogue.GameFramework
     /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
     /// </remarks>
     [PublicAPI]
-    public interface IGameObject : IHasID, IHasLayer, IHasComponents
+    public interface IGameObject : IHasID, IHasLayer
     {
         /// <summary>
         /// The current <see cref="Map" /> which this object resides on.  Returns null if the object has not been added to a map.
@@ -38,6 +38,11 @@ namespace GoRogue.GameFramework
         /// for the sake of calculating the FOV of a <see cref="Map" />.
         /// </summary>
         bool IsTransparent { get; set; }
+
+        /// <summary>
+        /// Container holding components that have been attached to this object.
+        /// </summary>
+        public IHasTaggableComponents GoRogueComponents { get; }
 
         /// <summary>
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides

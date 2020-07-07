@@ -50,15 +50,15 @@ namespace GoRogue.MapGeneration
         /// any object meeting the type requirement will be allowed as the return value.
         /// </param>
         /// <returns>An existing component of the appropriate type if one exists, or the newly created/added component if not.</returns>
-        public TComponent GetComponentOrNew<TComponent>([InstantHandle] Func<TComponent> newFunc, string? tag = null)
+        public TComponent GetFirstOrNew<TComponent>([InstantHandle] Func<TComponent> newFunc, string? tag = null)
             where TComponent : notnull
         {
             var contextComponent = GetFirstOrDefault<TComponent>(tag);
-            if (contextComponent == null)
-            {
-                contextComponent = newFunc();
-                Add(contextComponent, tag);
-            }
+            if (contextComponent != null)
+                return contextComponent;
+
+            contextComponent = newFunc();
+            Add(contextComponent, tag);
 
             return contextComponent;
         }

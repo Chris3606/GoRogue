@@ -172,7 +172,7 @@ namespace GoRogue.MapGeneration.Steps
             var innerMap = wallFloor.Bounds().Expand(-1, -1);
 
             // Get/create doors list component.
-            var doorsList = context.GetComponentOrNew(() => new DoorList(), DoorsListComponentTag);
+            var doorsList = context.GetFirstOrNew(() => new DoorList(), DoorsListComponentTag);
 
             /*
 			- Get all valid points along a side

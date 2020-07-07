@@ -45,7 +45,7 @@ namespace GoRogue.GameFramework
     /// if you implement this interface for your components.
     /// </remarks>
     [PublicAPI]
-    public class GameObject : ComponentContainer, IGameObject
+    public class GameObject : IGameObject
     {
         // Use the value of this variable instead of the "this" keyword from within GameObject
         private readonly IGameObject _parentObject;
@@ -93,8 +93,13 @@ namespace GoRogue.GameFramework
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor
         /// remarks for details.
         /// </param>
+        /// <param name="customComponentContainer">
+        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentContainer"/> is used.
+        /// Typically you will not need to specify this, as ComponentContainer is sufficient for nearly all use cases.
+        /// </param>
         public GameObject(Point position, int layer, IGameObject? parentObject, bool isStatic = false,
-                          bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null)
+                          bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null,
+                          IHasTaggableComponents? customComponentContainer = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -108,6 +113,9 @@ namespace GoRogue.GameFramework
             CurrentMap = null;
 
             ID = idGenerator();
+            GoRogueComponents = customComponentContainer ?? new ComponentContainer();
+            GoRogueComponents.ComponentAdded += On_ComponentAdded;
+            GoRogueComponents.ComponentRemoved += On_ComponentRemoved;
         }
 
         /// <inheritdoc />
@@ -178,6 +186,9 @@ namespace GoRogue.GameFramework
         /// <inheritdoc />
         public Map? CurrentMap { get; private set; }
 
+        /// <inheritdoc />
+        public IHasTaggableComponents GoRogueComponents { get; }
+
         /// <summary>
         /// Returns true if the GameObject can be moved to the location specified; false otherwise.
         /// </summary>
@@ -245,15 +256,11 @@ namespace GoRogue.GameFramework
                 $"{name} for an object of type {nameof(GameObject)} was set incorrectly when it was constructed.  See API documentation of {nameof(GameObject)} for details on that constructor parameter.");
         }
 
-        #region Component Functions
-
-        /// <inheritdoc />
-        public override void Add(object component, string? tag = null)
+        #region Component Handlers
+        private void On_ComponentAdded(object s, ComponentChangedEventArgs e)
         {
-            base.Add(component, tag);
-
-            // If no exception was thrown, the above add succeeded.
-            if (!(component is IGameObjectComponent c)) return;
+            if (!(e.Component is IGameObjectComponent c))
+                return;
 
             if (c.Parent != null)
                 throw new ArgumentException(
@@ -262,17 +269,11 @@ namespace GoRogue.GameFramework
             c.Parent = _parentObject;
         }
 
-        /// <inheritdoc />
-        public override void Remove(params object[] components)
+        private void On_ComponentRemoved(object s, ComponentChangedEventArgs e)
         {
-            base.Remove(components);
-
-            // If no exception was thrown, the above remove succeeded.
-            foreach (var component in components)
-                if (component is IGameObjectComponent c)
-                    c.Parent = null;
+            if (e.Component is IGameObjectComponent c)
+                c.Parent = null;
         }
-
         #endregion
     }
 }

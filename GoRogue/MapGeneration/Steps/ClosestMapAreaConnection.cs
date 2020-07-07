@@ -134,7 +134,7 @@ namespace GoRogue.MapGeneration.Steps
                     WallFloorComponentTag)!; // Known to not be null since Perform checked for us
 
             // Get/create tunnel component
-            var tunnels = context.GetComponentOrNew(() => new ItemList<Area>(), TunnelsComponentTag);
+            var tunnels = context.GetFirstOrNew(() => new ItemList<Area>(), TunnelsComponentTag);
 
             var ds = new DisjointSet(areasToConnect.Items.Count);
             while (ds.Count > 1) // Haven't unioned all sets into one

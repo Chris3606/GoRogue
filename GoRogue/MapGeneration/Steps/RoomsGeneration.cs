@@ -146,7 +146,7 @@ namespace GoRogue.MapGeneration.Steps
                     "The value must be greater than 0.");
 
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetComponentOrNew<ISettableMapView<bool>>(
+            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
                 () => new ArrayMap<bool>(context.Width, context.Height),
                 WallFloorComponentTag
             );
@@ -155,7 +155,7 @@ namespace GoRogue.MapGeneration.Steps
             var roomCounter = RNG.Next(MinRooms, MaxRooms + 1);
 
             // Get or create/add a rooms context component
-            var roomsContext = context.GetComponentOrNew(
+            var roomsContext = context.GetFirstOrNew(
                 () => new ItemList<Rectangle>(roomCounter),
                 RoomsComponentTag
             );

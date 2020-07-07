@@ -38,49 +38,49 @@ namespace GoRogue.UnitTests.MapGeneration
         }
 
         [Fact]
-        public void GetComponentOrNewWithExistingComponent()
+        public void GetFirstOrNewWithExistingComponent()
         {
             var context = new GenerationContext(10, 15);
             var component = new MapContextComponent1();
             context.Add(component); // Inherited so tested in the Component system.
 
             // Existing component should prevent creation
-            var component2 = context.GetComponentOrNew(CreateFunc);
+            var component2 = context.GetFirstOrNew(CreateFunc);
             Assert.Equal(0, _timesNewCalled);
             Assert.Same(component, component2);
 
-            var component3 = context.GetComponentOrNew<IMapContextComponent>(CreateFunc);
+            var component3 = context.GetFirstOrNew<IMapContextComponent>(CreateFunc);
             Assert.Equal(0, _timesNewCalled);
             Assert.Same(component, component3);
         }
 
         [Fact]
-        public void GetComponentOrNewWithNewComponent()
+        public void GetFirstOrNewWithNewComponent()
         {
             var context = new GenerationContext(10, 15);
 
             // No existing instance so it should be created
-            MapContextComponent1 component = context.GetComponentOrNew(CreateFunc);
+            MapContextComponent1 component = context.GetFirstOrNew(CreateFunc);
             Assert.Equal(1, _timesNewCalled);
             Assert.NotNull(component);
 
             // Existing instance should prevent creation
-            MapContextComponent1 component2 = context.GetComponentOrNew(CreateFunc);
+            MapContextComponent1 component2 = context.GetFirstOrNew(CreateFunc);
             Assert.Equal(1, _timesNewCalled);
             Assert.Same(component, component2);
 
             // No instance with the tag specified exists, so should create one
-            component2 = context.GetComponentOrNew(CreateFunc, "tag1");
+            component2 = context.GetFirstOrNew(CreateFunc, "tag1");
             Assert.Equal(2, _timesNewCalled);
             Assert.NotSame(component, component2);
 
             // Existing instance should prevent creation
-            MapContextComponent1 component3 = context.GetComponentOrNew(CreateFunc, "tag1");
+            MapContextComponent1 component3 = context.GetFirstOrNew(CreateFunc, "tag1");
             Assert.Equal(2, _timesNewCalled);
             Assert.Same(component2, component3);
 
             // This call can return either since no tag was specified and no priorities were used.
-            component3 = context.GetComponentOrNew(CreateFunc);
+            component3 = context.GetFirstOrNew(CreateFunc);
             Assert.Equal(2, _timesNewCalled);
             Assert.True(component3 == component2 || component3 == component);
         }

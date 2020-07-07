@@ -15,12 +15,15 @@ namespace GoRogue
         /// Constructor
         /// </summary>
         /// <param name="component">The component that was added/removed.</param>
-        public ComponentChangedEventArgs(object component) => Component = component;
+        public ComponentChangedEventArgs(object component)
+        {
+            Component = component;
+        }
 
         /// <summary>
         /// The component that was added or removed.
         /// </summary>
-        public object Component { get; }
+        public readonly object Component;
     }
 
     /// <summary>

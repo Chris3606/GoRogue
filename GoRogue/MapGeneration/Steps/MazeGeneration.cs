@@ -102,13 +102,13 @@ namespace GoRogue.MapGeneration.Steps
             // Logic implemented from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetComponentOrNew<ISettableMapView<bool>>(
+            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
                 () => new ArrayMap<bool>(context.Width, context.Height),
                 WallFloorComponentTag
             );
 
             // Get or create/add a tunnel list context component
-            var tunnelList = context.GetComponentOrNew(
+            var tunnelList = context.GetFirstOrNew(
                 () => new ItemList<Area>(),
                 TunnelsComponentTag
             );

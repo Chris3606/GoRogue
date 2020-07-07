@@ -72,7 +72,7 @@ namespace GoRogue
         public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
 
         /// <inheritdoc />
-        public virtual void Add(object component, string? tag = null)
+        public void Add(object component, string? tag = null)
         {
             var realType = component.GetType();
 
@@ -108,7 +108,7 @@ namespace GoRogue
         public void Remove(object component) => Remove(new[] { component });
 
         /// <inheritdoc />
-        public virtual void Remove(params object[] components)
+        public void Remove(params object[] components)
         {
             foreach (var component in components)
             {
