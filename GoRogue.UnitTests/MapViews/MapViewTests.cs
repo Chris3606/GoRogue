@@ -70,6 +70,33 @@ namespace GoRogue.UnitTests.MapViews
         }
 
         [Fact]
+        public void IndexerAccessMapViewTest()
+        {
+            var map = new ArrayMap<bool>(_width, _height);
+            ISettableMapView<bool> setMapView = map;
+            IMapView<bool> mapView = map;
+            bool[] array = map;
+
+            // Set last entry via indexer syntax (via the ArrayMap, to prove implicit implementations
+            // work at all levels)
+            map[^1] = true;
+
+            // Set second to last entry via settable map view
+            setMapView[^2] = true;
+
+            // Both of set should be true
+            Assert.True(mapView[^2]);
+            Assert.True(mapView[^1]);
+
+            // All items should be false except for the last two
+            for (int i = 0; i < array.Length - 2; i++)
+                Assert.False(array[i]);
+
+            Assert.True(array[^2]);
+            Assert.True(array[^1]);
+        }
+
+        [Fact]
         public void LambdaMapViewTest()
         {
             var map = MockFactory.Rectangle(_width, _height);
@@ -86,7 +113,12 @@ namespace GoRogue.UnitTests.MapViews
                 (c, b) => map[c] = b ? 1.0 : 0.0);
             CheckMaps(lambdaSettable, map);
 
-            // TODO: Test settable portion
+            // Set via lambda map, ensuring we actually change the value
+            Assert.True(lambdaSettable[1, 2]);
+            lambdaSettable[1, 2] = false;
+
+            // Make sure maps still match
+            CheckMaps(lambdaSettable, map);
         }
 
         [Fact]

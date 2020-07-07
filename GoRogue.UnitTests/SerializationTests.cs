@@ -7,6 +7,7 @@ namespace GoRogue.UnitTests
 {
     public class SerializationTests
     {
+        // TODO: Port to primitives library serialization method
         private bool DisjointSetEquality(DisjointSet t1, DisjointSet t2)
         {
             if (t1.Count != t2.Count)
