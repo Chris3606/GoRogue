@@ -41,7 +41,7 @@ namespace GoRogue.MapGeneration
         /// <returns>This generator (for chaining).</returns>
         public Generator AddComponent(object component, string? tag = null)
         {
-            Context.AddComponent(component, tag);
+            Context.Add(component, tag);
             return this;
         }
 

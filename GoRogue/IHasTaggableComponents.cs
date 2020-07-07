@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
@@ -12,10 +13,10 @@ namespace GoRogue
     /// logic for these functions.
     /// </summary>
     [PublicAPI]
-    public interface IHasTaggableComponents : IHasComponents
+    public interface IHasTaggableComponents : IHasComponents, IEnumerable<(object component, string? tag)>
     {
         /// <inheritdoc />
-        void IHasComponents.AddComponent(object component) => AddComponent(this);
+        void IHasComponents.Add(object component) => Add(this);
 
         /// <inheritdoc />
         [return: MaybeNull]
@@ -33,7 +34,7 @@ namespace GoRogue
         /// </summary>
         /// <param name="component">Component to add.</param>
         /// <param name="tag">An optional tag to give the component.  Defaults to no tag.</param>
-        void AddComponent(object component, string? tag = null);
+        void Add(object component, string? tag = null);
 
         /// <summary>
         /// Removes the component with the given tag.  Throws an exception if a component with the specified tag does not exist.

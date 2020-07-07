@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
 
@@ -25,15 +26,15 @@ namespace GoRogue.UnitTests
             var component2 = new Component1();
 
             // Should not throw
-            _componentContainer.AddComponent(component);
+            _componentContainer.Add(component);
             Assert.Equal(1, _addedCount);
 
             // Should throw exception because it's a duplicate object
-            Assert.Throws<ArgumentException>(() => _componentContainer.AddComponent(component));
+            Assert.Throws<ArgumentException>(() => _componentContainer.Add(component));
             Assert.Equal(1, _addedCount);
 
             // Multiple objects of same type, however, are allowed
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component2);
             Assert.Equal(2, _addedCount);
         }
 
@@ -45,20 +46,34 @@ namespace GoRogue.UnitTests
             var component2 = new Component1();
 
             // Should not throw
-            _componentContainer.AddComponent(component, "Tag1");
+            _componentContainer.Add(component, "Tag1");
             Assert.Equal(1, _addedCount);
 
             // Should throw exception because it's a duplicate object
-            Assert.Throws<ArgumentException>(() => _componentContainer.AddComponent(component, "Tag10"));
+            Assert.Throws<ArgumentException>(() => _componentContainer.Add(component, "Tag10"));
             Assert.Equal(1, _addedCount);
 
             // Should throw exception because it's a duplicate tag
-            Assert.Throws<ArgumentException>(() => _componentContainer.AddComponent(component2, "Tag1"));
+            Assert.Throws<ArgumentException>(() => _componentContainer.Add(component2, "Tag1"));
             Assert.Equal(1, _addedCount);
 
             // Duplicate types are still allowed, however
-            _componentContainer.AddComponent(component2, "Tag2");
+            _componentContainer.Add(component2, "Tag2");
             Assert.Equal(2, _addedCount);
+        }
+
+        [Fact]
+        public void ConstructionWithInitializerList()
+        {
+            var container = new ComponentContainer
+            {
+                new Component1(),
+                new Component2(),
+                { new Component2(), "TaggedComponent" }
+            };
+
+            Assert.Equal(3, container.Count());
+            Assert.NotNull(container.GetComponent<Component2>("TaggedComponent"));
         }
 
         [Fact]
@@ -66,7 +81,7 @@ namespace GoRogue.UnitTests
         {
             // Create and add a component
             var component = new Component1();
-            _componentContainer.AddComponent(component);
+            _componentContainer.Add(component);
 
             // Component1 qualifies as both of these types, so both should return the object.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
@@ -77,7 +92,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component of a different type
             var component2 = new Component2();
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component2);
 
             // Component1 should return the same instance as before
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
@@ -109,10 +124,10 @@ namespace GoRogue.UnitTests
             var component4 = new Component1(); // Not a sorted component
 
             // Ensure to add out of order
-            _componentContainer.AddComponent(component2);
-            _componentContainer.AddComponent(component);
-            _componentContainer.AddComponent(component4);
-            _componentContainer.AddComponent(component3);
+            _componentContainer.Add(component2);
+            _componentContainer.Add(component);
+            _componentContainer.Add(component4);
+            _componentContainer.Add(component3);
 
             // Lowest priority of all the components of a type is always returned here
             Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
@@ -140,10 +155,10 @@ namespace GoRogue.UnitTests
             var component4 = new Component1(); // Not a sorted component
 
             // Ensure to add out of order
-            _componentContainer.AddComponent(component2);
-            _componentContainer.AddComponent(component);
-            _componentContainer.AddComponent(component4);
-            _componentContainer.AddComponent(component3);
+            _componentContainer.Add(component2);
+            _componentContainer.Add(component);
+            _componentContainer.Add(component4);
+            _componentContainer.Add(component3);
 
             // Returned in order of priority, with objects that have no priority at the end
             Assert.Equal(TestUtils.Enumerable(component, component2, component3, component4),
@@ -164,7 +179,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component
             var component = new Component1();
-            _componentContainer.AddComponent(component, tag1);
+            _componentContainer.Add(component, tag1);
 
             // Component1 qualifies as both of these types, so both should return the component we added when we're not looking for tags.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
@@ -185,7 +200,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component of a different type, with no tag
             var component2 = new Component2();
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component2);
 
             // Null because the object we added has no tag
             Assert.Null(_componentContainer.GetComponent<Component2>(tag2));
@@ -196,7 +211,7 @@ namespace GoRogue.UnitTests
         {
             // Create and add a component
             var component = new Component1();
-            _componentContainer.AddComponent(component);
+            _componentContainer.Add(component);
 
             // Component1 qualifies as both of these types, so both should be true.
             Assert.True(_componentContainer.HasComponent<Component1>());
@@ -207,7 +222,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component of a different type
             var component2 = new Component2();
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component2);
 
             // Now all 3 should be true
             Assert.True(_componentContainer.HasComponent<Component1>());
@@ -229,7 +244,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component
             var component = new Component1();
-            _componentContainer.AddComponent(component, tag1);
+            _componentContainer.Add(component, tag1);
 
             // Component1 qualifies as both of these types, so both should be true when we're not looking for tags.
             Assert.True(_componentContainer.HasComponent<Component1>());
@@ -250,7 +265,7 @@ namespace GoRogue.UnitTests
 
             // Create and add a component of a different type, with no tag
             var component2 = new Component2();
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component2);
 
             // False because the object we added has no tag
             Assert.False(_componentContainer.HasComponent<Component2>(tag2));
@@ -263,8 +278,8 @@ namespace GoRogue.UnitTests
             var component2 = new Component2();
 
             // Ensure _addedCount increments so we're actually testing on decrement
-            _componentContainer.AddComponent(component);
-            _componentContainer.AddComponent(component2);
+            _componentContainer.Add(component);
+            _componentContainer.Add(component2);
             Assert.Equal(2, _addedCount);
 
             _componentContainer.RemoveComponent(component);
@@ -286,9 +301,9 @@ namespace GoRogue.UnitTests
             var component3 = new Component1();
 
             // Ensure _addedCount increments so we're actually testing on decrement
-            _componentContainer.AddComponent(component);
-            _componentContainer.AddComponent(component2);
-            _componentContainer.AddComponent(component3);
+            _componentContainer.Add(component);
+            _componentContainer.Add(component2);
+            _componentContainer.Add(component3);
             Assert.Equal(3, _addedCount);
 
             _componentContainer.RemoveComponents(component, component3);
@@ -309,9 +324,9 @@ namespace GoRogue.UnitTests
             var component3 = new Component1();
 
             // Ensure _addedCount increments so we're actually testing on decrement
-            _componentContainer.AddComponent(component, "tag1");
-            _componentContainer.AddComponent(component2, "tag2");
-            _componentContainer.AddComponent(component3, "tag3");
+            _componentContainer.Add(component, "tag1");
+            _componentContainer.Add(component2, "tag2");
+            _componentContainer.Add(component3, "tag3");
             Assert.Equal(3, _addedCount);
 
             _componentContainer.RemoveComponents("tag1", "tag3");
@@ -332,9 +347,9 @@ namespace GoRogue.UnitTests
             var component3 = new Component2();
 
             // Ensure _addedCount increments so we're actually testing on decrement
-            _componentContainer.AddComponent(component, "tag1");
-            _componentContainer.AddComponent(component2);
-            _componentContainer.AddComponent(component3, "tag3");
+            _componentContainer.Add(component, "tag1");
+            _componentContainer.Add(component2);
+            _componentContainer.Add(component3, "tag3");
             Assert.Equal(3, _addedCount);
 
 

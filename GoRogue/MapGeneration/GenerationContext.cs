@@ -57,7 +57,7 @@ namespace GoRogue.MapGeneration
             if (contextComponent == null)
             {
                 contextComponent = newFunc();
-                AddComponent(contextComponent, tag);
+                Add(contextComponent, tag);
             }
 
             return contextComponent;

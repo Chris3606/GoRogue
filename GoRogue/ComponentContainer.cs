@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace GoRogue
     /// {
     ///     void Tick();
     /// }
-    /// 
+    ///
     /// public class PlayerTickable : ITickable
     /// {
     ///     public void Tick() => Console.WriteLine("Player ticked!");
@@ -47,8 +48,9 @@ namespace GoRogue
     {
         private readonly Dictionary<Type, List<object>> _components;
 
-        // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are removed
-        private readonly Dictionary<object, string> _componentsToTags;
+        // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are
+        // removed.  Also used a distinct list of all components
+        private readonly Dictionary<object, string?> _componentsToTags;
 
         // Used for tag-based lookups
         private readonly Dictionary<string, object> _tagsToComponents;
@@ -59,7 +61,7 @@ namespace GoRogue
         public ComponentContainer()
         {
             _components = new Dictionary<Type, List<object>>();
-            _componentsToTags = new Dictionary<object, string>();
+            _componentsToTags = new Dictionary<object, string?>();
             _tagsToComponents = new Dictionary<string, object>();
         }
 
@@ -70,7 +72,7 @@ namespace GoRogue
         public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
 
         /// <inheritdoc />
-        public virtual void AddComponent(object component, string? tag = null)
+        public virtual void Add(object component, string? tag = null)
         {
             var realType = component.GetType();
 
@@ -94,11 +96,10 @@ namespace GoRogue
                     _components[type].Add(component);
             }
 
+            _componentsToTags.Add(component, tag);
+
             if (tag != null)
-            {
-                _componentsToTags.Add(component, tag);
                 _tagsToComponents.Add(tag, component);
-            }
 
             ComponentAdded?.Invoke(this, new ComponentChangedEventArgs(component));
         }
@@ -130,13 +131,11 @@ namespace GoRogue
                     else
                         _components[type].Remove(component);
 
-                // Add tag as needed
-                if (_componentsToTags.ContainsKey(component))
-                {
-                    string tag = _componentsToTags[component];
-                    _componentsToTags.Remove(component);
+                // Remove from tags lists as needed
+                string? tag = _componentsToTags[component];
+                _componentsToTags.Remove(component);
+                if (tag != null)
                     _tagsToComponents.Remove(tag);
-                }
 
                 ComponentRemoved?.Invoke(this, new ComponentChangedEventArgs(component));
             }
@@ -245,5 +244,21 @@ namespace GoRogue
 
             componentList.Insert(insertionPoint, component);
         }
+
+        /// <summary>
+        /// Returns all components paired with their tags.
+        /// </summary>
+        /// <returns/>
+        public IEnumerator<(object component, string? tag)> GetEnumerator()
+        {
+            foreach (var (component, tag) in _componentsToTags)
+                yield return (component, tag);
+        }
+
+        /// <summary>
+        /// Returns components paired with their tags.
+        /// </summary>
+        /// <returns/>
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

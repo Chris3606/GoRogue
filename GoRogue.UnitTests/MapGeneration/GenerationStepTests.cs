@@ -39,7 +39,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(0, _timesOnPerformCalled);
 
             // When the required component is there, it runs as normal
-            context.AddComponent(new MapContextComponent1());
+            context.Add(new MapContextComponent1());
             stepSingleComponent.PerformStep(context);
             Assert.Equal(1, _timesOnPerformCalled);
 
@@ -50,7 +50,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Add the second component and it runs appropriately.  Components with tags count if the requirement is for no particular tag
-            context.AddComponent(new MapContextComponent2(), "tag1");
+            context.Add(new MapContextComponent2(), "tag1");
             stepMultipleComponents.PerformStep(context);
             Assert.Equal(2, _timesOnPerformCalled);
         }
@@ -76,7 +76,7 @@ namespace GoRogue.UnitTests.MapGeneration
             string tag3 = "component3";
 
             // Add a component that has no tag
-            context.AddComponent(new MapContextComponent1());
+            context.Add(new MapContextComponent1());
 
             // Requires a single component with a tag that isn't present so will throw and will not call OnPerform
             var stepSingleComponent = new MockGenerationStep(() => _timesOnPerformCalled++, null,
@@ -85,7 +85,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(0, _timesOnPerformCalled);
 
             // When the required component is there, it runs as normal
-            context.AddComponent(new MapContextComponent1(), tag1);
+            context.Add(new MapContextComponent1(), tag1);
             stepSingleComponent.PerformStep(context);
             Assert.Equal(1, _timesOnPerformCalled);
 
@@ -96,13 +96,13 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Both of these objects have the wrong tag (or no tag) so we'll again throw exception
-            context.AddComponent(new MapContextComponent2(), tag3);
-            context.AddComponent(new MapContextComponent2());
+            context.Add(new MapContextComponent2(), tag3);
+            context.Add(new MapContextComponent2());
             Assert.Throws<MissingContextComponentException>(() => stepMultipleComponents.PerformStep(context));
             Assert.Equal(1, _timesOnPerformCalled);
 
             // Add the second component with the proper tag and it runs appropriately.
-            context.AddComponent(new MapContextComponent2(), tag2);
+            context.Add(new MapContextComponent2(), tag2);
             stepMultipleComponents.PerformStep(context);
             Assert.Equal(2, _timesOnPerformCalled);
         }

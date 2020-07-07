@@ -42,7 +42,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             var context = new GenerationContext(10, 15);
             var component = new MapContextComponent1();
-            context.AddComponent(component); // Inherited so tested in the Component system.
+            context.Add(component); // Inherited so tested in the Component system.
 
             // Existing component should prevent creation
             var component2 = context.GetComponentOrNew(CreateFunc);

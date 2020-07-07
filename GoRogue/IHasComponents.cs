@@ -45,7 +45,7 @@ namespace GoRogue
         /// Adds the given object as a component.  Throws ArgumentException if the specific instance has already been added.
         /// </summary>
         /// <param name="component">Component to add.</param>
-        void AddComponent(object component);
+        void Add(object component);
 
         /// <summary>
         /// Gets the first component of type T that was added, or default(T) if no component of that type has

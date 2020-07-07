@@ -248,9 +248,9 @@ namespace GoRogue.GameFramework
         #region Component Functions
 
         /// <inheritdoc />
-        public override void AddComponent(object component, string? tag = null)
+        public override void Add(object component, string? tag = null)
         {
-            base.AddComponent(component, tag);
+            base.Add(component, tag);
 
             // If no exception was thrown, the above add succeeded.
             if (!(component is IGameObjectComponent c)) return;
