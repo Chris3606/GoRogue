@@ -405,8 +405,12 @@ namespace GoRogue.GameFramework
                         throw new Exception(
                             "Tried to place non-walkable terrain at a location that already has another non-walkable item.");
 
-            if (_terrain[terrain.Position] != null)
-                ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
+            var oldTerrain = _terrain[terrain.Position];
+            if (oldTerrain != null)
+            {
+                ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(oldTerrain, oldTerrain.Position));
+                oldTerrain.OnMapChanged(null);
+            }
 
             _terrain[terrain.Position] = terrain;
 
