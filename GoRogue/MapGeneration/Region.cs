@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using GoRogue.Random;
 using SadRogue.Primitives;
+using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration
 {
@@ -69,20 +72,6 @@ namespace GoRogue.MapGeneration
             else
                 return this == (Region)obj;
         }
-        public static bool operator ==(Region left, Region right)
-        {
-            bool equals = left.Name == right.Name;
-            if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
-            if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
-            if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
-            if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
-            if (left.Center != right.Center) equals = false;
-            return equals;
-        }
-        public static bool operator !=(Region left, Region right)
-        {
-            return !(left == right);
-        }
         #endregion
 
         #region management
@@ -93,9 +82,11 @@ namespace GoRogue.MapGeneration
         /// <returns>All overlapping points</returns>
         public IEnumerable<Point> Overlap(Region other)
         {
-            foreach (Point c in InnerPoints)
+            Area you = new Area(other.Points);
+
+            foreach (Point c in Points)
             {
-                if (other.InnerPoints.Contains(c))
+                if (other.Contains(c))
                     yield return c;
             }
         }
@@ -107,14 +98,14 @@ namespace GoRogue.MapGeneration
         /// <returns>If this region contains the given point</returns>
         public bool Contains(Point here)
         {
-            return InnerPoints.Contains(here) || OuterPoints.Contains(here) || Connections.Contains(here);
+            return new Area(Points).Contains(here);
         }
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="here">the point to evaluate</param>
         /// <returns>whether or not the point is within the region</returns>
-        private bool IsCorner(Point here)
+        public bool IsCorner(Point here)
         {
             return here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
         }
@@ -145,52 +136,85 @@ namespace GoRogue.MapGeneration
         public void DistinguishSubRegions()
         {
             List<Region> regionsDistinguished = new List<Region>();
-            IEnumerable<Region> regionsReversed = SubRegions;
+            List<Region> regionsReversed = SubRegions.ToList();
             regionsReversed.Reverse();
             foreach (Region region in regionsReversed)
             {
+                List<Point> removeThese = new List<Point>();
                 foreach (Point point in region.Points.Distinct())
                 {
                     foreach (Region distinguishedRegion in regionsDistinguished)
                     {
                         if (distinguishedRegion.Contains(point))
                         {
-                            while (region.OuterPoints.Contains(point))
-                                ((List<Point>) region.OuterPoints).Remove(point);
-
-                            while (region.InnerPoints.Contains(point))
-                                ((List<Point>) region.InnerPoints).Remove(point);
+                            if (region.Contains(point))
+                                removeThese.Add(point);
                         }
                     }
                 }
 
+                foreach (var point in removeThese)
+                {
+                    region.Remove(point);
+                }
                 regionsDistinguished.Add(region);
             }
         }
+
+        /// <summary>
+        /// Removes a point from the region.
+        /// </summary>
+        /// <param name="point">The point to remove.</param>
+        /// <remarks>
+        /// This removes a point from the inner, outer points, and connections. Does not remove a point
+        /// from a boundary, since those are generated from the corners.
+        /// </remarks>
+        public void Remove(in Point point)
+        {
+            while (_outerPoints.Contains(point))
+                _outerPoints.Remove(point);
+            while (_innerPoints.Contains(point))
+                _innerPoints.Remove(point);
+            while (_connections.Contains(point))
+                _connections.Remove(point);
+        }
+
+        /// <summary>
+        /// Does this region have a subregion with a certain name?
+        /// </summary>
+        /// <param name="name">name of the region to analyze</param>
+        /// <returns>whether the specified region exists</returns>
+        public bool HasRegion(string name) => SubRegions.Where(r => r.Name == name).Count() > 0;
+
         /// <summary>
         /// Removes a common point from the OuterPoints of both regions
         /// and adds it to the Connections of both Regions
         /// </summary>
         /// <param name="a">the first region to evaluate</param>
         /// <param name="b">the second region to evaluate</param>
-        public static void AddConnectionBetween(Region a, Region b)
+        public static void AddConnectionBetween(Region a, Region b, IGenerator rng = null)
         {
-            List<Point> possible = new List<Point>();
-            List<Point> Points = a.OuterPoints.Where(here => b.OuterPoints.Contains(here) && !a.IsCorner(here) && !b.IsCorner(here)).ToList();
-            foreach (Point Point in Points)
-            {
-                possible.Add(Point);
-            }
-            if (possible.Count() <= 2) return;
-            possible.Remove(possible.First());
-            possible.Remove(possible.Last());
+            rng = rng ?? GlobalRandom.DefaultRNG;
+            List<Point> possible =  a.OuterPoints.Where(here => b.OuterPoints.Contains(here) && !a.IsCorner(here) && !b.IsCorner(here)).ToList();
 
-            Point connection = possible.RandomItem();
+            if (possible.Count <= 2)
+                throw new ArgumentException("The two proposed regions have no overlapping points.");
+            possible.RemoveAt(0);
+            possible.RemoveAt(possible.Count() - 1);
+            int connectionIndex = rng.Next(0, possible.Count);
+            Point connection = possible[connectionIndex];
+            a.AddConnection(connection);
+            b.AddConnection(connection);
+        }
 
-            ((List<Point>)a.OuterPoints).Remove(connection);
-            ((List<Point>)a.Connections).Add(connection);
-            ((List<Point>)b.OuterPoints).Remove(connection);
-            ((List<Point>)b.Connections).Add(connection);
+        /// <summary>
+        /// Ads a new connection to this region
+        /// </summary>
+        /// <param name="connection">The location of the connection</param>
+        public void AddConnection(Point connection)
+        {
+            Remove(connection);
+            _connections.Add(connection);
         }
 
         /// <summary>
@@ -202,10 +226,10 @@ namespace GoRogue.MapGeneration
         {
             foreach (Point c in imposing.OuterPoints)
             {
-                while (OuterPoints.Contains(c))
-                    ((List<Point>)OuterPoints).Remove(c);
-                while (InnerPoints.Contains(c))
-                    ((List<Point>) InnerPoints).Remove(c);
+                while (_outerPoints.Contains(c))
+                    _outerPoints.Remove(c);
+                while (_innerPoints.Contains(c))
+                    _innerPoints.Remove(c);
             }
         }
 
@@ -218,10 +242,10 @@ namespace GoRogue.MapGeneration
         {
             foreach (Point c in imposing.InnerPoints)
             {
-                while (OuterPoints.Contains(c))
-                    ((List<Point>) OuterPoints).Remove(c);
-                while (InnerPoints.Contains(c))
-                    ((List<Point>) InnerPoints).Remove(c);
+                while (_outerPoints.Contains(c))
+                    _outerPoints.Remove(c);
+                while (_innerPoints.Contains(c))
+                    _innerPoints.Remove(c);
             }
         }
         /// <summary>
@@ -231,12 +255,12 @@ namespace GoRogue.MapGeneration
         /// <param name="imposing">the region to check for common outer points</param>
         public void RemoveOverlappingPoints(Region imposing)
         {
-            foreach (Point c in imposing.OuterPoints.Concat(imposing.InnerPoints))
+            foreach (Point c in imposing.Points)
             {
-                while (OuterPoints.Contains(c))
-                    ((List<Point>) OuterPoints).Remove(c);
-                while (InnerPoints.Contains(c))
-                    ((List<Point>) InnerPoints).Remove(c);
+                while (_outerPoints.Contains(c))
+                    _outerPoints.Remove(c);
+                while (_innerPoints.Contains(c))
+                    _innerPoints.Remove(c);
             }
         }
 
@@ -253,7 +277,6 @@ namespace GoRogue.MapGeneration
         /// </remarks>
         public virtual Region Rotate(float degrees, bool doToSelf, Point origin = default)
         {
-            Region Region;
             int quarterTurns = 0;
             double radians = SadRogue.Primitives.MathHelpers.ToRadian(degrees);
 
@@ -261,18 +284,7 @@ namespace GoRogue.MapGeneration
             if (origin == default(Point))
                 origin = new Point((Left + Right) / 2, (Top + Bottom) / 2);
 
-            while (degrees < 0)
-                degrees += 360;
-
-            while (degrees > 360)
-                degrees -= 360;
-
-            float d = degrees;
-            while (d > 45)
-            {
-                d -= 90;
-                quarterTurns++;
-            }
+            degrees = MathHelpers.WrapAround((int) degrees, 360);
 
             Point sw = SouthWestCorner - origin;
             int x = (int) Math.Round(sw.X * Math.Cos(radians) - sw.Y * Math.Sin(radians));
@@ -318,40 +330,37 @@ namespace GoRogue.MapGeneration
             else
                 return new Region(Name, se, ne, nw, sw);
         }
+        #endregion
 
-        private Region QuarterRotation(bool doToSelf, Point origin)
+        #region subregions
+        /// <summary>
+        /// Adds a subregion to this region
+        /// </summary>
+        /// <param name="region">The region you wish to add as a subregion</param>
+        public void Add(Region region)
         {
-            //transpose
-            int radius = Math.Abs(origin.X - Right);
-            int nextDiff = Math.Abs(origin.X - Left);
-            radius = radius < nextDiff ? nextDiff : radius;
+            _subRegions.Add(region);
+        }
+        /// <summary>
+        /// removes a subregion whose name matches with the key
+        /// </summary>
+        /// <param name="name"></param>
+        public void Remove(string key)
+        {
+            if (HasRegion(key))
+                _subRegions.Remove(GetRegion(key));
+        }
 
-            nextDiff = Math.Abs(origin.Y - Bottom);
-            radius = radius < nextDiff ? nextDiff : radius;
-
-            nextDiff = Math.Abs(origin.Y - Top);
-            radius = radius < nextDiff ? nextDiff : radius;
-
-            Point nw = SouthWestCorner - Center;
-            nw = new Point(radius - nw.Y, nw.X) + Center;
-
-            Point ne = NorthWestCorner;
-            ne = new Point(radius - ne.Y, ne.X) + Center;
-
-            Point se = NorthEastCorner;
-            se = new Point(radius - se.Y, se.X) + Center;
-
-            Point sw = SouthEastCorner;
-            sw = new Point(radius - sw.Y, sw.X) + Center;
-
-            if (doToSelf)
-            {
-                Generate(se, ne, nw, sw);
-                return this;
-            }
+        /// <summary>
+        /// Get a SubRegion by its name
+        /// </summary>
+        /// <param name="name">the name of the region to find</param>
+        public Region GetRegion(string name)
+        {
+            if (HasRegion(name))
+                return SubRegions.First(r => r.Name == name);
             else
-                return new Region(Name, se, ne, nw, sw);
-
+                throw new KeyNotFoundException("No SubRegion named " + name + " was found");
         }
         #endregion
     }

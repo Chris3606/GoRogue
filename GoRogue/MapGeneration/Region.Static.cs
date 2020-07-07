@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using SadRogue.Primitives;
 
@@ -65,15 +66,54 @@ namespace GoRogue.MapGeneration
         /// <returns>All points contained within the outer region</returns>
         public static IEnumerable<Point> InnerFromOuterPoints(IEnumerable<Point> outer)
         {
+            if(outer.Count() == 0)
+                return new List<Point>();
+            List<Point> points = new List<Point>();
             outer = outer.OrderBy(x => x.X).ToList();
             for (int i = outer.First().X + 1; i < outer.Last().X; i++)
             {
                 List<Point> chunk = outer.Where(w => w.X == i).OrderBy(o => o.Y).ToList();
                 if(chunk.Count > 0)
-                    for (int j = chunk.First().Y; j <= chunk.Last().Y; j++)
+                {
+                    for (int j = chunk[0].Y; j <= chunk[^1].Y; j++)
                     {
-                        yield return new Point(i, j);
+                        points.Add(new Point(i, j));
                     }
+                }
+            }
+
+            return points;
+        }
+
+
+
+        public static bool operator ==(Region left, Region right)
+        {
+            try
+            {
+                bool equals = left.Name == right.Name;
+                if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
+                if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
+                if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
+                if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
+                if (left.Center != right.Center) equals = false;
+                return equals;
+            }
+            catch (NullReferenceException)
+            {
+                return false;
+            }
+        }
+
+        public static bool operator !=(Region left, Region right)
+        {
+            try
+            {
+                return !(left == right);
+            }
+            catch (NullReferenceException)
+            {
+                return false;
             }
         }
     }

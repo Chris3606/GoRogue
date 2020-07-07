@@ -111,7 +111,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             Assert.Equal(nw.X, area.LeftAt(nw.Y));
             Assert.Equal(4, area.LeftAt(area.Top));
-            Assert.Equal(2, area.LeftAt(area.Bottom));
+            Assert.Equal(3, area.LeftAt(area.Bottom));
         }
         [Fact]
         public void RightAtTest()
@@ -168,6 +168,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void DistinguishSubAreasTest()
         {
+
             /* 0123456
              * XXXXXXX
              * X     X
@@ -184,7 +185,6 @@ namespace GoRogue.UnitTests.MapGeneration
             Point se = new Point(9, 9);
             Point ne = new Point(9, 0);
             Region mainArea = new Region("parent area", ne: ne, nw: nw, se: se, sw: sw);
-
             PrintRegion(mainArea);
             nw = new Point(1, 1);
             se = new Point(5, 5);
@@ -200,14 +200,14 @@ namespace GoRogue.UnitTests.MapGeneration
             Region hostSubArea = new Region("host sub area", ne: ne, nw: nw, se: se, sw: sw);
             PrintRegion(hostSubArea);
 
-            ((List<Region>)mainArea.SubRegions).Add(hostSubArea);
-            ((List<Region>)mainArea.SubRegions).Add(imposingSubArea);
+            mainArea.Add(hostSubArea);
+            mainArea.Add(imposingSubArea);
             PrintRegion(mainArea);
 
             mainArea.DistinguishSubRegions();
             PrintRegion(mainArea);
-            hostSubArea = mainArea["imposing sub area"];
-            imposingSubArea = mainArea["host sub area"];
+            hostSubArea = mainArea.GetRegion("imposing sub area");
+            imposingSubArea = mainArea.GetRegion("host sub area");
             foreach (Point c in imposingSubArea.InnerPoints)
             {
                 Assert.True(mainArea.Contains(c), "Main area somehow had a Point removed.");
@@ -236,7 +236,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
         }
         [Fact]
-        public void RemoveOverlappingOuterpointsTest()
+        public void RemoveOverlappingOuterPointsTest()
         {
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(1, 1), new Point(3, 4)));
             Region b = Region.FromRectangle("Area B", new Rectangle(new Point(3, 0), new Point(6, 5)));
@@ -366,6 +366,41 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(parallelogram.Contains(origin + length), "Didn't contain expected coordinate of " + (origin + length).ToString());
             Assert.True(parallelogram.Contains(horizontalBound), "Didn't contain expected top-right corner");
             Assert.False(parallelogram.Contains(origin + new Point(0, 2)), "Contained unexpected spot due south of the origin.");
+        }
+
+        [Fact]
+        public void HasRegionTest()
+        {
+            Region house = new Region("house", ne: ne, nw: nw, se: se, sw: sw);
+
+            house.Add(new Region("parlor", ne: ne, nw: nw, se: se, sw: sw));
+            house.Add(new Region("ballroom", ne: ne, nw: nw, se: se, sw: sw));
+            house.Add(new Region("kitchenette", ne: ne, nw: nw, se: se, sw: sw));
+            Assert.False(house.HasRegion("house"));
+            Assert.False(house.HasRegion("studio"));
+            Assert.True(house.HasRegion("ballroom"));
+            Assert.True(house.HasRegion("kitchenette"));
+            Assert.True(house.HasRegion("parlor"));
+        }
+
+        [Fact]
+        public void SubRegionsTest()
+        {
+            Region house = new Region("house", ne: ne, nw: nw, se: se, sw: sw);
+            house.Add(new Region("parlor", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            Assert.Equal(1, house.SubRegions.Count);
+            house.Add(new Region("hall", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            Assert.Equal(2, house.SubRegions.Count);
+            house.Add(new Region("shitter", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            Assert.Equal(3, house.SubRegions.Count);
+
+            Region expected = new Region("parlor", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2);
+
+            Assert.Equal(expected, house.GetRegion("parlor"));
+
+
+            house.Remove("hall");
+            Assert.Equal(2, house.SubRegions.Count);
         }
         public void Dispose()
         {

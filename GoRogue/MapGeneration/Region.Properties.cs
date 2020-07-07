@@ -24,43 +24,43 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The subregions of this region (i.e., rooms in a house)
         /// </summary>
-        public IReadOnlyList<Region> SubRegions => _subRegions;
+        public IReadOnlyList<Region> SubRegions => _subRegions.AsReadOnly();
         private List<Region> _subRegions = new List<Region>();
 
         /// <summary>
         /// All of the boundary points of this region
         /// </summary>
-        public IReadOnlyList<Point> OuterPoints => _outerPoints;
+        public IReadOnlyList<Point> OuterPoints => _outerPoints.AsReadOnly();
         private List<Point> _outerPoints = new List<Point>();
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points and connections
         /// </summary>
-        public IReadOnlyList<Point> InnerPoints => _innerPoints;
+        public IReadOnlyList<Point> InnerPoints => _innerPoints.AsReadOnly();
         private List<Point> _innerPoints = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the southern boundary
         /// </summary>
-        public IReadOnlyList<Point> SouthBoundary => _southBoundary;
+        public IReadOnlyList<Point> SouthBoundary => _southBoundary.AsReadOnly();
         private List<Point> _southBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the northern boundary
         /// </summary>
-        public IReadOnlyList<Point> NorthBoundary => _northBoundary;
+        public IReadOnlyList<Point> NorthBoundary => _northBoundary.AsReadOnly();
         private List<Point> _northBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the eastern boundary
         /// </summary>
-        public IReadOnlyList<Point> EastBoundary => _eastBoundary;
+        public IReadOnlyList<Point> EastBoundary => _eastBoundary.AsReadOnly();
         private List<Point> _eastBoundary = new List<Point>();
 
         /// <summary>
         /// All of the outer points along the western boundary
         /// </summary>
-        public IReadOnlyList<Point> WestBoundary => _westBoundary;
+        public IReadOnlyList<Point> WestBoundary => _westBoundary.AsReadOnly();
         private List<Point> _westBoundary = new List<Point>();
 
         /// <summary>
@@ -174,22 +174,5 @@ namespace GoRogue.MapGeneration
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
         public int BottomAt(int x) => OuterPoints.BottomAt(x);
-
-        /// <summary>
-        /// Get a SubRegion by its name
-        /// </summary>
-        /// <param name="name">the name of the region to find</param>
-        public Region this[string name]
-        {
-            get
-            {
-                if(HasRegion(name))
-                    return SubRegions.First(r => r.Name == name);
-                else
-                    throw new KeyNotFoundException("No SubRegion named " + name + " was found");
-            }
-        }
-
-        public bool HasRegion(string name) => SubRegions.FirstOrDefault(r => r.Name == name) != null;
     }
 }
