@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Components;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -42,7 +43,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Container holding components that have been attached to this object.
         /// </summary>
-        public IHasTaggableComponents GoRogueComponents { get; }
+        public ITaggableComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides

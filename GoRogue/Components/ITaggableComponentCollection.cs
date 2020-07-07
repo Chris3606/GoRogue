@@ -3,33 +3,33 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Components
 {
     /// <summary>
     /// Interface for an object that has components that can be added, removed, checked for, and retrieved by type and a unique
     /// "tag"
-    /// string.  Typically, you would implement this via a backing field of type <see cref="ComponentContainer" />, which
+    /// string.  Typically, you would implement this via a backing field of type <see cref="ComponentCollection" />, which
     /// implements the
     /// logic for these functions.
     /// </summary>
     [PublicAPI]
-    public interface IHasTaggableComponents : IHasComponents, IEnumerable<(object component, string? tag)>
+    public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<(object component, string? tag)>
     {
         /// <inheritdoc />
-        void IHasComponents.Add(object component) => Add(this);
+        void IBasicComponentCollection.Add(object component) => Add(this);
 
         /// <inheritdoc />
         [return: MaybeNull]
-        T IHasComponents.GetFirstOrDefault<T>() => GetFirstOrDefault<T>();
+        T IBasicComponentCollection.GetFirstOrDefault<T>() => GetFirstOrDefault<T>();
 
         /// <inheritdoc />
-        T IHasComponents.GetFirst<T>() => GetFirst<T>();
+        T IBasicComponentCollection.GetFirst<T>() => GetFirst<T>();
 
         /// <inheritdoc />
-        bool IHasComponents.Contains(Type componentType) => Contains(componentType);
+        bool IBasicComponentCollection.Contains(Type componentType) => Contains(componentType);
 
         /// <inheritdoc />
-        bool IHasComponents.Contains<T>() => Contains<T>();
+        bool IBasicComponentCollection.Contains<T>() => Contains<T>();
 
         /// <summary>
         /// Adds the given object as a component, optionally giving it a tag.  Throws an exception if that specific

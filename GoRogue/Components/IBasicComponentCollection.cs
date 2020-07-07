@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Components
 {
     /// <summary>
     /// Arguments for events fired when components are added/removed from an object.
@@ -28,11 +28,11 @@ namespace GoRogue
 
     /// <summary>
     /// Interface for an object that has components that can be added, removed, checked for, and retrieved by type.  Typically,
-    /// you would implement this via a backing field of type <see cref="ComponentContainer" />, which implements the logic for
+    /// you would implement this via a backing field of type <see cref="ComponentCollection" />, which implements the logic for
     /// these functions.
     /// </summary>
     [PublicAPI]
-    public interface IHasComponents
+    public interface IBasicComponentCollection
     {
         /// <summary>
         /// Fired when a component is added to the component container.

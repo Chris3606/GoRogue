@@ -1,10 +1,10 @@
 ﻿using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Components
 {
     /// <summary>
     /// Optional interface that may be implemented by components to ensure they are returned in a specific order
-    /// when <see cref="ComponentContainer.GetFirstOrDefault{T}" /> is called.  Components are not required to implement
+    /// when <see cref="ComponentCollection.GetFirstOrDefault{T}" /> is called.  Components are not required to implement
     /// this interface, however components that do not will be returned after any components that do.
     /// </summary>
     /// <remarks>

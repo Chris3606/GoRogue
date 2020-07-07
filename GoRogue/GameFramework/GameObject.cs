@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Components;
 using GoRogue.GameFramework.Components;
 using GoRogue.MapViews;
 using GoRogue.Random;
@@ -12,7 +13,7 @@ namespace GoRogue.GameFramework
     /// Base class for any object that has a grid position and can be added to a <see cref="Map" />.  Implements basic
     /// attributes generally common to all objects
     /// on a map, as well as properties/methods that the Map class needs to function.  It also implements
-    /// <see cref="IHasComponents" />, which means you can attach
+    /// <see cref="IBasicComponentCollection" />, which means you can attach
     /// components to it.  In cases where this class cannot be inherited from, have your class implement
     /// <see cref="IGameObject" /> via a private GameObject field.
     /// </summary>
@@ -94,12 +95,12 @@ namespace GoRogue.GameFramework
         /// remarks for details.
         /// </param>
         /// <param name="customComponentContainer">
-        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentContainer"/> is used.
+        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentCollection"/> is used.
         /// Typically you will not need to specify this, as ComponentContainer is sufficient for nearly all use cases.
         /// </param>
         public GameObject(Point position, int layer, IGameObject? parentObject, bool isStatic = false,
                           bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null,
-                          IHasTaggableComponents? customComponentContainer = null)
+                          ITaggableComponentCollection? customComponentContainer = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -113,7 +114,7 @@ namespace GoRogue.GameFramework
             CurrentMap = null;
 
             ID = idGenerator();
-            GoRogueComponents = customComponentContainer ?? new ComponentContainer();
+            GoRogueComponents = customComponentContainer ?? new ComponentCollection();
             GoRogueComponents.ComponentAdded += On_ComponentAdded;
             GoRogueComponents.ComponentRemoved += On_ComponentRemoved;
         }
@@ -187,7 +188,7 @@ namespace GoRogue.GameFramework
         public Map? CurrentMap { get; private set; }
 
         /// <inheritdoc />
-        public IHasTaggableComponents GoRogueComponents { get; }
+        public ITaggableComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Returns true if the GameObject can be moved to the location specified; false otherwise.

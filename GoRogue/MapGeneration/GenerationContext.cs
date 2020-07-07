@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Components;
 using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration
@@ -9,7 +10,7 @@ namespace GoRogue.MapGeneration
     /// when they need to get previously generated data about the map.
     /// </summary>
     [PublicAPI]
-    public class GenerationContext : ComponentContainer
+    public class GenerationContext : ComponentCollection
     {
         /// <summary>
         /// Height of the map this context represents.

@@ -1,4 +1,6 @@
-﻿namespace GoRogue.UnitTests.Mocks
+﻿using GoRogue.Components;
+
+namespace GoRogue.UnitTests.Mocks
 {
     internal class ComponentBase
     { }

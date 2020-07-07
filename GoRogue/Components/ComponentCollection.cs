@@ -5,14 +5,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Components
 {
     /// <summary>
     /// A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either
     /// give your
     /// object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access
     /// components,
-    /// you may either inherit from ComponentContainer, or have your object implement <see cref="IHasComponents" />via a
+    /// you may either inherit from ComponentContainer, or have your object implement <see cref="IBasicComponentCollection" />via a
     /// backing field of
     /// type ComponentContainer.
     /// </summary>
@@ -44,7 +44,7 @@ namespace GoRogue
     /// obj.HasComponent(typeof(PlayerTickable)) both return true.
     /// </remarks>
     [PublicAPI]
-    public class ComponentContainer : IHasTaggableComponents
+    public class ComponentCollection : ITaggableComponentCollection
     {
         private readonly Dictionary<Type, List<object>> _components;
 
@@ -58,7 +58,7 @@ namespace GoRogue
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ComponentContainer()
+        public ComponentCollection()
         {
             _components = new Dictionary<Type, List<object>>();
             _componentsToTags = new Dictionary<object, string?>();
@@ -219,7 +219,7 @@ namespace GoRogue
             if (tag == null)
             {
                 if (!_components.ContainsKey(typeOfT))
-                    throw new InvalidOperationException($"No component of type {nameof(T)} has been added to the {nameof(ComponentContainer)}.");
+                    throw new InvalidOperationException($"No component of type {nameof(T)} has been added to the {nameof(ComponentCollection)}.");
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
@@ -227,12 +227,12 @@ namespace GoRogue
             }
 
             if (!_tagsToComponents.ContainsKey(tag))
-                throw new InvalidOperationException($"No component with the tag {tag} has been added to the {nameof(ComponentContainer)}.");
+                throw new InvalidOperationException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.");
 
             if (_tagsToComponents[tag] is T item)
                 return item;
 
-            throw new InvalidOperationException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentContainer)}, but the component with that tag is not of that type.");
+            throw new InvalidOperationException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.");
         }
 
         /// <inheritdoc />
