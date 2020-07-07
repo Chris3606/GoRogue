@@ -109,10 +109,10 @@ namespace GoRogue.MapGeneration.Steps
 
             // Get required existing components
             var wallFloor =
-                context.GetComponent<ISettableMapView<bool>>(
+                context.GetFirstOrDefault<ISettableMapView<bool>>(
                     WallFloorComponentTag)!; // Known to not be null since Perform checked for us
             var tunnels =
-                context.GetComponent<ItemList<Area>>(
+                context.GetFirstOrDefault<ItemList<Area>>(
                     TunnelsComponentTag)!; // Known to not be null since Perform checked for us
 
             // For each area, find dead ends up to the maximum number of iterations and prune them, unless they're saved

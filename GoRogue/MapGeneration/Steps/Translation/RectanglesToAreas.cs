@@ -61,14 +61,14 @@ namespace GoRogue.MapGeneration.Steps.Translation
         {
             // Get required components
             var rectangles =
-                context.GetComponent<ItemList<Rectangle>>(
+                context.GetFirstOrDefault<ItemList<Rectangle>>(
                     RectanglesComponentTag)!; // Not null because is in required components list
 
             // Get/create output component as needed
             var areas = context.GetComponentOrNew(() => new ItemList<Area>(), AreasComponentTag);
 
             if (RemoveSourceComponent)
-                context.RemoveComponent(rectangles);
+                context.Remove(rectangles);
 
             foreach (var rect in rectangles.Items)
             {

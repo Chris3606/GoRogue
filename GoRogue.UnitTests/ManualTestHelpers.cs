@@ -88,7 +88,7 @@ namespace GoRogue.UnitTests
             generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng, saveDeadEndChance: 10));
             generator.Generate();
 
-            var wallFloorMap = generator.Context.GetComponent<ISettableMapView<bool>>("WallFloor");
+            var wallFloorMap = generator.Context.GetFirstOrDefault<ISettableMapView<bool>>("WallFloor");
             Assert.NotNull(wallFloorMap);
 
             _output.WriteLine("Generated map: ");

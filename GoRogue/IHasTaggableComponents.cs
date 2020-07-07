@@ -20,13 +20,16 @@ namespace GoRogue
 
         /// <inheritdoc />
         [return: MaybeNull]
-        T IHasComponents.GetComponent<T>() => GetComponent<T>();
+        T IHasComponents.GetFirstOrDefault<T>() => GetFirstOrDefault<T>();
 
         /// <inheritdoc />
-        bool IHasComponents.HasComponent(Type componentType) => HasComponent(componentType);
+        T IHasComponents.GetFirst<T>() => GetFirst<T>();
 
         /// <inheritdoc />
-        bool IHasComponents.HasComponent<T>() => HasComponent<T>();
+        bool IHasComponents.Contains(Type componentType) => Contains(componentType);
+
+        /// <inheritdoc />
+        bool IHasComponents.Contains<T>() => Contains<T>();
 
         /// <summary>
         /// Adds the given object as a component, optionally giving it a tag.  Throws an exception if that specific
@@ -40,14 +43,14 @@ namespace GoRogue
         /// Removes the component with the given tag.  Throws an exception if a component with the specified tag does not exist.
         /// </summary>
         /// <param name="tag">Tag for component to remove.</param>
-        void RemoveComponent(string tag);
+        void Remove(string tag);
 
         /// <summary>
         /// Removes the component(s) with the given tags.  Throws an exception if a tag is encountered that does not have an object
         /// associated with it.
         /// </summary>
         /// <param name="tags">Tag(s) of components to remove.</param>
-        void RemoveComponents(params string[] tags);
+        void Remove(params string[] tags);
 
         /// <summary>
         /// Returns whether or not the implementer has at least one of all of the given types of components attached, optionally
@@ -60,7 +63,7 @@ namespace GoRogue
         /// True if the implementer has at least one component of each specified type that has the tag given, false
         /// otherwise.
         /// </returns>
-        bool HasComponents(params (Type type, string? tag)[] componentTypesAndTags);
+        bool Contains(params (Type type, string? tag)[] componentTypesAndTags);
 
         /// <summary>
         /// Returns whether or not there is at least one component of the specified type attached, that has the given tag
@@ -74,7 +77,7 @@ namespace GoRogue
         /// True if the implementer has at least one component of the specified type, and has the specified tag if one is
         /// specified; false otherwise.
         /// </returns>
-        bool HasComponent(Type componentType, string? tag = null);
+        bool Contains(Type componentType, string? tag = null);
 
         /// <summary>
         /// Returns whether or not there is at least one component of type T attached, that has the given tag associated with it if
@@ -84,7 +87,16 @@ namespace GoRogue
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
         /// <returns>True if the implemented has at least one component of the specified type attached, false otherwise.</returns>
-        bool HasComponent<T>(string? tag = null) where T : notnull;
+        bool Contains<T>(string? tag = null) where T : notnull;
+
+        /// <summary>
+        /// Gets the first component of type t that was added and has the given tag associated with it, if one is specified.
+        /// Throws InvalidOperationException if no such component exists.
+        /// </summary>
+        /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
+        /// <typeparam name="T">Type of component to retrieve.</typeparam>
+        /// <returns>The first component of Type T with the given tag that was attached.</returns>
+        T GetFirst<T>(string? tag = null) where T : notnull;
 
         /// <summary>
         /// Gets the first component of type T that was added and has the given tag associated with it, if one is specified, or
@@ -95,9 +107,9 @@ namespace GoRogue
         /// </summary>
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <returns>
-        /// The first component of Type T that was attached, or default(T) if no components of the given type
+        /// The first component of Type T with the given tag that was attached, or default(T) if no components of the given type
         /// have been attached.
         /// </returns>
-        T GetComponent<T>(string? tag = null) where T : notnull;
+        T GetFirstOrDefault<T>(string? tag = null) where T : notnull;
     }
 }

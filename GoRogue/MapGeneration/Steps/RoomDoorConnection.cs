@@ -162,10 +162,10 @@ namespace GoRogue.MapGeneration.Steps
 
             // Get required existing components
             var rooms =
-                context.GetComponent<ItemList<Rectangle>>(
+                context.GetFirstOrDefault<ItemList<Rectangle>>(
                     RoomsComponentTag)!; // Known to not be null since Perform checked for us
             var wallFloor =
-                context.GetComponent<ISettableMapView<bool>>(
+                context.GetFirstOrDefault<ISettableMapView<bool>>(
                     WallFloorComponentTag)!; // Known to not be null since Perform checked for us
 
             // Get rectangle of inner map bounds (the entire map except for the outer box that must remain all walls

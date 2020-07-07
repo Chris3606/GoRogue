@@ -191,7 +191,7 @@ namespace GoRogue.MapGeneration
         public void PerformStep(GenerationContext context)
         {
             foreach (var (componentType, tag) in _requiredComponents)
-                if (!context.HasComponent(componentType, tag))
+                if (!context.Contains(componentType, tag))
                     throw new MissingContextComponentException(this, componentType, tag);
 
             OnPerform(context);

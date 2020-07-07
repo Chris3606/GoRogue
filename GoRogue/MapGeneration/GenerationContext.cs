@@ -53,7 +53,7 @@ namespace GoRogue.MapGeneration
         public TComponent GetComponentOrNew<TComponent>([InstantHandle] Func<TComponent> newFunc, string? tag = null)
             where TComponent : notnull
         {
-            var contextComponent = GetComponent<TComponent>(tag);
+            var contextComponent = GetFirstOrDefault<TComponent>(tag);
             if (contextComponent == null)
             {
                 contextComponent = newFunc();

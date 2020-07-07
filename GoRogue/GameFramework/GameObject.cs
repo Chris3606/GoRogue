@@ -263,9 +263,9 @@ namespace GoRogue.GameFramework
         }
 
         /// <inheritdoc />
-        public override void RemoveComponents(params object[] components)
+        public override void Remove(params object[] components)
         {
-            base.RemoveComponents(components);
+            base.Remove(components);
 
             // If no exception was thrown, the above remove succeeded.
             foreach (var component in components)

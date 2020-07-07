@@ -105,10 +105,10 @@ namespace GoRogue
         }
 
         /// <inheritdoc />
-        public void RemoveComponent(object component) => RemoveComponents(component);
+        public void Remove(object component) => Remove(new[] { component });
 
         /// <inheritdoc />
-        public virtual void RemoveComponents(params object[] components)
+        public virtual void Remove(params object[] components)
         {
             foreach (var component in components)
             {
@@ -142,25 +142,25 @@ namespace GoRogue
         }
 
         /// <inheritdoc />
-        public void RemoveComponent(string tag) => RemoveComponents(tag);
+        public void Remove(string tag) => Remove(new[] { tag });
 
         /// <inheritdoc />
-        public void RemoveComponents(params string[] tags)
+        public void Remove(params string[] tags)
         {
             foreach (var tag in tags)
                 if (_tagsToComponents.TryGetValue(tag, out var component))
-                    RemoveComponent(component);
+                    Remove(component);
                 else
                     throw new ArgumentException(
                         $"Tried to remove a component with tag {tag}, but no such component exists on the object.");
         }
 
         /// <inheritdoc />
-        public bool HasComponents(params Type[] componentTypes)
+        public bool Contains(params Type[] componentTypes)
             => componentTypes.All(component => _components.ContainsKey(component));
 
         /// <inheritdoc />
-        public bool HasComponents(params (Type type, string? tag)[] componentTypesAndTags)
+        public bool Contains(params (Type type, string? tag)[] componentTypesAndTags)
         {
             foreach (var (type, tag) in componentTypesAndTags)
             {
@@ -181,14 +181,14 @@ namespace GoRogue
         }
 
         /// <inheritdoc />
-        public bool HasComponent(Type componentType, string? tag = null) => HasComponents((componentType, tag));
+        public bool Contains(Type componentType, string? tag = null) => Contains((componentType, tag));
 
         /// <inheritdoc />
-        public bool HasComponent<T>(string? tag = null) where T : notnull => HasComponents((typeof(T), tag));
+        public bool Contains<T>(string? tag = null) where T : notnull => Contains((typeof(T), tag));
 
         /// <inheritdoc />
         [return: MaybeNull]
-        public T GetComponent<T>(string? tag = null) where T : notnull
+        public T GetFirstOrDefault<T>(string? tag = null) where T : notnull
         {
             Type typeOfT = typeof(T);
 
@@ -212,7 +212,31 @@ namespace GoRogue
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> GetComponents<T>() where T : notnull
+        public T GetFirst<T>(string? tag = null) where T : notnull
+        {
+            Type typeOfT = typeof(T);
+
+            if (tag == null)
+            {
+                if (!_components.ContainsKey(typeOfT))
+                    throw new InvalidOperationException($"No component of type {nameof(T)} has been added to the {nameof(ComponentContainer)}.");
+
+                // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
+                // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
+                return (T)_components[typeOfT][0];
+            }
+
+            if (!_tagsToComponents.ContainsKey(tag))
+                throw new InvalidOperationException($"No component with the tag {tag} has been added to the {nameof(ComponentContainer)}.");
+
+            if (_tagsToComponents[tag] is T item)
+                return item;
+
+            throw new InvalidOperationException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentContainer)}, but the component with that tag is not of that type.");
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<T> GetAll<T>() where T : notnull
         {
             Type typeOfT = typeof(T);
 

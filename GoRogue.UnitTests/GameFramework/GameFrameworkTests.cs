@@ -15,7 +15,7 @@ namespace GoRogue.UnitTests.GameFramework
             var grMap = new Generator(10, 10)
                 .AddSteps(DefaultAlgorithms.RectangleMapSteps())
                 .Generate()
-                .Context.GetComponent<ISettableMapView<bool>>();
+                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
 
             TestUtils.NotNull(grMap);
 
@@ -49,7 +49,7 @@ namespace GoRogue.UnitTests.GameFramework
             var grMap = new Generator(10, 10)
                 .AddSteps(DefaultAlgorithms.RectangleMapSteps())
                 .Generate()
-                .Context.GetComponent<ISettableMapView<bool>>();
+                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
 
             TestUtils.NotNull(grMap);
 

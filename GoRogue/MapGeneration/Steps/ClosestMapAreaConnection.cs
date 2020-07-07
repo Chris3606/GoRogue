@@ -127,10 +127,10 @@ namespace GoRogue.MapGeneration.Steps
         {
             // Get required existing components
             var areasToConnect =
-                context.GetComponent<ItemList<Area>>(
+                context.GetFirstOrDefault<ItemList<Area>>(
                     AreasComponentTag)!; // Known to not be null since Perform checked for us
             var wallFloor =
-                context.GetComponent<ISettableMapView<bool>>(
+                context.GetFirstOrDefault<ISettableMapView<bool>>(
                     WallFloorComponentTag)!; // Known to not be null since Perform checked for us
 
             // Get/create tunnel component

@@ -74,9 +74,9 @@ namespace GoRogue.MapGeneration.Steps.Translation
         {
             // Get required components
             var baseList =
-                context.GetComponent<ItemList<TItem>>(BaseListTag)!; // Not null because is in required components list
+                context.GetFirstOrDefault<ItemList<TItem>>(BaseListTag)!; // Not null because is in required components list
             var listToAppend =
-                context.GetComponent<ItemList<TItem>>(
+                context.GetFirstOrDefault<ItemList<TItem>>(
                     ListToAppendTag)!; // Not null because is in required components list
 
             // Iterate over each individual position and add to original list, so we keep the original generation step that created it with it.

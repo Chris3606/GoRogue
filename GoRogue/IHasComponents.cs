@@ -57,14 +57,22 @@ namespace GoRogue
         /// have been attached.
         /// </returns>
         [return: MaybeNull]
-        T GetComponent<T>() where T : notnull;
+        T GetFirstOrDefault<T>() where T : notnull;
+
+        /// <summary>
+        /// Gets the first component of type T that was added, or throws InvalidOperationException if
+        /// no component of that type has been added.
+        /// </summary>
+        /// <typeparam name="T">Type of component to retrieve.</typeparam>
+        /// <returns>The first component of Type T that was attached.</returns>
+        T GetFirst<T>() where T : notnull;
 
         /// <summary>
         /// Gets all components of type T that are added.
         /// </summary>
         /// <typeparam name="T">Type of components to retrieve.</typeparam>
         /// <returns>All components of Type T that are attached.</returns>
-        IEnumerable<T> GetComponents<T>() where T : notnull;
+        IEnumerable<T> GetAll<T>() where T : notnull;
 
         /// <summary>
         /// Returns whether or not there is at least one component of the specified type attached.  Type may be specified
@@ -72,14 +80,14 @@ namespace GoRogue
         /// </summary>
         /// <param name="componentType">The type of component to check for.</param>
         /// <returns>True if the implementer has at least one component of the specified type, false otherwise.</returns>
-        bool HasComponent(Type componentType);
+        bool Contains(Type componentType);
 
         /// <summary>
         /// Returns whether or not there is at least one component of type T attached.
         /// </summary>
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <returns>True if the implemented has at least one component of the specified type attached, false otherwise.</returns>
-        bool HasComponent<T>() where T : notnull;
+        bool Contains<T>() where T : notnull;
 
         /// <summary>
         /// Returns whether or not the implementer has at least one of all of the given types of components attached.  Types may be
@@ -88,18 +96,18 @@ namespace GoRogue
         /// </summary>
         /// <param name="componentTypes">One or more component types to check for.</param>
         /// <returns>True if the implementer has at least one component of each specified type, false otherwise.</returns>
-        bool HasComponents(params Type[] componentTypes);
+        bool Contains(params Type[] componentTypes);
 
         /// <summary>
         /// Removes the given component.  Throws an exception if the component isn't attached.
         /// </summary>
         /// <param name="component">Component to remove.</param>
-        void RemoveComponent(object component);
+        void Remove(object component);
 
         /// <summary>
         /// Removes the given component(s).  Throws an exception if a component given isn't attached.
         /// </summary>
         /// <param name="components">One or more component instances to remove.</param>
-        void RemoveComponents(params object[] components);
+        void Remove(params object[] components);
     }
 }

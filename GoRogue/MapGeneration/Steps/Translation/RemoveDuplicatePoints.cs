@@ -73,10 +73,10 @@ namespace GoRogue.MapGeneration.Steps.Translation
         {
             // Get required components
             var areaList1 =
-                context.GetComponent<ItemList<Area>>(
+                context.GetFirstOrDefault<ItemList<Area>>(
                     ModifiedAreaListTag)!; // Not null because is in required components list
             var areaList2 =
-                context.GetComponent<ItemList<Area>>(
+                context.GetFirstOrDefault<ItemList<Area>>(
                     UnmodifiedAreaListTag)!; // Not null because is in required components list
 
             // Cache all positions in any area of area1List
