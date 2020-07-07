@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -204,8 +203,9 @@ namespace GoRogue.SpatialMaps
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
-        public IEnumerable<T> MoveValid(Point current, Point target)
+        public List<T> MoveValid(Point current, Point target)
         {
+            var result = new List<T>();
             if (_positionMapping.ContainsKey(current) && current != target)
             {
                 if (!_positionMapping.ContainsKey(target))
@@ -215,7 +215,7 @@ namespace GoRogue.SpatialMaps
                 {
                     tuple.Position = target;
                     _positionMapping[target].Add(tuple);
-                    yield return tuple.Item;
+                    result.Add(tuple.Item);
                 }
 
                 var list = _positionMapping[current];
@@ -225,10 +225,12 @@ namespace GoRogue.SpatialMaps
                     foreach (var tuple in list)
                         ItemMoved(this, new ItemMovedEventArgs<T>(tuple.Item, current, target));
             }
+
+            return result;
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
+        public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
@@ -253,14 +255,16 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> Remove(Point position)
+        public List<T> Remove(Point position)
         {
+            var result = new List<T>();
+
             if (_positionMapping.ContainsKey(position))
             {
                 foreach (var tuple in _positionMapping[position])
                 {
                     _itemMapping.Remove(tuple.Item);
-                    yield return tuple.Item;
+                    result.Add(tuple.Item);
                 }
 
                 var list = _positionMapping[position];
@@ -269,10 +273,12 @@ namespace GoRogue.SpatialMaps
                     foreach (var tuple in list)
                         ItemRemoved(this, new ItemEventArgs<T>(tuple.Item, position));
             }
+
+            return result;
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> Remove(int x, int y) => Remove(new Point(x, y));
+        public List<T> Remove(int x, int y) => Remove(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the
@@ -347,8 +353,7 @@ namespace GoRogue.SpatialMaps
                 throw new InvalidOperationException(
                     $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.");
 
-            // ReSharper disable once ReturnValueOfPureMethodIsNotUsed
-            MoveValid(current, target).ToArray(); // ToArray to force execution
+            MoveValid(current, target);
         }
 
         /// <summary>

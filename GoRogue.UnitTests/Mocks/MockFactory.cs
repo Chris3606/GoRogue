@@ -9,7 +9,7 @@ namespace GoRogue.UnitTests.Mocks
     /// </summary>
     internal class MockFactory
     {
-        public static IMapView<double> BoxResMap(int width, int height)
+        public static IMapView<double> RectangleResMap(int width, int height)
         {
             var map = Rectangle(width, height);
             return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
@@ -28,7 +28,7 @@ namespace GoRogue.UnitTests.Mocks
             return map;
         }
 
-        internal static ISettableMapView<bool> Rectangle(int width, int height)
+        public static ISettableMapView<bool> Rectangle(int width, int height)
         {
             ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
             for (var i = 0; i < map.Width; i++)
@@ -40,6 +40,24 @@ namespace GoRogue.UnitTests.Mocks
 
             return map;
         }
+
+        // Generates a rectangle with a double-thick border.
+        public static ISettableMapView<bool> DoubleThickRectangle(int width, int height)
+        {
+            var map = Rectangle(width, height);
+            var innerBounds = map.Bounds().Expand(-1, -1);
+            foreach (var pos in innerBounds.PerimeterPositions())
+                map[pos] = false;
+
+            return map;
+        }
+
+        public static IMapView<double> RectangleDoubleThickResMap(int width, int height)
+        {
+            var map = DoubleThickRectangle(width, height);
+            return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
+        }
+
         //internal static ISettableMapView<bool> Spiral(int width, int height)
         //{
         //    int center = map.Width / 2;

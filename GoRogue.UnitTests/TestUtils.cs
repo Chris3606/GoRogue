@@ -127,6 +127,14 @@ namespace GoRogue.UnitTests
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
 
+        /// <summary>
+        /// Gets all enum values from an enum.
+        /// </summary>
+        /// <typeparam name="T"/>
+        /// <returns/>
+        public static T[] GetEnumValues<T>() where T : Enum
+            => (T[])Enum.GetValues(typeof(T));
+
         public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
                                                   char floor = '.', char path = '*')
         {

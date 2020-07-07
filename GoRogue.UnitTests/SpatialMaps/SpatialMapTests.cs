@@ -136,5 +136,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(myId1));
             Assert.Empty(mySpatialMap.Remove((5, 6)));
         }
+
+        // TODO: tests for MoveValid, etc.  Split into different test cases like LayeredSpatialMapTests
     }
 }

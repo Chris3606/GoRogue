@@ -1,23 +1,9 @@
 ﻿using System;
+using GoRogue.UnitTests.Mocks;
 using Xunit;
 
 namespace GoRogue.UnitTests
 {
-    public class CancelingIntEffect : IntEffect
-    {
-        public CancelingIntEffect(string name, int startingDuration)
-            : base(name, startingDuration)
-        { }
-
-        protected override void OnTrigger(EffectArgs? e)
-        {
-            e = e ?? throw new ArgumentException($"Effect arguments for {nameof(CancelingIntEffect)} may not be null",
-                nameof(e));
-            Console.WriteLine($"Effect {Name} triggered, cancelling further triggers:");
-            e.CancelTrigger = true;
-        }
-    }
-
     public class EffectTests
     {
         [Fact]
@@ -75,18 +61,18 @@ namespace GoRogue.UnitTests
         [Fact]
         public void EffectTriggerEffects()
         {
-            var MULTI_DURATION = 3;
+            const int multiDuration = 3;
             var effectTrigger = new EffectTrigger<EffectArgs>();
 
             var effect1 = new IntEffect("Int Effect 1", 1);
-            var effect2 = new IntEffect("Int Effect 3", MULTI_DURATION);
+            var effect2 = new IntEffect("Int Effect 3", multiDuration);
 
             var effectInf = new IntEffect("Int Effect Inf", IntEffect.Infinite);
 
             effectTrigger.Add(effect2);
             effectTrigger.TriggerEffects(null); // Test with null arguments
             Assert.Equal(1, effectTrigger.Effects.Count);
-            Assert.Equal(MULTI_DURATION - 1, effectTrigger.Effects[0].Duration);
+            Assert.Equal(multiDuration - 1, effectTrigger.Effects[0].Duration);
             Assert.Equal(1, effect1.Duration);
 
             effectTrigger.Add(effect1);
@@ -95,7 +81,7 @@ namespace GoRogue.UnitTests
 
             effectTrigger.TriggerEffects(null);
             Assert.Equal(2, effectTrigger.Effects.Count);
-            Assert.Equal(MULTI_DURATION - 2, effectTrigger.Effects[0].Duration);
+            Assert.Equal(multiDuration - 2, effectTrigger.Effects[0].Duration);
             Assert.Equal(IntEffect.Infinite, effectTrigger.Effects[1].Duration);
 
             var secEffectTrigger = new EffectTrigger<EffectArgs>();
@@ -109,14 +95,5 @@ namespace GoRogue.UnitTests
             Assert.Equal(1, secEffectTrigger.Effects.Count);
             Assert.Equal(1, secEffectTrigger.Effects[0].Duration); // Must have cancelled
         }
-    }
-
-    public class IntEffect : Effect<EffectArgs>
-    {
-        public IntEffect(string name, int startingDuration)
-            : base(name, startingDuration)
-        { }
-
-        protected override void OnTrigger(EffectArgs? e) => Console.WriteLine($"Effect {Name} triggered.");
     }
 }

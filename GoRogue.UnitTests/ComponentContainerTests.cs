@@ -1,25 +1,9 @@
 using System;
+using GoRogue.UnitTests.Mocks;
 using Xunit;
 
 namespace GoRogue.UnitTests
 {
-    internal class ComponentBase
-    { }
-
-    internal class Component1 : ComponentBase
-    { }
-
-    internal class Component2 : ComponentBase
-    { }
-
-    internal class SortedComponent : Component1, ISortedComponent
-    {
-        public SortedComponent(uint sortOrder) => SortOrder = sortOrder;
-
-        public uint SortOrder { get; }
-    }
-
-
     public class ComponentContainerTests
     {
         public ComponentContainerTests()
@@ -33,9 +17,9 @@ namespace GoRogue.UnitTests
         private readonly ComponentContainer _componentContainer;
         private int _addedCount;
 
+        // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
         [Fact]
-        public void
-            AddComponentBasic() // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
+        public void AddComponentBasic()
         {
             var component = new Component1();
             var component2 = new Component1();
@@ -43,6 +27,7 @@ namespace GoRogue.UnitTests
             // Should not throw
             _componentContainer.AddComponent(component);
             Assert.Equal(1, _addedCount);
+
             // Should throw exception because it's a duplicate object
             Assert.Throws<ArgumentException>(() => _componentContainer.AddComponent(component));
             Assert.Equal(1, _addedCount);
@@ -52,9 +37,9 @@ namespace GoRogue.UnitTests
             Assert.Equal(2, _addedCount);
         }
 
+        // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
         [Fact]
-        public void
-            AddComponentTag() // We cannot test retrieval until we test GetComponent, but we will test exception-based behaviors
+        public void AddComponentTag()
         {
             var component = new Component1();
             var component2 = new Component1();
@@ -86,6 +71,7 @@ namespace GoRogue.UnitTests
             // Component1 qualifies as both of these types, so both should return the object.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
             Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
+
             // Component1 is NOT this type, so this should be null
             Assert.Null(_componentContainer.GetComponent<Component2>());
 
@@ -97,8 +83,10 @@ namespace GoRogue.UnitTests
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
 
             var retrievedComponent = _componentContainer.GetComponent<ComponentBase>();
+
             // Should be one of the two, since both are the proper type.  Order is not enforced since we don't have priorities set to the components
             Assert.True(retrievedComponent == component || retrievedComponent == component2);
+
             // Should now return component2
             Assert.Same(component2, _componentContainer.GetComponent<Component2>());
 
@@ -181,13 +169,17 @@ namespace GoRogue.UnitTests
             // Component1 qualifies as both of these types, so both should return the component we added when we're not looking for tags.
             Assert.Same(component, _componentContainer.GetComponent<Component1>());
             Assert.Same(component, _componentContainer.GetComponent<ComponentBase>());
+
             // Component1 is NOT this type, so this is null
             Assert.Null(_componentContainer.GetComponent<Component2>());
+
             // Should return the component because the component has the tag we're looking for
             Assert.Same(component, _componentContainer.GetComponent<Component1>(tag1));
             Assert.Same(component, _componentContainer.GetComponent<ComponentBase>(tag1));
+
             // Null because the object with the tag doesn't match the type requirement
             Assert.Null(_componentContainer.GetComponent<Component2>(tag1));
+
             // False because the object with the correct type doesn't have the tag
             Assert.Null(_componentContainer.GetComponent<Component1>(tag2));
 
@@ -209,6 +201,7 @@ namespace GoRogue.UnitTests
             // Component1 qualifies as both of these types, so both should be true.
             Assert.True(_componentContainer.HasComponent<Component1>());
             Assert.True(_componentContainer.HasComponent<ComponentBase>());
+
             // Component1 is NOT this type, so this is false
             Assert.False(_componentContainer.HasComponent<Component2>());
 
@@ -241,13 +234,17 @@ namespace GoRogue.UnitTests
             // Component1 qualifies as both of these types, so both should be true when we're not looking for tags.
             Assert.True(_componentContainer.HasComponent<Component1>());
             Assert.True(_componentContainer.HasComponent<ComponentBase>());
+
             // Component1 is NOT this type, so this is false
             Assert.False(_componentContainer.HasComponent<Component2>());
+
             // Should be true because the component has the tag we're looking for
             Assert.True(_componentContainer.HasComponent<Component1>(tag1));
             Assert.True(_componentContainer.HasComponent<ComponentBase>(tag1));
+
             // False because the object with the tag doesn't match the type requirement
             Assert.False(_componentContainer.HasComponent<Component2>(tag1));
+
             // False because the object with the correct type doesn't have the tag
             Assert.False(_componentContainer.HasComponent<Component1>(tag2));
 
@@ -272,6 +269,7 @@ namespace GoRogue.UnitTests
 
             _componentContainer.RemoveComponent(component);
             Assert.Equal(1, _addedCount);
+
             // Should throw because object isn't in the component list
             Assert.Throws<ArgumentException>(() => _componentContainer.RemoveComponent(component));
             Assert.Equal(1, _addedCount);

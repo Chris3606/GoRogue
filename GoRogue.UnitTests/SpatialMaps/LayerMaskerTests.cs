@@ -41,10 +41,10 @@ namespace GoRogue.UnitTests.SpatialMaps
         }
 
         [Fact]
-        public void Layers()
+        public void GetLayers()
         {
             var masker = new LayerMasker();
-            var layers = new[] { 0, 2, 5 };
+            int[] layers = { 0, 2, 5 };
 
             var mask = masker.Mask(layers);
             var layerReturn = masker.Layers(mask).ToArray();

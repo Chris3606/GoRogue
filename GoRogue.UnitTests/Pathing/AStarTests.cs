@@ -232,16 +232,22 @@ namespace GoRogue.UnitTests.Pathing
             TestUtils.NotNull(grPath);
             Assert.True(grPath.Length > 0);
 
-            _output.WriteLine("RoyT Path:");
+            _output.WriteLine("Map:");
+            _output.WriteLine(map.ExtendToString(elementStringifier: val => val ? "." : "#"));
+
+            _output.WriteLine("\nRoyT Path:");
             _output.WriteLine(path.Edges.ExtendToString());
 
             _output.WriteLine("\nGoRogue Path:");
             _output.WriteLine(grPath.ToString());
 
-            // While the paths may not be the same (multiple shortest paths, the lengths should be).
-            // RoyT returns steps (which are basically moves); so should be equivalent to the GoRogue
-            // path length WITHOUT the start.
-            Assert.Equal(path.Edges.Count, grPath.Length);
+            // The paths won't be the same path (there are very often multiple equally shortest paths).
+            // Additionally, because RoyT uses the euclidean heuristic, it will produce some non-shortest
+            // paths for some cases.  But we verify that our paths are adjacent and only over walkable terrain
+            // in other tests, so as long as well at least as short as RoyT's path, it should be correct.
+            // Since RoyT returns steps (pairs of points), their length is equivalent to our length WITHOUT
+            // the start.
+            Assert.True(grPath.Length <= path.Edges.Count);
         }
     }
 }
