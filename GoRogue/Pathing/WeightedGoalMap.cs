@@ -21,7 +21,7 @@ namespace GoRogue.Pathing
     /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap" />.
     /// </remarks>
     [PublicAPI]
-    public class WeightedGoalMap : IMapView<double?>
+    public sealed class WeightedGoalMap : MapViewBase<double?>
     {
         /// <summary>
         /// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
@@ -54,6 +54,7 @@ namespace GoRogue.Pathing
             foreach (var map in maps)
             {
                 Weights.Add(map, 1);
+
                 if (Height == 0)
                 {
                     Width = map.Width;
@@ -96,23 +97,18 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The height of the goal map, and the goal maps that compose it.
         /// </summary>
-        public int Height { get; }
+        public override int Height { get; }
 
 
         /// <summary>
         /// The width of the goal map, and the goal maps that compose it.
         /// </summary>
-        public int Width { get; }
-
-        /// <summary>
-        /// Returns the value of the combined goal maps at the given point.
-        /// </summary>
-        public double? this[int index1D] => this[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
+        public override int Width { get; }
 
         /// <summary>
         /// Returns the value of the combined goal maps at any given point.
         /// </summary>
-        public double? this[int x, int y]
+        public override double? this[Point point]
         {
             get
             {
@@ -120,7 +116,7 @@ namespace GoRogue.Pathing
                 var negResult = 0.0;
                 foreach (var pair in Weights)
                 {
-                    var value = pair.Key[x, y];
+                    var value = pair.Key[point];
                     if (!value.HasValue)
                         return null;
                     var weight = pair.Value;
@@ -134,11 +130,6 @@ namespace GoRogue.Pathing
                 return result + negResult;
             }
         }
-
-        /// <summary>
-        /// Returns the value of the combined goal maps at any given point.
-        /// </summary>
-        public double? this[Point point] => this[point.X, point.Y];
 
         /// <summary>
         /// Computes the entire aggregate goal map and returns it, effectively caching the result.

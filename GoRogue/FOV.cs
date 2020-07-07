@@ -60,6 +60,9 @@ namespace GoRogue
         public IMapView<bool> BooleanFOV { get; private set; }
 
         /// <inheritdoc />
+        public int Count => Width * Height;
+
+        /// <inheritdoc />
         public IEnumerable<Point> CurrentFOV => _currentFOV;
 
         /// <inheritdoc />

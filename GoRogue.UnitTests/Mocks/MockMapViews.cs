@@ -6,19 +6,17 @@ using SadRogue.Primitives;
 
 namespace GoRogue.UnitTests.Mocks
 {
-    internal class ResMap : IMapView<double>
+    internal class ResMap : MapViewBase<double>
     {
         private readonly IMapView<bool> view;
 
         public ResMap(IMapView<bool> view) => this.view = view;
 
-        public int Height => view.Height;
-        public int Width => view.Width;
-        public double this[Point pos] => view[pos] ? 0.0 : 1.0;
-        public double this[int x, int y] => view[x, y] ? 0.0 : 1.0;
-        public double this[int index1D] => view[index1D] ? 0.0 : 1.0;
+        public override int Height => view.Height;
+        public override int Width => view.Width;
+        public override double this[Point pos] => view[pos] ? 0.0 : 1.0;
 
-        public static void PrintHightlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
+        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
                                                    char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];

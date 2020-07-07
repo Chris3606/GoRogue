@@ -35,7 +35,7 @@ namespace GoRogue.GameFramework
     /// point in the case where you would like to use the components in a different way or within a different architecture.
     /// </remarks>
     [PublicAPI]
-    public class Map : IMapView<IEnumerable<IGameObject>>
+    public class Map : MapViewBase<IEnumerable<IGameObject>>
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
 
@@ -210,34 +210,19 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Height of the map, in grid spaces.
         /// </summary>
-        public int Height => _terrain.Height;
+        public override int Height => _terrain.Height;
 
         /// <summary>
         /// Width of the map, in grid spaces.
         /// </summary>
-        public int Width => _terrain.Width;
-
-        /// <summary>
-        /// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
-        /// </summary>
-        /// <param name="index1D">Location to retrieve objects for, specified as a 1D array-style index.</param>
-        /// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-        public IEnumerable<IGameObject> this[int index1D] => GetObjectsAt(Point.FromIndex(index1D, Width));
+        public override int Width => _terrain.Width;
 
         /// <summary>
         /// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
         /// </summary>
         /// <param name="pos">The position to retrieve objects for.</param>
         /// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-        public IEnumerable<IGameObject> this[Point pos] => GetObjectsAt(pos);
-
-        /// <summary>
-        /// Gets all objects at the given location, from the highest layer (layer with the highest number) down.
-        /// </summary>
-        /// <param name="x">X-value of the position to retrieve objects for.</param>
-        /// <param name="y">Y-value of the position to retrieve objects for.</param>
-        /// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-        public IEnumerable<IGameObject> this[int x, int y] => GetObjectsAt(x, y);
+        public override IEnumerable<IGameObject> this[Point pos] => GetObjectsAt(pos);
 
         /// <summary>
         /// Event that is fired whenever some object is added to the map.

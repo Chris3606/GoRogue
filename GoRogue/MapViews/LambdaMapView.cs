@@ -22,7 +22,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
     [PublicAPI]
-    public sealed class LambdaMapView<T> : IMapView<T>
+    public sealed class LambdaMapView<T> : MapViewBase<T>
     {
         private readonly Func<int> _heightGetter;
         private readonly Func<Point, T> _valueGetter;
@@ -74,34 +74,10 @@ namespace GoRogue.MapViews
         }
 
         /// <inheritdoc />
-        public int Height => _heightGetter();
+        public override int Height => _heightGetter();
 
         /// <inheritdoc />
-        public int Width => _widthGetter();
-
-        /// <summary>
-        /// Given an 1D-array-style index, determines the position associated with that index, and
-        /// returns the "value" associated with that location, by calling the valueGetter function
-        /// passed in at construction.
-        /// </summary>
-        /// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
-        /// <returns>
-        /// The "value" associated with the given location, according to the valueGetter function provided
-        /// at construction.
-        /// </returns>
-        public T this[int index1D] => _valueGetter(Point.FromIndex(index1D, Width));
-
-        /// <summary>
-        /// Given an X and Y value, returns the "value" associated with that location, by calling the
-        /// valueGetter function provided at construction.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>
-        /// The "value" associated with that location, according to the valueGetter function provided
-        /// at construction.
-        /// </returns>
-        public T this[int x, int y] => _valueGetter(new Point(x, y));
+        public override int Width => _widthGetter();
 
         /// <summary>
         /// Given a position, returns the "value" associated with that position, by calling the
@@ -112,7 +88,7 @@ namespace GoRogue.MapViews
         /// The "value" associated with the provided location, according to the valueGetter function
         /// provided at construction.
         /// </returns>
-        public T this[Point pos] => _valueGetter(pos);
+        public override T this[Point pos] => _valueGetter(pos);
 
         /// <summary>
         /// Returns a string representation of the map view.

@@ -69,6 +69,9 @@ namespace GoRogue.SenseMapping
         }
 
         /// <inheritdoc />
+        public int Count => Width * Height;
+
+        /// <inheritdoc />
         public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
 
         /// <summary>

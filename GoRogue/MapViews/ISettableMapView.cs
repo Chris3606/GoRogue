@@ -23,6 +23,9 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Given an X and Y value, returns/sets the "value" associated with that location.
         /// </summary>
+        /// <remarks>
+        /// Typically, this can be implemented via <see cref="this[Point]"/>.
+        /// </remarks>
         /// <param name="x">X-value of location.</param>
         /// <param name="y">Y-value of location.</param>
         /// <returns>The "value" associated with that location.</returns>

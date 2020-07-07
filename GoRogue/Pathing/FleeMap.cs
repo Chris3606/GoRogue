@@ -19,7 +19,7 @@ namespace GoRogue.Pathing
     /// </remarks>
 #pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
     [PublicAPI]
-    public class FleeMap : IMapView<double?>, IDisposable
+    public class FleeMap : MapViewBase<double?>, IDisposable
 #pragma warning restore CA1063
     {
         private readonly GoalMap _baseMap;
@@ -56,34 +56,19 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Height of the flee map.
         /// </summary>
-        public int Height => _goalMap.Height;
+        public override int Height => _goalMap.Height;
 
         /// <summary>
         /// Width of the flee map.
         /// </summary>
-        public int Width => _goalMap.Width;
-
-        /// <summary>
-        /// Returns the flee-map value for the given position.
-        /// </summary>
-        /// <param name="index1D">The position to return the value for, as a 1D-array-style index.</param>
-        /// <returns>The flee-map value for the given location.</returns>
-        public double? this[int index1D] => _goalMap[index1D];
+        public override int Width => _goalMap.Width;
 
         /// <summary>
         /// Returns the flee-map value for the given position.
         /// </summary>
         /// <param name="pos">The position to return the value for.</param>
         /// <returns>The flee-map value for the given location.</returns>
-        public double? this[Point pos] => _goalMap[pos];
-
-        /// <summary>
-        /// Returns the goal-map value for the given position.
-        /// </summary>
-        /// <param name="x">The x-value of the position to return the value for.</param>
-        /// <param name="y">The y-value of the position to return the value for.</param>
-        /// <returns>The flee-map value for the given location.</returns>
-        public double? this[int x, int y] => _goalMap[x, y];
+        public override double? this[Point pos] => _goalMap[pos];
 
         /// <summary>
         /// Gets the direction of the neighbor with the minimum flee-map value from the given position.

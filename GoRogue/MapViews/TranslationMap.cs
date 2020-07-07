@@ -23,7 +23,7 @@ namespace GoRogue.MapViews
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
     [PublicAPI]
-    public abstract class TranslationMap<T1, T2> : IMapView<T2>
+    public abstract class TranslationMap<T1, T2> : MapViewBase<T2>
     {
         /// <summary>
         /// Constructor. Takes an existing map view to create a view from.
@@ -39,39 +39,12 @@ namespace GoRogue.MapViews
         /// <summary>
         /// The height of the underlying map.
         /// </summary>
-        public int Height => BaseMap.Height;
+        public override int Height => BaseMap.Height;
 
         /// <summary>
         /// The width of the underlying map.
         /// </summary>
-        public int Width => BaseMap.Width;
-
-        /// <summary>
-        /// Given an 1D-array-style index, determines the position associated with that index, and
-        /// returns the "value" associated with that location.  This function calls <see cref="this[Point]" />,
-        /// so override that indexer to change functionality.
-        /// </summary>
-        /// <param name="index1D">1D-array-style index for location to retrieve value for.</param>
-        /// <returns>
-        /// The "value" associated with the given location, according to the translation function.
-        /// </returns>
-        public T2 this[int index1D]
-        {
-            get
-            {
-                var pos = Point.FromIndex(index1D, Width);
-                return this[pos];
-            }
-        }
-
-        /// <summary>
-        /// Given an X and Y value, translates and returns the "value" associated with that location.
-        /// This function calls this[Point pos], so override that indexer to change functionality.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>The translated "value" associated with that location.</returns>
-        public T2 this[int x, int y] => this[new Point(x, y)];
+        public override int Width => BaseMap.Width;
 
         /// <summary>
         /// Given a position, translates and returns the "value" associated with that position. the other indexers
@@ -80,7 +53,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="pos">Location to get the value for.</param>
         /// <returns>The translated "value" associated with the provided location.</returns>
-        public virtual T2 this[Point pos] => TranslateGet(pos, BaseMap[pos]);
+        public override T2 this[Point pos] => TranslateGet(pos, BaseMap[pos]);
 
         /// <summary>
         /// Returns a string representation of the TranslationMap.

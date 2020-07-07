@@ -16,7 +16,7 @@ namespace GoRogue.MapViews
     /// <typeparam name="T1">The type of your underlying data.</typeparam>
     /// <typeparam name="T2">The type of the data being exposed to the algorithm.</typeparam>
     [PublicAPI]
-    public abstract class SettableTranslationMap<T1, T2> : ISettableMapView<T2>
+    public abstract class SettableTranslationMap<T1, T2> : SettableMapViewBase<T2>
     {
         /// <summary>
         /// Constructor. Takes an existing map view to create a view from.
@@ -45,33 +45,10 @@ namespace GoRogue.MapViews
         public ISettableMapView<T1> BaseMap { get; private set; }
 
         /// <inheritdoc />
-        public int Height => BaseMap.Height;
+        public override int Height => BaseMap.Height;
 
         /// <inheritdoc />
-        public int Width => BaseMap.Width;
-
-        /// <summary>
-        /// Given an 1D-array-style index, determines the position associated with that index, and
-        /// returns/sets the "value" associated with that location.  This function calls
-        /// <see cref="this[Point]" />, so override that indexer to change functionality.
-        /// </summary>
-        /// <param name="index1D">1D-array-style index for location to retrieve/set value for.</param>
-        /// <returns>
-        /// The "value" associated with the given location, according to the translation function.
-        /// </returns>
-        public T2 this[int index1D]
-        {
-            get
-            {
-                var pos = Point.FromIndex(index1D, Width);
-                return this[pos];
-            }
-            set
-            {
-                var pos = Point.FromIndex(index1D, Width);
-                this[pos] = value;
-            }
-        }
+        public override int Width => BaseMap.Width;
 
         /// <summary>
         /// Given a position, translates and returns/sets the "value" associated with that position.
@@ -80,24 +57,10 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="pos">Location to get/set the value for.</param>
         /// <returns>The translated "value" associated with the provided location.</returns>
-        public virtual T2 this[Point pos]
+        public override T2 this[Point pos]
         {
             get => TranslateGet(pos, BaseMap[pos]);
             set => BaseMap[pos] = TranslateSet(pos, value);
-        }
-
-        /// <summary>
-        /// Given an X and Y value, translates and returns/sets the "value" associated with that
-        /// location. This function calls <see cref="this[Point]" />, so override that indexer to
-        /// change functionality.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>The translated "value" associated with that location.</returns>
-        public T2 this[int x, int y]
-        {
-            get => this[new Point(x, y)];
-            set => this[new Point(x, y)] = value;
         }
 
         /// <summary>

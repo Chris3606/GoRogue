@@ -22,7 +22,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T">The type being exposed by the Viewport.</typeparam>
     [PublicAPI]
-    public class Viewport<T> : IMapView<T>
+    public class Viewport<T> : MapViewBase<T>
     {
         private readonly BoundedRectangle _boundedRect;
 
@@ -59,24 +59,12 @@ namespace GoRogue.MapViews
         /// <summary>
         /// The height of the area being represented.
         /// </summary>
-        public int Height => ViewArea.Height;
+        public override int Height => ViewArea.Height;
 
         /// <summary>
         /// The width of the area being represented.
         /// </summary>
-        public int Width => ViewArea.Width;
-
-        /// <summary>
-        /// Given a position in relative 1d-array-index style, returns the "value" associated with that
-        /// location in absolute coordinates.
-        /// </summary>
-        /// <param name="relativeIndex1D">
-        /// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
-        /// </param>
-        /// <returns>
-        /// The "value" associated with the absolute location represented on the underlying map view.
-        /// </returns>
-        public T this[int relativeIndex1D] => MapView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)];
+        public override int Width => ViewArea.Width;
 
         /// <summary>
         /// Given a position in relative coordinates, returns the "value" associated with that
@@ -88,18 +76,7 @@ namespace GoRogue.MapViews
         /// <returns>
         /// The "value" associated with the absolute location represented on the underlying map view.
         /// </returns>
-        public virtual T this[Point relativePosition] => MapView[ViewArea.Position + relativePosition];
-
-        /// <summary>
-        /// Given an X and Y value in relative coordinates, returns the "value" associated with that
-        /// location in absolute coordinates.
-        /// </summary>
-        /// <param name="relativeX">Viewport-relative X-value of location.</param>
-        /// <param name="relativeY">Viewport-relative Y-value of location.</param>
-        /// <returns>
-        /// The "value" associated with the absolute location represented on the underlying map view.
-        /// </returns>
-        public virtual T this[int relativeX, int relativeY] => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY];
+        public override T this[Point relativePosition] => MapView[ViewArea.Position + relativePosition];
 
         /// <summary>
         /// Sets the viewing area for the viewport to the value given.  The viewport will automatically be bounded as needed to

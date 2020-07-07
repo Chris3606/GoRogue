@@ -17,7 +17,7 @@ namespace GoRogue.MapViews
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
     [PublicAPI]
-    public sealed class ArrayMap2D<T> : ISettableMapView<T>, ICloneable, IEquatable<ArrayMap2D<T>>
+    public sealed class ArrayMap2D<T> : SettableMapViewBase<T>, ICloneable, IEquatable<ArrayMap2D<T>>
     {
         private readonly T[,] _array;
 
@@ -59,30 +59,13 @@ namespace GoRogue.MapViews
         public bool Equals(ArrayMap2D<T> other) => !(other is null) && _array == other._array;
 
         /// <inheritdoc />
-        public int Height => _array.GetLength(1);
+        public override int Height => _array.GetLength(1);
 
         /// <inheritdoc />
-        public int Width => _array.GetLength(0);
+        public override int Width => _array.GetLength(0);
 
-        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc />
-        public T this[int index1D]
-        {
-            get => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
-            set => _array[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc />
-        public T this[int x, int y]
-        {
-            get => _array[x, y];
-            set => _array[x, y] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc />
-        public T this[Point pos]
+        public override T this[Point pos]
         {
             get => _array[pos.X, pos.Y];
             set => _array[pos.X, pos.Y] = value;
@@ -102,7 +85,7 @@ namespace GoRogue.MapViews
         /// and you can use the implicit conversion defined for this type instead.
         /// </summary>
         /// <returns>The underlying ArrayMap data as a 1D array.</returns>
-        public T[,] ToMultidimensionalArray() => this;
+        public T[,] ToMultidimensionalArray() => _array;
 
         /// <summary>
         /// Sets each element in the ArrayMap to the default for type T.

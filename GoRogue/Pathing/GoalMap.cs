@@ -24,7 +24,7 @@ namespace GoRogue.Pathing
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)" />
     /// </remarks>
     [PublicAPI]
-    public class GoalMap : IMapView<double?>
+    public class GoalMap : MapViewBase<double?>
     {
         private readonly HashSet<Point> _closedSet = new HashSet<Point>();
 
@@ -68,34 +68,19 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Height of the goal map.
         /// </summary>
-        public int Height => BaseMap.Height;
+        public override int Height => BaseMap.Height;
 
         /// <summary>
         /// Width of the goal map.
         /// </summary>
-        public int Width => BaseMap.Width;
-
-        /// <summary>
-        /// Returns the goal-map value for the given position.
-        /// </summary>
-        /// <param name="index1D">Position to return the goal-map value for, as a 1d-index-style value.</param>
-        /// <returns>The goal-map value for the given position.</returns>
-        public double? this[int index1D] => _goalMap[index1D];
-
-        /// <summary>
-        /// Returns the goal-map value for the given position.
-        /// </summary>
-        /// <param name="x">X-coordinate of the position to return the goal-map value for.</param>
-        /// <param name="y">Y-coordinate of the position to return the goal-map value for.</param>
-        /// <returns>The goal-map value for the given position.</returns>
-        public double? this[int x, int y] => _goalMap[x, y];
+        public override int Width => BaseMap.Width;
 
         /// <summary>
         /// Returns the goal-map value for the given position.
         /// </summary>
         /// <param name="pos">The position to return the goal-map value for.</param>
         /// <returns>The goal-map value for the given position.</returns>
-        public double? this[Point pos] => _goalMap[pos];
+        public override double? this[Point pos] => _goalMap[pos];
 
         /// <summary>
         /// Triggers when the GoalMap is updated.

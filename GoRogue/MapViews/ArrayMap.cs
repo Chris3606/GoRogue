@@ -17,7 +17,7 @@ namespace GoRogue.MapViews
     /// <typeparam name="T">The type of value being stored.</typeparam>
     [Serializable]
     [PublicAPI]
-    public sealed class ArrayMap<T> : ISettableMapView<T>, ICloneable, IEquatable<ArrayMap<T>>
+    public sealed class ArrayMap<T> : SettableMapViewBase<T>, ICloneable, IEquatable<ArrayMap<T>>
     {
         private readonly T[] _array;
 
@@ -70,30 +70,13 @@ namespace GoRogue.MapViews
         public bool Equals(ArrayMap<T>? other) => !(other is null) && _array == other._array;
 
         /// <inheritdoc />
-        public int Height { get; }
+        public override int Height { get; }
 
         /// <inheritdoc />
-        public int Width { get; }
+        public override int Width { get; }
 
-        // ReSharper disable once InheritdocInvalidUsage
         /// <inheritdoc />
-        public T this[int index1D]
-        {
-            get => _array[index1D];
-            set => _array[index1D] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc />
-        public T this[int x, int y]
-        {
-            get => _array[Point.ToIndex(x, y, Width)];
-            set => _array[Point.ToIndex(x, y, Width)] = value;
-        }
-
-        // ReSharper disable once InheritdocInvalidUsage
-        /// <inheritdoc />
-        public T this[Point pos]
+        public override T this[Point pos]
         {
             get => _array[pos.ToIndex(Width)];
             set => _array[pos.ToIndex(Width)] = value;
@@ -113,7 +96,6 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <returns>The underlying ArrayMap data as a 1D array.</returns>
         public T[] ToArray() => this;
-
 
         /// <summary>
         /// Sets each element in the ArrayMap to the default for type T.

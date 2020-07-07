@@ -16,7 +16,7 @@ namespace GoRogue.MapViews
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
     [PublicAPI]
-    public sealed class LambdaSettableMapView<T> : ISettableMapView<T>
+    public sealed class LambdaSettableMapView<T> : SettableMapViewBase<T>
     {
         private readonly Func<int> _heightGetter;
         private readonly Func<Point, T> _valueGetter;
@@ -77,42 +77,10 @@ namespace GoRogue.MapViews
         }
 
         /// <inheritdoc />
-        public int Height => _heightGetter();
+        public override int Height => _heightGetter();
 
         /// <inheritdoc />
-        public int Width => _widthGetter();
-
-        /// <summary>
-        /// Given an 1D-array-style index, determines the position associated with that index, and
-        /// returns/sets the "value" associated with that location, by calling the valueGetter/valueSetter
-        /// function passed in at construction.
-        /// </summary>
-        /// <param name="index1D">1D-array-style index for location to get/set the value for.</param>
-        /// <returns>
-        /// The "value" associated with the given location, according to the valueGetter function provided
-        /// at construction.
-        /// </returns>
-        public T this[int index1D]
-        {
-            get => _valueGetter(Point.FromIndex(index1D, Width));
-            set => _valueSetter(Point.FromIndex(index1D, Width), value);
-        }
-
-        /// <summary>
-        /// Given an X and Y value, returns/sets the "value" associated with that location, by
-        /// calling the valueGetter/valueSetter functions provided at construction.
-        /// </summary>
-        /// <param name="x">X-value of location.</param>
-        /// <param name="y">Y-value of location.</param>
-        /// <returns>
-        /// The "value" associated with that location, according to the valueGetter function provided
-        /// at construction.
-        /// </returns>
-        public T this[int x, int y]
-        {
-            get => _valueGetter(new Point(x, y));
-            set => _valueSetter(new Point(x, y), value);
-        }
+        public override int Width => _widthGetter();
 
         /// <summary>
         /// Given a position, returns/sets the "value" associated with that location, by calling the
@@ -123,7 +91,7 @@ namespace GoRogue.MapViews
         /// The "value" associated with the provided location, according to the valueGetter function
         /// provided at construction.
         /// </returns>
-        public T this[Point pos]
+        public override T this[Point pos]
         {
             get => _valueGetter(pos);
             set => _valueSetter(pos, value);

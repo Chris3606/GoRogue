@@ -11,7 +11,7 @@ namespace GoRogue.MapViews
     /// </summary>
     /// <typeparam name="T">The type being exposed by the UnboundedViewport.</typeparam>
     [PublicAPI]
-    public class UnboundedViewport<T> : IMapView<T>
+    public class UnboundedViewport<T> : MapViewBase<T>
     {
         /// <summary>
         /// The value to return if a position is accessed that is outside the actual underlying map view.
@@ -66,25 +66,12 @@ namespace GoRogue.MapViews
         /// <summary>
         /// The height of the area being represented.
         /// </summary>
-        public int Height => _viewArea.Height;
+        public override int Height => _viewArea.Height;
 
         /// <summary>
         /// The height of the area being represented.
         /// </summary>
-        public int Width => _viewArea.Width;
-
-        /// <summary>
-        /// Given a position in relative 1d-array-index style, returns the "value" associated with that
-        /// location in absolute coordinates.
-        /// </summary>
-        /// <param name="relativeIndex1D">
-        /// Viewport-relative position of the location to retrieve the value for, as a 1D array index.
-        /// </param>
-        /// <returns>
-        /// The "value" associated with the absolute location represented on the underlying map view,
-        /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
-        /// </returns>
-        public T this[int relativeIndex1D] => this[Point.FromIndex(relativeIndex1D, Width)];
+        public override int Width => _viewArea.Width;
 
         /// <summary>
         /// Given a position in relative coordinates, returns the "value" associated with that
@@ -97,40 +84,12 @@ namespace GoRogue.MapViews
         /// The "value" associated with the absolute location represented on the underlying map view,
         /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
         /// </returns>
-        public virtual T this[Point relativePosition]
+        public override T this[Point relativePosition]
         {
             get
             {
                 var pos = _viewArea.Position + relativePosition;
-
-                if (MapView.Contains(pos))
-                    return MapView[pos];
-
-                return DefaultValue;
-            }
-        }
-
-        /// <summary>
-        /// Given an X and Y value in relative coordinates, returns the "value" associated with that
-        /// location in absolute coordinates.
-        /// </summary>
-        /// <param name="relativeX">Viewport-relative X-value of location.</param>
-        /// <param name="relativeY">Viewport-relative Y-value of location.</param>
-        /// <returns>
-        /// The "value" associated with the absolute location represented on the underlying map view,
-        /// or <see cref="DefaultValue" /> if the absolute position does not exist in the underlying map view.
-        /// </returns>
-        public virtual T this[int relativeX, int relativeY]
-        {
-            get
-            {
-                var absX = ViewArea.X + relativeX;
-                var absY = _viewArea.Y + relativeY;
-
-                if (MapView.Contains(absX, absY))
-                    return MapView[absX, absY];
-
-                return DefaultValue;
+                return MapView.Contains(pos) ? MapView[pos] : DefaultValue;
             }
         }
 
