@@ -287,6 +287,16 @@ namespace GoRogue
 		public static Coord operator +(Coord c, Direction d) => new Coord(c.X + d.DeltaX, c.Y + d.DeltaY);
 
 		/// <summary>
+		/// Translates the given coordinate one unit in the opposite of the direction given.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <param name="d"></param>
+		/// <returns>
+		/// Coordinate (c.X - d.DeltaX, c.Y - d.DeltaY)
+		/// </returns>
+		public static Coord operator -(Coord c, Direction d) => new Coord(c.X - d.DeltaX, c.Y - d.DeltaY);
+
+		/// <summary>
 		/// True if c1.X == c2.X and c1.Y == c2.Y.
 		/// </summary>
 		/// <param name="c1"></param>
