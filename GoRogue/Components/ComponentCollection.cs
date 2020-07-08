@@ -8,40 +8,28 @@ using JetBrains.Annotations;
 namespace GoRogue.Components
 {
     /// <summary>
-    /// A class implementing a flexible, type-based system for adding components to objects.  To utilize it, you can either
-    /// give your
-    /// object that you want to have components a ComponentContainer field, or if you wish to avoid the extra field to access
-    /// components,
-    /// you may either inherit from ComponentContainer, or have your object implement <see cref="IBasicComponentCollection" />via a
-    /// backing field of
-    /// type ComponentContainer.
+    /// A class implementing a flexible, type-based system for keeping track of components that are added to objects.
+    /// A ComponentCollection can simply be added as a member of an object that needs components attached to it, then
+    /// used by a list.
     /// </summary>
     /// <remarks>
-    /// The component system is designed to be as efficient as possible at run-time for accessing components and determining if
-    /// a
-    /// ComponentContainer possesses one or more given types of components (or if it has a component with a specific tag), and
-    /// as well
-    /// remains flexible and type-safe.  Components may be of any type, although it is recommended that you _do not_ use value
-    /// types.
-    /// The system also remains accurate with respect to types, even when the components added implement interfaces or have an
-    /// inheritance
-    /// hierarchy.
-    /// For example, suppose we have the following structure:
-    /// <code>
-    /// interface ITickable
-    /// {
-    ///     void Tick();
-    /// }
+    /// This collection allows you to add arbitrary objects to it, optionally associated with a string tag.  It then
+    /// allows you to very efficiently query whether or not an object has a component of a given type and tag, and
+    /// retrieve that object, in a type-safe way.  It handles cases where multiple objects of a single type are added,
+    /// as well as cases where inheritance and/or interfaces are involved.
     ///
-    /// public class PlayerTickable : ITickable
-    /// {
-    ///     public void Tick() => Console.WriteLine("Player ticked!");
-    /// }
-    /// </code>
-    /// If we then add a component of type PlayerTickable to an object called obj.  obj.GetComponent&lt;PlayerTickable&gt;()
-    /// will return
-    /// the instance we added, as will obj.GetComponent&lt;ITickable&gt;().  Similarly, obj.HasComponent(typeof(ITickable)) and
-    /// obj.HasComponent(typeof(PlayerTickable)) both return true.
+    /// While components may be of any type, thanks to value-type defensive copying it is highly recommended that you
+    /// refrain from using value types as components.
+    ///
+    /// You may also control the order/priority with which components are retrieved.  Components are retrieved in the
+    /// order they were added by default.  If you would like more control than this, you may have your components
+    /// implement <see cref="ISortedComponent"/>.  Although implementing this interface is not required, any components
+    /// that do implement it are returned before any components that do not.  Similarly, components with a lower sort
+    /// order are returned before those with higher sort orders.
+    ///
+    /// It is worthy of note that, when given as a tag parameter, "null" is used to mean "no particular tag", rather
+    /// than "no tag whatsoever"; a call to a function that retrieves components that is given a tag of "null" can
+    /// retrieve any component meeting the type restrictions, regardless of whether it is associated with a tag.
     /// </remarks>
     [PublicAPI]
     public class ComponentCollection : ITaggableComponentCollection
@@ -219,7 +207,7 @@ namespace GoRogue.Components
             if (tag == null)
             {
                 if (!_components.ContainsKey(typeOfT))
-                    throw new InvalidOperationException($"No component of type {nameof(T)} has been added to the {nameof(ComponentCollection)}.");
+                    throw new ArgumentException($"No component of type {nameof(T)} has been added to the {nameof(ComponentCollection)}.");
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
@@ -227,12 +215,12 @@ namespace GoRogue.Components
             }
 
             if (!_tagsToComponents.ContainsKey(tag))
-                throw new InvalidOperationException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.");
+                throw new ArgumentException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.", nameof(tag));
 
             if (_tagsToComponents[tag] is T item)
                 return item;
 
-            throw new InvalidOperationException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.");
+            throw new ArgumentException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.", nameof(tag));
         }
 
         /// <inheritdoc />
@@ -270,12 +258,15 @@ namespace GoRogue.Components
         }
 
         /// <summary>
-        /// Returns all components paired with their tags.
+        /// Returns all components paired with their tags.  Ordered with respect to sorted components.
         /// </summary>
         /// <returns/>
         public IEnumerator<(object component, string? tag)> GetEnumerator()
         {
-            foreach (var (component, tag) in _componentsToTags)
+            var ordered = _componentsToTags.OrderBy(
+                val => val.Key is ISortedComponent sorted ? sorted.SortOrder : uint.MaxValue);
+
+            foreach (var (component, tag) in ordered)
                 yield return (component, tag);
         }
 

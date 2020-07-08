@@ -3,25 +3,25 @@
 namespace GoRogue.Components
 {
     /// <summary>
-    /// Optional interface that may be implemented by components to ensure they are returned in a specific order
-    /// when <see cref="ComponentCollection.GetFirstOrDefault{T}" /> is called.  Components are not required to implement
-    /// this interface, however components that do not will be returned after any components that do.
+    /// Interface that you may optionally implement on objects added to a <see cref="IBasicComponentCollection"/>
+    /// (for example, <see cref="ComponentCollection"/>) that enforces an order in which components are returned from
+    /// functions that retrieve components.
     /// </summary>
     /// <remarks>
-    /// When the GetComponents function of either ComponentContainer or any object that uses one to implement the component
-    /// system (such as <see cref="GameFramework.IGameObject" /> is called, any components with a lower
-    /// <see cref="SortOrder" />
-    /// are guaranteed to be returned BEFORE any components with a higher SortOrder.  This can be useful to enforce that
-    /// certain
-    /// types of or instances of components are processed before some other type of or instance of components.  Components that
-    /// do not implement ISortedComponent will always be returned AFTER any components that do implement that interface.
+    /// When functions that return components are called on <see cref="ComponentCollection"/> or some other
+    /// <see cref="IBasicComponentCollection"/>, components with a lower <see cref="SortOrder"/> are returned before
+    /// components with a higher one.  Components that do not implement <see cref="ISortedComponent"/> are returned
+    /// after any that do.
+    ///
+    /// This can be useful to enforce that certain types of or instances of components are processed before some other
+    /// type of or instance of components.
     /// </remarks>
     [PublicAPI]
     public interface ISortedComponent
     {
         /// <summary>
-        /// Value indicating the relative ordering of this component.  A lower value cause a component to be retrieved before
-        /// any components with a higher value.
+        /// Value indicating the relative ordering of this component.  A lower value cause a component to be retrieved
+        /// before any components of the same type with a higher value.
         /// </summary>
         uint SortOrder { get; }
     }

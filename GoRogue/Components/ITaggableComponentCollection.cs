@@ -6,12 +6,18 @@ using JetBrains.Annotations;
 namespace GoRogue.Components
 {
     /// <summary>
-    /// Interface for an object that has components that can be added, removed, checked for, and retrieved by type and a unique
-    /// "tag"
-    /// string.  Typically, you would implement this via a backing field of type <see cref="ComponentCollection" />, which
-    /// implements the
-    /// logic for these functions.
+    /// Interface for a collection of components, of arbitrary types, that can optionally be associated with a unique
+    /// tag string.  A concrete implementation is provided; see <see cref="ComponentCollection"/>.
     /// </summary>
+    /// <remarks>
+    /// Typically, you will not need to implement this yourself, as <see cref="ComponentCollection"/> should be suffice
+    /// for most use cases.  Nonetheless, the interface is provided for completeness, or if you have a need to
+    /// re-implement it for a corner case of performance.
+    ///
+    /// It is worthy of note that "null" is used to mean "no particular tag", rather than "no tag whatsoever";
+    /// a call to a function that retrieves components that is given a tag of "null" can retrieve any component meeting
+    /// the type restrictions, regardless of whether it is associated with a tag.
+    /// </remarks>
     [PublicAPI]
     public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<(object component, string? tag)>
     {
@@ -32,84 +38,95 @@ namespace GoRogue.Components
         bool IBasicComponentCollection.Contains<T>() => Contains<T>();
 
         /// <summary>
-        /// Adds the given object as a component, optionally giving it a tag.  Throws an exception if that specific
-        /// instance is already in this ComponentContainer.
+        /// Adds the given object as a component, optionally giving it a tag.  Throws ArgumentException if the given
+        /// object is already in this collection.
         /// </summary>
         /// <param name="component">Component to add.</param>
         /// <param name="tag">An optional tag to give the component.  Defaults to no tag.</param>
         void Add(object component, string? tag = null);
 
         /// <summary>
-        /// Removes the component with the given tag.  Throws an exception if a component with the specified tag does not exist.
+        /// Removes the component with the given tag.  Throws ArgumentException if a component with the specified tag
+        /// does not exist.
         /// </summary>
         /// <param name="tag">Tag for component to remove.</param>
         void Remove(string tag);
 
         /// <summary>
-        /// Removes the component(s) with the given tags.  Throws an exception if a tag is encountered that does not have an object
-        /// associated with it.
+        /// Removes the component(s) with the given tags.  Throws ArgumentException if a tag is encountered that does
+        /// not have an object associated with it.
         /// </summary>
         /// <param name="tags">Tag(s) of components to remove.</param>
         void Remove(params string[] tags);
 
         /// <summary>
-        /// Returns whether or not the implementer has at least one of all of the given types of components attached, optionally
-        /// with the specified tags.
-        /// Types may be specified by using typeof(MyComponentType).  If null is specified for any tag, any component meeting the
-        /// type requirement will qualify.
+        /// True if, for each tuple specified, there exists a component of the given type with the given tag in the
+        /// collection.
         /// </summary>
-        /// <param name="componentTypesAndTags">One or more component types to check for, and corresponding tags.</param>
-        /// <returns>
-        /// True if the implementer has at least one component of each specified type that has the tag given, false
-        /// otherwise.
-        /// </returns>
+        /// <remarks>
+        /// If "null" is specified as a tag, it indicates no particular tag; eg. any object of the given type will meet
+        /// the requirement, regardless of whether or not it has a tag.
+        /// </remarks>
+        /// <param name="componentTypesAndTags">One or more component types and corresponding tags to check for.</param>
+        /// <returns/>
         bool Contains(params (Type type, string? tag)[] componentTypesAndTags);
 
         /// <summary>
-        /// Returns whether or not there is at least one component of the specified type attached, that has the given tag
-        /// associated with it.  Type may be
-        /// specified by using typeof(MyComponentType).  If null is specified for the tag, any component meeting the type
-        /// requirement will qualify.
+        /// True if a component of the specified type associated with the specified tag has been added; false otherwise.
         /// </summary>
+        /// <remarks>
+        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// given type will meet the requirement, regardless of whether or not it has a tag.
+        /// </remarks>
         /// <param name="componentType">The type of component to check for.</param>
-        /// <param name="tag">A tag to check for.  If null is specified, any component meeting the type requirement will qualify.</param>
-        /// <returns>
-        /// True if the implementer has at least one component of the specified type, and has the specified tag if one is
-        /// specified; false otherwise.
-        /// </returns>
+        /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
+        /// <returns/>
         bool Contains(Type componentType, string? tag = null);
 
         /// <summary>
-        /// Returns whether or not there is at least one component of type T attached, that has the given tag associated with it if
-        /// one is specified.  If no tag
-        /// is specified, any component of type T will qualify.
+        /// True if a component of the specified type associated with the specified tag has been added; false otherwise.
         /// </summary>
+        /// <remarks>
+        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// given type will meet the requirement, regardless of whether or not it has a tag.
+        /// </remarks>
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
-        /// <returns>True if the implemented has at least one component of the specified type attached, false otherwise.</returns>
+        /// <returns/>
         bool Contains<T>(string? tag = null) where T : notnull;
 
         /// <summary>
-        /// Gets the first component of type t that was added and has the given tag associated with it, if one is specified.
-        /// Throws InvalidOperationException if no such component exists.
+        /// Gets the component of type T in the collection that has been associated with the given tag.
+        /// Throws ArgumentException if no component of the given type associated with the given tag has been added.
         /// </summary>
-        /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
+        /// <remarks>
+        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// given type will meet the requirement.  In this case,the normal sorting priority rules apply; the component
+        /// with the lowest <see cref="ISortedComponent.SortOrder"/> is returned.  Among components with equal sort
+        /// orders or components that do not implement <see cref="ISortedComponent"/>, the first component of the given
+        /// type that was added is returned.
+        /// </remarks>
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
-        /// <returns>The first component of Type T with the given tag that was attached.</returns>
+        /// <returns/>
         T GetFirst<T>(string? tag = null) where T : notnull;
 
         /// <summary>
-        /// Gets the first component of type T that was added and has the given tag associated with it, if one is specified, or
-        /// default(T) if no component of that type
-        /// that meets the tag and and type requirements has been added. If null is specified for the tag, no particular tag is
-        /// checked for; the function will get the first
-        /// component it encounters that meets the type requirement.
+        /// Gets the component of type T in the collection that has been associated with the given tag.
+        /// Returns default(T) if no component of the given type associated with the given tag has been added.
         /// </summary>
-        /// <typeparam name="T">Type of component to retrieve.</typeparam>
-        /// <returns>
-        /// The first component of Type T with the given tag that was attached, or default(T) if no components of the given type
-        /// have been attached.
-        /// </returns>
+        /// <remarks>
+        /// If you would instead like to throw an exception if a component of the given type is not found, see
+        /// <see cref="GetFirst{T}"/>.
+        ///
+        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// given type will meet the requirement.  In this case,the normal sorting priority rules apply; the component
+        /// with the lowest <see cref="ISortedComponent.SortOrder"/> is returned.  Among components with equal sort
+        /// orders or components that do not implement <see cref="ISortedComponent"/>, the first component of the given
+        /// type that was added is returned.
+        /// </remarks>
+        /// <param name="tag">Type of component to retrieve.</param>
+        /// <returns/>
+        [return: MaybeNull]
         T GetFirstOrDefault<T>(string? tag = null) where T : notnull;
     }
 }
