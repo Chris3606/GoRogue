@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using SadRogue.Primitives;
 
@@ -21,7 +20,7 @@ namespace GoRogue.MapGeneration
         public static Region Rectangle(string name, Point start, int width, int height, double angleRads = 0)
         {
             if (angleRads <= -1 || angleRads >= 1)
-                throw new ArgumentOutOfRangeException("angleRads must be between -1 and 1.");
+                throw new ArgumentOutOfRangeException(nameof(angleRads), "angleRads must be between -1 and 1.");
 
             int hRatio = (int)(height * angleRads);
             int wRatio = (int)(width * angleRads);
@@ -39,15 +38,25 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Creates a new Region from a GoRogue.Rectangle
+        /// Creates a new Region from a GoRogue.Rectangle.
         /// </summary>
-        /// <param name="name">the name of this region</param>
-        /// <param name="rectangle">the rectangle containing this region</param>
-        /// <returns></returns>
+        /// <param name="name">The name of this region.</param>
+        /// <param name="rectangle">The rectangle containing this region.</param>
+        /// <returns/>
         public static Region FromRectangle(string name, Rectangle rectangle)
         {
             return Rectangle(name, rectangle.MinExtent, rectangle.Width, rectangle.Height);
         }
+
+        /// <summary>
+        /// Creates a new Region in the shape of a parallelogram.
+        /// </summary>
+        /// <param name="name">The name of this region.</param>
+        /// <param name="origin">Origin of the parallelogram.</param>
+        /// <param name="width">Width of the parallelogram.</param>
+        /// <param name="height">Height of the parallelogram.</param>
+        /// <param name="rotationDegrees">Rotation of the parallelogram.</param>
+        /// <returns/>
         public static Region RegularParallelogram(string name, Point origin, int width, int height, int rotationDegrees)
         {
             Point nw = origin;
@@ -85,36 +94,32 @@ namespace GoRogue.MapGeneration
             return points;
         }
 
-
-
-        public static bool operator ==(Region left, Region right)
+        /// <summary>
+        /// True if the regions have the same corners/centers; false otherwise.
+        /// </summary>
+        /// <param name="left"/>
+        /// <param name="right"/>
+        /// <returns/>
+        public static bool operator ==(Region? left, Region? right)
         {
-            try
-            {
-                bool equals = left.Name == right.Name;
-                if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
-                if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
-                if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
-                if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
-                if (left.Center != right.Center) equals = false;
-                return equals;
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
+            if (left is null || right is null)
+                return ReferenceEquals(left, right); // They're both null if this returns true;
+
+            bool equals = left.Name == right.Name;
+            if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
+            if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
+            if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
+            if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
+            if (left.Center != right.Center) equals = false;
+            return equals;
         }
 
-        public static bool operator !=(Region left, Region right)
-        {
-            try
-            {
-                return !(left == right);
-            }
-            catch (NullReferenceException)
-            {
-                return false;
-            }
-        }
+        /// <summary>
+        /// False if the regions have the same corners and centers; false otherwise.
+        /// </summary>
+        /// <param name="left"/>
+        /// <param name="right"/>
+        /// <returns/>
+        public static bool operator !=(Region? left, Region? right) => !(left == right);
     }
 }

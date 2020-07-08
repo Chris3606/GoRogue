@@ -25,7 +25,7 @@ namespace GoRogue
 
         // Basically modulo for array indices, solves - num issues. (-1, 3) is 2.
         /// <summary>
-        /// A modified modulo operator, which practically differs from <paramref name="num" /> / <paramref name="wrapTo" />
+        /// A modified modulo operator, which practically differs from <paramref name="num" /> % <paramref name="wrapTo" />
         /// in that it wraps from 0 to <paramref name="wrapTo" /> - 1, as well as from <paramref name="wrapTo" /> - 1 to 0.
         /// </summary>
         /// <remarks>
@@ -53,6 +53,24 @@ namespace GoRogue
         /// wrapTo - 1], inclusive.
         /// </returns>
         public static int WrapAround(int num, int wrapTo) => (num % wrapTo + wrapTo) % wrapTo;
+
+        /// <summary>
+        /// Same effect as <see cref="WrapAround(int,int)"/>, but for doubles.
+        /// </summary>
+        /// <param name="num">The number to wrap.</param>
+        /// <param name="wrapTo">The number to wrap to.</param>
+        /// <returns>The wrapped result.  Guaranteed to lie in range [0,
+        /// wrapTo).</returns>
+        public static double WrapAround(double num, double wrapTo)
+        {
+            // Same modulo math would work, but less likely to result in rounding error
+            while (num < 0)
+                num += wrapTo;
+            while (num >= wrapTo)
+                num -= wrapTo;
+
+            return num;
+        }
 
         /// <summary>
         /// Approximation of the Atan2 function that scales the returned value to the range [0.0, 1.0], in order to remain
