@@ -91,5 +91,18 @@ namespace GoRogue
                 return x < 0.0 ? y < 0.0 ? 0.5 + r : 0.5 - r : y < 0.0 ? 1.0 - r : r;
             }
         }
+
+        /// <summary>
+        /// Calculates the distance between two points
+        /// </summary>
+        /// <param name="start">the first Coordinate Pair to evaluate</param>
+        /// <param name="stop">the second Coordinate Pair to evaluate</param>
+        /// <returns>the distance between them</returns>
+        public static float DistanceBetween((int X, int Y) start, (int X, int Y) stop)
+        {
+            int xdiff = start.X > stop.X ? start.X - stop.X : stop.X - start.X;
+            int ydiff = start.Y > stop.Y ? start.Y - stop.Y : stop.Y - start.Y;
+            return (float)Math.Sqrt(xdiff * xdiff + ydiff * ydiff);
+        }
     }
 }

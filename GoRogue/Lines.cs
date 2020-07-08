@@ -274,5 +274,13 @@ namespace GoRogue
                 yield return new Point(workX, workY);
             }
         }
+
+        #region IEnumerable<Point> Extensions
+
+        public static int LeftAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => c.X).First().X;
+        public static int RightAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => c.X).Last().X;
+        public static int TopAt(this IEnumerable<Point> self, int x) => self.Where(c => c.X == x).OrderBy(c => c.Y).First().Y;
+        public static int BottomAt(this IEnumerable<Point> self, int x) => self.Where(c => c.X == x).OrderBy(c => c.Y).Last().Y;
+        #endregion
     }
 }
