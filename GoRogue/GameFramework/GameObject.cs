@@ -11,39 +11,40 @@ namespace GoRogue.GameFramework
 {
     /// <summary>
     /// Base class for any object that has a grid position and can be added to a <see cref="Map" />.  Implements basic
-    /// attributes generally common to all objects
-    /// on a map, as well as properties/methods that the Map class needs to function.  It also implements
-    /// <see cref="IBasicComponentCollection" />, which means you can attach
-    /// components to it.  In cases where this class cannot be inherited from, have your class implement
-    /// <see cref="IGameObject" /> via a private GameObject field.
+    /// attributes generally common to all objects on a map, as well as properties/methods that <see cref="Map"/> needs
+    /// to function.  It also provides a container that you may attach arbitrary components to.
+    ///
+    /// In cases where you cannot inherit from GameObject, you may have your class implement <see cref="IGameObject" />
+    /// via a private field of this type.
     /// </summary>
     /// <remarks>
-    /// This class is designed to serve as a base class for your own game objects in your game.  It implements basic common
-    /// functionality such as
-    /// walkability and transparency, provides some infrastructure that allows it to be added to instances of
-    /// <see cref="Map" />, and implements the
-    /// framework for GoRogue's component system.  It also implements the necessary functionality that allows GameObjects to be
-    /// added to an
+    /// This class is designed to serve as a base class for your own game objects in your game.  It implements basic,
+    /// common functionality such as walkability and transparency, provides some infrastructure that allows it to be
+    /// added to instances of <see cref="Map" />, and has a collection that you may add arbitrary components to.
+    /// Additionally, it implements the necessary functionality to allow it to be added to an
     /// <see cref="ISpatialMap{T}" /> implementation.
+    ///
     /// Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one
     /// (GameObject), or implement
     /// <see cref="IGameObject" /> by composition using a private field of this class, and use that as
     /// the base class for your game's objects.  There is an example of doing this
     /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
-    /// If you utilize the component system, a subclass of GameObject isn't strictly necessary, as you could just construct
-    /// basic GameObject instances and add
-    /// components to them.  In either case, a <see cref="Map" /> instance can be used to store these objects efficiently. As
-    /// well, Map provides functionality that will allow you to retrieve your
-    /// objects as references of their derived type (MyGameObject or MyTerrain, in the example above), meaning that you can
-    /// implement any common, game-specific functionality you need and have
-    /// easy access to that information when objects are retrieved from the map.  This also means that if you prefer an
-    /// inheritance-based approach, you can simply not utilize
-    /// the component system, and you are still able to use these Map functions to differentiate functionality.
-    /// Although the component system will accept items of any type as components, there is an optional
-    /// <see cref="IGameObjectComponent" /> interface that GoRogue provides,
-    /// that has a field for the parent, eg. the IGameObject that it is attached to.  This field is automatically kept up to
-    /// date as you add/remove components
-    /// if you implement this interface for your components.
+    ///
+    /// If you wish to use a composition/components based approach instead, a subclass of GameObject isn't strictly
+    /// necessary.  You may simply construct basic GameObject instances and add components to their
+    /// <see cref="GoRogueComponents"/> collection.
+    ///
+    /// In either case, a <see cref="Map" /> instance can be used to store these objects efficiently.  As well, Map
+    /// provides functionality that will allow you to retrieve your objects as references of their derived type
+    /// (MyGameObject or MyTerrain, in the example above), meaning that if you are using an inheritance-based approach
+    /// you can implement any common, game-specific functionality you need and have easy access to that information when
+    /// objects are retrieved from the map.
+    ///
+    /// If you are using a component-based approach, the component collection will accept components of any type.
+    /// If the components implement <see cref="ISortedComponent"/>, the priority system works as expected; see
+    /// <see cref="ComponentCollection"/> documentation.  Additionally, your components may optionally implement
+    /// <see cref="IGameObjectComponent" />.  This interface has a <see cref="IGameObjectComponent.Parent"/> property,
+    /// which will automatically be updated to be set to the game object that the component has been added to.
     /// </remarks>
     [PublicAPI]
     public class GameObject : IGameObject
@@ -59,13 +60,12 @@ namespace GoRogue.GameFramework
         /// Constructor.
         /// </summary>
         /// <remarks>
-        /// The idGenerator function given is used to generate an ID which is assigned to the <see cref="ID" /> field.
-        /// When null is specified, the constructor simply assigns a random number in range of valid uints. This
+        /// <param name="idGenerator"></param> is used to generate an ID which is assigned to the <see cref="ID" />
+        /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
         /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
         /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
-        /// implementation is required, override this function to return an appropriate ID. Keep in
-        /// mind a relatively high degree of uniqueness is necessary for efficient placement in an
-        /// ISpatialMap implementation.
+        /// implementation is required, override this function to return an appropriate ID. Keep in mind a relatively
+        /// high degree of uniqueness is necessary for efficient placement in an ISpatialMap implementation.
         /// </remarks>
         /// <param name="position">Position to start the object at.</param>
         /// <param name="layer">The layer of of a <see cref="Map" /> the object is assigned to.</param>
@@ -73,8 +73,8 @@ namespace GoRogue.GameFramework
         /// Object holding this GameObject instance. If you are inheriting from GameObject,
         /// or using a backing field of type GameObject to implement <see cref="IGameObject" />, for example, you would pass
         /// <see langword="this" /> at construction.
-        /// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map" />, you would
-        /// pass null.
+        /// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map" />,
+        /// you would pass null.
         /// </param>
         /// <param name="isStatic">
         /// Whether or not the object can be moved (true if the object CANNOT be moved,
@@ -91,12 +91,13 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="idGenerator">
         /// The function used to generate and return an unsigned integer to use assign to the <see cref="ID" /> field.
-        /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See constructor
-        /// remarks for details.
+        /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See
+        /// the constructor remarks for details.
         /// </param>
         /// <param name="customComponentContainer">
-        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentCollection"/> is used.
-        /// Typically you will not need to specify this, as ComponentContainer is sufficient for nearly all use cases.
+        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
+        /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
+        /// use cases.
         /// </param>
         public GameObject(Point position, int layer, IGameObject? parentObject, bool isStatic = false,
                           bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null,
@@ -199,8 +200,8 @@ namespace GoRogue.GameFramework
         /// 2. If the object is added to the map and either:
         /// a. The position specified is not within the bounds of the map
         /// b. The object is not walkable and there is already a non-walkable item at the specified location
-        /// c. The object's layer cannot support multiple items at one location and there is already an item at that location on
-        /// that layer.
+        /// c. The object's layer cannot support multiple items at one location and there is already an item at that
+        /// location on that layer.
         /// </remarks>
         /// <param name="position">The position to check.</param>
         /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
@@ -224,7 +225,8 @@ namespace GoRogue.GameFramework
         /// Returns true if the GameObject can move in the given direction; false otherwise.
         /// </summary>
         /// <remarks>
-        /// See remarks in documentation for <see cref="CanMove(Point)" /> for details on when this function can return false.
+        /// See remarks in documentation for <see cref="CanMove(Point)" /> for details on when this function can return
+        /// false.
         /// </remarks>
         /// <param name="direction">The direction of movement to check.</param>
         /// <returns>True if the object can be moved in the specified direction; false otherwise</returns>

@@ -8,15 +8,12 @@ namespace GoRogue.GameFramework
 {
     /// <summary>
     /// An interface that defines the entire public interface of <see cref="GameObject" />.  Generally, you should NOT
-    /// implement these functions
-    /// yourself, however it can be used in conjunction with a private, backing field of type GameObject to store items in a
-    /// map, where that
-    /// object cannot directly inherit from GameObject.
+    /// implement these functions yourself, however it can be used in conjunction with a private, backing field of type
+    /// GameObject to store items in a map, for cases where that object cannot directly inherit from GameObject.
     /// </summary>
     /// <remarks>
-    /// Generally, you will never implement the items in this interface manually, but rather do so through a private, backing
-    /// field of type
-    /// <see cref="GameObject" />. There is an example of this type of implementation
+    /// Generally, you will never implement the items in this interface manually, but rather do so through a private,
+    /// backing field of type <see cref="GameObject" />. There is an example of this type of implementation
     /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
     /// </remarks>
     [PublicAPI]
