@@ -1,6 +1,6 @@
 {
   "homepages": [],
-  "source_base_path": "D:/Google Drive/Documents/Development/CSharp/GoRogue/GoRogue.Docs",
+  "source_base_path": "D:/Documents/Development/CSharp/GoRogue/GoRogue.Docs",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.Coord.html",
-          "hash": "Vmqb06qab9gYo+GuqdDCFg=="
+          "hash": "jgbRu1YSR+E3jhkCbr408A=="
         }
       },
       "is_incremental": false,
@@ -108,7 +108,7 @@
           "hash": "HuCX7IwmGudweWXEl0l6Uw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -204,7 +204,7 @@
           "hash": "SGr8o+qEHmTKfhekvUDB5Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -276,7 +276,7 @@
           "hash": "W18qYQqlGfsFd15lwBJtxg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -456,7 +456,7 @@
           "hash": "leJETK42kYwjf4X1G1bm9w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GoRogue.GameFramework.Map.html",
-          "hash": "iGs0H+7Ryin2Q6uTgXdfjQ=="
+          "hash": "Xy66gRBXlMb3nxZMEEhSfA=="
         }
       },
       "is_incremental": false,
@@ -624,7 +624,7 @@
           "hash": "Edd7TzFuv1bU1iPb3o+fsg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -648,7 +648,7 @@
           "hash": "vxVOUpYnehMX1h/ny6nLfw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -816,7 +816,7 @@
           "hash": "JrNYE9L3kw6rD9eg8sTYTg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -876,7 +876,7 @@
           "hash": "VR2Wqn6oYlIxl7zI9DPVYA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -960,7 +960,7 @@
           "hash": "9sMxzK3S8DLgzpikYqanqA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -984,7 +984,7 @@
           "hash": "lYi/hAAejVwxRqBgvb/QTQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -996,7 +996,7 @@
           "hash": "XPf2rrQcZdPNTBl9eH0Eiw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1008,7 +1008,7 @@
           "hash": "kxTcRzRzWVkNx9nk4Xqw7A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1020,7 +1020,7 @@
           "hash": "GXW2vc6HRIPSV4jWZb3C5Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1032,7 +1032,7 @@
           "hash": "TvYgn1lmGcqEPyCiqNi+sg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1080,7 +1080,7 @@
           "hash": "/pRzC7uWjiAB+JF/4H1PmA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1284,7 +1284,7 @@
           "hash": "jLvSXBR2kFEFf0HVPFEcyA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1296,7 +1296,7 @@
           "hash": "rHJtRIUvxoAFwVjz8Oa+KA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1308,7 +1308,7 @@
           "hash": "fNElmCxmREHc5gRhs8cH3A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1320,7 +1320,7 @@
           "hash": "LWAHSMjbrt5YMegtBoJjyg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1404,7 +1404,7 @@
           "hash": "rB21RrFhhGiHPYRFqxtMWg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1500,7 +1500,7 @@
           "hash": "1J7qVjNVHr5CNW1PN8zltw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1548,7 +1548,7 @@
           "hash": "fBOcTQShU5p5CghuV0/i9A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1584,7 +1584,7 @@
           "hash": "Nn00MEh8LOBZCEVxqJXOWQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1632,7 +1632,7 @@
           "hash": "7EJfaX1Sg28RAM2B9G9F5Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1668,7 +1668,7 @@
           "hash": "vmSPzBdG/nfe/jUvZU191w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1689,10 +1689,10 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "Xulob2fIWwoF6hOhUsDp6Q=="
+          "hash": "V3uVZVcEhiTlfuEH9kZyWA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1713,7 +1713,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/1-to-2-upgrade-guide.html",
-          "hash": "4/UK9jQva/Zit0hLPnsnZQ=="
+          "hash": "CBbJwn5Ju0WQAUNvI5qE/Q=="
         }
       },
       "is_incremental": false,
@@ -1728,7 +1728,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/game-framework.html",
-          "hash": "MmzS8O3fvIanh4zFRkI4AQ=="
+          "hash": "080YCd9pk+9UoBWZQJ/XBg=="
         }
       },
       "is_incremental": false,
@@ -1740,7 +1740,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/getting-started.html",
-          "hash": "Qk21YTjV2nOUBO03f1W/PQ=="
+          "hash": "XBmg+N1q7P9p6HBWFIwpQQ=="
         }
       },
       "is_incremental": false,
@@ -1755,7 +1755,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/gr3-map-gen.html",
-          "hash": "saRvts2bDnrDQUS9AtWtJQ=="
+          "hash": "PqGxKa4i2jSlZCbzHmMyiw=="
         }
       },
       "is_incremental": false,
@@ -1767,7 +1767,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/grid-system.html",
-          "hash": "+YjbPqzrQXGIy98tX8wgKQ=="
+          "hash": "JSREj0h/ofu2bIiHUMsWIA=="
         }
       },
       "is_incremental": false,
@@ -1779,7 +1779,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/grid_components/2d-points.html",
-          "hash": "a3+hazvtHRlrb2+opCkYaQ=="
+          "hash": "eyB1AKY5JTqmEcVXgCClqQ=="
         }
       },
       "is_incremental": false,
@@ -1791,7 +1791,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/grid_components/adjacency-and-neighbors.html",
-          "hash": "zi/fYC1uTHRLyfsxQz929g=="
+          "hash": "qKB4DPb6BjZyW7TaES30xQ=="
         }
       },
       "is_incremental": false,
@@ -1803,7 +1803,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/grid_components/directions-defining-coordinate-plane.html",
-          "hash": "EX8E/oP3J4hDrNEvVH0lYw=="
+          "hash": "TcRNviIFc7nxW1qmotB+nA=="
         }
       },
       "is_incremental": false,
@@ -1815,7 +1815,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/grid_components/measuring-distance.html",
-          "hash": "qlLI7L+QcU8/WSTqXE7Vzg=="
+          "hash": "3aP79nlvfH97+jwe5lNlyQ=="
         }
       },
       "is_incremental": false,
@@ -1827,7 +1827,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "hnblXLrSf85+HM6PZC/1qg=="
+          "hash": "AksNYi8ow6hHmNRz+p9drw=="
         }
       },
       "is_incremental": false,
@@ -2291,10 +2291,10 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "iI1EpDQdxHfPnlKxnC+31Q=="
+          "hash": "qh8yBRusKximOnoGTBvPOw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -2313,23 +2313,25 @@
   "incremental_info": [
     {
       "status": {
-        "can_incremental": true,
+        "can_incremental": false,
+        "details": "Cannot build incrementally because last build info is missing.",
         "incrementalPhase": "build",
         "total_file_count": 0,
-        "skipped_file_count": 0
+        "skipped_file_count": 0,
+        "full_build_reason_code": "NoAvailableBuildCache"
       },
       "processors": {
         "ConceptualDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 12,
-          "skipped_file_count": 12
+          "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+          "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 140,
-          "skipped_file_count": 66
+          "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
@@ -2349,8 +2351,8 @@
     },
     {
       "status": {
-        "can_incremental": true,
-        "details": "Can support incremental post processing.",
+        "can_incremental": false,
+        "details": "Cannot support incremental post processing, the reason is: last post processor info is null.",
         "incrementalPhase": "postProcessing",
         "total_file_count": 0,
         "skipped_file_count": 0

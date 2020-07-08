@@ -2429,6 +2429,12 @@ references:
   commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,GoRogue.Coord)
   fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, GoRogue.Coord)
   nameWithType: Coord.Subtraction(Coord, Coord)
+- uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,GoRogue.Direction)
+  name: Subtraction(Coord, Direction)
+  href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_GoRogue_Direction_
+  commentId: M:GoRogue.Coord.op_Subtraction(GoRogue.Coord,GoRogue.Direction)
+  fullName: GoRogue.Coord.Subtraction(GoRogue.Coord, GoRogue.Direction)
+  nameWithType: Coord.Subtraction(Coord, Direction)
 - uid: GoRogue.Coord.op_Subtraction(GoRogue.Coord,Microsoft.Xna.Framework.Point)
   name: Subtraction(Coord, Point)
   href: api/GoRogue.Coord.html#GoRogue_Coord_op_Subtraction_GoRogue_Coord_Microsoft_Xna_Framework_Point_
