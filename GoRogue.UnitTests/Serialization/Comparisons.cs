@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
+using GoRogue.DiceNotation;
 using GoRogue.SerializedTypes.Components;
 
 namespace GoRogue.UnitTests.Serialization
@@ -14,11 +15,21 @@ namespace GoRogue.UnitTests.Serialization
             {
                 { typeof(ComponentCollection), CompareComponentCollections },
                 { typeof(ComponentCollectionSerialized), CompareComponentCollectionSerialized },
+                { typeof(DiceExpression), CompareDiceExpressions }
             };
 
         public static Func<object, object, bool> GetComparisonFunc(object obj)
             => _equalityMethods.GetValueOrDefault(obj.GetType(), (o1, o2) => o1.Equals(o2))!;
 
+
+        private static bool CompareDiceExpressions(object o1, object o2)
+        {
+            var e1 = (DiceExpression)o1;
+            var e2 = (DiceExpression)o2;
+
+            // ToString returns parsable expressions so this should suffice
+            return o1.ToString() == o2.ToString();
+        }
 
         private static bool CompareComponentCollections(object o1, object o2)
         {

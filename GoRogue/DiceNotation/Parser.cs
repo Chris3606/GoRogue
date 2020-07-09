@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace GoRogue.DiceNotation
 {
     /// <summary>
-    /// Default class for parsing a string representing a dice expression into an <see cref="IDiceExpression" /> instance.
+    /// Default class for parsing a string representing a dice expression into a <see cref="DiceExpression" /> instance.
     /// </summary>
     [PublicAPI]
     public class Parser : IParser
@@ -24,7 +24,7 @@ namespace GoRogue.DiceNotation
         };
 
         /// <summary>
-        /// Parses the dice expression specified into an <see cref="IDiceExpression" /> instance.
+        /// Parses the dice expression specified into a <see cref="DiceExpression" /> instance.
         /// </summary>
         /// <remarks>
         /// Breaks the dice expression into postfix form, and evaluates the postfix expression to the
@@ -32,9 +32,9 @@ namespace GoRogue.DiceNotation
         /// </remarks>
         /// <param name="expression">The expression to parse.</param>
         /// <returns>
-        /// An <see cref="IDiceExpression" /> representing the given expression, that can "roll" the expression on command.
+        /// An <see cref="DiceExpression" /> representing the given expression, that can "roll" the expression on command.
         /// </returns>
-        public IDiceExpression Parse(string expression)
+        public DiceExpression Parse(string expression)
         {
             var postfix = ToPostfix(expression);
             var lastTerm = EvaluatePostfix(postfix);

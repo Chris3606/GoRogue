@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
+using GoRogue.DiceNotation;
 using GoRogue.SerializedTypes.Components;
+using GoRogue.SerializedTypes.DiceNotation;
 using GoRogue.UnitTests.Mocks;
 
 namespace GoRogue.UnitTests.Serialization
@@ -33,7 +36,9 @@ namespace GoRogue.UnitTests.Serialization
                     new ComponentTagPairSerialized { Component = new Component1(), Tag = "tag" },
                     new ComponentTagPairSerialized { Component = new Component2(), Tag = null },
                 }
-            }
+            },
+            // DiceExpression
+            new DiceExpressionSerialized { Expression = "3d(1d12)k2+4" }
         };
 
         /// <summary>
@@ -44,6 +49,8 @@ namespace GoRogue.UnitTests.Serialization
             // ComponentTagPairs
             new ComponentTagPair(new Component1() { Value = 92 }, "tag"),
             new ComponentTagPair(new Component2() { Value = 91 }, null),
+            // DiceExpressions
+            Dice.Parse("(3d(1d12))k2+4")
         };
 
         /// <summary>
@@ -59,6 +66,8 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(ComponentTagPair), new []{ "Component", "Tag" } },
             { typeof(ComponentTagPairSerialized), new []{ "Component", "Tag" } },
             { typeof(ComponentCollectionSerialized), new []{ "Components" } },
+            { typeof(DiceExpression), new [] { "RootTerm" } },
+            { typeof(DiceExpressionSerialized), new [] { "Expression" } }
         };
 
         /// <summary>
@@ -82,7 +91,8 @@ namespace GoRogue.UnitTests.Serialization
         public static readonly Dictionary<Type, Type> RegularToExpressiveTypes = new Dictionary<Type, Type>
         {
             { typeof(ComponentTagPair), typeof(ComponentTagPairSerialized) },
-            { typeof(ComponentCollection), typeof(ComponentCollectionSerialized) }
+            { typeof(ComponentCollection), typeof(ComponentCollectionSerialized) },
+            { typeof(DiceExpression), typeof(DiceExpressionSerialized) }
         };
         #endregion
 

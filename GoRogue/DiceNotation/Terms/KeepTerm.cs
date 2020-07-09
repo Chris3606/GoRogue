@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.Serialization;
 using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
 using Troschuetz.Random;
@@ -8,11 +9,19 @@ namespace GoRogue.DiceNotation.Terms
     /// <summary>
     /// Term representing the keep operator -- keeping only the n highest dice from a dice term.
     /// </summary>
+    [DataContract]
     [PublicAPI]
     public class KeepTerm : ITerm
     {
-        private readonly DiceTerm _diceTerm;
-        private readonly ITerm _keep;
+        /// <summary>
+        /// The dice term to operate on.
+        /// </summary>
+        [DataMember] public readonly DiceTerm DiceTerm;
+
+        /// <summary>
+        /// The number of dice to keep.
+        /// </summary>
+        [DataMember] public readonly ITerm Keep;
 
         /// <summary>
         /// Constructor. Takes a term representing the number of dice to keep, and the dice term to
@@ -22,8 +31,8 @@ namespace GoRogue.DiceNotation.Terms
         /// <param name="diceTerm">The dice term to operate on.</param>
         public KeepTerm(ITerm keep, DiceTerm diceTerm)
         {
-            _diceTerm = diceTerm;
-            _keep = keep;
+            DiceTerm = diceTerm;
+            Keep = keep;
         }
 
         /// <summary>
@@ -37,23 +46,23 @@ namespace GoRogue.DiceNotation.Terms
         /// </returns>
         public int GetResult(IGenerator rng)
         {
-            var keepVal = _keep.GetResult(rng);
+            var keepVal = Keep.GetResult(rng);
 
             if (keepVal < 0)
                 throw new InvalidChooseException();
 
-            _diceTerm.GetResult(rng); // Roll so we can check chooses
+            DiceTerm.GetResult(rng); // Roll so we can check chooses
 
-            if (keepVal > _diceTerm.LastMultiplicity)
+            if (keepVal > DiceTerm.LastMultiplicity)
                 throw new InvalidChooseException();
 
-            return _diceTerm.DiceResults.OrderByDescending(value => value).Take(keepVal).Sum();
+            return DiceTerm.DiceResults.OrderByDescending(value => value).Take(keepVal).Sum();
         }
 
         /// <summary>
         /// Returns a parenthesized string representing the term -- eg (4d6k3) or (2d6k2)
         /// </summary>
         /// <returns>A parenthesized string representing the term</returns>
-        public override string ToString() => $"({_diceTerm}k{_keep})";
+        public override string ToString() => $"({DiceTerm}k{Keep})";
     }
 }

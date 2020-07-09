@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
@@ -7,6 +8,7 @@ namespace GoRogue.DiceNotation.Terms
     /// Term representing the addition operator -- adds two terms together.
     /// </summary>
     [PublicAPI]
+    [DataContract]
     public class AddTerm : ITerm
     {
         /// <summary>
@@ -23,12 +25,12 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// First term (left-hand side).
         /// </summary>
-        public ITerm Term1 { get; private set; }
+        [DataMember] public readonly ITerm Term1;
 
         /// <summary>
         /// Second term (right-hand side).
         /// </summary>
-        public ITerm Term2 { get; private set; }
+        [DataMember] public readonly ITerm Term2;
 
         /// <summary>
         /// Adds its two terms together, evaluating those two terms as necessary.

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.Serialization;
 using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
 using Troschuetz.Random;
@@ -9,6 +10,7 @@ namespace GoRogue.DiceNotation.Terms
     /// Represents a dice term, eg 1d4 or 2d6.
     /// </summary>
     [PublicAPI]
+    [DataContract]
     public class DiceTerm : ITerm
     {
         private readonly List<int> _diceResults;
@@ -52,12 +54,12 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// Term representing the number of dice being rolled -- 2d6 has multiplicity 2.
         /// </summary>
-        public ITerm Multiplicity { get; private set; }
+        [DataMember] public readonly ITerm Multiplicity;
 
         /// <summary>
         /// Term representing the number of sides the dice have -- 2d6 has 6 sides.
         /// </summary>
-        public ITerm Sides { get; private set; }
+        [DataMember] public readonly ITerm Sides;
 
         /// <summary>
         /// Rolls the dice, returning the sum.

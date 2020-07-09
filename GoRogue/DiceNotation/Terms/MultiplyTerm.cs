@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Runtime.Serialization;
+using JetBrains.Annotations;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
@@ -7,6 +8,7 @@ namespace GoRogue.DiceNotation.Terms
     /// Term representing the multiplication operator -- multiplies <see cref="Term1" /> and <see cref="Term2" />.
     /// </summary>
     [PublicAPI]
+    [DataContract]
     public class MultiplyTerm : ITerm
     {
         /// <summary>
@@ -23,12 +25,12 @@ namespace GoRogue.DiceNotation.Terms
         /// <summary>
         /// The first term (left-hand side).
         /// </summary>
-        public ITerm Term1 { get; private set; }
+        [DataMember] public readonly ITerm Term1;
 
         /// <summary>
         /// The second term (right-hand side).
         /// </summary>
-        public ITerm Term2 { get; private set; }
+        [DataMember] public readonly ITerm Term2;
 
         /// <summary>
         /// Multiplies the first term by the second, evaluating those two terms as necessary.

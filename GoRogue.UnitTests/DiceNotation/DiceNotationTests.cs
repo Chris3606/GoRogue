@@ -8,14 +8,14 @@ namespace GoRogue.UnitTests.DiceNotation
     public class DiceNotationTests
     {
         [AssertionMethod]
-        private static void AssertMinMaxValues(IDiceExpression expr, int min, int max)
+        private static void AssertMinMaxValues(DiceExpression expr, int min, int max)
         {
             Assert.Equal(min, expr.MinRoll());
             Assert.Equal(max, expr.MaxRoll());
         }
 
         [AssertionMethod]
-        private static void AssertReturnedInRange(IDiceExpression expr, int min, int max)
+        private static void AssertReturnedInRange(DiceExpression expr, int min, int max)
         {
             for (var i = 0; i < 100; i++)
             {

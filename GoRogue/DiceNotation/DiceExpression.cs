@@ -1,4 +1,5 @@
-﻿using GoRogue.DiceNotation.Terms;
+﻿using System.Runtime.Serialization;
+using GoRogue.DiceNotation.Terms;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using Troschuetz.Random;
@@ -9,17 +10,21 @@ namespace GoRogue.DiceNotation
     /// The default class for representing a parsed dice expression.
     /// </summary>
     [PublicAPI]
-    public class DiceExpression : IDiceExpression
+    [DataContract]
+    public class DiceExpression
     {
-        private readonly ITerm _termToEvaluate;
+        /// <summary>
+        /// The root term in this expression tree.
+        /// </summary>
+        [DataMember] public readonly ITerm RootTerm;
 
         /// <summary>
         /// Constructor. Takes the last term in the dice expression (the root of the expression tree).
         /// </summary>
-        /// <param name="termToEvaluate">
+        /// <param name="rootTerm">
         /// The root of the expression tree -- by evaluating this term, all others will be evaluated recursively.
         /// </param>
-        public DiceExpression(ITerm termToEvaluate) => _termToEvaluate = termToEvaluate;
+        public DiceExpression(ITerm rootTerm) => RootTerm = rootTerm;
 
         /// <summary>
         /// Returns the maximum possible result of the dice expression.
@@ -42,13 +47,13 @@ namespace GoRogue.DiceNotation
         {
             rng ??= GlobalRandom.DefaultRNG;
 
-            return _termToEvaluate.GetResult(rng);
+            return RootTerm.GetResult(rng);
         }
 
         /// <summary>
         /// Returns a parenthesized string representing the dice expression in dice notation
         /// </summary>
         /// <returns>A parenthesized string representing the expression.</returns>
-        public override string ToString() => _termToEvaluate.ToString();
+        public override string ToString() => RootTerm.ToString();
     }
 }
