@@ -89,7 +89,7 @@ namespace GoRogue.UnitTests
             Assert.Same(component, _componentCollection.GetFirst<ComponentBase>());
 
             // Component1 is NOT this type, so this should throw
-            Assert.Throws<InvalidOperationException>(() => _componentCollection.GetFirst<Component2>());
+            Assert.Throws<ArgumentException>(() => _componentCollection.GetFirst<Component2>());
 
             // Create and add a component of a different type
             var component2 = new Component2();
@@ -111,7 +111,7 @@ namespace GoRogue.UnitTests
 
             // Now component1 should throw because there's no more component1 instances in the container,
             // but the others should return component2
-            Assert.Throws<InvalidOperationException>(() => _componentCollection.GetFirst<Component1>());
+            Assert.Throws<ArgumentException>(() => _componentCollection.GetFirst<Component1>());
             Assert.Same(component2, _componentCollection.GetFirst<ComponentBase>()); // Component2 qualifies
             Assert.Same(component2, _componentCollection.GetFirst<Component2>());
         }

@@ -19,23 +19,23 @@ namespace GoRogue.Components
     /// the type restrictions, regardless of whether it is associated with a tag.
     /// </remarks>
     [PublicAPI]
-    public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<(object component, string? tag)>
+    public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<ComponentTagPair>
     {
         /// <inheritdoc />
-        void IBasicComponentCollection.Add(object component) => Add(this);
+        void IBasicComponentCollection.Add<T>(T component) where T : class => Add(this);
 
         /// <inheritdoc />
         [return: MaybeNull]
-        T IBasicComponentCollection.GetFirstOrDefault<T>() => GetFirstOrDefault<T>();
+        T IBasicComponentCollection.GetFirstOrDefault<T>() where T : class => GetFirstOrDefault<T>();
 
         /// <inheritdoc />
-        T IBasicComponentCollection.GetFirst<T>() => GetFirst<T>();
+        T IBasicComponentCollection.GetFirst<T>() where T : class => GetFirst<T>();
 
         /// <inheritdoc />
         bool IBasicComponentCollection.Contains(Type componentType) => Contains(componentType);
 
         /// <inheritdoc />
-        bool IBasicComponentCollection.Contains<T>() => Contains<T>();
+        bool IBasicComponentCollection.Contains<T>() where T : class => Contains<T>();
 
         /// <summary>
         /// Adds the given object as a component, optionally giving it a tag.  Throws ArgumentException if the given
@@ -43,7 +43,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="component">Component to add.</param>
         /// <param name="tag">An optional tag to give the component.  Defaults to no tag.</param>
-        void Add(object component, string? tag = null);
+        void Add<T>(T component, string? tag = null) where T : class;
 
         /// <summary>
         /// Removes the component with the given tag.  Throws ArgumentException if a component with the specified tag
@@ -75,7 +75,7 @@ namespace GoRogue.Components
         /// True if a component of the specified type associated with the specified tag has been added; false otherwise.
         /// </summary>
         /// <remarks>
-        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// If "null" is specified for <paramref name="tag"/>, it indicates no particular tag; eg. any object of the
         /// given type will meet the requirement, regardless of whether or not it has a tag.
         /// </remarks>
         /// <param name="componentType">The type of component to check for.</param>
@@ -87,13 +87,13 @@ namespace GoRogue.Components
         /// True if a component of the specified type associated with the specified tag has been added; false otherwise.
         /// </summary>
         /// <remarks>
-        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// If "null" is specified for <paramref name="tag"/>, it indicates no particular tag; eg. any object of the
         /// given type will meet the requirement, regardless of whether or not it has a tag.
         /// </remarks>
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <param name="tag">The tag to check for.  If null is specified, no particular tag is checked for.</param>
         /// <returns/>
-        bool Contains<T>(string? tag = null) where T : notnull;
+        bool Contains<T>(string? tag = null) where T : class;
 
         /// <summary>
         /// Gets the component of type T in the collection that has been associated with the given tag.
@@ -108,7 +108,7 @@ namespace GoRogue.Components
         /// </remarks>
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <returns/>
-        T GetFirst<T>(string? tag = null) where T : notnull;
+        T GetFirst<T>(string? tag = null) where T : class;
 
         /// <summary>
         /// Gets the component of type T in the collection that has been associated with the given tag.
@@ -118,7 +118,7 @@ namespace GoRogue.Components
         /// If you would instead like to throw an exception if a component of the given type is not found, see
         /// <see cref="GetFirst{T}"/>.
         ///
-        /// If "null" is specified for <param name="tag"></param>, it indicates no particular tag; eg. any object of the
+        /// If "null" is specified for <paramref name="tag"/>, it indicates no particular tag; eg. any object of the
         /// given type will meet the requirement.  In this case,the normal sorting priority rules apply; the component
         /// with the lowest <see cref="ISortedComponent.SortOrder"/> is returned.  Among components with equal sort
         /// orders or components that do not implement <see cref="ISortedComponent"/>, the first component of the given
@@ -127,6 +127,6 @@ namespace GoRogue.Components
         /// <param name="tag">Type of component to retrieve.</param>
         /// <returns/>
         [return: MaybeNull]
-        T GetFirstOrDefault<T>(string? tag = null) where T : notnull;
+        T GetFirstOrDefault<T>(string? tag = null) where T : class;
     }
 }

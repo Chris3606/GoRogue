@@ -3,10 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace GoRogue.Components
 {
+    internal class ReferenceEqualityComparer : IEqualityComparer<object>
+    {
+        bool IEqualityComparer<object>.Equals(object x, object y) => ReferenceEquals(x, y);
+
+        public int GetHashCode(object obj) => RuntimeHelpers.GetHashCode(obj);
+    }
     /// <summary>
     /// A class implementing a flexible, type-based system for keeping track of components that are added to objects.
     /// A ComponentCollection can simply be added as a member of an object that needs components attached to it, then
@@ -32,15 +40,19 @@ namespace GoRogue.Components
     /// retrieve any component meeting the type restrictions, regardless of whether it is associated with a tag.
     /// </remarks>
     [PublicAPI]
+    [DataContract]
     public class ComponentCollection : ITaggableComponentCollection
     {
+        [IgnoreDataMember]
         private readonly Dictionary<Type, List<object>> _components;
 
         // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are
         // removed.  Also used a distinct list of all components
+        [IgnoreDataMember]
         private readonly Dictionary<object, string?> _componentsToTags;
 
         // Used for tag-based lookups
+        [IgnoreDataMember]
         private readonly Dictionary<string, object> _tagsToComponents;
 
         /// <summary>
@@ -49,9 +61,45 @@ namespace GoRogue.Components
         public ComponentCollection()
         {
             _components = new Dictionary<Type, List<object>>();
-            _componentsToTags = new Dictionary<object, string?>();
+            _componentsToTags = new Dictionary<object, string?>(new ReferenceEqualityComparer());
             _tagsToComponents = new Dictionary<string, object>();
         }
+
+        /// <summary>
+        /// Constructor taking a set of starting components.
+        /// </summary>
+        /// <param name="objects">Components to initially add.</param>
+        public ComponentCollection(IEnumerable<object> objects)
+            : this()
+        {
+            foreach (var obj in objects)
+            {
+                if (obj.GetType().IsValueType)
+                    throw new ArgumentException($"Value types are not allowed to be used as components in a ${nameof(ComponentCollection)}.",
+                        nameof(objects));
+
+                Add(obj);
+            }
+        }
+
+        /// <summary>
+        /// Constructor taking a set of starting components and their associated tags.
+        /// </summary>
+        /// <param name="objectsAndTags">Components to initially add and their corresponding tags.</param>
+        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags)
+            : this()
+        {
+            foreach (var (component, tag) in objectsAndTags)
+            {
+                if (component.GetType().IsValueType)
+                    throw new ArgumentException(
+                        $"Value types are not allowed to be used as components in a ${nameof(ComponentCollection)}.",
+                        nameof(objectsAndTags));
+
+                Add(component, tag);
+            }
+        }
+
 
         /// <inheritdoc />
         public event EventHandler<ComponentChangedEventArgs>? ComponentAdded;
@@ -60,11 +108,11 @@ namespace GoRogue.Components
         public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
 
         /// <inheritdoc />
-        public void Add(object component, string? tag = null)
+        public void Add<T>(T component, string? tag = null) where T : class
         {
             var realType = component.GetType();
 
-            if (_components.ContainsKey(realType) && _components[realType].Contains(component))
+            if (_components.ContainsKey(realType) && _components[realType].Any(i => ReferenceEquals(i, component)))
                 throw new ArgumentException("Tried to add the same component instance to an object twice.",
                     nameof(component));
 
@@ -172,11 +220,11 @@ namespace GoRogue.Components
         public bool Contains(Type componentType, string? tag = null) => Contains((componentType, tag));
 
         /// <inheritdoc />
-        public bool Contains<T>(string? tag = null) where T : notnull => Contains((typeof(T), tag));
+        public bool Contains<T>(string? tag = null) where T : class => Contains((typeof(T), tag));
 
         /// <inheritdoc />
         [return: MaybeNull]
-        public T GetFirstOrDefault<T>(string? tag = null) where T : notnull
+        public T GetFirstOrDefault<T>(string? tag = null) where T : class
         {
             Type typeOfT = typeof(T);
 
@@ -200,7 +248,7 @@ namespace GoRogue.Components
         }
 
         /// <inheritdoc />
-        public T GetFirst<T>(string? tag = null) where T : notnull
+        public T GetFirst<T>(string? tag = null) where T : class
         {
             Type typeOfT = typeof(T);
 
@@ -224,7 +272,7 @@ namespace GoRogue.Components
         }
 
         /// <inheritdoc />
-        public IEnumerable<T> GetAll<T>() where T : notnull
+        public IEnumerable<T> GetAll<T>() where T : class
         {
             Type typeOfT = typeof(T);
 
@@ -261,13 +309,13 @@ namespace GoRogue.Components
         /// Returns all components paired with their tags.  Ordered with respect to sorted components.
         /// </summary>
         /// <returns/>
-        public IEnumerator<(object component, string? tag)> GetEnumerator()
+        public IEnumerator<ComponentTagPair> GetEnumerator()
         {
             var ordered = _componentsToTags.OrderBy(
                 val => val.Key is ISortedComponent sorted ? sorted.SortOrder : uint.MaxValue);
 
             foreach (var (component, tag) in ordered)
-                yield return (component, tag);
+                yield return new ComponentTagPair(component, tag);
         }
 
         /// <summary>

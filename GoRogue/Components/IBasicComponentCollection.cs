@@ -53,7 +53,7 @@ namespace GoRogue.Components
         /// been added.
         /// </summary>
         /// <param name="component">Component to add.</param>
-        void Add(object component);
+        void Add<T>(T component) where T : class;
 
         /// <summary>
         /// Gets the component of type T in the collection that has the lowest <see cref="ISortedComponent.SortOrder"/>.
@@ -69,7 +69,7 @@ namespace GoRogue.Components
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <returns/>
         [return: MaybeNull]
-        T GetFirstOrDefault<T>() where T : notnull;
+        T GetFirstOrDefault<T>() where T : class;
 
         /// <summary>
         /// Gets the component of type T in the collection that has the lowest <see cref="ISortedComponent.SortOrder"/>.
@@ -80,7 +80,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <returns/>
-        T GetFirst<T>() where T : notnull;
+        T GetFirst<T>() where T : class;
 
         /// <summary>
         /// Gets all components of type T that have been added, with components having a lower
@@ -91,7 +91,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <typeparam name="T">Type of components to retrieve.</typeparam>
         /// <returns/>
-        IEnumerable<T> GetAll<T>() where T : notnull;
+        IEnumerable<T> GetAll<T>() where T : class;
 
         /// <summary>
         /// True if any component of the specified type has been added; false otherwise.
@@ -105,7 +105,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <typeparam name="T">Type of component to check for.</typeparam>
         /// <returns/>
-        bool Contains<T>() where T : notnull;
+        bool Contains<T>() where T : class;
 
         /// <summary>
         /// True if at least one component of each type specified has been added; false otherwise.

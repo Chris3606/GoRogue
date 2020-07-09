@@ -60,7 +60,7 @@ namespace GoRogue.GameFramework
         /// Constructor.
         /// </summary>
         /// <remarks>
-        /// <param name="idGenerator"></param> is used to generate an ID which is assigned to the <see cref="ID" />
+        /// <paramref name="idGenerator"/> is used to generate an ID which is assigned to the <see cref="ID" />
         /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
         /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
         /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
