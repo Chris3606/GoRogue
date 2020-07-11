@@ -59,7 +59,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void ApplyOverlayTest()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
 
@@ -99,7 +99,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaMapViewTest()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
             IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
             CheckMaps(map, lambdaMapView);
@@ -108,7 +108,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaSettableMapViewTest()
         {
-            var map = MockFactory.TestResMap(10, 10);
+            var map = MockMaps.TestResMap(10, 10);
             var lambdaSettable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0,
                 (c, b) => map[c] = b ? 1.0 : 0.0);
             CheckMaps(lambdaSettable, map);
@@ -124,7 +124,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaSettableTranslationMapTest()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
             CheckMaps(map, settable);
@@ -145,7 +145,7 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void LambdaTranslationMapTest()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
             var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
 
             CheckMaps(map, lambdaMap);
@@ -164,7 +164,7 @@ namespace GoRogue.UnitTests.MapViews
             const int mapWidth = 250;
             const int mapHeight = 250;
 
-            var map = MockFactory.Rectangle(mapWidth, mapHeight);
+            var map = MockMaps.Rectangle(mapWidth, mapHeight);
 
             var viewport = new Viewport<bool>(map, new Rectangle(0, 0, viewportWidth, viewportHeight));
             CheckViewportBounds(viewport, (0, 0), (viewportWidth - 1, viewportHeight - 1));

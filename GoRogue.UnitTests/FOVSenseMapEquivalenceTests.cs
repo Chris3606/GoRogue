@@ -20,8 +20,8 @@ namespace GoRogue.UnitTests
         private static readonly Radius[] _radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i).ToArray();
 
         // Basic rectangle boolean/resistance maps
-        private static readonly IMapView<bool> _losMap = MockFactory.Rectangle(_width, _height);
-        private static readonly IMapView<double> _resMap = MockFactory.RectangleResMap(_width, _height);
+        private static readonly IMapView<bool> _losMap = MockMaps.Rectangle(_width, _height);
+        private static readonly IMapView<double> _resMap = MockMaps.RectangleResMap(_width, _height);
 
         // Positions to test on _losMap
         private static readonly Point[] _testPositions =

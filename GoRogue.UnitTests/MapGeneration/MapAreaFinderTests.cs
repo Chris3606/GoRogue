@@ -17,9 +17,9 @@ namespace GoRogue.UnitTests.MapGeneration
 
         private static readonly IMapView<bool>[] _maps =
         {
-            MockFactory.Rectangle(_width, _height), MockFactory.CardinalBisection(_width, _height, 1),
-            MockFactory.DiagonalBisection(_width, _height, 1), MockFactory.CardinalBisection(_width, _height, 2),
-            MockFactory.DiagonalBisection(_width, _height, 2), MockFactory.DisconnectedSquares(_width, _height)
+            MockMaps.Rectangle(_width, _height), MockMaps.CardinalBisection(_width, _height, 1),
+            MockMaps.DiagonalBisection(_width, _height, 1), MockMaps.CardinalBisection(_width, _height, 2),
+            MockMaps.DiagonalBisection(_width, _height, 2), MockMaps.DisconnectedSquares(_width, _height)
         };
 
         private static readonly (AdjacencyRule rule, int expectedAreas)[][] _expectedAreas =

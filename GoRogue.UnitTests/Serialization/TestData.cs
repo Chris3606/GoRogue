@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
 using GoRogue.DiceNotation;
+using GoRogue.Factories;
 using GoRogue.SerializedTypes.Components;
 using GoRogue.SerializedTypes.DiceNotation;
+using GoRogue.SerializedTypes.Factories;
 using GoRogue.UnitTests.Mocks;
 
 namespace GoRogue.UnitTests.Serialization
@@ -38,7 +40,26 @@ namespace GoRogue.UnitTests.Serialization
                 }
             },
             // DiceExpression
-            new DiceExpressionSerialized { Expression = "3d(1d12)k2+4" }
+            new DiceExpressionSerialized { Expression = "3d(1d12)k2+4" },
+            // Factories
+            new FactorySerialized<FactoryItem>
+            {
+                Blueprints = new List<IFactoryBlueprint<FactoryItem>>
+                {
+                    new FactoryItemBlueprint("1"),
+                    new FactoryItemBlueprint("2"),
+                    new FactoryItemBlueprint("3")
+                }
+            },
+            new AdvancedFactorySerialized<int, FactoryItem>
+            {
+                Blueprints = new List<IAdvancedFactoryBlueprint<int, FactoryItem>>
+                {
+                    new AdvancedFactoryItemBlueprint("1"),
+                    new AdvancedFactoryItemBlueprint("2"),
+                    new AdvancedFactoryItemBlueprint("3")
+                }
+            },
         };
 
         /// <summary>
@@ -67,7 +88,9 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(ComponentTagPairSerialized), new []{ "Component", "Tag" } },
             { typeof(ComponentCollectionSerialized), new []{ "Components" } },
             { typeof(DiceExpression), new [] { "RootTerm" } },
-            { typeof(DiceExpressionSerialized), new [] { "Expression" } }
+            { typeof(DiceExpressionSerialized), new [] { "Expression" } },
+            { typeof(FactorySerialized<FactoryItem>), new [] { "Blueprints" } },
+            { typeof(AdvancedFactorySerialized<int, FactoryItem>), new [] { "Blueprints" } },
         };
 
         /// <summary>
@@ -83,6 +106,19 @@ namespace GoRogue.UnitTests.Serialization
                 { new Component2() { Value = 2 }, "MyTag" },
                 new Component2() { Value = 3}
             },
+            // Factories with serializable blueprints
+            new Factory<FactoryItem>
+            {
+                new FactoryItemBlueprint("1"),
+                new FactoryItemBlueprint("2"),
+                new FactoryItemBlueprint("3")
+            },
+            new AdvancedFactory<int, FactoryItem>
+            {
+                new AdvancedFactoryItemBlueprint("1"),
+                new AdvancedFactoryItemBlueprint("2"),
+                new AdvancedFactoryItemBlueprint("3")
+            },
         };
 
         /// <summary>
@@ -92,7 +128,9 @@ namespace GoRogue.UnitTests.Serialization
         {
             { typeof(ComponentTagPair), typeof(ComponentTagPairSerialized) },
             { typeof(ComponentCollection), typeof(ComponentCollectionSerialized) },
-            { typeof(DiceExpression), typeof(DiceExpressionSerialized) }
+            { typeof(DiceExpression), typeof(DiceExpressionSerialized) },
+            { typeof(Factory<FactoryItem>), typeof(FactorySerialized<FactoryItem>) },
+            { typeof(AdvancedFactory<int, FactoryItem>), typeof(AdvancedFactorySerialized<int, FactoryItem>) }
         };
         #endregion
 

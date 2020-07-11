@@ -17,7 +17,7 @@ namespace GoRogue.UnitTests.Serialization
         {
             Func<object, object, bool> equalityFunc = Comparisons.GetComparisonFunc(objToSerialize);
 
-            string name = $"{objToSerialize.GetType().FullName}.bin";
+            string name = $"TestBinaryFile.bin";
 
             var formatter = new BinaryFormatter();
             using (var stream = new FileStream(name, FileMode.Create, FileAccess.Write))

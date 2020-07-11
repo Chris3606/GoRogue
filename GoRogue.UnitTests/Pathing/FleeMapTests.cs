@@ -16,7 +16,7 @@ namespace GoRogue.UnitTests.Pathing
         [Fact]
         public void FleeMapDoesNotLeadToGoal()
         {
-            var map = (ArrayMap<bool>)MockFactory.Rectangle(_width, _height);
+            var map = (ArrayMap<bool>)MockMaps.Rectangle(_width, _height);
 
             var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace GoRogue.Factories
@@ -9,10 +10,29 @@ namespace GoRogue.Factories
     /// </summary>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
     [PublicAPI]
+    [DataContract]
     public class Factory<TProduced> : IEnumerable<IFactoryBlueprint<TProduced>>
     {
-        private readonly Dictionary<string, IFactoryBlueprint<TProduced>> _blueprints =
-            new Dictionary<string, IFactoryBlueprint<TProduced>>();
+        private readonly Dictionary<string, IFactoryBlueprint<TProduced>> _blueprints;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public Factory()
+        {
+            _blueprints = new Dictionary<string, IFactoryBlueprint<TProduced>>();
+        }
+
+        /// <summary>
+        /// Constructor.  Takes initial blueprints to add.
+        /// </summary>
+        /// <param name="initialBlueprints">Initial blueprints to add.</param>
+        public Factory(IEnumerable<IFactoryBlueprint<TProduced>> initialBlueprints)
+            : this()
+        {
+            foreach (var blueprint in initialBlueprints)
+                Add(blueprint);
+        }
 
         /// <summary>
         /// Gets an enumerator of all of the blueprints in the factory.

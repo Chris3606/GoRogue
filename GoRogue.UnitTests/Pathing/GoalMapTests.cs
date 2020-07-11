@@ -16,7 +16,7 @@ namespace GoRogue.UnitTests.Pathing
         [Fact]
         public void GoalMapLeadsToGoal()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(

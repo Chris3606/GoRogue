@@ -49,7 +49,7 @@ namespace GoRogue.UnitTests
         [MemberDataEnumerable(nameof(Distances))]
         public void ManualPrintAStarPaths(Distance distanceCalc)
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var pathfinder = new AStar(map, distanceCalc);
             var path = pathfinder.ShortestPath(_start, _end);
@@ -64,7 +64,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintGoalMap()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
             foreach (var pos in stateMap.Positions())
@@ -159,7 +159,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintFOV()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
             var myFov = new FOV(map);
             myFov.Calculate(5, 5, 3);
 
@@ -186,7 +186,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintMockMap()
         {
-            ISettableMapView<bool> map = (ArrayMap<bool>)MockFactory.Rectangle(_width, _height);
+            ISettableMapView<bool> map = (ArrayMap<bool>)MockMaps.Rectangle(_width, _height);
             _output.WriteLine(map.ToString());
         }
 
@@ -206,7 +206,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintPath()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(1, 2, 5, 6);
 
@@ -241,7 +241,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintSenseMap()
         {
-            var map = MockFactory.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(_width, _height);
 
             var resMap = new ResMap(map);
             var senseMap = new SenseMap(resMap);

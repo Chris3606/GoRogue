@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace GoRogue.Factories
@@ -13,12 +14,29 @@ namespace GoRogue.Factories
     /// </typeparam>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
     [PublicAPI]
-    public class
-        AdvancedFactory<TBlueprintConfig, TProduced> : IEnumerable<
-            IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
+    [DataContract]
+    public class AdvancedFactory<TBlueprintConfig, TProduced>
+        : IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
     {
-        private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints =
-            new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();
+        private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints;
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public AdvancedFactory()
+        {
+            _blueprints = new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();
+        }
+        /// <summary>
+        /// Constructor.  Takes some initial blueprints to add.
+        /// </summary>
+        /// <param name="initialBlueprints">Initial blueprints to add.</param>
+        public AdvancedFactory(IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> initialBlueprints)
+            : this()
+        {
+            foreach (var blueprint in initialBlueprints)
+                Add(blueprint);
+        }
 
         /// <summary>
         /// Gets an enumerator of all of the blueprints in the factory.

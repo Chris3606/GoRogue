@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests.Pathing
 {
     public class AStarTests
     {
-        private static readonly ISettableMapView<bool> _basicMap = MockFactory.Rectangle(100, 70);
+        private static readonly ISettableMapView<bool> _basicMap = MockMaps.Rectangle(100, 70);
         private static readonly Point _basicMapStart = (1, 2);
         private static readonly Point _basicMapEnd = (17, 14);
 
@@ -40,7 +40,7 @@ namespace GoRogue.UnitTests.Pathing
 
         private static readonly IMapView<bool>[] _testMaps =
         {
-            MockFactory.Rectangle(50, 35),
+            MockMaps.Rectangle(50, 35),
             new Generator(50, 35)
                 .AddSteps(DefaultAlgorithms.DungeonMazeMapSteps())
                 .Generate()

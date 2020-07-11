@@ -7,7 +7,7 @@ namespace GoRogue.UnitTests.Mocks
     /// <summary>
     /// A class that creates Mock Items to use in tests.
     /// </summary>
-    internal class MockFactory
+    internal static class MockMaps
     {
         public static IMapView<double> RectangleResMap(int width, int height)
         {

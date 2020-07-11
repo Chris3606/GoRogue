@@ -21,10 +21,10 @@ namespace GoRogue.UnitTests.SenseMapping
         private static readonly SourceType[] _senseSourceAlgorithms = TestUtils.GetEnumValues<SourceType>();
 
         // Basic rectangle boolean/resistance map, one with double-tile-thick walls
-        private static readonly IMapView<double> _resMap = MockFactory.RectangleResMap(_width, _height);
+        private static readonly IMapView<double> _resMap = MockMaps.RectangleResMap(_width, _height);
 
         private static readonly IMapView<double> _resMapDoubleThickWalls =
-            MockFactory.RectangleDoubleThickResMap(_width, _height);
+            MockMaps.RectangleDoubleThickResMap(_width, _height);
 
         // Radius shapes to test
         private static readonly Radius[] _radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i)
