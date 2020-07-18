@@ -125,13 +125,9 @@ namespace GoRogue.MapGeneration.Steps
         /// <inheritdoc />
         protected override void OnPerform(GenerationContext context)
         {
-            // Get required existing components
-            var areasToConnect =
-                context.GetFirstOrDefault<ItemList<Area>>(
-                    AreasComponentTag)!; // Known to not be null since Perform checked for us
-            var wallFloor =
-                context.GetFirstOrDefault<ISettableMapView<bool>>(
-                    WallFloorComponentTag)!; // Known to not be null since Perform checked for us
+            // Get required components; guaranteed to exist because enforced by required components list
+            var areasToConnect = context.GetFirst<ItemList<Area>>(AreasComponentTag);
+            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
 
             // Get/create tunnel component
             var tunnels = context.GetFirstOrNew(() => new ItemList<Area>(), TunnelsComponentTag);

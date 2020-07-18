@@ -71,13 +71,9 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// <inheritdoc />
         protected override void OnPerform(GenerationContext context)
         {
-            // Get required components
-            var areaList1 =
-                context.GetFirstOrDefault<ItemList<Area>>(
-                    ModifiedAreaListTag)!; // Not null because is in required components list
-            var areaList2 =
-                context.GetFirstOrDefault<ItemList<Area>>(
-                    UnmodifiedAreaListTag)!; // Not null because is in required components list
+            // Get required components; guaranteed to exist because enforced by required components list
+            var areaList1 = context.GetFirst<ItemList<Area>>(ModifiedAreaListTag);
+            var areaList2 = context.GetFirst<ItemList<Area>>(UnmodifiedAreaListTag);
 
             // Cache all positions in any area of area1List
             var areaList1Positions = new HashSet<Point>();

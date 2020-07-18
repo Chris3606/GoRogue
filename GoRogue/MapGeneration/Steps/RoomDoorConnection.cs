@@ -160,13 +160,9 @@ namespace GoRogue.MapGeneration.Steps
                 throw new InvalidConfigurationException(this, nameof(CancelConnectionPlacementChanceIncrease),
                     "The value must be a valid percent (between 0 and 100).");
 
-            // Get required existing components
-            var rooms =
-                context.GetFirstOrDefault<ItemList<Rectangle>>(
-                    RoomsComponentTag)!; // Known to not be null since Perform checked for us
-            var wallFloor =
-                context.GetFirstOrDefault<ISettableMapView<bool>>(
-                    WallFloorComponentTag)!; // Known to not be null since Perform checked for us
+            // Get required components; guaranteed to exist because enforced by required components list
+            var rooms = context.GetFirst<ItemList<Rectangle>>(RoomsComponentTag);
+            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
 
             // Get rectangle of inner map bounds (the entire map except for the outer box that must remain all walls
             var innerMap = wallFloor.Bounds().Expand(-1, -1);

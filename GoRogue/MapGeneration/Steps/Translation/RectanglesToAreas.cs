@@ -59,10 +59,8 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// <inheritdoc />
         protected override void OnPerform(GenerationContext context)
         {
-            // Get required components
-            var rectangles =
-                context.GetFirstOrDefault<ItemList<Rectangle>>(
-                    RectanglesComponentTag)!; // Not null because is in required components list
+            // Get required components; guaranteed to exist because enforced by required components list
+            var rectangles = context.GetFirst<ItemList<Rectangle>>(RectanglesComponentTag);
 
             // Get/create output component as needed
             var areas = context.GetFirstOrNew(() => new ItemList<Area>(), AreasComponentTag);

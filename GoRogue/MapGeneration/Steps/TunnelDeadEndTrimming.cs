@@ -107,13 +107,9 @@ namespace GoRogue.MapGeneration.Steps
                 throw new InvalidConfigurationException(this, nameof(MaxTrimIterations),
                     "The value must be 0 or above, or -1 for no iteration limit.");
 
-            // Get required existing components
-            var wallFloor =
-                context.GetFirstOrDefault<ISettableMapView<bool>>(
-                    WallFloorComponentTag)!; // Known to not be null since Perform checked for us
-            var tunnels =
-                context.GetFirstOrDefault<ItemList<Area>>(
-                    TunnelsComponentTag)!; // Known to not be null since Perform checked for us
+            // Get required components; guaranteed to exist because enforced by required components list
+            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
+            var tunnels = context.GetFirst<ItemList<Area>>(TunnelsComponentTag);
 
             // For each area, find dead ends up to the maximum number of iterations and prune them, unless they're saved
             foreach (var area in tunnels.Items)

@@ -73,12 +73,9 @@ namespace GoRogue.MapGeneration.Steps.Translation
         /// <inheritdoc />
         protected override void OnPerform(GenerationContext context)
         {
-            // Get required components
-            var baseList =
-                context.GetFirstOrDefault<ItemList<TItem>>(BaseListTag)!; // Not null because is in required components list
-            var listToAppend =
-                context.GetFirstOrDefault<ItemList<TItem>>(
-                    ListToAppendTag)!; // Not null because is in required components list
+            // Get required components; guaranteed to exist because enforced by required components list
+            var baseList = context.GetFirst<ItemList<TItem>>(BaseListTag);
+            var listToAppend = context.GetFirst<ItemList<TItem>>(ListToAppendTag);
 
             // Iterate over each individual position and add to original list, so we keep the original generation step that created it with it.
             foreach (var item in listToAppend.Items)
