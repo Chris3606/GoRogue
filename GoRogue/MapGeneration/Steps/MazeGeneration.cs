@@ -184,7 +184,7 @@ namespace GoRogue.MapGeneration.Steps
             }
 
             // Add appropriate items to the tunnels list
-            tunnelList.AddItems(crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0), Name);
+            tunnelList.AddRange(crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0), Name);
         }
 
         private static Point FindEmptySquare(IMapView<bool> map, IGenerator rng)

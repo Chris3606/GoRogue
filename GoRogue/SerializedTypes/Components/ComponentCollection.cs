@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using GoRogue.Components;
 using JetBrains.Annotations;
 
@@ -18,7 +17,7 @@ namespace GoRogue.SerializedTypes.Components
         /// <summary>
         /// List of components in the collection.
         /// </summary>
-        public List<ComponentTagPairSerialized> Components;
+        public List<ComponentTagPair> Components;
 
         /// <summary>
         /// Converts <see cref="ComponentCollection"/> to <see cref="ComponentCollectionSerialized"/>.
@@ -43,7 +42,7 @@ namespace GoRogue.SerializedTypes.Components
         /// <returns/>
         public static ComponentCollectionSerialized FromComponentCollection(ComponentCollection collection)
         {
-            var expressive = new ComponentCollectionSerialized { Components = new List<ComponentTagPairSerialized>() };
+            var expressive = new ComponentCollectionSerialized { Components = new List<ComponentTagPair>() };
 
             foreach (var componentTagPair in collection)
                 expressive.Components.Add(componentTagPair);
@@ -56,6 +55,6 @@ namespace GoRogue.SerializedTypes.Components
         /// </summary>
         /// <returns/>
         public ComponentCollection ToComponentCollection()
-            => new ComponentCollection(Components.Select(item => (ComponentTagPair)item));
+            => new ComponentCollection(Components);
     }
 }

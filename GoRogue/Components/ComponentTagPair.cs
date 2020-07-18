@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
-using GoRogue.SerializedTypes.Components;
 using JetBrains.Annotations;
 
 namespace GoRogue.Components
@@ -9,7 +7,7 @@ namespace GoRogue.Components
     /// <summary>
     /// A component from a <see cref="ITaggableComponentCollection"/> and its associated tag.
     /// </summary>
-    [DataContract]
+    [Serializable]
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
@@ -18,12 +16,12 @@ namespace GoRogue.Components
         /// <summary>
         /// The component.
         /// </summary>
-        [DataMember] public readonly object Component;
+        public readonly object Component;
 
         /// <summary>
         /// The tag associated with its component.
         /// </summary>
-        [DataMember] public readonly string? Tag;
+        public readonly string? Tag;
 
         /// <summary>
         /// Constructor.

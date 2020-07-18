@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Xunit;
+using Xunit.Abstractions;
 using XUnit.ValueTuples;
 
 namespace GoRogue.UnitTests.Serialization
@@ -9,6 +10,10 @@ namespace GoRogue.UnitTests.Serialization
         // Required to be in-class so we just forward
         public static IEnumerable<object> AllNonExpressiveTypes = TestData.AllNonExpressiveTypes;
 
+        private ITestOutputHelper _output;
+
+        public ImplicitConversionTests(ITestOutputHelper output) => _output = output;
+
         [Theory]
         [MemberDataEnumerable(nameof(AllNonExpressiveTypes))]
         public void RegularToSerializedConversion(object original)
@@ -16,6 +21,8 @@ namespace GoRogue.UnitTests.Serialization
             var originalType = original.GetType();
             var serializedType = TestData.RegularToExpressiveTypes[originalType];
             var equalityFunc = Comparisons.GetComparisonFunc(original);
+
+            _output.WriteLine($"Testing expressive conversion from {originalType} to {serializedType}.");
 
             // Retrieve each implicit conversion operator.  We must use reflection because there is no way to add type
             // constraints that tell the compiler that the object must have these implicit conversions without adding

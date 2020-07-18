@@ -13,6 +13,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
     /// <typeparam name="TItem">Type of item in the lists being appended.</typeparam>
     [PublicAPI]
     public class AppendItemLists<TItem> : GenerationStep
+        where TItem : notnull
     {
         /// <summary>
         /// A tag that must be attached to the component that will have items from the other list appended onto it.
@@ -81,7 +82,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
 
             // Iterate over each individual position and add to original list, so we keep the original generation step that created it with it.
             foreach (var item in listToAppend.Items)
-                baseList.AddItem(item, listToAppend.ItemToStepMapping[item]);
+                baseList.Add(item, listToAppend.ItemToStepMapping[item]);
         }
     }
 }

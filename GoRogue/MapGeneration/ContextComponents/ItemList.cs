@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.ContextComponents
@@ -10,7 +12,9 @@ namespace GoRogue.MapGeneration.ContextComponents
     /// </summary>
     /// <typeparam name="TItem">Type of item being stored.</typeparam>
     [PublicAPI]
-    public class ItemList<TItem>
+    [DataContract]
+    public class ItemList<TItem> : IEnumerable<ItemStepPair<TItem>>
+        where TItem : notnull
     {
         private readonly List<TItem> _items;
 
@@ -23,6 +27,17 @@ namespace GoRogue.MapGeneration.ContextComponents
         {
             _items = new List<TItem>();
             _itemToStepMapping = new Dictionary<TItem, string>();
+        }
+
+        /// <summary>
+        /// Creates a new item list and adds the given items to it.
+        /// </summary>
+        /// <param name="initialItems">Initial item/step pairs to add to the list.</param>
+        public ItemList(IEnumerable<ItemStepPair<TItem>> initialItems)
+            : this()
+        {
+            foreach (var (item, step) in initialItems)
+                Add(item, step);
         }
 
         /// <summary>
@@ -50,7 +65,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="generationStepName">The <see cref="GenerationStep.Name" /> of the generation step that created the item.</param>
-        public void AddItem(TItem item, string generationStepName)
+        public void Add(TItem item, string generationStepName)
         {
             _items.Add(item);
             _itemToStepMapping.Add(item, generationStepName);
@@ -61,7 +76,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// </summary>
         /// <param name="items">The items to add.</param>
         /// <param name="generationStepName">The <see cref="GenerationStep.Name" /> of the generation step that created the items.</param>
-        public void AddItems(IEnumerable<TItem> items, string generationStepName)
+        public void AddRange(IEnumerable<TItem> items, string generationStepName)
         {
             foreach (var item in items)
             {
@@ -74,13 +89,13 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// Removes the given item from the list.
         /// </summary>
         /// <param name="item">Item to remove.</param>
-        public void RemoveItem(TItem item) => RemoveItems(item.Yield());
+        public void Remove(TItem item) => Remove(item.Yield());
 
         /// <summary>
         /// Removes the given items from the list.
         /// </summary>
         /// <param name="items">Items to remove.</param>
-        public void RemoveItems(IEnumerable<TItem> items)
+        public void Remove(IEnumerable<TItem> items)
         {
             foreach (var item in items)
             {
@@ -97,7 +112,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// Removes all items from the list for which the given function returns true.
         /// </summary>
         /// <param name="predicate">Predicate to determine which elements to remove.</param>
-        public void RemoveItems(Func<TItem, bool> predicate)
+        public void Remove(Func<TItem, bool> predicate)
         {
             var toRemove = _items.Where(predicate).ToList();
 
@@ -105,5 +120,21 @@ namespace GoRogue.MapGeneration.ContextComponents
             foreach (var item in toRemove)
                 _itemToStepMapping.Remove(item);
         }
+
+        /// <summary>
+        /// Gets an enumerator of all items and the step that added them.
+        /// </summary>
+        /// <returns/>
+        public IEnumerator<ItemStepPair<TItem>> GetEnumerator()
+        {
+            foreach (var obj in _items)
+                yield return new ItemStepPair<TItem>(obj, _itemToStepMapping[obj]);
+        }
+
+        /// <summary>
+        /// Gets a generic enumerator of all items and the step that added them.
+        /// </summary>
+        /// <returns/>
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

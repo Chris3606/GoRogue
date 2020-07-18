@@ -240,7 +240,7 @@ namespace GoRogue.MapGeneration.Steps
                             wallFloorContext[point] = true;
 
                         placed = true;
-                        roomsContext.AddItem(roomInnerRect, Name);
+                        roomsContext.Add(roomInnerRect, Name);
                         break;
                     }
 

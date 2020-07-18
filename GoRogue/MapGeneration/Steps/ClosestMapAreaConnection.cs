@@ -147,7 +147,7 @@ namespace GoRogue.MapGeneration.Steps
                             areasToConnect.Items[iClosest]);
 
                     var tunnel = TunnelCreator.CreateTunnel(wallFloor, area1Position, area2Position);
-                    tunnels.AddItem(tunnel, Name);
+                    tunnels.Add(tunnel, Name);
 
                     ds.MakeUnion(i, iClosest);
                 }

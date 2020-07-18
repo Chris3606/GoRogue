@@ -4,8 +4,12 @@ using System.Linq;
 using GoRogue.Components;
 using GoRogue.DiceNotation;
 using GoRogue.Factories;
+using GoRogue.MapGeneration;
+using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.SerializedTypes.Components;
 using GoRogue.SerializedTypes.Factories;
+using GoRogue.SerializedTypes.MapGeneration;
+using GoRogue.SerializedTypes.MapGeneration.ContextComponents;
 using GoRogue.UnitTests.Mocks;
 
 namespace GoRogue.UnitTests.Serialization
@@ -23,6 +27,14 @@ namespace GoRogue.UnitTests.Serialization
                 { typeof(FactorySerialized<FactoryItem>), CompareFactorySerialized },
                 { typeof(AdvancedFactory<int, FactoryItem>), CompareAdvancedFactory },
                 { typeof(AdvancedFactorySerialized<int, FactoryItem>), CompareAdvancedFactorySerialized },
+                { typeof(DoorList), CompareDoorList },
+                { typeof(DoorListSerialized), CompareDoorListSerialized },
+                { typeof(ItemList<string>), CompareItemList },
+                { typeof(ItemListSerialized<string>), CompareItemListSerialized },
+                { typeof(RoomDoors), CompareRoomDoors },
+                { typeof(RoomDoorsSerialized), CompareRoomDoorsSerialized },
+                { typeof(RectangleEdgePositionsList), CompareRectangleEdgePositionsList },
+                { typeof(RectangleEdgePositionsListSerialized), CompareRectangleEdgePositionsListSerialized }
             };
 
         public static Func<object, object, bool> GetComparisonFunc(object obj)
@@ -89,6 +101,86 @@ namespace GoRogue.UnitTests.Serialization
             return HashSetEquality(f1.Blueprints.ToHashSet(), f2.Blueprints.ToHashSet());
         }
 
+        private static bool CompareDoorList(object o1, object o2)
+        {
+            var d1 = (DoorList)o1;
+            var d2 = (DoorList)o2;
+
+            if (d1.DoorsPerRoom.Count != d2.DoorsPerRoom.Count)
+                return false;
+
+            foreach (var key in d1.DoorsPerRoom.Keys)
+            {
+                if (!d2.DoorsPerRoom.ContainsKey(key))
+                    return false;
+
+                // Get comparison func for value
+                var equalityFunc = GetComparisonFunc(d1.DoorsPerRoom[key]);
+                if (!equalityFunc(d1.DoorsPerRoom[key], d2.DoorsPerRoom[key]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static bool CompareDoorListSerialized(object o1, object o2)
+        {
+            var d1 = (DoorListSerialized)o1;
+            var d2 = (DoorListSerialized)o2;
+
+
+
+            return ElementWiseEquality(d1.RoomsAndDoors.Cast<object>(), d2.RoomsAndDoors.Cast<object>(),
+                _equalityMethods[typeof(RoomDoorsSerialized)]);
+        }
+
+        private static bool CompareItemList(object o1, object o2)
+        {
+            var l1 = (ItemList<string>)o1;
+            var l2 = (ItemList<string>)o2;
+
+            return ElementWiseEquality(l1, l2);
+        }
+
+        private static bool CompareItemListSerialized(object o1, object o2)
+        {
+            var l1 = (ItemListSerialized<string>)o1;
+            var l2 = (ItemListSerialized<string>)o2;
+
+            return ElementWiseEquality(l1.Items, l2.Items);
+        }
+
+        private static bool CompareRoomDoors(object o1, object o2)
+        {
+            var d1 = (RoomDoors)o1;
+            var d2 = (RoomDoors)o2;
+
+            return d1.Room.Equals(d2.Room) && ElementWiseEquality(d1, d2);
+        }
+
+        private static bool CompareRoomDoorsSerialized(object o1, object o2)
+        {
+            var d1 = (RoomDoorsSerialized)o1;
+            var d2 = (RoomDoorsSerialized)o2;
+
+            return d1.Room.Equals(d2.Room) && ElementWiseEquality(d1.Doors, d2.Doors);
+        }
+
+        private static bool CompareRectangleEdgePositionsList(object o1, object o2)
+        {
+            var d1 = (RectangleEdgePositionsList)o1;
+            var d2 = (RectangleEdgePositionsList)o2;
+
+            return d1.Rectangle.Equals(d2.Rectangle) && ElementWiseEquality(d1.Positions, d2.Positions);
+        }
+
+        private static bool CompareRectangleEdgePositionsListSerialized(object o1, object o2)
+        {
+            var d1 = (RectangleEdgePositionsListSerialized)o1;
+            var d2 = (RectangleEdgePositionsListSerialized)o2;
+
+            return d1.Rectangle.Equals(d2.Rectangle) && ElementWiseEquality(d1.Positions, d2.Positions);
+        }
 
         private static bool HashSetEquality<T>(HashSet<T> h1, HashSet<T> h2)
         {

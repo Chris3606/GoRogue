@@ -212,7 +212,7 @@ namespace GoRogue.MapGeneration.Steps
                         // If this opening hasn't been carved out already, wouldn't lead to the edge of the map, and WOULD lead to a walkable tile,
                         // then it's a valid location for us to choose to carve a door
                         if (!wallFloor[wallPoint] && innerMap.Contains(testPoint) && wallFloor[testPoint])
-                            validPositions.AddPosition(wallPoint);
+                            validPositions.Add(wallPoint);
                     }
 
                 // Any side with at least one valid carving position is a valid side to select to start
@@ -255,7 +255,7 @@ namespace GoRogue.MapGeneration.Steps
                     {
                         // Select a position from the list
                         var newConnectionPoint = validPositions[side].RandomItem(RNG);
-                        validPositions.RemovePosition(newConnectionPoint);
+                        validPositions.Remove(newConnectionPoint);
 
                         // If point is by two valid walls, we'll carve it.  This might not be the case if we happened to select the point next to it
                         // previously

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -11,7 +12,7 @@ namespace GoRogue.MapGeneration
     /// some map generation steps.
     /// </summary>
     [PublicAPI]
-    public class RectangleEdgePositionsList
+    public class RectangleEdgePositionsList : IEnumerable<Point>
     {
         private readonly List<Point> _bottomPositions;
 
@@ -87,20 +88,20 @@ namespace GoRogue.MapGeneration
         /// Adds the given position to the appropriate lists of positions.
         /// </summary>
         /// <param name="perimeterPosition">Position to add.</param>
-        public void AddPosition(Point perimeterPosition) => AddPositions(perimeterPosition);
+        public void Add(Point perimeterPosition) => AddRange(perimeterPosition);
 
         /// <summary>
         /// Adds the given positions to the appropriate lists of positions.
         /// </summary>
         /// <param name="perimeterPositions">Positions to add.</param>
-        public void AddPositions(params Point[] perimeterPositions)
-            => AddPositions((IEnumerable<Point>)perimeterPositions);
+        public void AddRange(params Point[] perimeterPositions)
+            => AddRange((IEnumerable<Point>)perimeterPositions);
 
         /// <summary>
         /// Adds the given positions to the appropriate lists of positions.
         /// </summary>
         /// <param name="perimeterPositions">Positions to add.</param>
-        public void AddPositions(IEnumerable<Point> perimeterPositions)
+        public void AddRange(IEnumerable<Point> perimeterPositions)
         {
             foreach (var pos in perimeterPositions)
             {
@@ -136,20 +137,20 @@ namespace GoRogue.MapGeneration
         /// Removes the given position from the data structure.
         /// </summary>
         /// <param name="perimeterPosition">Position to remove.</param>
-        public void RemovePosition(Point perimeterPosition) => RemovePositions(perimeterPosition);
+        public void Remove(Point perimeterPosition) => RemoveRange(perimeterPosition);
 
         /// <summary>
         /// Removes the given positions from the data structure.
         /// </summary>
         /// <param name="perimeterPositions">Positions to remove.</param>
-        public void RemovePositions(params Point[] perimeterPositions)
-            => RemovePositions((IEnumerable<Point>)perimeterPositions);
+        public void RemoveRange(params Point[] perimeterPositions)
+            => RemoveRange((IEnumerable<Point>)perimeterPositions);
 
         /// <summary>
         /// Removes the given positions from the data structure.
         /// </summary>
         /// <param name="perimeterPositions">Positions to remove.</param>
-        public void RemovePositions(IEnumerable<Point> perimeterPositions)
+        public void RemoveRange(IEnumerable<Point> perimeterPositions)
         {
             foreach (var pos in perimeterPositions)
             {
@@ -180,5 +181,17 @@ namespace GoRogue.MapGeneration
         /// <param name="position" />
         /// <returns>Whether or not the structure contains the position specified.</returns>
         public bool Contains(Point position) => _positions.Contains(position);
+
+        /// <summary>
+        /// Gets an enumerator of all positions in the data structure.
+        /// </summary>
+        /// <returns/>
+        public IEnumerator<Point> GetEnumerator() => _positions.GetEnumerator();
+
+        /// <summary>
+        /// Gets an enumerator of all positions in the data structure.
+        /// </summary>
+        /// <returns/>
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

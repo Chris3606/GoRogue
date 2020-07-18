@@ -90,7 +90,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
                 area.Remove(pos => areaList1Positions.Contains(pos));
 
             // Remove any areas that now contain no positions
-            areaList2.RemoveItems(area => area.Count == 0);
+            areaList2.Remove(area => area.Count == 0);
         }
     }
 }
