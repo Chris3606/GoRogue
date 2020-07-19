@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using GoRogue.Factories;
 using JetBrains.Annotations;
 
@@ -11,14 +11,14 @@ namespace GoRogue.SerializedTypes.Factories
     /// Serializable (pure-data) object representing a <see cref="Factory{TProduced}"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct FactorySerialized<TProduced>
     {
         /// <summary>
         /// Blueprints in the factory.
         /// </summary>
-        public List<IFactoryBlueprint<TProduced>> Blueprints;
+        [DataMember] public List<IFactoryBlueprint<TProduced>> Blueprints;
 
         /// <summary>
         /// Converts <see cref="Factory{TProduced}"/> to <see cref="FactorySerialized{TProduced}"/>.

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using GoRogue.MapGeneration.Steps.Translation;
 using JetBrains.Annotations;
 
@@ -9,29 +9,29 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
     /// Serializable (pure-data) object representing a <see cref="RectanglesToAreas"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct RectanglesToAreasSerialized
     {
         /// <summary>
         /// Name of the generation step.
         /// </summary>
-        public string Name;
+        [DataMember] public string Name;
 
         /// <summary>
         /// Tag that must be associated with the component used to store the resulting areas.
         /// </summary>
-        public string AreasComponentTag;
+        [DataMember] public string AreasComponentTag;
 
         /// <summary>
         /// Tag that must be associated with the component used as input rectangles.
         /// </summary>
-        public string RectanglesComponentTag;
+        [DataMember] public string RectanglesComponentTag;
 
         /// <summary>
         /// Whether or not to remove the input list of rectangles from the context.
         /// </summary>
-        public bool RemoveSourceComponent;
+        [DataMember] public bool RemoveSourceComponent;
 
         /// <summary>
         /// Converts <see cref="RectanglesToAreas"/> to <see cref="RectanglesToAreasSerialized"/>.

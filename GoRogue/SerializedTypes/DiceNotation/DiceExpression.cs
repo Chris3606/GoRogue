@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using GoRogue.DiceNotation;
 using JetBrains.Annotations;
 
@@ -9,14 +10,14 @@ namespace GoRogue.SerializedTypes.DiceNotation
     /// Serializable (pure-data) object representing a <see cref="DiceExpression"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct DiceExpressionSerialized
     {
         /// <summary>
         /// Expression in dice notation representing the expression.
         /// </summary>
-        public string Expression;
+        [DataMember] public string Expression;
 
         /// <summary>
         /// Converts <see cref="DiceExpression"/> to <see cref="DiceExpressionSerialized"/>.

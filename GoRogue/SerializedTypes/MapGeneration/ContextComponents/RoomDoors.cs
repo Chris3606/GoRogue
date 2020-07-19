@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using GoRogue.MapGeneration.ContextComponents;
 using JetBrains.Annotations;
 using SadRogue.Primitives.SerializedTypes;
@@ -12,19 +12,19 @@ namespace GoRogue.SerializedTypes.MapGeneration.ContextComponents
     /// Serializable (pure-data) object representing a <see cref="RoomDoors"/> instance.
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct RoomDoorsSerialized
     {
         /// <summary>
         /// The room whose doors are being stored.
         /// </summary>
-        public RectangleSerialized Room;
+        [DataMember] public RectangleSerialized Room;
 
         /// <summary>
         /// Positions of doors.
         /// </summary>
-        public List<ItemStepPair<PointSerialized>> Doors;
+        [DataMember] public List<ItemStepPair<PointSerialized>> Doors;
 
         /// <summary>
         /// Converts <see cref="RoomDoors"/> to <see cref="RoomDoorsSerialized"/>.

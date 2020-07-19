@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using GoRogue.Components;
 using JetBrains.Annotations;
 
@@ -10,14 +11,14 @@ namespace GoRogue.SerializedTypes.Components
     /// Serializable (pure-data) object representing a <see cref="ComponentCollection"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct ComponentCollectionSerialized
     {
         /// <summary>
         /// List of components in the collection.
         /// </summary>
-        public List<ComponentTagPair> Components;
+        [DataMember] public List<ComponentTagPair> Components;
 
         /// <summary>
         /// Converts <see cref="ComponentCollection"/> to <see cref="ComponentCollectionSerialized"/>.

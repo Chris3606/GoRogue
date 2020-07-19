@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using SadRogue.Primitives.SerializedTypes;
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
@@ -13,19 +13,19 @@ namespace GoRogue.SerializedTypes.MapGeneration
     /// Serializable (pure-data) object representing a <see cref="RectangleEdgePositionsList"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct RectangleEdgePositionsListSerialized
     {
         /// <summary>
         /// The rectangle whose edge positions are being stored.
         /// </summary>
-        public RectangleSerialized Rectangle;
+        [DataMember] public RectangleSerialized Rectangle;
 
         /// <summary>
         /// Positions being stored.
         /// </summary>
-        public List<PointSerialized> Positions;
+        [DataMember] public List<PointSerialized> Positions;
 
         /// <summary>
         /// Converts <see cref="RectangleEdgePositionsList"/> to <see cref="RectangleEdgePositionsListSerialized"/>.

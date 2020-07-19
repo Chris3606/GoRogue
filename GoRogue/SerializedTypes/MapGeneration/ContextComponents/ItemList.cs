@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.Serialization;
 using GoRogue.MapGeneration.ContextComponents;
 using JetBrains.Annotations;
 
@@ -11,14 +11,14 @@ namespace GoRogue.SerializedTypes.MapGeneration.ContextComponents
     /// Serializable (pure-data) object representing a <see cref="ItemList{TItem}"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct ItemListSerialized<TItem> where TItem : notnull
     {
         /// <summary>
         /// Items added paired with the name of the step that added them.
         /// </summary>
-        public List<ItemStepPair<TItem>> Items;
+        [DataMember] public List<ItemStepPair<TItem>> Items;
 
         /// <summary>
         /// Converts <see cref="ItemList{TItem}"/> to <see cref="ItemListSerialized{TItem}"/>.

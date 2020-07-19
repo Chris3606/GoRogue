@@ -1,5 +1,5 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using GoRogue.MapGeneration.Steps.Translation;
 using JetBrains.Annotations;
 
@@ -9,30 +9,30 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
     /// Serializable (pure-data) object representing a <see cref="AppendItemLists{TItem}"/>
     /// </summary>
     [PublicAPI]
-    [Serializable]
+    [DataContract]
     [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct AppendItemListsSerialized<TItem> where TItem : notnull
     {
         /// <summary>
         /// Name of the generation step.
         /// </summary>
-        public string Name;
+        [DataMember] public string Name;
 
         /// <summary>
         /// A tag that must be attached to the component that will have items from the other list appended onto it.
         /// </summary>
-        public string BaseListTag;
+        [DataMember] public string BaseListTag;
 
         /// <summary>
         /// A tag that must be attached to the component that will have its items appended onto the base list.
         /// </summary>
-        public string ListToAppendTag;
+        [DataMember] public string ListToAppendTag;
 
         /// <summary>
         /// Whether or not to remove the component with the tag <see cref="ListToAppendTag" /> after its items have been
         /// added to the base list.
         /// </summary>
-        public bool RemoveAppendedComponent;
+        [DataMember] public bool RemoveAppendedComponent;
 
         /// <summary>
         /// Converts <see cref="AppendItemLists{TItem}"/> to <see cref="AppendItemListsSerialized{TItem}"/>.

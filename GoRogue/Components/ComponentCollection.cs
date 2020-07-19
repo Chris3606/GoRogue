@@ -43,16 +43,13 @@ namespace GoRogue.Components
     [DataContract]
     public class ComponentCollection : ITaggableComponentCollection
     {
-        [IgnoreDataMember]
         private readonly Dictionary<Type, List<object>> _components;
 
         // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are
         // removed.  Also used a distinct list of all components
-        [IgnoreDataMember]
         private readonly Dictionary<object, string?> _componentsToTags;
 
         // Used for tag-based lookups
-        [IgnoreDataMember]
         private readonly Dictionary<string, object> _tagsToComponents;
 
         /// <summary>
