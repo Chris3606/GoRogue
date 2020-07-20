@@ -6,7 +6,8 @@ namespace GoRogue.Debugger
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Interpreter.Init();
+            Interpreter.Run();
         }
     }
 }
