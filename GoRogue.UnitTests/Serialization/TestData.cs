@@ -7,11 +7,13 @@ using GoRogue.DiceNotation;
 using GoRogue.Factories;
 using GoRogue.MapGeneration;
 using GoRogue.MapGeneration.ContextComponents;
+using GoRogue.MapGeneration.Steps.Translation;
 using GoRogue.SerializedTypes.Components;
 using GoRogue.SerializedTypes.DiceNotation;
 using GoRogue.SerializedTypes.Factories;
 using GoRogue.SerializedTypes.MapGeneration;
 using GoRogue.SerializedTypes.MapGeneration.ContextComponents;
+using GoRogue.SerializedTypes.MapGeneration.Steps.Translation;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives.SerializedTypes;
 
@@ -22,11 +24,10 @@ namespace GoRogue.UnitTests.Serialization
         #region Original Data
         /// <summary>
         /// List of expressive versions of types.  The assumptions here are:
-        ///     1. All types in this list are serializable via binary serialization, and data contract serialization
-        ///     2. ONLY the types in this list are serializable via binary serialization
-        ///     2. All types in this list serialize to JSON objects (JObject)
+        ///     1. All types in this list are serializable via generic data contract serialization
+        ///     2. All types in this list serialize to JSON objects (JObject) when using Newtonsoft.Json
         /// </summary>
-        public static readonly IEnumerable<object> ExpressiveTypes = new object[]
+        private static readonly IEnumerable<object> _expressiveTypes = new object[]
         {
             // Not expressive types, but if these don't serialize properly to binary and JSON it will break
             // tests using them
@@ -122,6 +123,29 @@ namespace GoRogue.UnitTests.Serialization
                     new PointSerialized { X = 14, Y = 12 }
                 }
             },
+            // AppendItemLists
+            new AppendItemListsSerialized<string>
+            {
+                Name = "MyName",
+                BaseListTag = "BaseList",
+                ListToAppendTag = "AppendList",
+                RemoveAppendedComponent = true
+            },
+            // RectanglesToAreas
+            new RectanglesToAreasSerialized
+            {
+                Name = "MyName",
+                AreasComponentTag = "AreasComponent",
+                RectanglesComponentTag = "RectanglesComponent",
+                RemoveSourceComponent = true
+            },
+            // RemoveDuplicatePoints
+            new RemoveDuplicatePointsSerialized
+            {
+                Name = "MyName",
+                ModifiedAreaListTag = "ModifiedList",
+                UnmodifiedAreaListTag = "UnmodifiedList"
+            }
         };
 
         /// <summary>
@@ -153,7 +177,10 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(ItemListSerialized<string>), new []{ "Items" } },
             { typeof(DoorListSerialized), new []{ "RoomsAndDoors" } },
             { typeof(RoomDoorsSerialized), new []{ "Room", "Doors" } },
-            { typeof(RectangleEdgePositionsListSerialized), new [] { "Rectangle", "Positions" } }
+            { typeof(RectangleEdgePositionsListSerialized), new [] { "Rectangle", "Positions" } },
+            { typeof(AppendItemListsSerialized<string>), new [] { "Name", "BaseListTag", "ListToAppendTag", "RemoveAppendedComponent" } },
+            { typeof(RectanglesToAreasSerialized), new []{ "Name", "AreasComponentTag", "RectanglesComponentTag", "RemoveSourceComponent" } },
+            { typeof(RemoveDuplicatePointsSerialized), new []{ "Name", "UnmodifiedAreaListTag", "ModifiedAreaListTag" } }
         };
 
         /// <summary>
@@ -202,7 +229,10 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(DoorList), typeof(DoorListSerialized) },
             { typeof(ItemList<string>), typeof(ItemListSerialized<string>) },
             { typeof(RoomDoors), typeof(RoomDoorsSerialized) },
-            { typeof(RectangleEdgePositionsList), typeof(RectangleEdgePositionsListSerialized) }
+            { typeof(RectangleEdgePositionsList), typeof(RectangleEdgePositionsListSerialized) },
+            { typeof(AppendItemLists<string>), typeof(AppendItemListsSerialized<string>) },
+            { typeof(RectanglesToAreas), typeof(RectanglesToAreasSerialized) },
+            { typeof(RemoveDuplicatePoints), typeof(RemoveDuplicatePointsSerialized) }
         };
 
         /// <summary>
@@ -215,7 +245,19 @@ namespace GoRogue.UnitTests.Serialization
             // RoomDoors
             GenerateRoomDoors(),
             // RectangleEdgePositionsList
-            new RectangleEdgePositionsList((1, 2, 10, 20)) { (1, 4), (1, 7), (5, 2), (3, 2) }
+            new RectangleEdgePositionsList((1, 2, 10, 20)) { (1, 4), (1, 7), (5, 2), (3, 2) },
+            // AppendItemLists
+            new AppendItemLists<string>("MyName", "BaseList", "AppendList")
+            {
+                RemoveAppendedComponent = true
+            },
+            // RectanglesToAreas
+            new RectanglesToAreas("MyName", "RectanglesList", "AreasList")
+            {
+                RemoveSourceComponent = true
+            },
+            // RemoveDuplicatePoints
+            new RemoveDuplicatePoints("MyName", "UnmodifiedAreaList", "ModifiedAreaList")
         };
         #endregion
 
@@ -224,7 +266,7 @@ namespace GoRogue.UnitTests.Serialization
         /// All objects that should serialize to JSON objects.  All should have entries in TypeSerializedFields
         /// </summary>
         public static IEnumerable<object> SerializableValuesJsonObjects
-            => ExpressiveTypes.Concat(_nonExpressiveJsonObjects);
+            => _expressiveTypes.Concat(_nonExpressiveJsonObjects);
 
         /// <summary>
         /// Objects that should have expressive versions of types.  Each item must have an entry in

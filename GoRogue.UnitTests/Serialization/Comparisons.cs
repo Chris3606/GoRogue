@@ -6,6 +6,7 @@ using GoRogue.DiceNotation;
 using GoRogue.Factories;
 using GoRogue.MapGeneration;
 using GoRogue.MapGeneration.ContextComponents;
+using GoRogue.MapGeneration.Steps.Translation;
 using GoRogue.SerializedTypes.Components;
 using GoRogue.SerializedTypes.Factories;
 using GoRogue.SerializedTypes.MapGeneration;
@@ -34,7 +35,10 @@ namespace GoRogue.UnitTests.Serialization
                 { typeof(RoomDoors), CompareRoomDoors },
                 { typeof(RoomDoorsSerialized), CompareRoomDoorsSerialized },
                 { typeof(RectangleEdgePositionsList), CompareRectangleEdgePositionsList },
-                { typeof(RectangleEdgePositionsListSerialized), CompareRectangleEdgePositionsListSerialized }
+                { typeof(RectangleEdgePositionsListSerialized), CompareRectangleEdgePositionsListSerialized },
+                { typeof(AppendItemLists<string>), CompareAppendItemLists },
+                { typeof(RectanglesToAreas), CompareRectanglesToAreas },
+                { typeof(RemoveDuplicatePoints), CompareRemoveDuplicatePoints }
             };
 
         public static Func<object, object, bool> GetComparisonFunc(object obj)
@@ -180,6 +184,64 @@ namespace GoRogue.UnitTests.Serialization
             var d2 = (RectangleEdgePositionsListSerialized)o2;
 
             return d1.Rectangle.Equals(d2.Rectangle) && ElementWiseEquality(d1.Positions, d2.Positions);
+        }
+
+        private static bool CompareGenerationSteps(GenerationStep g1, GenerationStep g2)
+        {
+            var c1 = g1.RequiredComponents.ToList();
+            var c2 = g2.RequiredComponents.ToList();
+
+            if (c1.Count != c2.Count)
+                return false;
+
+            for (int i = 0; i < c1.Count; i++)
+            {
+                if (c1[i].type.FullName != c2[i].type.FullName)
+                    return false;
+
+                if (c1[i].tag != c2[i].tag)
+                    return false;
+            }
+
+            return g1.Name == g2.Name;
+        }
+
+        private static bool CompareAppendItemLists(object o1, object o2)
+        {
+            var s1 = (AppendItemLists<string>)o1;
+            var s2 = (AppendItemLists<string>)o2;
+
+            if (!CompareGenerationSteps(s1, s2))
+                return false;
+
+            return s1.BaseListTag == s2.BaseListTag &&
+                   s1.ListToAppendTag == s2.ListToAppendTag &&
+                   s1.RemoveAppendedComponent == s2.RemoveAppendedComponent;
+        }
+
+        private static bool CompareRectanglesToAreas(object o1, object o2)
+        {
+            var s1 = (RectanglesToAreas)o1;
+            var s2 = (RectanglesToAreas)o2;
+
+            if (!CompareGenerationSteps(s1, s2))
+                return false;
+
+            return s1.AreasComponentTag == s2.AreasComponentTag &&
+                   s1.RectanglesComponentTag == s2.RectanglesComponentTag &&
+                   s1.RemoveSourceComponent == s2.RemoveSourceComponent;
+        }
+
+        private static bool CompareRemoveDuplicatePoints(object o1, object o2)
+        {
+            var s1 = (RemoveDuplicatePoints)o1;
+            var s2 = (RemoveDuplicatePoints)o2;
+
+            if (!CompareGenerationSteps(s1, s2))
+                return false;
+
+            return s1.ModifiedAreaListTag == s2.ModifiedAreaListTag &&
+                   s1.UnmodifiedAreaListTag == s2.UnmodifiedAreaListTag;
         }
 
         private static bool HashSetEquality<T>(HashSet<T> h1, HashSet<T> h2)

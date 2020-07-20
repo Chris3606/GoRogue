@@ -69,7 +69,7 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
         /// </summary>
         /// <returns/>
         public RectanglesToAreas ToRectanglesToAreas()
-            => new RectanglesToAreas(Name, AreasComponentTag, RectanglesComponentTag)
+            => new RectanglesToAreas(Name, RectanglesComponentTag, AreasComponentTag)
             {
                 RemoveSourceComponent = RemoveSourceComponent
             };
