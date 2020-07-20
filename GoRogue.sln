@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoRogue.UnitTests", "GoRogu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoRogue.PerformanceTests", "GoRogue.PerformanceTests\GoRogue.PerformanceTests.csproj", "{B59CB381-205C-4460-97D5-6DE47DDA2595}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoRogue.Debugger", "GoRogue.Debugger\GoRogue.Debugger.csproj", "{71A260C0-D4F6-4DC1-A70B-EE34D130740C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{B59CB381-205C-4460-97D5-6DE47DDA2595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B59CB381-205C-4460-97D5-6DE47DDA2595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B59CB381-205C-4460-97D5-6DE47DDA2595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A260C0-D4F6-4DC1-A70B-EE34D130740C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A260C0-D4F6-4DC1-A70B-EE34D130740C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A260C0-D4F6-4DC1-A70B-EE34D130740C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A260C0-D4F6-4DC1-A70B-EE34D130740C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
