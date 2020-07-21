@@ -10,19 +10,18 @@ namespace GoRogue.Debugger.Routines
 {
     internal class TestRoutine : IRoutine
     {
-        public Map? Map { get; private set; }
-        private double _rotation = 0;
+        public Map Map { get; private set; } = null!; // Null override because it won't be null after GenerateMap
+        private double _rotation;
 
         private readonly List<Region> _originalRegions = new List<Region>();
 
         private readonly List<Region> _transformedRegions = new List<Region>();
         public IEnumerable<Region> Regions => _transformedRegions;
-        public string Name { get; }
+        public string Name => "TestRoutine";
 
-        public TestRoutine()
-        {
-            Name = "TestRoutine";
-        }
+        private readonly List<(string name, IMapView<char> view)> _views = new List<(string name, IMapView<char> view)>();
+        public IReadOnlyList<(string name, IMapView<char> view)> Views => _views.AsReadOnly();
+
 
         public void ElapseTimeUnit()
         {
@@ -68,6 +67,13 @@ namespace GoRogue.Debugger.Routines
             ApplyRegionsToMap();
         }
 
+        public void CreateViews()
+        {
+            Debug.Assert(Map != null);
+
+            _views.Add(("Regions", new LambdaMapView<char>(Map.Width, Map.Height, RegionsView)));
+        }
+
         // Apply proper settings to terrain tiles in regions
         private void ApplyRegionsToMap()
         {
@@ -100,6 +106,16 @@ namespace GoRogue.Debugger.Routines
                     Map.Terrain[point]!.IsWalkable = true;
                     Map.Terrain[point]!.IsTransparent = false;
                 }
+        }
+
+        private char RegionsView(Point pos)
+        {
+            Debug.Assert(Map != null);
+            var terrain = Map.Terrain[pos];
+            if (terrain == null)
+                return '?';
+
+            return terrain.IsWalkable ? (terrain.IsTransparent ? '.' : 'I') : terrain.IsTransparent ? '-' : '#';
         }
     }
 }

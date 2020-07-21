@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using GoRogue.GameFramework;
 using GoRogue.MapViews;
-using GoRogue.Debugger.Implementations.GameObjects;
 using SadRogue.Primitives;
 
 namespace GoRogue.Debugger
@@ -19,13 +18,11 @@ namespace GoRogue.Debugger
         private static bool _exit; // Used to decide whether or not to exit the program
         private static bool _dirty = true; // Whether or not to redraw the map
 
-        private static IRoutine? _routine; // The routine that we're running in this test
+        // The routine that we're running in this test.  Null override because we initialize in Init
+        private static IRoutine _routine = null!;
 
-        // TODO: Temp: this should be in routine
-        private static IMapView<char>? _characterMap;
-
-        // Viewport of visible map
-        private static Viewport<char>? _mapView;
+        // Viewport of routine's map.  Null override because we initialize in Init
+        private static RoutineViewport _mapView = null!;
 
         #region Setup
         /// <summary>
@@ -33,18 +30,17 @@ namespace GoRogue.Debugger
         /// </summary>
         public static void Init()
         {
-            // Pick routine and set up its map
+            // Pick routine, set up its map, and create its map views.
             _routine = PickRoutine();
             _routine.GenerateMap();
 
-            // TODO: Temp; initialize character view to translate to terrain types
-            _characterMap = new LambdaTranslationMap<IEnumerable<IGameObject>,char>(_routine.Map!,
-                objs => (char)(objs.Cast<EntityBase>().FirstOrDefault()?.Glyph ?? '?'));
+            // Set up map's views and select first one automatically
+            _routine.CreateViews();
+            if (_routine.Views.Count == 0)
+                throw new Exception("Selected map defines 0 views.");
 
-            // Initialize viewport
-            _mapView = new Viewport<char>(_characterMap,
-                new Rectangle(0, 0, Console.WindowWidth - 1, Console.WindowHeight - 1));
-            _mapView.SetViewArea(_mapView.ViewArea.WithCenter((_routine.Map!.Width / 2, _routine.Map!.Height / 2)));
+            // Set up viewport, defaulting to first item in views list
+            _mapView = new RoutineViewport(_routine, Console.WindowWidth - 1, Console.WindowHeight - 1);
 
             Console.WriteLine("Initialized...");
         }
@@ -141,16 +137,18 @@ namespace GoRogue.Debugger
                 case ConsoleKey.RightArrow:
                     moveViewportDir = Direction.Right;
                     break;
+                case ConsoleKey.OemPlus:
+                    _mapView.NextView();
+                    _dirty = true;
+                    break;
+                case ConsoleKey.OemMinus:
+                    _mapView.PreviousView();
+                    _dirty = true;
+                    break;
             }
 
             if (moveViewportDir != Direction.None)
-            {
-                Point center = _mapView!.ViewArea.Center;
-                _mapView!.SetViewArea(_mapView.ViewArea.Translate(moveViewportDir));
-
-                if (center != _mapView.ViewArea.Center) // Actually changed, eg. we weren't on edge of map on update
-                    _dirty = true;
-            }
+                _dirty = _mapView.CenterViewOn(_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
         }
 
         private static void DrawMap()
@@ -160,15 +158,11 @@ namespace GoRogue.Debugger
             int width = Console.WindowWidth - 1;
             int height = Console.WindowHeight - 1;
 
-            // If console size has changed, resize viewport and re-center on same location.
-            if (_mapView!.ViewArea.Width != width || _mapView!.ViewArea.Height != height)
-            {
-                var center = _mapView.ViewArea.Center;
-                _mapView.SetViewArea(_mapView.ViewArea.WithSize(width, height).WithCenter(center));
-            }
+            // Resize viewport as needed to match console size
+            _mapView.ResizeViewport(width, height);
 
             // Draw viewport, ensuring to allow no space between characters
-            Console.WriteLine(_mapView.ExtendToString(elementSeparator: ""));
+            Console.WriteLine(_mapView.CurrentViewport.ExtendToString(elementSeparator: ""));
 
             // Reset dirty flag because we just drew
             _dirty = false;

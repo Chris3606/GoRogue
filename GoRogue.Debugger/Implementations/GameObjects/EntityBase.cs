@@ -1,28 +1,20 @@
-﻿using System;
-using GoRogue.Components;
+﻿using GoRogue.Components;
 using GoRogue.Debugger.Implementations.Components;
 using GoRogue.GameFramework;
 using GoRogue.GameFramework.Components;
-using GoRogue.SpatialMaps;
 using SadRogue.Primitives;
 
 namespace GoRogue.Debugger.Implementations.GameObjects
 {
     public abstract class EntityBase : GameObject
     {
-        public virtual int Glyph => _glyph;
-        private int _glyph;
-
         public EntityBase(Point position = default,
                           bool isWalkable = true,
                           bool isTransparent = true,
                           int layer = 1,
-                          bool isStatic = false,
-                          int glyph = 0)
+                          bool isStatic = false)
             : base(position, layer, null, isStatic, isWalkable, isTransparent)
-        {
-            _glyph = glyph;
-        }
+        { }
 
         public void AddComponent(IGameObjectComponent component)
         {
@@ -48,7 +40,7 @@ namespace GoRogue.Debugger.Implementations.GameObjects
 
         public void ElapseTimeUnit()
         {
-            // TODO: Remove?
+            // TODO: Unused
             foreach (ComponentTagPair componentTagPair in GoRogueComponents)
             {
                 ComponentBase component = (ComponentBase)componentTagPair.Component;

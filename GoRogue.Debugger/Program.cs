@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace GoRogue.Debugger
+﻿namespace GoRogue.Debugger
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Interpreter.Init();
             Interpreter.Run();
