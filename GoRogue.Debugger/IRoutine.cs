@@ -12,9 +12,8 @@ namespace GoRogue.Debugger
     {
         IEnumerable<Region> Regions { get; }
         string Name { get; }
-        Map BaseMap { get; }
-        Map TransformedMap { get; }
-        Map ElapseTimeUnit();
-        Map GenerateMap();
+        Map? Map { get; }
+        void ElapseTimeUnit();
+        void GenerateMap();
     }
 }

@@ -26,7 +26,7 @@ namespace GoRogue.Debugger
         private static bool _calculateFov;//whether to view an FOV radius, or the whole map
         private static Point _position;//the printing location of the viewport on the Map
         private static bool _dirty = true; //whether or not to redraw the map
-        private static Map _map => Routine.TransformedMap; //the map that we're printing to the console
+        private static Map _map => Routine.Map; //the map that we're printing to the console
         public static IRoutine Routine { get; private set; } //the routine that we're running in this test
 
         //the "visible" region of the map

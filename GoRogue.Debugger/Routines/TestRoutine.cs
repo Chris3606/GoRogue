@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using GoRogue.GameFramework;
 using GoRogue.MapGeneration;
 using GoRogue.MapViews;
@@ -10,64 +10,86 @@ namespace GoRogue.Debugger.Routines
 {
     internal class TestRoutine : IRoutine
     {
-        private Map _baseMap;
-        private Map _transformedMap;
-        private List<Region> _currentRegions = new List<Region>();
-        private List<Region> _originalRegions = new List<Region>();
-        public Map BaseMap => _baseMap;
+        public Map? Map { get; private set; }
         private double _rotation = 0;
-        public Map TransformedMap => _transformedMap;
-        public IEnumerable<Region> Regions => _currentRegions;
-        public string Name { get; set; }
+
+        private readonly List<Region> _regions = new List<Region>();
+        public IEnumerable<Region> Regions => _regions;
+        public string Name { get; }
 
         public TestRoutine()
         {
             Name = "TestRoutine";
         }
 
-        public Map ElapseTimeUnit()
+        public void ElapseTimeUnit()
         {
+            // Set tiles in current regions back to start (so whole map is blank)
+            RemoveRegionsFromMap();
+
+            // Rotate all regions
             _rotation += 5;
-            _transformedMap = new Map(500, 500, 31, Distance.Euclidean);
-            _currentRegions.Clear();
-            foreach (Region region in _originalRegions)
-            {
-                _currentRegions.Add(region.Rotate(_rotation, false, region.Center));
-            }
+            foreach (Region region in _regions)
+                region.Rotate(_rotation, true, region.Center);
 
-            SetTerrain(_transformedMap);
-            return _transformedMap;
+            // Apply tile settings to tiles now in region
+            ApplyRegionsToMap();
         }
 
-        public Map GenerateMap()
+        public void GenerateMap()
         {
-            _baseMap = new Map(500, 500, 31, Distance.Euclidean);
+            // Create map and initialize tiles
+            Map = new Map(500, 500, 31, Distance.Euclidean);
+            foreach (var pos in Map.Positions())
+                Map.SetTerrain(new Terrain(pos, true, false));
 
-            // Region region = new Region("rhombus", (256,256),(202, 128),(2,2),(128, 202));
-            // _originalRegions.Add(region);
-            // region = Region.RegularParallelogram("parallelogram", (256,256),40,40, 75);
-            // _originalRegions.Add(region);
+
+            // Generate regions
             Region region = Region.Rectangle("square", (256, 256), 48, 48);
-            _originalRegions.Add(region);
-            SetTerrain(_baseMap);
+            _regions.Add(region);
+            /*
+            region = new Region("rhombus", (256,256),(202, 128),(2,2),(128, 202));
+            _regions.Add(region);
+            region = Region.RegularParallelogram("parallelogram", (256,256),40,40, 75);
+            _regions.Add(region);
+            */
 
-            _transformedMap = _baseMap;
-            return _baseMap;
+            // Apply regions to map data
+            ApplyRegionsToMap();
         }
 
-        private void SetTerrain(Map map)
+        // Apply proper settings to terrain tiles in regions
+        private void ApplyRegionsToMap()
         {
-            foreach (Point p in BaseMap.Positions())
-                map.SetTerrain(new Terrain(p, true, false));
+            Debug.Assert(Map != null);
 
-            foreach (Region region in _currentRegions)
+            foreach (var region in _regions)
             {
-                foreach (Point p in region.InnerPoints)
-                    map.SetTerrain(new Terrain(p, true, true));
+                foreach (var point in region.InnerPoints)
+                {
+                    Map.Terrain[point]!.IsWalkable = true;
+                    Map.Terrain[point]!.IsTransparent = true;
+                }
 
-                foreach (Point p in region.OuterPoints)
-                    map.SetTerrain(new Terrain(p, false, false));
+                foreach (var point in region.OuterPoints)
+                {
+                    Map.Terrain[point]!.IsWalkable = false;
+                    Map.Terrain[point]!.IsTransparent = false;
+                }
             }
+        }
+
+        // Revert all tiles in current regions back to start
+        private void RemoveRegionsFromMap()
+        {
+            Debug.Assert(Map != null);
+
+            foreach (var region in _regions)
+                foreach (var point in region.Points)
+                {
+                    Map.Terrain[point]!.IsWalkable = true;
+                    Map.Terrain[point]!.IsTransparent = false;
+                }
         }
     }
 }

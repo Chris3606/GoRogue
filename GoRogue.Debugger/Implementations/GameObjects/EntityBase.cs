@@ -8,44 +8,19 @@ using SadRogue.Primitives;
 
 namespace GoRogue.Debugger.Implementations.GameObjects
 {
-    public abstract class EntityBase : IGameObject
+    public abstract class EntityBase : GameObject
     {
         public virtual int Glyph => _glyph;
         private int _glyph = 0;
-        public uint ID { get; }
-        public int Layer { get; }
 
-        public void OnMapChanged(Map? newMap)
+        public EntityBase(Point position = default,
+                          bool isWalkable = true,
+                          bool isTransparent = true,
+                          int layer = 1,
+                          bool isStatic = false,
+                          int glyph = 0)
+            : base(position, layer, null, isStatic, isWalkable, isTransparent)
         {
-        }
-
-        public bool CanMove(Point position)
-        {
-            throw new NotImplementedException();
-        }
-        public bool CanMoveIn(Direction direction)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Map? CurrentMap { get; }
-        public bool IsStatic { get; }
-        public bool IsTransparent { get; set; }
-        public ITaggableComponentCollection GoRogueComponents { get; }
-        public bool IsWalkable { get; set; }
-        public Point Position { get; set; }
-        public event EventHandler<ItemMovedEventArgs<IGameObject>> Moved;
-
-        public EntityBase(Point position = default, bool isWalkable = true, bool isTransparent = true, int layer = 1, Map map = null, bool isStatic = false, int glyph = 0)
-        {
-            System.Random initRand = new System.Random();
-            ID = (uint) initRand.Next();
-            Layer = layer;
-            Position = position;
-            IsWalkable = isWalkable;
-            IsTransparent = isTransparent;
-            IsStatic = isStatic;
-            GoRogueComponents = new ComponentCollection();
             _glyph = glyph;
         }
 
@@ -73,6 +48,7 @@ namespace GoRogue.Debugger.Implementations.GameObjects
 
         public void ElapseTimeUnit()
         {
+            // TODO: Remove?
             foreach (ComponentTagPair componentTagPair in GoRogueComponents)
             {
                 ComponentBase component = (ComponentBase)componentTagPair.Component;
