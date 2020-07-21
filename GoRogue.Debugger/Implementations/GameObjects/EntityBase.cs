@@ -11,7 +11,7 @@ namespace GoRogue.Debugger.Implementations.GameObjects
     public abstract class EntityBase : GameObject
     {
         public virtual int Glyph => _glyph;
-        private int _glyph = 0;
+        private int _glyph;
 
         public EntityBase(Point position = default,
                           bool isWalkable = true,
@@ -41,10 +41,10 @@ namespace GoRogue.Debugger.Implementations.GameObjects
             }
         }
 
-        public void SetGlyph(int glyph)
-        {
-            _glyph = glyph;
-        }
+        //public void SetGlyph(int glyph)
+        //{
+        //    _glyph = glyph;
+        //}
 
         public void ElapseTimeUnit()
         {

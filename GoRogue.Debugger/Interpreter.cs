@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using GoRogue;
 using GoRogue.GameFramework;
-using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using GoRogue.Debugger.Implementations.GameObjects;
 using SadRogue.Primitives;
@@ -18,35 +16,36 @@ namespace GoRogue.Debugger
     /// </summary>
     public static class Interpreter
     {
+        private static bool _exit; // Used to decide whether or not to exit the program
+        private static bool _dirty = true; // Whether or not to redraw the map
 
-        private static int _width; //width of the console
-        private static int _height;//height of the console
-        private static bool _invertY;//to use default, or make positions match cartesian graph
-        private static bool _exit;//used to decide whether or not to exit the program
-        private static bool _calculateFov;//whether to view an FOV radius, or the whole map
-        private static Point _position;//the printing location of the viewport on the Map
-        private static bool _dirty = true; //whether or not to redraw the map
-        private static Map _map => Routine.Map; //the map that we're printing to the console
-        public static IRoutine Routine { get; private set; } //the routine that we're running in this test
+        private static IRoutine? _routine; // The routine that we're running in this test
 
-        //the "visible" region of the map
-        private static Viewport<bool> _viewport =>
-            new Viewport<bool>(_map.WalkabilityView, new Rectangle(_position.X, _position.Y, _width, _height));
+        // TODO: Temp: this should be in routine
+        private static IMapView<char>? _characterMap;
+
+        // Viewport of visible map
+        private static Viewport<char>? _mapView;
 
         #region setup
         /// <summary>
-        /// Get theRoutine, Interpreter, and Map ready for action.
+        /// Get the Routine, Interpreter, and Map ready for action.
         /// </summary>
         public static void Init()
         {
-            _invertY = false;
-            _exit = false;
-            _width = System.Console.WindowWidth;
-            _height = System.Console.WindowHeight;
+            // Pick routine and set up its map
+            _routine = PickRoutine();
+            _routine.GenerateMap();
 
-            Routine = PickRoutine();
-            Routine.GenerateMap();
-            _position = (_map.Width / 2 - _width / 2, _map.Height / 2 - _height / 2);
+            // TODO: Temp; initialize character view to translate to terrain types
+            _characterMap = new LambdaTranslationMap<IEnumerable<IGameObject>,char>(_routine.Map!,
+                objs => (char)(objs.Cast<EntityBase>().FirstOrDefault()?.Glyph ?? '?'));
+
+            // Initialize viewport
+            _mapView = new Viewport<char>(_characterMap,
+                new Rectangle(0, 0, Console.WindowWidth - 1, Console.WindowHeight - 1));
+            _mapView.SetViewArea(_mapView.ViewArea.WithCenter((_routine.Map!.Width / 2, _routine.Map!.Height / 2)));
+
             Console.WriteLine("Initialized...");
         }
 
@@ -68,10 +67,10 @@ namespace GoRogue.Debugger
             try
             {
                 string number = key.ToString().Replace("D", "").Replace("NumPad", "");
-                i = Int32.Parse(number);
+                i = int.Parse(number);
                 return routines[i];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Could not understand input; please use numbers");
                 return PickRoutine();
@@ -85,11 +84,13 @@ namespace GoRogue.Debugger
         private static List<IRoutine> GetRoutines()
         {
             List<IRoutine> objects = new List<IRoutine>();
-            var types = Assembly.GetAssembly(typeof(IRoutine)).GetTypes();
+            var types = Assembly.GetAssembly(typeof(IRoutine))?.GetTypes() ?? Array.Empty<Type>();
             types = types.Where(t => t.GetInterface(nameof(IRoutine)) != null).ToArray();
             foreach (Type type in types)
             {
-                objects.Add((IRoutine)Activator.CreateInstance(type));
+                var instance = Activator.CreateInstance(type) as IRoutine ??
+                               throw new Exception("Failed to create instance of routine.");
+                objects.Add(instance);
             }
             objects.Sort();
             return objects;
@@ -107,78 +108,69 @@ namespace GoRogue.Debugger
             {
                 if (_dirty)
                     DrawMap();
+
                 InterpretKeyPress();
             }
         }
 
-        /// <summary>
-        /// Elapse a single unit of time
-        /// </summary>
-        private static void GoRogueGameFrame()
-        {
-            Routine.ElapseTimeUnit();
-        }
         #endregion
         #region ui
         private static void InterpretKeyPress()
         {
+            Direction moveViewportDir = Direction.None;
             ConsoleKey key = Console.ReadKey().Key;
+            switch (key)
+            {
+                case ConsoleKey.Escape:
+                    _exit = true;
+                    break;
+                case ConsoleKey.Spacebar:
+                    _routine?.ElapseTimeUnit();
+                    _dirty = true;
+                    break;
+                case ConsoleKey.UpArrow:
+                    moveViewportDir = Direction.Up;
+                    break;
+                case ConsoleKey.DownArrow:
+                    moveViewportDir = Direction.Down;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    moveViewportDir = Direction.Left;
+                    break;
+                case ConsoleKey.RightArrow:
+                    moveViewportDir = Direction.Right;
+                    break;
+            }
 
-            if (key == ConsoleKey.Escape)
-                _exit = true;
-            else if (key == ConsoleKey.Spacebar)
-                GoRogueGameFrame();
+            if (moveViewportDir != Direction.None)
+            {
+                Point center = _mapView!.ViewArea.Center;
+                _mapView!.SetViewArea(_mapView.ViewArea.Translate(moveViewportDir));
 
-            else if (key == ConsoleKey.LeftArrow)
-                ShiftLeft();
-            else if (key == ConsoleKey.RightArrow)
-                ShiftRight();
-            else if (key == ConsoleKey.UpArrow)
-                ShiftUp();
-            else if (key == ConsoleKey.DownArrow)
-                ShiftDown();
+                if (center != _mapView.ViewArea.Center) // Actually changed, eg. we weren't on edge of map on update
+                    _dirty = true;
+            }
         }
 
         private static void DrawMap()
         {
-            _width = System.Console.WindowWidth;
-            _height = System.Console.WindowHeight;
-            for (int i = _position.Y; i < _position.Y + _height - 1; i++)
+            // Calculate available console space.  Make sure to subtract one to ensure we actually fit
+            // text instead of going 1 over with newline.
+            int width = Console.WindowWidth - 1;
+            int height = Console.WindowHeight - 1;
+
+            // If console size has changed, resize viewport and re-center on same location.
+            if (_mapView!.ViewArea.Width != width || _mapView!.ViewArea.Height != height)
             {
-                string line = "";
-                for (int j = _position.X; j < _position.X + _width - 1; j++)
-                {
-                    Terrain go = (Terrain) _map[j, i].FirstOrDefault();
-                    if (go == null)
-                        line += "?";
-
-                    else
-                        line += (char)go.Glyph;
-                }
-                Console.WriteLine(line);
+                var center = _mapView.ViewArea.Center;
+                _mapView.SetViewArea(_mapView.ViewArea.WithSize(width, height).WithCenter(center));
             }
-        }
 
-        public static void ShiftLeft()
-        {
-            _position += (-1, 0);
-            _dirty = true;
-        }
+            // Draw viewport, ensuring to allow no space between characters
+            Console.WriteLine(_mapView.ExtendToString(elementSeparator: ""));
 
-        public static void ShiftUp()
-        {
-         _position += _invertY ? (0, 1) : (0, -1);
-         _dirty = true;
-        }
-        public static void ShiftDown()
-        {
-            _position += _invertY ? (0, -1) : (0, 1);
-            _dirty = true;
-        }
-        public static void ShiftRight()
-        {
-            _position += (1, 0);
-            _dirty = true;
+            // Reset dirty flag because we just drew
+            _dirty = false;
         }
         #endregion
     }
