@@ -13,8 +13,10 @@ namespace GoRogue.Debugger.Routines
         public Map? Map { get; private set; }
         private double _rotation = 0;
 
-        private readonly List<Region> _regions = new List<Region>();
-        public IEnumerable<Region> Regions => _regions;
+        private readonly List<Region> _originalRegions = new List<Region>();
+
+        private readonly List<Region> _transformedRegions = new List<Region>();
+        public IEnumerable<Region> Regions => _transformedRegions;
         public string Name { get; }
 
         public TestRoutine()
@@ -27,10 +29,15 @@ namespace GoRogue.Debugger.Routines
             // Set tiles in current regions back to start (so whole map is blank)
             RemoveRegionsFromMap();
 
-            // Rotate all regions
+            // Increase rotation
             _rotation += 5;
-            foreach (Region region in _regions)
-                region.Rotate(_rotation, true, region.Center);
+
+            // Remove transformed regions so we can replace them
+            _transformedRegions.Clear();
+
+            // Rotate each original region by the new amount and add to the list.
+            foreach (Region region in _originalRegions)
+                _transformedRegions.Add(region.Rotate(_rotation, false, region.Center));
 
             // Apply tile settings to tiles now in region
             ApplyRegionsToMap();
@@ -46,12 +53,15 @@ namespace GoRogue.Debugger.Routines
 
             // Generate regions
             Region region = Region.Rectangle("square", (256, 256), 48, 48);
-            _regions.Add(region);
+            _originalRegions.Add(region);
+            _transformedRegions.Add(region);
             /*
             region = new Region("rhombus", (256,256),(202, 128),(2,2),(128, 202));
-            _regions.Add(region);
+            _originalRegions.Add(region);
+            _transformedRegions.Add(region);
             region = Region.RegularParallelogram("parallelogram", (256,256),40,40, 75);
-            _regions.Add(region);
+            _originalRegions.Add(region);
+            _transformedRegions.Add(region);
             */
 
             // Apply regions to map data
@@ -63,7 +73,7 @@ namespace GoRogue.Debugger.Routines
         {
             Debug.Assert(Map != null);
 
-            foreach (var region in _regions)
+            foreach (var region in _transformedRegions)
             {
                 foreach (var point in region.InnerPoints)
                 {
@@ -84,7 +94,7 @@ namespace GoRogue.Debugger.Routines
         {
             Debug.Assert(Map != null);
 
-            foreach (var region in _regions)
+            foreach (var region in _transformedRegions)
                 foreach (var point in region.Points)
                 {
                     Map.Terrain[point]!.IsWalkable = true;

@@ -27,7 +27,7 @@ namespace GoRogue.Debugger
         // Viewport of visible map
         private static Viewport<char>? _mapView;
 
-        #region setup
+        #region Setup
         /// <summary>
         /// Get the Routine, Interpreter, and Map ready for action.
         /// </summary>
@@ -97,7 +97,7 @@ namespace GoRogue.Debugger
         }
         #endregion
 
-        #region run
+        #region Run
 
         /// <summary>
         /// Start listening for keypresses
@@ -114,7 +114,8 @@ namespace GoRogue.Debugger
         }
 
         #endregion
-        #region ui
+
+        #region UI
         private static void InterpretKeyPress()
         {
             Direction moveViewportDir = Direction.None;
