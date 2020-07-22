@@ -101,7 +101,7 @@ namespace GoRogue.UnitTests
             var retrievedComponent = _componentCollection.GetFirst<ComponentBase>();
 
             // Should be one of the two, since both are the proper type.  Order is not enforced since we don't have priorities set to the components
-            Assert.True(retrievedComponent == component || retrievedComponent == component2);
+            Assert.True(ReferenceEquals(retrievedComponent, component) || ReferenceEquals(retrievedComponent, component2));
 
             // Should now return component2
             Assert.Same(component2, _componentCollection.GetFirst<Component2>());
@@ -140,7 +140,7 @@ namespace GoRogue.UnitTests
             var retrievedComponent = _componentCollection.GetFirstOrDefault<ComponentBase>();
 
             // Should be one of the two, since both are the proper type.  Order is not enforced since we don't have priorities set to the components
-            Assert.True(retrievedComponent == component || retrievedComponent == component2);
+            Assert.True(ReferenceEquals(retrievedComponent, component) || ReferenceEquals(retrievedComponent, component2));
 
             // Should now return component2
             Assert.Same(component2, _componentCollection.GetFirstOrDefault<Component2>());
