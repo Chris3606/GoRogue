@@ -26,12 +26,6 @@ namespace GoRogue.GameFramework
         Map? CurrentMap { get; }
 
         /// <summary>
-        /// Whether or not the object is "static".  Static objects CANNOT be moved, and only static objects may
-        /// be placed on layer 0 of a <see cref="Map" />.
-        /// </summary>
-        bool IsStatic { get; }
-
-        /// <summary>
         /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
         /// for the sake of calculating the FOV of a <see cref="Map" />.
         /// </summary>

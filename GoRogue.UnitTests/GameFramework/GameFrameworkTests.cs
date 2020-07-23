@@ -19,17 +19,19 @@ namespace GoRogue.UnitTests.GameFramework
 
             TestUtils.NotNull(grMap);
 
+            // Normally, in this situation, you would just use the ApplyTerrainOverlay function overload that takes
+            // a translation function, instead of creating tempMap and translationMap.  But we want to test the other
+            // overload so we do it this way only for testing
             var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap,
                 (pos, val) =>
                     val ?
-                        new GameObject(pos, 0, null, true)
-                        : new GameObject(pos, 0, null, true, false, false));
+                        new GameObject(pos, 0, null)
+                        : new GameObject(pos, 0, null, true, false));
 
+            // Create map
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
 
-            // Normally you shouldn't need tempMap, as you would do what is done in ApplyTerrainOverlayTransition,
-            // which is define the translation function the the ApplyTerrainOverlay function call.  But here, we want
-            // to test the overload without the translation function, so we rely on a translation map instead.
+            // Create temporary map to record what values are supposed to be
             var tempMap = new ArrayMap<IGameObject>(grMap.Width, grMap.Height);
             tempMap.ApplyOverlay(translationMap);
 
@@ -53,23 +55,93 @@ namespace GoRogue.UnitTests.GameFramework
 
             TestUtils.NotNull(grMap);
 
+            // Create map and apply overlay with a translation function
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
             map.ApplyTerrainOverlay(grMap,
                 (pos, b) =>
                     b ?
-                        new GameObject(pos, 0, null, true)
-                        : new GameObject(pos, 0, null, true, false, false));
+                        new GameObject(pos, 0, null)
+                        : new GameObject(pos, 0, null, false, false));
 
-            // If any value is null this fails due to NullReferenceException: otherwise, we assert the right value got set
             foreach (var pos in grMap.Positions())
             {
                 var terrain = map.GetTerrainAt(pos);
                 TestUtils.NotNull(terrain);
-                if (grMap[pos])
-                    Assert.True(terrain.IsWalkable);
-                else
-                    Assert.False(terrain.IsWalkable);
+                Assert.Equal(grMap[pos], terrain.IsWalkable);
             }
+        }
+
+        [Fact]
+        public void ApplyTerrainOverlayPositions()
+        {
+            var grMap = new Generator(10, 10)
+                .AddSteps(DefaultAlgorithms.RectangleMapSteps())
+                .Generate()
+                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
+
+            TestUtils.NotNull(grMap);
+
+            // Create map and apply overlay with a translation function
+            var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
+            map.ApplyTerrainOverlay(grMap,
+                (pos, b) =>
+                    b ?
+                        new GameObject(pos, 0, null)
+                        : new GameObject(pos, 0, null, true, false));
+
+            // Assert all objects are at right position to start with
+            foreach (var pos in grMap.Positions())
+            {
+                var terrain = map.GetTerrainAt(pos);
+                TestUtils.NotNull(terrain);
+
+                Assert.Equal(pos, terrain.Position);
+            }
+
+            // Rearrange positions by mirror-imaging in X/Y
+            var terrainMap2 = new ArrayMap<IGameObject>(map.Width, map.Height);
+            foreach (var (x, y) in map.Positions())
+            {
+                var terrain = map.GetTerrainAt(x, y);
+                TestUtils.NotNull(terrain);
+                terrainMap2[map.Width - 1 - x, map.Height - 1 - y] = terrain;
+            }
+
+            // Apply overlay, hopefully adapting positions properly
+            map.ApplyTerrainOverlay(terrainMap2);
+
+            foreach (var pos in grMap.Positions())
+            {
+                var terrain = map.GetTerrainAt(pos);
+                TestUtils.NotNull(terrain);
+
+                Assert.Equal(pos, terrain.Position);
+            }
+        }
+
+        [Fact]
+        public void ApplyTerrainOverlayRemoveFromOldMap()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var map2 = new Map(map.Width, map.Height, map.Entities.NumberOfLayers, map.DistanceMeasurement);
+            var gameObject = new GameObject((1, 2), 0, null);
+
+            map.SetTerrain(gameObject);
+            Assert.Equal(map, gameObject.CurrentMap);
+
+            // Create an overlay with our object
+            var terrainOverlay = new ArrayMap<IGameObject>(map.Width, map.Height) { [5, 6] = gameObject };
+
+            // Apply overlay
+            map2.ApplyTerrainOverlay(terrainOverlay);
+
+            // Verify there is nothing in original map
+            foreach (var pos in map.Positions())
+                Assert.Null(map.Terrain[pos]);
+
+            // Verify the object is in the new map precisely once at the position it was in in the overlay
+            foreach (var pos in map2.Positions())
+                Assert.NotEqual(pos == (5, 6), map2.Terrain[pos] == null);
         }
 
         [Fact]
@@ -99,7 +171,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void OutOfBoundsTerrainAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((-1, -1), 0, null, true);
+            var obj = new GameObject((-1, -1), 0, null);
 
             Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
         }

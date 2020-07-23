@@ -76,10 +76,6 @@ namespace GoRogue.GameFramework
         /// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map" />,
         /// you would pass null.
         /// </param>
-        /// <param name="isStatic">
-        /// Whether or not the object can be moved (true if the object CANNOT be moved,
-        /// false otherwise).
-        /// </param>
         /// <param name="isWalkable">
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
         /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or not this
@@ -99,7 +95,7 @@ namespace GoRogue.GameFramework
         /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
         /// use cases.
         /// </param>
-        public GameObject(Point position, int layer, IGameObject? parentObject, bool isStatic = false,
+        public GameObject(Point position, int layer, IGameObject? parentObject,
                           bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null,
                           ITaggableComponentCollection? customComponentContainer = null)
         {
@@ -110,7 +106,6 @@ namespace GoRogue.GameFramework
             Layer = layer;
             IsWalkable = isWalkable;
             IsTransparent = isTransparent;
-            IsStatic = isStatic;
 
             CurrentMap = null;
 
@@ -129,10 +124,6 @@ namespace GoRogue.GameFramework
                 if (_position == value)
                     return; // This is OK as the position is already what was given so count it as "success".
 
-                if (IsStatic)
-                    throw new InvalidOperationException(
-                        $"Tried to move a {GetType().Name} that was set as static.  Static objects cannot move.");
-
                 if (CurrentMap != null && !CurrentMap.Contains(value))
                     throw new InvalidOperationException(
                         $"An entity's {nameof(CurrentMap)} is not synchronized with the map, as the {nameof(CurrentMap)} reports that it does not contain the entity." +
@@ -141,6 +132,10 @@ namespace GoRogue.GameFramework
                 if (!IsWalkable && CurrentMap != null && !CurrentMap.WalkabilityView[value])
                     throw new InvalidOperationException(
                         $"Tried to move {GetType().Name} to a square that it is not allowed to because it would collide with another non-walkable object.");
+
+                if (CurrentMap != null && Layer == 0)
+                    throw new InvalidOperationException(
+                        $"Tried to move a {GetType().Name} that was added to a map as terrain.  Terrain objects cannot move while they are added to a map.");
 
                 var oldPos = _position;
 
@@ -177,9 +172,6 @@ namespace GoRogue.GameFramework
         public bool IsTransparent { get; set; }
 
         /// <inheritdoc />
-        public bool IsStatic { get; }
-
-        /// <inheritdoc />
         public uint ID { get; }
 
         /// <inheritdoc />
@@ -196,29 +188,27 @@ namespace GoRogue.GameFramework
         /// </summary>
         /// <remarks>
         /// This function can return false in the following cases:
-        /// 1. If the object has <see cref="IsStatic" /> set to true (in which case it cannot be moved)
+        /// 1. If the object has is added to a Map and is on layer 0 (because terrain objects cannot move while added
+        ///    to the map.
         /// 2. If the object is added to the map and either:
-        /// a. The position specified is not within the bounds of the map
-        /// b. The object is not walkable and there is already a non-walkable item at the specified location
-        /// c. The object's layer cannot support multiple items at one location and there is already an item at that
-        /// location on that layer.
+        ///     a. The position specified is not within the bounds of the map
+        ///     b. The object is not walkable and there is already a non-walkable item at the specified location
+        ///     c. The object's layer cannot support multiple items at one location and there is already an item at that
+        ///        location on that layer.
         /// </remarks>
         /// <param name="position">The position to check.</param>
         /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
         public virtual bool CanMove(Point position)
         {
-            if (IsStatic)
+            if (CurrentMap == null)
+                return true;
+
+            if (!CurrentMap.Contains(position) || !IsWalkable && !CurrentMap.WalkabilityView[position] ||
+                Layer == 0)
                 return false;
 
-            if (CurrentMap != null)
-            {
-                if (!CurrentMap.Contains(position) || !IsWalkable && !CurrentMap.WalkabilityView[position])
-                    return false;
+            return CurrentMap.EntityCanMove(_parentObject, position);
 
-                return CurrentMap.EntityCanMove(_parentObject, position);
-            }
-
-            return true;
         }
 
         /// <summary>

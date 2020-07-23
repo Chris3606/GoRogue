@@ -10,29 +10,27 @@ using SadRogue.Primitives;
 namespace GoRogue.GameFramework
 {
     /// <summary>
-    /// Base class for a map that consists of one or more objects of base type <see cref="IGameObject" />.  It implements basic
-    /// functionality to manage and access these
-    /// objects, as well as commonly needed functionality like tile exploration, FOV, and pathfinding.  It also provides
-    /// methods to easily access these objects as
-    /// instances of some derived type, that can be used to access functionality you've implemented in a subclass.
+    /// Base class for a map that consists of one or more objects of base type <see cref="IGameObject" />.  It
+    /// implements basic functionality to manage and access these objects, as well as commonly needed functionality like
+    /// tile exploration, FOV, and pathfinding.  It also provides methods to easily access these objects as instances of
+    /// some derived type.  This can be used to easily access functionality you've implemented in a subclass.
     /// </summary>
     /// <remarks>
-    /// A Map consists of <see cref="IGameObject" /> instances on one or more layers.  These layers are numbered, from the
-    /// lowest layer of 0 upward.  Each Map contains
-    /// at minimum a "terrain" layer.  This is considered to be layer 0.  All objects added to this layer must have their
-    /// <see cref="IGameObject.IsStatic" /> flag set to true,
-    /// and must reside on layer 0.
-    /// A map will typically also have some other layers, for non-terrain objects like monsters, items, etc.  The number of
-    /// these layers present
-    /// on the map, along with which of all the layers participate in collision detection, etc., can be specified in the
-    /// constructor.
+    /// A Map consists of <see cref="IGameObject" /> instances on one or more layers.  These layers are numbered, from
+    /// the lowest layer of 0 upward.  Each Map contains at minimum a layer 0, which is considered the "terrain" layer.
+    /// All objects added to this layer cannot move while they are added to a map; though they can move when they aren't
+    /// a part of any map.
+    ///
+    /// A map will typically also have some other layers, for non-terrain objects like monsters, items, etc.  The number
+    /// of these layers present on the map, along with which of all the layers participate in collision detection, etc.,
+    /// can be specified in the constructor.
+    ///
     /// While this class has some flexibility, it does, unlike the rest of the library, tend to impose itself on your
-    /// architecture.  In cases where this is
-    /// undesirable, each component of this map class exists as a separate component (layer masking, the SpatialMap(s) storing
-    /// the entity layers, FOV, and pathfinding
-    /// all exist as their own (more flexible) components).  This class is not intended to cover every possible use case, but
-    /// instead may act as an example or starting
-    /// point in the case where you would like to use the components in a different way or within a different architecture.
+    /// architecture to some degree.  In cases where this is undesirable, each component of this map class exists as a
+    /// separate component; layer masking, the SpatialMap(s) storing the entity layers, FOV, and pathfinding all exist
+    /// as their own (more flexible) components).  This class is not intended to cover every possible use case, but
+    /// may act as an example or starting point in the case where you would like to use the components in a different
+    /// way or within a different architecture.
     /// </remarks>
     [PublicAPI]
     public class Map : MapViewBase<IEnumerable<IGameObject>>
@@ -368,30 +366,28 @@ namespace GoRogue.GameFramework
         /// <param name="x">X-value of the position to get the terrain for.</param>
         /// <param name="y">Y-value of the position to get the terrain for.</param>
         /// <returns>
-        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was not castable
-        /// to type
-        /// TerrainType.
+        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was
+        /// not castable to <see cref="TTerrain"/>.
         /// </returns>
         public TTerrain? GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject
             => _terrain[x, y] as TTerrain;
 
         /// <summary>
-        /// Sets the terrain at the given objects location to the given object, overwriting any terrain already present there.
+        /// Sets the terrain at the given objects location to the given object, overwriting any terrain already present
+        /// there.
         /// </summary>
+        /// <remarks>
+        /// A GameObject that is added as Terrain must have a Layer of 0, must not be part of a map currently, and
+        /// must have a position within the bounds of the map.
+        /// </remarks>
         /// <param name="terrain">
         /// Terrain to replace the current terrain with. <paramref name="terrain" /> must have its
-        /// <see cref="IGameObject.IsStatic" /> flag set to true and its <see cref="IHasLayer.Layer" /> must be 0, or an exception
-        /// will be thrown.
+        /// <see cref="IHasLayer.Layer" /> must be 0, or an exception will be thrown.
         /// </param>
         public void SetTerrain(IGameObject terrain)
         {
             if (terrain.Layer != 0)
                 throw new ArgumentException("Terrain for Map must reside on layer 0.", nameof(terrain));
-
-            if (!terrain.IsStatic)
-                throw new ArgumentException(
-                    $"Terrain for Map must be marked static via its {nameof(IGameObject.IsStatic)} flag.",
-                    nameof(terrain));
 
             if (terrain.CurrentMap != null)
                 throw new ArgumentException($"Cannot add terrain to more than one {nameof(Map)}.", nameof(terrain));
@@ -419,12 +415,59 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Sets all terrain on the map to the result of running the given translator on the value in <paramref name="overlay" />
-        /// at the
-        /// corresponding position.  Useful, for example, for applying the map view resulting from map generation to a Map as
-        /// terrain.
+        /// Removes the given terrain object from the map.  If the given terrain object is not a part of the map,
+        /// throws <see cref="ArgumentException"/>.
         /// </summary>
-        /// <typeparam name="T">Type of values exposed by map view to translate.  Generally inferred by the compiler.</typeparam>
+        /// <param name="terrain">Terrain to remove.</param>
+        public void RemoveTerrain(IGameObject terrain)
+        {
+            if (terrain.CurrentMap != this)
+                throw new ArgumentException("A terrain object was removed from the map that had not been added",
+                    nameof(terrain));
+
+            _terrain[terrain.Position] = null;
+
+            ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
+            terrain.OnMapChanged(null);
+        }
+
+        /// <summary>
+        /// Removes the terrain at the given location and returns it.  Throws <see cref="ArgumentException"/> if no
+        /// terrain object has been added at that location.
+        /// </summary>
+        /// <param name="position">Position to remove terrain from.</param>
+        /// <returns>Terrain that was at the position given.</returns>
+        public IGameObject RemoveTerrainAt(Point position)
+        {
+            var terrain = _terrain[position];
+
+            if (terrain == null)
+                throw new ArgumentException("Cannot remove terrain at given location because no terrain at that location has been added",
+                    nameof(position));
+
+            ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
+            terrain.OnMapChanged(null);
+
+            return terrain;
+        }
+
+        /// <summary>
+        /// Removes the terrain at the given location and returns it.  Throws <see cref="ArgumentException"/> if no
+        /// terrain object has been added at that location.
+        /// </summary>
+        /// <param name="x">X-value of the position to remove terrain from.</param>
+        /// <param name="y">Y-value of the position to remove terrain from.</param>
+        /// <returns>Terrain that was at the position given.</returns>
+        public IGameObject RemoveTerrainAt(int x, int y) => RemoveTerrainAt(new Point(x, y));
+
+        /// <summary>
+        /// Sets all terrain on the map to the result of running the given translator on the value in
+        /// <paramref name="overlay" /> at the corresponding position.  Useful, for example, for applying the map view
+        /// resulting from map generation to a Map as terrain.
+        /// </summary>
+        /// <typeparam name="T">
+        /// Type of values exposed by map view to translate.  Generally inferred by the compiler.
+        /// </typeparam>
         /// <param name="overlay">Map view to translate.</param>
         /// <param name="translator">
         /// Function that translates values of the type that <paramref name="overlay" /> exposes to values
@@ -437,11 +480,14 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Sets all terrain on the current map to be equal to the corresponding values from the map view you pass in.  Equivalent
-        /// to
-        /// calling <see cref="SetTerrain(IGameObject)" /> once on each object in the map view you pass in.  If translation between
-        /// the overlay and IGameObject is required, see the overloads of this function that take a translation function.
+        /// Sets all terrain on the current map to be equal to the corresponding values from the map view you pass in.
+        /// All terrain will in the map view will be removed from its current Map, if any, and its position edited
+        /// to what it is in the <see cref="overlay"/>, before it is added to the map.
         /// </summary>
+        /// <remarks>
+        /// If translation between the overlay and IGameObject is required, see the overloads of this function that
+        /// take a translation function.
+        /// </remarks>
         /// <param name="overlay">
         /// Map view specifying the terrain apply to the map. Must have identical dimensions to the current map.
         /// </param>
@@ -451,7 +497,16 @@ namespace GoRogue.GameFramework
                 throw new ArgumentException("Overlay size must match current map size.");
 
             foreach (var pos in _terrain.Positions())
-                SetTerrain(overlay[pos]);
+            {
+                var terrain = overlay[pos];
+                if (terrain == null)
+                    continue;
+
+                terrain.CurrentMap?.RemoveTerrain(terrain);
+                terrain.Position = pos;
+
+                SetTerrain(terrain);
+            }
         }
 
         #endregion
