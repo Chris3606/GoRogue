@@ -9,7 +9,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     /// An item added to a generation context component and the name of the step that added it.
     /// </summary>
     /// <typeparam name="TItem">The type of item stored in the pairing.</typeparam>
-    [Serializable]
+    [DataContract]
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
@@ -19,12 +19,12 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// <summary>
         /// The item.
         /// </summary>
-        public readonly TItem Item;
+        [DataMember] public readonly TItem Item;
 
         /// <summary>
         /// The name associated with the step that created the item.
         /// </summary>
-        public readonly string Step;
+        [DataMember] public readonly string Step;
 
         /// <summary>
         /// Constructor.
