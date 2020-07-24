@@ -2,7 +2,7 @@
 using GoRogue.Random;
 using System;
 using System.Collections.Generic;
-using Troschuetz.Random;
+using IGenerator = Troschuetz.Random.IGenerator;
 using DrawingRectangle = System.Drawing.Rectangle;
 using DrawingRectangleF = System.Drawing.RectangleF;
 #if ALLCONVERSIONS

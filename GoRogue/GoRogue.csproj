@@ -3,14 +3,14 @@
     <!-- Basic package info -->
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>GoRogue</PackageId>
-    <Version>2.6.3</Version>
+    <Version>2.6.4</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
     <Authors>Chris3606</Authors>
     <Description>Roguelike/2D game utility library.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Bugfixes.  See https://github.com/Chris3606/GoRogue/releases/tag/2.6.3 for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>Troschuetz bugfix.  See https://github.com/Chris3606/GoRogue/releases/tag/2.6.4 for details.</PackageReleaseNotes>
     <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
     <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
     <!-- Add symbols package -->
@@ -68,7 +68,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="Troschuetz.Random" Version="4.3.1" />
+    <PackageReference Include="Troschuetz.Random" Version="4.4.0" />
   </ItemGroup>
   
   <!-- Run InheritDoc on the final builds.  This isn't used right now becuase of bugs with docfx and inheriting docs from template classes, but may be in the future -->

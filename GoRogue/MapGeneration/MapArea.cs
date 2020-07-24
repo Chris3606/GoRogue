@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Troschuetz.Random;
+using IGenerator = Troschuetz.Random.IGenerator;
 
 namespace GoRogue.MapGeneration
 {
