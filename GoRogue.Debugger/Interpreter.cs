@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using GoRogue;
+using GoRogue.Debugger.Extensions;
 using GoRogue.GameFramework;
-using GoRogue.MapGeneration;
 using GoRogue.MapViews;
-using GoRogue.Debugger.Implementations.GameObjects;
 using SadRogue.Primitives;
 
 namespace GoRogue.Debugger
@@ -26,12 +24,10 @@ namespace GoRogue.Debugger
         private static bool _calculateFov;//whether to view an FOV radius, or the whole map
         private static Point _position;//the printing location of the viewport on the Map
         private static bool _dirty = true; //whether or not to redraw the map
+        private static Viewport<char> _viewport;//the "visible" region of the map
         private static Map _map => Routine.TransformedMap; //the map that we're printing to the console
         public static IRoutine Routine { get; private set; } //the routine that we're running in this test
-
-        //the "visible" region of the map
-        private static Viewport<bool> _viewport =>
-            new Viewport<bool>(_map.WalkabilityView, new Rectangle(_position.X, _position.Y, _width, _height));
+        private static Viewport<char> Viewport => _viewport;
 
         #region setup
         /// <summary>
@@ -47,7 +43,16 @@ namespace GoRogue.Debugger
             Routine = PickRoutine();
             Routine.GenerateMap();
             _position = (_map.Width / 2 - _width / 2, _map.Height / 2 - _height / 2);
+            _viewport = GenerateMapView();
             Console.WriteLine("Initialized...");
+        }
+
+        /// <summary>
+        /// Creates the map view to display
+        /// </summary>
+        private static Viewport<char> GenerateMapView()
+        {
+            return new Viewport<char>(_map.CharMap(), new Rectangle(_position, _position + (_width, _height)));
         }
 
         /// <summary>
@@ -141,22 +146,11 @@ namespace GoRogue.Debugger
 
         private static void DrawMap()
         {
-            _width = System.Console.WindowWidth;
-            _height = System.Console.WindowHeight;
-            for (int i = _position.Y; i < _position.Y + _height - 1; i++)
-            {
-                string line = "";
-                for (int j = _position.X; j < _position.X + _width - 1; j++)
-                {
-                    Terrain go = (Terrain) _map[j, i].FirstOrDefault();
-                    if (go == null)
-                        line += "?";
-
-                    else
-                        line += (char)go.Glyph;
-                }
-                Console.WriteLine(line);
-            }
+            _width = System.Console.WindowWidth - 1;
+            _height = System.Console.WindowHeight - 1;
+            _viewport = GenerateMapView();
+            string output = _viewport.ExtendToString(elementSeparator:"");
+            Console.Write(output);
         }
 
         public static void ShiftLeft()
