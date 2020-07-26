@@ -64,7 +64,7 @@ namespace GoRogue.MapGeneration
             Point se = origin + new Point(width * 2, height);
             Point sw = origin + new Point(width, height);
             Region area = new Region(name, se, ne, nw, sw);
-            area = area.Rotate(rotationDegrees, true, origin);
+            area = area.Rotate(rotationDegrees, origin);
             return area;
         }
 
@@ -75,18 +75,18 @@ namespace GoRogue.MapGeneration
         /// <returns>All points contained within the outer region</returns>
         public static IEnumerable<Point> InnerFromOuterPoints(IEnumerable<Point> outer)
         {
-            if(outer.Any())
+            if(!outer.Any())
                 return new List<Point>();
+
+            var outerList = outer.OrderBy(x => x.X).ToList();
             List<Point> points = new List<Point>();
-            outer = outer.OrderBy(x => x.X).ToList();
-            int start = outer.First().X;
-            int end = outer.Last().X;
-            for (int i = start + 1; i < end; i++)
+
+            for (int i = outerList[0].X + 1; i < outerList[^1].X; i++)
             {
-                List<Point> chunk = outer.Where(w => w.X == i).OrderBy(o => o.Y).ToList();
-                if(chunk.Count > 0)
+                List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
+                if(row.Count > 0)
                 {
-                    for (int j = chunk[0].Y; j <= chunk[^1].Y; j++)
+                    for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
                         points.Add(new Point(i, j));
                     }
@@ -94,6 +94,25 @@ namespace GoRogue.MapGeneration
             }
 
             return points;
+        }
+
+
+        /// <summary>
+        /// Rotates a single point around the origin (0, 0).
+        /// </summary>
+        /// <param name="point">The Point to rotate</param>
+        /// <param name="radians">The amount of Radians to rotate this point</param>
+        /// <returns>The equivalnt point after a rotation</returns>
+        /// <remarks>
+        /// This is intended only as a helper class for rotation, and not for general use.
+        /// Intended usage is like so:
+        /// `Point sw = RotatePoint(SouthWestCorner - origin, radians) + origin;`
+        /// </remarks>
+        private static Point RotatePoint(Point point, in double radians)
+        {
+            int x = (int)Math.Round(point.X * Math.Cos(radians) - point.Y * Math.Sin(radians));
+            int y = (int)Math.Round(point.X * Math.Sin(radians) + point.Y * Math.Cos(radians));
+            return new Point(x, y);
         }
 
         /// <summary>

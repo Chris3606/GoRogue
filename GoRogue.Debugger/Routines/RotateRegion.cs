@@ -8,13 +8,13 @@ namespace GoRogue.Debugger.Routines
 {
     internal class RotateRegion : IRoutine
     {
-        private Map _baseMap;
-        private Map _transformedMap;
+        private Map? _baseMap;
+        private Map? _transformedMap;
         private List<Region> _currentRegions = new List<Region>();
         private List<Region> _originalRegions = new List<Region>();
-        public Map BaseMap => _baseMap;
+        public Map? BaseMap => _baseMap;
         private double _rotation = 0;
-        public Map TransformedMap => _transformedMap;
+        public Map? TransformedMap => _transformedMap;
         public IEnumerable<Region> Regions => _currentRegions;
         public string Name { get; set; }
 
@@ -30,7 +30,7 @@ namespace GoRogue.Debugger.Routines
             _currentRegions.Clear();
             foreach (Region region in _originalRegions)
             {
-                _currentRegions.Add(region.Rotate(_rotation, false, region.Center));
+                _currentRegions.Add(region.Rotate(_rotation, region.Center));
             }
 
             SetTerrain(_transformedMap);
@@ -57,13 +57,13 @@ namespace GoRogue.Debugger.Routines
         {
             foreach (Region region in _currentRegions)
             {
-                foreach (Point p in region.InnerPoints)
+                foreach (Point p in region.InnerPoints.Positions)
                 {
                     if (map.Contains(p))
                         map.SetTerrain(new GameObject(p, 0, null, true, true));
                 }
 
-                foreach (Point p in region.OuterPoints)
+                foreach (Point p in region.OuterPoints.Positions)
                 {
                     if(map.Contains(p))
                         map.SetTerrain(new GameObject(p, 0, null, false, false));
