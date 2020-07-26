@@ -334,10 +334,10 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(ne.X > se.X);
             Assert.True(se.Y > ne.Y);
 
-            double topDiff = MathHelpers.DistanceBetween(nw, ne);
-            double rightDiff = MathHelpers.DistanceBetween(se, ne);
-            double bottomDiff = MathHelpers.DistanceBetween(sw, se);
-            double leftDiff = MathHelpers.DistanceBetween(nw, sw);
+            double topDiff = Distance.Euclidean.Calculate(nw, ne);
+            double rightDiff = Distance.Euclidean.Calculate(se, ne);
+            double bottomDiff = Distance.Euclidean.Calculate(sw, se);
+            double leftDiff = Distance.Euclidean.Calculate(nw, sw);
             Assert.Equal(topDiff, bottomDiff);
             Assert.Equal(leftDiff, rightDiff);
         }

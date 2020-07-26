@@ -28,38 +28,38 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All of the boundary points of this region
         /// </summary>
-        public IReadOnlyList<Point> OuterPoints => _outerPoints.AsReadOnly();
-        private List<Point> _outerPoints = new List<Point>();
+        public Area OuterPoints => _outerPoints;
+        private Area _outerPoints = new Area();
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points and connections
         /// </summary>
-        public IReadOnlyList<Point> InnerPoints => _innerPoints.AsReadOnly();
-        private List<Point> _innerPoints = new List<Point>();
+        public Area InnerPoints => _innerPoints;
+        private Area _innerPoints = new Area();
 
         /// <summary>
         /// All of the outer points along the southern boundary
         /// </summary>
-        public IReadOnlyList<Point> SouthBoundary => _southBoundary.AsReadOnly();
-        private List<Point> _southBoundary = new List<Point>();
+        public Area SouthBoundary => _southBoundary;
+        private Area _southBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the northern boundary
         /// </summary>
-        public IReadOnlyList<Point> NorthBoundary => _northBoundary.AsReadOnly();
-        private List<Point> _northBoundary = new List<Point>();
+        public Area NorthBoundary => _northBoundary;
+        private Area _northBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the eastern boundary
         /// </summary>
-        public IReadOnlyList<Point> EastBoundary => _eastBoundary.AsReadOnly();
-        private List<Point> _eastBoundary = new List<Point>();
+        public Area EastBoundary => _eastBoundary;
+        private Area _eastBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the western boundary
         /// </summary>
-        public IReadOnlyList<Point> WestBoundary => _westBoundary.AsReadOnly();
-        private List<Point> _westBoundary = new List<Point>();
+        public Area WestBoundary => _westBoundary;
+        private Area _westBoundary = new Area();
 
         /// <summary>
         /// All of the points that are considered "connections" to other regions
@@ -67,8 +67,8 @@ namespace GoRogue.MapGeneration
         /// <remarks>
         /// You should perform transformations (rotation, etc) before Connections are made.
         /// </remarks>
-        public IReadOnlyList<Point> Connections => _connections;
-        private List<Point> _connections = new List<Point>();
+        public Area Connections => _connections;
+        private Area _connections = new Area();
 
         /// <summary>
         /// The left-most X-value of the region's four corners
