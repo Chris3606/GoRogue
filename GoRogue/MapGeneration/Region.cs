@@ -326,10 +326,10 @@ namespace GoRogue.MapGeneration
             Point[] bottomTwo = new Point[2] {corners [2], corners [3] };
 
             sw = bottomTwo.OrderBy(c => c.X).ToArray()[0];
-            se = bottomTwo.OrderBy(c => -c.X).ToArray()[1];
+            se = bottomTwo.OrderBy(c => c.X).ToArray()[1];
 
             nw = topTwo.OrderBy(c => c.X).ToArray()[0];
-            ne = corners.OrderBy(c => -c.X).ToArray()[1];
+            ne = topTwo.OrderBy(c => c.X).ToArray()[1];
 
             if (doToSelf)
             {
