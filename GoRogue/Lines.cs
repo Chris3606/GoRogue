@@ -283,14 +283,14 @@ namespace GoRogue
         /// <param name="self"/>
         /// <param name="y">Y-value to find the left-most point on.</param>
         /// <returns/>
-        public static int LeftAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => c.X).ToList()[0].X;
+        public static int LeftAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => c.X).First().X;
         /// <summary>
         /// Gets the right-most point in a list that is on the given y-value.
         /// </summary>
         /// <param name="self"/>
         /// <param name="y">Y-value to find the right-most point on.</param>
         /// <returns/>
-        public static int RightAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => -c.X).ToList()[0].X;
+        public static int RightAt(this IEnumerable<Point> self, int y) => self.Where(c => c.Y == y).OrderBy(c => -c.X).First().X;
 
         /// <summary>
         /// Gets the top-most point in a list that is on the given x-value.
@@ -299,8 +299,8 @@ namespace GoRogue
         /// <param name="x">X-value to find the top-most point on.</param>
         /// <returns/>
         public static int TopAt(this IEnumerable<Point> self, int x) => Direction.YIncreasesUpward
-            ? self.Where(c => c.X == x).OrderBy(c => -c.Y).ToList()[0].Y
-            : self.Where(c => c.X == x).OrderBy(c => c.Y).ToList()[0].Y;
+            ? self.Where(c => c.X == x).OrderBy(c => -c.Y).First().Y
+            : self.Where(c => c.X == x).OrderBy(c => c.Y).First().Y;
 
         /// <summary>
         /// Gets the top-most point in a list that is on the given x-value.
@@ -309,8 +309,8 @@ namespace GoRogue
         /// <param name="x">X-value to find the top-most point on.</param>
         /// <returns/>
         public static int BottomAt(this IEnumerable<Point> self, int x) => Direction.YIncreasesUpward
-            ? self.Where(c => c.X == x).OrderBy(c => c.Y).ToList()[0].Y
-            : self.Where(c => c.X == x).OrderBy(c => -c.Y).ToList()[0].Y;
+            ? self.Where(c => c.X == x).OrderBy(c => c.Y).First().Y
+            : self.Where(c => c.X == x).OrderBy(c => -c.Y).First().Y;
 
         #endregion
     }

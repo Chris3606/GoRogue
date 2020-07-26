@@ -79,7 +79,9 @@ namespace GoRogue.MapGeneration
                 return new List<Point>();
             List<Point> points = new List<Point>();
             outer = outer.OrderBy(x => x.X).ToList();
-            for (int i = outer.First().X + 1; i < outer.Last().X; i++)
+            int start = outer.First().X;
+            int end = outer.Last().X;
+            for (int i = start + 1; i < end; i++)
             {
                 List<Point> chunk = outer.Where(w => w.X == i).OrderBy(o => o.Y).ToList();
                 if(chunk.Count > 0)
