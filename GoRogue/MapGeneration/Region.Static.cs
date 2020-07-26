@@ -75,7 +75,7 @@ namespace GoRogue.MapGeneration
         /// <returns>All points contained within the outer region</returns>
         public static IEnumerable<Point> InnerFromOuterPoints(IEnumerable<Point> outer)
         {
-            if(outer.Count() == 0)
+            if(outer.Any())
                 return new List<Point>();
             List<Point> points = new List<Point>();
             outer = outer.OrderBy(x => x.X).ToList();

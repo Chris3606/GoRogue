@@ -356,7 +356,7 @@ namespace GoRogue.MapGeneration
         /// Intended usage is like so:
         /// `Point sw = RotatePoint(SouthWestCorner - origin, radians) + origin;`
         /// </remarks>
-        private Point RotatePoint(Point point, in double radians)
+        private static Point RotatePoint(Point point, in double radians)
         {
             int x = (int)Math.Round(point.X * Math.Cos(radians) - point.Y * Math.Sin(radians));
             int y = (int)Math.Round(point.X * Math.Sin(radians) + point.Y * Math.Cos(radians));
