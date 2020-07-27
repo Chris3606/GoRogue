@@ -206,7 +206,7 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Gets an IEnumerable<Point> of all the OuterPoints shared by the left and right regions
+        /// Gets a <see cref="IEnumerable{Point}"/> of all the OuterPoints shared by the left and right regions
         /// </summary>
         /// <param name="left">the first region to analyze</param>
         /// <param name="right">the second region to analyze</param>
@@ -276,10 +276,9 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
-        /// Rotates a region around it's center
+        /// Rotates a region around it's center.
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <param name="doToSelf">Whether to perform this transformation on itself, or return a new region.</param>
         /// <returns>A region equal to the original region rotated by the given degree</returns>
         public virtual Region Rotate(double degrees) => Rotate(degrees, Center);
 
@@ -288,10 +287,10 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
         /// <param name="origin">The Point around which to rotate</param>
-        /// <returns>This region, rotated</returns>
+        /// <returns>This region, rotated.</returns>
         /// <remarks>
-        /// This is destructive to the region's Connections, so you should try to refrain from generating those
-        /// until after you've performed your rotations.
+        /// This is destructive to the region's <see cref="Connections"/>, so you should try to refrain from generating
+        /// those until after you've performed your rotations.
         /// </remarks>
         public virtual Region Rotate(double degrees, Point origin)
         {
