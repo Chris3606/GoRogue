@@ -403,7 +403,7 @@ namespace GoRogue.SenseMapping
             dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
             while (dq.Count != 0)
             {
-                var p = dq.First.Value;
+                var p = dq.First!.Value;
                 dq.RemoveFirst();
 
                 if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
@@ -440,7 +440,7 @@ namespace GoRogue.SenseMapping
             dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
             while (dq.Count != 0)
             {
-                var p = dq.First.Value;
+                var p = dq.First!.Value;
                 dq.RemoveFirst();
 
                 if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])

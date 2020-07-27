@@ -27,6 +27,7 @@ namespace GoRogue
         /// <returns>A ReadOnlyDictionary instance for the specified dictionary.</returns>
         public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary)
+            where TKey : notnull
             => new ReadOnlyDictionary<TKey, TValue>(dictionary);
 
         /// <summary>
@@ -127,6 +128,7 @@ namespace GoRogue
                                                           Func<TValue, string>? valueStringifier = null,
                                                           string kvSeparator = " : ", string pairSeparator = ", ",
                                                           string end = "}")
+            where TKey : notnull
         {
             keyStringifier ??= obj => obj?.ToString() ?? "null";
 

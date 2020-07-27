@@ -81,7 +81,7 @@ namespace GoRogue.Messaging
         {
             var messageType = typeof(TMessage);
 
-            if (_subscriberRefs.TryGetValue(messageType, out List<ISubscriberRef> handlerRefs))
+            if (_subscriberRefs.TryGetValue(messageType, out List<ISubscriberRef>? handlerRefs))
             {
                 var item = handlerRefs.FindIndex(i => ReferenceEquals(i.Subscriber, subscriber));
 
@@ -112,7 +112,7 @@ namespace GoRogue.Messaging
                 _typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
 
             foreach (var type in _typeTreeCache[runtimeMessageType])
-                if (_subscriberRefs.TryGetValue(type, out List<ISubscriberRef> handlerRefs))
+                if (_subscriberRefs.TryGetValue(type, out List<ISubscriberRef>? handlerRefs))
                     foreach (var handlerRef in handlerRefs)
                         handlerRef.Handler(message);
         }

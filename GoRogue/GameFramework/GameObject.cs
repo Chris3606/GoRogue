@@ -250,7 +250,7 @@ namespace GoRogue.GameFramework
         }
 
         #region Component Handlers
-        private void On_ComponentAdded(object s, ComponentChangedEventArgs e)
+        private void On_ComponentAdded(object? s, ComponentChangedEventArgs e)
         {
             if (!(e.Component is IGameObjectComponent c))
                 return;
@@ -262,7 +262,7 @@ namespace GoRogue.GameFramework
             c.Parent = _parentObject;
         }
 
-        private void On_ComponentRemoved(object s, ComponentChangedEventArgs e)
+        private void On_ComponentRemoved(object? s, ComponentChangedEventArgs e)
         {
             if (e.Component is IGameObjectComponent c)
                 c.Parent = null;

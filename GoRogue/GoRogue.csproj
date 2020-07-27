@@ -1,47 +1,78 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Basic package info -->
-    <TargetFramework>netstandard2.1</TargetFramework>
-	<RootNamespace>GoRogue</RootNamespace>
-	<Version>3.0.0-alpha01</Version>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1</TargetFrameworks>
+	  <RootNamespace>GoRogue</RootNamespace>
+	  <Authors>Chris3606</Authors>
+	  <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
+	  <Description>Roguelike/2D game utility library.</Description>
+
+    <!--
+    Configure versioning information, making sure to append "debug" to Debug version to allow publishing
+    to NuGet seperately from Release version.
+    -->
+    <Version>3.0.0-alpha01</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
-	<Authors>Chris3606</Authors>
-	<Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
-	<Description>Roguelike/2D game utility library.</Description>
-	
-	<!-- More nuget package settings-->
+
+	  <!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	<PackageReleaseNotes>Addition of a system for creating factory-based architectures.  See https://github.com/Chris3606/GoRogue/releases/tag/2.6.0 for details.</PackageReleaseNotes>
-	<RepositoryUrl>https://github.com/Chris3606/GoRogue</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	  <PackageReleaseNotes>Addition of a system for creating factory-based architectures.  See https://github.com/Chris3606/GoRogue/releases/tag/2.6.0 for details.</PackageReleaseNotes>
+	  <RepositoryUrl>https://github.com/Chris3606/GoRogue</RepositoryUrl>
+	  <RepositoryType>git</RepositoryType>
+	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
-	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>roguelike;roguelikes;rogue;library;2d;game;games</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-	
-	<!-- Enable C# 8.0 nullable reference feature -->
-	<Nullable>enable</Nullable>
+
+	  <!-- Enable C# 8.0 and its nullable reference feature -->
+    <LangVersion>8.0</LangVersion>
+	  <Nullable>enable</Nullable>
+
+    <!--
+    Warnings disabled project-wide:
+        - CA1043: We explicitly permit non-integral/string values to be used as indexers (Point for IMapView)
+        - CA1303: Exception strings are non-localized to avoid generating an exception within an exception
+        - CA1814: Multi-dimensional array usage in GoRogue is for maps and thus will not waste space
+        - CA1710: Suffix of IEnumerable implementations containing collection does not make sense for GoRogue
+                  structures; example: Region => PointCollection??  What would Area be?  This convention only makes
+                  sense for standard library, generic data structures/additions
+        - CA1305: Format providers are not used in string exception messages (again to avoid potentiall generating an
+                  exception inside an exception).
+        - CA1051: Microsoft guidance on preferring readonly fields to get-only properties to avoid defensive copies
+                  when it comes to structs directly contradicts this warning.  Instance fields are necessary for maximum
+                  performance in many instances with value types.  Further, field exposure is required to allow passing
+                  a parameter via "ref".
+        - CA1307: In string comparisons in GoRogue, ordinal behavior is desired, as they are only compared for
+                  equality, not sort-order.
+        - CA2211: GoRogue specifically allows static mutable fields for configuration options like
+                  GlobalRandom.DefaultRNG and Dice parsers.  These fields explicitly document that changing them is not
+                  thread-safe behavior, and that they are meant as configuration to be performed during application
+                  initialization.  This addresses the main concerns with static mutable fields (thread safety), without
+                  costing non-trivial code complexity and performance.
+        - CA1062: Nullability validation is performed by C#8 nullable reference types in GoRogue.
+    -->
+    <NoWarn>CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
+
+    <!-- Generate documentation files for all configurations since Debug and Release are published to NuGet. -->
+    <DocumentationFile>$(OutputPath)\GoRogue.xml</DocumentationFile>
   </PropertyGroup>
-  
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\$(Configuration)\netstandard2.1\GoRogue.xml</DocumentationFile>
-    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
-  </PropertyGroup>
-  
+
+  <!-- Define trace constant for debug builds. -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>bin\$(Configuration)\netstandard2.1\GoRogue.xml</DocumentationFile>
-    <NoWarn>1701;1702;CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
   </PropertyGroup>
-  
+
   <!-- Pack a read-me with the nuget package, so it displays when installed -->
   <ItemGroup>
-    <None Include="readme.txt" Pack="true" PackagePath="." />
+    <Content Include="readme.txt">
+      <Pack>true</Pack>
+      <PackagePath>.</PackagePath>
+    </Content>
   </ItemGroup>
-  
+
   <!-- Dependencies -->
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
@@ -56,10 +87,10 @@
     <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha5" />
     <PackageReference Include="Troschuetz.Random" Version="5.0.1" />
   </ItemGroup>
-  
+
   <!-- When packing, copy the nuget files to the nuget output directory -->
   <Target Name="CopyPackage" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\nuget" />
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\nuget" />
   </Target>
 </Project>

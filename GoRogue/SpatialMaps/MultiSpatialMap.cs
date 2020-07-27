@@ -21,6 +21,7 @@ namespace GoRogue.SpatialMaps
     /// <typeparam name="T">The type of object that will be contained by this AdvancedMultiSpatialMap.</typeparam>
     [PublicAPI]
     public class AdvancedMultiSpatialMap<T> : ISpatialMap<T>
+        where T : notnull
     {
         private readonly Dictionary<T, SpatialTuple<T>> _itemMapping;
         private readonly Dictionary<Point, List<SpatialTuple<T>>> _positionMapping;

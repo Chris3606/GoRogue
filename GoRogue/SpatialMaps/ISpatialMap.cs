@@ -42,6 +42,7 @@ namespace GoRogue.SpatialMaps
     /// <typeparam name="T">The type of object that will be contained by the spatial map.</typeparam>
     [PublicAPI]
     public interface ISpatialMap<T> : IReadOnlySpatialMap<T>
+        where T : notnull
     {
         /// <summary>
         /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
@@ -248,7 +249,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="x">First object to compare.</param>
         /// <param name="y">Second object to compare.</param>
         /// <returns>True if the objects are considered equal, false otherwise.</returns>
-        public bool Equals(T x, T y) => ReferenceEquals(x, y);
+        public bool Equals(T? x, T? y) => ReferenceEquals(x, y);
 
         /// <summary>
         /// Generates a hash based on the object's ID.GetHashCode() function.

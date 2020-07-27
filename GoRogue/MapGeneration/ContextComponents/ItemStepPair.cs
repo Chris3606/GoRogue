@@ -102,7 +102,7 @@ namespace GoRogue.MapGeneration.ContextComponents
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
-        public override bool Equals(object obj) => obj is ItemStepPair<TItem> pair && Equals(pair);
+        public override bool Equals(object? obj) => obj is ItemStepPair<TItem> pair && Equals(pair);
 
         /// <summary>
         /// Returns a hash code based on all of the pair's fields.

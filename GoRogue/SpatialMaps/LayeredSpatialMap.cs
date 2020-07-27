@@ -25,7 +25,8 @@ namespace GoRogue.SpatialMaps
     /// MUST NOT change while the item is in the AdvancedLayeredSpatialMap.
     /// </typeparam>
     [PublicAPI]
-    public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T> where T : IHasLayer
+    public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T>
+        where T : IHasLayer
     {
         // Same as above but startingLayers less layers, for actual use, since we view our layers as
         // 0 -> numberOfLayers - 1
@@ -494,7 +495,7 @@ namespace GoRogue.SpatialMaps
         /// Returns a string representation of each layer in the spatial map.
         /// </summary>
         /// <returns>A string representing each layer of the LayeredSpatialMap</returns>
-        public override string ToString() => ToString(t => t.ToString());
+        public override string ToString() => ToString(t => t.ToString() ?? "null");
 
         /// <summary>
         /// Moves all items that are on layers in <paramref name="layerMask" /> at the specified source location to the target

@@ -16,6 +16,7 @@ namespace GoRogue.SpatialMaps
     /// </remarks>
     [PublicAPI]
     public interface IReadOnlySpatialMap<T> : IEnumerable<ISpatialTuple<T>>
+        where T : notnull
     {
         /// <summary>
         /// The number of items in the spatial map.

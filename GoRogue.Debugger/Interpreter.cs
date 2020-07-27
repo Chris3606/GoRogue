@@ -50,8 +50,9 @@ namespace GoRogue.Debugger
         /// </summary>
         private static Viewport<char> GenerateMapView()
         {
-            Debug.Assert(Map != null, nameof(Map) + " != null");
-            return new Viewport<char>(Map.CharMap(), new Rectangle(_position, _position + (_width, _height)));
+            Debug.Assert(Map != null, nameof(Map) + " == null");
+
+            return new Viewport<char>(Map!.CharMap(), new Rectangle(_position, _position + (_width, _height)));
         }
 
         /// <summary>

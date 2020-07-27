@@ -56,7 +56,7 @@ namespace GoRogue.MapViews
         /// </summary>
         /// <param name="other" />
         /// <returns>True if the given ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false otherwise.</returns>
-        public bool Equals(ArrayMap2D<T> other) => !(other is null) && _array == other._array;
+        public bool Equals(ArrayMap2D<T>? other) => !(other is null) && _array == other._array;
 
         /// <inheritdoc />
         public override int Height => _array.GetLength(1);
@@ -100,7 +100,7 @@ namespace GoRogue.MapViews
         /// True if the given object is an ArrayMap2D&lt;T&gt; with a reference to the same underlying array, false
         /// otherwise.
         /// </returns>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is ArrayMap2D<T> e)
                 return Equals(e);

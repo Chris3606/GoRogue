@@ -56,7 +56,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
-        public override bool Equals(object obj) => obj is Region region && this == region;
+        public override bool Equals(object? obj) => obj is Region region && this == region;
 
         /// <summary>
         /// To facilitate in equality operations

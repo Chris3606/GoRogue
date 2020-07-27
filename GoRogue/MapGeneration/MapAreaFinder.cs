@@ -77,7 +77,7 @@ namespace GoRogue.MapGeneration
                 {
                     var area = Visit(new Point(x, y));
 
-                    if (area != null && area.Count != 0)
+                    if (!ReferenceEquals(null, area) && area.Count != 0)
                         yield return area;
                 }
         }

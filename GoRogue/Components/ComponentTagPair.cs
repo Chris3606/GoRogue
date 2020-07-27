@@ -97,7 +97,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
-        public override bool Equals(object obj) => obj is ComponentTagPair pair && Equals(pair);
+        public override bool Equals(object? obj) => obj is ComponentTagPair pair && Equals(pair);
 
         /// <summary>
         /// Returns a hash code based on all of the pair's field's.

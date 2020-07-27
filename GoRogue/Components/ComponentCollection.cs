@@ -11,7 +11,7 @@ namespace GoRogue.Components
 {
     internal class ReferenceEqualityComparer : IEqualityComparer<object>
     {
-        bool IEqualityComparer<object>.Equals(object x, object y) => ReferenceEquals(x, y);
+        bool IEqualityComparer<object>.Equals(object? x, object? y) => ReferenceEquals(x, y);
 
         public int GetHashCode(object obj) => RuntimeHelpers.GetHashCode(obj);
     }

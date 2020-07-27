@@ -3,9 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
-	
-	<!-- Enable C# 8.0 nullable reference feature -->
-	<Nullable>enable</Nullable>
+
+	  <!-- Enable C# 8.0 nullable reference feature -->
+    <LangVersion>8.0</LangVersion>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
