@@ -137,7 +137,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points in this region
         /// </summary>
-        public Area Points => (Area) _outerPoints.Positions.Concat(_innerPoints.Positions).Concat(_connections.Positions);
+        public IEnumerable<Point> Points => _outerPoints.Concat(_innerPoints).Concat(_connections);
 
         /// <summary>
         /// The Center point of this region
