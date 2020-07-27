@@ -15,29 +15,29 @@ namespace GoRogue.MapGeneration
     public partial class Region
     {
         #region generation
+
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
         /// <param name="name">the name of this region</param>
-        /// <param name="se">the South-East corner of this region</param>
-        /// <param name="ne">the North-East corner of this region</param>
-        /// <param name="nw">the North-West corner of this region</param>
-        /// <param name="sw">the South-West corner of this region</param>
-        public Region(string name, Point se, Point ne, Point nw, Point sw)
+        /// <param name="northWest">the North-West corner of this region</param>
+        /// <param name="northEast">the North-East corner of this region</param>
+        /// <param name="southEast">the South-East corner of this region</param>
+        /// <param name="southWest">the South-West corner of this region</param>
+        public Region(string name, Point northWest, Point northEast, Point southEast, Point southWest)
         {
             Name = name;
-            SouthEastCorner = se;
-            NorthEastCorner = ne;
-            NorthWestCorner = nw;
-            SouthWestCorner = sw;
+            SouthEastCorner = southEast;
+            NorthEastCorner = northEast;
+            NorthWestCorner = northWest;
+            SouthWestCorner = southWest;
 
             _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner));
             _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner));
             _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
-            _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary).Distinct());
-            var inner = InnerFromOuterPoints(_outerPoints);
-            _innerPoints = new Area(inner.Distinct());
+            _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary));
+            _innerPoints = InnerFromOuterPoints(_outerPoints);
         }
         #endregion
 
@@ -94,19 +94,17 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="here">The Point to evaluate</param>
         /// <returns>If this region contains the given point</returns>
-        public bool Contains(Point here)
-        {
-            return Points.Contains(here);
-        }
+        public bool Contains(Point here) =>
+            _outerPoints.Contains(here) || _innerPoints.Contains(here) || _connections.Contains(here);
+
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="here">the point to evaluate</param>
         /// <returns>whether or not the point is within the region</returns>
-        public bool IsCorner(Point here)
-        {
-            return here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
-        }
+        public bool IsCorner(Point here) =>
+            here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
+
         #endregion
 
         #region transform
@@ -117,7 +115,7 @@ namespace GoRogue.MapGeneration
         /// <returns>This region shifted by the distance</returns>
         public Region Shift(Point distance)
         {
-            Region region = new Region(Name, SouthEastCorner + distance, NorthEastCorner + distance, NorthWestCorner + distance, SouthWestCorner + distance);
+            Region region = new Region(Name, NorthWestCorner + distance, NorthEastCorner + distance, SouthEastCorner + distance, SouthWestCorner + distance);
             foreach (var subRegion in SubRegions)
             {
                 ((List<Region>) region.SubRegions).Add(subRegion);
@@ -213,10 +211,9 @@ namespace GoRogue.MapGeneration
         /// <param name="left">the first region to analyze</param>
         /// <param name="right">the second region to analyze</param>
         /// <returns></returns>
-        public static IEnumerable<Point> GetPossibleConnections(Region left, Region right)
-        {
-            return left._outerPoints.Where(here => right._outerPoints.Contains(here) && !left.IsCorner(here) && !right.IsCorner(here));
-        }
+        public static IEnumerable<Point> GetPossibleConnections(Region left, Region right) =>
+            left._outerPoints.Where(here => right._outerPoints.Contains(here) && !left.IsCorner(here) && !right.IsCorner(here));
+
 
         /// <summary>
         /// Adds a new connection to this region
@@ -224,6 +221,9 @@ namespace GoRogue.MapGeneration
         /// <param name="connection">The location of the connection</param>
         public void AddConnection(Point connection)
         {
+            if(!Contains(connection))
+                throw new ArgumentException("Connection must be within the region");
+
             Remove(connection);
             _connections.Add(connection);
         }
@@ -309,7 +309,7 @@ namespace GoRogue.MapGeneration
             Point northeast = RotatePoint(NorthEastCorner - origin, radians) + origin;
             corners.Add(northeast);
 
-            //order the ner corner by Y-value
+            //order the new corner by Y-value
             corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToList();
 
             //split that list in half and then sort by X-value
@@ -323,7 +323,7 @@ namespace GoRogue.MapGeneration
             southwest = bottomTwo[0];
             southeast = bottomTwo[1];
 
-            return new Region(Name, southeast, northeast, northwest, southwest);
+            return new Region(Name, northwest, northeast, southeast, southwest);
         }
 
         #endregion

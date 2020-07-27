@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration
         /// Points in this collection can be removed, which might make them different
         /// from the sum of each of the Boundary Points
         /// </remarks>
-        public Area OuterPoints => _outerPoints;
+        public IReadOnlyArea OuterPoints => _outerPoints;
         private readonly Area _outerPoints = new Area();
 
         /// <summary>
@@ -105,22 +105,22 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The South-East corner of the region
         /// </summary>
-        public Point SouthEastCorner { get; }
+        public readonly Point SouthEastCorner;
 
         /// <summary>
         /// The South-West corner of the region
         /// </summary>
-        public Point SouthWestCorner { get; }
+        public readonly Point SouthWestCorner;
 
         /// <summary>
         /// The North-West corner of the region
         /// </summary>
-        public Point NorthWestCorner { get; }
+        public readonly Point NorthWestCorner;
 
         /// <summary>
         /// the North-East corner of the region
         /// </summary>
-        public Point NorthEastCorner { get; }
+        public readonly Point NorthEastCorner;
 
         //these don't respect inverted-Y
 
@@ -137,7 +137,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points in this region
         /// </summary>
-        public Area Points => new Area(_outerPoints.Positions.Concat(_innerPoints.Positions).Concat(_connections.Positions));
+        public Area Points => (Area) _outerPoints.Positions.Concat(_innerPoints.Positions).Concat(_connections.Positions);
 
         /// <summary>
         /// The Center point of this region

@@ -11,30 +11,16 @@ namespace GoRogue.MapGeneration
         /// Returns a new Region from a parameter set similar to GoRogue.Rectangle
         /// </summary>
         /// <param name="name">The Name of the region</param>
-        /// <param name="start"></param>
+        /// <param name="origin"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        /// <param name="angleRads"></param>
+        /// <param name="degrees"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static Region Rectangle(string name, Point start, int width, int height, double angleRads = 0)
+        public static Region Rectangle(string name, Point origin, int width, int height, int degrees = 0)
         {
-            if (angleRads <= -1 || angleRads >= 1)
-                throw new ArgumentOutOfRangeException(nameof(angleRads), "angleRads must be between -1 and 1.");
-
-            int hRatio = (int)(height * angleRads);
-            int wRatio = (int)(width * angleRads);
-            int east = start.X + width - wRatio;
-            int west = start.X - wRatio;
-            int north = start.Y + hRatio;
-            int south = start.Y + height + hRatio;
-            return new Region(
-                name,
-                nw: start,
-                se: new Point(east - wRatio, south),
-                ne: new Point(east, north),
-                sw: new Point(west, south - hRatio)
-            );
+            Region answer = new Region(name, northWest: origin, northEast: origin + new Point(width, 0), southEast: origin + new Point(width, height), southWest: origin + new Point(0, height));
+            return answer.Rotate(degrees, origin);
         }
 
         /// <summary>
@@ -43,10 +29,8 @@ namespace GoRogue.MapGeneration
         /// <param name="name">The name of this region.</param>
         /// <param name="rectangle">The rectangle containing this region.</param>
         /// <returns/>
-        public static Region FromRectangle(string name, Rectangle rectangle)
-        {
-            return Rectangle(name, rectangle.MinExtent, rectangle.Width, rectangle.Height);
-        }
+        public static Region FromRectangle(string name, Rectangle rectangle) => Rectangle(name, rectangle.MinExtent, rectangle.Width, rectangle.Height);
+
 
         /// <summary>
         /// Creates a new Region in the shape of a parallelogram.
@@ -63,7 +47,7 @@ namespace GoRogue.MapGeneration
             Point ne = origin + new Point(width, 0);
             Point se = origin + new Point(width * 2, height);
             Point sw = origin + new Point(width, height);
-            Region area = new Region(name, se, ne, nw, sw);
+            Region area = new Region(name, nw, ne, se, sw);
             area = area.Rotate(rotationDegrees, origin);
             return area;
         }
@@ -73,13 +57,14 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="outer">An IEnumerable of Points that form a closed region of any shape and size</param>
         /// <returns>All points contained within the outer region</returns>
-        public static IEnumerable<Point> InnerFromOuterPoints(IEnumerable<Point> outer)
+        public static Area InnerFromOuterPoints(IEnumerable<Point> outer)
         {
-            if(!outer.Any())
-                return new List<Point>();
-
             var outerList = outer.OrderBy(x => x.X).ToList();
-            List<Point> points = new List<Point>();
+
+            if(outerList.Count == 0)
+                return new Area();
+
+            Area points = new Area();
 
             for (int i = outerList[0].X + 1; i < outerList[^1].X; i++)
             {

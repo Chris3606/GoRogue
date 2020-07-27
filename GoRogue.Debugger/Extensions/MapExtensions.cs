@@ -16,7 +16,7 @@ namespace GoRogue.Debugger.Extensions
                     if (obj != null)
                         chars[obj.Position] = obj.IsTransparent ?
                             obj.IsWalkable ? '.' : '+' : //transparent
-                            obj.IsWalkable ? '#' : '"'; //opaque
+                            obj.IsWalkable ? '-' : '#'; //opaque
                     else
                         chars[(i, j)] = ' ';
                 }
