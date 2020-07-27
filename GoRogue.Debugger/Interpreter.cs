@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using GoRogue.Debugger.Extensions;
@@ -21,13 +22,12 @@ namespace GoRogue.Debugger
         private static int _height;//height of the console
         private static bool _invertY;//to use default, or make positions match cartesian graph
         private static bool _exit;//used to decide whether or not to exit the program
-        private static bool _calculateFov;//whether to view an FOV radius, or the whole map
+        //private static bool _calculateFov;//whether to view an FOV radius, or the whole map
         private static Point _position;//the printing location of the viewport on the Map
         private static bool _dirty = true; //whether or not to redraw the map
-        private static Viewport<char> _viewport;//the "visible" region of the map
-        private static Map _map => Routine.TransformedMap; //the map that we're printing to the console
-        public static IRoutine Routine { get; private set; } //the routine that we're running in this test
-        private static Viewport<char> Viewport => _viewport;
+        private static Viewport<char> Viewport => GenerateMapView();//the "visible" region of the map
+        private static Map? Map => Routine?.TransformedMap; //the map that we're printing to the console
+        private static IRoutine? Routine { get; set; } //the routine that we're running in this test
 
         #region setup
         /// <summary>
@@ -41,10 +41,8 @@ namespace GoRogue.Debugger
             _height = System.Console.WindowHeight;
 
             Routine = PickRoutine();
-            Routine.GenerateMap();
-            _position = (_map.Width / 2 - _width / 2, _map.Height / 2 - _height / 2);
-            _viewport = GenerateMapView();
-            Console.WriteLine("Initialized...");
+            Routine?.GenerateMap();
+            if (Map != null) _position = (Map.Width / 2 - _width / 2, Map.Height / 2 - _height / 2);
         }
 
         /// <summary>
@@ -52,21 +50,22 @@ namespace GoRogue.Debugger
         /// </summary>
         private static Viewport<char> GenerateMapView()
         {
-            return new Viewport<char>(_map.CharMap(), new Rectangle(_position, _position + (_width, _height)));
+            Debug.Assert(Map != null, nameof(Map) + " != null");
+            return new Viewport<char>(Map.CharMap(), new Rectangle(_position, _position + (_width, _height)));
         }
 
         /// <summary>
         /// Picks a routine out of the possible candidates
         /// </summary>
         /// <returns>The Routine we're running in this test</returns>
-        private static IRoutine PickRoutine()
+        private static IRoutine? PickRoutine()
         {
             Console.WriteLine("Pick your routine using numbers");
-            List<IRoutine> routines = GetRoutines();
+            List<IRoutine?> routines = GetRoutines();
             int i = 0;
             foreach (var routine in routines)
             {
-                Console.WriteLine(i + ") " + routine.Name);
+                Console.WriteLine(i + ") " + routine?.Name);
                 i++;
             }
             var key = Console.ReadKey().Key;
@@ -76,7 +75,7 @@ namespace GoRogue.Debugger
                 i = Int32.Parse(number);
                 return routines[i];
             }
-            catch (Exception e)
+            catch
             {
                 Console.WriteLine("Could not understand input; please use numbers");
                 return PickRoutine();
@@ -87,14 +86,14 @@ namespace GoRogue.Debugger
         /// Gets all of the classes that implement IRoutine
         /// </summary>
         /// <returns>A list of all routines available</returns>
-        private static List<IRoutine> GetRoutines()
+        private static List<IRoutine?> GetRoutines()
         {
-            List<IRoutine> objects = new List<IRoutine>();
-            var types = Assembly.GetAssembly(typeof(IRoutine)).GetTypes();
+            List<IRoutine?> objects = new List<IRoutine?>();
+            Type[]? types = Assembly.GetAssembly(typeof(IRoutine))?.GetTypes();
             types = types.Where(t => t.GetInterface(nameof(IRoutine)) != null).ToArray();
             foreach (Type type in types)
             {
-                objects.Add((IRoutine)Activator.CreateInstance(type));
+                objects.Add(Activator.CreateInstance(type) as IRoutine);
             }
             objects.Sort();
             return objects;
@@ -119,10 +118,8 @@ namespace GoRogue.Debugger
         /// <summary>
         /// Elapse a single unit of time
         /// </summary>
-        private static void GoRogueGameFrame()
-        {
-            Routine.ElapseTimeUnit();
-        }
+        private static void GoRogueGameFrame() => Routine?.ElapseTimeUnit();
+
         #endregion
         #region ui
         private static void InterpretKeyPress()
@@ -148,8 +145,7 @@ namespace GoRogue.Debugger
         {
             _width = System.Console.WindowWidth - 1;
             _height = System.Console.WindowHeight - 1;
-            _viewport = GenerateMapView();
-            string output = _viewport.ExtendToString(elementSeparator:"");
+            string output = Viewport.ExtendToString(elementSeparator:"");
             Console.Write(output);
         }
 

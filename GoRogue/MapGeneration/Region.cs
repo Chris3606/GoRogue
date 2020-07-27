@@ -9,50 +9,35 @@ using Troschuetz.Random;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// A region of the map with four corners of arbitrary shape and size
+    /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
     public partial class Region
     {
         #region generation
+
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
         /// <param name="name">the name of this region</param>
-        /// <param name="se">the South-East corner of this region</param>
-        /// <param name="ne">the North-East corner of this region</param>
-        /// <param name="nw">the North-West corner of this region</param>
-        /// <param name="sw">the South-West corner of this region</param>
-        public Region(string name, Point se, Point ne, Point nw, Point sw)
+        /// <param name="northWest">the North-West corner of this region</param>
+        /// <param name="northEast">the North-East corner of this region</param>
+        /// <param name="southEast">the South-East corner of this region</param>
+        /// <param name="southWest">the South-West corner of this region</param>
+        public Region(string name, Point northWest, Point northEast, Point southEast, Point southWest)
         {
             Name = name;
-            Generate(se, ne, nw, sw);
-        }
+            SouthEastCorner = southEast;
+            NorthEastCorner = northEast;
+            NorthWestCorner = northWest;
+            SouthWestCorner = southWest;
 
-        /// <summary>
-        /// A private function for generating the values of the region based on corners.
-        /// </summary>
-        /// <param name="se">South-East corner</param>
-        /// <param name="ne">North-East corner</param>
-        /// <param name="nw">North-West corner</param>
-        /// <param name="sw">South-West corner</param>
-        /// <remarks>This will destroy any Connections that the region currently has.</remarks>
-        private void Generate(Point se, Point ne, Point nw, Point sw)
-        {
-            SouthEastCorner = se;
-            NorthEastCorner = ne;
-            NorthWestCorner = nw;
-            SouthWestCorner = sw;
-            _connections = new List<Point>();
-            _westBoundary = Lines.Get(NorthWestCorner, SouthWestCorner).ToList();
-            _southBoundary = Lines.Get(SouthWestCorner, SouthEastCorner).ToList();
-            _eastBoundary = Lines.Get(SouthEastCorner, NorthEastCorner).ToList();
-            _northBoundary = Lines.Get(NorthEastCorner, NorthWestCorner).ToList();
-
-            Rise = se.Y - ne.Y;
-            Run = se.X - sw.X;
-            _outerPoints = _westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary).Distinct().ToList();
-            _innerPoints = InnerFromOuterPoints(OuterPoints).Distinct().ToList();
+            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner));
+            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner));
+            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
+            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
+            _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary));
+            _innerPoints = InnerFromOuterPoints(_outerPoints);
         }
         #endregion
 
@@ -71,13 +56,22 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
-        public override bool Equals(object obj)
+        public override bool Equals(object obj) => obj is Region region && this == region;
+
+        /// <summary>
+        /// To facilitate in equality operations
+        /// </summary>
+        /// <returns>The Hash Code of the Region</returns>
+        /// <remarks>
+        /// Due to the nature of Connections being personal to the map generation algorithm,
+        /// connections are not considered when evaluating a region's Hash Code.
+        /// </remarks>
+        public override int GetHashCode()
         {
-            if (obj.GetType() != typeof(Region))
-                return false;
-            else
-                return this == (Region)obj;
+            return SouthEastCorner.GetHashCode() + NorthEastCorner.GetHashCode() + SouthWestCorner.GetHashCode() +
+                       NorthWestCorner.GetHashCode() + Center.GetHashCode();
         }
+
         #endregion
 
         #region management
@@ -100,19 +94,17 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="here">The Point to evaluate</param>
         /// <returns>If this region contains the given point</returns>
-        public bool Contains(Point here)
-        {
-            return new Area(Points).Contains(here);
-        }
+        public bool Contains(Point here) =>
+            _outerPoints.Contains(here) || _innerPoints.Contains(here) || _connections.Contains(here);
+
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="here">the point to evaluate</param>
         /// <returns>whether or not the point is within the region</returns>
-        public bool IsCorner(Point here)
-        {
-            return here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
-        }
+        public bool IsCorner(Point here) =>
+            here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
+
         #endregion
 
         #region transform
@@ -123,7 +115,7 @@ namespace GoRogue.MapGeneration
         /// <returns>This region shifted by the distance</returns>
         public Region Shift(Point distance)
         {
-            Region region = new Region(Name, SouthEastCorner + distance, NorthEastCorner + distance, NorthWestCorner + distance, SouthWestCorner + distance);
+            Region region = new Region(Name, NorthWestCorner + distance, NorthEastCorner + distance, SouthEastCorner + distance, SouthWestCorner + distance);
             foreach (var subRegion in SubRegions)
             {
                 ((List<Region>) region.SubRegions).Add(subRegion);
@@ -197,11 +189,11 @@ namespace GoRogue.MapGeneration
         /// <param name="a">the first region to evaluate</param>
         /// <param name="b">the second region to evaluate</param>
         /// <param name="rng">The RNG to use.  Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
-        public static void AddConnectionBetween(Region a, Region b, IGenerator rng = null)
+        public static void AddConnectionBetween(Region a, Region b, IGenerator? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
-            List<Point> possible =  a.OuterPoints.Where(here => b.OuterPoints.Contains(here) && !a.IsCorner(here) && !b.IsCorner(here)).ToList();
+            List<Point> possible = GetPossibleConnections(a, b).ToList();
 
             if (possible.Count <= 2)
                 throw new ArgumentException("The two proposed regions have no overlapping points.");
@@ -214,11 +206,24 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
+        /// Gets an IEnumerable<Point> of all the OuterPoints shared by the left and right regions
+        /// </summary>
+        /// <param name="left">the first region to analyze</param>
+        /// <param name="right">the second region to analyze</param>
+        /// <returns></returns>
+        public static IEnumerable<Point> GetPossibleConnections(Region left, Region right) =>
+            left._outerPoints.Where(here => right._outerPoints.Contains(here) && !left.IsCorner(here) && !right.IsCorner(here));
+
+
+        /// <summary>
         /// Adds a new connection to this region
         /// </summary>
         /// <param name="connection">The location of the connection</param>
         public void AddConnection(Point connection)
         {
+            if(!Contains(connection))
+                throw new ArgumentException("Connection must be within the region");
+
             Remove(connection);
             _connections.Add(connection);
         }
@@ -230,7 +235,7 @@ namespace GoRogue.MapGeneration
         /// <param name="imposing">the region to check for common outer points</param>
         public void RemoveOverlappingOuterPoints(Region imposing)
         {
-            foreach (Point c in imposing.OuterPoints)
+            foreach (Point c in imposing._outerPoints)
             {
                 while (_outerPoints.Contains(c))
                     _outerPoints.Remove(c);
@@ -246,7 +251,7 @@ namespace GoRogue.MapGeneration
         /// <param name="imposing">the region to check for common outer points</param>
         public void RemoveOverlappingInnerPoints(Region imposing)
         {
-            foreach (Point c in imposing.InnerPoints)
+            foreach (Point c in imposing._innerPoints)
             {
                 while (_outerPoints.Contains(c))
                     _outerPoints.Remove(c);
@@ -271,70 +276,56 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
+        /// Rotates a region around it's center
+        /// </summary>
+        /// <param name="degrees">The amount of degrees to rotate this region</param>
+        /// <param name="doToSelf">Whether to perform this transformation on itself, or return a new region.</param>
+        /// <returns>A region equal to the original region rotated by the given degree</returns>
+        public virtual Region Rotate(double degrees) => Rotate(degrees, Center);
+
+        /// <summary>
         /// Rotates this region by an arbitrary number of degrees
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <param name="doToSelf">Whether to perform this rotation on this region, or return a new region</param>
         /// <param name="origin">The Point around which to rotate</param>
         /// <returns>This region, rotated</returns>
         /// <remarks>
         /// This is destructive to the region's Connections, so you should try to refrain from generating those
         /// until after you've performed your rotations.
         /// </remarks>
-        public virtual Region Rotate(double degrees, bool doToSelf, Point origin = default)
+        public virtual Region Rotate(double degrees, Point origin)
         {
+            degrees = MathHelpers.WrapAround(degrees, 360);
             double radians = SadRogue.Primitives.MathHelpers.ToRadian(degrees);
 
+            //figure out the new corners post-rotation
             List<Point> corners = new List<Point>();
-            if (origin == default(Point))
-                origin = new Point((Left + Right) / 2, (Top + Bottom) / 2);
+            Point southwest = RotatePoint(SouthWestCorner - origin, radians) + origin;
+            corners.Add(southwest);
+            Point southeast = RotatePoint(SouthEastCorner - origin, radians) + origin;
+            corners.Add(southeast);
+            Point northwest = RotatePoint(NorthWestCorner - origin, radians) + origin;
+            corners.Add(northwest);
+            Point northeast = RotatePoint(NorthEastCorner - origin, radians) + origin;
+            corners.Add(northeast);
 
-            degrees = MathHelpers.WrapAround(degrees, 360);
+            //order the new corner by Y-value
+            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToList();
 
-            Point sw = SouthWestCorner - origin;
-            int x = (int) Math.Round(sw.X * Math.Cos(radians) - sw.Y * Math.Sin(radians));
-            int y = (int) Math.Round(sw.X * Math.Sin(radians) + sw.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + origin);
+            //split that list in half and then sort by X-value
+            Point[] topTwo = new Point[] { corners[0], corners[1] };
+            topTwo = topTwo.OrderBy(c => c.X).ToArray();
+            northwest = topTwo[0];
+            northeast = topTwo[1];
 
-            Point se = SouthEastCorner - origin;
-            x = (int) Math.Round(se.X * Math.Cos(radians) - se.Y * Math.Sin(radians));
-            y = (int) Math.Round(se.X * Math.Sin(radians) + se.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + origin);
+            Point[] bottomTwo = new Point[] { corners [2], corners [3] };
+            bottomTwo = bottomTwo.OrderBy(c => c.X).ToArray();
+            southwest = bottomTwo[0];
+            southeast = bottomTwo[1];
 
-            Point nw = NorthWestCorner - origin;
-            x = (int) Math.Round(nw.X * Math.Cos(radians) - nw.Y * Math.Sin(radians));
-            y = (int) Math.Round(nw.X * Math.Sin(radians) + nw.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + origin);
-
-            Point ne = NorthEastCorner - origin;
-            x = (int) Math.Round(ne.X * Math.Cos(radians) - ne.Y * Math.Sin(radians));
-            y = (int) Math.Round(ne.X * Math.Sin(radians) + ne.Y * Math.Cos(radians));
-            corners.Add(new Point(x, y) + origin);
-
-            sw = corners.OrderBy(c => -c.Y).ThenBy(c => c.X).First();
-            corners.Remove(sw);
-
-            se = corners.OrderBy(c => -c.Y).First();
-            corners.Remove(se);
-
-            nw = corners.OrderBy(c => c.X).First();
-            corners.Remove(nw);
-
-            ne = corners.OrderBy(c => -c.X).First();
-
-            if (doToSelf)
-            {
-                Generate(se, ne, nw, sw);
-
-                foreach (Region subRegion in SubRegions)
-                {
-                    subRegion.Rotate(degrees, true, origin);
-                }
-                return this;
-            }
-            else
-                return new Region(Name, se, ne, nw, sw);
+            return new Region(Name, northwest, northeast, southeast, southwest);
         }
+
         #endregion
 
         #region subregions

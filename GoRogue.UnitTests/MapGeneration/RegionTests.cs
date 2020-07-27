@@ -29,48 +29,22 @@ namespace GoRogue.UnitTests.MapGeneration
         private readonly int height = 7;
         private readonly int rise = 1;
         private readonly int run = 4;
-        private readonly double angleRadians = 0.25;
+        private readonly int degrees = 22;
 
         public RegionTests(ITestOutputHelper output)
         {
-            area = new Region("forbidden zone", se, ne, nw, sw);
-            _output = output;
-            PrintRegion(area);
+            area = new Region("forbidden zone", nw, ne, se, sw);
         }
 
-        private void PrintRegion(Region region)
-        {
-            var map = new char[region.Width + 1, region.Height + 1];
-            _output.WriteLine(region.Name + ", Width: " + region.Width + ", Height: " + region.Height);
-
-            for (int y = 0; y <= region.Height; y++)
-            {
-                string line = "";
-                for (int x = 0; x <= region.Width; x++)
-                {
-                    Point here = new Point(x, y);
-                    if (region.Connections.Contains(here))
-                        map[x, y] = '+';
-                    else if (region.OuterPoints.Contains(here))
-                        map[x, y] = '#';
-                    else if (region.InnerPoints.Contains(here))
-                        map[x, y] = '.';
-                    else
-                        map[x, y] = ' ';
-                    line += map[x, y];
-                }
-                _output.WriteLine(line);
-            }
-        }
         [Fact]
         public void RegionTest()
         {
-            Assert.Equal(14, area.OuterPoints.Count());
-            Assert.Equal(20, area.InnerPoints.Count());
-            Assert.Equal(5, area.NorthBoundary.Count());
-            Assert.Equal(4, area.WestBoundary.Count());
-            Assert.Equal(5, area.SouthBoundary.Count());
-            Assert.Equal(4, area.EastBoundary.Count());
+            Assert.Equal(14, area.OuterPoints.Count);
+            Assert.Equal(20, area.InnerPoints.Count);
+            Assert.Equal(5, area.NorthBoundary.Count);
+            Assert.Equal(4, area.WestBoundary.Count);
+            Assert.Equal(5, area.SouthBoundary.Count);
+            Assert.Equal(4, area.EastBoundary.Count);
         }
         [Fact]
         public void ToStringOverrideTest()
@@ -96,9 +70,8 @@ namespace GoRogue.UnitTests.MapGeneration
             Point tr = new Point(2, 0);
             Point br = new Point(2, 2);
             Point bl = new Point(0, 2);
-            Region a2 = new Region("zone of terror", br, tr, tl, bl);
-            PrintRegion(a2);
-            List<Point> answer = area.Overlap(a2).ToList();
+            Region a2 = new Region("zone of terror", tl, tr, br, bl);
+            IEnumerable<Point> answer = area.Overlap(a2);
 
             foreach (Point c in answer)
             {
@@ -161,7 +134,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Region a1 = area;
             Region a2 = area.Shift(two);
 
-            foreach (Point inner in a2.InnerPoints)
+            foreach (Point inner in a2.InnerPoints.Positions)
                 Assert.True(a1.Contains(inner - two));
         }
 
@@ -184,36 +157,33 @@ namespace GoRogue.UnitTests.MapGeneration
             Point sw = new Point(0, 9);
             Point se = new Point(9, 9);
             Point ne = new Point(9, 0);
-            Region mainArea = new Region("parent area", ne: ne, nw: nw, se: se, sw: sw);
-            PrintRegion(mainArea);
+            Region mainArea = new Region("parent area", northWest: nw, northEast: ne, southEast: se, southWest: sw);
+
             nw = new Point(1, 1);
             se = new Point(5, 5);
             sw = new Point(1, 5);
             ne = new Point(5, 1);
-            Region imposingSubArea = new Region("imposing sub area", ne: ne, nw: nw, se: se, sw: sw);
-            PrintRegion(imposingSubArea);
+            Region imposingSubArea = new Region("imposing sub area", northWest: nw, northEast: ne, southEast: se, southWest: sw);
 
             nw = new Point(4, 4);
             se = new Point(8, 8);
             sw = new Point(4, 8);
             ne = new Point(8, 4);
-            Region hostSubArea = new Region("host sub area", ne: ne, nw: nw, se: se, sw: sw);
-            PrintRegion(hostSubArea);
+            Region hostSubArea = new Region("host sub area", northWest: nw, northEast: ne, southEast: se, southWest: sw);
 
             mainArea.Add(hostSubArea);
             mainArea.Add(imposingSubArea);
-            PrintRegion(mainArea);
 
             mainArea.DistinguishSubRegions();
-            PrintRegion(mainArea);
             hostSubArea = mainArea.GetRegion("imposing sub area");
             imposingSubArea = mainArea.GetRegion("host sub area");
-            foreach (Point c in imposingSubArea.InnerPoints)
+
+            foreach (Point c in imposingSubArea.InnerPoints.Positions)
             {
                 Assert.True(mainArea.Contains(c), "Main area somehow had a Point removed.");
                 Assert.False(hostSubArea.Contains(c), "sub area contains a Point in imposing area.");
             }
-            foreach (Point c in hostSubArea.InnerPoints)
+            foreach (Point c in hostSubArea.InnerPoints.Positions)
             {
                 Assert.True(mainArea.Contains(c), "Main area somehow lost a Point.");
                 Assert.False(imposingSubArea.Contains(c), "a Point should have been removed from the sub area but was not.");
@@ -225,14 +195,14 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             Region a = Region.Rectangle("test-tangle", new Point(0, 0), 6, 6);
             Region b = Region.Rectangle("rest-ert", new Point(a.Right, a.Top), 5, 5);
-            int aCountBefore = a.OuterPoints.Count();
-            int bCountBefore = b.OuterPoints.Count();
+            int aCountBefore = a.OuterPoints.Count;
+            int bCountBefore = b.OuterPoints.Count;
             Region.AddConnectionBetween(a, b);
-            Assert.Equal(1, a.Connections.Count());
-            Assert.Equal(1, b.Connections.Count());
+            Assert.Equal(1, a.Connections.Count);
+            Assert.Equal(1, b.Connections.Count);
 
-            Assert.Equal(aCountBefore - 1, a.OuterPoints.Count());
-            Assert.Equal(bCountBefore - 1, b.OuterPoints.Count());
+            Assert.Equal(aCountBefore - 1, a.OuterPoints.Count);
+            Assert.Equal(bCountBefore - 1, b.OuterPoints.Count);
 
         }
         [Fact]
@@ -241,11 +211,11 @@ namespace GoRogue.UnitTests.MapGeneration
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(1, 1), new Point(3, 4)));
             Region b = Region.FromRectangle("Area B", new Rectangle(new Point(3, 0), new Point(6, 5)));
 
-            int aCountBefore = a.OuterPoints.Count();
-            int bCountBefore = b.OuterPoints.Count();
+            int aCountBefore = a.OuterPoints.Count;
+            int bCountBefore = b.OuterPoints.Count;
             a.RemoveOverlappingOuterPoints(b);
-            Assert.True(a.OuterPoints.Count() < aCountBefore);
-            Assert.Equal(b.OuterPoints.Count(), bCountBefore);
+            Assert.True(a.OuterPoints.Count < aCountBefore);
+            Assert.Equal(b.OuterPoints.Count, bCountBefore);
         }
         [Fact]
         public void RemoveOverlappingInnerpointsTest()
@@ -253,11 +223,11 @@ namespace GoRogue.UnitTests.MapGeneration
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(1, 1), new Point(3, 4)));
             Region b = Region.FromRectangle("Area B", new Rectangle(new Point(3, 0), new Point(6, 5)));
 
-            int aCountBefore = a.OuterPoints.Count();
-            int bCountBefore = b.OuterPoints.Count();
+            int aCountBefore = a.OuterPoints.Count;
+            int bCountBefore = b.OuterPoints.Count;
             a.RemoveOverlappingInnerPoints(b);
-            Assert.True(a.OuterPoints.Count() < aCountBefore, "No connecting points were removed from Area A");
-            Assert.Equal(b.OuterPoints.Count(), bCountBefore);
+            Assert.True(a.OuterPoints.Count < aCountBefore, "No connecting points were removed from Area A");
+            Assert.Equal(b.OuterPoints.Count, bCountBefore);
         }
         [Fact]
         public void RemoveOverlappingPointsTest()
@@ -265,13 +235,13 @@ namespace GoRogue.UnitTests.MapGeneration
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(3, 3), new Point(5, 5)));
             Region b = Region.FromRectangle("Area B", new Rectangle(new Point(1, 1), new Point(7, 7)));
 
-            int aCountBefore = a.OuterPoints.Count();
-            int bCountBefore = b.OuterPoints.Count();
+            int aCountBefore = a.OuterPoints.Count;
+            int bCountBefore = b.OuterPoints.Count;
             a.RemoveOverlappingPoints(b);
 
-            Assert.Empty(a.OuterPoints);
-            Assert.Empty(a.InnerPoints);
-            Assert.Equal(bCountBefore,b.OuterPoints.Count());
+            Assert.Empty(a.OuterPoints.Positions);
+            Assert.Empty(a.InnerPoints.Positions);
+            Assert.Equal(bCountBefore,b.OuterPoints.Count);
         }
         [Fact]
         public void RotateTest()
@@ -295,9 +265,9 @@ namespace GoRogue.UnitTests.MapGeneration
              */
             float degrees = 45.0f;
             Point centerOfRotation = new Point(6,14);
-            Region prior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), centerOfRotation);
-            Region copyOfPrior = new Region("bermuda triangle", new Point(14, 6), new Point(0, 1), new Point(0, 0), centerOfRotation);
-            Region post = prior.Rotate(degrees, false, centerOfRotation);
+            Region prior = new Region("bermuda triangle", new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
+            Region copyOfPrior = new Region("bermuda triangle", new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
+            Region post = prior.Rotate(degrees, centerOfRotation);
             Assert.Equal(prior.Bottom, post.Bottom);
             Assert.Equal(prior.SouthWestCorner, post.SouthWestCorner);
             Assert.True(prior.Left < post.Left);
@@ -306,17 +276,13 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(prior.SouthEastCorner.Y < post.SouthEastCorner.Y);
 
             Assert.Equal(copyOfPrior, prior);
-
-            Region rightAnglePost = prior.Rotate(degrees * 2, false, centerOfRotation);
-            post.Rotate(degrees, true, centerOfRotation);
-            Assert.Equal(rightAnglePost, post);
         }
 
         [Fact]
         public void RectangleTest()
         {
 
-            Region room = Region.Rectangle("my office", start, width, height, angleRadians);
+            Region room = Region.Rectangle("my office", start, width, height, degrees);
 
             Point nw = room.NorthWestCorner;
             Point sw = room.SouthWestCorner;
@@ -333,13 +299,6 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(ne.Y > nw.Y);
             Assert.True(ne.X > se.X);
             Assert.True(se.Y > ne.Y);
-
-            double topDiff = MathHelpers.DistanceBetween(nw, ne);
-            double rightDiff = MathHelpers.DistanceBetween(se, ne);
-            double bottomDiff = MathHelpers.DistanceBetween(sw, se);
-            double leftDiff = MathHelpers.DistanceBetween(nw, sw);
-            Assert.Equal(topDiff, bottomDiff);
-            Assert.Equal(leftDiff, rightDiff);
         }
         [Fact]
         public static void FromRectangleTest()
@@ -348,11 +307,11 @@ namespace GoRogue.UnitTests.MapGeneration
             Region area = Region.FromRectangle("square", rectangle);
             Assert.Equal(rectangle.Width + 1, area.Width);
             Assert.Equal(rectangle.Height + 1, area.Height);
-            Assert.Equal(20, area.OuterPoints.Count());
-            Assert.Equal(6, area.NorthBoundary.Count());
-            Assert.Equal(6, area.SouthBoundary.Count());
-            Assert.Equal(6, area.EastBoundary.Count());
-            Assert.Equal(6, area.WestBoundary.Count());
+            Assert.Equal(20, area.OuterPoints.Count);
+            Assert.Equal(6, area.NorthBoundary.Count);
+            Assert.Equal(6, area.SouthBoundary.Count);
+            Assert.Equal(6, area.EastBoundary.Count);
+            Assert.Equal(6, area.WestBoundary.Count);
         }
         [Fact]
         public void RegularParallelogramTest()
@@ -371,11 +330,11 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void HasRegionTest()
         {
-            Region house = new Region("house", ne: ne, nw: nw, se: se, sw: sw);
+            Region house = new Region("house", northWest: nw, northEast: ne, southEast: se, southWest: sw);
 
-            house.Add(new Region("parlor", ne: ne, nw: nw, se: se, sw: sw));
-            house.Add(new Region("ballroom", ne: ne, nw: nw, se: se, sw: sw));
-            house.Add(new Region("kitchenette", ne: ne, nw: nw, se: se, sw: sw));
+            house.Add(new Region("parlor", northWest: nw, northEast: ne, southEast: se, southWest: sw));
+            house.Add(new Region("ballroom", northWest: nw, northEast: ne, southEast: se, southWest: sw));
+            house.Add(new Region("kitchenette", northWest: nw, northEast: ne, southEast: se, southWest: sw));
             Assert.False(house.HasRegion("house"));
             Assert.False(house.HasRegion("studio"));
             Assert.True(house.HasRegion("ballroom"));
@@ -384,17 +343,24 @@ namespace GoRogue.UnitTests.MapGeneration
         }
 
         [Fact]
+        public void InnerFromOuterPointsTest()
+        {
+            Rectangle rectangle = new Rectangle(new Point(1, 1), new Point(5, 5));
+            Assert.Equal(20, area.InnerPoints.Positions.Count);
+        }
+
+        [Fact]
         public void SubRegionsTest()
         {
-            Region house = new Region("house", ne: ne, nw: nw, se: se, sw: sw);
-            house.Add(new Region("parlor", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            Region house = new Region("house", northWest: nw, northEast: ne, southEast: se, southWest: sw);
+            house.Add(new Region("parlor", northWest: nw + 1, northEast: ne + 3, southEast: se + 3, southWest: sw + 2));
             Assert.Equal(1, house.SubRegions.Count);
-            house.Add(new Region("hall", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            house.Add(new Region("hall", northWest: nw + 1, northEast: ne + 3, southEast: se + 3, southWest: sw + 2));
             Assert.Equal(2, house.SubRegions.Count);
-            house.Add(new Region("shitter", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2));
+            house.Add(new Region("shitter", northWest: nw + 1, northEast: ne + 3, southEast: se + 3, southWest: sw + 2));
             Assert.Equal(3, house.SubRegions.Count);
 
-            Region expected = new Region("parlor", ne: ne + 3, nw: nw + 1, se: se + 3, sw: sw + 2);
+            Region expected = new Region("parlor", northWest: nw + 1, northEast: ne + 3, southEast: se + 3, southWest: sw + 2);
 
             Assert.Equal(expected, house.GetRegion("parlor"));
 
