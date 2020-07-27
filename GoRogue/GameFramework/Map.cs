@@ -367,7 +367,7 @@ namespace GoRogue.GameFramework
         /// <param name="y">Y-value of the position to get the terrain for.</param>
         /// <returns>
         /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was
-        /// not castable to <see cref="TTerrain"/>.
+        /// not castable to <typeparamref name="TTerrain"/>.
         /// </returns>
         public TTerrain? GetTerrainAt<TTerrain>(int x, int y) where TTerrain : class, IGameObject
             => _terrain[x, y] as TTerrain;
@@ -482,7 +482,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Sets all terrain on the current map to be equal to the corresponding values from the map view you pass in.
         /// All terrain will in the map view will be removed from its current Map, if any, and its position edited
-        /// to what it is in the <see cref="overlay"/>, before it is added to the map.
+        /// to what it is in the <paramref name="overlay"/>, before it is added to the map.
         /// </summary>
         /// <remarks>
         /// If translation between the overlay and IGameObject is required, see the overloads of this function that

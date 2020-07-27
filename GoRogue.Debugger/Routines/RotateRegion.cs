@@ -13,7 +13,7 @@ namespace GoRogue.Debugger.Routines
         private List<Region> _currentRegions = new List<Region>();
         private List<Region> _originalRegions = new List<Region>();
         public Map? BaseMap => _baseMap;
-        private double _rotation = 0;
+        private double _rotation;
         public Map? TransformedMap => _transformedMap;
         public IEnumerable<Region> Regions => _currentRegions;
         public string Name { get; set; }
@@ -76,7 +76,7 @@ namespace GoRogue.Debugger.Routines
                 foreach (Point p in region.InnerPoints.Positions)
                 {
                     if (map.Contains(p))
-                        map.SetTerrain(new GameObject(p, 0, null, true, true));
+                        map.SetTerrain(new GameObject(p, 0, null));
                 }
 
                 foreach (Point p in region.OuterPoints.Positions)

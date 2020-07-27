@@ -105,9 +105,13 @@ namespace GoRogue.MapGeneration
         {
             foreach (var pos in perimeterPositions)
             {
+                bool top = Rectangle.IsOnSide(pos, Direction.Up);
+                bool right = Rectangle.IsOnSide(pos, Direction.Right);
+                bool down = Rectangle.IsOnSide(pos, Direction.Down);
+                bool left = Rectangle.IsOnSide(pos, Direction.Left);
+
                 // Not directly on perimeter of rectangle
-                if (!Rectangle.IsOnTopEdge(pos) && !Rectangle.IsOnRightEdge(pos) && !Rectangle.IsOnBottomEdge(pos) &&
-                    !Rectangle.IsOnLeftEdge(pos))
+                if (!(top || right || down || left))
                     throw new ArgumentException(
                         $"Positions added to a {nameof(RectangleEdgePositionsList)} must be on one of the edges of the rectangle.",
                         nameof(perimeterPositions));
@@ -119,16 +123,16 @@ namespace GoRogue.MapGeneration
                 // Add to collection of positions and appropriate sub-lists
                 _positions.Add(pos);
 
-                if (Rectangle.IsOnTopEdge(pos))
+                if (top)
                     _topPositions.Add(pos);
 
-                if (Rectangle.IsOnRightEdge(pos))
+                if (right)
                     _rightPositions.Add(pos);
 
-                if (Rectangle.IsOnBottomEdge(pos))
+                if (down)
                     _bottomPositions.Add(pos);
 
-                if (Rectangle.IsOnLeftEdge(pos))
+                if (left)
                     _leftPositions.Add(pos);
             }
         }
@@ -161,16 +165,16 @@ namespace GoRogue.MapGeneration
                 // Remove from collection of positions and appropriate sub-lists
                 _positions.Remove(pos);
 
-                if (Rectangle.IsOnTopEdge(pos))
+                if (Rectangle.IsOnSide(pos, Direction.Up))
                     _topPositions.Remove(pos);
 
-                if (Rectangle.IsOnRightEdge(pos))
+                if (Rectangle.IsOnSide(pos, Direction.Right))
                     _rightPositions.Remove(pos);
 
-                if (Rectangle.IsOnBottomEdge(pos))
+                if (Rectangle.IsOnSide(pos, Direction.Down))
                     _bottomPositions.Remove(pos);
 
-                if (Rectangle.IsOnLeftEdge(pos))
+                if (Rectangle.IsOnSide(pos, Direction.Left))
                     _leftPositions.Remove(pos);
             }
         }

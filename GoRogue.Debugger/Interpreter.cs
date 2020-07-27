@@ -37,8 +37,8 @@ namespace GoRogue.Debugger
         {
             _invertY = false;
             _exit = false;
-            _width = System.Console.WindowWidth;
-            _height = System.Console.WindowHeight;
+            _width = Console.WindowWidth;
+            _height = Console.WindowHeight;
 
             Routine = PickRoutine();
             Routine?.GenerateMap();
@@ -143,8 +143,8 @@ namespace GoRogue.Debugger
 
         private static void DrawMap()
         {
-            _width = System.Console.WindowWidth - 1;
-            _height = System.Console.WindowHeight - 1;
+            _width = Console.WindowWidth - 1;
+            _height = Console.WindowHeight - 1;
             string output = Viewport.ExtendToString(elementSeparator:"");
             Console.Write(output);
         }
