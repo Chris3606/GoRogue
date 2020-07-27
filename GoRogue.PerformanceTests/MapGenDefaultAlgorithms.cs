@@ -5,12 +5,6 @@ namespace GoRogue.PerformanceTests
 {
     public class MapGenDefaultAlgorithms
     {
-        //private readonly Generator _generator;
-
-        //public MapGenDefaultAlgorithms()
-        //{
-        //_generator = new Generator(40, 50);
-        //}
 
         [Benchmark]
         public GenerationContext DungeonMazeMap()
