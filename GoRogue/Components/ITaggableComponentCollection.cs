@@ -60,7 +60,7 @@ namespace GoRogue.Components
         void Remove(params string[] tags);
 
         /// <summary>
-        /// True if, for each tuple specified, there exists a component of the given type with the given tag in the
+        /// True if, for each pair specified, there exists a component of the given type with the given tag in the
         /// collection.
         /// </summary>
         /// <remarks>
@@ -69,7 +69,7 @@ namespace GoRogue.Components
         /// </remarks>
         /// <param name="componentTypesAndTags">One or more component types and corresponding tags to check for.</param>
         /// <returns/>
-        bool Contains(params (Type type, string? tag)[] componentTypesAndTags);
+        bool Contains(params ComponentTypeTagPair[] componentTypesAndTags);
 
         /// <summary>
         /// True if a component of the specified type associated with the specified tag has been added; false otherwise.

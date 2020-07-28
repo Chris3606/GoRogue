@@ -193,7 +193,7 @@ namespace GoRogue.Components
             => componentTypes.All(component => _components.ContainsKey(component));
 
         /// <inheritdoc />
-        public bool Contains(params (Type type, string? tag)[] componentTypesAndTags)
+        public bool Contains(params ComponentTypeTagPair[] componentTypesAndTags)
         {
             foreach (var (type, tag) in componentTypesAndTags)
             {
