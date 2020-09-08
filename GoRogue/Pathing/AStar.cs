@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using GoRogue.MapViews;
 using JetBrains.Annotations;
 using Priority_Queue;
@@ -36,7 +37,7 @@ namespace GoRogue.Pathing
         private Func<Point, Point, double> _heuristic;
 
         // Node objects used under the hood for the priority queue
-        private AStarNode[] _nodes;
+        private AStarNode?[] _nodes;
 
         // Priority queue of the open nodes.
         private FastPriorityQueue<AStarNode> _openNodes;
@@ -146,7 +147,7 @@ namespace GoRogue.Pathing
             Heuristic = heuristic!; // Handles null and exposes as non-nullable since it will never allow null
 
             var maxSize = walkabilityMap.Width * walkabilityMap.Height;
-            _nodes = new AStarNode[maxSize];
+            _nodes = new AStarNode?[maxSize];
             _closed = new bool[maxSize];
             _cachedWidth = walkabilityMap.Width;
             _cachedHeight = walkabilityMap.Height;
@@ -176,10 +177,13 @@ namespace GoRogue.Pathing
         /// it defaults to using the distance calculation specified by <see cref="DistanceMeasurement" />, with a safe/efficient
         /// tie-breaking multiplier added on.
         /// </summary>
+        [AllowNull]
         public Func<Point, Point, double> Heuristic
         {
             get => _heuristic;
 
+            // Warning should not be present since AllowNull is set
+            // ReSharper disable once ConstantNullCoalescingCondition
             set => _heuristic = value ?? ((c1, c2)
                 => DistanceMeasurement.Calculate(c1, c2) +
                    Point.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier);
@@ -259,9 +263,10 @@ namespace GoRogue.Pathing
 
             _nodes[index] ??= new AStarNode(start);
 
-            _nodes[index].G = 0;
-            _nodes[index].F = (float)Heuristic(start, end); // Completely heuristic for first node
-            _openNodes.Enqueue(_nodes[index], _nodes[index].F);
+            // _nodes[index] is known to be not null because it was set to a value directly above this if it was
+            _nodes[index]!.G = 0;
+            _nodes[index]!.F = (float)Heuristic(start, end); // Completely heuristic for first node
+            _openNodes.Enqueue(_nodes[index]!, _nodes[index]!.F);
 
             while (_openNodes.Count != 0)
             {
@@ -276,9 +281,9 @@ namespace GoRogue.Pathing
                     do
                     {
                         result.Add(current.Position);
-                        current = current
-                                .Parent
-                            !; // Overriding null because we know Parent won't be null because we'll hit the start and exit the loop first
+                        // Overriding null because we know Parent won't be null because we'll hit the start and
+                        // exit the loop first
+                        current = current.Parent!;
                     } while (current.Position != start);
 
                     result.Add(start);
@@ -351,7 +356,7 @@ namespace GoRogue.Pathing
         public Path? ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
             => ShortestPath(new Point(startX, startY), new Point(endX, endY), assumeEndpointsWalkable);
 
-        private static bool IsOpen(AStarNode node, FastPriorityQueue<AStarNode> openSet)
+        private static bool IsOpen(AStarNode? node, FastPriorityQueue<AStarNode> openSet)
             => node != null && openSet.Contains(node);
 
         private bool CheckWalkability(Point pos, Point start, Point end, bool assumeEndpointsWalkable)

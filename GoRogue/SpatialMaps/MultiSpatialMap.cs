@@ -373,7 +373,7 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <returns>A string representation of the spatial map.</returns>
         public override string ToString()
-            => ToString(obj => obj?.ToString() ?? "null");
+            => ToString(obj => obj.ToString() ?? "null");
     }
 
     /// <summary>

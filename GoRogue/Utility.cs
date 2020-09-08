@@ -130,7 +130,7 @@ namespace GoRogue
                                                           string end = "}")
             where TKey : notnull
         {
-            keyStringifier ??= obj => obj?.ToString() ?? "null";
+            keyStringifier ??= obj => obj.ToString() ?? "null";
 
             valueStringifier ??= obj => obj?.ToString() ?? "null";
 

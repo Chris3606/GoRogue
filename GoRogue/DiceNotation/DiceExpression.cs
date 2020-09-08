@@ -54,6 +54,6 @@ namespace GoRogue.DiceNotation
         /// Returns a parenthesized string representing the dice expression in dice notation
         /// </summary>
         /// <returns>A parenthesized string representing the expression.</returns>
-        public override string ToString() => RootTerm?.ToString() ?? "";
+        public override string ToString() => RootTerm.ToString() ?? "null";
     }
 }
