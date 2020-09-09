@@ -189,7 +189,7 @@ namespace GoRogue.GameFramework
         /// <remarks>
         /// This function can return false in the following cases:
         /// 1. If the object has is added to a Map and is on layer 0 (because terrain objects cannot move while added
-        ///    to the map.
+        ///    to the map).
         /// 2. If the object is added to the map and either:
         ///     a. The position specified is not within the bounds of the map
         ///     b. The object is not walkable and there is already a non-walkable item at the specified location
