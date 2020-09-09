@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoRogue.Components;
 using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration
@@ -133,7 +134,7 @@ namespace GoRogue.MapGeneration
     [PublicAPI]
     public abstract class GenerationStep
     {
-        private readonly (Type type, string? tag)[] _requiredComponents;
+        private readonly ComponentTypeTagPair[] _requiredComponents;
 
         /// <summary>
         /// The name of the generation step.
@@ -150,15 +151,18 @@ namespace GoRogue.MapGeneration
         { }
 
         /// <summary>
-        /// Creates a generation step that requires the given component(s) on the <see cref="GenerationContext" /> to function.
+        /// Creates a generation step that requires the given component(s) on the <see cref="GenerationContext" /> to
+        /// function.
         /// </summary>
-        /// <param name="requiredComponents">
-        /// Components that <see cref="OnPerform(GenerationContext)" /> will require from the
-        /// context.
+        /// <param name="name">
+        /// The name of the generation step being created.  Defaults to the name of the (runtime) class.
         /// </param>
-        /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
+        /// <param name="requiredComponents">
+        /// Components (and associated tags) that <see cref="OnPerform(GenerationContext)" /> will require from the
+        /// context.  Null specified as a tag means no particular tag is required; only a component of the given type.
+        /// </param>
         protected GenerationStep(string? name = null, params Type[] requiredComponents)
-            : this(name, requiredComponents.Select<Type, (Type, string?)>(i => (i, null)).ToArray())
+            : this(name, requiredComponents.Select(type => new ComponentTypeTagPair(type, null)).ToArray())
         { }
 
         /// <summary>
@@ -169,7 +173,7 @@ namespace GoRogue.MapGeneration
         /// required for each component.  Null means no particular tag is required.
         /// </param>
         /// <param name="name">The name of the generation step being created.  Defaults to the name of the (runtime) class.</param>
-        protected GenerationStep(string? name = null, params (Type type, string? tag)[] requiredComponents)
+        protected GenerationStep(string? name = null, params ComponentTypeTagPair[] requiredComponents)
         {
             Name = name ?? GetType().Name;
             _requiredComponents = requiredComponents;
@@ -180,7 +184,7 @@ namespace GoRogue.MapGeneration
         /// <see cref="OnPerform(GenerationContext)" />.
         /// Each component may optionally have a required tag.
         /// </summary>
-        public IEnumerable<(Type type, string? tag)> RequiredComponents => _requiredComponents;
+        public IEnumerable<ComponentTypeTagPair> RequiredComponents => _requiredComponents;
 
         /// <summary>
         /// Performs the generation step on the given map context.  Throws exception if a required component is missing.

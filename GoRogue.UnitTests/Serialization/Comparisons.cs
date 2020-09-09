@@ -196,10 +196,10 @@ namespace GoRogue.UnitTests.Serialization
 
             for (int i = 0; i < c1.Count; i++)
             {
-                if (c1[i].type.FullName != c2[i].type.FullName)
+                if (c1[i].ComponentType.FullName != c2[i].ComponentType.FullName)
                     return false;
 
-                if (c1[i].tag != c2[i].tag)
+                if (c1[i].Tag != c2[i].Tag)
                     return false;
             }
 

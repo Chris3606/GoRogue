@@ -134,7 +134,7 @@ namespace GoRogue.MapViews
         /// True if the two given ArrayMap2D&lt;T&gt; instances do NOT have a reference to the same underlying array,
         /// false otherwise.
         /// </returns>
-        public static bool operator !=(ArrayMap2D<T> lhs, ArrayMap2D<T> rhs) => !(lhs == rhs);
+        public static bool operator !=(ArrayMap2D<T>? lhs, ArrayMap2D<T>? rhs) => !(lhs == rhs);
 
         /// <summary>
         /// Returns a string representation of the 2D array.

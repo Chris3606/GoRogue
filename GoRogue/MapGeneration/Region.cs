@@ -14,7 +14,7 @@ namespace GoRogue.MapGeneration
     [PublicAPI]
     public partial class Region
     {
-        #region generation
+        #region Generation
 
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
@@ -41,7 +41,7 @@ namespace GoRogue.MapGeneration
         }
         #endregion
 
-        #region overrides
+        #region Overrides
         /// <summary>
         /// Returns a string detailing the region's corner locations.
         /// </summary>
@@ -74,7 +74,7 @@ namespace GoRogue.MapGeneration
 
         #endregion
 
-        #region management
+        #region Management
         /// <summary>
         /// Gets all Points that overlap with another region
         /// </summary>
@@ -107,7 +107,7 @@ namespace GoRogue.MapGeneration
 
         #endregion
 
-        #region transform
+        #region Transform
         /// <summary>
         /// Shifts the entire region by performing Point addition
         /// </summary>
@@ -327,7 +327,7 @@ namespace GoRogue.MapGeneration
 
         #endregion
 
-        #region subregions
+        #region SubRegions
         /// <summary>
         /// Adds a sub-region to this region.
         /// </summary>

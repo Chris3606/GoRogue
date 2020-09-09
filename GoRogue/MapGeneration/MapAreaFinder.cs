@@ -95,8 +95,9 @@ namespace GoRogue.MapGeneration
             while (stack.Count != 0)
             {
                 position = stack.Pop();
-                if (_visited![position.X, position.Y] || !Map[position]
-                ) // Already visited, or not part of any mapArea.  Also only called from functions that have allocated visited
+                // Already visited, or not part of any mapArea.  Also only called from functions that have allocated
+                // visited
+                if (_visited![position.X, position.Y] || !Map[position])
                     continue;
 
                 area.Add(position);
@@ -104,8 +105,8 @@ namespace GoRogue.MapGeneration
 
                 foreach (var c in AdjacencyMethod.Neighbors(position))
                 {
-                    if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height
-                    ) // Out of bounds, thus not actually a neighbor
+                    // Out of bounds, thus not actually a neighbor
+                    if (c.X < 0 || c.Y < 0 || c.X >= Map.Width || c.Y >= Map.Height)
                         continue;
 
                     if (Map[c] && !_visited[c.X, c.Y])

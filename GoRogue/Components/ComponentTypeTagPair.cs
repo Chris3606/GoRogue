@@ -7,7 +7,7 @@ namespace GoRogue.Components
 {
     /// <summary>
     /// A type of a component and the tag expected to be associated with a component of that type in a
-    /// <see cref="ITaggableComponentCollection"/>.
+    /// <see cref="ITaggableComponentCollection"/> or map generation step.
     /// </summary>
     [DataContract]
     [PublicAPI]
@@ -85,7 +85,7 @@ namespace GoRogue.Components
             => new ComponentTypeTagPair(tuple.componentType, tuple.tag);
         #endregion
 
-        #region EqualityComparison
+        #region Equality Comparison
 
         /// <summary>
         /// True if the given pair has the same component type and tag; false otherwise.

@@ -23,7 +23,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
             => DistanceCalculation = distanceCalculation;
 
         /// <inheritdoc />
-        public (Point area1Position, Point area2Position) SelectConnectionPoints(
+        public AreaConnectionPointPair SelectConnectionPoints(
             IReadOnlyArea area1, IReadOnlyArea area2)
         {
             var c1 = Point.None;
@@ -42,7 +42,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
                     }
                 }
 
-            return (c1, c2);
+            return new AreaConnectionPointPair(c1, c2);
         }
     }
 }

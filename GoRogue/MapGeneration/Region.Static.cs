@@ -87,7 +87,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="point">The Point to rotate</param>
         /// <param name="radians">The amount of Radians to rotate this point</param>
-        /// <returns>The equivalnt point after a rotation</returns>
+        /// <returns>The equivalent point after a rotation</returns>
         /// <remarks>
         /// This is intended only as a helper class for rotation, and not for general use.
         /// Intended usage is like so:

@@ -568,7 +568,8 @@ namespace GoRogue.GameFramework
         /// no entities of
         /// the specified type are found.
         /// </returns>
-        public TEntity GetEntityAt<TEntity>(Point position, uint layerMask = uint.MaxValue) where TEntity : IGameObject
+        public TEntity? GetEntityAt<TEntity>(Point position, uint layerMask = uint.MaxValue)
+            where TEntity : class, IGameObject
             => GetEntitiesAt<TEntity>(position.X, position.Y, layerMask).FirstOrDefault();
 
         /// <summary>
@@ -587,7 +588,8 @@ namespace GoRogue.GameFramework
         /// no entities of
         /// the specified type are found.
         /// </returns>
-        public TEntity GetEntityAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue) where TEntity : IGameObject
+        public TEntity? GetEntityAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue)
+            where TEntity : class, IGameObject
             => GetEntitiesAt<TEntity>(x, y, layerMask).FirstOrDefault();
 
         /// <summary>
@@ -652,7 +654,7 @@ namespace GoRogue.GameFramework
         /// <param name="position">Position to get object for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
         /// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-        public IGameObject GetObjectAt(Point position, uint layerMask = uint.MaxValue)
+        public IGameObject? GetObjectAt(Point position, uint layerMask = uint.MaxValue)
             => GetObjectsAt(position.X, position.Y, layerMask).FirstOrDefault();
 
 
@@ -671,7 +673,7 @@ namespace GoRogue.GameFramework
         /// no objects of
         /// the specified type are found.
         /// </returns>
-        public TObject GetObjectAt<TObject>(Point position, uint layerMask = uint.MaxValue)
+        public TObject? GetObjectAt<TObject>(Point position, uint layerMask = uint.MaxValue)
             where TObject : class, IGameObject
             => GetObjectsAt<TObject>(position.X, position.Y, layerMask).FirstOrDefault();
 
@@ -686,7 +688,7 @@ namespace GoRogue.GameFramework
         /// <param name="y">Y-value of the position to get object for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
         /// <returns>The first object encountered, moving from the highest existing layer in the layer mask downward.</returns>
-        public IGameObject GetObjectAt(int x, int y, uint layerMask = uint.MaxValue)
+        public IGameObject? GetObjectAt(int x, int y, uint layerMask = uint.MaxValue)
             => GetObjectsAt(x, y, layerMask).FirstOrDefault();
 
         /// <summary>
@@ -705,7 +707,7 @@ namespace GoRogue.GameFramework
         /// no objects of
         /// the specified type are found.
         /// </returns>
-        public TObject GetObjectAt<TObject>(int x, int y, uint layerMask = uint.MaxValue)
+        public TObject? GetObjectAt<TObject>(int x, int y, uint layerMask = uint.MaxValue)
             where TObject : class, IGameObject
             => GetObjectsAt<TObject>(x, y, layerMask).FirstOrDefault();
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Components;
 using GoRogue.MapGeneration;
 
 namespace GoRogue.UnitTests.Mocks
@@ -32,7 +33,7 @@ namespace GoRogue.UnitTests.Mocks
             => _onPerform = onPerform;
 
         public MockGenerationStep(Action onPerform, string? name = null,
-                                  params (Type type, string? tag)[] requiredComponents)
+                                  params ComponentTypeTagPair[] requiredComponents)
             : base(name, requiredComponents)
             => _onPerform = onPerform;
 
