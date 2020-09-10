@@ -29,7 +29,7 @@ namespace GoRogue.Debugger.Routines
             if (_hasNext)
                 _hasNext = _stageEnumerator.MoveNext();
 
-            var mapView = _generator.Context.GetFirst<IMapView<bool>>(); ;
+            var mapView = _generator.Context.GetFirst<IMapView<bool>>();
             TransformedMap?.ApplyTerrainOverlay(mapView, (pos, floor) =>
                 floor ? new GameObject(pos, 0, null) :
                     new GameObject(pos, 0, null, false, false));

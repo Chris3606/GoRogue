@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
   </ItemGroup>
 
   <ItemGroup>
