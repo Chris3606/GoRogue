@@ -1,4 +1,5 @@
-﻿using GoRogue.MapGeneration.ContextComponents;
+﻿using System.Collections.Generic;
+using GoRogue.MapGeneration.ContextComponents;
 using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.Steps.Translation
@@ -71,7 +72,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         { }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object> OnPerform(GenerationContext context)
         {
             // Get required components; guaranteed to exist because enforced by required components list
             var baseList = context.GetFirst<ItemList<TItem>>(BaseListTag);
@@ -80,6 +81,8 @@ namespace GoRogue.MapGeneration.Steps.Translation
             // Iterate over each individual position and add to original list, so we keep the original generation step that created it with it.
             foreach (var item in listToAppend.Items)
                 baseList.Add(item, listToAppend.ItemToStepMapping[item]);
+
+            yield break;
         }
     }
 }

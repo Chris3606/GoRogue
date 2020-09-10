@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapViews;
 using GoRogue.Random;
@@ -126,7 +127,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Validate configuration
             if (MinRooms > MaxRooms)
@@ -245,7 +246,10 @@ namespace GoRogue.MapGeneration.Steps
                     }
 
                     if (placed)
+                    {
+                        yield return null;
                         break;
+                    }
 
                     tryCounterCreate--;
                 }

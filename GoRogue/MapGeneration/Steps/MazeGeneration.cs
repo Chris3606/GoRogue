@@ -92,7 +92,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Validate configuration
             if (CrawlerChangeDirectionImprovement > 100)
@@ -112,6 +112,9 @@ namespace GoRogue.MapGeneration.Steps
                 () => new ItemList<Area>(),
                 TunnelsComponentTag
             );
+
+            // Record spaces we've crawled to introduce changes.
+            int spacesCrawled = 0;
 
 
             var crawlers = new List<Crawler>();
@@ -175,9 +178,25 @@ namespace GoRogue.MapGeneration.Steps
                         }
 
                         crawler.MoveTo(points[index]);
+                        spacesCrawled++;
                     }
                     else
+                    {
                         crawler.Backtrack();
+                        spacesCrawled++;
+                    }
+
+                    if (spacesCrawled >= 10)
+                    {
+                        yield return null;
+                        spacesCrawled = 0;
+                    }
+                }
+
+                if (spacesCrawled > 0)
+                {
+                    yield return null;
+                    spacesCrawled = 0;
                 }
 
                 empty = FindEmptySquare(wallFloorContext, RNG);

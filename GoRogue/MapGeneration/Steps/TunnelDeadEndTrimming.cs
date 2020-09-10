@@ -96,7 +96,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Validate configuration
             if (SaveDeadEndChance > 100)
@@ -194,6 +194,8 @@ namespace GoRogue.MapGeneration.Steps
                     deadEnds.Clear();
                     iteration++;
                 }
+
+                yield return null;
             }
         }
     }

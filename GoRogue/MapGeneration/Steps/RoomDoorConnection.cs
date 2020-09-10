@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapViews;
 using GoRogue.Random;
@@ -137,7 +138,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Validate configuration
             if (MaxSidesToConnect > 4 || MaxSidesToConnect <= 0)
@@ -272,6 +273,8 @@ namespace GoRogue.MapGeneration.Steps
 
                             currentCancelPlacementChance += CancelConnectionPlacementChanceIncrease;
                         }
+
+                        yield return null;
                     }
                 }
             }

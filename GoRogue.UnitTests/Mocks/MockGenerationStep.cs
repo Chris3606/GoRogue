@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GoRogue.Components;
 using GoRogue.MapGeneration;
 
@@ -37,7 +38,11 @@ namespace GoRogue.UnitTests.Mocks
             : base(name, requiredComponents)
             => _onPerform = onPerform;
 
-        protected override void OnPerform(GenerationContext context) => _onPerform?.Invoke();
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
+        {
+            _onPerform?.Invoke();
+            yield break;
+        }
     }
 
     #endregion

@@ -194,17 +194,46 @@ namespace GoRogue.MapGeneration
         /// <param name="context">Context to perform the generation step on.</param>
         public void PerformStep(GenerationContext context)
         {
-            foreach (var (componentType, tag) in _requiredComponents)
-                if (!context.Contains(componentType, tag))
-                    throw new MissingContextComponentException(this, componentType, tag);
+            // Ensure required components exist
+            CheckForRequiredComponents(context);
 
-            OnPerform(context);
+            // Evaluate entire enumerator to complete the entire step
+            var enumerator = OnPerform(context);
+            bool isNext;
+            do
+            {
+                isNext = enumerator.MoveNext();
+            } while (isNext);
         }
 
         /// <summary>
-        /// Implement to perform the actual work of the generation step.
+        /// Return an enumerator that, when evaluated to completion, will perform each "stage" of the generation step
+        /// sequentially.
         /// </summary>
         /// <param name="context">Context to perform the generation step on.</param>
-        protected abstract void OnPerform(GenerationContext context);
+        /// <returns>An enumerator which, when evaluated, performs each stage of the step sequentially.</returns>
+        public IEnumerator<object?> GetStageEnumerator(GenerationContext context)
+        {
+            // Check for required components
+            CheckForRequiredComponents(context);
+
+            // Return enumerator which, when evaluated, will perform each stage of the step.
+            return OnPerform(context);
+        }
+
+        /// <summary>
+        /// Implement to perform the actual work of the generation step.  Use "yield return null" to indicate the end
+        /// of a "stage", eg. a point where execution can be paused when using
+        /// <see cref="Generator.GetStageEnumerator"/>.
+        /// </summary>
+        /// <param name="context">Context to perform the generation step on.</param>
+        protected abstract IEnumerator<object?> OnPerform(GenerationContext context);
+
+        private void CheckForRequiredComponents(GenerationContext context)
+        {
+            foreach (var (componentType, tag) in _requiredComponents)
+                if (!context.Contains(componentType, tag))
+                    throw new MissingContextComponentException(this, componentType, tag);
+        }
     }
 }

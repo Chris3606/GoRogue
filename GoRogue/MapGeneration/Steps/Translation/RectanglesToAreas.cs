@@ -1,4 +1,5 @@
-﻿using GoRogue.MapGeneration.ContextComponents;
+﻿using System.Collections.Generic;
+using GoRogue.MapGeneration.ContextComponents;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -57,7 +58,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         { }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object> OnPerform(GenerationContext context)
         {
             // Get required components; guaranteed to exist because enforced by required components list
             var rectangles = context.GetFirst<ItemList<Rectangle>>(RectanglesComponentTag);
@@ -73,6 +74,8 @@ namespace GoRogue.MapGeneration.Steps.Translation
                 var area = new Area { rect.Positions() };
                 areas.Add(area, Name);
             }
+
+            yield break;
         }
     }
 }

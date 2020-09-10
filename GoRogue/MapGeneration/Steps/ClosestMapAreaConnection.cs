@@ -123,7 +123,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Get required components; guaranteed to exist because enforced by required components list
             var areasToConnect = context.GetFirst<ItemList<Area>>(AreasComponentTag);
@@ -146,6 +146,8 @@ namespace GoRogue.MapGeneration.Steps
                     tunnels.Add(tunnel, Name);
 
                     ds.MakeUnion(i, iClosest);
+
+                    yield return null; // One stage per connection
                 }
         }
 

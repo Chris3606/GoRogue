@@ -1,4 +1,5 @@
-﻿using GoRogue.MapViews;
+﻿using System.Collections.Generic;
+using GoRogue.MapViews;
 using JetBrains.Annotations;
 
 namespace GoRogue.MapGeneration.Steps
@@ -51,7 +52,7 @@ namespace GoRogue.MapGeneration.Steps
         }
 
         /// <inheritdoc/>
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Get or create/add a wall-floor context component
             var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
@@ -62,6 +63,9 @@ namespace GoRogue.MapGeneration.Steps
             var innerBounds = wallFloorContext.Bounds().Expand(-1, -1);
             foreach (var position in wallFloorContext.Positions())
                 wallFloorContext[position] = innerBounds.Contains(position);
+
+            // No stages as its a simple rectangle generator
+            yield break;
         }
     }
 }

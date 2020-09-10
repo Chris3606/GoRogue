@@ -69,7 +69,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         { }
 
         /// <inheritdoc />
-        protected override void OnPerform(GenerationContext context)
+        protected override IEnumerator<object> OnPerform(GenerationContext context)
         {
             // Get required components; guaranteed to exist because enforced by required components list
             var areaList1 = context.GetFirst<ItemList<Area>>(ModifiedAreaListTag);
@@ -87,6 +87,8 @@ namespace GoRogue.MapGeneration.Steps.Translation
 
             // Remove any areas that now contain no positions
             areaList2.Remove(area => area.Count == 0);
+
+            yield break;
         }
     }
 }
