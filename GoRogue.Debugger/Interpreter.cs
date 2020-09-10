@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using GoRogue.Debugger.Extensions;
-using GoRogue.GameFramework;
 using GoRogue.MapViews;
 using SadRogue.Primitives;
 
@@ -17,94 +14,97 @@ namespace GoRogue.Debugger
     /// </summary>
     public static class Interpreter
     {
+        private static bool _exit; // Used to decide whether or not to exit the program
+        private static bool _dirty = true; // Whether or not to redraw the map
 
-        private static int _width; //width of the console
-        private static int _height;//height of the console
-        private static bool _invertY;//to use default, or make positions match cartesian graph
-        private static bool _exit;//used to decide whether or not to exit the program
-        //private static bool _calculateFov;//whether to view an FOV radius, or the whole map
-        private static Point _position;//the printing location of the viewport on the Map
-        private static bool _dirty = true; //whether or not to redraw the map
-        private static Viewport<char> Viewport => GenerateMapView();//the "visible" region of the map
-        private static Map? Map => Routine?.TransformedMap; //the map that we're printing to the console
-        private static IRoutine? Routine { get; set; } //the routine that we're running in this test
+        // The routine that we're running in this test.  Null override because we initialize in Init
+        private static IRoutine _routine = null!;
 
-        #region setup
+        // Viewport of routine's map.  Null override because we initialize in Init
+        private static RoutineViewport _mapView = null!;
+
+        #region Setup
+
         /// <summary>
-        /// Get theRoutine, Interpreter, and Map ready for action.
+        /// Select the routine and initialize it.
         /// </summary>
         public static void Init()
         {
-            _invertY = false;
-            _exit = false;
-            _width = Console.WindowWidth;
-            _height = Console.WindowHeight;
+            // Pick routine, and generate its map and views
+            _routine = PickRoutine();
+            _routine.GenerateMap();
+            _routine.CreateViews();
 
-            Routine = PickRoutine();
-            Routine?.GenerateMap();
-            if (Map != null) _position = (Map.Width / 2 - _width / 2, Map.Height / 2 - _height / 2);
-        }
-
-        /// <summary>
-        /// Creates the map view to display
-        /// </summary>
-        private static Viewport<char> GenerateMapView()
-        {
-            Debug.Assert(Map != null, nameof(Map) + " == null");
-
-            return new Viewport<char>(Map!.CharMap(), new Rectangle(_position, _position + (_width, _height)));
+            // Set up viewport, defaulting to first item in views list
+            _mapView = new RoutineViewport(_routine, Console.WindowWidth - 1, Console.WindowHeight - 1);
         }
 
         /// <summary>
         /// Picks a routine out of the possible candidates
         /// </summary>
         /// <returns>The Routine we're running in this test</returns>
-        private static IRoutine? PickRoutine()
+        private static IRoutine PickRoutine()
         {
-            Console.WriteLine("Pick your routine using numbers");
-            List<IRoutine?> routines = GetRoutines();
-            int i = 0;
-            foreach (var routine in routines)
+            IRoutine? chosenRoutine = null;
+            do
             {
-                Console.WriteLine(i + ") " + routine?.Name);
-                i++;
-            }
-            var key = Console.ReadKey().Key;
-            try
-            {
-                string number = key.ToString().Replace("D", "").Replace("NumPad", "");
-                i = Int32.Parse(number);
-                return routines[i];
-            }
-            catch
-            {
-                Console.WriteLine("Could not understand input; please use numbers");
-                return PickRoutine();
-            }
+                // Display selection menu for routines
+                Console.WriteLine("Pick your routine by using its corresponding number:");
+                List<IRoutine> routines = GetRoutines();
+                foreach (var (routine, index) in routines.Select((routine, index) => (routine, index)))
+                    Console.WriteLine(index + ") " + routine.Name);
+
+                // Read user input and parse into index
+                var key = Console.ReadKey().Key;
+                try
+                {
+                    string number = key.ToString().Replace("D", "").Replace("NumPad", "");
+                    var index = int.Parse(number);
+                    chosenRoutine = routines[index];
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid selection.  Please select from the available options.");
+                }
+            } while (chosenRoutine == null);
+
+            return chosenRoutine;
         }
 
         /// <summary>
-        /// Gets all of the classes that implement IRoutine
+        /// Gets all of the classes that implement IRoutine.
         /// </summary>
-        /// <returns>A list of all routines available</returns>
-        private static List<IRoutine?> GetRoutines()
+        /// <returns>A list of all routines available.</returns>
+        private static List<IRoutine> GetRoutines()
         {
-            List<IRoutine?> objects = new List<IRoutine?>();
-            Type[]? types = Assembly.GetAssembly(typeof(IRoutine))?.GetTypes();
-            types = types.Where(t => t.GetInterface(nameof(IRoutine)) != null).ToArray();
-            foreach (Type type in types)
-            {
-                objects.Add(Activator.CreateInstance(type) as IRoutine);
-            }
-            objects.Sort();
-            return objects;
+            // Get all types implementing IRoutine in current assembly
+            Type[] routineTypes = Assembly.GetAssembly(typeof(IRoutine))?.GetTypes() ??
+                           throw new Exception("Can't find assembly that defines IRoutine.");
+            routineTypes = routineTypes.Where(t => t.GetInterface(nameof(IRoutine)) != null).ToArray();
+
+            // Use the parameterless constructor for each type to create an instance of that type.
+            // Overriding to non-nullable because the next stage will exit the function if there are any nulls
+            List<IRoutine> routineInstances = routineTypes
+                .Select(type => Activator.CreateInstance(type) as IRoutine)
+                .ToList()!;
+
+            // Null indicates Nullable types, which should not occur; IRoutines can't be a type that implements
+            // Nullable<T>
+            if (routineInstances.Any(inst => inst == null))
+                throw new Exception("Cannot use Nullable<T> instances as implementers of IRoutine.");
+
+            // Sort the list by name then return
+            routineInstances.Sort(
+                (r1, r2) => string.CompareOrdinal(r1.Name, r2.Name));
+
+            return routineInstances;
         }
         #endregion
 
-        #region run
+        #region Run
 
         /// <summary>
-        /// Start listening for keypresses
+        /// Start listening for keypresses.
         /// </summary>
         public static void Run()
         {
@@ -112,64 +112,74 @@ namespace GoRogue.Debugger
             {
                 if (_dirty)
                     DrawMap();
+
                 InterpretKeyPress();
             }
         }
 
-        /// <summary>
-        /// Elapse a single unit of time
-        /// </summary>
-        private static void GoRogueGameFrame() => Routine?.ElapseTimeUnit();
-
         #endregion
-        #region ui
+        #region UI
         private static void InterpretKeyPress()
         {
+            Direction moveViewportDir = Direction.None;
             ConsoleKey key = Console.ReadKey().Key;
 
-            if (key == ConsoleKey.Escape)
-                _exit = true;
-            else if (key == ConsoleKey.Spacebar)
-                GoRogueGameFrame();
+            switch (key)
+            {
+                case ConsoleKey.Escape:
+                    _exit = true;
+                    break;
+                case ConsoleKey.Spacebar:
+                    _routine.ElapseTimeUnit();
+                    _dirty = true;
+                    break;
+                case ConsoleKey.LeftArrow:
+                    moveViewportDir = Direction.Left;
+                    break;
+                case ConsoleKey.RightArrow:
+                    moveViewportDir = Direction.Right;
+                    break;
+                case ConsoleKey.UpArrow:
+                    moveViewportDir = Direction.Up;
+                    break;
+                case ConsoleKey.DownArrow:
+                    moveViewportDir = Direction.Down;
+                    break;
+                case ConsoleKey.OemPlus:
+                    _mapView.NextView();
+                    _dirty = true;
+                    break;
+                case ConsoleKey.OemMinus:
+                    _mapView.PreviousView();
+                    _dirty = true;
+                    break;
+            }
 
-            else if (key == ConsoleKey.LeftArrow)
-                ShiftLeft();
-            else if (key == ConsoleKey.RightArrow)
-                ShiftRight();
-            else if (key == ConsoleKey.UpArrow)
-                ShiftUp();
-            else if (key == ConsoleKey.DownArrow)
-                ShiftDown();
+            if (moveViewportDir != Direction.None)
+                _dirty = _mapView.CenterViewOn(_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
         }
 
         private static void DrawMap()
         {
-            _width = Console.WindowWidth - 1;
-            _height = Console.WindowHeight - 1;
-            string output = Viewport.ExtendToString(elementSeparator:"");
-            Console.Write(output);
-        }
+            // Calculate available console space.  Make sure to subtract one to ensure we actually fit
+            // text instead of going 1 over (because the write will include a newline).
+            int width = Console.WindowWidth - 1;
+            int height = Console.WindowHeight - 1;
 
-        public static void ShiftLeft()
-        {
-            _position += (-1, 0);
-            _dirty = true;
-        }
+            // Resize viewport as needed to match console size
+            _mapView.ResizeViewport(width, height);
 
-        public static void ShiftUp()
-        {
-         _position += _invertY ? (0, 1) : (0, -1);
-         _dirty = true;
-        }
-        public static void ShiftDown()
-        {
-            _position += _invertY ? (0, -1) : (0, 1);
-            _dirty = true;
-        }
-        public static void ShiftRight()
-        {
-            _position += (1, 0);
-            _dirty = true;
+            // Get string constituting the viewport, ensuring to allow no space between characters
+            var lines = _mapView.CurrentViewport.ExtendToString(elementSeparator: "").Split('\n');
+            foreach (var line in lines)
+                Console.WriteLine(line.Trim());
+
+            // Print as many new lines as required to ensure that we don't end up with part of the old map on screen
+            for (int i = lines.Length; i < height; i++)
+                Console.WriteLine();
+
+            // Reset dirty flag because we just drew
+            _dirty = false;
         }
         #endregion
     }
