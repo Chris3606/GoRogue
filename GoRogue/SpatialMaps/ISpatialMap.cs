@@ -47,17 +47,17 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
-        void Add(T newItem, Point position);
+        void Add(T item, Point position);
 
         /// <summary>
         /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="x">X-value of the position to add item to.</param>
         /// <param name="y">Y-value of the position to add item to.</param>
-        void Add(T newItem, int x, int y);
+        void Add(T item, int x, int y);
 
         /// <summary>
         /// Clears all items out of the spatial map.

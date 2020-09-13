@@ -24,8 +24,8 @@ namespace GoRogue.SpatialMaps
     public class AdvancedSpatialMap<T> : ISpatialMap<T>
         where T : notnull
     {
-        private readonly Dictionary<T, SpatialTuple<T>> _itemMapping;
-        private readonly Dictionary<Point, SpatialTuple<T>> _positionMapping;
+        private readonly Dictionary<T, Point> _itemMapping;
+        private readonly Dictionary<Point, T> _positionMapping;
 
         /// <summary>
         /// Constructor.
@@ -41,8 +41,8 @@ namespace GoRogue.SpatialMaps
         /// </param>
         public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
         {
-            _itemMapping = new Dictionary<T, SpatialTuple<T>>(initialCapacity, comparer);
-            _positionMapping = new Dictionary<Point, SpatialTuple<T>>(initialCapacity);
+            _itemMapping = new Dictionary<T, Point>(initialCapacity, comparer);
+            _positionMapping = new Dictionary<Point, T>(initialCapacity);
         }
 
         /// <inheritdoc />
@@ -62,8 +62,8 @@ namespace GoRogue.SpatialMaps
         {
             get
             {
-                foreach (var item in _itemMapping.Values)
-                    yield return item.Item;
+                foreach (T item in _itemMapping.Keys)
+                    yield return item;
             }
         }
 
@@ -82,21 +82,20 @@ namespace GoRogue.SpatialMaps
         /// spatial map and the position is not already filled. If either of those are the case,
         /// throws InvalidOperationException.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
-        public void Add(T newItem, Point position)
+        public void Add(T item, Point position)
         {
-            if (_itemMapping.ContainsKey(newItem))
+            if (_itemMapping.ContainsKey(item))
                 throw new InvalidOperationException($"Item added to {GetType().Name} when it has already been added.");
 
             if (_positionMapping.ContainsKey(position))
                 throw new InvalidOperationException(
                     $"Item added to {GetType().Name} at a position already occupied by another item.");
 
-            var tuple = new SpatialTuple<T>(newItem, position);
-            _itemMapping.Add(newItem, tuple);
-            _positionMapping.Add(position, tuple);
-            ItemAdded?.Invoke(this, new ItemEventArgs<T>(newItem, position));
+            _itemMapping.Add(item, position);
+            _positionMapping.Add(position, item);
+            ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
         }
 
         /// <summary>
@@ -104,10 +103,10 @@ namespace GoRogue.SpatialMaps
         /// spatial map and the position is not already filled. If either of those are the case,
         /// throws InvalidOperationException.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="x">X-value of the position to add item to.</param>
         /// <param name="y">Y-value of the position to add item to.</param>
-        public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
+        public void Add(T item, int x, int y) => Add(item, new Point(x, y));
 
         /// <inheritdoc />
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
@@ -133,10 +132,10 @@ namespace GoRogue.SpatialMaps
         /// foreach loop. Generally should never be called explicitly.
         /// </summary>
         /// <returns>An enumerator for the spatial map</returns>
-        public IEnumerator<ISpatialTuple<T>> GetEnumerator()
+        public IEnumerator<ItemPositionPair<T>> GetEnumerator()
         {
-            foreach (var tuple in _itemMapping.Values)
-                yield return tuple;
+            foreach (var (item, pos) in _itemMapping)
+                yield return (item, pos);
         }
 
         /// <summary>
@@ -162,9 +161,9 @@ namespace GoRogue.SpatialMaps
         /// </returns>
         public IEnumerable<T> GetItemsAt(Point position)
         {
-            _positionMapping.TryGetValue(position, out var tuple);
-            if (tuple != null)
-                yield return tuple.Item;
+            _positionMapping.TryGetValue(position, out var item);
+            if (item != null)
+                yield return item;
         }
 
         /// <summary>
@@ -188,9 +187,8 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
-            _itemMapping.TryGetValue(item, out var tuple);
-            if (tuple == null) return Point.None;
-            return tuple.Position;
+            _itemMapping.TryGetValue(item, out var pos);
+            return pos;
         }
 
         /// <summary>
@@ -209,11 +207,9 @@ namespace GoRogue.SpatialMaps
                 throw new InvalidOperationException(
                     $"Tried to move item in {GetType().Name}, but the target position already contains an item.");
 
-            var movingTuple = _itemMapping[item];
-            var oldPos = movingTuple.Position;
-            _positionMapping.Remove(movingTuple.Position);
-            movingTuple.Position = target;
-            _positionMapping.Add(target, movingTuple);
+            var oldPos = _itemMapping[item];
+            _positionMapping.Remove(oldPos);
+            _positionMapping.Add(target, item);
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
 
@@ -247,13 +243,12 @@ namespace GoRogue.SpatialMaps
 
             if (_positionMapping.ContainsKey(current) && !_positionMapping.ContainsKey(target))
             {
-                var movingTuple = _positionMapping[current];
+                var item = _positionMapping[current];
                 _positionMapping.Remove(current);
-                movingTuple.Position = target;
-                _positionMapping.Add(target, movingTuple);
-                result.Add(movingTuple.Item);
+                _positionMapping.Add(target, item);
+                result.Add(item);
 
-                ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(movingTuple.Item, current, target));
+                ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
             }
 
             return result;
@@ -291,10 +286,10 @@ namespace GoRogue.SpatialMaps
                 throw new InvalidOperationException(
                     $"Tried to remove an item from the {GetType().Name} that has not been added.");
 
-            var tuple = _itemMapping[item];
+            var itemPos = _itemMapping[item];
             _itemMapping.Remove(item);
-            _positionMapping.Remove(tuple.Position);
-            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, tuple.Position));
+            _positionMapping.Remove(itemPos);
+            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, itemPos));
         }
 
         /// <summary>
@@ -307,21 +302,21 @@ namespace GoRogue.SpatialMaps
         /// </remarks>
         /// <param name="position">The position of the item to remove.</param>
         /// <returns>
-        /// The item removed as a 1-element IEnumerable, if something was removed; nothing if no item
+        /// The item removed as a 1-element list, if something was removed; an empty list if no item
         /// was found at that position.
         /// </returns>
         public List<T> Remove(Point position)
         {
             var result = new List<T>();
 
-            _positionMapping.TryGetValue(position, out var tuple);
-            if (tuple != null)
-            {
-                _positionMapping.Remove(position);
-                _itemMapping.Remove(tuple.Item);
-                ItemRemoved?.Invoke(this, new ItemEventArgs<T>(tuple.Item, tuple.Position));
-                result.Add(tuple.Item);
-            }
+            _positionMapping.TryGetValue(position, out var item);
+            if (item == null)
+                return result;
+
+            _positionMapping.Remove(position);
+            _itemMapping.Remove(item);
+            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, position));
+            result.Add(item);
 
             return result;
         }
@@ -349,7 +344,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the spatial map.</returns>
         public string ToString(Func<T, string> itemStringifier)
-            => _positionMapping.ExtendToString(valueStringifier: obj => itemStringifier(obj.Item), pairSeparator: "; ");
+            => _positionMapping.ExtendToString(valueStringifier: itemStringifier, pairSeparator: "; ");
 
         /// <summary>
         /// Returns true if the given item can be added at the given position, eg. the item is not already in the
@@ -476,11 +471,8 @@ namespace GoRogue.SpatialMaps
         [return: MaybeNull]
         public T GetItem(Point position)
         {
-            _positionMapping.TryGetValue(position, out var tuple);
-            if (tuple != null)
-                return tuple.Item;
-
-            return default!; // Ok to override as the return value is manually flagged as nullable
+            _positionMapping.TryGetValue(position, out var item);
+            return item;
         }
 
         /// <summary>
@@ -533,22 +525,5 @@ namespace GoRogue.SpatialMaps
         public SpatialMap(int initialCapacity = 32)
             : base(new IDComparer<T>(), initialCapacity)
         { }
-    }
-
-    internal class SpatialTuple<T> : ISpatialTuple<T>
-    {
-        public SpatialTuple(T item, Point position)
-        {
-            Item = item;
-            Position = position;
-        }
-
-        public T Item { get; }
-        public Point Position { get; set; }
-
-        [UsedImplicitly]
-        public string ToString(Func<T, string> itemStringifier) => Position + " : " + itemStringifier(Item);
-
-        public override string ToString() => Position + " : " + Item;
     }
 }

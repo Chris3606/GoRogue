@@ -193,17 +193,17 @@ namespace GoRogue.SpatialMaps
         /// invalid or
         /// the item otherwise cannot be added to its layer.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item at.</param>
-        public void Add(T newItem, Point position)
+        public void Add(T item, Point position)
         {
-            var relativeLayer = newItem.Layer - StartingLayer;
+            var relativeLayer = item.Layer - StartingLayer;
 
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
                 throw new InvalidOperationException(
-                    $"Tried to add item to {GetType().Name} on layer {newItem.Layer}, but no such layer exists.");
+                    $"Tried to add item to {GetType().Name} on layer {item.Layer}, but no such layer exists.");
 
-            _layers[relativeLayer].Add(newItem, position);
+            _layers[relativeLayer].Add(item, position);
         }
 
         /// <summary>
@@ -211,10 +211,10 @@ namespace GoRogue.SpatialMaps
         /// invalid or
         /// the item otherwise cannot be added to its layer.
         /// </summary>
-        /// <param name="newItem">Item to add.</param>
+        /// <param name="item">Item to add.</param>
         /// <param name="x">X-value of position to add item at.</param>
         /// <param name="y">Y-value of position to add item at.</param>
-        public void Add(T newItem, int x, int y) => Add(newItem, new Point(x, y));
+        public void Add(T item, int x, int y) => Add(item, new Point(x, y));
 
         /// <inheritdoc />
         IReadOnlySpatialMap<T> IReadOnlySpatialMap<T>.AsReadOnly() => this;
@@ -247,7 +247,7 @@ namespace GoRogue.SpatialMaps
         /// foreach loop. Generally should never be called explicitly.
         /// </summary>
         /// <returns>An enumerator for the spatial map</returns>
-        public IEnumerator<ISpatialTuple<T>> GetEnumerator()
+        public IEnumerator<ItemPositionPair<T>> GetEnumerator()
         {
             foreach (var layer in _layers)
                 foreach (var tuple in layer)

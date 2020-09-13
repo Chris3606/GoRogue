@@ -13,7 +13,7 @@ namespace GoRogue.Components
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public struct ComponentTypeTagPair : IEquatable<ComponentTypeTagPair>
+    public readonly struct ComponentTypeTagPair : IEquatable<ComponentTypeTagPair>
     {
         /// <summary>
         /// The type of component expected.
