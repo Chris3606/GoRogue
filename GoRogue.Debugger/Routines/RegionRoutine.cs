@@ -9,19 +9,8 @@ using SadRogue.Primitives;
 
 namespace GoRogue.Debugger.Routines
 {
-    /// <summary>
-    /// Used to indicate the current state of each tile (whether it is within a region or not),
-    /// for the sake of efficiently generating a view.
-    /// </summary>
-    internal enum TileState
-    {
-        InnerRegionPoint,
-        OuterRegionPoint,
-        Wall
-    }
-
     [UsedImplicitly]
-    internal class RotateRegion : IRoutine
+    internal class RegionRoutine : IRoutine
     {
         // Current amount to rotate _originalRegions by
         private double _rotation;
@@ -32,10 +21,12 @@ namespace GoRogue.Debugger.Routines
 
         // Map view set to indicate current state of each tile, so that it can be efficiently rendered.
         private readonly ArrayMap<TileState> _map = new ArrayMap<TileState>(500, 500);
-
         private readonly List<(string name, IMapView<char> view)> _views = new List<(string name, IMapView<char> view)>();
         /// <inheritdoc />
         public IReadOnlyList<(string name, IMapView<char> view)> Views => _views.AsReadOnly();
+
+        /// <inheritdoc />
+        public void InterpretKeyPress(ConsoleKey key) { } //
 
         /// <inheritdoc />
         public string Name => "Rotating Regions";
@@ -46,14 +37,37 @@ namespace GoRogue.Debugger.Routines
             _views.Add(("Regions", new LambdaMapView<char>(_map.Width, _map.Height, RegionsView)));
         }
 
+        public ArrayMap<TileState> Zone => _map;
+
         /// <inheritdoc />
-        public void ElapseTimeUnit()
+        public void NextTimeUnit()
         {
             // Revert all points in current regions back to walls
             RemoveRegionsFromMap();
 
             // Increase amount we rotate by
             _rotation += 5;
+
+            // Remove transformed regions so we can transform them by a new amount
+            _transformedRegions.Clear();
+
+            // Rotate each original region by the new amount about its center, and add
+            // it to the list of transformed regions
+            foreach (Region region in _originalRegions)
+                _transformedRegions.Add(region.Rotate(_rotation, region.Center));
+
+            // Update map to reflect new regions
+            ApplyRegionsToMap();
+        }
+
+        /// <inheritdoc />
+        public void LastTimeUnit()
+        {
+            // Revert all points in current regions back to walls
+            RemoveRegionsFromMap();
+
+            // Decrease amount we rotate by
+            _rotation -= 5;
 
             // Remove transformed regions so we can transform them by a new amount
             _transformedRegions.Clear();

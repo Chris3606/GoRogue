@@ -130,7 +130,11 @@ namespace GoRogue.Debugger
                     _exit = true;
                     break;
                 case ConsoleKey.Spacebar:
-                    _routine.ElapseTimeUnit();
+                    _routine.NextTimeUnit();
+                    _dirty = true;
+                    break;
+                case ConsoleKey.Backspace:
+                    _routine.LastTimeUnit();
                     _dirty = true;
                     break;
                 case ConsoleKey.LeftArrow:
@@ -153,10 +157,15 @@ namespace GoRogue.Debugger
                     _mapView.PreviousView();
                     _dirty = true;
                     break;
+                default:
+                    _routine.InterpretKeyPress(key);
+                    break;
             }
 
             if (moveViewportDir != Direction.None)
+            {
                 _dirty = _mapView.CenterViewOn(_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
+            }
         }
 
         private static void DrawMap()
@@ -172,7 +181,8 @@ namespace GoRogue.Debugger
             // Get string constituting the viewport, ensuring to allow no space between characters
             var lines = _mapView.CurrentViewport.ExtendToString(elementSeparator: "").Split('\n');
             foreach (var line in lines)
-                Console.WriteLine(line.Trim());
+                Console.WriteLine(line);
+                //Console.WriteLine(line.Trim());
 
             // Print as many new lines as required to ensure that we don't end up with part of the old map on screen
             for (int i = lines.Length; i < height; i++)
