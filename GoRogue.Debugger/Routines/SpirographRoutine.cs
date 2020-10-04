@@ -13,7 +13,6 @@ namespace GoRogue.Debugger.Routines
         private double _theta = -100.0;
         private readonly List<Spirograph> _spirographs = new List<Spirograph>();
         public string Name => "Spirographs";
-        public ArrayMap<TileState> Zone => _map;
         public IReadOnlyList<(string name, IMapView<char> view)> Views => _views;
 
         public SpirographRoutine()
@@ -69,9 +68,6 @@ namespace GoRogue.Debugger.Routines
                 _ => throw new Exception("Regions view encountered unsupported tile settings.")
             };
 
-        public void InterpretKeyPress(ConsoleKey key)
-        {
-
-        }
+        public void InterpretKeyPress(ConsoleKey key) { }
     }
 }

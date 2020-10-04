@@ -17,11 +17,6 @@ namespace GoRogue.Debugger
         string Name { get; }
 
         /// <summary>
-        /// This is the map we're working with
-        /// </summary>
-        ArrayMap<TileState> Zone { get; }
-
-        /// <summary>
         /// Different views of the map, each with a name.  Each view must have the same width and height.
         /// </summary>
         IReadOnlyList<(string name, IMapView<char> view)> Views { get; }

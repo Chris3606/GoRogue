@@ -37,8 +37,6 @@ namespace GoRogue.Debugger.Routines
             _views.Add(("Regions", new LambdaMapView<char>(_map.Width, _map.Height, RegionsView)));
         }
 
-        public ArrayMap<TileState> Zone => _map;
-
         /// <inheritdoc />
         public void NextTimeUnit()
         {
