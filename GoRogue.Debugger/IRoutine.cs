@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GoRogue.GameFramework;
 using GoRogue.MapViews;
 
 namespace GoRogue.Debugger

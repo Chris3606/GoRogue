@@ -182,7 +182,6 @@ namespace GoRogue.Debugger
             var lines = _mapView.CurrentViewport.ExtendToString(elementSeparator: "").Split('\n');
             foreach (var line in lines)
                 Console.WriteLine(line);
-                //Console.WriteLine(line.Trim());
 
             // Print as many new lines as required to ensure that we don't end up with part of the old map on screen
             for (int i = lines.Length; i < height; i++)
