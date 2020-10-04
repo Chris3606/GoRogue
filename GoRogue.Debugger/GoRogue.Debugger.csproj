@@ -13,7 +13,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" />
+      <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+	  <PrivateAssets>all</PrivateAssets>
+	</PackageReference>
     </ItemGroup>
 
 </Project>
