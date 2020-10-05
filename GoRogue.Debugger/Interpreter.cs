@@ -220,32 +220,12 @@ namespace GoRogue.Debugger
             // Resize viewport as needed to match console size
             _mapView.ResizeViewport(width, height);
 
-            // Get string constituting the viewport, ensuring to allow no space between characters
-            var lines = _mapView.CurrentViewport.ExtendToString(elementSeparator: "").Split('\n');
-
-            if (lines.Length > 0) // Make sure there is actually something to render
+            // Change each character of the console as appropriate
+            foreach (var pos in _mapView.CurrentViewport.Positions())
             {
-                // NCurses doesn't allow Add functions to write to the bottom-right corner of the console for historical
-                // reasons.  You must explicitly use the insert functionality to do this.  So we write the last
-                // character manually in the case that the write involves that bottom-left corner.
-                // manually if we need to.
-                int y = 0;
-                foreach (var line in lines[..^1])
-                {
-                    NCurses.MoveAddString(y, 0, line.Trim());
-                    y += 1;
-                }
-
-                string lastLine = lines[^1].Trim();
-                if (lastLine.Length == width)
-                {
-                    NCurses.MoveAddString(y, 0, lastLine[..^1]);
-                    NCurses.InsertChar(lastLine[^1]);
-                }
-                else
-                    NCurses.MoveAddString(y, 0, lastLine);
+                NCurses.Move(pos.Y, pos.X);
+                NCurses.InsertChar(_mapView.CurrentViewport[pos]);
             }
-
 
             // Render data to screen
             NCurses.Refresh();
