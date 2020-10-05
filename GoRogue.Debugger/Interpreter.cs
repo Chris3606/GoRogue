@@ -80,7 +80,10 @@ namespace GoRogue.Debugger
             // Get all types implementing IRoutine in current assembly
             Type[] routineTypes = Assembly.GetAssembly(typeof(IRoutine))?.GetTypes() ??
                            throw new Exception("Can't find assembly that defines IRoutine.");
-            routineTypes = routineTypes.Where(t => t.GetInterface(nameof(IRoutine)) != null).ToArray();
+            routineTypes = routineTypes
+                .Where(t => t.GetInterface(nameof(IRoutine)) != null)
+                .Where(t => !t.IsAbstract)
+                .ToArray();
 
             // Use the parameterless constructor for each type to create an instance of that type.
             // Overriding to non-nullable because the next stage will exit the function if there are any nulls

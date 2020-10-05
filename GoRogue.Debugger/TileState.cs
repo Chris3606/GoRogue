@@ -6,9 +6,10 @@ namespace GoRogue.Debugger
     /// </summary>
     public enum TileState
     {
+        Wall,
+        Floor,
         InnerRegionPoint,
         OuterRegionPoint,
-        Wall,
         Door,
         SpiroNext,
         SpiroNow,
