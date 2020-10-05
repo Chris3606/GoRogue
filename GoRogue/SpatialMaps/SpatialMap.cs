@@ -210,6 +210,7 @@ namespace GoRogue.SpatialMaps
             var oldPos = _itemMapping[item];
             _positionMapping.Remove(oldPos);
             _positionMapping.Add(target, item);
+            _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
 
@@ -246,6 +247,7 @@ namespace GoRogue.SpatialMaps
                 var item = _positionMapping[current];
                 _positionMapping.Remove(current);
                 _positionMapping.Add(target, item);
+                _itemMapping[item] = target;
                 result.Add(item);
 
                 ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));

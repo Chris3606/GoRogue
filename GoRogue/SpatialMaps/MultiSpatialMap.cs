@@ -185,6 +185,8 @@ namespace GoRogue.SpatialMaps
 
             if (!_positionMapping.ContainsKey(target))
                 _positionMapping[target] = new List<T>();
+
+            _itemMapping[item] = target;
             _positionMapping[target].Add(item);
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
@@ -210,6 +212,7 @@ namespace GoRogue.SpatialMaps
 
             foreach (var item in _positionMapping[current])
             {
+                _itemMapping[item] = target;
                 _positionMapping[target].Add(item);
                 result.Add(item);
             }
