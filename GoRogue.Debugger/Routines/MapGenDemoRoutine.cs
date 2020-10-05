@@ -91,7 +91,7 @@ namespace GoRogue.Debugger.Routines
         }
 
         /// <inheritdoc />
-        public void InterpretKeyPress(ConsoleKey key) { }
+        public void InterpretKeyPress(int key) { }
 
         /// <inheritdoc />
         public abstract void CreateViews();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using GoRogue.MapViews;
+using Mindmagma.Curses;
 using SadRogue.Primitives;
 
 namespace GoRogue.Debugger
@@ -23,6 +24,8 @@ namespace GoRogue.Debugger
         // Viewport of routine's map.  Null override because we initialize in Init
         private static RoutineViewport _mapView = null!;
 
+        private static IntPtr _window;
+
         #region Setup
 
         /// <summary>
@@ -30,6 +33,12 @@ namespace GoRogue.Debugger
         /// </summary>
         public static void Init()
         {
+            // Initialize NCurses
+            _window = NCurses.InitScreen();
+            NCurses.CBreak();
+            NCurses.NoEcho();
+            NCurses.Keypad(_window, true);
+
             // Pick routine, and generate its map and views
             _routine = PickRoutine();
             _routine.GenerateMap();
@@ -48,23 +57,49 @@ namespace GoRogue.Debugger
             IRoutine? chosenRoutine = null;
             do
             {
+                int y = 0;
+
+                // Clear current data from console
+                NCurses.Erase();
+
                 // Display selection menu for routines
-                Console.WriteLine("Pick your routine by using its corresponding number:");
+                NCurses.MoveAddString(y, 0, "Pick your routine by using its corresponding number:");
+                y += 1;
+
                 List<IRoutine> routines = GetRoutines();
                 foreach (var (routine, index) in routines.Select((routine, index) => (routine, index)))
-                    Console.WriteLine(index + ") " + routine.Name);
+                {
+                    NCurses.MoveAddString(y, 0, index + ") " + routine.Name);
+                    y += 1;
+                }
+
+                // Move cursor to new line
+                NCurses.Move(y, 0);
+
+                // Render menu to screen
+                NCurses.Refresh();
 
                 // Read user input and parse into index
-                var key = Console.ReadKey().Key;
+                int key = NCurses.GetChar();
                 try
                 {
-                    string number = key.ToString().Replace("D", "").Replace("NumPad", "");
-                    var index = int.Parse(number);
+                    // Convert the character code we get to string, then from that to the integer that was typed.
+                    string number = ((char)key).ToString();
+                    int index = int.Parse(number);
                     chosenRoutine = routines[index];
                 }
-                catch
+                catch // Invalid selection: Display retry message to user.
                 {
-                    Console.WriteLine("Invalid selection.  Please select from the available options.");
+                    // Clear old menu
+                    NCurses.Erase();
+
+                    // Print retry message
+                    NCurses.MoveAddString(0, 0,
+                        "Invalid selection.  Please select from the available options.  Press [Enter] to continue.");
+
+                    // Display to screen and wait for user to acknowledge
+                    NCurses.Refresh();
+                    NCurses.GetChar();
                 }
             } while (chosenRoutine == null);
 
@@ -117,6 +152,9 @@ namespace GoRogue.Debugger
 
                 InterpretKeyPress();
             }
+
+            NCurses.EndWin();
+
         }
 
         #endregion
@@ -124,38 +162,41 @@ namespace GoRogue.Debugger
         private static void InterpretKeyPress()
         {
             Direction moveViewportDir = Direction.None;
-            ConsoleKey key = Console.ReadKey().Key;
 
+            int key = NCurses.GetChar();
             switch (key)
             {
-                case ConsoleKey.Escape:
+                case CursesKey.ESC:
                     _exit = true;
                     break;
-                case ConsoleKey.Spacebar:
+                case ' ':
                     _routine.NextTimeUnit();
                     _dirty = true;
                     break;
-                case ConsoleKey.Backspace:
+                // Backspace can be 3 different key-codes, depending on platform
+                case CursesKey.BACKSPACE:
+                case '\b':
+                case 127:
                     _routine.LastTimeUnit();
                     _dirty = true;
                     break;
-                case ConsoleKey.LeftArrow:
+                case CursesKey.LEFT:
                     moveViewportDir = Direction.Left;
                     break;
-                case ConsoleKey.RightArrow:
+                case CursesKey.RIGHT:
                     moveViewportDir = Direction.Right;
                     break;
-                case ConsoleKey.UpArrow:
+                case CursesKey.UP:
                     moveViewportDir = Direction.Up;
                     break;
-                case ConsoleKey.DownArrow:
+                case CursesKey.DOWN:
                     moveViewportDir = Direction.Down;
                     break;
-                case ConsoleKey.OemPlus:
+                case '+':
                     _mapView.NextView();
                     _dirty = true;
                     break;
-                case ConsoleKey.OemMinus:
+                case '-':
                     _mapView.PreviousView();
                     _dirty = true;
                     break;
@@ -165,29 +206,49 @@ namespace GoRogue.Debugger
             }
 
             if (moveViewportDir != Direction.None)
-            {
                 _dirty = _mapView.CenterViewOn(_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
-            }
         }
 
         private static void DrawMap()
         {
-            // Calculate available console space.  Make sure to subtract one to ensure we actually fit
-            // text instead of going 1 over (because the write will include a newline).
-            int width = Console.WindowWidth - 1;
-            int height = Console.WindowHeight - 1;
+            // Clear current data from console
+            NCurses.Erase();
+
+            // Calculate available console space.
+            NCurses.GetMaxYX(_window, out int height, out int width);
 
             // Resize viewport as needed to match console size
             _mapView.ResizeViewport(width, height);
 
             // Get string constituting the viewport, ensuring to allow no space between characters
             var lines = _mapView.CurrentViewport.ExtendToString(elementSeparator: "").Split('\n');
-            foreach (var line in lines)
-                Console.WriteLine(line);
 
-            // Print as many new lines as required to ensure that we don't end up with part of the old map on screen
-            for (int i = lines.Length; i < height; i++)
-                Console.WriteLine();
+            if (lines.Length > 0) // Make sure there is actually something to render
+            {
+                // NCurses doesn't allow Add functions to write to the bottom-right corner of the console for historical
+                // reasons.  You must explicitly use the insert functionality to do this.  So we write the last
+                // character manually in the case that the write involves that bottom-left corner.
+                // manually if we need to.
+                int y = 0;
+                foreach (var line in lines[..^1])
+                {
+                    NCurses.MoveAddString(y, 0, line.Trim());
+                    y += 1;
+                }
+
+                string lastLine = lines[^1].Trim();
+                if (lastLine.Length == width)
+                {
+                    NCurses.MoveAddString(y, 0, lastLine[..^1]);
+                    NCurses.InsertChar(lastLine[^1]);
+                }
+                else
+                    NCurses.MoveAddString(y, 0, lastLine);
+            }
+
+
+            // Render data to screen
+            NCurses.Refresh();
 
             // Reset dirty flag because we just drew
             _dirty = false;

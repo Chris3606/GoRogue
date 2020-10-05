@@ -6,13 +6,61 @@
 		  <!-- Enable C# 8.0 and nullable reference features -->
       <LangVersion>8.0</LangVersion>
 		  <Nullable>enable</Nullable>
+		  <Configurations>Debug;Release</Configurations>
+		  <Platforms>x64;x86</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\GoRogue\GoRogue.csproj" />
     </ItemGroup>
+	
+	<ItemGroup Condition=" '$(Platform)' == 'x86' ">
+	  <ContentWithTargetPath Include="deps\ncursesw\x86\libformw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libformw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x86\libmenuw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libmenuw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x86\libncursesw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libncursesw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x86\libpanelw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libpanelw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x86\ncursesw6-config">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>ncursesw6-config</TargetPath>
+	  </ContentWithTargetPath>
+	</ItemGroup>
+	<ItemGroup Condition=" '$(Platform)' == 'x64' ">
+	  <ContentWithTargetPath Include="deps\ncursesw\x64\libformw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libformw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x64\libmenuw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libmenuw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x64\libncursesw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libncursesw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x64\libpanelw6.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>libpanelw6.dll</TargetPath>
+	  </ContentWithTargetPath>
+	  <ContentWithTargetPath Include="deps\ncursesw\x64\ncursesw6-config">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<TargetPath>ncursesw6-config</TargetPath>
+	  </ContentWithTargetPath>
+	</ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="dotnet-curses" Version="1.0.2" />
       <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
