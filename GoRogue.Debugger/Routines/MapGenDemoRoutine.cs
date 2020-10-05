@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GoRogue.Random;
 using GoRogue.MapGeneration;
 using GoRogue.MapViews;
 using SadRogue.Primitives;
@@ -18,15 +17,14 @@ namespace GoRogue.Debugger.Routines
         /// <summary>
         /// Map used for displaying.
         /// </summary>
-        protected ArrayMap<TileState> Map { get; }
+        protected TimeStepAwareMapView<TileState> Map { get; }
 
         /// <summary>
         /// The map generator being used.
         /// </summary>
-        protected Generator generator;
+        protected readonly Generator generator;
         private IEnumerator<object?>? _stageEnumerator;
         private bool _hasNext;
-        private int _stepsCompleted;
 
         /// <summary>
         /// Internal list of views.
@@ -42,12 +40,11 @@ namespace GoRogue.Debugger.Routines
             views = new List<(string name, IMapView<char> view)>();
 
             // Set up map
-            Map = new ArrayMap<TileState>(MapWidth, MapHeight);
+            Map = new TimeStepAwareMapView<TileState>(MapWidth, MapHeight);
 
             // Set up basic generator and state for tracking step progress
             generator = new Generator(MapWidth, MapHeight);
             _hasNext = true;
-            _stepsCompleted = 0;
         }
 
         /// <inheritdoc />
@@ -59,28 +56,20 @@ namespace GoRogue.Debugger.Routines
             if (!_hasNext)
                 return;
 
-            _hasNext = _stageEnumerator.MoveNext();
-            _stepsCompleted++;
-            UpdateMap();
-
+            if (Map.NextTimeStep())
+            {
+                _hasNext = _stageEnumerator.MoveNext();
+                UpdateMap();
+            }
         }
 
         /// <inheritdoc />
         public void LastTimeUnit()
         {
-            if (_stepsCompleted <= 0)
+            if (Map.CurrentStep < 0)
                 return;
 
-            _stepsCompleted--;
-            GlobalRandom.DefaultRNG.Reset();
-            generator = new Generator(MapWidth, MapHeight);
-            generator.AddSteps(GenerationSteps());
-            _stageEnumerator = generator.GetStageEnumerator();
-
-            for (int i = 0; i < _stepsCompleted; i++)
-                _hasNext = _stageEnumerator.MoveNext();
-
-            UpdateMap();
+            Map.LastTimeStep();
         }
 
         /// <inheritdoc />
@@ -88,6 +77,8 @@ namespace GoRogue.Debugger.Routines
         {
             generator.AddSteps(GenerationSteps());
             _stageEnumerator = generator.GetStageEnumerator();
+
+            SetInitialMapValues();
         }
 
         /// <inheritdoc />
@@ -101,6 +92,11 @@ namespace GoRogue.Debugger.Routines
         /// </summary>
         /// <returns>The generation steps this routine uses and displays.</returns>
         protected abstract IEnumerable<GenerationStep> GenerationSteps();
+
+        /// <summary>
+        /// Sets the initial values for the map.
+        /// </summary>
+        protected abstract void SetInitialMapValues();
 
         /// <summary>
         /// Updates the map with new tiles based on current map generation context.
