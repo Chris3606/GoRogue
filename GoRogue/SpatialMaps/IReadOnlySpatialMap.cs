@@ -15,7 +15,7 @@ namespace GoRogue.SpatialMaps
     /// encapsulation principles of something like a game map.
     /// </remarks>
     [PublicAPI]
-    public interface IReadOnlySpatialMap<T> : IEnumerable<ISpatialTuple<T>>
+    public interface IReadOnlySpatialMap<T> : IEnumerable<ItemPositionPair<T>>
         where T : notnull
     {
         /// <summary>
@@ -178,23 +178,5 @@ namespace GoRogue.SpatialMaps
         /// <param name="itemStringifier">Function that turns an item into a string.</param>
         /// <returns>A string representation of the spatial map.</returns>
         string ToString(Func<T, string> itemStringifier);
-    }
-
-    /// <summary>
-    /// Interface specifying return type for item-location pairs in spatial maps.
-    /// </summary>
-    /// <typeparam name="T">Type of the item associated with locations.</typeparam>
-    [PublicAPI]
-    public interface ISpatialTuple<out T>
-    {
-        /// <summary>
-        /// The item associated with this pair.
-        /// </summary>
-        T Item { get; }
-
-        /// <summary>
-        /// The position associated with this pair.
-        /// </summary>
-        Point Position { get; }
     }
 }

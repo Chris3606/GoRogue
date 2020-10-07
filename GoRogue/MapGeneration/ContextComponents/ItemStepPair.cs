@@ -13,7 +13,7 @@ namespace GoRogue.MapGeneration.ContextComponents
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public struct ItemStepPair<TItem> : IEquatable<ItemStepPair<TItem>>
+    public readonly struct ItemStepPair<TItem> : IEquatable<ItemStepPair<TItem>>
         where TItem : notnull
     {
         /// <summary>

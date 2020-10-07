@@ -57,7 +57,7 @@
     <NoWarn>CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
 
     <!-- Generate documentation files for all configurations since Debug and Release are published to NuGet. -->
-    <DocumentationFile>$(OutputPath)\GoRogue.xml</DocumentationFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <!-- Define trace constant for debug builds. -->
