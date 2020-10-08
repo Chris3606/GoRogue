@@ -195,12 +195,23 @@ namespace GoRogue.MapViews
             get => _baseMap[pos];
             set
             {
+                T oldValue = _baseMap[pos];
+
+                // No change necessary
+                if (oldValue.Equals(value))
+                    return;
+
+                // First change for this diff so create the change object
+                if (CurrentDiffIndex == _diffs.Count)
+                    _diffs.Add(new Diff<T>());
+
+                // We can't make changes when there's previously recorded states to apply
                 if (CurrentDiffIndex != _diffs.Count - 1)
                     throw new InvalidOperationException(
                         $"Cannot set values to a {nameof(DiffAwareMapView<T>)} when there are existing diffs " +
                         "that are not applied.");
 
-                T oldValue = _baseMap[pos];
+                // Apply change to base map and add to current diff
                 _baseMap[pos] = value;
                 _diffs[^1].Add(new ValueChange<T>(pos, oldValue, value));
             }
@@ -211,6 +222,10 @@ namespace GoRogue.MapViews
         /// if none of the diffs in the list have been applied (eg. the map is in the state it was in at the
         /// <see cref="DiffAwareMapView{T}"/>'s creation.
         /// </summary>
+        /// <remarks>
+        /// This index in <see cref="Diffs"/> MAY or MAY NOT exist.  It will only exist if a change
+        /// has actually been added to the current diff (or it has been finalized).
+        /// </remarks>
         public int CurrentDiffIndex { get; private set; }
 
         private List<Diff<T>> _diffs;
@@ -236,7 +251,7 @@ namespace GoRogue.MapViews
             _baseMap = baseMap;
             CurrentDiffIndex = 0;
             AutoCompress = autoCompress;
-            _diffs = new List<Diff<T>> { new Diff<T>() };
+            _diffs = new List<Diff<T>>();
         }
 
         /// <summary>
@@ -257,7 +272,7 @@ namespace GoRogue.MapViews
         public void ApplyNextDiff()
         {
             // Can't apply a diff if there is no next diff
-            if (CurrentDiffIndex == _diffs.Count - 1)
+            if (CurrentDiffIndex >= _diffs.Count - 1)
                 throw new InvalidOperationException($"Cannot {nameof(ApplyNextDiff)} when the map is already " +
                                                     "synchronized with the most recent recorded diff.");
 
@@ -268,13 +283,13 @@ namespace GoRogue.MapViews
             // Modify state to reflect diff we're applying
             CurrentDiffIndex += 1;
 
-            // Apply diff's changes
-            foreach (var change in _diffs[CurrentDiffIndex].Changes)
-                _baseMap[change.Position] = change.NewValue;
-
             // Compress the diff we're about to apply if it needs it and auto-compression is on
             if (AutoCompress)
                 _diffs[CurrentDiffIndex].Compress();
+
+            // Apply diff's changes
+            foreach (var change in _diffs[CurrentDiffIndex].Changes)
+                _baseMap[change.Position] = change.NewValue;
         }
 
         /// <summary>
@@ -287,13 +302,16 @@ namespace GoRogue.MapViews
                 throw new InvalidOperationException(
                     $"Cannot {nameof(RevertToPreviousDiff)} when there are no applied diffs.");
 
-            // Compress the diff we're about to switch off if it needs it and auto-compression is on
-            if (AutoCompress)
-                _diffs[CurrentDiffIndex].Compress();
+            if (CurrentDiffIndex != _diffs.Count) // If current diff has no changes, nothing to do
+            {
+                // Compress the diff we're about to switch off if it needs it and auto-compression is on
+                if (AutoCompress)
+                    _diffs[CurrentDiffIndex].Compress();
 
-            // Apply diff's changes
-            foreach (var change in _diffs[CurrentDiffIndex].Changes)
-                _baseMap[change.Position] = change.OldValue;
+                // Revert current diff's changes
+                foreach (var change in _diffs[CurrentDiffIndex].Changes)
+                    _baseMap[change.Position] = change.OldValue;
+            }
 
             // Modify state to reflect diff we're applying.  Exit if we're at beginning state, eg. there are no longer
             // any diffs applied
@@ -312,14 +330,18 @@ namespace GoRogue.MapViews
         /// </summary>
         public void FinalizeCurrentDiff()
         {
-            if (CurrentDiffIndex != _diffs.Count - 1)
+            if (CurrentDiffIndex < _diffs.Count - 1)
                 throw new InvalidOperationException(
                     $"Cannot {nameof(FinalizeCurrentDiff)} if there are existing diffs that are not applied.");
 
-            if (AutoCompress)
+            // No changes were ever added to the current diff, so create the empty one since it's been finalized
+            if (CurrentDiffIndex == _diffs.Count)
+                _diffs.Add(new Diff<T>());
+            // No need to compress if diff we just added was empty
+            else if (AutoCompress)
                 _diffs[^1].Compress();
 
-            _diffs.Add(new Diff<T>());
+            // Add to index to record currently active diff
             CurrentDiffIndex += 1;
         }
 
@@ -331,7 +353,7 @@ namespace GoRogue.MapViews
         /// <returns>True if an existing diff is applied, false if a new one was created.</returns>
         public bool ApplyNextDiffOrFinalize()
         {
-            if (CurrentDiffIndex == _diffs.Count - 1)
+            if (CurrentDiffIndex >= _diffs.Count - 1)
             {
                 FinalizeCurrentDiff();
                 return false;

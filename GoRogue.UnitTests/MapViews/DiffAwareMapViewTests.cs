@@ -155,8 +155,8 @@ namespace GoRogue.UnitTests.MapViews
             Assert.Equal(arrayMap, diffAwareMap.BaseMap);
             Assert.Equal(arrayMap.Width, diffAwareMap.Width);
             Assert.Equal(arrayMap.Height, diffAwareMap.Height);
-            Assert.Single(diffAwareMap.Diffs);
-            Assert.Empty(diffAwareMap.Diffs[0].Changes);
+            Assert.Equal(0, diffAwareMap.CurrentDiffIndex);
+            Assert.Empty(diffAwareMap.Diffs);
         }
 
         [Theory]
@@ -174,8 +174,8 @@ namespace GoRogue.UnitTests.MapViews
             Assert.Equal(25, diffAwareMap.BaseMap.Height);
             Assert.Equal(80, diffAwareMap.Width);
             Assert.Equal(25, diffAwareMap.Height);
-            Assert.Single(diffAwareMap.Diffs);
-            Assert.Empty(diffAwareMap.Diffs[0].Changes);
+            Assert.Equal(0, diffAwareMap.CurrentDiffIndex);
+            Assert.Empty(diffAwareMap.Diffs);
         }
 
         [Theory]
@@ -183,13 +183,11 @@ namespace GoRogue.UnitTests.MapViews
         [InlineData(false)]
         public void GetAndSetValuesToMap(bool autoCompress)
         {
-            // Create a new map view
-            var view = new DiffAwareMapView<bool>(80, 25, autoCompress);
-            Assert.Single(view.Diffs);
-            Assert.Empty(view.Diffs[0].Changes);
-
-            // Change value 1
-            view[1, 2] = true;
+            // Create a new map view and change 1 value
+            var view = new DiffAwareMapView<bool>(80, 25, autoCompress)
+            {
+                [1, 2] = true
+            };
 
             // Verify appropriate value changed
             Assert.True(view[1, 2]);
@@ -277,8 +275,9 @@ namespace GoRogue.UnitTests.MapViews
                     view[pos] = val;
                 view.FinalizeCurrentDiff();
             }
-            // 3 diffs with changes + 1 new blank one
-            Assert.Equal(4, view.Diffs.Count);
+            // 3 diffs with changes, but the active one hasn't been created yet
+            Assert.Equal(3, view.Diffs.Count);
+            Assert.Equal(3, view.CurrentDiffIndex);
 
             // Going to next diff should fail since there is no next diff
             Assert.Throws<InvalidOperationException>(view.ApplyNextDiff);
@@ -304,16 +303,18 @@ namespace GoRogue.UnitTests.MapViews
                 Assert.True(view.ApplyNextDiffOrFinalize());
                 CheckMapState(view, nextState);
             }
-            // One more should get to last blank state
-            Assert.True(view.ApplyNextDiffOrFinalize());
+            // One more will not apply any state, instead finalizing the last one that actually has changes
+            Assert.False(view.ApplyNextDiffOrFinalize());
 
-            // No new diffs should have been created, but we should be on the last one
-            Assert.Equal(4, view.Diffs.Count);
+            // No new diffs should have been created, but we should have the one active that hasn't been created yet
+            // (no changes)
+            Assert.Equal(3, view.Diffs.Count);
             Assert.Equal(3, view.CurrentDiffIndex);
 
-            // This call will not fail but should instead create a new diff.
+            // This call will not fail but should instead create a new diff, and finalize the current one (with no
+            // changes)
             Assert.False(view.ApplyNextDiffOrFinalize());
-            Assert.Equal(5, view.Diffs.Count);
+            Assert.Equal(4, view.Diffs.Count);
             Assert.Equal(4, view.CurrentDiffIndex);
         }
 
