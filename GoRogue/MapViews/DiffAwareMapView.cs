@@ -77,7 +77,7 @@ namespace GoRogue.MapViews
     /// </summary>
     /// <typeparam name="T">Type of value stored in the map view.</typeparam>
     [PublicAPI]
-    public class Diff<T> where T : struct, IEquatable<T>
+    public class Diff<T> where T : struct
     {
         private List<ValueChange<T>> _changes = new List<ValueChange<T>>();
         /// <summary>
@@ -174,7 +174,7 @@ namespace GoRogue.MapViews
     /// <typeparam name="T">Type of value in the map view.  Must be a value type.</typeparam>
     [PublicAPI]
     public class DiffAwareMapView<T> : SettableMapViewBase<T>
-        where T : struct, IEquatable<T>
+        where T : struct
     {
         private ISettableMapView<T> _baseMap;
 
