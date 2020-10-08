@@ -267,6 +267,24 @@ namespace GoRogue.MapViews
         { }
 
         /// <summary>
+        /// Sets the baseline values (eg. values before any diffs are recorded) to the values from the given map view.
+        /// Only valid to do before any diffs are recorded.
+        /// </summary>
+        /// <param name="baseline">Baseline values to use.  Must have same width/height as <see cref="BaseMap"/>.</param>
+        public void SetBaseline(IMapView<T> baseline)
+        {
+            if (baseline.Width != BaseMap.Width || baseline.Height != BaseMap.Height)
+                throw new ArgumentException(
+                    $"Baseline map's width/height must be same as {nameof(BaseMap)}.",
+                    nameof(baseline));
+
+            if (_diffs.Count != 0)
+                throw new InvalidOperationException("Baseline values must be set before any diffs are recorded.");
+
+            _baseMap.ApplyOverlay(baseline);
+        }
+
+        /// <summary>
         /// Applies the next recorded diff, or throws exception if there is no future diffs recorded.
         /// </summary>
         public void ApplyNextDiff()
@@ -298,7 +316,7 @@ namespace GoRogue.MapViews
         /// </summary>
         public void RevertToPreviousDiff()
         {
-            if (CurrentDiffIndex == -1)
+            if (CurrentDiffIndex == -1 || _diffs.Count == 0)
                 throw new InvalidOperationException(
                     $"Cannot {nameof(RevertToPreviousDiff)} when there are no applied diffs.");
 

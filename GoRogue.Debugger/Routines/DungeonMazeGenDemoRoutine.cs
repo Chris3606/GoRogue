@@ -31,6 +31,7 @@ namespace GoRogue.Debugger.Routines
         }
 
         /// <inheritdoc />
-        protected override void SetInitialMapValues() => Map.Fill(TileState.Wall);
+        protected override void SetInitialMapValues(ISettableMapView<TileState> map)
+            => map.Fill(TileState.Wall);
     }
 }
