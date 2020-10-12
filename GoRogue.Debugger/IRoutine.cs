@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoRogue.MapViews;
 
 namespace GoRogue.Debugger
@@ -47,6 +46,6 @@ namespace GoRogue.Debugger
         /// Allows the routine to perform some actions when the user presses a key
         /// </summary>
         /// <param name="key">the key being pressed</param>
-        void InterpretKeyPress(ConsoleKey key);
+        void InterpretKeyPress(int key);
     }
 }
