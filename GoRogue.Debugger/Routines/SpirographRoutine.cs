@@ -68,6 +68,6 @@ namespace GoRogue.Debugger.Routines
                 _ => throw new Exception("Regions view encountered unsupported tile settings.")
             };
 
-        public void InterpretKeyPress(ConsoleKey key) { }
+        public void InterpretKeyPress(int key) { }
     }
 }

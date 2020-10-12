@@ -26,7 +26,7 @@ namespace GoRogue.Debugger.Routines
         public IReadOnlyList<(string name, IMapView<char> view)> Views => _views.AsReadOnly();
 
         /// <inheritdoc />
-        public void InterpretKeyPress(ConsoleKey key) { } //
+        public void InterpretKeyPress(int key) { } //
 
         /// <inheritdoc />
         public string Name => "Rotating Regions";
