@@ -14,7 +14,7 @@ namespace GoRogue.Debugger.Routines
         private const int MapWidth = 80;
         private const int MapHeight = 25;
 
-        private ArrayMap<TileState> _underlyingMap;
+        private readonly ArrayMap<TileState> _underlyingMap;
         /// <summary>
         /// Map used for displaying.
         /// </summary>
