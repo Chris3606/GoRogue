@@ -114,7 +114,16 @@ namespace GoRogue.GameFramework
                 // Set position and fire event
                 var oldValue = _position;
                 _position = value;
-                Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldValue, _position));
+                try
+                {
+                    Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldValue, _position));
+                }
+                catch (InvalidOperationException)
+                {
+                    // If exception, preserve old value for future
+                    _position = oldValue;
+                    throw;
+                }
             }
         }
 
@@ -135,14 +144,48 @@ namespace GoRogue.GameFramework
                 // Set walkability and fire event
                 var oldValue = _isWalkable;
                 _isWalkable = value;
-                WalkabilityChanged?.Invoke(this, new ItemWalkabilityChangedEventArgs(this, oldValue, _isWalkable));
+                try
+                {
+                    WalkabilityChanged?.Invoke(this, new ItemWalkabilityChangedEventArgs(this, oldValue, _isWalkable));
+                }
+                catch (InvalidOperationException)
+                {
+                    // If exception, preserve old value for future
+                    _isWalkable = oldValue;
+                    throw;
+                }
             }
         }
         /// <inheritdoc />
         public event EventHandler<ItemWalkabilityChangedEventArgs>? WalkabilityChanged;
 
+        private bool _isTransparent;
+
         /// <inheritdoc />
-        public bool IsTransparent { get; set; }
+        public bool IsTransparent
+        {
+            get => _isTransparent;
+            set
+            {
+                // Nothing to do; value has not changed.
+                if (_isWalkable == value)
+                    return;
+
+                // Set transparency and fire event
+                var oldValue = _isTransparent;
+                _isTransparent = value;
+                try
+                {
+                    TransparencyChanged?.Invoke(this, new ItemTransparencyChangedEventArgs(this, oldValue, _isWalkable));
+                }
+                catch (InvalidOperationException)
+                {
+                    // If exception, preserve old value for future
+                    _isTransparent = oldValue;
+                    throw;
+                }
+            }
+        }
 
         /// <inheritdoc />
         public event EventHandler<ItemTransparencyChangedEventArgs>? TransparencyChanged;
