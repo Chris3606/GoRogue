@@ -301,12 +301,6 @@ namespace GoRogue.GameFramework
                 layersBlockingTransparency, entityLayersSupportingMultipleItems);
         }
 
-        internal void AttemptEntityMove(IGameObject gameObject, Point newPosition)
-            => _entities.Move(gameObject, newPosition);
-
-        internal bool EntityCanMove(IGameObject gameObject, Point newPosition)
-            => _entities.CanMove(gameObject, newPosition);
-
         private bool FullIsTransparent(Point position)
         {
             foreach (var item in GetObjectsAt(position, LayersBlockingTransparency))
@@ -403,14 +397,13 @@ namespace GoRogue.GameFramework
 
             var oldTerrain = _terrain[terrain.Position];
             if (oldTerrain != null)
-            {
-                ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(oldTerrain, oldTerrain.Position));
-                oldTerrain.OnMapChanged(null);
-            }
+                RemoveTerrain(oldTerrain);
 
             _terrain[terrain.Position] = terrain;
 
             terrain.OnMapChanged(this);
+            terrain.Moved += OnGameObjectMoved;
+            terrain.WalkabilityChanged += OnWalkabilityChanged;
             ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
         }
 
@@ -422,11 +415,13 @@ namespace GoRogue.GameFramework
         public void RemoveTerrain(IGameObject terrain)
         {
             if (terrain.CurrentMap != this)
-                throw new ArgumentException("A terrain object was removed from the map that had not been added",
+                throw new ArgumentException("A terrain object was removed from the map that had not been added.",
                     nameof(terrain));
 
             _terrain[terrain.Position] = null;
 
+            terrain.Moved -= OnGameObjectMoved;
+            terrain.WalkabilityChanged -= OnWalkabilityChanged;
             ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
             terrain.OnMapChanged(null);
         }
@@ -551,6 +546,8 @@ namespace GoRogue.GameFramework
 
             entity.CurrentMap?.RemoveEntity(entity);
             entity.OnMapChanged(this);
+            entity.Moved += OnGameObjectMoved;
+            entity.WalkabilityChanged += OnWalkabilityChanged;
         }
 
         /// <summary>
@@ -640,6 +637,8 @@ namespace GoRogue.GameFramework
         {
             _entities.Remove(entity);
             entity.OnMapChanged(null);
+            entity.Moved -= OnGameObjectMoved;
+            entity.WalkabilityChanged -= OnWalkabilityChanged;
         }
 
         #endregion
@@ -900,6 +899,81 @@ namespace GoRogue.GameFramework
                 Explored[pos] = true;
         }
 
+        #endregion
+
+        #region Movement Handling
+
+        /// <summary>
+        /// Returns whether or not the given game object is allowed to move to the position specified.  The object
+        /// specified must be part of the map.
+        /// </summary>
+        /// <param name="gameObject">Object to check.</param>
+        /// <param name="newPosition">New position to check if the object can move to.</param>
+        /// <returns>True if the object given can move to the given position, false otherwise.</returns>
+        /// <exception cref="ArgumentException">Thrown if the given object is not part of this map.</exception>
+        public bool GameObjectCanMove(IGameObject gameObject, Point newPosition)
+        {
+            if (gameObject.CurrentMap != this)
+                throw new ArgumentException($"{nameof(GameObjectCanMove)} was called on an object that was not "
+                                            + "part of the map");
+
+            if (gameObject.Layer == 0 || !this.Contains(newPosition) ||
+                !gameObject.IsWalkable && !WalkabilityView[newPosition])
+                return false;
+
+            return _entities.CanMove(gameObject, newPosition);
+        }
+
+        private void OnGameObjectMoved(object s, ItemMovedEventArgs<IGameObject> e)
+        {
+
+            // Ensure move is valid
+            if (e.Item.Layer == 0)
+                throw new InvalidOperationException(
+                    "Tried to move a GameObject that was added to a map as terrain.  Terrain objects cannot "
+                    + " be moved while they are added to a map.");
+
+            if (!this.Contains(e.NewPosition))
+                throw new InvalidOperationException($"A GameObject tried to move to {e.NewPosition}, which is "
+                                                    + "outside the bounds of its map.");
+
+            if (!e.Item.IsWalkable && !WalkabilityView[e.NewPosition])
+                throw new InvalidOperationException("A non-walkable GameObject tried to move to a square where "
+                                                    + "it would collide with another non-walkable object.");
+
+            // Validate move via spatial map and synchronize the object's position in the spatial map.
+            _entities.Move(e.Item, e.NewPosition);
+        }
+        #endregion
+
+        #region Walkability Validation
+
+        /// <summary>
+        /// Returns whether or not the given game object is allowed to set its <see cref="IGameObject.IsWalkable"/>
+        /// property to the given value. The object specified must be part of the map.
+        /// </summary>
+        /// <param name="gameObject">Object to check.</param>
+        /// <param name="value">New value to check for walkability.</param>
+        /// <returns>
+        /// True if the object may set its walkability to the given value without violating collision detection; false
+        /// otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown if the given object is not part of this map.</exception>
+        public bool GameObjectCanSetWalkability(IGameObject gameObject, bool value)
+        {
+            if (gameObject.CurrentMap != this)
+                throw new ArgumentException($"{nameof(GameObjectCanSetWalkability)} was called on an object "
+                                            + "that was not part of the map.");
+
+            return value || WalkabilityView[gameObject.Position];
+        }
+        private void OnWalkabilityChanged(object s, ItemWalkabilityChangedEventArgs e)
+        {
+            if (!e.NewWalkability && !WalkabilityView[e.Item.Position])
+                throw new InvalidOperationException(
+                    "Cannot set walkability of object to false; this would violate collision detection rules of "
+                    + "the map the object resides on.");
+        }
         #endregion
     }
 }

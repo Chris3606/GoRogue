@@ -1,7 +1,6 @@
 ﻿using System;
 using GoRogue.Components;
 using GoRogue.GameFramework.Components;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
@@ -49,11 +48,7 @@ namespace GoRogue.GameFramework
     [PublicAPI]
     public class GameObject : IGameObject
     {
-        // Use the value of this variable instead of the "this" keyword from within GameObject
-        private readonly IGameObject _parentObject;
-
         private bool _isWalkable;
-
         private Point _position;
 
         /// <summary>
@@ -69,13 +64,6 @@ namespace GoRogue.GameFramework
         /// </remarks>
         /// <param name="position">Position to start the object at.</param>
         /// <param name="layer">The layer of of a <see cref="Map" /> the object is assigned to.</param>
-        /// <param name="parentObject">
-        /// Object holding this GameObject instance. If you are inheriting from GameObject,
-        /// or using a backing field of type GameObject to implement <see cref="IGameObject" />, for example, you would pass
-        /// <see langword="this" /> at construction.
-        /// Otherwise, if you are simply instantiating base GameObject instances and adding them to a <see cref="Map" />,
-        /// you would pass null.
-        /// </param>
         /// <param name="isWalkable">
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
         /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or not this
@@ -95,13 +83,11 @@ namespace GoRogue.GameFramework
         /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
         /// use cases.
         /// </param>
-        public GameObject(Point position, int layer, IGameObject? parentObject,
-                          bool isWalkable = true, bool isTransparent = true, Func<uint>? idGenerator = null,
-                          ITaggableComponentCollection? customComponentContainer = null)
+        public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
+                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentContainer = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
-            _parentObject = parentObject ?? this;
             _position = position;
             Layer = layer;
             IsWalkable = isWalkable;
@@ -116,33 +102,19 @@ namespace GoRogue.GameFramework
         }
 
         /// <inheritdoc />
-        public virtual Point Position
+        public Point Position
         {
             get => _position;
             set
             {
+                // Nothing to do; we're already at the specified position
                 if (_position == value)
-                    return; // This is OK as the position is already what was given so count it as "success".
+                    return;
 
-                if (CurrentMap != null && !CurrentMap.Contains(value))
-                    throw new InvalidOperationException(
-                        $"An entity's {nameof(CurrentMap)} is not synchronized with the map, as the {nameof(CurrentMap)} reports that it does not contain the entity." +
-                        "This indicates either a GoRogue bug or a bug in an implementation of IGameObject.");
-
-                if (!IsWalkable && CurrentMap != null && !CurrentMap.WalkabilityView[value])
-                    throw new InvalidOperationException(
-                        $"Tried to move {GetType().Name} to a square that it is not allowed to because it would collide with another non-walkable object.");
-
-                if (CurrentMap != null && Layer == 0)
-                    throw new InvalidOperationException(
-                        $"Tried to move a {GetType().Name} that was added to a map as terrain.  Terrain objects cannot move while they are added to a map.");
-
-                var oldPos = _position;
-
-                CurrentMap?.AttemptEntityMove(_parentObject, value);
-
+                // Set position and fire event
+                var oldValue = _position;
                 _position = value;
-                Moved?.Invoke(_parentObject, new ItemMovedEventArgs<IGameObject>(_parentObject, oldPos, _position));
+                Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldValue, _position));
             }
         }
 
@@ -156,20 +128,24 @@ namespace GoRogue.GameFramework
 
             set
             {
-                if (_isWalkable == value) return;
+                // Nothing to do; value has not changed.
+                if (_isWalkable == value)
+                    return;
 
-                // Would violate walkability
-                if (!value && CurrentMap != null && !CurrentMap.WalkabilityView[Position])
-                    throw new ArgumentException(
-                        "Cannot set walkability of object to false; this would violate walkability of the map the object resides on.",
-                        nameof(IsWalkable));
-
+                // Set walkability and fire event
+                var oldValue = _isWalkable;
                 _isWalkable = value;
+                WalkabilityChanged?.Invoke(this, new ItemWalkabilityChangedEventArgs(this, oldValue, _isWalkable));
             }
         }
+        /// <inheritdoc />
+        public event EventHandler<ItemWalkabilityChangedEventArgs>? WalkabilityChanged;
 
         /// <inheritdoc />
         public bool IsTransparent { get; set; }
+
+        /// <inheritdoc />
+        public event EventHandler<ItemTransparencyChangedEventArgs>? TransparencyChanged;
 
         /// <inheritdoc />
         public uint ID { get; }
@@ -183,70 +159,10 @@ namespace GoRogue.GameFramework
         /// <inheritdoc />
         public ITaggableComponentCollection GoRogueComponents { get; }
 
-        /// <summary>
-        /// Returns true if the GameObject can be moved to the location specified; false otherwise.
-        /// </summary>
-        /// <remarks>
-        /// This function can return false in the following cases:
-        /// 1. If the object has is added to a Map and is on layer 0 (because terrain objects cannot move while added
-        ///    to the map).
-        /// 2. If the object is added to the map and either:
-        ///     a. The position specified is not within the bounds of the map
-        ///     b. The object is not walkable and there is already a non-walkable item at the specified location
-        ///     c. The object's layer cannot support multiple items at one location and there is already an item at that
-        ///        location on that layer.
-        /// </remarks>
-        /// <param name="position">The position to check.</param>
-        /// <returns>True if the object can be moved to the specified position; false otherwise.</returns>
-        public virtual bool CanMove(Point position)
-        {
-            if (CurrentMap == null)
-                return true;
-
-            if (!CurrentMap.Contains(position) || !IsWalkable && !CurrentMap.WalkabilityView[position] ||
-                Layer == 0)
-                return false;
-
-            return CurrentMap.EntityCanMove(_parentObject, position);
-
-        }
-
-        /// <summary>
-        /// Returns true if the GameObject can move in the given direction; false otherwise.
-        /// </summary>
-        /// <remarks>
-        /// See remarks in documentation for <see cref="CanMove(Point)" /> for details on when this function can return
-        /// false.
-        /// </remarks>
-        /// <param name="direction">The direction of movement to check.</param>
-        /// <returns>True if the object can be moved in the specified direction; false otherwise</returns>
-        public bool CanMoveIn(Direction direction) => CanMove(Position + direction);
-
         /// <inheritdoc />
         public void OnMapChanged(Map? newMap)
         {
-            if (newMap != null)
-            {
-                // Hack check to make sure the parentObject parameter was set properly.  The only case the add operation could have called
-                // this function, but the object not be "present", is if reference equality of our parent doesn't match what is actually
-                // in the map.  This can only happen if the parentObject isn't what it is supposed to be.
-                if (Layer == 0) // It's terrain
-                {
-                    if (newMap.Terrain[Position] != _parentObject)
-                        ThrowInvalidParentException();
-                }
-                else if (!newMap.Entities.Contains(_parentObject)) // It's an entity
-                    ThrowInvalidParentException();
-            }
-
             CurrentMap = newMap;
-        }
-
-        private void ThrowInvalidParentException()
-        {
-            var name = nameof(_parentObject).Replace("_", "");
-            throw new Exception(
-                $"{name} for an object of type {nameof(GameObject)} was set incorrectly when it was constructed.  See API documentation of {nameof(GameObject)} for details on that constructor parameter.");
         }
 
         #region Component Handlers
@@ -259,7 +175,7 @@ namespace GoRogue.GameFramework
                 throw new ArgumentException(
                     $"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple objects at once.");
 
-            c.Parent = _parentObject;
+            c.Parent = this;
         }
 
         private void On_ComponentRemoved(object? s, ComponentChangedEventArgs e)
