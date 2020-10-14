@@ -105,59 +105,21 @@ namespace GoRogue.GameFramework
         public Point Position
         {
             get => _position;
-            set
-            {
-                // Nothing to do; we're already at the specified position
-                if (_position == value)
-                    return;
-
-                // Set position and fire event
-                var oldValue = _position;
-                _position = value;
-                try
-                {
-                    Moved?.Invoke(this, new ItemMovedEventArgs<IGameObject>(this, oldValue, _position));
-                }
-                catch (InvalidOperationException)
-                {
-                    // If exception, preserve old value for future
-                    _position = oldValue;
-                    throw;
-                }
-            }
+            set => this.SafelySetProperty(ref _position, value, Moved);
         }
 
         /// <inheritdoc />
-        public event EventHandler<ItemMovedEventArgs<IGameObject>>? Moved;
+        public event EventHandler<GameObjectPropertyChanged<Point>>? Moved;
 
         /// <inheritdoc />
         public bool IsWalkable
         {
             get => _isWalkable;
-
-            set
-            {
-                // Nothing to do; value has not changed.
-                if (_isWalkable == value)
-                    return;
-
-                // Set walkability and fire event
-                var oldValue = _isWalkable;
-                _isWalkable = value;
-                try
-                {
-                    WalkabilityChanged?.Invoke(this, new ItemWalkabilityChangedEventArgs(this, oldValue, _isWalkable));
-                }
-                catch (InvalidOperationException)
-                {
-                    // If exception, preserve old value for future
-                    _isWalkable = oldValue;
-                    throw;
-                }
-            }
+            set => this.SafelySetProperty(ref _isWalkable, value, WalkabilityChanged);
         }
+
         /// <inheritdoc />
-        public event EventHandler<ItemWalkabilityChangedEventArgs>? WalkabilityChanged;
+        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
 
         private bool _isTransparent;
 
@@ -165,30 +127,11 @@ namespace GoRogue.GameFramework
         public bool IsTransparent
         {
             get => _isTransparent;
-            set
-            {
-                // Nothing to do; value has not changed.
-                if (_isWalkable == value)
-                    return;
-
-                // Set transparency and fire event
-                var oldValue = _isTransparent;
-                _isTransparent = value;
-                try
-                {
-                    TransparencyChanged?.Invoke(this, new ItemTransparencyChangedEventArgs(this, oldValue, _isWalkable));
-                }
-                catch (InvalidOperationException)
-                {
-                    // If exception, preserve old value for future
-                    _isTransparent = oldValue;
-                    throw;
-                }
-            }
+            set => this.SafelySetProperty(ref _isTransparent, value, TransparencyChanged);
         }
 
         /// <inheritdoc />
-        public event EventHandler<ItemTransparencyChangedEventArgs>? TransparencyChanged;
+        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
 
         /// <inheritdoc />
         public uint ID { get; }

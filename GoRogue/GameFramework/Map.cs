@@ -924,25 +924,24 @@ namespace GoRogue.GameFramework
             return _entities.CanMove(gameObject, newPosition);
         }
 
-        private void OnGameObjectMoved(object s, ItemMovedEventArgs<IGameObject> e)
+        private void OnGameObjectMoved(object? s, GameObjectPropertyChanged<Point> e)
         {
-
             // Ensure move is valid
             if (e.Item.Layer == 0)
                 throw new InvalidOperationException(
                     "Tried to move a GameObject that was added to a map as terrain.  Terrain objects cannot "
                     + " be moved while they are added to a map.");
 
-            if (!this.Contains(e.NewPosition))
-                throw new InvalidOperationException($"A GameObject tried to move to {e.NewPosition}, which is "
+            if (!this.Contains(e.NewValue))
+                throw new InvalidOperationException($"A GameObject tried to move to {e.NewValue}, which is "
                                                     + "outside the bounds of its map.");
 
-            if (!e.Item.IsWalkable && !WalkabilityView[e.NewPosition])
+            if (!e.Item.IsWalkable && !WalkabilityView[e.NewValue])
                 throw new InvalidOperationException("A non-walkable GameObject tried to move to a square where "
                                                     + "it would collide with another non-walkable object.");
 
             // Validate move via spatial map and synchronize the object's position in the spatial map.
-            _entities.Move(e.Item, e.NewPosition);
+            _entities.Move(e.Item, e.NewValue);
         }
         #endregion
 
@@ -967,9 +966,9 @@ namespace GoRogue.GameFramework
 
             return value || WalkabilityView[gameObject.Position];
         }
-        private void OnWalkabilityChanged(object s, ItemWalkabilityChangedEventArgs e)
+        private void OnWalkabilityChanged(object? s, GameObjectPropertyChanged<bool> e)
         {
-            if (!e.NewWalkability && !WalkabilityView[e.Item.Position])
+            if (!e.NewValue && !WalkabilityView[e.Item.Position])
                 throw new InvalidOperationException(
                     "Cannot set walkability of object to false; this would violate collision detection rules of "
                     + "the map the object resides on.");

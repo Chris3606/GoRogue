@@ -1,78 +1,43 @@
 ﻿using System;
 using GoRogue.Components;
-using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
 {
     /// <summary>
-    /// Event arguments for <see cref="IGameObject.WalkabilityChanged"/> event.
+    /// Event arguments for en event fired when IGameObject properties are changed.
     /// </summary>
+    /// <typeparam name="T">Type of the property changed.</typeparam>
     [PublicAPI]
-    public class ItemWalkabilityChangedEventArgs : EventArgs
+    public class GameObjectPropertyChanged<T> : EventArgs
     {
         /// <summary>
-        /// Object whose walkability was changed.
+        /// Object whose property was changed.
         /// </summary>
         public readonly IGameObject Item;
 
         /// <summary>
-        /// Previous value of walkability.
+        /// Previous value of property.
         /// </summary>
-        public readonly bool OldWalkability;
+        public readonly T OldValue;
 
         /// <summary>
-        /// New value of walkability.
+        /// New value of property.
         /// </summary>
-        public readonly bool NewWalkability;
-
-        /// <summary>
-        /// Creates a new object.
-        /// </summary>
-        /// <param name="item">Object whose walkability was changed.</param>
-        /// <param name="oldWalkability">Previous value of walkability.</param>
-        /// <param name="newWalkability">New value of walkability.</param>
-        public ItemWalkabilityChangedEventArgs(IGameObject item, bool oldWalkability, bool newWalkability)
-        {
-            Item = item;
-            OldWalkability = oldWalkability;
-            NewWalkability = newWalkability;
-        }
-    }
-
-    /// <summary>
-    /// Event arguments for <see cref="IGameObject.TransparencyChanged"/> event.
-    /// </summary>
-    [PublicAPI]
-    public class ItemTransparencyChangedEventArgs : EventArgs
-    {
-        /// <summary>
-        /// Object whose transparency was changed.
-        /// </summary>
-        public readonly IGameObject Item;
-
-        /// <summary>
-        /// Previous value of transparency.
-        /// </summary>
-        public readonly bool OldTransparency;
-
-        /// <summary>
-        /// New value of transparency.
-        /// </summary>
-        public readonly bool NewTransparency;
+        public readonly T NewValue;
 
         /// <summary>
         /// Creates a new object.
         /// </summary>
-        /// <param name="item">Object whose walkability was changed.</param>
-        /// <param name="oldTransparency">Previous value of transparency.</param>
-        /// <param name="newTransparency">New value of transparency.</param>
-        public ItemTransparencyChangedEventArgs(IGameObject item, bool oldTransparency, bool newTransparency)
+        /// <param name="item">Object whose property was changed.</param>
+        /// <param name="oldValue">Previous value of property.</param>
+        /// <param name="newValue">New value of property.</param>
+        public GameObjectPropertyChanged(IGameObject item, T oldValue, T newValue)
         {
             Item = item;
-            OldTransparency = oldTransparency;
-            NewTransparency = newTransparency;
+            OldValue = oldValue;
+            NewValue = newValue;
         }
     }
 
@@ -104,7 +69,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Fired when <see cref="IsTransparent"/> is changed.
         /// </summary>
-        public event EventHandler<ItemTransparencyChangedEventArgs>? TransparencyChanged;
+        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
 
         /// <summary>
         /// Container holding components that have been attached to this object.
@@ -121,7 +86,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Fired when <see cref="IsWalkable"/> is changed.
         /// </summary>
-        public event EventHandler<ItemWalkabilityChangedEventArgs>? WalkabilityChanged;
+        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
 
         /// <summary>
         /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved" /> event is fired.
@@ -136,7 +101,7 @@ namespace GoRogue.GameFramework
         /// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
         /// the object is part of a <see cref="Map" />.
         /// </summary>
-        event EventHandler<ItemMovedEventArgs<IGameObject>>? Moved;
+        event EventHandler<GameObjectPropertyChanged<Point>>? Moved;
 
         /// <summary>
         /// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap" /> field of the

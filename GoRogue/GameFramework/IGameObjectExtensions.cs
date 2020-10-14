@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.GameFramework
@@ -59,5 +60,37 @@ namespace GoRogue.GameFramework
         /// false otherwise.
         /// </returns>
         public static bool CanToggleWalkability(this IGameObject self) => self.CanSetWalkability(!self.IsWalkable);
+
+        /// <summary>
+        /// Sets the given field to the new value, and fires the corresponding event.  The value will be properly
+        /// reverted to the old value if the event handler throws InvalidOperationException.
+        /// </summary>
+        /// <param name="self" />
+        /// <param name="propertyField">Field to set.</param>
+        /// <param name="newValue">New value to set to given field.</param>
+        /// <param name="changedEvent">Event to fire when change occurs.</param>
+        /// <typeparam name="T">Type of the property.</typeparam>
+        public static void SafelySetProperty<T>(this IGameObject self, ref T propertyField, T newValue,
+                                                EventHandler<GameObjectPropertyChanged<T>>? changedEvent)
+            where T: notnull
+        {
+            // Nothing to do; the value hasn't changed
+            if (propertyField.Equals(newValue))
+                return;
+
+            // Set new value and fire event
+            var oldValue = propertyField;
+            propertyField = newValue;
+            try
+            {
+                changedEvent?.Invoke(self, new GameObjectPropertyChanged<T>(self, oldValue, newValue));
+            }
+            catch (InvalidOperationException)
+            {
+                // If exception, preserve old value for future
+                propertyField = oldValue;
+                throw;
+            }
+        }
     }
 }
