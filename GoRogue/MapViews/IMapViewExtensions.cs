@@ -42,6 +42,18 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
+        /// Sets the values for each location of the current map to be equal to the value returned from the given
+        /// function when given that position.
+        /// </summary>
+        /// <typeparam name="T" />
+        /// <param name="self" />
+        /// <param name="valueFunc">
+        /// Function returning data for each location in the map view.
+        /// </param>
+        public static void ApplyOverlay<T>(this ISettableMapView<T> self, Func<Point, T> valueFunc)
+            => self.ApplyOverlay(new LambdaMapView<T>(self.Width, self.Height, valueFunc));
+
+        /// <summary>
         /// Gets a rectangle representing the bounds of the current map view.
         /// </summary>
         /// <typeparam name="T" />
@@ -167,6 +179,15 @@ namespace GoRogue.MapViews
 
             return result.ToString();
         }
+
+        /// <summary>
+        /// Fills each location in the map view given with the value specified.
+        /// </summary>
+        /// <typeparam name="T" />
+        /// <param name="self" />
+        /// <param name="value">Value to fill the map view with.</param>
+        public static void Fill<T>(this ISettableMapView<T> self, T value)
+            => self.ApplyOverlay(_ => value);
 
         /// <summary>
         /// Iterates through each position in the map view. Equivalent to nested for loop for (y =
