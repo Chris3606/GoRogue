@@ -100,7 +100,7 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Sets each element in the ArrayMap to the default for type T.
         /// </summary>
-        public void SetToDefault() => Array.Clear(_array, 0, _array.Length);
+        public void Clear() => Array.Clear(_array, 0, _array.Length);
 
         /// <summary>
         /// Compares the current ArrayMap to the object given.
