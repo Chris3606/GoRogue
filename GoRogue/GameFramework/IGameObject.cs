@@ -13,7 +13,7 @@ namespace GoRogue.GameFramework
     public class GameObjectPropertyChanged<T> : EventArgs
     {
         /// <summary>
-        /// Object whose property was changed.
+        /// Game object whose property was changed.
         /// </summary>
         public readonly IGameObject Item;
 
@@ -28,9 +28,9 @@ namespace GoRogue.GameFramework
         public readonly T NewValue;
 
         /// <summary>
-        /// Creates a new object.
+        /// Creates a new change description object.
         /// </summary>
-        /// <param name="item">Object whose property was changed.</param>
+        /// <param name="item">Game object whose property was changed.</param>
         /// <param name="oldValue">Previous value of property.</param>
         /// <param name="newValue">New value of property.</param>
         public GameObjectPropertyChanged(IGameObject item, T oldValue, T newValue)
@@ -42,14 +42,17 @@ namespace GoRogue.GameFramework
     }
 
     /// <summary>
-    /// An interface that defines the entire public interface of <see cref="GameObject" />.  Generally, you should NOT
-    /// implement these functions yourself, however it can be used in conjunction with a private, backing field of type
-    /// GameObject to store items in a map, for cases where that object cannot directly inherit from GameObject.
+    /// Base interface required for any object that has a grid position and can be added to a <see cref="Map" />.
+    /// Implements basic attributes generally common to all objects on a map, as well as properties/methods that
+    /// <see cref="Map"/> needs to function.  It also provides a container that you may attach arbitrary components to.
+    ///
+    /// For a concrete implementation, see <see cref="GameObject"/>.
     /// </summary>
     /// <remarks>
-    /// Generally, you will never implement the items in this interface manually, but rather do so through a private,
-    /// backing field of type <see cref="GameObject" />. There is an example of this type of implementation
-    /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
+    /// Generally, you can use <see cref="GameObject"/> instead of implementing this interface directly.  However, if
+    /// the need to avoid inheritance or change that implementation arises, please note that the interface contains
+    /// events that you must fire appropriately when the corresponding property implementations are changed.
+    /// GoRogue defines helper methods for this; it is recommended that you use GameObject as an example.
     /// </remarks>
     [PublicAPI]
     public interface IGameObject : IHasID, IHasLayer
@@ -62,7 +65,7 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
-        /// for the sake of calculating the FOV of a <see cref="Map" />.
+        /// for the sake of calculating FOV.
         /// </summary>
         bool IsTransparent { get; set; }
 
@@ -78,8 +81,8 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
-        /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or not this
-        /// object collides.
+        /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or
+        /// not this object collides.
         /// </summary>
         bool IsWalkable { get; set; }
 
@@ -89,12 +92,9 @@ namespace GoRogue.GameFramework
         public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
 
         /// <summary>
-        /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved" /> event is fired.
+        /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved" /> event is
+        /// fired.
         /// </summary>
-        /// <remarks>
-        /// This property may be overriden to implement custom functionality, however it is highly recommended
-        /// that you call the base set in the overridden setter, as it performs collision detection.
-        /// </remarks>
         Point Position { get; set; }
 
         /// <summary>

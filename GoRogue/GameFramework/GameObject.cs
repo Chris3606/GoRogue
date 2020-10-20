@@ -9,41 +9,19 @@ using SadRogue.Primitives;
 namespace GoRogue.GameFramework
 {
     /// <summary>
-    /// Base class for any object that has a grid position and can be added to a <see cref="Map" />.  Implements basic
-    /// attributes generally common to all objects on a map, as well as properties/methods that <see cref="Map"/> needs
-    /// to function.  It also provides a container that you may attach arbitrary components to.
-    ///
-    /// In cases where you cannot inherit from GameObject, you may have your class implement <see cref="IGameObject" />
-    /// via a private field of this type.
+    /// Concrete implementation of <see cref="IGameObject"/> that works for most use cases.  In addition to the
+    /// functionality guaranteed by IGameObject, it also defines some support for some additional functionality for
+    /// components.
     /// </summary>
     /// <remarks>
-    /// This class is designed to serve as a base class for your own game objects in your game.  It implements basic,
-    /// common functionality such as walkability and transparency, provides some infrastructure that allows it to be
-    /// added to instances of <see cref="Map" />, and has a collection that you may add arbitrary components to.
-    /// Additionally, it implements the necessary functionality to allow it to be added to an
-    /// <see cref="ISpatialMap{T}" /> implementation.
+    /// Any component collection implementing the proper interface may be passed in at construction and used as the
+    /// <see cref="GoRogueComponents"/> property value, however by default a <see cref="ComponentCollection"/> is used,
+    /// and thus will accept components of any type and will properly support <see cref="ISortedComponent"/>.
     ///
-    /// Generally, you would create one or more classes (say, MyGameObject or MyTerrain), that derives from this one
-    /// (GameObject), or implement
-    /// <see cref="IGameObject" /> by composition using a private field of this class, and use that as
-    /// the base class for your game's objects.  There is an example of doing this
-    /// <a href="https://chris3606.github.io/GoRogue/articles/game-framework.html#implementing-igameobject">here</a>.
-    ///
-    /// If you wish to use a composition/components based approach instead, a subclass of GameObject isn't strictly
-    /// necessary.  You may simply construct basic GameObject instances and add components to their
-    /// <see cref="GoRogueComponents"/> collection.
-    ///
-    /// In either case, a <see cref="Map" /> instance can be used to store these objects efficiently.  As well, Map
-    /// provides functionality that will allow you to retrieve your objects as references of their derived type
-    /// (MyGameObject or MyTerrain, in the example above), meaning that if you are using an inheritance-based approach
-    /// you can implement any common, game-specific functionality you need and have easy access to that information when
-    /// objects are retrieved from the map.
-    ///
-    /// If you are using a component-based approach, the component collection will accept components of any type.
-    /// If the components implement <see cref="ISortedComponent"/>, the priority system works as expected; see
-    /// <see cref="ComponentCollection"/> documentation.  Additionally, your components may optionally implement
-    /// <see cref="IGameObjectComponent" />.  This interface has a <see cref="IGameObjectComponent.Parent"/> property,
-    /// which will automatically be updated to be set to the game object that the component has been added to.
+    /// Regardless of what implementation is used, however, this object provides support for its components to
+    /// (optionally) implement <see cref="IGameObjectComponent"/>.  This interface has a
+    /// <see cref="IGameObjectComponent.Parent"/> property, which will automatically be updated to be set to the game
+    /// object that the component has been added to as it is added or removed.
     /// </remarks>
     [PublicAPI]
     public class GameObject : IGameObject
@@ -55,7 +33,7 @@ namespace GoRogue.GameFramework
         /// Constructor.
         /// </summary>
         /// <remarks>
-        /// <paramref name="idGenerator"/> is used to generate an ID which is assigned to the <see cref="ID" />
+        /// <paramref name="idGenerator" /> is used to generate an ID which is assigned to the <see cref="ID"/>
         /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
         /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
         /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
@@ -66,8 +44,8 @@ namespace GoRogue.GameFramework
         /// <param name="layer">The layer of of a <see cref="Map" /> the object is assigned to.</param>
         /// <param name="isWalkable">
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
-        /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or not this
-        /// object collides.
+        /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or
+        /// not this object collides.
         /// </param>
         /// <param name="isTransparent">
         /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
