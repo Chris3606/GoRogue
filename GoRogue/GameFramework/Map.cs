@@ -24,13 +24,6 @@ namespace GoRogue.GameFramework
     /// A map will typically also have some other layers, for non-terrain objects like monsters, items, etc.  The number
     /// of these layers present on the map, along with which of all the layers participate in collision detection, etc.,
     /// can be specified in the constructor.
-    ///
-    /// While this class has some flexibility, it does, unlike the rest of the library, tend to impose itself on your
-    /// architecture to some degree.  In cases where this is undesirable, each component of this map class exists as a
-    /// separate component; layer masking, the SpatialMap(s) storing the entity layers, FOV, and pathfinding all exist
-    /// as their own (more flexible) components).  This class is not intended to cover every possible use case, but
-    /// may act as an example or starting point in the case where you would like to use the components in a different
-    /// way or within a different architecture.
     /// </remarks>
     [PublicAPI]
     public class Map : MapViewBase<IEnumerable<IGameObject>>
@@ -41,10 +34,9 @@ namespace GoRogue.GameFramework
         private readonly ISettableMapView<IGameObject?> _terrain;
 
         /// <summary>
-        /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as they are
-        /// within
-        /// a calculated FOV.  This ArrayMap may also have values set to it, to easily allow for serialization or wizard-mode like
-        /// functionality.
+        /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
+        /// they are within a calculated FOV.  This ArrayMap may also have values set to it, to easily allow for
+        /// custom serialization or wizard-mode like functionality.
         /// </summary>
         public ArrayMap<bool> Explored;
 
@@ -68,36 +60,35 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
-                   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
+                   uint layersBlockingTransparency = uint.MaxValue,
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
             : this(new ArrayMap<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
                 layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems)
         { }
 
         /// <summary>
-        /// Constructor.  Constructs map with the given terrain layer, determining width/height based on the width/height of that
-        /// terrain layer.
+        /// Constructor.  Constructs map with the given terrain layer, determining width/height based on the
+        /// width/height of that terrain layer.
         /// </summary>
         /// <remarks>
-        /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" /> parameter MUST be
-        /// of type
-        /// <see cref="ISettableMapView{IGameObject}" />, rather than <see cref="ISettableMapView{T}" /> where T is a type that
-        /// derives from or implements
-        /// <see cref="IGameObject" />.  If you need to use a map view storing type T rather than IGameObject, use the
-        /// <see cref="CreateMap{T}(ISettableMapView{T}, int, Distance, uint, uint, uint)" /> function to create the map.
+        /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" />
+        /// parameter MUST be of type <see cref="ISettableMapView{IGameObject}" />, rather than
+        /// <see cref="ISettableMapView{T}" /> where T is a type that derives from or implements
+        /// <see cref="IGameObject" />.  If you need to use a map view storing some type T rather than IGameObject, use
+        /// the <see cref="CreateMap{T}(ISettableMapView{T}, int, Distance, uint, uint, uint)" /> function to create the
+        /// map.
         /// </remarks>
         /// <param name="terrainLayer">
         /// The <see cref="ISettableMapView{IGameObject}" /> that represents the terrain layer for this map.  After the
-        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the values in this
-        /// map view, rather
-        /// than setting the values via the map view itself -- if you re-assign the value at a location via the map view, the
-        /// <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are NOT guaranteed to be called, and many invariants of
-        /// map may not be properly
-        /// enforced.
+        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
+        /// values in this map view, rather than setting the values via the map view itself -- if you re-assign the
+        /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
+        /// NOT guaranteed to be called, and many invariants of map may not be properly enforced.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
@@ -114,11 +105,12 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         public Map(ISettableMapView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
-                   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
+                   uint layersBlockingTransparency = uint.MaxValue,
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
         {
             _terrain = terrainLayer;
             Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
@@ -161,30 +153,26 @@ namespace GoRogue.GameFramework
         public LayerMasker LayerMasker => _entities.LayerMasker;
 
         /// <summary>
-        /// Layer mask that contains only layers that block walkability.  A non-walkable <see cref="IGameObject" /> can only be
-        /// added to this
-        /// map if the layer it resides on is contained within this layer mask.
+        /// Layer mask that contains only layers that block walkability.  A non-walkable <see cref="IGameObject" /> can
+        /// only be added to this map if the layer it resides on is contained within this layer mask.
         /// </summary>
         public uint LayersBlockingWalkability { get; }
 
         /// <summary>
-        /// Layer mask that contains only layers that block transparency.  A non-transparent <see cref="IGameObject" /> can only be
-        /// added to this
-        /// map if the layer it is on is contained within this layer mask.
+        /// Layer mask that contains only layers that block transparency.  A non-transparent <see cref="IGameObject" />
+        /// can only be added to this map if the layer it is on is contained within this layer mask.
         /// </summary>
         public uint LayersBlockingTransparency { get; }
 
         /// <summary>
-        /// <see cref="IMapView{Boolean}" /> representing transparency values for each tile.  Each location returns true if the
-        /// location is transparent
-        /// (there are no non-transparent objects at that location), and false otherwise.
+        /// <see cref="IMapView{Boolean}" /> representing transparency values for each tile.  Each location returns true
+        /// if the location is transparent (there are no non-transparent objects at that location), and false otherwise.
         /// </summary>
         public IMapView<bool> TransparencyView { get; }
 
         /// <summary>
-        /// <see cref="IMapView{Boolean}" /> representing walkability values for each tile.  Each location is true if the location
-        /// is walkable (there are
-        /// no non-walkable objects at that location), and false otherwise.
+        /// <see cref="IMapView{Boolean}" /> representing walkability values for each tile.  Each location is true if
+        /// the location is walkable (there are no non-walkable objects at that location), and false otherwise.
         /// </summary>
         public IMapView<bool> WalkabilityView { get; }
 
@@ -194,9 +182,8 @@ namespace GoRogue.GameFramework
         public IReadOnlyFOV FOV => _fov.AsReadOnly();
 
         /// <summary>
-        /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can be
-        /// reached,
-        /// and calculates distance based on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can
+        /// be reached, and calculates distance based on the <see cref="Distance" /> passed to the Map in the constructor.
         /// </summary>
         public AStar AStar { get; set; }
 
@@ -238,25 +225,22 @@ namespace GoRogue.GameFramework
         public event EventHandler<ItemMovedEventArgs<IGameObject>>? ObjectMoved;
 
         /// <summary>
-        /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableMapView{T}" /> for the terrain map,
-        /// where type T can
-        /// be any type that implements <see cref="IGameObject" />.  Note that a Map that is constructed using this function will
-        /// throw an
-        /// <see cref="InvalidCastException" /> if any IGameObject is given to <see cref="SetTerrain(IGameObject)" /> that cannot
-        /// be cast to type T.
+        /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableMapView{T}" /> for the
+        /// terrain map, where type T can be any type that implements <see cref="IGameObject" />.  Note that a Map that
+        /// is constructed using this function will throw an <see cref="InvalidCastException" /> if any IGameObject is
+        /// given to <see cref="SetTerrain(IGameObject)" /> that cannot be cast to type T.
         /// </summary>
         /// <remarks>
-        /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.  This
-        /// construction function allows
-        /// you to construct your map using an <see cref="ISettableMapView{MyTerrain}" /> instance as the terrain map, which you
-        /// cannot do with the regular
-        /// constructor since <see cref="ISettableMapView{MyTerrain}" /> does not satisfy the constructor's type requirement of
-        /// <see cref="ISettableMapView{IGameObject}" />.
-        /// Since this function under the hood creates a <see cref="SettableTranslationMap{T, IGameObject}" /> that translates
-        /// to/from IGameObject as needed,
-        /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in the map and
-        /// in the original
-        /// ISettableMapView.
+        /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.
+        /// This construction function allows you to construct your map using an
+        /// <see cref="ISettableMapView{MyTerrain}" /> instance as the terrain map, which you cannot do with the regular
+        /// constructor since <see cref="ISettableMapView{MyTerrain}" /> does not satisfy the constructor's type
+        /// requirement of <see cref="ISettableMapView{IGameObject}" />.
+        ///
+        /// Since this function under the hood creates a <see cref="SettableTranslationMap{T, IGameObject}" /> that
+        /// translates to/from IGameObject as needed,
+        /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in
+        /// the map and in the original ISettableMapView.
         /// </remarks>
         /// <typeparam name="T">
         /// The type of terrain that will be stored in the created Map.  Can be any type that implements
@@ -264,12 +248,10 @@ namespace GoRogue.GameFramework
         /// </typeparam>
         /// <param name="terrainLayer">
         /// The <see cref="ISettableMapView{T}" /> that represents the terrain layer for this map.  After the
-        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the values in this
-        /// map view, rather
-        /// than setting the values via the map view itself -- if you re-assign the value at a location via the map view, the
-        /// <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are NOT guaranteed to be called, and many invariants of
-        /// map may not be properly
-        /// enforced.
+        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
+        /// values in this map view, rather than setting the values via the map view itself.  If you re-assign the
+        /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
+        /// NOT guaranteed to be called, and many invariants of map may not be properly enforced.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
@@ -286,13 +268,14 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         /// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
         public static Map CreateMap<T>(ISettableMapView<T?> terrainLayer, int numberOfEntityLayers,
                                        Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
-                                       uint entityLayersSupportingMultipleItems = 0) where T : class, IGameObject
+                                       uint entityLayersSupportingMultipleItems = uint.MaxValue)
+            where T : class, IGameObject
         {
             var terrainMap =
                 new LambdaSettableTranslationMap<T?, IGameObject?>(terrainLayer, t => t,
@@ -329,16 +312,14 @@ namespace GoRogue.GameFramework
         public IGameObject? GetTerrainAt(Point position) => _terrain[position];
 
         /// <summary>
-        /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or
-        /// the terrain
-        /// cannot be cast to the type specified.
+        /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain
+        /// is set, or the terrain cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to check for/return the terrain as.</typeparam>
         /// <param name="position">The position to get the terrain for.</param>
         /// <returns>
-        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was not castable
-        /// to type
-        /// TerrainType.
+        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was
+        /// not castable the given type.
         /// </returns>
         public TTerrain? GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject
             => _terrain[position] as TTerrain;
@@ -353,8 +334,7 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or
-        /// the terrain
-        /// cannot be cast to the type specified.
+        /// the terrain cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to return the terrain as.</typeparam>
         /// <param name="x">X-value of the position to get the terrain for.</param>
