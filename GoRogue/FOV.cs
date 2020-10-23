@@ -8,6 +8,67 @@ using SadRogue.Primitives;
 namespace GoRogue
 {
     /// <summary>
+    /// Arguments for event fired when FOV is recalculated.
+    /// </summary>
+    [PublicAPI]
+    public class FOVRecalculatedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// Position of the FOV origin point.
+        /// </summary>
+        public readonly Point Origin;
+
+        /// <summary>
+        /// The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.
+        /// </summary>
+        public readonly double Radius;
+
+        /// <summary>
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </summary>
+        public readonly Distance DistanceCalc;
+
+        /// <summary>
+        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
+        /// points right.
+        /// </summary>
+        public readonly double Angle;
+
+        /// <summary>
+        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
+        /// <see cref="Span"/> / 2 degrees are included on either side of the span line.
+        /// </summary>
+        public readonly double Span;
+
+        /// <summary>
+        /// Create and configure the event argument object.
+        /// </summary>
+        /// <param name="origin">Position of the FOV origin point.</param>
+        /// <param name="radius">The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.</param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </param>
+        /// <param name="angle">
+        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
+        /// points right.
+        /// </param>
+        /// <param name="span">
+        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
+        /// <paramref name="span"/>> / 2 degrees are included on either side of the span line.
+        /// </param>
+        public FOVRecalculatedEventArgs(Point origin, double radius, Distance distanceCalc,
+                                        double angle = 0.0, double span = 360.0)
+        {
+            Origin = origin;
+            Radius = radius;
+            DistanceCalc = distanceCalc;
+            Angle = angle;
+            Span = span;
+        }
+    }
+    /// <summary>
     /// Implements the capability to calculate a grid-based field of view for a map.
     /// </summary>
     /// <remarks>
@@ -37,6 +98,11 @@ namespace GoRogue
         private HashSet<Point> _currentFOV;
         private double[,] _light;
         private HashSet<Point> _previousFOV;
+
+        /// <summary>
+        /// Fired whenever the FOV is recalculated.
+        /// </summary>
+        public event EventHandler<FOVRecalculatedEventArgs>? Recalculated;
 
         /// <summary>
         /// Constructor.
@@ -110,33 +176,33 @@ namespace GoRogue
         /// calculates with a radius of maximum integer value, which is effectively infinite. Radius
         /// is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
         /// </param>
-        public void Calculate(int startX, int startY, double radius = double.MaxValue)
-            => Calculate(startX, startY, radius, Radius.Circle);
+        public void Calculate(int originX, int originY, double radius = double.MaxValue)
+            => Calculate(originX, originY, radius, Radius.Circle);
 
         /// <summary>
         /// Calculates FOV given an origin point and a radius. If no radius is specified,
         /// simply calculates with a radius of maximum integer value, which is effectively infinite.
         /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
-        /// <param name="start">Position of origin.</param>
+        /// <param name="origin">Position of origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// If no radius is specified, it is effectively infinite.
         /// </param>
-        public void Calculate(Point start, double radius = double.MaxValue)
-            => Calculate(start.X, start.Y, radius, Radius.Circle);
+        public void Calculate(Point origin, double radius = double.MaxValue)
+            => Calculate(origin.X, origin.Y, radius, Radius.Circle);
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, and radius shape.
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// </param>
@@ -144,7 +210,7 @@ namespace GoRogue
         /// The distance calculation used to determine what shape the radius has (or a type
         /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
-        public void Calculate(int startX, int startY, double radius, Distance distanceCalc)
+        public void Calculate(int originX, int originY, double radius, Distance distanceCalc)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
@@ -153,22 +219,24 @@ namespace GoRogue
             _currentFOV = new HashSet<Point>();
 
             InitializeLightMap();
-            _light[startX, startY] = 1; // Full power to starting space
-            _currentFOV.Add(new Point(startX, startY));
+            _light[originX, originY] = 1; // Full power to starting space
+            _currentFOV.Add(new Point(originX, originY));
 
             foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
             {
-                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, startX, startY, decay, _light, _currentFOV,
+                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY, decay, _light, _currentFOV,
                     _fovMap, distanceCalc);
-                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, startX, startY, decay, _light, _currentFOV,
+                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, originX, originY, decay, _light, _currentFOV,
                     _fovMap, distanceCalc);
             }
+
+            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc));
         }
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, and a radius shape.
         /// </summary>
-        /// <param name="start">Coordinate of the origin.</param>
+        /// <param name="origin">Coordinate of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// </param>
@@ -176,16 +244,16 @@ namespace GoRogue
         /// The distance calculation used to determine what shape the radius has (or a type
         /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
-        public void Calculate(Point start, double radius, Distance distanceCalc)
-            => Calculate(start.X, start.Y, radius, distanceCalc);
+        public void Calculate(Point origin, double radius, Distance distanceCalc)
+            => Calculate(origin.X, origin.Y, radius, distanceCalc);
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
         /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
         /// if unobstructed, will be a cone defined by the angle and span given.
         /// </summary>
-        /// <param name="startX">Coordinate x-value of the origin.</param>
-        /// <param name="startY">Coordinate y-value of the origin.</param>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// </param>
@@ -201,7 +269,7 @@ namespace GoRogue
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
         /// <paramref name="angle" /> / 2 degrees are included on either side of the cone's center line.
         /// </param>
-        public void Calculate(int startX, int startY, double radius, Distance distanceCalc, double angle, double span)
+        public void Calculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
@@ -214,28 +282,30 @@ namespace GoRogue
             _currentFOV = new HashSet<Point>();
 
             InitializeLightMap();
-            _light[startX, startY] = 1; // Full power to starting space
-            _currentFOV.Add(new Point(startX, startY));
+            _light[originX, originY] = 1; // Full power to starting space
+            _currentFOV.Add(new Point(originX, originY));
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
-                distanceCalc, angle, span);
-
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
-                distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, startX, startY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
                 distanceCalc, angle, span);
+
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+                distanceCalc, angle, span);
+
+            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc, angle, span));
         }
 
         /// <summary>
@@ -243,7 +313,7 @@ namespace GoRogue
         /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
         /// if unobstructed, will be a cone defined by the angle and span given.
         /// </summary>
-        /// <param name="start">Coordinate of the origin.</param>
+        /// <param name="origin">Coordinate of the origin.</param>
         /// <param name="radius">
         /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
         /// </param>
@@ -259,8 +329,8 @@ namespace GoRogue
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
         /// <paramref name="angle" /> / 2 degrees are included on either side of the span line.
         /// </param>
-        public void Calculate(Point start, double radius, Distance distanceCalc, double angle, double span)
-            => Calculate(start.X, start.Y, radius, distanceCalc, angle, span);
+        public void Calculate(Point origin, double radius, Distance distanceCalc, double angle, double span)
+            => Calculate(origin.X, origin.Y, radius, distanceCalc, angle, span);
 
         // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
 #pragma warning disable RECS0137

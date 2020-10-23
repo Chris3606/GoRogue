@@ -29,16 +29,35 @@ namespace GoRogue.GameFramework
     public class Map : MapViewBase<IEnumerable<IGameObject>>
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
-
-        private readonly FOV _fov;
         private readonly ISettableMapView<IGameObject?> _terrain;
+
+        private FOV _playerFOV;
+        /// <summary>
+        /// FOV for the player.  By default, calculated based upon <see cref="TransparencyView"/>.
+        /// <see cref="PlayerExplored"/> is updated automatically when this is calculated.
+        /// </summary>
+        public FOV PlayerFOV
+        {
+            get => _playerFOV;
+
+            set
+            {
+                if (_playerFOV == value)
+                    return;
+
+                _playerFOV.Recalculated -= On_FOVRecalculated;
+
+                _playerFOV = value;
+                _playerFOV.Recalculated += On_FOVRecalculated;
+            }
+        }
 
         /// <summary>
         /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
-        /// they are within a calculated FOV.  This ArrayMap may also have values set to it, to easily allow for
+        /// they are within <see cref="PlayerFOV"/>.  This ArrayMap may also have values set to it, to easily allow for
         /// custom serialization or wizard-mode like functionality.
         /// </summary>
-        public ArrayMap<bool> Explored;
+        public ArrayMap<bool> PlayerExplored;
 
         /// <summary>
         /// Constructor.  Constructs terrain map as <see cref="ArrayMap{IGameObject}" />; with the given width/height.
@@ -113,7 +132,7 @@ namespace GoRogue.GameFramework
                    uint entityLayersSupportingMultipleItems = uint.MaxValue)
         {
             _terrain = terrainLayer;
-            Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
+            PlayerExplored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
 
             _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, 1,
                 entityLayersSupportingMultipleItems);
@@ -133,7 +152,9 @@ namespace GoRogue.GameFramework
                 ? new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
                 : new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
-            _fov = new FOV(TransparencyView);
+            _playerFOV = new FOV(TransparencyView);
+            _playerFOV.Recalculated += On_FOVRecalculated;
+
             AStar = new AStar(WalkabilityView, distanceMeasurement);
         }
 
@@ -176,10 +197,6 @@ namespace GoRogue.GameFramework
         /// </summary>
         public IMapView<bool> WalkabilityView { get; }
 
-        /// <summary>
-        /// Current FOV results for the map.  Calculate FOV via the Map's CalculateFOV functions.
-        /// </summary>
-        public IReadOnlyFOV FOV => _fov.AsReadOnly();
 
         /// <summary>
         /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can
@@ -764,121 +781,11 @@ namespace GoRogue.GameFramework
         #endregion
 
         #region FOV
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the
-        /// <see cref="FOV" /> property.  All tiles
-        /// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        public void CalculateFOV(Point position, double radius = double.MaxValue)
-            => CalculateFOV(position.X, position.Y, radius, Radius.Circle);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the
-        /// <see cref="FOV" /> property.  All tiles
-        /// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        public void CalculateFOV(int x, int y, double radius = double.MaxValue)
-            => CalculateFOV(x, y, radius, Radius.Circle);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV" /> property.  All
-        /// tiles that are in the
-        /// resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        public void CalculateFOV(Point position, double radius, Distance radiusShape)
-            => CalculateFOV(position.X, position.Y, radius, radiusShape);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV" /> property.  All
-        /// tiles that are in the
-        /// resulting FOV are marked as explored.  Other non-angle-based overloads call this one, so if you need to override
-        /// functionality, override
-        /// this function.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape)
+        private void On_FOVRecalculated(object? s, FOVRecalculatedEventArgs e)
         {
-            _fov.Calculate(x, y, radius, radiusShape);
-
-            foreach (var pos in _fov.NewlySeen)
-                Explored[pos] = true;
+            foreach (var pos in PlayerFOV.NewlySeen)
+                PlayerExplored[pos] = true;
         }
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in
-        /// the <see cref="FOV" />
-        /// property. All tiles that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance, double, double)" />, so if you need to override this functionality,
-        /// override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        /// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
-        /// <param name="span">
-        /// The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are
-        /// included
-        /// in the cone.
-        /// </param>
-        public void CalculateFOV(Point position, double radius, Distance radiusShape, double angle, double span)
-            => CalculateFOV(position.X, position.Y, radius, radiusShape, angle, span);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in
-        /// the <see cref="FOV" />
-        /// property.  All tiles that are in the resulting FOV are marked as explored.  Other angle-based overloads call this one,
-        /// so if you need to
-        /// override functionality, override this function.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        /// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
-        /// <param name="span">
-        /// The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are
-        /// included
-        /// in the cone.
-        /// </param>
-        public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape, double angle, double span)
-        {
-            _fov.Calculate(x, y, radius, radiusShape, angle, span);
-
-            foreach (var pos in _fov.NewlySeen)
-                Explored[pos] = true;
-        }
-
         #endregion
 
         #region Movement Handling
