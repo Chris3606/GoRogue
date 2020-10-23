@@ -25,8 +25,8 @@ namespace GoRogue.UnitTests.GameFramework
             var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap,
                 (pos, val) =>
                     val ?
-                        new GameObject(pos, 0, null)
-                        : new GameObject(pos, 0, null, true, false));
+                        new GameObject(pos, 0)
+                        : new GameObject(pos, 0, true, false));
 
             // Create map
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
@@ -60,8 +60,8 @@ namespace GoRogue.UnitTests.GameFramework
             map.ApplyTerrainOverlay(grMap,
                 (pos, b) =>
                     b ?
-                        new GameObject(pos, 0, null)
-                        : new GameObject(pos, 0, null, false, false));
+                        new GameObject(pos, 0)
+                        : new GameObject(pos, 0, false, false));
 
             foreach (var pos in grMap.Positions())
             {
@@ -86,8 +86,8 @@ namespace GoRogue.UnitTests.GameFramework
             map.ApplyTerrainOverlay(grMap,
                 (pos, b) =>
                     b ?
-                        new GameObject(pos, 0, null)
-                        : new GameObject(pos, 0, null, true, false));
+                        new GameObject(pos, 0)
+                        : new GameObject(pos, 0, true, false));
 
             // Assert all objects are at right position to start with
             foreach (var pos in grMap.Positions())
@@ -124,7 +124,7 @@ namespace GoRogue.UnitTests.GameFramework
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var map2 = new Map(map.Width, map.Height, map.Entities.NumberOfLayers, map.DistanceMeasurement);
-            var gameObject = new GameObject((1, 2), 0, null);
+            var gameObject = new GameObject((1, 2), 0);
 
             map.SetTerrain(gameObject);
             Assert.Equal(map, gameObject.CurrentMap);
@@ -148,7 +148,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void OutOfBoundsEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((-1, -1), 1, null);
+            var obj = new GameObject((-1, -1), 1);
 
             Assert.Throws<InvalidOperationException>(() => map.AddEntity(obj));
             Assert.Empty(map.Entities);
@@ -158,7 +158,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void OutOfBoundsMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null);
+            var obj = new GameObject((1, 1), 1);
 
             map.AddEntity(obj);
 
@@ -171,7 +171,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void OutOfBoundsTerrainAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((-1, -1), 0, null);
+            var obj = new GameObject((-1, -1), 0);
 
             Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
         }
@@ -180,7 +180,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void ValidEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null);
+            var obj = new GameObject((1, 1), 1);
 
             map.AddEntity(obj);
             Assert.Single(map.Entities);
@@ -190,7 +190,7 @@ namespace GoRogue.UnitTests.GameFramework
         public void ValidEntityMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
-            var obj = new GameObject((1, 1), 1, null);
+            var obj = new GameObject((1, 1), 1);
             var five = new Point(5, 5);
             map.AddEntity(obj);
 

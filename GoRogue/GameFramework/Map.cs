@@ -24,29 +24,40 @@ namespace GoRogue.GameFramework
     /// A map will typically also have some other layers, for non-terrain objects like monsters, items, etc.  The number
     /// of these layers present on the map, along with which of all the layers participate in collision detection, etc.,
     /// can be specified in the constructor.
-    ///
-    /// While this class has some flexibility, it does, unlike the rest of the library, tend to impose itself on your
-    /// architecture to some degree.  In cases where this is undesirable, each component of this map class exists as a
-    /// separate component; layer masking, the SpatialMap(s) storing the entity layers, FOV, and pathfinding all exist
-    /// as their own (more flexible) components).  This class is not intended to cover every possible use case, but
-    /// may act as an example or starting point in the case where you would like to use the components in a different
-    /// way or within a different architecture.
     /// </remarks>
     [PublicAPI]
     public class Map : MapViewBase<IEnumerable<IGameObject>>
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
-
-        private readonly FOV _fov;
         private readonly ISettableMapView<IGameObject?> _terrain;
 
+        private FOV _playerFOV;
         /// <summary>
-        /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as they are
-        /// within
-        /// a calculated FOV.  This ArrayMap may also have values set to it, to easily allow for serialization or wizard-mode like
-        /// functionality.
+        /// FOV for the player.  By default, calculated based upon <see cref="TransparencyView"/>.
+        /// <see cref="PlayerExplored"/> is updated automatically when this is calculated.
         /// </summary>
-        public ArrayMap<bool> Explored;
+        public FOV PlayerFOV
+        {
+            get => _playerFOV;
+
+            set
+            {
+                if (_playerFOV == value)
+                    return;
+
+                _playerFOV.Recalculated -= On_FOVRecalculated;
+
+                _playerFOV = value;
+                _playerFOV.Recalculated += On_FOVRecalculated;
+            }
+        }
+
+        /// <summary>
+        /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
+        /// they are within <see cref="PlayerFOV"/>.  This ArrayMap may also have values set to it, to easily allow for
+        /// custom serialization or wizard-mode like functionality.
+        /// </summary>
+        public ArrayMap<bool> PlayerExplored;
 
         /// <summary>
         /// Constructor.  Constructs terrain map as <see cref="ArrayMap{IGameObject}" />; with the given width/height.
@@ -68,36 +79,35 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
-                   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
+                   uint layersBlockingTransparency = uint.MaxValue,
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
             : this(new ArrayMap<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
                 layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems)
         { }
 
         /// <summary>
-        /// Constructor.  Constructs map with the given terrain layer, determining width/height based on the width/height of that
-        /// terrain layer.
+        /// Constructor.  Constructs map with the given terrain layer, determining width/height based on the
+        /// width/height of that terrain layer.
         /// </summary>
         /// <remarks>
-        /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" /> parameter MUST be
-        /// of type
-        /// <see cref="ISettableMapView{IGameObject}" />, rather than <see cref="ISettableMapView{T}" /> where T is a type that
-        /// derives from or implements
-        /// <see cref="IGameObject" />.  If you need to use a map view storing type T rather than IGameObject, use the
-        /// <see cref="CreateMap{T}(ISettableMapView{T}, int, Distance, uint, uint, uint)" /> function to create the map.
+        /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" />
+        /// parameter MUST be of type <see cref="ISettableMapView{IGameObject}" />, rather than
+        /// <see cref="ISettableMapView{T}" /> where T is a type that derives from or implements
+        /// <see cref="IGameObject" />.  If you need to use a map view storing some type T rather than IGameObject, use
+        /// the <see cref="CreateMap{T}(ISettableMapView{T}, int, Distance, uint, uint, uint)" /> function to create the
+        /// map.
         /// </remarks>
         /// <param name="terrainLayer">
         /// The <see cref="ISettableMapView{IGameObject}" /> that represents the terrain layer for this map.  After the
-        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the values in this
-        /// map view, rather
-        /// than setting the values via the map view itself -- if you re-assign the value at a location via the map view, the
-        /// <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are NOT guaranteed to be called, and many invariants of
-        /// map may not be properly
-        /// enforced.
+        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
+        /// values in this map view, rather than setting the values via the map view itself -- if you re-assign the
+        /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
+        /// NOT guaranteed to be called, and many invariants of map may not be properly enforced.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
@@ -114,14 +124,15 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         public Map(ISettableMapView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
-                   uint layersBlockingTransparency = uint.MaxValue, uint entityLayersSupportingMultipleItems = 0)
+                   uint layersBlockingTransparency = uint.MaxValue,
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
         {
             _terrain = terrainLayer;
-            Explored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
+            PlayerExplored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
 
             _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, 1,
                 entityLayersSupportingMultipleItems);
@@ -141,7 +152,9 @@ namespace GoRogue.GameFramework
                 ? new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
                 : new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
-            _fov = new FOV(TransparencyView);
+            _playerFOV = new FOV(TransparencyView);
+            _playerFOV.Recalculated += On_FOVRecalculated;
+
             AStar = new AStar(WalkabilityView, distanceMeasurement);
         }
 
@@ -161,42 +174,33 @@ namespace GoRogue.GameFramework
         public LayerMasker LayerMasker => _entities.LayerMasker;
 
         /// <summary>
-        /// Layer mask that contains only layers that block walkability.  A non-walkable <see cref="IGameObject" /> can only be
-        /// added to this
-        /// map if the layer it resides on is contained within this layer mask.
+        /// Layer mask that contains only layers that block walkability.  A non-walkable <see cref="IGameObject" /> can
+        /// only be added to this map if the layer it resides on is contained within this layer mask.
         /// </summary>
         public uint LayersBlockingWalkability { get; }
 
         /// <summary>
-        /// Layer mask that contains only layers that block transparency.  A non-transparent <see cref="IGameObject" /> can only be
-        /// added to this
-        /// map if the layer it is on is contained within this layer mask.
+        /// Layer mask that contains only layers that block transparency.  A non-transparent <see cref="IGameObject" />
+        /// can only be added to this map if the layer it is on is contained within this layer mask.
         /// </summary>
         public uint LayersBlockingTransparency { get; }
 
         /// <summary>
-        /// <see cref="IMapView{Boolean}" /> representing transparency values for each tile.  Each location returns true if the
-        /// location is transparent
-        /// (there are no non-transparent objects at that location), and false otherwise.
+        /// <see cref="IMapView{Boolean}" /> representing transparency values for each tile.  Each location returns true
+        /// if the location is transparent (there are no non-transparent objects at that location), and false otherwise.
         /// </summary>
         public IMapView<bool> TransparencyView { get; }
 
         /// <summary>
-        /// <see cref="IMapView{Boolean}" /> representing walkability values for each tile.  Each location is true if the location
-        /// is walkable (there are
-        /// no non-walkable objects at that location), and false otherwise.
+        /// <see cref="IMapView{Boolean}" /> representing walkability values for each tile.  Each location is true if
+        /// the location is walkable (there are no non-walkable objects at that location), and false otherwise.
         /// </summary>
         public IMapView<bool> WalkabilityView { get; }
 
-        /// <summary>
-        /// Current FOV results for the map.  Calculate FOV via the Map's CalculateFOV functions.
-        /// </summary>
-        public IReadOnlyFOV FOV => _fov.AsReadOnly();
 
         /// <summary>
-        /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can be
-        /// reached,
-        /// and calculates distance based on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can
+        /// be reached, and calculates distance based on the <see cref="Distance" /> passed to the Map in the constructor.
         /// </summary>
         public AStar AStar { get; set; }
 
@@ -238,25 +242,22 @@ namespace GoRogue.GameFramework
         public event EventHandler<ItemMovedEventArgs<IGameObject>>? ObjectMoved;
 
         /// <summary>
-        /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableMapView{T}" /> for the terrain map,
-        /// where type T can
-        /// be any type that implements <see cref="IGameObject" />.  Note that a Map that is constructed using this function will
-        /// throw an
-        /// <see cref="InvalidCastException" /> if any IGameObject is given to <see cref="SetTerrain(IGameObject)" /> that cannot
-        /// be cast to type T.
+        /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableMapView{T}" /> for the
+        /// terrain map, where type T can be any type that implements <see cref="IGameObject" />.  Note that a Map that
+        /// is constructed using this function will throw an <see cref="InvalidCastException" /> if any IGameObject is
+        /// given to <see cref="SetTerrain(IGameObject)" /> that cannot be cast to type T.
         /// </summary>
         /// <remarks>
-        /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.  This
-        /// construction function allows
-        /// you to construct your map using an <see cref="ISettableMapView{MyTerrain}" /> instance as the terrain map, which you
-        /// cannot do with the regular
-        /// constructor since <see cref="ISettableMapView{MyTerrain}" /> does not satisfy the constructor's type requirement of
-        /// <see cref="ISettableMapView{IGameObject}" />.
-        /// Since this function under the hood creates a <see cref="SettableTranslationMap{T, IGameObject}" /> that translates
-        /// to/from IGameObject as needed,
-        /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in the map and
-        /// in the original
-        /// ISettableMapView.
+        /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.
+        /// This construction function allows you to construct your map using an
+        /// <see cref="ISettableMapView{MyTerrain}" /> instance as the terrain map, which you cannot do with the regular
+        /// constructor since <see cref="ISettableMapView{MyTerrain}" /> does not satisfy the constructor's type
+        /// requirement of <see cref="ISettableMapView{IGameObject}" />.
+        ///
+        /// Since this function under the hood creates a <see cref="SettableTranslationMap{T, IGameObject}" /> that
+        /// translates to/from IGameObject as needed,
+        /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in
+        /// the map and in the original ISettableMapView.
         /// </remarks>
         /// <typeparam name="T">
         /// The type of terrain that will be stored in the created Map.  Can be any type that implements
@@ -264,12 +265,10 @@ namespace GoRogue.GameFramework
         /// </typeparam>
         /// <param name="terrainLayer">
         /// The <see cref="ISettableMapView{T}" /> that represents the terrain layer for this map.  After the
-        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the values in this
-        /// map view, rather
-        /// than setting the values via the map view itself -- if you re-assign the value at a location via the map view, the
-        /// <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are NOT guaranteed to be called, and many invariants of
-        /// map may not be properly
-        /// enforced.
+        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
+        /// values in this map view, rather than setting the values via the map view itself.  If you re-assign the
+        /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
+        /// NOT guaranteed to be called, and many invariants of map may not be properly enforced.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
@@ -286,13 +285,14 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="entityLayersSupportingMultipleItems">
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
-        /// location on the same layer.  Defaults to no layers.
+        /// location on the same layer.  Defaults to all layers.
         /// </param>
         /// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
         public static Map CreateMap<T>(ISettableMapView<T?> terrainLayer, int numberOfEntityLayers,
                                        Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
-                                       uint entityLayersSupportingMultipleItems = 0) where T : class, IGameObject
+                                       uint entityLayersSupportingMultipleItems = uint.MaxValue)
+            where T : class, IGameObject
         {
             var terrainMap =
                 new LambdaSettableTranslationMap<T?, IGameObject?>(terrainLayer, t => t,
@@ -300,12 +300,6 @@ namespace GoRogue.GameFramework
             return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems);
         }
-
-        internal void AttemptEntityMove(IGameObject gameObject, Point newPosition)
-            => _entities.Move(gameObject, newPosition);
-
-        internal bool EntityCanMove(IGameObject gameObject, Point newPosition)
-            => _entities.CanMove(gameObject, newPosition);
 
         private bool FullIsTransparent(Point position)
         {
@@ -335,16 +329,14 @@ namespace GoRogue.GameFramework
         public IGameObject? GetTerrainAt(Point position) => _terrain[position];
 
         /// <summary>
-        /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or
-        /// the terrain
-        /// cannot be cast to the type specified.
+        /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain
+        /// is set, or the terrain cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to check for/return the terrain as.</typeparam>
         /// <param name="position">The position to get the terrain for.</param>
         /// <returns>
-        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was not castable
-        /// to type
-        /// TerrainType.
+        /// The terrain at the given position, or null if either no terrain exists at that location or the terrain was
+        /// not castable the given type.
         /// </returns>
         public TTerrain? GetTerrainAt<TTerrain>(Point position) where TTerrain : class, IGameObject
             => _terrain[position] as TTerrain;
@@ -359,8 +351,7 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets the terrain object at the given location, as a value of type TerrainType.  Returns null if no terrain is set, or
-        /// the terrain
-        /// cannot be cast to the type specified.
+        /// the terrain cannot be cast to the type specified.
         /// </summary>
         /// <typeparam name="TTerrain">Type to return the terrain as.</typeparam>
         /// <param name="x">X-value of the position to get the terrain for.</param>
@@ -403,14 +394,13 @@ namespace GoRogue.GameFramework
 
             var oldTerrain = _terrain[terrain.Position];
             if (oldTerrain != null)
-            {
-                ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(oldTerrain, oldTerrain.Position));
-                oldTerrain.OnMapChanged(null);
-            }
+                RemoveTerrain(oldTerrain);
 
             _terrain[terrain.Position] = terrain;
 
             terrain.OnMapChanged(this);
+            terrain.Moved += OnGameObjectMoved;
+            terrain.WalkabilityChanged += OnWalkabilityChanged;
             ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
         }
 
@@ -422,11 +412,13 @@ namespace GoRogue.GameFramework
         public void RemoveTerrain(IGameObject terrain)
         {
             if (terrain.CurrentMap != this)
-                throw new ArgumentException("A terrain object was removed from the map that had not been added",
+                throw new ArgumentException("A terrain object was removed from the map that had not been added.",
                     nameof(terrain));
 
             _terrain[terrain.Position] = null;
 
+            terrain.Moved -= OnGameObjectMoved;
+            terrain.WalkabilityChanged -= OnWalkabilityChanged;
             ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
             terrain.OnMapChanged(null);
         }
@@ -551,6 +543,8 @@ namespace GoRogue.GameFramework
 
             entity.CurrentMap?.RemoveEntity(entity);
             entity.OnMapChanged(this);
+            entity.Moved += OnGameObjectMoved;
+            entity.WalkabilityChanged += OnWalkabilityChanged;
         }
 
         /// <summary>
@@ -640,6 +634,8 @@ namespace GoRogue.GameFramework
         {
             _entities.Remove(entity);
             entity.OnMapChanged(null);
+            entity.Moved -= OnGameObjectMoved;
+            entity.WalkabilityChanged -= OnWalkabilityChanged;
         }
 
         #endregion
@@ -785,121 +781,85 @@ namespace GoRogue.GameFramework
         #endregion
 
         #region FOV
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the
-        /// <see cref="FOV" /> property.  All tiles
-        /// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        public void CalculateFOV(Point position, double radius = double.MaxValue)
-            => CalculateFOV(position.X, position.Y, radius, Radius.Circle);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius (of shape circle), and stores the result in the
-        /// <see cref="FOV" /> property.  All tiles
-        /// that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        public void CalculateFOV(int x, int y, double radius = double.MaxValue)
-            => CalculateFOV(x, y, radius, Radius.Circle);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV" /> property.  All
-        /// tiles that are in the
-        /// resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance)" />, so if you need to override this functionality, override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        public void CalculateFOV(Point position, double radius, Distance radiusShape)
-            => CalculateFOV(position.X, position.Y, radius, radiusShape);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, and stores the result in the <see cref="FOV" /> property.  All
-        /// tiles that are in the
-        /// resulting FOV are marked as explored.  Other non-angle-based overloads call this one, so if you need to override
-        /// functionality, override
-        /// this function.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape)
+        private void On_FOVRecalculated(object? s, FOVRecalculatedEventArgs e)
         {
-            _fov.Calculate(x, y, radius, radiusShape);
+            foreach (var pos in PlayerFOV.NewlySeen)
+                PlayerExplored[pos] = true;
+        }
+        #endregion
 
-            foreach (var pos in _fov.NewlySeen)
-                Explored[pos] = true;
+        #region Movement Handling
+
+        /// <summary>
+        /// Returns whether or not the given game object is allowed to move to the position specified.  The object
+        /// specified must be part of the map.
+        /// </summary>
+        /// <param name="gameObject">Object to check.</param>
+        /// <param name="newPosition">New position to check if the object can move to.</param>
+        /// <returns>True if the object given can move to the given position, false otherwise.</returns>
+        /// <exception cref="ArgumentException">Thrown if the given object is not part of this map.</exception>
+        public bool GameObjectCanMove(IGameObject gameObject, Point newPosition)
+        {
+            if (gameObject.CurrentMap != this)
+                throw new ArgumentException($"{nameof(GameObjectCanMove)} was called on an object that was not "
+                                            + "part of the map");
+
+            if (gameObject.Layer == 0 || !this.Contains(newPosition) ||
+                !gameObject.IsWalkable && !WalkabilityView[newPosition])
+                return false;
+
+            return _entities.CanMove(gameObject, newPosition);
         }
 
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in
-        /// the <see cref="FOV" />
-        /// property. All tiles that are in the resulting FOV are marked as explored.  This function calls the virtual overload
-        /// <see cref="CalculateFOV(int, int, double, Distance, double, double)" />, so if you need to override this functionality,
-        /// override that
-        /// overload instead.
-        /// </summary>
-        /// <param name="position">The center point of the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        /// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
-        /// <param name="span">
-        /// The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are
-        /// included
-        /// in the cone.
-        /// </param>
-        public void CalculateFOV(Point position, double radius, Distance radiusShape, double angle, double span)
-            => CalculateFOV(position.X, position.Y, radius, radiusShape, angle, span);
-
-        /// <summary>
-        /// Calculates FOV with the given center point and radius, restricted to the given angle and span, and stores the result in
-        /// the <see cref="FOV" />
-        /// property.  All tiles that are in the resulting FOV are marked as explored.  Other angle-based overloads call this one,
-        /// so if you need to
-        /// override functionality, override this function.
-        /// </summary>
-        /// <param name="x">X-value of the center point for the new FOV to calculate.</param>
-        /// <param name="y">Y-value of the center point for the new FOV to calculate.</param>
-        /// <param name="radius">The radius of the FOV.  Defaults to infinite.</param>
-        /// <param name="radiusShape">
-        /// The shape of the FOV to calculate.  Can be specified as either <see cref="Distance" /> or <see cref="Radius" /> types
-        /// (they are implicitly convertible).
-        /// </param>
-        /// <param name="angle">The angle in degrees the FOV cone faces.  0 degrees points right.</param>
-        /// <param name="span">
-        /// The angle in degrees specifying the full arc of the FOV cone.  span/2 degrees on either side of the given angle are
-        /// included
-        /// in the cone.
-        /// </param>
-        public virtual void CalculateFOV(int x, int y, double radius, Distance radiusShape, double angle, double span)
+        private void OnGameObjectMoved(object? s, GameObjectPropertyChanged<Point> e)
         {
-            _fov.Calculate(x, y, radius, radiusShape, angle, span);
+            // Ensure move is valid
+            if (e.Item.Layer == 0)
+                throw new InvalidOperationException(
+                    "Tried to move a GameObject that was added to a map as terrain.  Terrain objects cannot "
+                    + " be moved while they are added to a map.");
 
-            foreach (var pos in _fov.NewlySeen)
-                Explored[pos] = true;
+            if (!this.Contains(e.NewValue))
+                throw new InvalidOperationException($"A GameObject tried to move to {e.NewValue}, which is "
+                                                    + "outside the bounds of its map.");
+
+            if (!e.Item.IsWalkable && !WalkabilityView[e.NewValue])
+                throw new InvalidOperationException("A non-walkable GameObject tried to move to a square where "
+                                                    + "it would collide with another non-walkable object.");
+
+            // Validate move via spatial map and synchronize the object's position in the spatial map.
+            _entities.Move(e.Item, e.NewValue);
         }
+        #endregion
 
+        #region Walkability Validation
+
+        /// <summary>
+        /// Returns whether or not the given game object is allowed to set its <see cref="IGameObject.IsWalkable"/>
+        /// property to the given value. The object specified must be part of the map.
+        /// </summary>
+        /// <param name="gameObject">Object to check.</param>
+        /// <param name="value">New value to check for walkability.</param>
+        /// <returns>
+        /// True if the object may set its walkability to the given value without violating collision detection; false
+        /// otherwise.
+        /// </returns>
+        /// <exception cref="ArgumentException">Thrown if the given object is not part of this map.</exception>
+        public bool GameObjectCanSetWalkability(IGameObject gameObject, bool value)
+        {
+            if (gameObject.CurrentMap != this)
+                throw new ArgumentException($"{nameof(GameObjectCanSetWalkability)} was called on an object "
+                                            + "that was not part of the map.");
+
+            return value || WalkabilityView[gameObject.Position];
+        }
+        private void OnWalkabilityChanged(object? s, GameObjectPropertyChanged<bool> e)
+        {
+            if (!e.NewValue && !WalkabilityView[e.Item.Position])
+                throw new InvalidOperationException(
+                    "Cannot set walkability of object to false; this would violate collision detection rules of "
+                    + "the map the object resides on.");
+        }
         #endregion
     }
 }
