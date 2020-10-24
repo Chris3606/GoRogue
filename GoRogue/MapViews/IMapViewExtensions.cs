@@ -339,23 +339,16 @@ namespace GoRogue.MapViews
         }
 
         /// <summary>
-        /// Converts this IMapView<T> into an array of T[]
+        /// Converts the given mapview into an array of T[]
         /// </summary>
         /// <param name="self">the map view being transformed</param>
         /// <typeparam name="T">The type of which to return an array</typeparam>
         /// <returns></returns>
         public static T[] ToArray<T>(this IMapView<T> self)
         {
-            List<T> items = new List<T>();
-            for (int y = 0; y < self.Height; y++)
-            {
-                for (int x = 0; x < self.Width; x++)
-                {
-                    items.Add(self[x, y]);
-                }
-            }
-
-            return items.ToArray();
+            var array = new ArrayMap<T>(self.Width, self.Height);
+            array.ApplyOverlay(self);
+            return array;
         }
     }
 }
