@@ -295,17 +295,16 @@ namespace GoRogue.MapGeneration
         public virtual Region Rotate(double degrees, Point origin)
         {
             degrees = MathHelpers.WrapAround(degrees, 360);
-            double radians = SadRogue.Primitives.MathHelpers.ToRadian(degrees);
 
             //figure out the new corners post-rotation
             List<Point> corners = new List<Point>();
-            Point southwest = RotatePoint(SouthWestCorner - origin, radians) + origin;
+            Point southwest = SouthWestCorner.Rotate(degrees, origin);
             corners.Add(southwest);
-            Point southeast = RotatePoint(SouthEastCorner - origin, radians) + origin;
+            Point southeast = SouthEastCorner.Rotate(degrees, origin);
             corners.Add(southeast);
-            Point northwest = RotatePoint(NorthWestCorner - origin, radians) + origin;
+            Point northwest = NorthWestCorner.Rotate(degrees, origin);
             corners.Add(northwest);
-            Point northeast = RotatePoint(NorthEastCorner - origin, radians) + origin;
+            Point northeast = NorthEastCorner.Rotate(degrees, origin);
             corners.Add(northeast);
 
             //order the new corner by Y-value

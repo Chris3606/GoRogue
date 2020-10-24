@@ -81,25 +81,6 @@ namespace GoRogue.MapGeneration
             return points;
         }
 
-
-        /// <summary>
-        /// Rotates a single point around the origin (0, 0).
-        /// </summary>
-        /// <param name="point">The Point to rotate</param>
-        /// <param name="radians">The amount of Radians to rotate this point</param>
-        /// <returns>The equivalent point after a rotation</returns>
-        /// <remarks>
-        /// This is intended only as a helper class for rotation, and not for general use.
-        /// Intended usage is like so:
-        /// `Point sw = RotatePoint(SouthWestCorner - origin, radians) + origin;`
-        /// </remarks>
-        private static Point RotatePoint(Point point, in double radians)
-        {
-            int x = (int)Math.Round(point.X * Math.Cos(radians) - point.Y * Math.Sin(radians));
-            int y = (int)Math.Round(point.X * Math.Sin(radians) + point.Y * Math.Cos(radians));
-            return new Point(x, y);
-        }
-
         /// <summary>
         /// True if the regions have the same corners/centers; false otherwise.
         /// </summary>
