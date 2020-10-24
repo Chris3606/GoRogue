@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoRogue.Components;
 using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SpatialMaps;
@@ -53,6 +54,11 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
+        /// Container holding components that have been attached to this object.
+        /// </summary>
+        public ITaggableComponentCollection? GoRogueComponents { get; }
+
+        /// <summary>
         /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
         /// they are within <see cref="PlayerFOV"/>.  This ArrayMap may also have values set to it, to easily allow for
         /// custom serialization or wizard-mode like functionality.
@@ -81,13 +87,30 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// <param name="customPlayerFOV">
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
+        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// </param>
+        /// <param name="customPather">
+        /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
+        /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
+        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// </param>
+        /// <param name="customComponentContainer">
+        /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
+        /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
+        /// ComponentCollection is sufficient for nearly all use cases.
+        /// </param>
         public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
-                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                   FOV? customPlayerFOV = null,
+                   AStar? customPather = null,
+                   ITaggableComponentCollection? customComponentContainer = null)
             : this(new ArrayMap<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
-                layersBlockingWalkability,
-                layersBlockingTransparency, entityLayersSupportingMultipleItems)
+                layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
+                customPlayerFOV, customPather, customComponentContainer)
         { }
 
         /// <summary>
@@ -99,8 +122,7 @@ namespace GoRogue.GameFramework
         /// parameter MUST be of type <see cref="ISettableMapView{IGameObject}" />, rather than
         /// <see cref="ISettableMapView{T}" /> where T is a type that derives from or implements
         /// <see cref="IGameObject" />.  If you need to use a map view storing some type T rather than IGameObject, use
-        /// the <see cref="CreateMap{T}(ISettableMapView{T}, int, Distance, uint, uint, uint)" /> function to create the
-        /// map.
+        /// the <see cref="CreateMap{T}"/> function to create the map.
         /// </remarks>
         /// <param name="terrainLayer">
         /// The <see cref="ISettableMapView{IGameObject}" /> that represents the terrain layer for this map.  After the
@@ -126,10 +148,27 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// <param name="customPlayerFOV">
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
+        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// </param>
+        /// <param name="customPather">
+        /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
+        /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
+        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// </param>
+        /// <param name="customComponentContainer">
+        /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
+        /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
+        /// ComponentCollection is sufficient for nearly all use cases.
+        /// </param>
         public Map(ISettableMapView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement,
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
-                   uint entityLayersSupportingMultipleItems = uint.MaxValue)
+                   uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                   FOV? customPlayerFOV = null,
+                   AStar? customPather = null,
+                   ITaggableComponentCollection? customComponentContainer = null)
         {
             _terrain = terrainLayer;
             PlayerExplored = new ArrayMap<bool>(_terrain.Width, _terrain.Height);
@@ -152,10 +191,12 @@ namespace GoRogue.GameFramework
                 ? new LambdaMapView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
                 : new LambdaMapView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
-            _playerFOV = new FOV(TransparencyView);
+            _playerFOV = customPlayerFOV ?? new FOV(TransparencyView);
             _playerFOV.Recalculated += On_FOVRecalculated;
 
-            AStar = new AStar(WalkabilityView, distanceMeasurement);
+            AStar = customPather ?? new AStar(WalkabilityView, distanceMeasurement);
+
+            GoRogueComponents = customComponentContainer ?? new ComponentCollection();
         }
 
         /// <summary>
@@ -287,18 +328,35 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// <param name="customPlayerFOV">
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
+        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// </param>
+        /// <param name="customPather">
+        /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
+        /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
+        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// </param>
+        /// <param name="customComponentContainer">
+        /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
+        /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
+        /// ComponentCollection is sufficient for nearly all use cases.
+        /// </param>
         /// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
         public static Map CreateMap<T>(ISettableMapView<T?> terrainLayer, int numberOfEntityLayers,
                                        Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
-                                       uint entityLayersSupportingMultipleItems = uint.MaxValue)
+                                       uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                                       FOV? customPlayerFOV = null, AStar? customPather = null,
+                                       ITaggableComponentCollection? customComponentContainer = null)
             where T : class, IGameObject
         {
             var terrainMap =
                 new LambdaSettableTranslationMap<T?, IGameObject?>(terrainLayer, t => t,
                     g => (T?)g); // Assignment is fine here
             return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
-                layersBlockingTransparency, entityLayersSupportingMultipleItems);
+                layersBlockingTransparency, entityLayersSupportingMultipleItems, customPlayerFOV, customPather,
+                customComponentContainer);
         }
 
         private bool FullIsTransparent(Point position)
