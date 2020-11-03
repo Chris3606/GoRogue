@@ -143,6 +143,9 @@ namespace GoRogue.MapGeneration
             };
         }
 
+        // TODO: Cellular automata quick gen
+        //public static IEnumerable<GenerationStep>
+
         /// <summary>
         /// Generates a simple map that is a hollowed-out rectangle surrounded by walls.
         /// </summary>
