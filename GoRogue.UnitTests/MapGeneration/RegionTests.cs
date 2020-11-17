@@ -164,8 +164,8 @@ namespace GoRogue.UnitTests.MapGeneration
             ne = new Point(8, 4);
             Region hostSubArea = new Region("host sub area", northWest: nw, northEast: ne, southEast: se, southWest: sw);
 
-            mainArea.Add(hostSubArea);
-            mainArea.Add(imposingSubArea);
+            mainArea.AddRegion(hostSubArea);
+            mainArea.AddRegion(imposingSubArea);
 
             mainArea.DistinguishSubRegions();
             hostSubArea = mainArea.GetRegion("imposing sub area");
@@ -267,7 +267,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(prior.SouthEastCorner.X < post.SouthEastCorner.X);
             Assert.True(prior.SouthEastCorner.Y < post.SouthEastCorner.Y);
 
-            Assert.Equal(copyOfPrior, prior);
+            Assert.True(copyOfPrior.Matches(prior));
         }
 
         [Fact]
@@ -281,7 +281,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Point se = room.SouthEastCorner;
             Point ne = room.NorthEastCorner;
 
-            Assert.Equal(nw, new Point(1, 1));
+            Assert.Equal(new Point(1, 1), nw);
 
             Assert.True(nw.X > sw.X);
             Assert.True(sw.Y > nw.Y);
@@ -323,9 +323,9 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             Region house = new Region("house", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw);
 
-            house.Add(new Region("parlor", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
-            house.Add(new Region("ballroom", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
-            house.Add(new Region("kitchenette", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
+            house.AddRegion(new Region("parlor", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
+            house.AddRegion(new Region("ballroom", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
+            house.AddRegion(new Region("kitchenette", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw));
             Assert.False(house.HasRegion("house"));
             Assert.False(house.HasRegion("studio"));
             Assert.True(house.HasRegion("ballroom"));
@@ -343,19 +343,19 @@ namespace GoRogue.UnitTests.MapGeneration
         public void SubRegionsTest()
         {
             Region house = new Region("house", northWest: _nw, northEast: _ne, southEast: _se, southWest: _sw);
-            house.Add(new Region("parlor", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
+            house.AddRegion(new Region("parlor", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
             Assert.Equal(1, house.SubRegions.Count);
-            house.Add(new Region("hall", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
+            house.AddRegion(new Region("hall", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
             Assert.Equal(2, house.SubRegions.Count);
-            house.Add(new Region("shitter", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
+            house.AddRegion(new Region("shitter", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
             Assert.Equal(3, house.SubRegions.Count);
 
             Region expected = new Region("parlor", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2);
 
-            Assert.Equal(expected, house.GetRegion("parlor"));
+            Assert.True(expected.Matches(house.GetRegion("parlor")));
 
 
-            house.Remove("hall");
+            house.RemoveRegion("hall");
             Assert.Equal(2, house.SubRegions.Count);
         }
         public void Dispose()

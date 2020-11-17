@@ -80,52 +80,5 @@ namespace GoRogue.MapGeneration
 
             return points;
         }
-
-
-        /// <summary>
-        /// Rotates a single point around the origin (0, 0).
-        /// </summary>
-        /// <param name="point">The Point to rotate</param>
-        /// <param name="radians">The amount of Radians to rotate this point</param>
-        /// <returns>The equivalent point after a rotation</returns>
-        /// <remarks>
-        /// This is intended only as a helper class for rotation, and not for general use.
-        /// Intended usage is like so:
-        /// `Point sw = RotatePoint(SouthWestCorner - origin, radians) + origin;`
-        /// </remarks>
-        private static Point RotatePoint(Point point, in double radians)
-        {
-            int x = (int)Math.Round(point.X * Math.Cos(radians) - point.Y * Math.Sin(radians));
-            int y = (int)Math.Round(point.X * Math.Sin(radians) + point.Y * Math.Cos(radians));
-            return new Point(x, y);
-        }
-
-        /// <summary>
-        /// True if the regions have the same corners/centers; false otherwise.
-        /// </summary>
-        /// <param name="left"/>
-        /// <param name="right"/>
-        /// <returns/>
-        public static bool operator ==(Region? left, Region? right)
-        {
-            if (left is null || right is null)
-                return ReferenceEquals(left, right); // They're both null if this returns true;
-
-            bool equals = left.Name == right.Name;
-            if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
-            if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
-            if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
-            if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
-            if (left.Center != right.Center) equals = false;
-            return equals;
-        }
-
-        /// <summary>
-        /// False if the regions have the same corners and centers; false otherwise.
-        /// </summary>
-        /// <param name="left"/>
-        /// <param name="right"/>
-        /// <returns/>
-        public static bool operator !=(Region? left, Region? right) => !(left == right);
     }
 }
