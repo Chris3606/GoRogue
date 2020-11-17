@@ -23,10 +23,10 @@ namespace GoRogue.UnitTests
         private const int _radius = 10;
 
         // Basic rectangle LOS map
-        private static readonly IMapView<bool> _losMap = MockMaps.Rectangle(_width, _height);
+        private static readonly IGridView<bool> _losMap = MockMaps.Rectangle(_width, _height);
 
         // LOS map with double-thick walls
-        private static readonly IMapView<bool> _losMapDoubleThickWalls =
+        private static readonly IGridView<bool> _losMapDoubleThickWalls =
             MockMaps.DoubleThickRectangle(_width, _height);
 
         // Radius shapes to test

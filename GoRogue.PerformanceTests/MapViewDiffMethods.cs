@@ -37,7 +37,7 @@ namespace GoRogue.PerformanceTests
         // Change sets to apply
         private readonly List<List<Change>> _changeSets = new List<List<Change>>();
 
-        private DiffAwareMapView<int>? _regularStartingMapView;
+        private DiffAwareGridView<int>? _regularStartingMapView;
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -59,7 +59,7 @@ namespace GoRogue.PerformanceTests
             }
 
             // Pre-configure maps to use for non-add tests
-            _regularStartingMapView = new DiffAwareMapView<int>(_mapSize.X, _mapSize.Y);
+            _regularStartingMapView = new DiffAwareGridView<int>(_mapSize.X, _mapSize.Y);
             foreach (var changeSet in _changeSets)
             {
                 foreach (var change in changeSet)
@@ -70,9 +70,9 @@ namespace GoRogue.PerformanceTests
         }
 
         [Benchmark]
-        public IMapView<int> CreateViewAndDiffsCompressionMethod()
+        public IGridView<int> CreateViewAndDiffsCompressionMethod()
         {
-            var view = new DiffAwareMapView<int>(_mapSize.X, _mapSize.Y);
+            var view = new DiffAwareGridView<int>(_mapSize.X, _mapSize.Y);
 
             foreach (var changeSet in _changeSets)
             {
@@ -86,7 +86,7 @@ namespace GoRogue.PerformanceTests
         }
 
         [Benchmark]
-        public IMapView<int> TraverseViewsCompressionMethod()
+        public IGridView<int> TraverseViewsCompressionMethod()
         {
             // Go from start to beginning
             while (_regularStartingMapView!.CurrentDiffIndex != -1)

@@ -4,34 +4,34 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Similar to <see cref="Viewport{T}" />, but implements <see cref="ISettableMapView{T}" />and thus implements
+    /// Similar to <see cref="Viewport{T}" />, but implements <see cref="ISettableGridView{T}" />and thus implements
     /// "set" functionality via relative coordinates.
     /// </summary>
     /// <typeparam name="T">Type being exposed by map view.</typeparam>
     [PublicAPI]
-    public class SettableViewport<T> : Viewport<T>, ISettableMapView<T>
+    public class SettableViewport<T> : Viewport<T>, ISettableGridView<T>
     {
         /// <summary>
         /// Constructor. Takes the parent map view, and the initial subsection of that map view to represent.
         /// </summary>
-        /// <param name="mapView">The map view being represented.</param>
+        /// <param name="gridView">The map view being represented.</param>
         /// <param name="viewArea">The initial subsection of that map to represent.</param>
-        public SettableViewport(ISettableMapView<T> mapView, Rectangle viewArea)
-            : base(mapView, viewArea)
+        public SettableViewport(ISettableGridView<T> gridView, Rectangle viewArea)
+            : base(gridView, viewArea)
         { }
 
         /// <summary>
         /// Constructor. Takes the map view to represent. The viewport will represent the entire given map view.
         /// </summary>
-        /// <param name="mapView">The map view to represent.</param>
-        public SettableViewport(ISettableMapView<T> mapView)
-            : base(mapView)
+        /// <param name="gridView">The map view to represent.</param>
+        public SettableViewport(ISettableGridView<T> gridView)
+            : base(gridView)
         { }
 
         /// <summary>
         /// The map view that this viewport is exposing values from.
         /// </summary>
-        public new ISettableMapView<T> MapView => (ISettableMapView<T>)base.MapView;
+        public new ISettableGridView<T> GridView => (ISettableGridView<T>)base.GridView;
 
         /// <summary>
         /// Given a position in relative 1d-array-index style, returns/sets the "value" associated with that
@@ -46,7 +46,7 @@ namespace GoRogue.MapViews
         public new T this[int relativeIndex1D]
         {
             get => base[relativeIndex1D];
-            set => MapView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)] = value;
+            set => GridView[ViewArea.Position + Point.FromIndex(relativeIndex1D, Width)] = value;
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace GoRogue.MapViews
         public new T this[Point relativePosition]
         {
             get => base[relativePosition];
-            set => MapView[ViewArea.Position + relativePosition] = value;
+            set => GridView[ViewArea.Position + relativePosition] = value;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace GoRogue.MapViews
         public new T this[int relativeX, int relativeY]
         {
             get => base[relativeX, relativeY];
-            set => MapView[ViewArea.X + relativeX, ViewArea.Y + relativeY] = value;
+            set => GridView[ViewArea.X + relativeX, ViewArea.Y + relativeY] = value;
         }
     }
 }

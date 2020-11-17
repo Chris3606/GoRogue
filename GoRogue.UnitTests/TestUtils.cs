@@ -135,7 +135,7 @@ namespace GoRogue.UnitTests
         public static T[] GetEnumValues<T>() where T : Enum
             => (T[])Enum.GetValues(typeof(T));
 
-        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
+        public static void PrintHighlightedPoints(IGridView<bool> map, IEnumerable<Point> points, char wall = '#',
                                                   char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];
@@ -154,7 +154,7 @@ namespace GoRogue.UnitTests
             }
         }
 
-        public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
+        public static void ReadMap(string filePath, ISettableGridView<bool> map, char wallChar = '#')
         {
             using var reader = new StreamReader(filePath);
             for (var row = 0; row < map.Height; row++)

@@ -66,7 +66,7 @@ namespace GoRogue.UnitTests
         {
             var map = MockMaps.Rectangle(_width, _height);
 
-            var stateMap = new ArrayMap<GoalState>(map.Width, map.Height);
+            var stateMap = new ArrayView<GoalState>(map.Width, map.Height);
             foreach (var pos in stateMap.Positions())
                 stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
 
@@ -88,7 +88,7 @@ namespace GoRogue.UnitTests
             generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng, saveDeadEndChance: 10));
             generator.Generate();
 
-            var wallFloorMap = generator.Context.GetFirstOrDefault<ISettableMapView<bool>>("WallFloor");
+            var wallFloorMap = generator.Context.GetFirstOrDefault<ISettableGridView<bool>>("WallFloor");
             Assert.NotNull(wallFloorMap);
 
             _output.WriteLine("Generated map: ");
@@ -186,7 +186,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintMockMap()
         {
-            ISettableMapView<bool> map = (ArrayMap<bool>)MockMaps.Rectangle(_width, _height);
+            ISettableGridView<bool> map = (ArrayView<bool>)MockMaps.Rectangle(_width, _height);
             _output.WriteLine(map.ToString());
         }
 

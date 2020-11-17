@@ -13,10 +13,10 @@ namespace GoRogue.Pathing
     /// tile.
     /// </summary>
     /// <remarks>
-    /// Like most GoRogue algorithms, AStar takes as a construction parameter an IMapView representing the map.
-    /// Specifically, it takes an <see cref="IMapView{T}" />, where true indicates that a tile should be
+    /// Like most GoRogue algorithms, AStar takes as a construction parameter an IGridView representing the map.
+    /// Specifically, it takes an <see cref="IGridView{T}" />, where true indicates that a tile should be
     /// considered walkable, and false indicates that a tile should be considered impassable.
-    /// For details on the map view system in general, see <see cref="IMapView{T}" />.  As well, there is an article
+    /// For details on the map view system in general, see <see cref="IGridView{T}" />.  As well, there is an article
     /// explaining the map view system at the GoRogue documentation page
     /// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
     /// If truly shortest paths are not strictly necessary, you may want to consider <see cref="FastAStar" /> instead.
@@ -56,7 +56,7 @@ namespace GoRogue.Pathing
         /// Constructor.  Uses a default heuristic corresponding to the distance calculation given, along with a safe/efficient
         /// tie-breaking/smoothing element which will produce guaranteed shortest paths.
         /// </summary>
-        /// <param name="walkabilityMap">
+        /// <param name="walkabilityView">
         /// Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.
         /// </param>
@@ -64,14 +64,14 @@ namespace GoRogue.Pathing
         /// Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.
         /// </param>
-        public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
-            : this(walkabilityMap, distanceMeasurement, null, null, 1.0)
+        public AStar(IGridView<bool> walkabilityView, Distance distanceMeasurement)
+            : this(walkabilityView, distanceMeasurement, null, null, 1.0)
         { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">
+        /// <param name="walkabilityView">
         /// Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.
         /// </param>
@@ -80,8 +80,8 @@ namespace GoRogue.Pathing
         /// how to calculate the distance between points.
         /// </param>
         /// <param name="heuristic">Function used to estimate the distance between two given points.</param>
-        public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Point, Point, double> heuristic)
-            : this(walkabilityMap, distanceMeasurement, heuristic, null, -1.0)
+        public AStar(IGridView<bool> walkabilityView, Distance distanceMeasurement, Func<Point, Point, double> heuristic)
+            : this(walkabilityView, distanceMeasurement, heuristic, null, -1.0)
         { }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace GoRogue.Pathing
         /// tie-breaking/smoothing element which will produce guaranteed shortest paths, provided <paramref name="minimumWeight" />
         /// is correct.
         /// </summary>
-        /// <param name="walkabilityMap">
+        /// <param name="walkabilityView">
         /// Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.
         /// </param>
@@ -105,15 +105,15 @@ namespace GoRogue.Pathing
         /// this condition is not met.  If this minimum changes after construction, it may be updated via the
         /// <see cref="AStar.MinimumWeight" /> property.
         /// </param>
-        public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights,
+        public AStar(IGridView<bool> walkabilityView, Distance distanceMeasurement, IGridView<double> weights,
                      double minimumWeight)
-            : this(walkabilityMap, distanceMeasurement, null, weights, minimumWeight)
+            : this(walkabilityView, distanceMeasurement, null, weights, minimumWeight)
         { }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">
+        /// <param name="walkabilityView">
         /// Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.
         /// </param>
@@ -123,34 +123,34 @@ namespace GoRogue.Pathing
         /// </param>
         /// <param name="heuristic">Function used to estimate the distance between two given points.</param>
         /// <param name="weights">A map view indicating the weights of each location (see <see cref="Weights" />.</param>
-        public AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, Func<Point, Point, double> heuristic,
-                     IMapView<double> weights)
-            : this(walkabilityMap, distanceMeasurement, heuristic, weights, -1.0)
+        public AStar(IGridView<bool> walkabilityView, Distance distanceMeasurement, Func<Point, Point, double> heuristic,
+                     IGridView<double> weights)
+            : this(walkabilityView, distanceMeasurement, heuristic, weights, -1.0)
         { }
 
         // Private constructor that does work of others
 #pragma warning disable CS8618 // _heuristic is initialized via Heuristic so ignore erroneous warning
-        private AStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement,
-                      Func<Point, Point, double>? heuristic = null, IMapView<double>? weights = null,
+        private AStar(IGridView<bool> walkabilityView, Distance distanceMeasurement,
+                      Func<Point, Point, double>? heuristic = null, IGridView<double>? weights = null,
                       double minimumWeight = 1.0)
 #pragma warning restore CS8618
         {
             Weights = weights;
 
-            WalkabilityMap = walkabilityMap;
+            WalkabilityView = walkabilityView;
             DistanceMeasurement = distanceMeasurement;
             MinimumWeight = minimumWeight;
             _cachedMinWeight = minimumWeight;
             MaxEuclideanMultiplier = MinimumWeight / Point.EuclideanDistanceMagnitude(new Point(0, 0),
-                new Point(WalkabilityMap.Width, WalkabilityMap.Height));
+                new Point(WalkabilityView.Width, WalkabilityView.Height));
 
             Heuristic = heuristic!; // Handles null and exposes as non-nullable since it will never allow null
 
-            var maxSize = walkabilityMap.Width * walkabilityMap.Height;
+            var maxSize = walkabilityView.Width * walkabilityView.Height;
             _nodes = new AStarNode?[maxSize];
             _closed = new bool[maxSize];
-            _cachedWidth = walkabilityMap.Width;
-            _cachedHeight = walkabilityMap.Height;
+            _cachedWidth = walkabilityView.Width;
+            _cachedHeight = walkabilityView.Height;
 
             _openNodes = new FastPriorityQueue<AStarNode>(maxSize);
         }
@@ -170,7 +170,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The map view being used to determine whether or not each tile is walkable.
         /// </summary>
-        public IMapView<bool> WalkabilityMap { get; private set; }
+        public IGridView<bool> WalkabilityView { get; private set; }
 
         /// <summary>
         /// The heuristic used to estimate distance from nodes to the end point.  If unspecified or specified as null,
@@ -194,7 +194,7 @@ namespace GoRogue.Pathing
         /// to
         /// enter as a tile with weight 1.  If unspecified or specified as null, all tiles have weight 1.
         /// </summary>
-        public IMapView<double>? Weights { get; }
+        public IGridView<double>? Weights { get; }
 
         // NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
         /// <summary>
@@ -216,13 +216,13 @@ namespace GoRogue.Pathing
         /// <param name="end">The ending point of the path.</param>
         /// <param name="assumeEndpointsWalkable">
         /// Whether or not to assume the start and end points are walkable, regardless of what the
-        /// <see cref="WalkabilityMap" /> reports. Defaults to <see langword="true" />.
+        /// <see cref="WalkabilityView" /> reports. Defaults to <see langword="true" />.
         /// </param>
         /// <returns>The shortest path between the two points, or <see langword="null" /> if no valid path exists.</returns>
         public Path? ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
         {
             // Don't waste initialization time if there is definitely no path
-            if (!assumeEndpointsWalkable && (!WalkabilityMap[start] || !WalkabilityMap[end]))
+            if (!assumeEndpointsWalkable && (!WalkabilityView[start] || !WalkabilityView[end]))
                 return null; // There is no path
 
             // If the path is simply the start, don't bother with graph initialization and such
@@ -238,28 +238,28 @@ namespace GoRogue.Pathing
             {
                 _cachedMinWeight = MinimumWeight;
                 MaxEuclideanMultiplier = MinimumWeight / Point.EuclideanDistanceMagnitude(new Point(0, 0),
-                    new Point(WalkabilityMap.Width, WalkabilityMap.Height));
+                    new Point(WalkabilityView.Width, WalkabilityView.Height));
             }
 
             // Update width/height dependent values if map width/height has changed
-            if (_cachedWidth != WalkabilityMap.Width || _cachedHeight != WalkabilityMap.Height)
+            if (_cachedWidth != WalkabilityView.Width || _cachedHeight != WalkabilityView.Height)
             {
-                var length = WalkabilityMap.Width * WalkabilityMap.Height;
+                var length = WalkabilityView.Width * WalkabilityView.Height;
                 _nodes = new AStarNode[length];
                 _closed = new bool[length];
                 _openNodes = new FastPriorityQueue<AStarNode>(length);
 
-                _cachedWidth = WalkabilityMap.Width;
-                _cachedHeight = WalkabilityMap.Height;
+                _cachedWidth = WalkabilityView.Width;
+                _cachedHeight = WalkabilityView.Height;
 
                 MaxEuclideanMultiplier = MinimumWeight / Point.EuclideanDistanceMagnitude(new Point(0, 0),
-                    new Point(WalkabilityMap.Width, WalkabilityMap.Height));
+                    new Point(WalkabilityView.Width, WalkabilityView.Height));
             }
             else
                 Array.Clear(_closed, 0, _closed.Length);
 
             var result = new List<Point>();
-            var index = start.ToIndex(WalkabilityMap.Width);
+            var index = start.ToIndex(WalkabilityView.Width);
 
             _nodes[index] ??= new AStarNode(start);
 
@@ -271,7 +271,7 @@ namespace GoRogue.Pathing
             while (_openNodes.Count != 0)
             {
                 var current = _openNodes.Dequeue();
-                var currentIndex = current.Position.ToIndex(WalkabilityMap.Width);
+                var currentIndex = current.Position.ToIndex(WalkabilityView.Width);
                 _closed[currentIndex] = true;
 
                 if (current.Position == end) // We found the end, cleanup and return the path
@@ -295,15 +295,15 @@ namespace GoRogue.Pathing
                     var neighborPos = current.Position + dir;
 
                     // Not a valid map position, ignore
-                    if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityMap.Width ||
-                        neighborPos.Y >= WalkabilityMap.Height)
+                    if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityView.Width ||
+                        neighborPos.Y >= WalkabilityView.Height)
                         continue;
 
                     if (!CheckWalkability(neighborPos, start, end, assumeEndpointsWalkable)
                     ) // Not part of walkable node "graph", ignore
                         continue;
 
-                    var neighborIndex = neighborPos.ToIndex(WalkabilityMap.Width);
+                    var neighborIndex = neighborPos.ToIndex(WalkabilityView.Width);
                     var neighbor = _nodes[neighborIndex];
 
                     var isNeighborOpen = IsOpen(neighbor, _openNodes);
@@ -350,7 +350,7 @@ namespace GoRogue.Pathing
         /// <param name="endY">The y-coordinate of the ending point of the path.</param>
         /// <param name="assumeEndpointsWalkable">
         /// Whether or not to assume the start and end points are walkable, regardless of what the
-        /// <see cref="WalkabilityMap" /> reports. Defaults to <see langword="true" />.
+        /// <see cref="WalkabilityView" /> reports. Defaults to <see langword="true" />.
         /// </param>
         /// <returns>The shortest path between the two points, or <see langword="null" /> if no valid path exists.</returns>
         public Path? ShortestPath(int startX, int startY, int endX, int endY, bool assumeEndpointsWalkable = true)
@@ -362,9 +362,9 @@ namespace GoRogue.Pathing
         private bool CheckWalkability(Point pos, Point start, Point end, bool assumeEndpointsWalkable)
         {
             if (!assumeEndpointsWalkable)
-                return WalkabilityMap[pos];
+                return WalkabilityView[pos];
 
-            return WalkabilityMap[pos] || pos == start || pos == end;
+            return WalkabilityView[pos] || pos == start || pos == end;
         }
     }
 

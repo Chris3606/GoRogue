@@ -3,8 +3,8 @@
 namespace GoRogue.GameFramework.Components
 {
     /// <summary>
-    /// Optional interface for components that are attached to an <see cref="GameObject" />, or any
-    /// <see cref="IGameObject"/> implementation that property sets the <see cref="Parent"/> field.
+    /// Optional interface for components that are attached to a <see cref="GameObject" />, or any
+    /// <see cref="IGameObject"/> implementation that properly sets the <see cref="Parent"/> field.
     /// </summary>
     /// <remarks>
     /// While the implementation of this interface is not required for GameObject components, if it is used the

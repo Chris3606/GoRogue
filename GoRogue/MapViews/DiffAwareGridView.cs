@@ -7,7 +7,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Records a value change in a diff as recorded by a <see cref="DiffAwareMapView{T}"/>.
+    /// Records a value change in a diff as recorded by a <see cref="DiffAwareGridView{T}"/>.
     /// </summary>
     /// <typeparam name="T">Type of value being changed.</typeparam>
     [PublicAPI]
@@ -73,9 +73,9 @@ namespace GoRogue.MapViews
     }
 
     /// <summary>
-    /// Represents a unique patch/diff of the state of a <see cref="DiffAwareMapView{T}"/>.
+    /// Represents a unique patch/diff of the state of a <see cref="DiffAwareGridView{T}"/>.
     /// </summary>
-    /// <typeparam name="T">Type of value stored in the map view.</typeparam>
+    /// <typeparam name="T">Type of value stored in the grid view.</typeparam>
     [PublicAPI]
     public class Diff<T> where T : struct
     {
@@ -163,39 +163,40 @@ namespace GoRogue.MapViews
     }
 
     /// <summary>
-    /// A map view wrapper useful for recording diffs (change-sets) of changes to a map view, and applying/removing
-    /// those change-sets of values from the map view.  Only functions with value types.
+    /// A grid view wrapper useful for recording diffs (change-sets) of changes to a grid view, and applying/removing
+    /// those change-sets of values from the grid view.  Only works with grid views of value types.
     /// </summary>
     /// <remarks>
     /// Generally, this class is useful with values types/primitive types wherein values are completely replaced when
     /// they are modified.  It allows applying a series of change sets in forward or reverse order; and as such
-    /// can be extremely useful for debugging and/or recording intermediate values of a map generation target view.
+    /// can be extremely useful for debugging or situations where you want to record intermediate states of an
+    /// algorithm.
     /// </remarks>
-    /// <typeparam name="T">Type of value in the map view.  Must be a value type.</typeparam>
+    /// <typeparam name="T">Type of value in the grid view.  Must be a value type.</typeparam>
     [PublicAPI]
-    public class DiffAwareMapView<T> : SettableMapViewBase<T>
+    public class DiffAwareGridView<T> : SettableGridViewBase<T>
         where T : struct
     {
-        private ISettableMapView<T> _baseMap;
+        private ISettableGridView<T> _baseGrid;
 
         /// <summary>
-        /// The map view whose changes are being recorded in diffs.
+        /// The grid view whose changes are being recorded in diffs.
         /// </summary>
-        public IMapView<T> BaseMap => _baseMap;
+        public IGridView<T> BaseGrid => _baseGrid;
 
         /// <inheritdoc />
-        public override int Height => BaseMap.Height;
+        public override int Height => BaseGrid.Height;
 
         /// <inheritdoc />
-        public override int Width => BaseMap.Width;
+        public override int Width => BaseGrid.Width;
 
         /// <inheritdoc />
         public override T this[Point pos]
         {
-            get => _baseMap[pos];
+            get => _baseGrid[pos];
             set
             {
-                T oldValue = _baseMap[pos];
+                T oldValue = _baseGrid[pos];
 
                 // No change necessary
                 if (oldValue.Equals(value))
@@ -208,19 +209,19 @@ namespace GoRogue.MapViews
                 // We can't make changes when there's previously recorded states to apply
                 if (CurrentDiffIndex != _diffs.Count - 1)
                     throw new InvalidOperationException(
-                        $"Cannot set values to a {nameof(DiffAwareMapView<T>)} when there are existing diffs " +
+                        $"Cannot set values to a {nameof(DiffAwareGridView<T>)} when there are existing diffs " +
                         "that are not applied.");
 
                 // Apply change to base map and add to current diff
-                _baseMap[pos] = value;
+                _baseGrid[pos] = value;
                 _diffs[^1].Add(new ValueChange<T>(pos, oldValue, value));
             }
         }
 
         /// <summary>
-        /// The index of the diff whose ending state is currently reflected in <see cref="BaseMap"/>. Returns -1
+        /// The index of the diff whose ending state is currently reflected in <see cref="BaseGrid"/>. Returns -1
         /// if none of the diffs in the list have been applied (eg. the map is in the state it was in at the
-        /// <see cref="DiffAwareMapView{T}"/>'s creation.
+        /// <see cref="DiffAwareGridView{T}"/>'s creation.
         /// </summary>
         /// <remarks>
         /// This index in <see cref="Diffs"/> MAY or MAY NOT exist.  It will only exist if a change
@@ -242,46 +243,46 @@ namespace GoRogue.MapViews
         /// <summary>
         /// Constructs a diff-aware map view that wraps around an existing map view.
         /// </summary>
-        /// <param name="baseMap">The map view whose changes are to be recorded in diffs.</param>
+        /// <param name="baseGrid">The map view whose changes are to be recorded in diffs.</param>
         /// <param name="autoCompress">
         /// Whether or not to automatically compress diffs when the currently applied diff is changed.
         /// </param>
-        public DiffAwareMapView(ISettableMapView<T> baseMap, bool autoCompress = true)
+        public DiffAwareGridView(ISettableGridView<T> baseGrid, bool autoCompress = true)
         {
-            _baseMap = baseMap;
+            _baseGrid = baseGrid;
             CurrentDiffIndex = 0;
             AutoCompress = autoCompress;
             _diffs = new List<Diff<T>>();
         }
 
         /// <summary>
-        /// Constructs a diff-aware map view, whose base map will be a new <see cref="ArrayMap{T}"/>.
+        /// Constructs a diff-aware map view, whose base map will be a new <see cref="ArrayView{T}"/>.
         /// </summary>
         /// <param name="width">Width of the base map view that will be created.</param>
         /// <param name="height">Height of the base map view that will be created.</param>
         /// <param name="autoCompress">
         /// Whether or not to automatically compress diffs when the currently applied diff is changed.
         /// </param>
-        public DiffAwareMapView(int width, int height, bool autoCompress = true)
-            : this(new ArrayMap<T>(width, height), autoCompress)
+        public DiffAwareGridView(int width, int height, bool autoCompress = true)
+            : this(new ArrayView<T>(width, height), autoCompress)
         { }
 
         /// <summary>
         /// Sets the baseline values (eg. values before any diffs are recorded) to the values from the given map view.
         /// Only valid to do before any diffs are recorded.
         /// </summary>
-        /// <param name="baseline">Baseline values to use.  Must have same width/height as <see cref="BaseMap"/>.</param>
-        public void SetBaseline(IMapView<T> baseline)
+        /// <param name="baseline">Baseline values to use.  Must have same width/height as <see cref="BaseGrid"/>.</param>
+        public void SetBaseline(IGridView<T> baseline)
         {
-            if (baseline.Width != BaseMap.Width || baseline.Height != BaseMap.Height)
+            if (baseline.Width != BaseGrid.Width || baseline.Height != BaseGrid.Height)
                 throw new ArgumentException(
-                    $"Baseline map's width/height must be same as {nameof(BaseMap)}.",
+                    $"Baseline map's width/height must be same as {nameof(BaseGrid)}.",
                     nameof(baseline));
 
             if (_diffs.Count != 0)
                 throw new InvalidOperationException("Baseline values must be set before any diffs are recorded.");
 
-            _baseMap.ApplyOverlay(baseline);
+            _baseGrid.ApplyOverlay(baseline);
         }
 
         /// <summary>
@@ -307,7 +308,7 @@ namespace GoRogue.MapViews
 
             // Apply diff's changes
             foreach (var change in _diffs[CurrentDiffIndex].Changes)
-                _baseMap[change.Position] = change.NewValue;
+                _baseGrid[change.Position] = change.NewValue;
         }
 
         /// <summary>
@@ -328,7 +329,7 @@ namespace GoRogue.MapViews
 
                 // Revert current diff's changes
                 foreach (var change in _diffs[CurrentDiffIndex].Changes)
-                    _baseMap[change.Position] = change.OldValue;
+                    _baseGrid[change.Position] = change.OldValue;
             }
 
             // Modify state to reflect diff we're applying.  Exit if we're at beginning state, eg. there are no longer

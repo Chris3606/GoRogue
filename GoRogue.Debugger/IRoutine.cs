@@ -18,7 +18,7 @@ namespace GoRogue.Debugger
         /// <summary>
         /// Different views of the map, each with a name.  Each view must have the same width and height.
         /// </summary>
-        IReadOnlyList<(string name, IMapView<char> view)> Views { get; }
+        IReadOnlyList<(string name, IGridView<char> view)> Views { get; }
 
         /// <summary>
         /// Elapses a single unit of time; should apply one or more transformations to the map, that ultimately

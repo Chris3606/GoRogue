@@ -15,7 +15,7 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public override void CreateViews()
         {
-            views.Add(("Wall-Floor", new LambdaMapView<char>(Map.Width, Map.Height, WallFloorView)));
+            views.Add(("Wall-Floor", new LambdaGridView<char>(Map.Width, Map.Height, WallFloorView)));
         }
 
         /// <inheritdoc />
@@ -25,13 +25,13 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         protected override void UpdateMap()
         {
-            var wallFloorView = generator.Context.GetFirst<IMapView<bool>>();
-            Map.ApplyOverlay(new LambdaTranslationMap<bool,TileState>(wallFloorView,
+            var wallFloorView = generator.Context.GetFirst<IGridView<bool>>();
+            Map.ApplyOverlay(new LambdaTranslationGridView<bool,TileState>(wallFloorView,
                 val => val ? TileState.Floor : TileState.Wall));
         }
 
         /// <inheritdoc />
-        protected override void SetInitialMapValues(ISettableMapView<TileState> map)
+        protected override void SetInitialMapValues(ISettableGridView<TileState> map)
             => map.Fill(TileState.Wall);
     }
 }

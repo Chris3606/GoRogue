@@ -89,8 +89,8 @@ namespace GoRogue.MapGeneration.Steps
                     "The value must be a valid percent (between 0 and 100).");
 
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
-                () => new ArrayMap<bool>(context.Width, context.Height),
+            var wallFloorContext = context.GetFirstOrNew<ISettableGridView<bool>>(
+                () => new ArrayView<bool>(context.Width, context.Height),
                 WallFloorComponentTag);
 
             // Get or create/add an areas context component
@@ -100,7 +100,7 @@ namespace GoRogue.MapGeneration.Steps
 
             // Create a new map view to use as a temporary value during generation, so that existing map generation
             // features aren't erased by these (since we set the map to random values to start the process)
-            var tempMap = new ArrayMap<bool>(context.Width, context.Height);
+            var tempMap = new ArrayView<bool>(context.Width, context.Height);
 
             // Set the non-edge points to random values based on fill probability.  The edges are untouched so are
             // always walls
@@ -110,7 +110,7 @@ namespace GoRogue.MapGeneration.Steps
 
             // Create a new array map to use in the smoothing algorithms to temporarily store old values.
             // Allocating it here instead of in the smoothing minimizes allocations.
-            var oldMap = new ArrayMap<bool>(tempMap.Width, tempMap.Height);
+            var oldMap = new ArrayView<bool>(tempMap.Width, tempMap.Height);
 
             // Iterate over the generated values, smoothing them with the appropriate algorithm
             for (int i = 0; i < TotalIterations; i++)
@@ -134,7 +134,7 @@ namespace GoRogue.MapGeneration.Steps
                     wallFloorContext[pos] = true;
         }
 
-        private static void CellAutoSmoothingAlgo(ArrayMap<bool> map, ArrayMap<bool> oldMap, bool bigAreaFill)
+        private static void CellAutoSmoothingAlgo(ArrayView<bool> map, ArrayView<bool> oldMap, bool bigAreaFill)
         {
             // Record current state of the map so we can compare to it to determine nearest walls
             oldMap.ApplyOverlay(map);
@@ -149,11 +149,11 @@ namespace GoRogue.MapGeneration.Steps
             }
         }
 
-        private static int CountWallsNear(ArrayMap<bool> map, Point centerPos, int distance)
+        private static int CountWallsNear(ArrayView<bool> map, Point centerPos, int distance)
         {
             int count = 0;
 
-            foreach (var pos in Radius.Square.PositionsInRadius(centerPos, 1))
+            foreach (var pos in Radius.Square.PositionsInRadius(centerPos, distance))
                 if (pos != centerPos &&  map[pos])
                     count += 1;
 

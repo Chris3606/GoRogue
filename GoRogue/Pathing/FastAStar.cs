@@ -31,7 +31,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="walkabilityMap">
+        /// <param name="walkabilityView">
         /// Map view used to determine whether or not each location can be traversed -- true indicates a tile can be traversed,
         /// and false indicates it cannot.
         /// </param>
@@ -39,13 +39,13 @@ namespace GoRogue.Pathing
         /// Distance calculation used to determine whether 4-way or 8-way connectivity is used, and to determine
         /// how to calculate the distance between points.
         /// </param>
-        public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement)
-            : base(walkabilityMap, distanceMeasurement) => Heuristic = (c1, c2)
+        public FastAStar(IGridView<bool> walkabilityView, Distance distanceMeasurement)
+            : base(walkabilityView, distanceMeasurement) => Heuristic = (c1, c2)
             => Distance.Manhattan.Calculate(c1, c2) + Point.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier;
 
         /// <summary>
         /// </summary>
-        /// <param name="walkabilityMap"></param>
+        /// <param name="walkabilityView"></param>
         /// <param name="distanceMeasurement"></param>
         /// <param name="weights">A map view indicating the weights of each location (see <see cref="AStar.Weights" />.</param>
         /// <param name="minimumWeight">
@@ -55,9 +55,9 @@ namespace GoRogue.Pathing
         /// this condition is not met.  If this minimum changes after construction, it may be updated via the
         /// <see cref="AStar.MinimumWeight" /> property.
         /// </param>
-        public FastAStar(IMapView<bool> walkabilityMap, Distance distanceMeasurement, IMapView<double> weights,
+        public FastAStar(IGridView<bool> walkabilityView, Distance distanceMeasurement, IGridView<double> weights,
                          double minimumWeight)
-            : base(walkabilityMap, distanceMeasurement, weights, minimumWeight) => Heuristic = (c1, c2)
+            : base(walkabilityView, distanceMeasurement, weights, minimumWeight) => Heuristic = (c1, c2)
             => Distance.Manhattan.Calculate(c1, c2) + Point.EuclideanDistanceMagnitude(c1, c2) * MaxEuclideanMultiplier;
     }
 }

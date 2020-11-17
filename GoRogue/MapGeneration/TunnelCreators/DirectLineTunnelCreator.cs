@@ -34,7 +34,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         }
 
         /// <inheritdoc />
-        public Area CreateTunnel(ISettableMapView<bool> map, Point start, Point end)
+        public Area CreateTunnel(ISettableGridView<bool> map, Point start, Point end)
         {
             var lineAlgorithm = _adjacencyRule == AdjacencyRule.Cardinals
                 ? Lines.Algorithm.Orthogonal
@@ -62,7 +62,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         }
 
         /// <inheritdoc />
-        public Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY)
+        public Area CreateTunnel(ISettableGridView<bool> map, int startX, int startY, int endX, int endY)
             => CreateTunnel(map, new Point(startX, startY), new Point(endX, endY));
     }
 }

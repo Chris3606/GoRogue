@@ -16,7 +16,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>Default Tag</description>
     ///     </listheader>
     ///     <item>
-    ///         <term><see cref="ISettableMapView{T}" /> where T is bool</term>
+    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
     /// This generation step simply turns the map into a giant rectangular room.  It sets the interior positions to
     /// true, and outer-edge points to false, in the map context's map view with the given tag.  If the
     /// GenerationContext has an existing map view context component, that component is used.  If not, an
-    /// <see cref="MapViews.ArrayMap{T}" /> where T is bool is created and added to the map context, whose width/height
+    /// <see cref="ArrayView{T}" /> where T is bool is created and added to the map context, whose width/height
     /// match <see cref="GenerationContext.Width" />/<see cref="GenerationContext.Height" />.
     /// </remarks>
     [PublicAPI]
@@ -55,8 +55,8 @@ namespace GoRogue.MapGeneration.Steps
         protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
-                () => new ArrayMap<bool>(context.Width, context.Height),
+            var wallFloorContext = context.GetFirstOrNew<ISettableGridView<bool>>(
+                () => new ArrayView<bool>(context.Width, context.Height),
                 WallFloorComponentTag
             );
 

@@ -15,14 +15,14 @@ namespace GoRogue.UnitTests.GameFramework
             var grMap = new Generator(10, 10)
                 .AddSteps(DefaultAlgorithms.RectangleMapSteps())
                 .Generate()
-                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
+                .Context.GetFirstOrDefault<ISettableGridView<bool>>();
 
             TestUtils.NotNull(grMap);
 
             // Normally, in this situation, you would just use the ApplyTerrainOverlay function overload that takes
             // a translation function, instead of creating tempMap and translationMap.  But we want to test the other
             // overload so we do it this way only for testing
-            var translationMap = new LambdaTranslationMap<bool, IGameObject>(grMap,
+            var translationMap = new LambdaTranslationGridView<bool, IGameObject>(grMap,
                 (pos, val) =>
                     val ?
                         new GameObject(pos, 0)
@@ -32,7 +32,7 @@ namespace GoRogue.UnitTests.GameFramework
             var map = new Map(grMap.Width, grMap.Height, 1, Distance.Chebyshev);
 
             // Create temporary map to record what values are supposed to be
-            var tempMap = new ArrayMap<IGameObject>(grMap.Width, grMap.Height);
+            var tempMap = new ArrayView<IGameObject>(grMap.Width, grMap.Height);
             tempMap.ApplyOverlay(translationMap);
 
             // Apply overlay
@@ -51,7 +51,7 @@ namespace GoRogue.UnitTests.GameFramework
             var grMap = new Generator(10, 10)
                 .AddSteps(DefaultAlgorithms.RectangleMapSteps())
                 .Generate()
-                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
+                .Context.GetFirstOrDefault<ISettableGridView<bool>>();
 
             TestUtils.NotNull(grMap);
 
@@ -77,7 +77,7 @@ namespace GoRogue.UnitTests.GameFramework
             var grMap = new Generator(10, 10)
                 .AddSteps(DefaultAlgorithms.RectangleMapSteps())
                 .Generate()
-                .Context.GetFirstOrDefault<ISettableMapView<bool>>();
+                .Context.GetFirstOrDefault<ISettableGridView<bool>>();
 
             TestUtils.NotNull(grMap);
 
@@ -99,7 +99,7 @@ namespace GoRogue.UnitTests.GameFramework
             }
 
             // Rearrange positions by mirror-imaging in X/Y
-            var terrainMap2 = new ArrayMap<IGameObject>(map.Width, map.Height);
+            var terrainMap2 = new ArrayView<IGameObject>(map.Width, map.Height);
             foreach (var (x, y) in map.Positions())
             {
                 var terrain = map.GetTerrainAt(x, y);
@@ -130,7 +130,7 @@ namespace GoRogue.UnitTests.GameFramework
             Assert.Equal(map, gameObject.CurrentMap);
 
             // Create an overlay with our object
-            var terrainOverlay = new ArrayMap<IGameObject>(map.Width, map.Height) { [5, 6] = gameObject };
+            var terrainOverlay = new ArrayView<IGameObject>(map.Width, map.Height) { [5, 6] = gameObject };
 
             // Apply overlay
             map2.ApplyTerrainOverlay(terrainOverlay);

@@ -4,21 +4,22 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Interface designed to act as a standardized input/output interpretation for algorithms that need to make
-    /// modifications to data on a map.
+    /// Interface designed to act as a standardized input/output format that defines minimal required data
+    /// for algorithms that operate and make changes to a grid of some sort.  For a concrete implementation to subclass
+    /// for custom implementations, see <see cref="SettableGridViewBase{T}"/>.
     /// </summary>
     /// <remarks>
-    /// See <see cref="IMapView{T}" />. Algorithms such as map generation may need to modify their
-    /// inputs. Again, creating an actual 2D array can be tedious, depending on the application. As
-    /// such, this interface extends IMapView to provide the capability to "set" values
-    /// Like IMapView, a number of implementations of this interface to cover common cases are provided.  For example,
-    /// in case an actual array is desired, <see cref="ArrayMap{T}" /> implements this interface for you via an actual
-    /// array. Similarly, <see cref="LambdaSettableMapView{T}" /> implements the interface for you via a function you
-    /// pass to it.
+    /// See <see cref="IGridView{T}" />. This interface serves the same purpose, but for cases when it is also
+    /// necessary for an algorithm to be able to change the value at each location.
+    ///
+    /// Like IGridView, a number of implementations of this interface to cover common needs are provided.  For example,
+    /// <see cref="ArrayView{T}"/> defines the interface such that the data is retrieved from and set to an array, and
+    /// <see cref="LambdaSettableGridView{T}"/> defines the interface such that arbitrary callbacks are used to retrieve
+    /// and set the data.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned/set by the indexer functions.</typeparam>
     [PublicAPI]
-    public interface ISettableMapView<T> : IMapView<T>
+    public interface ISettableGridView<T> : IGridView<T>
     {
         /// <summary>
         /// Given an X and Y value, returns/sets the "value" associated with that location.

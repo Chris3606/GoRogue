@@ -12,7 +12,7 @@ namespace GoRogue.UnitTests.MapViews
         private const int _height = 50;
 
         [AssertionMethod]
-        private static void CheckMaps(IMapView<bool> genMap, IMapView<double> resMap)
+        private static void CheckMaps(IGridView<bool> genMap, IGridView<double> resMap)
         {
             for (var x = 0; x < genMap.Width; x++)
                 for (var y = 0; y < genMap.Height; y++)
@@ -32,8 +32,8 @@ namespace GoRogue.UnitTests.MapViews
             Assert.Equal(expectedMinCorner, viewport.ViewArea.MinExtent);
             Assert.True(viewport.ViewArea.X >= 0);
             Assert.True(viewport.ViewArea.Y >= 0);
-            Assert.True(viewport.ViewArea.X < viewport.MapView.Width);
-            Assert.True(viewport.ViewArea.Y < viewport.MapView.Height);
+            Assert.True(viewport.ViewArea.X < viewport.GridView.Width);
+            Assert.True(viewport.ViewArea.Y < viewport.GridView.Height);
 
             foreach (var pos in viewport.ViewArea.Positions())
             {
@@ -43,13 +43,13 @@ namespace GoRogue.UnitTests.MapViews
                 Assert.True(pos.Y <= viewport.ViewArea.MaxExtentY);
                 Assert.True(pos.X >= 0);
                 Assert.True(pos.Y >= 0);
-                Assert.True(pos.X < viewport.MapView.Width);
-                Assert.True(pos.Y < viewport.MapView.Height);
+                Assert.True(pos.X < viewport.GridView.Width);
+                Assert.True(pos.Y < viewport.GridView.Height);
 
                 // Utterly stupid way to access things via viewport, but verifies that the coordinate
                 // translation is working properly.
-                if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.MapView.Width - 1 ||
-                    pos.Y == viewport.MapView.Height - 1)
+                if (pos.X == 0 || pos.Y == 0 || pos.X == viewport.GridView.Width - 1 ||
+                    pos.Y == viewport.GridView.Height - 1)
                     Assert.False(viewport[pos - viewport.ViewArea.MinExtent]);
                 else
                     Assert.True(viewport[pos - viewport.ViewArea.MinExtent]);
@@ -61,7 +61,7 @@ namespace GoRogue.UnitTests.MapViews
         {
             var map = MockMaps.Rectangle(_width, _height);
 
-            var duplicateMap = new ArrayMap<bool>(map.Width, map.Height);
+            var duplicateMap = new ArrayView<bool>(map.Width, map.Height);
 
             duplicateMap.ApplyOverlay(map);
 
@@ -72,21 +72,21 @@ namespace GoRogue.UnitTests.MapViews
         [Fact]
         public void IndexerAccessMapViewTest()
         {
-            var map = new ArrayMap<bool>(_width, _height);
-            ISettableMapView<bool> setMapView = map;
-            IMapView<bool> mapView = map;
+            var map = new ArrayView<bool>(_width, _height);
+            ISettableGridView<bool> setGridView = map;
+            IGridView<bool> gridView = map;
             bool[] array = map;
 
-            // Set last entry via indexer syntax (via the ArrayMap, to prove implicit implementations
+            // Set last entry via indexer syntax (via the ArrayView, to prove implicit implementations
             // work at all levels)
             map[^1] = true;
 
             // Set second to last entry via settable map view
-            setMapView[^2] = true;
+            setGridView[^2] = true;
 
             // Both of set should be true
-            Assert.True(mapView[^2]);
-            Assert.True(mapView[^1]);
+            Assert.True(gridView[^2]);
+            Assert.True(gridView[^1]);
 
             // All items should be false except for the last two
             for (int i = 0; i < array.Length - 2; i++)
@@ -100,16 +100,16 @@ namespace GoRogue.UnitTests.MapViews
         public void LambdaMapViewTest()
         {
             var map = MockMaps.Rectangle(_width, _height);
-            IMapView<double> lambdaMapView = new LambdaMapView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
+            IGridView<double> lambdaGridView = new LambdaGridView<double>(map.Width, map.Height, c => map[c] ? 1.0 : 0.0);
 
-            CheckMaps(map, lambdaMapView);
+            CheckMaps(map, lambdaGridView);
         }
 
         [Fact]
         public void LambdaSettableMapViewTest()
         {
             var map = MockMaps.TestResMap(10, 10);
-            var lambdaSettable = new LambdaSettableMapView<bool>(map.Width, map.Height, c => map[c] > 0.0,
+            var lambdaSettable = new LambdaSettableGridView<bool>(map.Width, map.Height, c => map[c] > 0.0,
                 (c, b) => map[c] = b ? 1.0 : 0.0);
             CheckMaps(lambdaSettable, map);
 
@@ -126,7 +126,7 @@ namespace GoRogue.UnitTests.MapViews
         {
             var map = MockMaps.Rectangle(_width, _height);
 
-            var settable = new LambdaSettableTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
+            var settable = new LambdaSettableTranslationGridView<bool, double>(map, b => b ? 1.0 : 0.0, d => d > 0.0);
             CheckMaps(map, settable);
 
             // Change the map via the settable, and re-check
@@ -137,7 +137,7 @@ namespace GoRogue.UnitTests.MapViews
 
             // Check other constructor.  Intentionally "misusing" the position parameter, to make sure we ensure the position
             // parameter is correct without complicating our test case
-            settable = new LambdaSettableTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0,
+            settable = new LambdaSettableTranslationGridView<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0,
                 (pos, d) => d > 0.0);
             CheckMaps(map, settable);
         }
@@ -146,13 +146,13 @@ namespace GoRogue.UnitTests.MapViews
         public void LambdaTranslationMapTest()
         {
             var map = MockMaps.Rectangle(_width, _height);
-            var lambdaMap = new LambdaTranslationMap<bool, double>(map, b => b ? 1.0 : 0.0);
+            var lambdaMap = new LambdaTranslationGridView<bool, double>(map, b => b ? 1.0 : 0.0);
 
             CheckMaps(map, lambdaMap);
 
             // Check other constructor.  Intentionally "misusing" the position parameter, to make sure we ensure the position
             // parameter is correct without complicating our test case
-            lambdaMap = new LambdaTranslationMap<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0);
+            lambdaMap = new LambdaTranslationGridView<bool, double>(map, (pos, b) => map[pos] ? 1.0 : 0.0);
             CheckMaps(map, lambdaMap);
         }
 
@@ -190,7 +190,7 @@ namespace GoRogue.UnitTests.MapViews
         {
             const int mapWidth = 100;
             const int mapHeight = 100;
-            var map = new ArrayMap<int>(mapWidth, mapHeight);
+            var map = new ArrayView<int>(mapWidth, mapHeight);
             var unboundedViewport = new UnboundedViewport<int>(map, 1);
 
             foreach (var pos in map.Positions())

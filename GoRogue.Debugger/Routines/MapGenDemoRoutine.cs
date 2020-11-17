@@ -14,11 +14,11 @@ namespace GoRogue.Debugger.Routines
         private const int MapWidth = 80;
         private const int MapHeight = 25;
 
-        private readonly ArrayMap<TileState> _underlyingMap;
+        private readonly ArrayView<TileState> _underlyingMap;
         /// <summary>
-        /// Map used for displaying.
+        /// _grid used for displaying.
         /// </summary>
-        protected DiffAwareMapView<TileState> Map { get; }
+        protected DiffAwareGridView<TileState> Map { get; }
 
         /// <summary>
         /// The map generator being used.
@@ -30,19 +30,19 @@ namespace GoRogue.Debugger.Routines
         /// <summary>
         /// Internal list of views.
         /// </summary>
-        protected readonly List<(string name, IMapView<char> view)> views;
+        protected readonly List<(string name, IGridView<char> view)> views;
 
         /// <inheritdoc />
-        public IReadOnlyList<(string name, IMapView<char> view)> Views => views;
+        public IReadOnlyList<(string name, IGridView<char> view)> Views => views;
 
         protected MapGenDemoRoutine(string name)
         {
             Name = name;
-            views = new List<(string name, IMapView<char> view)>();
+            views = new List<(string name, IGridView<char> view)>();
 
             // Set up map
-            _underlyingMap = new ArrayMap<TileState>(MapWidth, MapHeight);
-            Map = new DiffAwareMapView<TileState>(_underlyingMap);
+            _underlyingMap = new ArrayView<TileState>(MapWidth, MapHeight);
+            Map = new DiffAwareGridView<TileState>(_underlyingMap);
 
             // Set up basic generator and state for tracking step progress
             generator = new Generator(MapWidth, MapHeight);
@@ -53,7 +53,7 @@ namespace GoRogue.Debugger.Routines
         public void NextTimeUnit()
         {
             if (_stageEnumerator == null)
-                throw new Exception("Map generation routine configured in invalid state.");
+                throw new Exception("_grid generation routine configured in invalid state.");
 
             if (!_hasNext)
                 return;
@@ -100,12 +100,12 @@ namespace GoRogue.Debugger.Routines
         protected abstract IEnumerable<GenerationStep> GenerationSteps();
 
         /// <summary>
-        /// Sets the initial values for the map to the map view specified.  The underlying BaseMap for the diff-aware
+        /// Sets the initial values for the map to the map view specified.  The underlying BaseGrid for the diff-aware
         /// map view used is passed to the function, and values should be set directly to that, to avoid creating diffs
         /// for the initial state.
         /// </summary>
         /// <param name="map">The map that the function should set values to.</param>
-        protected abstract void SetInitialMapValues(ISettableMapView<TileState> map);
+        protected abstract void SetInitialMapValues(ISettableGridView<TileState> map);
 
         /// <summary>
         /// Updates the map with new tiles based on current map generation context.

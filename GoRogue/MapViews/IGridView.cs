@@ -4,45 +4,50 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// Interface designed to act as a standardized input/output interpretation for algorithms.
+    /// Interface designed to act as a standardized input/output format that defines minimal required data
+    /// for algorithms that operate on a grid of some sort.  For a concrete implementation to subclass for custom
+    /// implementations, see <see cref="GridViewBase{T}"/>.
     /// </summary>
     /// <remarks>
-    /// Many roguelike/2D grid algorithms, such as pathfinding, FOV, and map generation, view a map
-    /// as simply a 2D array of some type. In many games, however, the "value" associated with each
-    /// 2D position may be dependent upon many different things. For example, pathfinding, as input,
-    /// often needs a "walkability map" -- in common terms, a 2D array of boolean values, where the
-    /// boolean value at each position represents whether or not that tile is passable with respect to
-    /// pathing. This boolean value might be determined by a number of things - terrain type, monster
-    /// positions, etc. Thus, in practice, maintaining an actual 2D array of boolean values that such
-    /// an algorithm could take as input can be difficult. IMapView solves this problem by
-    /// providing an interface that all such algorithms can take as input -- pathfinding, for
-    /// instance, would take an <see cref="IMapView{Boolean}" />; instance, rather than a 2D array of booleans. A
-    /// user of that algorithm might create a class that implements the indexers below to check the
-    /// terrain type, if there is a monster at the position, etc., and returns the correct value.
-    /// This prevents the need to maintain an actual 2D array in code that pathfinding can use, if
-    /// such an array does not fit with your game architecture. If you do want to store the data in an actual 2D
-    /// array, IMapView works similarly -- the indexers can simply retrieve values in the array.
-    /// Although manually implementing a custom IMapView may be necessary in some cases, GoRogue provides many
-    /// implementations that cater to common cases -- for example, <see cref="ArrayMap{T}" /> is an implementation
-    /// that uses an actual array, while <see cref="LambdaMapView{T}" /> is a built-in implementation that uses a
-    /// function to retrieve values.
+    /// Many algorithms that operate on a grid need only some very basic information about each location in the grid
+    /// to function.  For example, a basic grid-based pathfinding algorithm might only need to know whether each
+    /// location can be traversed or not, which can be represented by a single boolean value per location.  A renderer
+    /// might want to know simple rendering information for each location, which might be wrapped in a class or
+    /// structure.
+    ///
+    /// One option for creating these algorithms would be to take as input arrays of the type they need.  For example,
+    /// the pathing algorithm might take an array of boolean values as input.  However, this can be quite inflexible.
+    /// The values that algorithms need to function might be determined based on a much more complex structure than a
+    /// simple array of the precise type it needs, depending on use case.  Taking an array as input in these cases
+    /// forces a user to either adapt their data structure to the one that the algorithm uses, or maintain multiple
+    /// "copies" of their data in the format that the algorithms need.
+    ///
+    /// <see cref="IGridView{T}"/> is designed to act as a much more flexible input/output format for algorithms
+    /// like this that operate on a grid.  The interface simply defines properties for width and height, and some
+    /// basic abstract indexers that allow accessing the "object" at each location.  In the examples from above,
+    /// the basic pathfinding algorithm might take as input an IGridView&lt;bool&gt;, whereas the renderer might take
+    /// IGridView&lt;RenderingInfo&gt;.  This allows the algorithms to operate on the minimal data that they need
+    /// to function, but allows a user to define where that data comes from.  For common cases, concrete implementations
+    /// are provided that make the interface easier to use; for example, <see cref="ArrayView{T}"/> defines the
+    /// interface such that the data comes from an array, and <see cref="LambdaGridView{T}"/> defines the interface
+    /// such that an arbitrary callback is used to retrieve the data.
     /// </remarks>
     /// <typeparam name="T">The type of value being returned by the indexer functions.</typeparam>
     [PublicAPI]
-    public interface IMapView<out T>
+    public interface IGridView<out T>
     {
         /// <summary>
-        /// The height of the map being represented.
+        /// The height of the grid being represented.
         /// </summary>
         int Height { get; }
 
         /// <summary>
-        /// The width of the map being represented.
+        /// The width of the grid being represented.
         /// </summary>
         int Width { get; }
 
         /// <summary>
-        /// Number of tiles in the map view; equal to <see cref="Width"/> * <see cref="Height"/>.
+        /// Number of tiles in the grid; equal to <see cref="Width"/> * <see cref="Height"/>.
         /// </summary>
         int Count { get; }
 

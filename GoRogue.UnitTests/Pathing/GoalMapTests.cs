@@ -18,9 +18,9 @@ namespace GoRogue.UnitTests.Pathing
         {
             var map = MockMaps.Rectangle(_width, _height);
 
-            var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
+            var goalMapData = new ArrayView<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(
-                new LambdaTranslationMap<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
+                new LambdaTranslationGridView<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
             goalMapData[_goal] = GoalState.Goal;
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);

@@ -147,12 +147,12 @@ namespace GoRogue.UnitTests.MapViews
         public void ConstructionViaWrapper(bool autoCompress)
         {
             // Create the wrapper
-            var arrayMap = new ArrayMap<bool>(80, 25);
-            var diffAwareMap = new DiffAwareMapView<bool>(arrayMap, autoCompress);
+            var arrayMap = new ArrayView<bool>(80, 25);
+            var diffAwareMap = new DiffAwareGridView<bool>(arrayMap, autoCompress);
 
             // Validate beginning state
             Assert.Equal(autoCompress, diffAwareMap.AutoCompress);
-            Assert.Equal(arrayMap, diffAwareMap.BaseMap);
+            Assert.Equal(arrayMap, diffAwareMap.BaseGrid);
             Assert.Equal(arrayMap.Width, diffAwareMap.Width);
             Assert.Equal(arrayMap.Height, diffAwareMap.Height);
             Assert.Equal(0, diffAwareMap.CurrentDiffIndex);
@@ -165,13 +165,13 @@ namespace GoRogue.UnitTests.MapViews
         public void ConstructionViaWidthHeight(bool autoCompress)
         {
             // Create the wrapper
-            var diffAwareMap = new DiffAwareMapView<bool>(80, 25, autoCompress);
+            var diffAwareMap = new DiffAwareGridView<bool>(80, 25, autoCompress);
 
             // Validate beginning state
             Assert.Equal(autoCompress, diffAwareMap.AutoCompress);
-            Assert.IsType<ArrayMap<bool>>(diffAwareMap.BaseMap);
-            Assert.Equal(80, diffAwareMap.BaseMap.Width);
-            Assert.Equal(25, diffAwareMap.BaseMap.Height);
+            Assert.IsType<ArrayView<bool>>(diffAwareMap.BaseGrid);
+            Assert.Equal(80, diffAwareMap.BaseGrid.Width);
+            Assert.Equal(25, diffAwareMap.BaseGrid.Height);
             Assert.Equal(80, diffAwareMap.Width);
             Assert.Equal(25, diffAwareMap.Height);
             Assert.Equal(0, diffAwareMap.CurrentDiffIndex);
@@ -184,7 +184,7 @@ namespace GoRogue.UnitTests.MapViews
         public void GetAndSetValuesToMap(bool autoCompress)
         {
             // Create a new map view and change 1 value
-            var view = new DiffAwareMapView<bool>(80, 25, autoCompress)
+            var view = new DiffAwareGridView<bool>(80, 25, autoCompress)
             {
                 [1, 2] = true
             };
@@ -238,7 +238,7 @@ namespace GoRogue.UnitTests.MapViews
         public void DiffRecordingAndTraversal(bool autoCompress)
         {
             // Create a new map view
-            var view = new DiffAwareMapView<int>(80, 25, autoCompress);
+            var view = new DiffAwareGridView<int>(80, 25, autoCompress);
 
             // Create 3 states for which we will record diffs
             var stateChangeSet1 = new Dictionary<Point, int>
@@ -319,7 +319,7 @@ namespace GoRogue.UnitTests.MapViews
         }
 
         [AssertionMethod]
-        private static void CheckMapState(IMapView<int> map, Dictionary<Point, int> fullChanges)
+        private static void CheckMapState(IGridView<int> map, Dictionary<Point, int> fullChanges)
         {
             foreach (var pos in map.Positions())
                 Assert.Equal(fullChanges.GetValueOrDefault(pos), map[pos]);

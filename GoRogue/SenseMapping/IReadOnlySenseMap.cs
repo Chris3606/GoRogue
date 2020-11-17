@@ -9,7 +9,7 @@ namespace GoRogue.SenseMapping
     /// Read-only interface of a <see cref="SenseMap" />.
     /// </summary>
     [PublicAPI]
-    public interface IReadOnlySenseMap : IEnumerable<double>, IMapView<double>
+    public interface IReadOnlySenseMap : IEnumerable<double>, IGridView<double>
     {
         /// <summary>
         /// IEnumerable of only positions currently "in" the sense map, eg. all positions that have a

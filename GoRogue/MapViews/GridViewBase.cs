@@ -4,16 +4,11 @@ using SadRogue.Primitives;
 namespace GoRogue.MapViews
 {
     /// <summary>
-    /// A convenient base class to inherit from when implementing <see cref="IMapView{T}"/> that minimizes
-    /// the number of items you must implement by implementing indexers in terms of a single indexer taking Point.
+    /// A convenient base class to inherit from when implementing <see cref="IGridView{T}"/> that minimizes
+    /// the number of items you must implement by implementing indexers in terms of a single indexer taking a Point.
     /// </summary>
-    /// <remarks>
-    /// All algorithms in GoRogue that operate on map views use <see cref="IMapView{T}"/>, which this implements;
-    /// but if you cannot inherit from a base class, you may still implement <see cref="IMapView{T}"/> directly.
-    /// This class simply serves as a convenience feature for quick implementations.
-    /// </remarks>
     [PublicAPI]
-    public abstract class MapViewBase<T> : IMapView<T>
+    public abstract class GridViewBase<T> : IGridView<T>
     {
         /// <inheritdoc />
         public abstract int Height { get; }
