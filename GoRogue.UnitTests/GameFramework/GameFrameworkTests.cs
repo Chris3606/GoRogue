@@ -1,8 +1,8 @@
 ﻿using System;
 using GoRogue.GameFramework;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 
 namespace GoRogue.UnitTests.GameFramework

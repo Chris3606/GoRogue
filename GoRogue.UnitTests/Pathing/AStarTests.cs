@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using Roy_T.AStar.Graphs;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;

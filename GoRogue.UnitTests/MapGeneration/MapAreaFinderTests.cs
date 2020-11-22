@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;

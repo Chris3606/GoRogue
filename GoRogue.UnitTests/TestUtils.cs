@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using GoRogue.MapViews;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 
 namespace GoRogue.UnitTests

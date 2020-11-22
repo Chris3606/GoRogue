@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.TunnelCreators

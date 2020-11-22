@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using GoRogue.MapViews;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger
 {

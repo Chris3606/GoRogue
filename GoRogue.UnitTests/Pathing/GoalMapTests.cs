@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 
 namespace GoRogue.UnitTests.Pathing

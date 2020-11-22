@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.GameFramework
 {

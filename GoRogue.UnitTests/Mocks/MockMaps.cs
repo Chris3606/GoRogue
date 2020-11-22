@@ -1,6 +1,6 @@
-﻿using GoRogue.MapViews;
-using GoRogue.Random;
+﻿using GoRogue.Random;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.UnitTests.Mocks
 {

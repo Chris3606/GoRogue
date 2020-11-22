@@ -2,9 +2,9 @@
 using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapGeneration.TunnelCreators;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.MapGeneration.Steps
 {

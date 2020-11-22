@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {

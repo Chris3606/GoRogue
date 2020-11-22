@@ -1,6 +1,6 @@
-﻿using GoRogue.MapViews;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.MapGeneration.TunnelCreators
 {

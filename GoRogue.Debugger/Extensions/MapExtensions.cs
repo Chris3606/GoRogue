@@ -1,5 +1,5 @@
 ﻿using GoRogue.GameFramework;
-using GoRogue.MapViews;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Extensions
 {

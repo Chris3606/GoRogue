@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.PerformanceTests
 {
@@ -14,9 +14,9 @@ namespace GoRogue.PerformanceTests
     }
 
     /// <summary>
-    /// Performance tests for diff-aware map view operations.
+    /// Performance tests for diff-aware grid view operations.
     /// </summary>
-    public class MapViewDiffMethods
+    public class GridViewDiffMethods
     {
         // Number of changes per position to generate
         [UsedImplicitly]

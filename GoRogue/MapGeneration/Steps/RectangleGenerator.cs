@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.MapGeneration.Steps
 {

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using GoRogue.DiceNotation;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random.Generators;
 using Xunit;
 using Xunit.Abstractions;
