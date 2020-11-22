@@ -19,7 +19,7 @@ namespace GoRogue.MapGeneration.Steps
     ///     </listheader>
     ///     <item>
     ///         <term>
-    ///             <see cref="ItemList{TItem}" />
+    ///             <see cref="ItemList{Area}" />
     ///         </term>
     ///         <description>"Areas"</description>
     ///     </item>
