@@ -100,7 +100,7 @@ namespace GoRogue.MapGeneration.Steps
             int count = 0;
 
             foreach (var pos in Radius.Square.PositionsInRadius(centerPos, distance))
-                if (map.Contains(pos) && pos != centerPos && map[pos])
+                if (map.Contains(pos) && pos != centerPos && !map[pos])
                     count += 1;
 
             return count;
