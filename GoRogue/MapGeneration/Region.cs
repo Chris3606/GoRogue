@@ -48,8 +48,9 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="other">the region against which to compare</param>
         /// <returns></returns>
-        public bool Matches(Region other)
+        public bool Matches(Region? other)
         {
+            if (other is null) return false;
             if (Name != other.Name) return false;
             if (NorthWestCorner != other.NorthWestCorner) return false;
             if (SouthWestCorner != other.SouthWestCorner) return false;
@@ -174,7 +175,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="name">name of the region to analyze</param>
         /// <returns>whether the specified region exists</returns>
-        public bool HasRegion(string name) => SubRegions.Any(r => r.Name == name);
+        public bool HasSubRegion(string name) => SubRegions.Any(r => r.Name == name);
 
         /// <summary>
         /// Removes a common point from the OuterPoints of both regions
@@ -325,7 +326,7 @@ namespace GoRogue.MapGeneration
         /// Adds a sub-region to this region.
         /// </summary>
         /// <param name="region">The region you wish to add as a sub-region</param>
-        public void AddRegion(Region region)
+        public void AddSubRegion(Region region)
         {
             _subRegions.Add(region);
         }
@@ -333,19 +334,19 @@ namespace GoRogue.MapGeneration
         /// Removes a sub-region whose name matches with the string given.
         /// </summary>
         /// <param name="name">Key of sub-region to remove.</param>
-        public void RemoveRegion(string name)
+        public void RemoveSubRegion(string name)
         {
-            if (HasRegion(name))
-                _subRegions.Remove(GetRegion(name));
+            if (HasSubRegion(name))
+                _subRegions.Remove(GetSubRegion(name));
         }
 
         /// <summary>
         /// Get a sub-region by its name.
         /// </summary>
         /// <param name="name">The name of the region to find</param>
-        public Region GetRegion(string name)
+        public Region GetSubRegion(string name)
         {
-            if (HasRegion(name))
+            if (HasSubRegion(name))
                 return SubRegions.First(r => r.Name == name);
             else
                 throw new KeyNotFoundException("No sub-region named " + name + " was found");
