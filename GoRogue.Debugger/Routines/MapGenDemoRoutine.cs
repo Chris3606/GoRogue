@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -16,7 +17,7 @@ namespace GoRogue.Debugger.Routines
 
         private readonly ArrayView<TileState> _underlyingMap;
         /// <summary>
-        /// _grid used for displaying.
+        /// Map used for displaying.
         /// </summary>
         protected DiffAwareGridView<TileState> Map { get; }
 
@@ -52,19 +53,31 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public void NextTimeUnit()
         {
+            Debug.WriteLine($"Starting index: {Map.CurrentDiffIndex}");
             if (_stageEnumerator == null)
-                throw new Exception("_grid generation routine configured in invalid state.");
+                throw new Exception("Map generation routine configured in invalid state.");
 
-            if (!_hasNext)
+            // Apply next diff if there is one
+            if (Map.CurrentDiffIndex < Map.Diffs.Count - 1)
+            {
+                Map.ApplyNextDiff();
                 return;
+            }
 
-            // If there was an existing diff to apply, we're done
-            if (Map.ApplyNextDiffOrFinalize())
+            // Otherwise, if there are changes to the current diff we'll finalize it; otherwise it's free
+            // for use.
+            if (Map.CurrentDiffIndex  == Map.Diffs.Count - 1 && Map.Diffs[^1].Changes.Count != 0)
+                Map.FinalizeCurrentDiff();
+
+            // If there was no existing diff to apply and no next state to generate, then there's
+            // nothing to do
+            if (!_hasNext)
                 return;
 
             // Otherwise, we'll advance the map generator and update the map state
             _hasNext = _stageEnumerator.MoveNext();
             UpdateMap();
+            Debug.WriteLine($"Ending index: {Map.CurrentDiffIndex}");
         }
 
         /// <inheritdoc />
@@ -74,6 +87,7 @@ namespace GoRogue.Debugger.Routines
                 return;
 
             Map.RevertToPreviousDiff();
+            Debug.WriteLine($"Did something on prev: {Map.CurrentDiffIndex}");
         }
 
         /// <inheritdoc />
