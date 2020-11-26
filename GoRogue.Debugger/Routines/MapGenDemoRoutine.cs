@@ -77,7 +77,6 @@ namespace GoRogue.Debugger.Routines
             // Otherwise, we'll advance the map generator and update the map state
             _hasNext = _stageEnumerator.MoveNext();
             UpdateMap();
-            Debug.WriteLine($"Ending index: {Map.CurrentDiffIndex}");
         }
 
         /// <inheritdoc />
@@ -86,8 +85,13 @@ namespace GoRogue.Debugger.Routines
             if (Map.CurrentDiffIndex < 0 || Map.Diffs.Count == 0)
                 return;
 
+            // If we're one past the last existing diff, last time unit should to to previous diff twice
+            // since currently DiffAwareMapView doesn't set correctly in this case
+            bool doublePrevious = Map.CurrentDiffIndex == Map.Diffs.Count;
+
             Map.RevertToPreviousDiff();
-            Debug.WriteLine($"Did something on prev: {Map.CurrentDiffIndex}");
+            if (doublePrevious)
+                Map.RevertToPreviousDiff();
         }
 
         /// <inheritdoc />
