@@ -12,7 +12,7 @@ namespace GoRogue.MapGeneration
     /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
-    public partial class Region
+    public partial class Region : IMatchable<Region>
     {
         #region Generation
 
@@ -42,36 +42,31 @@ namespace GoRogue.MapGeneration
         #endregion
 
         #region Overrides
+
+        /// <summary>
+        /// Returns whether or not this region is completely overlapping with the other region
+        /// </summary>
+        /// <param name="other">the region against which to compare</param>
+        /// <returns></returns>
+        public bool Matches(Region? other)
+        {
+            if (other is null) return false;
+            if (Name != other.Name) return false;
+            if (NorthWestCorner != other.NorthWestCorner) return false;
+            if (SouthWestCorner != other.SouthWestCorner) return false;
+            if (NorthEastCorner != other.NorthEastCorner) return false;
+            if (SouthEastCorner != other.SouthEastCorner) return false;
+            if (Center != other.Center) return false;
+
+            return true;
+        }
+
         /// <summary>
         /// Returns a string detailing the region's corner locations.
         /// </summary>
         /// <returns/>
         public override string ToString()
-        {
-            return Name + ": NW" + NorthWestCorner +"=> NE" + NorthEastCorner + "=> SE" + SouthEastCorner + "=> SW" + SouthWestCorner;
-        }
-
-        /// <summary>
-        /// True if the given object is a region that has the same corner/centers; false otherwise.
-        /// </summary>
-        /// <param name="obj"/>
-        /// <returns/>
-        public override bool Equals(object? obj) => obj is Region region && this == region;
-
-        /// <summary>
-        /// To facilitate in equality operations
-        /// </summary>
-        /// <returns>The Hash Code of the Region</returns>
-        /// <remarks>
-        /// Due to the nature of Connections being personal to the map generation algorithm,
-        /// connections are not considered when evaluating a region's Hash Code.
-        /// </remarks>
-        public override int GetHashCode()
-        {
-            return SouthEastCorner.GetHashCode() + NorthEastCorner.GetHashCode() + SouthWestCorner.GetHashCode() +
-                       NorthWestCorner.GetHashCode() + Center.GetHashCode();
-        }
-
+            => $"{Name}: NW{NorthWestCorner.ToString()}=> NE{NorthEastCorner.ToString()}=> SE{SouthEastCorner.ToString()}=> SW{SouthWestCorner.ToString()}";
         #endregion
 
         #region Management
@@ -180,7 +175,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="name">name of the region to analyze</param>
         /// <returns>whether the specified region exists</returns>
-        public bool HasRegion(string name) => SubRegions.Any(r => r.Name == name);
+        public bool HasSubRegion(string name) => SubRegions.Any(r => r.Name == name);
 
         /// <summary>
         /// Removes a common point from the OuterPoints of both regions
@@ -295,29 +290,28 @@ namespace GoRogue.MapGeneration
         public virtual Region Rotate(double degrees, Point origin)
         {
             degrees = MathHelpers.WrapAround(degrees, 360);
-            double radians = SadRogue.Primitives.MathHelpers.ToRadian(degrees);
 
             //figure out the new corners post-rotation
             List<Point> corners = new List<Point>();
-            Point southwest = RotatePoint(SouthWestCorner - origin, radians) + origin;
+            Point southwest = SouthWestCorner.Rotate(degrees, origin);
             corners.Add(southwest);
-            Point southeast = RotatePoint(SouthEastCorner - origin, radians) + origin;
+            Point southeast = SouthEastCorner.Rotate(degrees, origin);
             corners.Add(southeast);
-            Point northwest = RotatePoint(NorthWestCorner - origin, radians) + origin;
+            Point northwest = NorthWestCorner.Rotate(degrees, origin);
             corners.Add(northwest);
-            Point northeast = RotatePoint(NorthEastCorner - origin, radians) + origin;
+            Point northeast = NorthEastCorner.Rotate(degrees, origin);
             corners.Add(northeast);
 
             //order the new corner by Y-value
             corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToList();
 
             //split that list in half and then sort by X-value
-            Point[] topTwo = new Point[] { corners[0], corners[1] };
+            Point[] topTwo = { corners[0], corners[1] };
             topTwo = topTwo.OrderBy(c => c.X).ToArray();
             northwest = topTwo[0];
             northeast = topTwo[1];
 
-            Point[] bottomTwo = new Point[] { corners [2], corners [3] };
+            Point[] bottomTwo = { corners [2], corners [3] };
             bottomTwo = bottomTwo.OrderBy(c => c.X).ToArray();
             southwest = bottomTwo[0];
             southeast = bottomTwo[1];
@@ -332,7 +326,7 @@ namespace GoRogue.MapGeneration
         /// Adds a sub-region to this region.
         /// </summary>
         /// <param name="region">The region you wish to add as a sub-region</param>
-        public void Add(Region region)
+        public void AddSubRegion(Region region)
         {
             _subRegions.Add(region);
         }
@@ -340,19 +334,19 @@ namespace GoRogue.MapGeneration
         /// Removes a sub-region whose name matches with the string given.
         /// </summary>
         /// <param name="name">Key of sub-region to remove.</param>
-        public void Remove(string name)
+        public void RemoveSubRegion(string name)
         {
-            if (HasRegion(name))
-                _subRegions.Remove(GetRegion(name));
+            if (HasSubRegion(name))
+                _subRegions.Remove(GetSubRegion(name));
         }
 
         /// <summary>
         /// Get a sub-region by its name.
         /// </summary>
         /// <param name="name">The name of the region to find</param>
-        public Region GetRegion(string name)
+        public Region GetSubRegion(string name)
         {
-            if (HasRegion(name))
+            if (HasSubRegion(name))
                 return SubRegions.First(r => r.Name == name);
             else
                 throw new KeyNotFoundException("No sub-region named " + name + " was found");
