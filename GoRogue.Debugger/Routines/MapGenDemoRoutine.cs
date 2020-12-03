@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -53,45 +52,42 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public void NextTimeUnit()
         {
-            Debug.WriteLine($"Starting index: {Map.CurrentDiffIndex}");
+            // Enumerator must be configured before next time unit is requested
             if (_stageEnumerator == null)
                 throw new Exception("Map generation routine configured in invalid state.");
 
-            // Apply next diff if there is one
+
+            // If there is a next diff to apply, simply apply it
             if (Map.CurrentDiffIndex < Map.Diffs.Count - 1)
             {
                 Map.ApplyNextDiff();
                 return;
             }
 
-            // Otherwise, if there are changes to the current diff we'll finalize it; otherwise it's free
-            // for use.
-            if (Map.CurrentDiffIndex  == Map.Diffs.Count - 1 && Map.Diffs[^1].Changes.Count != 0)
+            // Otherwise, iterate until a change that displays something new to the user is made, or the algorithm
+            // is done.
+            int startingIndex = Map.CurrentDiffIndex;
+            while (startingIndex == Map.CurrentDiffIndex && _hasNext)
+            {
+
+                // Advance the map generator, and apply the new state to the map
+                _hasNext = _stageEnumerator.MoveNext();
+                UpdateMap();
+
+                // Finalize state we just created
                 Map.FinalizeCurrentDiff();
-
-            // If there was no existing diff to apply and no next state to generate, then there's
-            // nothing to do
-            if (!_hasNext)
-                return;
-
-            // Otherwise, we'll advance the map generator and update the map state
-            _hasNext = _stageEnumerator.MoveNext();
-            UpdateMap();
+            }
         }
 
         /// <inheritdoc />
         public void LastTimeUnit()
         {
+            // No previous diffs to go to
             if (Map.CurrentDiffIndex < 0 || Map.Diffs.Count == 0)
                 return;
 
-            // If we're one past the last existing diff, last time unit should to to previous diff twice
-            // since currently DiffAwareMapView doesn't set correctly in this case
-            bool doublePrevious = Map.CurrentDiffIndex == Map.Diffs.Count;
-
+            // Otherwise, just revert state
             Map.RevertToPreviousDiff();
-            if (doublePrevious)
-                Map.RevertToPreviousDiff();
         }
 
         /// <inheritdoc />
