@@ -80,33 +80,5 @@ namespace GoRogue.MapGeneration
 
             return points;
         }
-
-        /// <summary>
-        /// True if the regions have the same corners/centers; false otherwise.
-        /// </summary>
-        /// <param name="left"/>
-        /// <param name="right"/>
-        /// <returns/>
-        public static bool operator ==(Region? left, Region? right)
-        {
-            if (left is null || right is null)
-                return ReferenceEquals(left, right); // They're both null if this returns true;
-
-            bool equals = left.Name == right.Name;
-            if (left.NorthWestCorner != right.NorthWestCorner) equals = false;
-            if (left.SouthWestCorner != right.SouthWestCorner) equals = false;
-            if (left.NorthEastCorner != right.NorthEastCorner) equals = false;
-            if (left.SouthEastCorner != right.SouthEastCorner) equals = false;
-            if (left.Center != right.Center) equals = false;
-            return equals;
-        }
-
-        /// <summary>
-        /// False if the regions have the same corners and centers; false otherwise.
-        /// </summary>
-        /// <param name="left"/>
-        /// <param name="right"/>
-        /// <returns/>
-        public static bool operator !=(Region? left, Region? right) => !(left == right);
     }
 }
