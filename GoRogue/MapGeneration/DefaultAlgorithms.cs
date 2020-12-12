@@ -17,13 +17,80 @@ namespace GoRogue.MapGeneration
     /// to add them to a generator.
     /// </summary>
     /// <remarks>
-    /// These algorithms serve as a quick way to generate a map and demonstrate how generation steps may be used together. Feel
-    /// free to look at the source,
-    /// and copy the generation steps into a custom generator.
+    /// These algorithms serve as a quick way to generate a map and demonstrate how generation steps may be used together.
+    /// Feel free to look at the source, and copy onr or more of the generation steps into a custom generator.
     /// </remarks>
     [PublicAPI]
     public static class DefaultAlgorithms
     {
+        /// <summary>
+        /// Generates a basic dungeon by randomly sizing and placing rooms on the map, then connecting them with basic
+        /// tunnels.
+        /// </summary>
+        /// <param name="rng">The RNG to use for map generation.  Defaults to <see cref="GlobalRandom.DefaultRNG" />.</param>
+        /// <param name="minRooms">Minimum amount of rooms to generate on the map.  Defaults to 4.</param>
+        /// <param name="maxRooms">Maximum amount of rooms to generate on the map.  Defaults to 10.</param>
+        /// <param name="roomMinSize">The minimum size allowed for generated rooms.  Rounded up to an odd number.  Defaults to 3.</param>
+        /// <param name="roomMaxSize">The maximum size allowed for generated rooms.  Rounded up to an odd number.  Defaults to 7.</param>
+        /// <param name="roomSizeRatioX">The ratio of the room width to the height for generated rooms. Defaults to 1.0.</param>
+        /// <param name="roomSizeRatioY">The ratio of the room height to the width for generated rooms. Defaults to 1.0.</param>
+        /// <param name="maxCreationAttempts">
+        /// The maximum times to re-generate a room that fails to place in a valid location
+        /// before giving up on generating that room entirely.  Defaults to 10.
+        /// </param>
+        /// <param name="maxPlacementAttempts">
+        /// The maximum times to attempt to place a room in a map without intersection, before
+        /// giving up and re-generating that room. Defaults to 10.
+        /// </param>
+        /// <param name="connectionPointSelector">
+        /// The area connection strategy to use. Defaults to a <see cref="CenterBoundsConnectionPointSelector"/>.</param>
+        /// <param name="tunnelCreator">
+        /// The tunnel creation strategy to use. Defaults to <see cref="HorizontalVerticalTunnelCreator"/> using
+        /// the given RNG.</param>
+        /// <returns>A set of map generation steps that generate a map with rectangular rooms connected to each other.</returns>
+        public static IEnumerable<GenerationStep> BasicRandomRoomsMapSteps(IGenerator? rng = null, int minRooms = 4,
+                                                                      int maxRooms = 10, int roomMinSize = 3,
+                                                                      int roomMaxSize = 7, float roomSizeRatioX = 1f,
+                                                                      float roomSizeRatioY = 1f,
+                                                                      int maxCreationAttempts = 10,
+                                                                      int maxPlacementAttempts = 10,
+                                                                      IConnectionPointSelector? connectionPointSelector = null,
+                                                                      ITunnelCreator? tunnelCreator = null
+                                                                      )
+        {
+            rng ??= GlobalRandom.DefaultRNG;
+            tunnelCreator ??= new HorizontalVerticalTunnelCreator(rng);
+            connectionPointSelector ??= new CenterBoundsConnectionPointSelector();
+
+            // 1. Generate rectangular rooms
+            yield return new RoomsGeneration
+            {
+                RNG = rng,
+                MinRooms = minRooms,
+                MaxRooms = maxRooms,
+                RoomMinSize = roomMinSize,
+                RoomMaxSize = roomMaxSize,
+                RoomSizeRatioX = roomSizeRatioX,
+                RoomSizeRatioY = roomSizeRatioY,
+                MaxCreationAttempts = maxCreationAttempts,
+                MaxPlacementAttempts = maxPlacementAttempts
+            };
+
+            // 2. Convert the rectangles for rooms given by the last step to areas so we can run
+            // the connection algorithm
+            yield return new RectanglesToAreas("Rooms", "RoomAreas");
+
+            // 3. Connect rooms together randomly using the specified tunnel creation method/connection point
+            // selector
+            yield return new OrderedMapAreaConnection(areasComponentTag: "RoomAreas")
+            {
+                ConnectionPointSelector = connectionPointSelector,
+                RandomizeOrder = true,
+                RNG = rng,
+                TunnelCreator = tunnelCreator
+            };
+        }
+
         /// <summary>
         /// Generates a dungeon map based on the process outlined here:
         /// http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/.
