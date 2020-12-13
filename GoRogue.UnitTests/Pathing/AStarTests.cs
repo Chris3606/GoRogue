@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using Roy_T.AStar.Graphs;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;
@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests.Pathing
 {
     public class AStarTests
     {
-        private static readonly ISettableMapView<bool> _basicMap = MockMaps.Rectangle(100, 70);
+        private static readonly ISettableGridView<bool> _basicMap = MockMaps.Rectangle(100, 70);
         private static readonly Point _basicMapStart = (1, 2);
         private static readonly Point _basicMapEnd = (17, 14);
 
@@ -38,13 +38,13 @@ namespace GoRogue.UnitTests.Pathing
             => _endpointWalkableCases.Combinate(
                 TestUtils.Enumerable(Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan));
 
-        private static readonly IMapView<bool>[] _testMaps =
+        private static readonly IGridView<bool>[] _testMaps =
         {
             MockMaps.Rectangle(50, 35),
             new Generator(50, 35)
                 .AddSteps(DefaultAlgorithms.DungeonMazeMapSteps())
                 .Generate()
-                .Context.GetFirstOrDefault<IMapView<bool>>() ?? throw new Exception("Null map."),
+                .Context.GetFirstOrDefault<IGridView<bool>>() ?? throw new Exception("Null map."),
         };
 
         // Number of paths generated/tested against per test map
@@ -72,11 +72,11 @@ namespace GoRogue.UnitTests.Pathing
             }
         }
 
-        public static IEnumerable<(IMapView<bool>, Point, Point, Distance)> TestPaths
+        public static IEnumerable<(IGridView<bool>, Point, Point, Distance)> TestPaths
         {
             get
             {
-                var mapAndPoints = new List<(IMapView<bool>, Point, Point)>();
+                var mapAndPoints = new List<(IGridView<bool>, Point, Point)>();
                 foreach (var (map, testPoints) in _testMaps.Zip(RandomTestPoints))
                     foreach (var (start, end) in testPoints)
                         mapAndPoints.Add((map, start, end));
@@ -149,7 +149,7 @@ namespace GoRogue.UnitTests.Pathing
 
         [Theory]
         [MemberDataTuple(nameof(TestPaths))]
-        public void ProducesAdjacentAndWalkablePaths(IMapView<bool> map, Point start, Point end, Distance distanceCalc)
+        public void ProducesAdjacentAndWalkablePaths(IGridView<bool> map, Point start, Point end, Distance distanceCalc)
         {
             // Print out map so we can replicate it
             _output.WriteLine("Map:");
@@ -182,7 +182,7 @@ namespace GoRogue.UnitTests.Pathing
 
         [Theory]
         [MemberDataTuple(nameof(TestPaths))]
-        public void ProducesShortestPaths(IMapView<bool> map, Point start, Point end, Distance distanceCalc)
+        public void ProducesShortestPaths(IGridView<bool> map, Point start, Point end, Distance distanceCalc)
         {
             // Calculate velocities to represent potential edge weights
             var velocity = Velocity.FromMetersPerSecond(1);
@@ -196,7 +196,7 @@ namespace GoRogue.UnitTests.Pathing
             };
 
             // Create RoyT graph equivalent the map we're testing
-            var graph = new ArrayMap<Node>(map.Width, map.Height);
+            var graph = new ArrayView<Node>(map.Width, map.Height);
             foreach (var pos in graph.Positions())
                 graph[pos] = new Node(new Position(pos.X, pos.Y));
 

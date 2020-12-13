@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue
 {
@@ -77,24 +77,24 @@ namespace GoRogue
     /// field of view (including options for an infinite-radius field of view).  As well, for
     /// non-infinite size fields of view, the result contains built-in linear distance falloff for
     /// the sake of creating lighting/color/fidelity differences based on distance from the center.
-    /// Like most GoRogue algorithms, FOV takes as a construction parameter an IMapView representing the map.
-    /// Specifically, it takes an <see cref="IMapView{T}" />, where true indicates that a tile should be
+    /// Like most GoRogue algorithms, FOV takes as a construction parameter an IGridView representing the map.
+    /// Specifically, it takes an <see cref="IGridView{T}" />, where true indicates that a tile should be
     /// considered transparent, eg. not blocking to line of sight, and false indicates that a tile should be
     /// considered opaque, eg. blocking to line of sight.
     /// The field of view can then be calculated by calling one of the various Calculate overloads.
     /// The result of the calculation is exposed in two different forms.  First, the values are exposed to you
-    /// via indexers -- the FOV class itself implements <see cref="IMapView{Double}" />, where a value of 1.0
+    /// via indexers -- the FOV class itself implements <see cref="IGridView{T}" />, where a value of 1.0
     /// represents the center of the field of view calculation, and 0.0 indicates a location that is not inside
     /// the resulting field of view at all.  Values in between are representative of linear falloff based on
     /// distance from the source.
     /// Alternatively, if the distance from the source is irrelevant, FOV also provides the result of the calculation
-    /// via <see cref="BooleanFOV" />, which is an <see cref="IMapView{Boolean}" /> where a value of true indicates
+    /// via <see cref="BooleanFOV" />, which is an <see cref="IGridView{T}" /> where a value of true indicates
     /// that a location is within field of view, and a value of false indicates it is outside of the field of view.
     /// </remarks>
     [PublicAPI]
     public class FOV : IReadOnlyFOV
     {
-        private readonly IMapView<bool> _fovMap;
+        private readonly IGridView<bool> _transparencyView;
         private HashSet<Point> _currentFOV;
         private double[,] _light;
         private HashSet<Point> _previousFOV;
@@ -107,23 +107,23 @@ namespace GoRogue
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="fovMap">
+        /// <param name="transparencyView">
         /// The values used to calculate field of view. Values of true are considered
         /// non-blocking (transparent) to line of sight, while false values are considered
         /// to be blocking.
         /// </param>
-        public FOV(IMapView<bool> fovMap)
+        public FOV(IGridView<bool> transparencyView)
         {
-            _fovMap = fovMap;
-            BooleanFOV = new LambdaTranslationMap<double, bool>(this, val => val > 0.0);
+            _transparencyView = transparencyView;
+            BooleanFOV = new LambdaTranslationGridView<double, bool>(this, val => val > 0.0);
 
-            _light = new double[fovMap.Width, fovMap.Height];
+            _light = new double[transparencyView.Width, transparencyView.Height];
             _currentFOV = new HashSet<Point>();
             _previousFOV = new HashSet<Point>();
         }
 
         /// <inheritdoc />
-        public IMapView<bool> BooleanFOV { get; private set; }
+        public IGridView<bool> BooleanFOV { get; private set; }
 
         /// <inheritdoc />
         public int Count => Width * Height;
@@ -132,7 +132,7 @@ namespace GoRogue
         public IEnumerable<Point> CurrentFOV => _currentFOV;
 
         /// <inheritdoc />
-        public int Height => _fovMap.Height;
+        public int Height => _transparencyView.Height;
 
         /// <inheritdoc />
         public IEnumerable<Point> NewlySeen => _currentFOV.Where(pos => !_previousFOV.Contains(pos));
@@ -141,7 +141,7 @@ namespace GoRogue
         public IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
         /// <inheritdoc />
-        public int Width => _fovMap.Width;
+        public int Width => _transparencyView.Width;
 
         /// <summary>
         /// Returns the field of view value for the given position.
@@ -225,9 +225,9 @@ namespace GoRogue
             foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
             {
                 ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY, decay, _light, _currentFOV,
-                    _fovMap, distanceCalc);
+                    _transparencyView, distanceCalc);
                 ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, originX, originY, decay, _light, _currentFOV,
-                    _fovMap, distanceCalc);
+                    _transparencyView, distanceCalc);
             }
 
             Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc));
@@ -285,24 +285,24 @@ namespace GoRogue
             _light[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
-                distanceCalc, angle, span);
-
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
-                distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _fovMap,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
+                distanceCalc, angle, span);
+
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, _light, _currentFOV, _transparencyView,
                 distanceCalc, angle, span);
 
             Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc, angle, span));
@@ -347,9 +347,9 @@ namespace GoRogue
         {
             string result = "";
 
-            for (var y = 0; y < _fovMap.Height; y++)
+            for (var y = 0; y < _transparencyView.Height; y++)
             {
-                for (var x = 0; x < _fovMap.Width; x++)
+                for (var x = 0; x < _transparencyView.Width; x++)
                 {
                     result += _light[x, y] > 0.0 ? sourceValue : normal;
                     result += " ";
@@ -380,7 +380,7 @@ namespace GoRogue
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
                                        double radius, int startX, int startY, double decay, double[,] lightMap,
                                        HashSet<Point> fovSet,
-                                       IMapView<bool> map, Distance distanceStrategy)
+                                       IGridView<bool> map, Distance distanceStrategy)
         {
             double newStart = 0;
             if (start < end)
@@ -438,7 +438,7 @@ namespace GoRogue
 
         private static void ShadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy,
                                               double radius, int startX, int startY, double decay,
-                                              double[,] lightMap, HashSet<Point> fovSet, IMapView<bool> map,
+                                              double[,] lightMap, HashSet<Point> fovSet, IGridView<bool> map,
                                               Distance distanceStrategy, double angle, double span)
         {
             double newStart = 0;
@@ -498,8 +498,8 @@ namespace GoRogue
 
         private void InitializeLightMap()
         {
-            if (_light.GetLength(0) != _fovMap.Width || _light.GetLength(1) != _fovMap.Height)
-                _light = new double[_fovMap.Width, _fovMap.Height];
+            if (_light.GetLength(0) != _transparencyView.Width || _light.GetLength(1) != _transparencyView.Height)
+                _light = new double[_transparencyView.Width, _transparencyView.Height];
             else
                 Array.Clear(_light, 0, _light.Length);
         }

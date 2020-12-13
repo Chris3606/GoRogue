@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Pathing
 {
@@ -19,14 +19,14 @@ namespace GoRogue.Pathing
     /// </remarks>
 #pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
     [PublicAPI]
-    public class FleeMap : MapViewBase<double?>, IDisposable
+    public class FleeMap : GridViewBase<double?>, IDisposable
 #pragma warning restore CA1063
     {
         private readonly GoalMap _baseMap;
-        private readonly ArrayMap<double?> _goalMap;
+        private readonly ArrayView<double?> _goalMap;
 
         // Nodes for the priority queue used in Update.
-        private readonly ArrayMap<PositionNode> _nodes;
+        private readonly ArrayView<PositionNode> _nodes;
 
         /// <summary>
         /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
@@ -38,8 +38,8 @@ namespace GoRogue.Pathing
         {
             _baseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             Magnitude = magnitude;
-            _goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
-            _nodes = new ArrayMap<PositionNode>(baseMap.Width, baseMap.Height);
+            _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
+            _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
 

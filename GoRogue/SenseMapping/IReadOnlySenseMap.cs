@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.SenseMapping
 {
@@ -9,7 +9,7 @@ namespace GoRogue.SenseMapping
     /// Read-only interface of a <see cref="SenseMap" />.
     /// </summary>
     [PublicAPI]
-    public interface IReadOnlySenseMap : IEnumerable<double>, IMapView<double>
+    public interface IReadOnlySenseMap : IEnumerable<double>, IGridView<double>
     {
         /// <summary>
         /// IEnumerable of only positions currently "in" the sense map, eg. all positions that have a

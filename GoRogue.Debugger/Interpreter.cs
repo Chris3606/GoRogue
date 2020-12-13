@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using GoRogue.MapViews;
 using Mindmagma.Curses;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger
 {

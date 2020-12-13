@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.SenseMapping
 {
@@ -19,8 +19,8 @@ namespace GoRogue.SenseMapping
     /// of light, sound, heat for a heat-map, etc. through a map.  You create one or more <see cref="SenseSource" />
     /// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate" />
     /// when you wish to re-calculate the SenseMap.
-    /// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IMapView that represents
-    /// the map.  Specifically, it takes an <see cref="IMapView{T}" />, where the double value at each location
+    /// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IGridView that represents
+    /// the map.  Specifically, it takes an <see cref="IGridView{T}" />, where the double value at each location
     /// represents the "resistance" that location has to the passing of source values through it.  The values must be >= 0.0,
     /// where 0.0 means that a location has no resistance to spreading of source values, and greater values represent greater
     /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="SenseSource.Intensity" /> of
@@ -28,7 +28,7 @@ namespace GoRogue.SenseMapping
     /// is subtracted from the source's value (plus the normal fall-of for distance).
     /// The map can be calculated by calling the <see cref="Calculate" /> function.
     /// This class exposes the resulting sensory values values to you via indexers -- SenseMap implements
-    /// <see cref="IMapView{Double}" />, where 0.0 indicates no sources were able to spread to the given location (eg, either
+    /// <see cref="IGridView{T}" />, where 0.0 indicates no sources were able to spread to the given location (eg, either
     /// it was
     /// stopped or fell off due to distance), and a value greater than 0.0 indicates the combined intensity of any sources
     /// that reached the given location.
@@ -36,7 +36,7 @@ namespace GoRogue.SenseMapping
     [PublicAPI]
     public class SenseMap : IReadOnlySenseMap
     {
-        private readonly IMapView<double> _resMap;
+        private readonly IGridView<double> _resMap;
         private readonly List<SenseSource> _senseSources;
 
         private HashSet<Point> _currentSenseMap;
@@ -55,7 +55,7 @@ namespace GoRogue.SenseMapping
         /// Constructor. Takes the resistance map to use for calculations.
         /// </summary>
         /// <param name="resMap">The resistance map to use for calculations.</param>
-        public SenseMap(IMapView<double> resMap)
+        public SenseMap(IGridView<double> resMap)
         {
             _resMap = resMap;
             _senseMap = new double[resMap.Width, resMap.Height];
@@ -265,7 +265,7 @@ namespace GoRogue.SenseMapping
 
         // Blits given source's lightMap onto the global light-map given
         private static void BlitSenseSource(SenseSource source, double[,] destination, HashSet<Point> sourceMap,
-                                            IMapView<double> resMap)
+                                            IGridView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
             var minX = Math.Min((int)source.Radius, source.Position.X);

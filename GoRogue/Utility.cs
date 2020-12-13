@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random;
 
 namespace GoRogue
@@ -222,7 +222,7 @@ namespace GoRogue
                                                    Func<T, string>? elementStringifier = null,
                                                    string rowSeparator = "\n", string elementSeparator = " ",
                                                    string endRow = "", string end = "")
-            => new ArrayMap2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator,
+            => new ArrayView2D<T>(array).ExtendToString(begin, beginRow, elementStringifier, rowSeparator,
                 elementSeparator, endRow, end);
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace GoRogue
                                                    string beginRow = "", Func<T, string>? elementStringifier = null,
                                                    string rowSeparator = "\n", string elementSeparator = " ",
                                                    string endRow = "", string end = "")
-            => new ArrayMap2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator,
+            => new ArrayView2D<T>(array).ExtendToString(fieldSize, begin, beginRow, elementStringifier, rowSeparator,
                 elementSeparator, endRow, end);
 
         /// <summary>

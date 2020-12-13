@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// Map generator that applies a series of <see cref="GenerationStep" /> instances to a
+    /// _grid generator that applies a series of <see cref="GenerationStep" /> instances to a
     /// <see cref="GenerationContext" /> to generate a map.
     /// </summary>
     [PublicAPI]

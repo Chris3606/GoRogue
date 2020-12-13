@@ -2,9 +2,9 @@
 using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapGeneration.TunnelCreators;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -19,12 +19,12 @@ namespace GoRogue.MapGeneration.Steps
     ///     </listheader>
     ///     <item>
     ///         <term>
-    ///             <see cref="ItemList{TItem}" />
+    ///             <see cref="ItemList{Area}" />
     ///         </term>
     ///         <description>"Areas"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableMapView{T}" /> where T is bool</term>
+    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -114,7 +114,7 @@ namespace GoRogue.MapGeneration.Steps
         /// </param>
         public ClosestMapAreaConnection(string? name = null, string? wallFloorComponentTag = "WallFloor",
                                         string? areasComponentTag = "Areas", string? tunnelsComponentTag = "Tunnels")
-            : base(name, (typeof(ISettableMapView<bool>), wallFloorComponentTag),
+            : base(name, (typeof(ISettableGridView<bool>), wallFloorComponentTag),
                 (typeof(ItemList<Area>), areasComponentTag))
         {
             WallFloorComponentTag = wallFloorComponentTag;
@@ -127,7 +127,7 @@ namespace GoRogue.MapGeneration.Steps
         {
             // Get required components; guaranteed to exist because enforced by required components list
             var areasToConnect = context.GetFirst<ItemList<Area>>(AreasComponentTag);
-            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
+            var wallFloor = context.GetFirst<ISettableGridView<bool>>(WallFloorComponentTag);
 
             // Get/create tunnel component
             var tunnels = context.GetFirstOrNew(() => new ItemList<Area>(), TunnelsComponentTag);

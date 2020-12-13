@@ -1,7 +1,7 @@
 ﻿using System;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger
 {
@@ -23,7 +23,7 @@ namespace GoRogue.Debugger
         /// Current view being displayed.
         /// </summary>
         [PublicAPI]
-        public IMapView<char> CurrentView { get; private set; }
+        public IGridView<char> CurrentView { get; private set; }
         /// <summary>
         /// The actual viewport of the current view being displayed.
         /// </summary>

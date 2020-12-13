@@ -252,7 +252,7 @@ namespace GoRogue.Components
             if (tag == null)
             {
                 if (!_components.ContainsKey(typeOfT))
-                    throw new ArgumentException($"No component of type {nameof(T)} has been added to the {nameof(ComponentCollection)}.");
+                    throw new ArgumentException($"No component of type {typeof(T).Name} has been added to the {nameof(ComponentCollection)}.");
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
@@ -265,7 +265,7 @@ namespace GoRogue.Components
             if (_tagsToComponents[tag] is T item)
                 return item;
 
-            throw new ArgumentException($"Component of type {nameof(T)} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.", nameof(tag));
+            throw new ArgumentException($"Component of type {typeof(T).Name} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.", nameof(tag));
         }
 
         /// <inheritdoc />

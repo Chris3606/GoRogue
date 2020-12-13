@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Pathing
 {
@@ -18,19 +18,19 @@ namespace GoRogue.Pathing
     /// level change, the GoalMap instance will need to be updated. Call <see cref="Update" /> if obstacles
     /// have changed, or <see cref="UpdatePathsOnly" /> if the goals have changed but not the obstacles.
     /// This class exposes the resulting goal map to you via indexers -- GoalMap implements
-    /// <see cref="IMapView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
+    /// <see cref="IGridView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
     /// and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
     /// contains a goal.
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)" />
     /// </remarks>
     [PublicAPI]
-    public class GoalMap : MapViewBase<double?>
+    public class GoalMap : GridViewBase<double?>
     {
         private readonly HashSet<Point> _closedSet = new HashSet<Point>();
 
         private readonly HashSet<Point> _edgeSet = new HashSet<Point>();
 
-        private readonly ArrayMap<double?> _goalMap;
+        private readonly ArrayView<double?> _goalMap;
 
         private readonly HashSet<Point> _walkable = new HashSet<Point>();
 
@@ -39,24 +39,24 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="baseMap">
         /// A map view that represents the map as
-        /// <see cref="IMapView{GoalState}" />GoalStates.
+        /// <see cref="IGridView{T}" />GoalStates.
         /// </param>
         /// <param name="distanceMeasurement">
         /// The distance measurement (and implicitly the <see cref="AdjacencyRule" />) to use for calculation.
         /// </param>
-        public GoalMap(IMapView<GoalState> baseMap, Distance distanceMeasurement)
+        public GoalMap(IGridView<GoalState> baseMap, Distance distanceMeasurement)
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
 
-            _goalMap = new ArrayMap<double?>(baseMap.Width, baseMap.Height);
+            _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             Update();
         }
 
         /// <summary>
         /// The map view of the underlying map used to determine where obstacles/goals are.
         /// </summary>
-        public IMapView<GoalState> BaseMap { get; private set; }
+        public IGridView<GoalState> BaseMap { get; private set; }
 
         /// <summary>
         /// The distance measurement the GoalMap is using to calculate distance.

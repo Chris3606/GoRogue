@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using GoRogue.MapViews;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.UnitTests.Mocks
 {
-    internal class ResMap : MapViewBase<double>
+    internal class ResMap : GridViewBase<double>
     {
-        private readonly IMapView<bool> view;
+        private readonly IGridView<bool> view;
 
-        public ResMap(IMapView<bool> view) => this.view = view;
+        public ResMap(IGridView<bool> view) => this.view = view;
 
         public override int Height => view.Height;
         public override int Width => view.Width;
         public override double this[Point pos] => view[pos] ? 0.0 : 1.0;
 
-        public static void PrintHighlightedPoints(IMapView<bool> map, IEnumerable<Point> points, char wall = '#',
+        public static void PrintHighlightedPoints(IGridView<bool> map, IEnumerable<Point> points, char wall = '#',
                                                    char floor = '.', char path = '*')
         {
             var array = new char[map.Width, map.Height];
@@ -35,7 +35,7 @@ namespace GoRogue.UnitTests.Mocks
             }
         }
 
-        public static void ReadMap(string filePath, ISettableMapView<bool> map, char wallChar = '#')
+        public static void ReadMap(string filePath, ISettableGridView<bool> map, char wallChar = '#')
         {
             using var reader = new StreamReader(filePath);
             for (var row = 0; row < map.Height; row++)

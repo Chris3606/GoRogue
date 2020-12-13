@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.SenseMapping
 {
@@ -75,7 +75,7 @@ namespace GoRogue.SenseMapping
         private Point _position;
 #pragma warning restore IDE0044
         private double _radius;
-        internal IMapView<double>? _resMap;
+        internal IGridView<double>? _resMap;
 
         private int _size;
 
@@ -397,7 +397,7 @@ namespace GoRogue.SenseMapping
             }
         }
 
-        private void DoRippleFOV(int ripple, IMapView<double> map)
+        private void DoRippleFOV(int ripple, IGridView<double> map)
         {
             LinkedList<Point> dq = new LinkedList<Point>();
             dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
@@ -434,7 +434,7 @@ namespace GoRogue.SenseMapping
             }
         }
 
-        private void DoRippleFOV(int ripple, IMapView<double> map, double angle, double span)
+        private void DoRippleFOV(int ripple, IGridView<double> map, double angle, double span)
         {
             LinkedList<Point> dq = new LinkedList<Point>();
             dq.AddLast(new Point(_halfSize, _halfSize)); // Add starting point
@@ -485,7 +485,7 @@ namespace GoRogue.SenseMapping
         }
 
         private double NearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors,
-                                       IMapView<double> map)
+                                       IGridView<double> map)
         {
             if (x == _halfSize && y == _halfSize)
                 return _intensity;
@@ -556,7 +556,7 @@ namespace GoRogue.SenseMapping
             return curLight;
         }
 
-        private void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IMapView<double> map)
+        private void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy, IGridView<double> map)
         {
             double newStart = 0;
             if (start < end)
@@ -613,7 +613,7 @@ namespace GoRogue.SenseMapping
         }
 
         private void ShadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy,
-                                       IMapView<double> map, double angle, double span)
+                                       IGridView<double> map, double angle, double span)
         {
             double newStart = 0;
             if (start < end)

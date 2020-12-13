@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using GoRogue.MapGeneration.ContextComponents;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Steps
@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Tunnels"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableMapView{T}" /> where T is bool</term>
+    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -40,7 +40,7 @@ namespace GoRogue.MapGeneration.Steps
     /// one is created.  It also sets the all locations inside the tunnels to true in the map's "WallFloor" map view context
     /// component.  If the
     /// GenerationContext has an existing "WallFloor" context component, that component is used.  If not, an
-    /// <see cref="ArrayMap{T}" /> where T is bool is
+    /// <see cref="ArrayView{T}" /> where T is bool is
     /// created and added to the map context, whose width/height match <see cref="GenerationContext.Width" />/
     /// <see cref="GenerationContext.Height" />.
     /// </remarks>
@@ -102,8 +102,8 @@ namespace GoRogue.MapGeneration.Steps
             // Logic implemented from http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
             // Get or create/add a wall-floor context component
-            var wallFloorContext = context.GetFirstOrNew<ISettableMapView<bool>>(
-                () => new ArrayMap<bool>(context.Width, context.Height),
+            var wallFloorContext = context.GetFirstOrNew<ISettableGridView<bool>>(
+                () => new ArrayView<bool>(context.Width, context.Height),
                 WallFloorComponentTag
             );
 
@@ -206,7 +206,7 @@ namespace GoRogue.MapGeneration.Steps
             tunnelList.AddRange(crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0), Name);
         }
 
-        private static Point FindEmptySquare(IMapView<bool> map, IGenerator rng)
+        private static Point FindEmptySquare(IGridView<bool> map, IGenerator rng)
         {
             // Try random positions first
             for (var i = 0; i < 100; i++)
@@ -261,14 +261,14 @@ namespace GoRogue.MapGeneration.Steps
 
         // TODO: Create random position function that has a fallback for if random fails after max retries
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsPointConsideredEmpty(IMapView<bool> map, Point location)
+        private static bool IsPointConsideredEmpty(IGridView<bool> map, Point location)
             => !IsPointMapEdge(map, location) && // exclude outer ridge of map
                location.X % 2 != 0 && location.Y % 2 != 0 && // check is odd number position
                IsPointSurroundedByWall(map, location) && // make sure is surrounded by a wall.
                !map[location]; // The location is a wall
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool IsPointMapEdge(IMapView<bool> map, Point location, bool onlyEdgeTest = false)
+        private static bool IsPointMapEdge(IGridView<bool> map, Point location, bool onlyEdgeTest = false)
         {
             if (onlyEdgeTest)
                 return location.X == 0 || location.X == map.Width - 1 || location.Y == 0 ||
@@ -276,7 +276,7 @@ namespace GoRogue.MapGeneration.Steps
             return location.X <= 0 || location.X >= map.Width - 1 || location.Y <= 0 || location.Y >= map.Height - 1;
         }
 
-        private static bool IsPointSurroundedByWall(IMapView<bool> map, Point location)
+        private static bool IsPointSurroundedByWall(IGridView<bool> map, Point location)
         {
             var points = AdjacencyRule.EightWay.Neighbors(location);
 
@@ -293,7 +293,7 @@ namespace GoRogue.MapGeneration.Steps
             return true;
         }
 
-        private static bool IsPointWallsExceptSource(IMapView<bool> map, Point location, Direction sourceDirection)
+        private static bool IsPointWallsExceptSource(IGridView<bool> map, Point location, Direction sourceDirection)
         {
             // exclude the outside of the map
             var mapInner = map.Bounds().Expand(-1, -1);

@@ -1,6 +1,6 @@
-﻿using GoRogue.MapViews;
-using GoRogue.Random;
+﻿using GoRogue.Random;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.UnitTests.Mocks
 {
@@ -9,18 +9,18 @@ namespace GoRogue.UnitTests.Mocks
     /// </summary>
     internal static class MockMaps
     {
-        public static IMapView<double> RectangleResMap(int width, int height)
+        public static IGridView<double> RectangleResMap(int width, int height)
         {
             var map = Rectangle(width, height);
-            return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
+            return new LambdaTranslationGridView<bool, double>(map, val => val ? 0.0 : 1.0);
         }
 
-        public static IMapView<bool> EmptyFOVMap(int width, int height)
-            => new LambdaMapView<bool>(width, height, _ => true);
+        public static IGridView<bool> EmptyFOVMap(int width, int height)
+            => new LambdaGridView<bool>(width, height, _ => true);
 
-        public static ISettableMapView<double> TestResMap(int width, int height)
+        public static ISettableGridView<double> TestResMap(int width, int height)
         {
-            var map = new ArrayMap<double>(width, height);
+            var map = new ArrayView<double>(width, height);
 
             foreach (var pos in map.Positions())
                 map[pos] = GlobalRandom.DefaultRNG.NextDouble();
@@ -28,9 +28,9 @@ namespace GoRogue.UnitTests.Mocks
             return map;
         }
 
-        public static ISettableMapView<bool> Rectangle(int width, int height)
+        public static ISettableGridView<bool> Rectangle(int width, int height)
         {
-            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+            ISettableGridView<bool> map = new ArrayView<bool>(width, height);
             for (var i = 0; i < map.Width; i++)
                 for (var j = 0; j < map.Height; j++)
                     if (i == 0 || i == map.Width - 1 || j == 0 || j == map.Height - 1)
@@ -42,7 +42,7 @@ namespace GoRogue.UnitTests.Mocks
         }
 
         // Generates a rectangle with a double-thick border.
-        public static ISettableMapView<bool> DoubleThickRectangle(int width, int height)
+        public static ISettableGridView<bool> DoubleThickRectangle(int width, int height)
         {
             var map = Rectangle(width, height);
             var innerBounds = map.Bounds().Expand(-1, -1);
@@ -52,13 +52,13 @@ namespace GoRogue.UnitTests.Mocks
             return map;
         }
 
-        public static IMapView<double> RectangleDoubleThickResMap(int width, int height)
+        public static IGridView<double> RectangleDoubleThickResMap(int width, int height)
         {
             var map = DoubleThickRectangle(width, height);
-            return new LambdaTranslationMap<bool, double>(map, val => val ? 0.0 : 1.0);
+            return new LambdaTranslationGridView<bool, double>(map, val => val ? 0.0 : 1.0);
         }
 
-        //internal static ISettableMapView<bool> Spiral(int width, int height)
+        //internal static ISettableGridView<bool> Spiral(int width, int height)
         //{
         //    int center = map.Width / 2;
         //    int dx = 0;
@@ -88,13 +88,13 @@ namespace GoRogue.UnitTests.Mocks
         //    }
         //    return map;
         //}
-        internal static ISettableMapView<bool> DisconnectedSquares(int width, int height)
+        internal static ISettableGridView<bool> DisconnectedSquares(int width, int height)
         {
             var r1 = new Rectangle(3, 3, 10, 10);
             var r2 = new Rectangle(30, 3, 10, 10);
             var r3 = new Rectangle(3, 30, 10, 10);
             var r4 = new Rectangle(30, 30, 10, 10);
-            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+            ISettableGridView<bool> map = new ArrayView<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
                 for (var j = 0; j < map.Height; j++)
@@ -111,9 +111,9 @@ namespace GoRogue.UnitTests.Mocks
             return map;
         }
 
-        internal static ISettableMapView<bool> CardinalBisection(int width, int height, int timesToBisect)
+        internal static ISettableGridView<bool> CardinalBisection(int width, int height, int timesToBisect)
         {
-            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+            ISettableGridView<bool> map = new ArrayView<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
                 for (var j = 0; j < map.Height; j++)
@@ -128,9 +128,9 @@ namespace GoRogue.UnitTests.Mocks
             return map;
         }
 
-        internal static ISettableMapView<bool> DiagonalBisection(int width, int height, int timesToBisect)
+        internal static ISettableGridView<bool> DiagonalBisection(int width, int height, int timesToBisect)
         {
-            ISettableMapView<bool> map = new ArrayMap<bool>(width, height);
+            ISettableGridView<bool> map = new ArrayView<bool>(width, height);
 
             for (var i = 0; i < map.Width; i++)
                 for (var j = 0; j < map.Height; j++)

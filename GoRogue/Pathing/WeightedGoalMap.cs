@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Pathing
 {
@@ -21,25 +21,25 @@ namespace GoRogue.Pathing
     /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap" />.
     /// </remarks>
     [PublicAPI]
-    public sealed class WeightedGoalMap : MapViewBase<double?>
+    public sealed class WeightedGoalMap : GridViewBase<double?>
     {
         /// <summary>
         /// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
         /// </summary>
         /// <remarks>
-        /// When adding a new goal map, its <see cref="IMapView{Double}.Width" /> and <see cref="IMapView{Double}.Height" />
+        /// When adding a new goal map, its <see cref="IGridView{T}.Width" /> and <see cref="IGridView{T}.Height" />
         /// should be identical to the WeightedGoalMap's <see cref="Width" /> and
         /// <see cref="Height" />.
         /// </remarks>
-        public readonly Dictionary<IMapView<double?>, double> Weights;
+        public readonly Dictionary<IGridView<double?>, double> Weights;
 
         /// <summary>
         /// Constructor. Takes a single goal map and assigns it a weight of 1.0.
         /// </summary>
         /// <param name="map">The goal map.</param>
-        public WeightedGoalMap(IMapView<double?> map)
+        public WeightedGoalMap(IGridView<double?> map)
         {
-            Weights = new Dictionary<IMapView<double?>, double> { { map, 1 } };
+            Weights = new Dictionary<IGridView<double?>, double> { { map, 1 } };
             Width = map.Width;
             Height = map.Height;
         }
@@ -48,9 +48,9 @@ namespace GoRogue.Pathing
         /// Constructor. Takes a sequence of goal maps and assigns each one a weight of 1.0.
         /// </summary>
         /// <param name="maps">The goal maps. Each one should be of the same size.</param>
-        public WeightedGoalMap(IEnumerable<IMapView<double?>> maps)
+        public WeightedGoalMap(IEnumerable<IGridView<double?>> maps)
         {
-            Weights = new Dictionary<IMapView<double?>, double>();
+            Weights = new Dictionary<IGridView<double?>, double>();
             foreach (var map in maps)
             {
                 Weights.Add(map, 1);
@@ -71,9 +71,9 @@ namespace GoRogue.Pathing
         /// <param name="maps">
         /// The goal maps. Each one should be of the same size, and all weights should have a nonzero value.
         /// </param>
-        public WeightedGoalMap(IDictionary<IMapView<double?>, double> maps)
+        public WeightedGoalMap(IDictionary<IGridView<double?>, double> maps)
         {
-            Weights = new Dictionary<IMapView<double?>, double>();
+            Weights = new Dictionary<IGridView<double?>, double>();
 
             foreach (var (key, value) in maps)
             {
@@ -135,9 +135,9 @@ namespace GoRogue.Pathing
         /// Computes the entire aggregate goal map and returns it, effectively caching the result.
         /// This may be useful in situations where the goals are shared between many characters and do not change frequently.
         /// </summary>
-        public ArrayMap<double?> Combine()
+        public ArrayView<double?> Combine()
         {
-            var result = new ArrayMap<double?>(Width, Height);
+            var result = new ArrayView<double?>(Width, Height);
             for (var y = 0; y < Height; ++y)
                 for (var x = 0; x < Width; ++x)
                     result[x, y] = this[x, y];

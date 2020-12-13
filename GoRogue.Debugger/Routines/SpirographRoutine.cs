@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using GoRogue.MapViews;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {
     public class SpirographRoutine : IRoutine
     {
         private const int _size = 500;
-        private readonly ArrayMap<TileState> _map = new ArrayMap<TileState>(_size, _size);
-        private readonly List<(string name, IMapView<char> view)> _views = new List<(string name, IMapView<char> view)>();
+        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(_size, _size);
+        private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
         private double _theta = -100.0;
         private readonly List<Spirograph> _spirographs = new List<Spirograph>();
         public string Name => "Spirographs";
-        public IReadOnlyList<(string name, IMapView<char> view)> Views => _views;
+        public IReadOnlyList<(string name, IGridView<char> view)> Views => _views;
 
         public SpirographRoutine()
         {
@@ -55,7 +55,7 @@ namespace GoRogue.Debugger.Routines
         }
         public void CreateViews()
         {
-            _views.Add(("Regions", new LambdaMapView<char>(_map.Width, _map.Height, Spiroview)));
+            _views.Add(("Regions", new LambdaGridView<char>(_map.Width, _map.Height, Spiroview)));
         }
 
         private char Spiroview(Point pos)

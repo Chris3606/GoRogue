@@ -1,6 +1,6 @@
-﻿using GoRogue.MapViews;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.MapGeneration.TunnelCreators
 {
@@ -15,22 +15,22 @@ namespace GoRogue.MapGeneration.TunnelCreators
         /// Implements the algorithm, creating the tunnel between the two points (ensuring there is a
         /// path of positions set to true between those two points).
         /// </summary>
-        /// <param name="map">Map to create the tunnel on.</param>
+        /// <param name="map">_grid to create the tunnel on.</param>
         /// <param name="tunnelStart">Start position to connect.</param>
         /// <param name="tunnelEnd">End position to connect.</param>
         /// <returns>An area containing all points that are part of the tunnel.</returns>
-        Area CreateTunnel(ISettableMapView<bool> map, Point tunnelStart, Point tunnelEnd);
+        Area CreateTunnel(ISettableGridView<bool> map, Point tunnelStart, Point tunnelEnd);
 
         /// <summary>
         /// Implements the algorithm, creating the tunnel between the two points (ensuring there is a
         /// path of positions set to true between those two points).
         /// </summary>
-        /// <param name="map">Map to create the tunnel on.</param>
+        /// <param name="map">_grid to create the tunnel on.</param>
         /// <param name="startX">X-value of the start position to connect.</param>
         /// <param name="startY">Y-value of the start position to connect.</param>
         /// <param name="endX">X-value of the end position to connect.</param>
         /// <param name="endY">Y-value of the end position to connect.</param>
         /// <returns>An area containing all points that are part of the tunnel.</returns>
-        Area CreateTunnel(ISettableMapView<bool> map, int startX, int startY, int endX, int endY);
+        Area CreateTunnel(ISettableGridView<bool> map, int startX, int startY, int endX, int endY);
     }
 }

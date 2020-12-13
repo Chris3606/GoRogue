@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;
@@ -15,7 +15,7 @@ namespace GoRogue.UnitTests.MapGeneration
         private const int _width = 50;
         private const int _height = 50;
 
-        private static readonly IMapView<bool>[] _maps =
+        private static readonly IGridView<bool>[] _maps =
         {
             MockMaps.Rectangle(_width, _height), MockMaps.CardinalBisection(_width, _height, 1),
             MockMaps.DiagonalBisection(_width, _height, 1), MockMaps.CardinalBisection(_width, _height, 2),
@@ -45,7 +45,7 @@ namespace GoRogue.UnitTests.MapGeneration
             _output = output;
         }
 
-        public static IEnumerable<(IMapView<bool>, AdjacencyRule, int)> TestData
+        public static IEnumerable<(IGridView<bool>, AdjacencyRule, int)> TestData
         {
             get
             {
@@ -58,7 +58,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
         [Theory]
         [MemberDataTuple(nameof(TestData))]
-        public void MapAreasTest(IMapView<bool> map, AdjacencyRule adjacency, int expected)
+        public void MapAreasTest(IGridView<bool> map, AdjacencyRule adjacency, int expected)
         {
             _output.WriteLine("Map used:");
             _output.WriteLine(map.ExtendToString(elementStringifier: val => val ? "." : "#"));

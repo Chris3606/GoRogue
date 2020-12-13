@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using GoRogue.MapViews;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue
 {
@@ -9,13 +9,13 @@ namespace GoRogue
     /// Read-only interface of the <see cref="FOV" /> class.
     /// </summary>
     [PublicAPI]
-    public interface IReadOnlyFOV : IMapView<double>
+    public interface IReadOnlyFOV : IGridView<double>
     {
         /// <summary>
         /// A view of the calculation results in boolean form, where true indicates a location is in
         /// field of view, and false indicates it is not.
         /// </summary>
-        IMapView<bool> BooleanFOV { get; }
+        IGridView<bool> BooleanFOV { get; }
 
         /// <summary>
         /// IEnumerable of only positions currently in the field of view.

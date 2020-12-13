@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {
@@ -19,11 +19,11 @@ namespace GoRogue.Debugger.Routines
         private readonly List<Region> _originalRegions = new List<Region>();
         private readonly List<Region> _transformedRegions = new List<Region>();
 
-        // Map view set to indicate current state of each tile, so that it can be efficiently rendered.
-        private readonly ArrayMap<TileState> _map = new ArrayMap<TileState>(500, 500);
-        private readonly List<(string name, IMapView<char> view)> _views = new List<(string name, IMapView<char> view)>();
+        // _grid view set to indicate current state of each tile, so that it can be efficiently rendered.
+        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(500, 500);
+        private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
         /// <inheritdoc />
-        public IReadOnlyList<(string name, IMapView<char> view)> Views => _views.AsReadOnly();
+        public IReadOnlyList<(string name, IGridView<char> view)> Views => _views.AsReadOnly();
 
         /// <inheritdoc />
         public void InterpretKeyPress(int key) { } //
@@ -34,7 +34,7 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public void CreateViews()
         {
-            _views.Add(("Regions", new LambdaMapView<char>(_map.Width, _map.Height, RegionsView)));
+            _views.Add(("Regions", new LambdaGridView<char>(_map.Width, _map.Height, RegionsView)));
         }
 
         /// <inheritdoc />

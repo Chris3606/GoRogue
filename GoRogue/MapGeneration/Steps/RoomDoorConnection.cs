@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration.ContextComponents;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Steps
@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Rooms"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableMapView{T}" /> where T is bool</term>
+    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -130,7 +130,7 @@ namespace GoRogue.MapGeneration.Steps
         public RoomDoorConnection(string? name = null, string? roomsComponentTag = "Rooms",
                                   string? wallFloorComponentTag = "WallFloor", string? doorsListComponentTag = "Doors")
             : base(name, (typeof(ItemList<Rectangle>), roomsComponentTag),
-                (typeof(ISettableMapView<bool>), wallFloorComponentTag))
+                (typeof(ISettableGridView<bool>), wallFloorComponentTag))
         {
             RoomsComponentTag = roomsComponentTag;
             WallFloorComponentTag = wallFloorComponentTag;
@@ -163,7 +163,7 @@ namespace GoRogue.MapGeneration.Steps
 
             // Get required components; guaranteed to exist because enforced by required components list
             var rooms = context.GetFirst<ItemList<Rectangle>>(RoomsComponentTag);
-            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
+            var wallFloor = context.GetFirst<ISettableGridView<bool>>(WallFloorComponentTag);
 
             // Get rectangle of inner map bounds (the entire map except for the outer box that must remain all walls
             var innerMap = wallFloor.Bounds().Expand(-1, -1);

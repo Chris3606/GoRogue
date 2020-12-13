@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using GoRogue.MapViews;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
 
 namespace GoRogue.UnitTests.Pathing
@@ -16,11 +16,11 @@ namespace GoRogue.UnitTests.Pathing
         [Fact]
         public void FleeMapDoesNotLeadToGoal()
         {
-            var map = (ArrayMap<bool>)MockMaps.Rectangle(_width, _height);
+            var map = (ArrayView<bool>)MockMaps.Rectangle(_width, _height);
 
-            var goalMapData = new ArrayMap<GoalState>(map.Width, map.Height);
+            var goalMapData = new ArrayView<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(
-                new LambdaTranslationMap<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
+                new LambdaTranslationGridView<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
             goalMapData[_goal] = GoalState.Goal;
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);

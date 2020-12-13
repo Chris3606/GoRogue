@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.MapGeneration.ContextComponents;
-using GoRogue.MapViews;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration.Steps
@@ -25,7 +25,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Tunnels"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableMapView{T}" /> where T is bool</term>
+    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -88,7 +88,7 @@ namespace GoRogue.MapGeneration.Steps
         /// </param>
         public TunnelDeadEndTrimming(string? name = null, string? wallFloorComponentTag = "WallFloor",
                                      string? tunnelsComponentTag = "Tunnels")
-            : base(name, (typeof(ISettableMapView<bool>), wallFloorComponentTag),
+            : base(name, (typeof(ISettableGridView<bool>), wallFloorComponentTag),
                 (typeof(ItemList<Area>), tunnelsComponentTag))
         {
             WallFloorComponentTag = wallFloorComponentTag;
@@ -108,7 +108,7 @@ namespace GoRogue.MapGeneration.Steps
                     "The value must be 0 or above, or -1 for no iteration limit.");
 
             // Get required components; guaranteed to exist because enforced by required components list
-            var wallFloor = context.GetFirst<ISettableMapView<bool>>(WallFloorComponentTag);
+            var wallFloor = context.GetFirst<ISettableGridView<bool>>(WallFloorComponentTag);
             var tunnels = context.GetFirst<ItemList<Area>>(TunnelsComponentTag);
 
             // For each area, find dead ends up to the maximum number of iterations and prune them, unless they're saved

@@ -1,13 +1,13 @@
 ﻿using GoRogue.GameFramework;
-using GoRogue.MapViews;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Extensions
 {
     public static class MapExtensions
     {
-        public static ArrayMap<char> CharMap(this Map map)
+        public static ArrayView<char> CharMap(this Map map)
         {
-            ArrayMap<char> chars = new ArrayMap<char>(map.Width, map.Height);
+            ArrayView<char> chars = new ArrayView<char>(map.Width, map.Height);
             for (int i = 0; i < map.Width; i++)
             {
                 for (int j = 0; j < map.Height; j++)
