@@ -15,7 +15,7 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public override void CreateViews()
         {
-            views.Add(("Wall-Floor", new LambdaGridView<char>(Map.Width, Map.Height, WallFloorView)));
+            views.Add(("Wall-Floor", new LambdaGridView<char>(Map.Width, Map.Height, BasicDungeonView)));
         }
 
         /// <inheritdoc />

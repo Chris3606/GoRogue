@@ -48,7 +48,6 @@ namespace GoRogue.MapGeneration.Steps
             GridViewComponentTag = gridViewComponentTag;
         }
 
-
         /// <inheritdoc/>
         protected override IEnumerator<object?> OnPerform(GenerationContext context)
         {

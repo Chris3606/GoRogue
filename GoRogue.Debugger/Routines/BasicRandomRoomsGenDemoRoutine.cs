@@ -7,11 +7,11 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.Debugger.Routines
 {
     [UsedImplicitly]
-    public class DungeonMazeGenDemoRoutine : MapGenDemoRoutine
+    public class BasicRandomRoomsGenDemoRoutine : MapGenDemoRoutine
     {
-        public DungeonMazeGenDemoRoutine()
-            : base("Dungeon Maze Map Generation")
-        {}
+        public BasicRandomRoomsGenDemoRoutine()
+            : base("Basic Random Rooms Map Generation")
+        { }
 
         /// <inheritdoc />
         public override void CreateViews()
@@ -21,7 +21,10 @@ namespace GoRogue.Debugger.Routines
 
         /// <inheritdoc />
         protected override IEnumerable<GenerationStep> GenerationSteps()
-            => DefaultAlgorithms.DungeonMazeMapSteps();
+            => DefaultAlgorithms.BasicRandomRoomsMapSteps();
+
+        /// <inheritdoc />
+        protected override void SetInitialMapValues(ISettableGridView<TileState> map) => map.Fill(TileState.Wall);
 
         /// <inheritdoc />
         protected override void UpdateMap()
@@ -42,9 +45,5 @@ namespace GoRogue.Debugger.Routines
                     Map[door] = TileState.Door;
             }
         }
-
-        /// <inheritdoc />
-        protected override void SetInitialMapValues(ISettableGridView<TileState> map)
-            => map.Fill(TileState.Wall);
     }
 }

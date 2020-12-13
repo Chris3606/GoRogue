@@ -89,6 +89,9 @@ namespace GoRogue.MapGeneration
                 RNG = rng,
                 TunnelCreator = tunnelCreator
             };
+
+            // 4. Find and record the locations that doors should be placed in the generated rooms.
+            yield return new DoorFinder();
         }
 
         /// <summary>

@@ -127,16 +127,17 @@ namespace GoRogue.Debugger.Routines
         protected abstract void UpdateMap();
 
         /// <summary>
-        /// A simple function for creating a map view that displays tiles as wall/floor.
+        /// A simple function for creating a map view that displays tiles as wall/floor/door.
         /// </summary>
         /// <param name="pos">Position to return the character for.</param>
-        /// <returns>The character for the position specified, depending on if it is a wall or a floor.</returns>
-        protected char WallFloorView(Point pos)
+        /// <returns>The character for the position specified, depending on if it is a wall, floor, or door.</returns>
+        protected char BasicDungeonView(Point pos)
             => Map[pos] switch
             {
                 TileState.Wall => '#',
                 TileState.Floor => '.',
-                _ => throw new Exception("Wall-floor view encountered unsupported tile settings.")
+                TileState.Door => '+',
+                _ => throw new Exception("BasicDungeonView view encountered unsupported tile settings.")
             };
     }
 }
