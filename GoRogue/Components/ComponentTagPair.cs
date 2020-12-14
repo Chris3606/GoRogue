@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.Components
 {
@@ -12,7 +14,7 @@ namespace GoRogue.Components
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public readonly struct ComponentTagPair : IEquatable<ComponentTagPair>
+    public readonly struct ComponentTagPair : IEquatable<ComponentTagPair>, IMatchable<ComponentTagPair>
     {
         /// <summary>
         /// The component.
@@ -72,6 +74,8 @@ namespace GoRogue.Components
         /// Converts the pair to an equivalent tuple.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (object component, string? tag) ToTuple() => (Component, Tag);
 
         /// <summary>
@@ -79,6 +83,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="tuple"/>
         /// <returns/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ComponentTagPair FromTuple((object component, string? tag) tuple)
             => new ComponentTagPair(tuple.component, tuple.tag);
         #endregion
@@ -90,13 +95,26 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="other"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(ComponentTagPair other) => Component.Equals(other.Component) && Tag == other.Tag;
+
+        /// <summary>
+        /// True if the given pair has the same component and tag; false otherwise.
+        /// </summary>
+        /// <param name="other"/>
+        /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Matches(ComponentTagPair other) => Equals(other);
 
         /// <summary>
         /// True if the given object is a ComponentTagPair and has the same component and tag; false otherwise.
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object? obj) => obj is ComponentTagPair pair && Equals(pair);
 
         /// <summary>
