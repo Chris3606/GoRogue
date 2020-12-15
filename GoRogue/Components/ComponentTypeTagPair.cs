@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
+using SadRogue.Primitives;
 
 namespace GoRogue.Components
 {
@@ -13,7 +15,7 @@ namespace GoRogue.Components
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public readonly struct ComponentTypeTagPair : IEquatable<ComponentTypeTagPair>
+    public readonly struct ComponentTypeTagPair : IEquatable<ComponentTypeTagPair>, IMatchable<ComponentTypeTagPair>
     {
         /// <summary>
         /// The type of component expected.
@@ -74,6 +76,8 @@ namespace GoRogue.Components
         /// Converts the pair to an equivalent tuple.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (Type componentType, string? tag) ToTuple() => (ComponentType, Tag);
 
         /// <summary>
@@ -81,6 +85,7 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="tuple"/>
         /// <returns/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ComponentTypeTagPair FromTuple((Type componentType, string? tag) tuple)
             => new ComponentTypeTagPair(tuple.componentType, tuple.tag);
         #endregion
@@ -92,14 +97,27 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="other"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(ComponentTypeTagPair other)
             => ComponentType == other.ComponentType && Tag == other.Tag;
+
+        /// <summary>
+        /// True if the given pair has the same component type and tag; false otherwise.
+        /// </summary>
+        /// <param name="other"/>
+        /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Matches(ComponentTypeTagPair other) => Equals(other);
 
         /// <summary>
         /// True if the given object is a ComponentTypeTagPair and has the same component type and tag; false otherwise.
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object? obj) => obj is ComponentTypeTagPair pair && Equals(pair);
 
         /// <summary>
@@ -131,6 +149,5 @@ namespace GoRogue.Components
         /// <returns/>
         public static bool operator !=(ComponentTypeTagPair left, ComponentTypeTagPair right) => !(left == right);
         #endregion
-
     }
 }

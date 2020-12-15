@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -14,7 +15,7 @@ namespace GoRogue.SpatialMaps
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public readonly struct ItemPositionPair<TItem> : IEquatable<ItemPositionPair<TItem>>
+    public readonly struct ItemPositionPair<TItem> : IEquatable<ItemPositionPair<TItem>>, IMatchable<ItemPositionPair<TItem>>
         where TItem : notnull
     {
         /// <summary>
@@ -42,6 +43,7 @@ namespace GoRogue.SpatialMaps
         /// Returns a string representing the item and the position it's located at.
         /// </summary>
         /// <returns/>
+        [Pure]
         public override string ToString() => $"{Item}: {Position}";
 
         #region Tuple Compatibility
@@ -75,6 +77,8 @@ namespace GoRogue.SpatialMaps
         /// Converts the pair to an equivalent tuple.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (TItem item, Point position) ToTuple() => (Item, Position);
 
         /// <summary>
@@ -82,6 +86,7 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="tuple"/>
         /// <returns/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [SuppressMessage("ReSharper", "CA1000")] // Must be static to comply with implicit operator rules
         public static ItemPositionPair<TItem> FromTuple((TItem item, Point position) tuple)
             => new ItemPositionPair<TItem>(tuple.item, tuple.position);
@@ -95,14 +100,27 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="other"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(ItemPositionPair<TItem> other)
             => Item.Equals(other.Item) && Position.Equals(other.Position);
+
+        /// <summary>
+        /// True if the given pair has equivalent items and positions; false otherwise.
+        /// </summary>
+        /// <param name="other"/>
+        /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Matches(ItemPositionPair<TItem> other) => Equals(other);
 
         /// <summary>
         /// True if the given object is an ItemPositionPair that has an equivalent item and position; false otherwise.
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object? obj)
             => obj is ItemPositionPair<TItem> pair && Equals(pair);
 
@@ -110,6 +128,8 @@ namespace GoRogue.SpatialMaps
         /// Returns a hash code based on all of the pair's fields.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => Item.GetHashCode() ^ Position.GetHashCode();
 
         /// <summary>

@@ -44,7 +44,7 @@ namespace GoRogue.UnitTests.Pathing
             new Generator(50, 35)
                 .AddSteps(DefaultAlgorithms.DungeonMazeMapSteps())
                 .Generate()
-                .Context.GetFirstOrDefault<IGridView<bool>>() ?? throw new Exception("Null map."),
+                .Context.GetFirstOrDefault<IGridView<bool>>() ?? throw new InvalidOperationException("Null map."),
         };
 
         // Number of paths generated/tested against per test map

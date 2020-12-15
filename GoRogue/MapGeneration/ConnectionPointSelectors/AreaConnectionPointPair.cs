@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -14,7 +15,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
     [PublicAPI]
     // Tuples do not resolve names properly; function is provided
     [SuppressMessage("ReSharper", "CA2225")]
-    public struct AreaConnectionPointPair : IEquatable<AreaConnectionPointPair>
+    public struct AreaConnectionPointPair : IEquatable<AreaConnectionPointPair>, IMatchable<AreaConnectionPointPair>
     {
         /// <summary>
         /// The type of component expected.
@@ -76,6 +77,8 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
         /// Converts the pair to an equivalent tuple.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (Point area1Position, Point area2Position) ToTuple() => (Area1Position, Area2Position);
 
         /// <summary>
@@ -83,6 +86,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
         /// </summary>
         /// <param name="tuple"/>
         /// <returns/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static AreaConnectionPointPair FromTuple((Point area1Position, Point area2Position) tuple)
             => new AreaConnectionPointPair(tuple.area1Position, tuple.area2Position);
         #endregion
@@ -94,20 +98,35 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
         /// </summary>
         /// <param name="other"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(AreaConnectionPointPair other)
             => Area1Position == other.Area1Position && Area2Position == other.Area2Position;
+
+        /// <summary>
+        /// True if the given pair contains the same points; false otherwise.
+        /// </summary>
+        /// <param name="other"/>
+        /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Matches(AreaConnectionPointPair other) => Equals(other);
 
         /// <summary>
         /// True if the given object is a AreaConnectionPointPair and has the same points; false otherwise.
         /// </summary>
         /// <param name="obj"/>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object? obj) => obj is AreaConnectionPointPair pair && Equals(pair);
 
         /// <summary>
         /// Returns a hash code based on all of the pair's field's.
         /// </summary>
         /// <returns/>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => Area1Position.GetHashCode() ^ Area2Position.GetHashCode();
 
         /// <summary>

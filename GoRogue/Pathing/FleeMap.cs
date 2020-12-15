@@ -44,6 +44,9 @@ namespace GoRogue.Pathing
                 _nodes[pos] = new PositionNode(pos);
 
             _baseMap.Updated += Update;
+
+            // Necessary to ensure the FleeMap is valid immediately after construction
+            Update();
         }
 
         /// <summary>

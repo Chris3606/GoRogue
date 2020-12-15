@@ -210,7 +210,7 @@ namespace GoRogue.UnitTests
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(1, 2, 5, 6);
 
-            _output.WriteLine(path?.ToString() ?? throw new Exception("Should be a path."));
+            _output.WriteLine(path?.ToString() ?? throw new InvalidOperationException("Should be a path."));
         }
 
         [Fact]
