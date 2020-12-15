@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests
         {
             Assert.NotNull(obj);
             if (obj == null)
-                throw new Exception("Can't happen, prevents compiler from complaining.");
+                throw new InvalidOperationException("Can't happen, prevents compiler from complaining.");
 
         }
 
