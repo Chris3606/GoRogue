@@ -68,7 +68,9 @@ namespace GoRogue.SenseMapping
             _currentSenseMap = new HashSet<Point>();
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Total number of tiles in the sense map.
+        /// </summary>
         public int Count => Width * Height;
 
         /// <inheritdoc />

@@ -125,13 +125,17 @@ namespace GoRogue
         /// <inheritdoc />
         public IGridView<bool> BooleanFOV { get; private set; }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Number of tiles in the entire transparency view.
+        /// </summary>
         public int Count => Width * Height;
 
         /// <inheritdoc />
         public IEnumerable<Point> CurrentFOV => _currentFOV;
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Height of the transparency view FOV is being run on.
+        /// </summary>
         public int Height => _transparencyView.Height;
 
         /// <inheritdoc />
@@ -140,7 +144,9 @@ namespace GoRogue
         /// <inheritdoc />
         public IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Width of the transparency view FOV is being run on.
+        /// </summary>
         public int Width => _transparencyView.Width;
 
         /// <summary>
