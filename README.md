@@ -9,6 +9,8 @@ Welcome to the homepage for GoRogue, a modern .NET Standard roguelike/2D game ut
 You can find getting started instructions, tutorial articles, and the API documentation on the [documentation website](http://www.roguelib.com). Additionally, the API documentation will show up in your IDE as you would expect.  GoRogue also has a subreddit at [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/) and a [discord server](https://discord.gg/fxj5kPq).
 
 ## Feature List
+**Nullable Reference Types Support:** GoRogue is fully annotated to support code that enables the [nullable reference type](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references) feature introduced in C# 8.  It doesn't affect or break code that doesn't enable that feature, but for projects using it provides more compile-time safety, allowing you to build working, reliable code more quickly.
+
 **Convenient Primitive Types:** GoRogue is based on the `SadRogue.Primitives` library, which provides comprehensive, easy-to-use, and flexible primitive types for coordinates, rectangles, grids, and more.  As well, `SadRogue.Primitives` provides integration packages for other common libraries that define those types (MonoGame, SFML, etc) that allow easy integration with those library's equivalent types.  It also provides functionality to easily operate on and work with grids, which includes operations such as determining locations in a radius, moving a position around on a grid, and calculating distance.
 
 **Unobtrusive Algorithms:** GoRogue algorithms are based upon a simple abstraction for input/output data, so that GoRogue can easily integrate into many different existing systems/libraries without requiring duplication of data or merging of data structures.
