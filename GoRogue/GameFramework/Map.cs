@@ -565,37 +565,43 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part
-        /// of.  Throws InvalidOperationException if the entity could not be added
+        /// of.  Throws ArgumentException if the entity could not be added
         /// (eg., collision detection would not allow it, etc.)
         /// </summary>
         /// <param name="entity">Entity to add.</param>
         public void AddEntity(IGameObject entity)
         {
             if (entity.CurrentMap == this)
-                throw new InvalidOperationException(
-                    $"Tried to add entity to a {GetType().Name} that was already a part of that map.");
+                throw new ArgumentException(
+                    $"Tried to add entity to a {GetType().Name} that was already a part of that map.",
+                    nameof(entity));
 
             if (entity.Layer < 1)
-                throw new InvalidOperationException(
-                    $"Tried to add entity to a {GetType().Name} that had layer < 1.  Non-terrain items must have a layer >= 1.");
+                throw new ArgumentException(
+                    $"Tried to add entity to a {GetType().Name} that had layer < 1.  Non-terrain items must have a layer >= 1.",
+                    nameof(entity));
 
             if (!this.Contains(entity.Position))
-                throw new InvalidOperationException(
-                    $"Tried to add entity to a {GetType().Name}, but that entity's position was not within the map.");
+                throw new ArgumentException(
+                    $"Tried to add entity to a {GetType().Name}, but that entity's position was not within the map.",
+                    nameof(entity));
 
             if (!entity.IsWalkable)
             {
                 if (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer))
-                    throw new InvalidOperationException(
-                        $"Tried to add a non-walkable entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block walkability.");
+                    throw new ArgumentException(
+                        $"Tried to add a non-walkable entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block walkability.",
+                        nameof(entity));
                 if (!WalkabilityView[entity.Position])
-                    throw new InvalidOperationException(
-                        $"Tried to add a non-walkable entity to a {GetType().Name}, but that map already has a non-walkable object at the entity's location.");
+                    throw new ArgumentException(
+                        $"Tried to add a non-walkable entity to a {GetType().Name}, but that map already has a non-walkable object at the entity's location.",
+                        nameof(entity));
             }
 
             if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
-                throw new InvalidOperationException(
-                    $"Tried to add a non-transparent entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block transparency.");
+                throw new ArgumentException(
+                    $"Tried to add a non-transparent entity to a {GetType().Name}, but the entity's layer is not in the map's layer-mask of layers that can block transparency.",
+                    nameof(entity));
 
             _entities.Add(entity, entity.Position);
 
@@ -684,7 +690,7 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Removes the given entity (non-terrain object) from the map.  Throws InvalidOperationException if the entity was not
+        /// Removes the given entity (non-terrain object) from the map.  Throws ArgumentException if the entity was not
         /// part of this map.
         /// </summary>
         /// <param name="entity">The entity to remove from the map.</param>

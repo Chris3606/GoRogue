@@ -80,18 +80,21 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Tries to add the given item at the given position, provided the item is not already in the
         /// spatial map and the position is not already filled. If either of those are the case,
-        /// throws InvalidOperationException.
+        /// throws ArgumentException.
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
         public void Add(T item, Point position)
         {
             if (_itemMapping.ContainsKey(item))
-                throw new InvalidOperationException($"Item added to {GetType().Name} when it has already been added.");
+                throw new ArgumentException(
+                    $"Item added to {GetType().Name} when it has already been added.",
+                    nameof(item));
 
             if (_positionMapping.ContainsKey(position))
-                throw new InvalidOperationException(
-                    $"Item added to {GetType().Name} at a position already occupied by another item.");
+                throw new ArgumentException(
+                    $"Item added to {GetType().Name} at a position already occupied by another item.",
+                    nameof(position));
 
             _itemMapping.Add(item, position);
             _positionMapping.Add(position, item);
@@ -101,7 +104,7 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Tries to add the given item at the given position, provided the item is not already in the
         /// spatial map and the position is not already filled. If either of those are the case,
-        /// throws InvalidOperationException.
+        /// throws ArgumentException.
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="x">X-value of the position to add item to.</param>
@@ -192,7 +195,7 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        /// Moves the item specified to the position specified. Throws InvalidOperationException if the item
+        /// Moves the item specified to the position specified. Throws ArgumentException if the item
         /// does not exist in the spatial map or if the position is already filled by some other item.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -200,12 +203,14 @@ namespace GoRogue.SpatialMaps
         public void Move(T item, Point target)
         {
             if (!_itemMapping.ContainsKey(item))
-                throw new InvalidOperationException(
-                    $"Tried to move item in {GetType().Name}, but the item does not exist.");
+                throw new ArgumentException(
+                    $"Tried to move item in {GetType().Name}, but the item does not exist.",
+                    nameof(item));
 
             if (_positionMapping.ContainsKey(target))
-                throw new InvalidOperationException(
-                    $"Tried to move item in {GetType().Name}, but the target position already contains an item.");
+                throw new ArgumentException(
+                    $"Tried to move item in {GetType().Name}, but the target position already contains an item.",
+                    nameof(target));
 
             var oldPos = _itemMapping[item];
             _positionMapping.Remove(oldPos);
@@ -215,7 +220,7 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        /// Moves the item specified to the position specified. Throws InvalidOperationException if the item
+        /// Moves the item specified to the position specified. Throws ArgumentException if the item
         /// does not exist in the spatial map or if the position is already filled by some other item.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -278,15 +283,16 @@ namespace GoRogue.SpatialMaps
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
-        /// Removes the item specified. Throws InvalidOperationException if the item specified was
+        /// Removes the item specified. Throws ArgumentException if the item specified was
         /// not in the spatial map.
         /// </summary>
         /// <param name="item">The item to remove.</param>
         public void Remove(T item)
         {
             if (!_itemMapping.ContainsKey(item))
-                throw new InvalidOperationException(
-                    $"Tried to remove an item from the {GetType().Name} that has not been added.");
+                throw new ArgumentException(
+                    $"Tried to remove an item from the {GetType().Name} that has not been added.",
+                    nameof(item));
 
             var itemPos = _itemMapping[item];
             _itemMapping.Remove(item);
@@ -424,7 +430,7 @@ namespace GoRogue.SpatialMaps
             => CanMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
-        /// Moves the item at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// Moves the item at the specified source location to the target location.  Throws ArgumentException if one or
         /// more items cannot be moved, eg.
         /// if no item exists at the current position or the new position is already filled by some other item.
         /// </summary>
@@ -433,22 +439,25 @@ namespace GoRogue.SpatialMaps
         public void MoveAll(Point current, Point target)
         {
             if (!_positionMapping.ContainsKey(current))
-                throw new InvalidOperationException(
-                    $"Tried to move item from {current} in {GetType().Name}, but there was nothing at the that position.");
+                throw new ArgumentException(
+                    $"Tried to move item from {current} in {GetType().Name}, but there was nothing at the that position.",
+                    nameof(current));
 
             if (current == target)
-                throw new InvalidOperationException(
-                    $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.");
+                throw new ArgumentException(
+                    $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.",
+                    nameof(target));
 
             if (_positionMapping.ContainsKey(target))
-                throw new InvalidOperationException(
-                    $"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.");
+                throw new ArgumentException(
+                    $"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.",
+                    nameof(target));
 
             MoveValid(current, target);
         }
 
         /// <summary>
-        /// Moves the item at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// Moves the item at the specified source location to the target location.  Throws ArgumentException if one or
         /// more items cannot be moved, eg.
         /// if no item exists at the current position or the new position is already filled by some other item.
         /// </summary>

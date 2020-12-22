@@ -45,14 +45,14 @@ namespace GoRogue.SpatialMaps
         where T : notnull
     {
         /// <summary>
-        /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
+        /// Tries to add the given item at the given position, and throws ArgumentException if the item cannot be added.
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
         void Add(T item, Point position);
 
         /// <summary>
-        /// Tries to add the given item at the given position, and throws InvalidOperationException if the item cannot be added.
+        /// Tries to add the given item at the given position, and throws ArgumentException if the item cannot be added.
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="x">X-value of the position to add item to.</param>
@@ -65,7 +65,7 @@ namespace GoRogue.SpatialMaps
         void Clear();
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item
+        /// Moves the given item from its current location to the specified one. Throws ArgumentException if the item
         /// cannot be moved.
         /// </summary>
         /// <param name="item">Item to move.</param>
@@ -73,7 +73,7 @@ namespace GoRogue.SpatialMaps
         void Move(T item, Point target);
 
         /// <summary>
-        /// Moves the given item from its current location to the specified one. Throws InvalidOperationException if the item
+        /// Moves the given item from its current location to the specified one. Throws ArgumentException if the item
         /// cannot be moved.
         /// </summary>
         /// <param name="item">Item to move</param>
@@ -82,7 +82,7 @@ namespace GoRogue.SpatialMaps
         void Move(T item, int targetX, int targetY);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// Moves all items at the specified source location to the target location.  Throws ArgumentException if one or
         /// more items cannot be moved or there are
         /// no items to be moved.
         /// </summary>
@@ -91,7 +91,7 @@ namespace GoRogue.SpatialMaps
         void MoveAll(Point current, Point target);
 
         /// <summary>
-        /// Moves all items at the specified source location to the target location.  Throws InvalidOperationException if one or
+        /// Moves all items at the specified source location to the target location.  Throws ArgumentException if one or
         /// more items cannot be moved or there are no items
         /// to be moved.
         /// </summary>
@@ -121,7 +121,7 @@ namespace GoRogue.SpatialMaps
         List<T> MoveValid(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
-        /// Removes the given item from the spatial map.  Throws InvalidOperationException if the item cannot be removed.
+        /// Removes the given item from the spatial map.  Throws ArgumentException if the item cannot be removed.
         /// </summary>
         /// <param name="item">The item to remove.</param>
         void Remove(T item);
