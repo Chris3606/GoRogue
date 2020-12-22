@@ -3,7 +3,7 @@ title: 2.x to 3.0 Upgrade Guide
 ---
 
 # 2.x To 3.0 Upgrade Guide
-This article is intended to be a useful resource for those that are familiar with GoRogue 2.x, and are looking to upgrade to 3.0, by summarizing/discussing the relevant changes.
+This article is intended to be a useful resource for those that are familiar with GoRogue 2.x, and are looking to upgrade to 3.0, by summarizing/discussing the relevant changes.  It is not an all-inclusive list of new features, however discusses particularly breaking changes and some useful new features.
 
 # Upgraded to .NET Standard 2.1
 One of the biggest changes in GoRogue 3 is that it has moved to support a minimum .NET Standard version of .NET Standard 2.1, for reasons pertaining to run-time performance and C# language feature support.  This affects the minimum versions of various runtimes required to use GoRogue as described in [this Microsoft table](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
@@ -81,6 +81,9 @@ These classes may optionally be inherited from as an alternative to `IGridView` 
 
 ## New IGridView Properties
 `IGridView` and `ISettableGridView` now require implementations of a `Count` property, which should be equal to `Width * Height` (the number of tiles in the view).  This property allows `IGridView` to support [indices](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#indices-and-ranges) as introduced in C# 8.  The `GridViewBase` and `SettableGridViewBase` implement this property automatically.
+
+## New/Refactored Map View Helper Functions
+A number of useful extension methods for `ISettableGridView` implementations have also been added/refactored.  First, the `ArrayView.SetToDefault` function was changed to `ArrayView.Clear()` to match more typical naming conventions for arrays.  Additionally, an `ApplyOverlay` overload has been added as an extension for `ISettableGridView` that takes a `Func<Point, T>` to use for determine overlay values, to avoid the need to use a `LambdaGridView` in these cases.  Finally, an `Fill` extension method has been added that fills an `ISettableGridView` with a specified value.
 
 ## New IGridView Implementation
 Additionally, `TheSadRogue.Primitives` contains one additional concrete implementation of `ISettableGridView` that was not included in GoRogue 2; the `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
@@ -187,7 +190,14 @@ There are also a number of new data structures that may be useful in map generat
 # Naming Conventions for Static Variables and Enums Changed
 Names of various enumerations and static variables have been changed, to bring them more in accordance with recommended C# naming conventions.  Effectively, this just results in ALL_CAPS style names being removed, and replaced with UpperFirstLetter style names; eg. `SourceType.RIPPLE` has been changed to `SourceType.Ripple`, and `Radius.SQUARE` has been changed to `Radius.Square`.
 
-# Spatial Map Interface Refactored
+# Random Number Generation Extension Changes
+One breaking change pertaining to RNG in GoRogue 3 is that the `Random.SingletonRandom` class was renamed to `Random.GlobalRandom`, to more accurately reflect its purpose.  The `DefaultRNG` parameter should otherwise be the same, and simply require updating the class name in any references.
+
+Additionally, a `PercentageCheck` function has been added as an extension method of `IGenerator`.  This makes it much more convenient to use an RNG to perform a "percentage check" (a check with a specified percent chance to succeed) with any RNG, including `DefaultRNG`.
+
+# Spatial Map Changes
+First, all spatial map implementions and related interfaces in GoRogue 3 have been moved to the `GoRogue.SpatialMaps` namespace, in order to clean up the root namespace.  There are also a number of interface changes.
+
 In GoRogue 2, functions for spatial maps like `Add` and `Move` simply returned `false` if an operation failed.  This design had some useful properties, but ultimately turned out to be a poor design decision, which didn't fit well with the rest of the library and was the source of many known bugs/desyncs that users, and I, accidentally created in code. Therefore, the `ISpatialMap` interface and all implementing classes have been modified such that, if the functions fail, they throw an `InvalidOperationException` with an error message that tells you exactly what went wrong.  Functions that work in this way now included `Add`, `Move`, `MoveAll`, and `Remove`.
 
 This change makes it much more obvious to the user when something unexpected happens.  For situations where you _do_ need to check whether an operation is possible before completing it, the interface has been augmented to include functions that simply check if an operation is possible without doing it, and return the appropriate boolean value.  These functions include `CanAdd`, `CanMove`, and `CanMoveAll`.
@@ -206,6 +216,19 @@ The class structure for `GameFramework.GameObject` has been simplified in GoRogu
 However, this approach proved to be somewhat error prone, and very easily led to non-intuitive/difficult to debug behavior in error cases.  Further, it added complexity to code that needed to implement `IGameObject` instead of inheriting from `GameObject`.  So, in GoRogue 3, the `parent` parameter in the `GameObject` constructor has been removed, and it is no longer recommended (and in many cases no longer possible) to implement `IGameObject` via a backing field of type `GameObject`.
 
 Instead, a focus was placed on decoupling the code required to implement `IGameObject` from the internal code in `Map`, which ultimately resulted in `IGameObject` being much easier to implement the more traditional way.  Helper functions have been provided that make implementing most functions in the `IGameObject` interface a one-line endeavor.  As such, if you need to implement `IGameObject` yourself, you should be able to more or less copy-paste the code from `GameObject`, and use it for the implementation, without making your code unintuitive or unnecessarily long.
+
+## Map Functionality Changes
+There were also a number of relevant changes to the `GameFramework.Map` API in GoRogue 3.
+
+### FOV Changes
+In GoRogue 2, the `Map` had `CalculateFOV` functions that were used to calculate FOV for the map.  This made it more difficult to separate FOV from the map in use cases that required it, and required inconvenient overloads to react to FOV changes.  In GoRogue 3, a number of refactors have taken place to address this.
+
+First, the `Map.FOV` property has been renamed to `Map.PlayerFOV`.  This more clearly reflects the intended purpose of the field in games using multiple FOV instances for different entities.  Similarly, the `Explored` field has been renamed to `PlayerExplored`.
+
+Additionally, the `CalculateFOV` functions have been completely removed from `Map`.  Instead, the `PlayerFOV` field is of type `FOV` instead of `IReadOnlyFOV` as it was in GoRogue 2.  This allows you to call the `PlayerFOV.Calculate` function directly, with the same parameters previously passed to `CalculateFOV`.  The `FOV` class has also been augmented to include a `Recalculated` event that fires whenever the FOV is recalculated, which allows you to respond to the FOV changing.  Since the `PlayerFOV` field is still settable, these changes make it much easier to separate the FOV from the `Map` when necessary and make responding to FOV changes require less work.
+
+### Components Allowed on Map
+One other change is that `GameFramework.Map` now has a `GoRogueComponents` property.  This allows you to attach components to a `Map` just like you do with game objects.  This may be useful functionality for component-based architectures.
 
 ## Removed IsStatic from IGameObject
 In GoRogue 2, game objects had an `IsStatic` flag, that could be set via a constructor parameter to indicate that they could not move.  Objects on the terrain layer of a map (layer 0) were _required_ to have `IsStatic` set, to allow for some optimization by allowing them to reside on a grid view as opposed to a spatial map.  This was useful for performance, but inconvenient at times for users; particularly if a user wanted to use the "factory method pattern" for creation of terrain.  The position could only be set at construction due to the `IsStatic` flag being checked, which means that the position had to be known exactly when the object was created.  Furthermore, the restriction of terrain objects being unable to move at all is actually more stringent than required; the only required portion for optimization is that they not move _while they are part of a map_.
@@ -226,9 +249,17 @@ The `AddEntity`, `RemoveEntity`, `SetTerrain`, `RemoveTerrain` and `RemoveTerrai
 There are also extension methods provided for `IGameObject` that return a boolean value indicating whether it is valid to set the object's `Position` or an `IsWalkable` property a certain way.  the `CanMove` function returns whether or not an object's position can be set; `CanMoveIn` is similar, except it takes a direction and returns whether or not the object can move in that direction.  Similarly, `CanSetWalkability` and `CanToggleWalkability` return information about whether or not `IsWalkable` can be set.
 
 ## GameObject Component Changes
+The component systems used for attaching components to game object have also changed notably.
+
+### Components Now Attached to Property
 In GoRogue 2, `IGameObject` implemented `IHasComponents` to allow components to be placed on game objects.  In GoRogue 3, this is no longer the case; instead, `IGameObject` defines a property `GoRogueComponents`, which is a collection that can have components added/removed.  This class also integrates the new "tag" functionality for tagging components.  The names of the functions for adding, removing, and retrieving components have also changed in a manner corresponding to the [component collection name changes](#component-system-changes).
 
 The `GoRogueComponents` field in `GameObject` defaults to being of type `Components.ComponentCollection`, and it is generally rare to need that field to be represented by some other component implementation.  Nonetheless, the field is of type `Components.ITaggableComponentCollection`, and an instance of some custom implementation of this interface may be passed to `GameObject` via its constructor.  This ensures that the component collection structure can be customized if it becomes necessary.
+
+### Optional Base Class for GameObject Components
+GoRogue 2 contained the `GameFramework.Components.IGameObjectComponent` interface, which is an optional interface that you could implement on components attached to a `GameObject`.  When implemented, the object would automatically record the `IGameObject` that it was attached to.  This still exists in GoRogue 3, despite the fact that components are now added to `IGameObject.GoRogueComponents` instead of the object directly.  If you attach something that implements `IGameObjectComponent` to a `GameObject` by calling its `GoRogueComponents.Add` function, the `Parent` property will automatically be updated to reflect the `IGameObject` that it was attached to.  Similarly, that property is also updated when a component is detached.
+
+In addition to this behavior, there is now a base _class_ that you can optionally implement on components being attached to `GameObjects`.  This class is `GameFramework.Components.ComponentBase`.  It implements `IGameObjectComponent`, and also adds some useful functionality in the form of events that are automatically fired when the component is attached/detached from an object.  It also uses these events to provide some additional functionality; for example, the `ComponentBase<T>` class uses the events to add a run-time requirement that the parent inherit from a particular type, and stores the `Parent` as that type, which makes it very convenient if you need to access methods/properties of that type beyond what `IGameObject` provides.
 
 ## GameObject ID Generation Changes
 One additional change alters the method that you use to assign IDs to objects in a custom way.  In GoRogue 2, to assign IDs in a custom manner, you had to subclass `GameObject` and override the `GameObject.GenerateID()` function.  Given that `GameObject` instances can often be used with no subclasses at all, the requirement to create a subclass for this functinality can be inconvenient.
