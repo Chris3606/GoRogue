@@ -121,7 +121,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.False(mySpatialMap.Contains((2, 3)));
             Assert.False(mySpatialMap.Contains(myId2));
 
-            Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(myId1));
+            Assert.Throws<ArgumentException>(() => mySpatialMap.Remove(myId1));
 
 
             Assert.Empty(mySpatialMap.Remove((5, 6)));

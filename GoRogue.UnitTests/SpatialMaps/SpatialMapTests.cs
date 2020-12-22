@@ -44,7 +44,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Single(mySpatialMap.GetItemsAt((1, 2)));
             Assert.Empty(mySpatialMap.GetItemsAt((2, 3)));
 
-            Assert.Throws<InvalidOperationException>(() => mySpatialMap.Add(myId2, (1, 2)));
+            Assert.Throws<ArgumentException>(() => mySpatialMap.Add(myId2, (1, 2)));
 
             Assert.Single(mySpatialMap.GetItemsAt((1, 2)));
         }
@@ -55,7 +55,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             var mySpatialMap = new SpatialMap<MyIDImpl>();
 
             Assert.Equal(0, mySpatialMap.Count);
-            Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(new MyIDImpl(0)));
+            Assert.Throws<ArgumentException>(() => mySpatialMap.Remove(new MyIDImpl(0)));
             Assert.Empty(mySpatialMap.Remove((1, 2)));
             Assert.Empty(mySpatialMap.Items);
         }
@@ -82,7 +82,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             retVal = mySpatialMap.Contains((2, 3));
             Assert.True(retVal);
 
-            Assert.Throws<InvalidOperationException>(() => mySpatialMap.Move(myId2, (5, 6)));
+            Assert.Throws<ArgumentException>(() => mySpatialMap.Move(myId2, (5, 6)));
             Assert.True(mySpatialMap.Contains((2, 3)));
             Assert.True(mySpatialMap.Contains((5, 6)));
         }
@@ -133,7 +133,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.False(mySpatialMap.Contains((2, 3)));
             Assert.False(mySpatialMap.Contains(myId2));
 
-            Assert.Throws<InvalidOperationException>(() => mySpatialMap.Remove(myId1));
+            Assert.Throws<ArgumentException>(() => mySpatialMap.Remove(myId1));
             Assert.Empty(mySpatialMap.Remove((5, 6)));
         }
 

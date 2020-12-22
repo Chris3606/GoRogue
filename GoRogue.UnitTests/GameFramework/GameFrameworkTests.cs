@@ -150,7 +150,7 @@ namespace GoRogue.UnitTests.GameFramework
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((-1, -1), 1);
 
-            Assert.Throws<InvalidOperationException>(() => map.AddEntity(obj));
+            Assert.Throws<ArgumentException>(() => map.AddEntity(obj));
             Assert.Empty(map.Entities);
         }
 

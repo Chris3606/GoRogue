@@ -189,9 +189,8 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        /// Adds the given item at the given position on the correct layer.  InvalidOperationException is thrown if the layer is
-        /// invalid or
-        /// the item otherwise cannot be added to its layer.
+        /// Adds the given item at the given position on the correct layer.  ArgumentException is thrown if the layer is
+        /// invalid or the item otherwise cannot be added to its layer.
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item at.</param>
@@ -200,14 +199,15 @@ namespace GoRogue.SpatialMaps
             var relativeLayer = item.Layer - StartingLayer;
 
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-                throw new InvalidOperationException(
-                    $"Tried to add item to {GetType().Name} on layer {item.Layer}, but no such layer exists.");
+                throw new ArgumentException(
+                    $"Tried to add item to {GetType().Name} on layer {item.Layer}, but no such layer exists.",
+                    nameof(item));
 
             _layers[relativeLayer].Add(item, position);
         }
 
         /// <summary>
-        /// Adds the given item at the given position on the correct layer.  InvalidOperationException is thrown if the layer is
+        /// Adds the given item at the given position on the correct layer.  ArgumentException is thrown if the layer is
         /// invalid or
         /// the item otherwise cannot be added to its layer.
         /// </summary>
@@ -282,7 +282,7 @@ namespace GoRogue.SpatialMaps
         }
 
         /// <summary>
-        /// Moves the given item to the given position.  Throws InvalidOperationException if either the item given
+        /// Moves the given item to the given position.  Throws ArgumentException if either the item given
         /// isn't in the spatial map, or if the layer that the item resides on is configured to allow only one item per
         /// location at any given time and there is already an item at <paramref name="target" />.
         /// </summary>
@@ -293,14 +293,15 @@ namespace GoRogue.SpatialMaps
             var relativeLayer = item.Layer - StartingLayer;
 
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-                throw new InvalidOperationException(
-                    $"Tried to move item in {GetType().Name} on layer {item.Layer}, but no such layer exists.");
+                throw new ArgumentException(
+                    $"Tried to move item in {GetType().Name} on layer {item.Layer}, but no such layer exists.",
+                    nameof(item));
 
             _layers[relativeLayer].Move(item, target);
         }
 
         /// <summary>
-        /// Moves the given item to the given position.  Throws InvalidOperationException if either the item given
+        /// Moves the given item to the given position.  Throws ArgumentException if either the item given
         /// isn't in the spatial map, or if the layer that the item resides on is configured to allow only one item per
         /// location at any given time and there is already an item at the target position.
         /// </summary>
@@ -322,8 +323,9 @@ namespace GoRogue.SpatialMaps
         {
             var relativeLayer = item.Layer - StartingLayer;
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-                throw new InvalidOperationException(
-                    $"Tried to remove item from {GetType().Name} on layer {item.Layer}, but no such layer exists.");
+                throw new ArgumentException(
+                    $"Tried to remove item from {GetType().Name} on layer {item.Layer}, but no such layer exists.",
+                    nameof(item));
 
             _layers[relativeLayer].Remove(item);
         }
@@ -499,7 +501,7 @@ namespace GoRogue.SpatialMaps
 
         /// <summary>
         /// Moves all items that are on layers in <paramref name="layerMask" /> at the specified source location to the target
-        /// location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// location.  Throws ArgumentException if one or more items cannot be moved or there are
         /// no items to be moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
@@ -510,7 +512,7 @@ namespace GoRogue.SpatialMaps
 
         /// <summary>
         /// Moves all items that are on layers in <paramref name="layerMask" /> at the specified source location to the target
-        /// location.  Throws InvalidOperationException if one or more items cannot be moved or there are
+        /// location.  Throws ArgumentException if one or more items cannot be moved or there are
         /// no items to be moved.
         /// </summary>
         /// <param name="currentX">X-value of the location to move items from.</param>
@@ -535,7 +537,7 @@ namespace GoRogue.SpatialMaps
 
             // No items is an error
             if (!hasItems)
-                throw new InvalidOperationException(
+                throw new ArgumentException(
                     $"Tried to move all items at position {new Point(currentX, currentY)} in a {GetType().Name}, but there were no items present at that location.");
 
             // No layers would fail, so move everything
