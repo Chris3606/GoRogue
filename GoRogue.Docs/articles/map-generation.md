@@ -108,8 +108,8 @@ Each generation step will have in its class API documentation a list of componen
 
 If a step cannot find one of its required components, a `MissingContextComponentException` is raised, with a detailed exception message that tells you exactly what step required what component that it could not find.  This exception will be raised as soon as `generator.Generate()` is called.  The built-in steps also avoid very tricky scenarios like components that are "conditionally" required -- a component is either required or it is not.  These features should make debugging algorithms composed of these steps much easier.
 
-[!NOTE]
-The framework allowing these messages is exposed to the user, and can be very useful when creating your own generation steps.  This will be covered in a later section.
+>[!NOTE]
+>The framework allowing these messages is exposed to the user, and can be very useful when creating your own generation steps.  This will be covered in a later section.
 
 ## Configuration of Steps
 Each built-in generation step may take in some configuration parameters that dictate how it operates.  For example, `RoomsGenerator`, which is used in the above example, takes in a number of these such as `MinRooms` and `MaxRooms`.  To avoid massive sets of constructor parameters, initial values for these fields are not passed to a generation step's constructor unless absolutely necessary (eg, no functional default can be provided).  Instead, built-in steps will expose these as public fields on the generation step class, and the field's documentation will state what the field controls.  The documentation will also note the field's default if no custom value is set.
@@ -118,8 +118,8 @@ In the example above, we use C#'s convenient initializer list syntax to pass cus
 
 If an improper value is given to a field, as soon as `generator.Generate` is called an `InvalidConfigurationException` will be raised.  This exception will have a detailed exception messages that specifies exactly what value of what generation step was invalid, and what the restrictions on that value are.
 
-[!NOTE]
-The exception constructor allowing these exception messages is exposed to the user, and can be very useful when creating your own generation steps.
+>[!NOTE]
+>The exception constructor allowing these exception messages is exposed to the user, and can be very useful when creating your own generation steps.
 
 ## Translation Steps
 Particularly when using steps in customized arrangements, or creating your own steps, it can be necessary to "translate" data from one form to another to allow steps to operate with each other.  For example, you might want to join two lists of items together, or translate `Rectangles` to `Areas` like we did in the example above.  For these situations, a few different "translation steps" are provided in the `GoRogue.MapGeneration.Steps.Translation` namespace.  These are `GenerationSteps` whose sole purpose is to translate data in this way.
