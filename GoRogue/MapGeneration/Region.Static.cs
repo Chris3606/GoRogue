@@ -19,7 +19,10 @@ namespace GoRogue.MapGeneration
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public static Region Rectangle(string name, Point origin, int width, int height, int degrees = 0)
         {
-            Region answer = new Region(name, northWest: origin, northEast: origin + new Point(width, 0), southEast: origin + new Point(width, height), southWest: origin + new Point(0, height));
+            var northEast = origin + new Point(width - 1, 0);
+            var southEast = origin + new Point(width - 1, height - 1);
+            var southWest = origin + new Point(0, height - 1);
+            Region answer = new Region(name, origin, northEast, southEast, southWest);
             return answer.Rotate(degrees, origin);
         }
 
