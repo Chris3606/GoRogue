@@ -14,16 +14,6 @@ namespace GoRogue.UnitTests.MapGeneration
         private readonly Point _se = new Point(7, 3);
         private readonly Region _area;
 
-
-        private readonly Point _start = new Point(1, 1);
-        //private static readonly Point _end = (17, 14);
-        private const int _width = 9;
-        private const int _height = 7;
-
-        //private readonly int rise = 1;
-        //private readonly int run = 4;
-        private const int _degrees = 22;
-
         public RegionTests()
         {
             _area = new Region("forbidden zone", _nw, _ne, _se, _sw);
