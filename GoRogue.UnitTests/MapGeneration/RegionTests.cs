@@ -214,7 +214,7 @@ namespace GoRogue.UnitTests.MapGeneration
         public void RemoveOverlappingInnerpointsTest()
         {
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(1, 1), new Point(3, 4)));
-            Region b = Region.FromRectangle("Area B", new Rectangle(new Point(3, 0), new Point(6, 5)));
+            Region b = Region.FromRectangle("Area B", new Rectangle(new Point(2, 0), new Point(6, 5)));
 
             int aCountBefore = a.OuterPoints.Count;
             int bCountBefore = b.OuterPoints.Count;
