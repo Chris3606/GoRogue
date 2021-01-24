@@ -26,14 +26,14 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
         [Fact]
         public void AllDoorsRecorded()
         {
-            // Use a generator with an arbitrary seed (known to cause a bug)
-            var rng = new XorShift128Generator(1788441385);
+            // Use a generator with an arbitrary seed (known to cause an issue) in a minimalistic case
+            var rng = new XorShift128Generator(737318414);
 
             // Generate a map
-            var generator = new Generator(100, 100);
+            var generator = new Generator(40, 40);
             generator
                 .AddSteps(GoRogue.MapGeneration.DefaultAlgorithms.DungeonMazeMapSteps(
-                    minRooms: 10, maxRooms: 20, roomMinSize:5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng))
+                    minRooms: 1, maxRooms: 1, roomMinSize:5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng))
                 .Generate();
 
             // Find components we're expecting
@@ -57,8 +57,6 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
                 Assert.Equal(holes, new HashSet<Point>(doorListForCurrentRoom.Doors));
                 Assert.Equal(holes, doorListForCurrentRoom.Select(pair => pair.Item).ToHashSet());
             }
-
-
         }
     }
 }
