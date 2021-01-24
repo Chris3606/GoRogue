@@ -56,7 +56,7 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Container holding components that have been attached to this object.
         /// </summary>
-        public ITaggableComponentCollection? GoRogueComponents { get; }
+        public ITaggableComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
