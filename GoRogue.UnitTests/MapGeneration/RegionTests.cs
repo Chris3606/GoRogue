@@ -265,7 +265,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
 
             // Region room = Region.Rectangle("my office", _start, _width, _height, _degrees);
-            Region room = Region.Rectangle("my office", (0,0), 9, 9, 0);
+            Region room = Region.Rectangle("my office", (0,0), 9, 9);
             var rectangle = new Rectangle(0, 0, 9, 9);
 
             Assert.False(rectangle.Contains((0, 9)));
