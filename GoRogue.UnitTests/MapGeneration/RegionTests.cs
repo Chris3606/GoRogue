@@ -14,16 +14,6 @@ namespace GoRogue.UnitTests.MapGeneration
         private readonly Point _se = new Point(7, 3);
         private readonly Region _area;
 
-
-        private readonly Point _start = new Point(1, 1);
-        //private static readonly Point _end = (17, 14);
-        private const int _width = 9;
-        private const int _height = 7;
-
-        //private readonly int rise = 1;
-        //private readonly int run = 4;
-        private const int _degrees = 22;
-
         public RegionTests()
         {
             _area = new Region("forbidden zone", _nw, _ne, _se, _sw);
@@ -214,7 +204,7 @@ namespace GoRogue.UnitTests.MapGeneration
         public void RemoveOverlappingInnerpointsTest()
         {
             Region a = Region.FromRectangle("Area A", new Rectangle(new Point(1, 1), new Point(3, 4)));
-            Region b = Region.FromRectangle("Area B", new Rectangle(new Point(3, 0), new Point(6, 5)));
+            Region b = Region.FromRectangle("Area B", new Rectangle(new Point(2, 0), new Point(6, 5)));
 
             int aCountBefore = a.OuterPoints.Count;
             int bCountBefore = b.OuterPoints.Count;
@@ -274,36 +264,47 @@ namespace GoRogue.UnitTests.MapGeneration
         public void RectangleTest()
         {
 
-            Region room = Region.Rectangle("my office", _start, _width, _height, _degrees);
+            // Region room = Region.Rectangle("my office", _start, _width, _height, _degrees);
+            Region room = Region.Rectangle("my office", (0,0), 9, 9, 0);
+            var rectangle = new Rectangle(0, 0, 9, 9);
 
+            Assert.False(rectangle.Contains((0, 9)));
+            Assert.False(rectangle.Contains((9, 0)));
             Point nw = room.NorthWestCorner;
             Point sw = room.SouthWestCorner;
             Point se = room.SouthEastCorner;
             Point ne = room.NorthEastCorner;
 
-            Assert.Equal(new Point(1, 1), nw);
+            Assert.Equal(new Point(0, 0), nw);
 
-            Assert.True(nw.X > sw.X);
-            Assert.True(sw.Y > nw.Y);
-            Assert.True(se.X > sw.X);
-            Assert.True(se.Y > sw.Y);
-            Assert.True(ne.X > nw.X);
-            Assert.True(ne.Y > nw.Y);
-            Assert.True(ne.X > se.X);
-            Assert.True(se.Y > ne.Y);
+            Assert.True(nw.X >= sw.X);
+            Assert.True(sw.Y >= nw.Y);
+            Assert.True(se.X >= sw.X);
+            Assert.True(se.Y >= sw.Y);
+            Assert.True(ne.X >= nw.X);
+            Assert.True(ne.Y >= nw.Y);
+            Assert.True(ne.X >= se.X);
+            Assert.True(se.Y >= ne.Y);
+
+
+            Assert.False(room.Contains((0, 9)));
+            Assert.False(room.Contains((9, 0)));
         }
         [Fact]
         public static void FromRectangleTest()
         {
-            Rectangle rectangle = new Rectangle(new Point(1, 1), new Point(5, 5));
+            Rectangle rectangle = new Rectangle(new Point(0, 0), new Point(5, 5));
             Region area = Region.FromRectangle("square", rectangle);
-            Assert.Equal(rectangle.Width + 1, area.Width);
-            Assert.Equal(rectangle.Height + 1, area.Height);
+            Assert.Equal(rectangle.Width, area.Width);
+            Assert.Equal(rectangle.Height, area.Height);
             Assert.Equal(20, area.OuterPoints.Count);
             Assert.Equal(6, area.NorthBoundary.Count);
             Assert.Equal(6, area.SouthBoundary.Count);
             Assert.Equal(6, area.EastBoundary.Count);
             Assert.Equal(6, area.WestBoundary.Count);
+
+            Assert.False(area.Contains((1, 6)));
+            Assert.False(area.Contains((6, 1)));
         }
         [Fact]
         public void RegularParallelogramTest()
