@@ -120,7 +120,7 @@ namespace GoRogue.MapGeneration.Steps
                 var iteration = 1;
                 while (MaxTrimIterations == -1 || iteration <= MaxTrimIterations)
                 {
-                    foreach (var point in area.Positions)
+                    foreach (var point in area)
                         foreach (var direction in AdjacencyRule.Cardinals.DirectionsOfNeighborsClockwise())
                         {
                             var neighbor = point + direction;

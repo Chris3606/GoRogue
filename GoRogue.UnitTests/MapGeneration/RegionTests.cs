@@ -117,7 +117,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Region a1 = _area;
             Region a2 = _area.Shift(two);
 
-            foreach (Point inner in a2.InnerPoints.Positions)
+            foreach (Point inner in a2.InnerPoints)
                 Assert.True(a1.Contains(inner - two));
         }
 
@@ -161,12 +161,12 @@ namespace GoRogue.UnitTests.MapGeneration
             hostSubArea = mainArea.GetSubRegion("imposing sub area");
             imposingSubArea = mainArea.GetSubRegion("host sub area");
 
-            foreach (Point c in imposingSubArea.InnerPoints.Positions)
+            foreach (Point c in imposingSubArea.InnerPoints)
             {
                 Assert.True(mainArea.Contains(c), "Main area somehow had a Point removed.");
                 Assert.False(hostSubArea.Contains(c), "sub area contains a Point in imposing area.");
             }
-            foreach (Point c in hostSubArea.InnerPoints.Positions)
+            foreach (Point c in hostSubArea.InnerPoints)
             {
                 Assert.True(mainArea.Contains(c), "Main area somehow lost a Point.");
                 Assert.False(imposingSubArea.Contains(c), "a Point should have been removed from the sub area but was not.");
@@ -221,8 +221,8 @@ namespace GoRogue.UnitTests.MapGeneration
             int bCountBefore = b.OuterPoints.Count;
             a.RemoveOverlappingPoints(b);
 
-            Assert.Empty(a.OuterPoints.Positions);
-            Assert.Empty(a.InnerPoints.Positions);
+            Assert.Empty(a.OuterPoints);
+            Assert.Empty(a.InnerPoints);
             Assert.Equal(bCountBefore,b.OuterPoints.Count);
         }
         [Fact]
@@ -337,7 +337,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void InnerFromOuterPointsTest()
         {
-            Assert.Equal(20, _area.InnerPoints.Positions.Count);
+            Assert.Equal(20, _area.InnerPoints.Count);
         }
 
         [Fact]
@@ -348,7 +348,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(1, house.SubRegions.Count);
             house.AddSubRegion(new Region("hall", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
             Assert.Equal(2, house.SubRegions.Count);
-            house.AddSubRegion(new Region("shitter", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
+            house.AddSubRegion(new Region("bathroom", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2));
             Assert.Equal(3, house.SubRegions.Count);
 
             Region expected = new Region("parlor", northWest: _nw + 1, northEast: _ne + 3, southEast: _se + 3, southWest: _sw + 2);
