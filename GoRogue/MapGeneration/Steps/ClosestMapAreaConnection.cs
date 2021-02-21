@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using GoRogue.MapGeneration.ConnectionPointSelectors;
 using GoRogue.MapGeneration.ContextComponents;
 using GoRogue.MapGeneration.TunnelCreators;
@@ -96,6 +97,8 @@ namespace GoRogue.MapGeneration.Steps
         /// </summary>
         public ITunnelCreator TunnelCreator = new DirectLineTunnelCreator(Distance.Manhattan);
 
+        private List<MultiArea>? _multiAreas;
+
         /// <summary>
         /// Creates a new closest area connection step.
         /// </summary>
@@ -132,23 +135,34 @@ namespace GoRogue.MapGeneration.Steps
             // Get/create tunnel component
             var tunnels = context.GetFirstOrNew(() => new ItemList<Area>(), TunnelsComponentTag);
 
-            var ds = new DisjointSet(areasToConnect.Items.Count);
-            while (ds.Count > 1) // Haven't unioned all sets into one
-                for (var i = 0; i < areasToConnect.Items.Count; i++)
-                {
-                    var iClosest = FindNearestMapArea(areasToConnect.Items, DistanceCalc, i, ds);
+            // Create set of multi-areas for the areas we're joining, and a disjoint set based off of them
+            _multiAreas = new List<MultiArea>(areasToConnect.Select(a => new MultiArea(a.Item)));
+            var ds = new DisjointSet(_multiAreas.Count);
+            ds.SetsJoined += DSOnSetsJoined;
 
+            while (ds.Count > 1) // Haven't unioned all sets into one
+                for (var i = 0; i < _multiAreas.Count; i++)
+                {
+                    int iClosest = FindNearestMapArea(_multiAreas, DistanceCalc, i, ds);
+                    int iParent = ds.Find(i);
                     var (area1Position, area2Position) =
-                        ConnectionPointSelector.SelectConnectionPoints(areasToConnect.Items[i],
-                            areasToConnect.Items[iClosest]);
+                        ConnectionPointSelector.SelectConnectionPoints(_multiAreas[iParent],
+                            _multiAreas[iClosest]);
 
                     var tunnel = TunnelCreator.CreateTunnel(wallFloor, area1Position, area2Position);
                     tunnels.Add(tunnel, Name);
 
-                    ds.MakeUnion(i, iClosest);
+                    ds.MakeUnion(iParent, iClosest);
 
                     yield return null; // One stage per connection
                 }
+        }
+
+        private void DSOnSetsJoined(object? sender, JoinedEventArgs e)
+        {
+            // Can ignore the nullability mismatch because the event handler is only used from OnPerform, after
+            // multiAreas is initialized.
+            _multiAreas![e.LargerSetID].AddRange(_multiAreas![e.SmallerSetID].SubAreas);
         }
 
         private static int FindNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc,

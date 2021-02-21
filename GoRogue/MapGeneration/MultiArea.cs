@@ -98,6 +98,12 @@ namespace GoRogue.MapGeneration
         public void Add(IReadOnlyArea subArea) => _subAreas.Add(subArea);
 
         /// <summary>
+        /// Adds the given sub-areas to the MultiArea.
+        /// </summary>
+        /// <param name="subAreas">The sub-areas to add.</param>
+        public void AddRange(IEnumerable<IReadOnlyArea> subAreas) => _subAreas.AddRange(subAreas);
+
+        /// <summary>
         /// Removes the given sub-area from the MultiArea.
         /// </summary>
         /// <param name="subArea">The sub-area to remove.</param>
