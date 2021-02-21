@@ -11,7 +11,7 @@ namespace GoRogue.MapGeneration.Steps
 {
     /// <summary>
     /// Connects areas of the map by connecting each area to its closest neighboring area, with distance between areas based on
-    /// the center-points of the areas.
+    /// the connection point selector specified.
     /// Context Components Required:
     /// <list type="table">
     ///     <listheader>
@@ -55,9 +55,9 @@ namespace GoRogue.MapGeneration.Steps
     /// component (with the tag "Tunnels", by default).
     /// If an appropriate component with the specified tag exists for the resulting tunnels, the Areas are added to that
     /// component.  Otherwise, a new component is created.
-    /// Areas are connected by drawing a tunnel between each Area and its closest neighboring area, based on based on distance
-    /// between the center points of the areas.  The actual points selected in each area
-    /// to connect, as well as the method for drawing tunnels between those areas, is customizable via the
+    /// Areas are connected by drawing a tunnel between each Area and its closest neighboring area, based on distance
+    /// between the points selected by the given <see cref="ConnectionPointSelector"/>.  The actual points selected in
+    /// each area to connect, as well as the method for drawing tunnels between those areas, is customizable via the
     /// <see cref="ConnectionPointSelector" /> and <see cref="TunnelCreator" /> parameters.
     /// </remarks>
     [PublicAPI]
@@ -143,15 +143,20 @@ namespace GoRogue.MapGeneration.Steps
             while (ds.Count > 1) // Haven't unioned all sets into one
                 for (var i = 0; i < _multiAreas.Count; i++)
                 {
-                    int iClosest = FindNearestMapArea(_multiAreas, DistanceCalc, i, ds);
-                    int iParent = ds.Find(i);
-                    var (area1Position, area2Position) =
-                        ConnectionPointSelector.SelectConnectionPoints(_multiAreas[iParent],
-                            _multiAreas[iClosest]);
+                    // We finished early
+                    if (ds.Count == 1) break;
 
+                    // Make sure we operate on the parent set (since it contains the true points
+                    int iParent = ds.Find(i);
+
+                    // Find nearest area (area calculated based on point selector, and return selected connection points)
+                    var (iClosest, area1Position, area2Position) = FindNearestMapArea(_multiAreas, DistanceCalc, ConnectionPointSelector, iParent, ds);
+
+                    // Create a tunnel between the two points
                     var tunnel = TunnelCreator.CreateTunnel(wallFloor, area1Position, area2Position);
                     tunnels.Add(tunnel, Name);
 
+                    // Mark the sets as unioned in the disjoint set
                     ds.MakeUnion(iParent, iClosest);
 
                     yield return null; // One stage per connection
@@ -165,30 +170,44 @@ namespace GoRogue.MapGeneration.Steps
             _multiAreas![e.LargerSetID].AddRange(_multiAreas![e.SmallerSetID].SubAreas);
         }
 
-        private static int FindNearestMapArea(IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc,
-                                              int mapAreaIndex, DisjointSet ds)
+        private static (int areaIndex, Point area1Position, Point area2Position) FindNearestMapArea(
+            IReadOnlyList<IReadOnlyArea> mapAreas, Distance distanceCalc, IConnectionPointSelector pointSelector,
+            int mapAreaIndex, DisjointSet ds)
         {
-            var closestIndex = mapAreaIndex;
-            var distance = double.MaxValue;
+            // Record minimum distance and pair of points found based on selection
+            int closestIndex = mapAreaIndex;
+            double closestDistance = double.MaxValue;
+            AreaConnectionPointPair closestPointPair = (Point.None, Point.None);
 
             for (var i = 0; i < mapAreas.Count; i++)
             {
+                // Don't check against ourselves or anything in our set
                 if (i == mapAreaIndex)
                     continue;
 
                 if (ds.InSameSet(i, mapAreaIndex))
                     continue;
 
-                var distanceBetween =
-                    distanceCalc.Calculate(mapAreas[mapAreaIndex].Bounds.Center, mapAreas[i].Bounds.Center);
-                if (distanceBetween < distance)
+                // Ensure we operate on the parent of the neighbor (which cannot be our parent due to the checks
+                // above), since the parents are the only areas that have the "true" list of points
+                int iParentNeighbor = ds.Find(i);
+
+                // Select connection points to check between the two areas
+                var currentPointPair = pointSelector.SelectConnectionPoints(mapAreas[mapAreaIndex],
+                    mapAreas[iParentNeighbor]);
+
+                // Calculate distance between the selected connection points
+                double distance = distanceCalc.Calculate(currentPointPair.Area1Position, currentPointPair.Area2Position);
+                if (distance < closestDistance)
                 {
-                    distance = distanceBetween;
-                    closestIndex = i;
+                    closestIndex = iParentNeighbor;
+                    closestDistance = distance;
+                    closestPointPair = currentPointPair;
                 }
             }
 
-            return closestIndex;
+            // Return index, along with connection points found
+            return (closestIndex, closestPointPair.Area1Position, closestPointPair.Area2Position);
         }
     }
 }

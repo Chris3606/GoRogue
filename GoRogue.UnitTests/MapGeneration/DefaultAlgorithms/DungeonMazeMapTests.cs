@@ -7,6 +7,7 @@ using SadRogue.Primitives.GridViews;
 using Troschuetz.Random.Generators;
 using Xunit;
 using Xunit.Abstractions;
+using XUnit.ValueTuples;
 
 namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
 {
@@ -14,18 +15,25 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
     {
         private readonly ITestOutputHelper _output;
 
+        #region Test Data
+
+        // Seeds known to cause corner cases that, if connection algorithm doesn't choose true closest points,
+        // will result in tunnels cutting through rooms (thus creating additional "doors")
+        public static uint[] TrueClosestEdgeCaseSeeds = { 737318414, 3851955825, 3366057365 };
+        #endregion
+
         public DungeonMazeMapTests(ITestOutputHelper output) => _output = output;
 
         /// <summary>
-        /// Tests that all doors that are made in rooms are in the door structure, in a known seed that causes
-        /// issues if area merges are incorrectly recorded.
+        /// Tests that all doors that are made in rooms are in the door structure, with known seeds that cause
+        /// issues if area merges are incorrectly recorded/points are incorrectly selected.
         /// </summary>
-        [Fact]
-        public void TunnelsConnectedToTrueClosest()
+        [Theory]
+        [MemberDataEnumerable(nameof(TrueClosestEdgeCaseSeeds))]
+        public void TunnelsConnectedToTrueClosest(uint seed)
         {
-            // Use a generator with an arbitrary seed (known to cause an issue) in a minimalistic case
-            //var rng = new XorShift128Generator(737318414); 3851955825
-            var rng = new XorShift128Generator(3851955825);
+            // Use a generator with the seed known to cause an issue in a minimalistic case
+            var rng = new XorShift128Generator(seed);
 
             // Generate a map
             var generator = new Generator(40, 40);
@@ -39,8 +47,10 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
             var wallFloor = generator.Context.GetFirst<IGridView<bool>>("WallFloor");
             var doors = generator.Context.GetFirst<DoorList>("Doors");
 
+            // Print map representation to assist in debugging if test fails
             _output.WriteLine("Map: ");
             _output.WriteLine(wallFloor.ExtendToString(elementStringifier: i => i ? "." : "#"));
+
             // Go through each room and verify the correct items are there.
             foreach (var (room, _) in rooms)
             {
@@ -59,14 +69,17 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
             }
         }
 
+        /// <summary>
+        /// Checks using an array of random seeds to ensure that DungeonMazeMap generation does not produce unexpected
+        /// doors.
+        /// </summary>
         [Fact]
         public void AllDoorsRecorded()
         {
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 500; i++)
             {
                 // Use a particular generator so that we know the seed and thus have a replicable procedure if there
                 // is an issue
-                // Use a generator with an arbitrary seed (known to cause an issue) in a minimalistic case
                 var rng = new XorShift128Generator();
                 _output.WriteLine($"Using generator with seed: {rng.Seed}.");
 
@@ -98,7 +111,6 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
                     Assert.Equal(holes, doorListForCurrentRoom.Select(pair => pair.Item).ToHashSet());
                 }
             }
-
         }
     }
 }
