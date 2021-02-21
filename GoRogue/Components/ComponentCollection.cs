@@ -52,6 +52,9 @@ namespace GoRogue.Components
         // Used for tag-based lookups
         private readonly Dictionary<string, object> _tagsToComponents;
 
+        /// <inheritdoc/>
+        public int Count => _componentsToTags.Count;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -135,6 +138,18 @@ namespace GoRogue.Components
                 _tagsToComponents.Add(tag, component);
 
             ComponentAdded?.Invoke(this, new ComponentChangedEventArgs(component));
+        }
+
+        /// <inheritdoc/>
+        public void Clear()
+        {
+            // Must duplicate list to avoid modification while iterating
+            var components = _componentsToTags.Keys.ToList();
+
+            foreach (var component in components)
+            {
+                Remove(component);
+            }
         }
 
         /// <inheritdoc />

@@ -38,9 +38,11 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
             // Generate a map
             var generator = new Generator(40, 40);
             generator
-                .AddSteps(GoRogue.MapGeneration.DefaultAlgorithms.DungeonMazeMapSteps(
-                    minRooms: 1, maxRooms: 1, roomMinSize:5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng))
-                .Generate();
+                .ConfigAndGenerateSafe((gen) =>
+                {
+                    gen.AddSteps(GoRogue.MapGeneration.DefaultAlgorithms.DungeonMazeMapSteps(
+                        minRooms: 1, maxRooms: 1, roomMinSize: 5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng));
+                });
 
             // Find components we're expecting
             var rooms = generator.Context.GetFirst<ItemList<Rectangle>>("Rooms");
@@ -86,9 +88,11 @@ namespace GoRogue.UnitTests.MapGeneration.DefaultAlgorithms
                 // Generate a map
                 var generator = new Generator(40, 40);
                 generator
-                    .AddSteps(GoRogue.MapGeneration.DefaultAlgorithms.DungeonMazeMapSteps(
-                        minRooms: 1, maxRooms: 1, roomMinSize:5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng))
-                    .Generate();
+                    .ConfigAndGenerateSafe(gen =>
+                    {
+                        gen.AddSteps(GoRogue.MapGeneration.DefaultAlgorithms.DungeonMazeMapSteps(
+                            minRooms: 1, maxRooms: 1, roomMinSize: 5, roomMaxSize: 11, saveDeadEndChance: 0, rng: rng));
+                    });
 
                 // Find components we're expecting
                 var rooms = generator.Context.GetFirst<ItemList<Rectangle>>("Rooms");

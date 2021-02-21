@@ -93,9 +93,11 @@ namespace GoRogue.Debugger.Routines
         /// <inheritdoc />
         public void GenerateMap()
         {
-            // Set up map generation steps
-            generator.AddSteps(GenerationSteps());
-            _stageEnumerator = generator.GetStageEnumerator();
+            // Set up map generation steps and get regeneration-safe stage enumerator
+            _stageEnumerator = generator.ConfigAndGetStageEnumeratorSafe(gen =>
+            {
+                gen.AddSteps(GenerationSteps());
+            });
 
             // Set initial values
             SetInitialMapValues(_underlyingMap);

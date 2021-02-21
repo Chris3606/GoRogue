@@ -127,6 +127,38 @@ namespace GoRogue.MapGeneration
         { }
     }
 
+    /// <summary>
+    /// Raised by map generation steps if they detect that an invalid state (that can occasionally happen) is detected,
+    /// and the map should be regenerated.  Automatically used by the <see cref="Generator.ConfigAndGenerateSafe"/> and
+    /// <see cref="Generator.ConfigAndGetStageEnumeratorSafe"/> functions.
+    /// </summary>
+    [PublicAPI]
+    public class RegenerateMapException : Exception
+    {
+        /// <summary>
+        /// Creates map regeneration exception with no message.
+        /// </summary>
+        public RegenerateMapException()
+        { }
+
+        /// <summary>
+        /// Creates a map regeneration exception with a customized message.
+        /// </summary>
+        /// <param name="message" />
+        public RegenerateMapException(string message)
+            : base(message)
+        { }
+
+        /// <summary>
+        /// Creates a map regeneration exception with a customized message an inner exception.
+        /// </summary>
+        /// <param name="message" />
+        /// <param name="innerException" />
+        public RegenerateMapException(string message, Exception innerException)
+            : base(message, innerException)
+        { }
+    }
+
     // TODO: Figure out way to check for tags AND types that are the same (for some generation steps)?  This wrecks ClosestMapAreaConnector
     /// <summary>
     /// Base class for implementing custom map generation steps.
