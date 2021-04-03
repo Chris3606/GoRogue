@@ -4,14 +4,14 @@
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
 	  <RootNamespace>GoRogue</RootNamespace>
 	  <Authors>Chris3606</Authors>
-	  <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
+	  <Copyright>Copyright © 2021 Christopher Ridley (Chris3606)</Copyright>
 	  <Description>Roguelike/2D game utility library.</Description>
 
     <!--
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha01</Version>
+    <Version>3.0.0-alpha02</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	  <!-- More nuget package settings-->
@@ -75,7 +75,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
@@ -84,7 +84,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha9" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0" />
     <PackageReference Include="Troschuetz.Random" Version="5.0.1" />
   </ItemGroup>
 
