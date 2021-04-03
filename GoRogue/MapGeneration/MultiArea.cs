@@ -22,7 +22,9 @@ namespace GoRogue.MapGeneration
         public IReadOnlyList<IReadOnlyArea> SubAreas => _subAreas.AsReadOnly();
 
         // TODO: Modify to be in ExpandToFit function in Rectangle
-        /// <inheritdoc/>
+        /// <summary>
+        /// Smallest possible rectangle that encompasses every position in every sub-area.
+        /// </summary>
         public Rectangle Bounds
         {
             get
@@ -48,10 +50,20 @@ namespace GoRogue.MapGeneration
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Number of positions in all of this area's sub-areas combined.
+        /// </summary>
         public int Count => _subAreas.Sum(area => area.Count);
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns positions from the area (via its sub-areas) in the same fashion you would via a list.
+        /// </summary>
+        /// <remarks>
+        /// The indexing scheme considers index 0 to be index 0 in the first sub-area in <see cref="SubAreas"/>.
+        /// The indices proceed in increasing order across all points in that sub-area, then roll over into the next
+        ///  one.  Eg. index [SubAreas[0].Count] is actually index 0 in the second sub-area, ie. SubAreas[1][0].
+        /// </remarks>
+        /// <param name="index">Index of position to retrieve.</param>
         public Point this[int index]
         {
             get
@@ -156,17 +168,44 @@ namespace GoRogue.MapGeneration
         /// <returns>An enumerator that iterates through all positions in all sub-areas.</returns>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns whether or not the given area is completely contained within the summation of this area's subareas.
+        /// </summary>
+        /// <param name="area">Area to check.</param>
+        /// <returns>
+        /// True if the all of the given area's points are contained within one or more subareas, false otherwise.
+        /// </returns>
         public bool Contains(IReadOnlyArea area)
         {
-            foreach (var subArea in _subAreas)
-                if (subArea.Contains(area))
-                    return true;
+            foreach (var pos in area)
+            {
+                // Try to find this point in one of this area's sub-areas
+                bool found = false;
+                foreach (var subarea in _subAreas)
+                {
+                    if (subarea.Contains(pos))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
 
-            return false;
+                // If we can't find this point in any sub-area, then the summation of the subareas does NOT contain
+                // the area in question.
+                if (!found)
+                    return false;
+            }
+
+            // All points were found in at least one sub-area, so by definition, the summation of the subareas contains
+            // the area in question.
+            return true;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether or not the given position is considered within one of this area's subareas or not.
+        /// </summary>
+        /// <param name="position">The position to check.</param>
+        /// <returns>True if the specified position is within one of the subareas, false otherwise.</returns>
         public bool Contains(Point position)
         {
             foreach (var subArea in _subAreas)
@@ -176,7 +215,12 @@ namespace GoRogue.MapGeneration
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Determines whether or not the given position is considered within one of this area's subareas or not.
+        /// </summary>
+        /// <param name="positionX">X-value of the position to check.</param>
+        /// <param name="positionY">X-value of the position to check.</param>
+        /// <returns>True if the specified position is within one of the subareas, false otherwise.</returns>
         public bool Contains(int positionX, int positionY)
         {
             foreach (var subArea in _subAreas)
@@ -186,7 +230,14 @@ namespace GoRogue.MapGeneration
             return false;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns whether or not the given map area intersects any of this area's subareas. If you intend to
+        /// determine/use the exact intersection based on this return value, it is best to instead
+        /// call <see cref="Area.GetIntersection(IReadOnlyArea, IReadOnlyArea)"/>, and check the number
+        /// of positions in the result (0 if no intersection).
+        /// </summary>
+        /// <param name="area">The area to check.</param>
+        /// <returns>True if the given area intersects one of the current one's subareas, false otherwise.</returns>
         public bool Intersects(IReadOnlyArea area)
         {
             foreach (var subArea in _subAreas)
