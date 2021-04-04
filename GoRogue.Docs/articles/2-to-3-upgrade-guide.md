@@ -95,7 +95,7 @@ A number of useful extension methods for `ISettableGridView` implementations hav
 Additionally, `TheSadRogue.Primitives` contains one additional concrete implementation of `ISettableGridView` that was not included in GoRogue 2; the `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
 
 # Map Generation Rewritten
-The map generation system has been completely rewritten from the ground up in GoRogue 3.  It functions in a notably different manner, so it is recommended that you review [this article](~/articles/map-generation.md) which explains the new system's concepts and components.
+The map generation system has been completely rewritten from the ground up in GoRogue 3.  It functions in a notably different manner, so it is recommended that you review [this article](~/articles/howtos/map-generation.md) which explains the new system's concepts and components.
 
 ## GoRogue 2 Equivalents
 The basic map generation algorithms that were present in GoRogue 2 are all present in some form in GoRogue 3, but not at a level that produces full implementation parity.  Therefore, the new implementation of those algorthms is not guaranteed to produce the same level from a given seed that was produced in GoRogue 2.
@@ -120,7 +120,9 @@ The "connection" algorithms provided in GoRogue 2 for connecting areas/rooms are
 | `MapGeneration.Connectors.OrderedMapAreaConnector` | `MapGeneration.Steps.OrderedMapAreaConnection` |
 | `MapGeneration.Connectors.RoomDoorConnector` | `MapGeneration.Steps.RoomDoorConnection` |
 
-The configuration options are very similar functionally, however since these are now generation steps they're specified as public members of the class.
+The configuration options are very similar functionally for most of them, however since these are now generation steps they're specified as public members of the class.
+
+One notable exception is `ClosestMapAreaConnector`; its GoRogue 3 counterpart functions somewhat differently.  The largest change is that it utilizes the new `MultiArea` class to more accurately represent the areas during the connection process, which allows it to take into account all points that are part of areas that have been previously joined by the algorithm.  It also uses the `ConnectionPointSelector` given to it not only to determine the points to use to connect the areas, but the points to use to determine distance between the areas as well, which allows for more control over its distance assumptions.
 
 ### Tunnel Creation Algorithms
 The tunnel creation algorithms provided in GoRogue 2 are largely intact in GoRogue 3, and have just moved to different namespaces.  The API has changed a bit, but functionally they produce the same result.  The `ITunnelCreator`, `DirectLineTunnelCreator`, and `HorizontalVerticalTunnelCreator` classes are now located in the `MapGeneration.TunnelCreators` namespace.  The API has been modified so that the tunnel creators return an `Area` representing the tunnel they create; but otherwise the algorithms function in much the same way.  They are used as optional paramters in the appropriate map generation steps just like they were in the GoRogue 2 algorithms.
@@ -146,6 +148,10 @@ Most other GoRogue 2 map generation structures/algorithms exist in some form as 
 
 ## New Generation-Related Algorithms
 A number of new generation steps/algorithms that have no GoRogue 2 equivalent are also provided in the `MapGeneration` namespace.
+
+## MultiArea
+GoRogue now provides a `MultiArea` class in the `MapGeneration` namespace.  This is a relatively simple class that implements the `IReadOnlyArea` interface, by querying a list of "sub-areas".  This class can prove useful because defining an area in terms of a set of other areas is a common need for map generation
+and region representation.
 
 ### Translation Steps
 The article on map generation refers to "translation steps" as steps that purely transform existing data in the map generation context to a new form, as opposed to generating new, unique data.  It may definitely prove useful to review these steps, located in the `MapGeneration.Steps.Translation` namespace, as they may be useful in general cases.

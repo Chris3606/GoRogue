@@ -1,0 +1,33 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
+
+## [Unreleased]
+- None
+
+## [3.0.0-alpha02] - 2021-04-04
+
+### Added
+- `MultiArea` class that implements `IReadOnlyArea` in terms of a list of "sub-areas"
+- `Clear()` and `Count` functionality to component collections
+- Specific functions `RandomItem` and `RandomIndex` for `Area` (since `Area` no longer exposes a list)
+- Added `RegenerateMapException` which can be thrown by `GenerationStep` instances to indicate the map must be discarded and re-generated
+- Added `ConfigAndGenerateSafe`/`ConfigAndGetStageEnumeratorSafe` functions that provide behavior in addition to the typical `AddStep/Generate` type sequence that can handle cases where the map must be re-generated.
+- `DisjointSet` now has events that fire when areas are joined
+- `DisjointSet<T>` class which automatically assigns IDs to objects
+
+### Changed
+- Updated to v1.0 of the primitives library
+- Modified `Area` to implement new primitives library `IReadOnlyArea` interface
+    - List of positions no longer exposed
+    - `Area` has indexers that take indices and return points directly
+- Modified map generation interface to support critical exceptions that require map re-generation
+    - You must now call `ConfigAndGenerateSafe` to get equivalent behavior to `gen.AddSteps(...).Generate()` that will automatically handle these exceptions
+- Modified `ClosestMapAreaConnection` step to minimize chances of issues that cause connections to cut through other areas
+    - Uses more accurate description of areas in connection point selection
+    - Uses the same `ConnectionPointSelector` used to determine points to connect for determining the distance between two areas; thus allowing more control over how distance is calculated.
+
+### Fixed
+- Incorrect nullable annotation for `Map.GoRogueComponents` (#219)
+- `DungeonMazeGeneration` returning rooms with unrecorded doors (#217)

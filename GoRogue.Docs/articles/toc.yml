@@ -6,5 +6,10 @@
   href: 2-to-3-upgrade-guide.md
 - name: 1.x to 2.0 Upgrade Guide
   href: 1-to-2-upgrade-guide.md
-- name: Map Generation System
-  href: map-generation.md
+- name: How-Tos
+  href: howtos/index.md
+  items:
+      - name: Using Dice Notation
+        href: howtos/dice-notation.md
+      - name: Using Map Generation
+        href: howtos/map-generation.md

@@ -49,11 +49,21 @@ namespace GoRogue.Components
         public event EventHandler<ComponentChangedEventArgs>? ComponentRemoved;
 
         /// <summary>
+        /// Number of components attached.
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
         /// Adds the given object to the collection.  Throws ArgumentException if the specific instance has already
         /// been added.
         /// </summary>
         /// <param name="component">Component to add.</param>
         void Add<T>(T component) where T : class;
+
+        /// <summary>
+        /// Removes all components from the collection.
+        /// </summary>
+        void Clear();
 
         /// <summary>
         /// Gets the component of type T in the collection that has the lowest <see cref="ISortedComponent.SortOrder"/>.

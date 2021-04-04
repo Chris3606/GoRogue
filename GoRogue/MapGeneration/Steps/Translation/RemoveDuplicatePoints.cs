@@ -78,7 +78,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
             // Cache all positions in any area of area1List
             var areaList1Positions = new HashSet<Point>();
             foreach (var area in areaList1.Items)
-                foreach (var point in area.Positions)
+                foreach (var point in area)
                     areaList1Positions.Add(point);
 
             // Remove any position in second list's areas that is already in the first

@@ -445,3 +445,107 @@ namespace GoRogue
         }
     }
 }
+
+namespace SadRogue.Primitives
+{
+    /// <summary>
+    /// A series of useful extension methods for classes in the primitives library.
+    /// </summary>
+    [PublicAPI]
+    public static class PrimitivesExtensions
+    {
+        /// <summary>
+        /// Extension method that selects and returns a random valid index of a position in the Area, using the
+        /// rng specified. -1 is returned if the area is empty.
+        /// </summary>
+        /// <param name="area" />
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
+        /// <returns>The index selected.</returns>
+        public static int RandomIndex(this IReadOnlyArea area, IGenerator? rng = null)
+        {
+            rng ??= GlobalRandom.DefaultRNG;
+
+            if (area.Count == 0)
+                return -1;
+
+            return rng.Next(area.Count);
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random valid index fpr some position in the Area for which
+        /// the selector function given returns true, using the rng specified. Indices are repeatedly
+        /// selected until a qualifying index is found. -1 is returned if the area is empty.
+        /// </summary>
+        /// <param name="area" />
+        /// <param name="selector">
+        /// Function that returns true if the given index is valid selection, false otherwise.
+        /// </param>
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
+        /// <returns>Index selected.</returns>
+        public static int RandomIndex(this IReadOnlyArea area, Func<int, bool> selector, IGenerator? rng = null)
+        {
+            rng ??= GlobalRandom.DefaultRNG;
+
+            if (area.Count == 0)
+                return -1;
+
+            var index = rng.Next(area.Count);
+            while (!selector(index))
+                index = rng.Next(area.Count);
+
+            return index;
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random position from the Area, using the rng
+        /// specified. An exception is thrown if the area is empty.
+        /// </summary>
+        /// <param name="area" />
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
+        /// <returns>Item selected.</returns>
+        public static Point RandomItem(this IReadOnlyArea area, IGenerator? rng = null)
+        {
+            rng ??= GlobalRandom.DefaultRNG;
+
+            if (area.Count == 0)
+                throw new ArgumentException("Cannot select random item from empty area.", nameof(area));
+
+            return area[rng.Next(area.Count)];
+        }
+
+        /// <summary>
+        /// Extension method that selects and returns a random position from the list for which the given
+        /// selector returns true, using the rng specified. Items are repeatedly selected until a
+        /// qualifying item is found. default(T) is returned if the list is empty.
+        /// </summary>
+        /// <param name="area" />
+        /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
+        /// <param name="rng">
+        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
+        /// to be used.
+        /// </param>
+        /// <returns>Item selected.</returns>
+        public static Point RandomItem(this IReadOnlyArea area, Func<Point, bool> selector, IGenerator? rng = null)
+        {
+            rng ??= GlobalRandom.DefaultRNG;
+
+            if (area.Count == 0)
+                throw new ArgumentException("Cannot select random item from empty area.", nameof(area));
+
+            var item = area[rng.Next(area.Count)];
+            while (!selector(item))
+                item = area[rng.Next(area.Count)];
+
+            return item;
+        }
+    }
+}

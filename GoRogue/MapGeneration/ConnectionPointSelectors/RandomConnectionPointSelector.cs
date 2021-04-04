@@ -22,6 +22,6 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
 
         /// <inheritdoc />
         public AreaConnectionPointPair SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2)
-            => new AreaConnectionPointPair(area1.Positions.RandomItem(_rng), area2.Positions.RandomItem(_rng));
+            => new AreaConnectionPointPair(area1.RandomItem(_rng), area2.RandomItem(_rng));
     }
 }

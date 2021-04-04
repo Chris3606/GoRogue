@@ -198,6 +198,10 @@ namespace GoRogue.MapGeneration.Steps
                 // we expand by one so we can store positions that are walls
                 var validPositions = new RectangleEdgePositionsList(room.Expand(1, 1));
 
+                foreach (var pos in room.Expand(1, 1).PerimeterPositions())
+                    if (wallFloor[pos])
+                        throw new RegenerateMapException("RoomDoorConnection was given rooms that already had doors.");
+
                 // For each side, add any valid carving positions
                 foreach (var side in AdjacencyRule.Cardinals.DirectionsOfNeighbors())
                     foreach (var sidePosition in room.PositionsOnSide(side))

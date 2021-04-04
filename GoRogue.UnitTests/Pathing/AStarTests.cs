@@ -42,8 +42,10 @@ namespace GoRogue.UnitTests.Pathing
         {
             MockMaps.Rectangle(50, 35),
             new Generator(50, 35)
-                .AddSteps(DefaultAlgorithms.DungeonMazeMapSteps())
-                .Generate()
+                .ConfigAndGenerateSafe(gen =>
+                {
+                    gen.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps());
+                })
                 .Context.GetFirstOrDefault<IGridView<bool>>() ?? throw new InvalidOperationException("Null map."),
         };
 

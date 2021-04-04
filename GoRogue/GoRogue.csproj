@@ -2,34 +2,35 @@
   <PropertyGroup>
     <!-- Basic package info -->
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0</TargetFrameworks>
-	  <RootNamespace>GoRogue</RootNamespace>
-	  <Authors>Chris3606</Authors>
-	  <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
-	  <Description>Roguelike/2D game utility library.</Description>
+	<RootNamespace>GoRogue</RootNamespace>
+	<Authors>Chris3606</Authors>
+	<Copyright>Copyright © 2021 Christopher Ridley (Chris3606)</Copyright>
+	<Description>Roguelike/2D game utility library.</Description>
 
     <!--
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha01</Version>
+    <Version>3.0.0-alpha02</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
-	  <!-- More nuget package settings-->
+	<!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	  <PackageReleaseNotes>BREAKING CHANGES!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.</PackageReleaseNotes>
-	  <RepositoryUrl>https://github.com/Chris3606/GoRogue</RepositoryUrl>
-	  <RepositoryType>git</RepositoryType>
-	  <PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha02---2021-04-04.</PackageReleaseNotes>
+	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
-	  <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageTags>roguelike;roguelikes;rogue;library;2d;game;games</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-	  <!-- Enable C# 8.0 and its nullable reference feature -->
+	<!-- Enable C# 8.0 and its nullable reference feature -->
     <LangVersion>8.0</LangVersion>
-	  <Nullable>enable</Nullable>
+	<Nullable>enable</Nullable>
 
     <!--
     Warnings disabled project-wide:
@@ -39,7 +40,7 @@
         - CA1710: Suffix of IEnumerable implementations containing collection does not make sense for GoRogue
                   structures; example: Region => PointCollection??  What would Area be?  This convention only makes
                   sense for standard library, generic data structures/additions
-        - CA1305: Format providers are not used in string exception messages (again to avoid potentiall generating an
+        - CA1305: Format providers are not used in string exception messages (again to avoid potentially generating an
                   exception inside an exception).
         - CA1051: Microsoft guidance on preferring readonly fields to get-only properties to avoid defensive copies
                   when it comes to structs directly contradicts this warning.  Instance fields are necessary for maximum
@@ -75,7 +76,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
@@ -84,7 +85,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0-alpha8" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.0.0" />
     <PackageReference Include="Troschuetz.Random" Version="5.0.1" />
   </ItemGroup>
 

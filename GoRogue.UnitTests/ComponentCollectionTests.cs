@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using GoRogue.Components;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
@@ -73,7 +72,7 @@ namespace GoRogue.UnitTests
                 { new Component2(), "TaggedComponent" }
             };
 
-            Assert.Equal(3, container.Count());
+            Assert.Equal(3, container.Count);
             Assert.NotNull(container.GetFirstOrDefault<Component2>("TaggedComponent"));
         }
 

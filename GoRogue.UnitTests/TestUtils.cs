@@ -14,6 +14,11 @@ namespace GoRogue.UnitTests
     /// </summary>
     public static class TestUtils
     {
+        /// <summary>
+        /// Asserts that the value is not null in such a way that the nullable reference type control flow
+        /// analyzer understands that the object cannot be null after this function is called.
+        /// </summary>
+        /// <param name="obj">Object check for null</param>
         public static void NotNull([NotNull]object? obj)
         {
             Assert.NotNull(obj);
@@ -23,14 +28,15 @@ namespace GoRogue.UnitTests
         }
 
         /// <summary>
-        /// Returns the object as a single-element enumerable.
+        /// Checks that the two IMatchable implementations given match according to the match function.
         /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="obj" />
-        /// <returns>The given object as a single-element IEnumerable</returns>
-        public static IEnumerable<T> ToEnumerable<T>(this T obj)
+        /// <param name="m1"/>
+        /// <param name="m2"/>
+        /// <typeparam name="T">True if the given IMatchable implementations match, false otherwise.</typeparam>
+        public static void Matches<T>(T m1, T m2)
+            where T : IMatchable<T>
         {
-            yield return obj;
+            Assert.True(m1.Matches(m2));
         }
 
         /// <summary>
@@ -126,6 +132,19 @@ namespace GoRogue.UnitTests
         /// Input values to have within the resulting enumerable.
         /// <returns>An enumerable containing all the input parameters, in order.</returns>
         public static IEnumerable<T> Enumerable<T>(params T[] objs) => objs;
+
+        /// <summary>
+        /// Flattens an enumerable of enumerables into a single enumerable.
+        /// </summary>
+        /// <param name="self"/>
+        /// <typeparam name="T">Type of item in the lists.</typeparam>
+        /// <returns>A enumerable with all (flattened) values.</returns>
+        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> self)
+        {
+            foreach (var enumerable in self)
+                foreach (var item in enumerable)
+                    yield return item;
+        }
 
         /// <summary>
         /// Gets all enum values from an enum.

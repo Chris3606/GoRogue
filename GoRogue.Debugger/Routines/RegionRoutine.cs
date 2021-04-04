@@ -124,10 +124,10 @@ namespace GoRogue.Debugger.Routines
         {
             foreach (var region in _transformedRegions)
             {
-                foreach (var point in region.InnerPoints.Positions.Where(point => _map.Contains(point)))
+                foreach (var point in region.InnerPoints.Where(point => _map.Contains(point)))
                     _map[point] = TileState.InnerRegionPoint;
 
-                foreach (var point in region.OuterPoints.Positions.Where(point => _map.Contains(point)))
+                foreach (var point in region.OuterPoints.Where(point => _map.Contains(point)))
                     _map[point] = TileState.OuterRegionPoint;
             }
         }

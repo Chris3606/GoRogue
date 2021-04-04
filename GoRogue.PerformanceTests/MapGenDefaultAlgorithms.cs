@@ -26,9 +26,11 @@ namespace GoRogue.PerformanceTests
         public GenerationContext DungeonMazeMap()
         {
             var generator = new Generator(MapSize.width, MapSize.height);
-            generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps());
+            generator.ConfigAndGenerateSafe(gen =>
+            {
+                gen.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps());
+            });
 
-            generator.Generate();
             return generator.Context;
         }
     }

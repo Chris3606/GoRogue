@@ -85,8 +85,10 @@ namespace GoRogue.UnitTests
             var rng = new XorShift128Generator(12345);
 
             var generator = new Generator(40, 30);
-            generator.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng, saveDeadEndChance: 10));
-            generator.Generate();
+            generator.ConfigAndGenerateSafe(gen =>
+            {
+                gen.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps(rng, saveDeadEndChance: 10));
+            });
 
             var wallFloorMap = generator.Context.GetFirstOrDefault<ISettableGridView<bool>>("WallFloor");
             Assert.NotNull(wallFloorMap);
