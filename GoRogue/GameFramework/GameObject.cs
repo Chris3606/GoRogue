@@ -56,13 +56,13 @@ namespace GoRogue.GameFramework
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See
         /// the constructor remarks for details.
         /// </param>
-        /// <param name="customComponentContainer">
-        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
+        /// <param name="customComponentCollection">
+        /// A custom component collection to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
         /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
         /// use cases.
         /// </param>
         public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
-                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentContainer = null)
+                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentCollection = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -74,7 +74,7 @@ namespace GoRogue.GameFramework
             CurrentMap = null;
 
             ID = idGenerator();
-            GoRogueComponents = customComponentContainer ?? new ComponentCollection();
+            GoRogueComponents = customComponentCollection ?? new ComponentCollection();
             GoRogueComponents.ComponentAdded += On_ComponentAdded;
             GoRogueComponents.ComponentRemoved += On_ComponentRemoved;
         }
