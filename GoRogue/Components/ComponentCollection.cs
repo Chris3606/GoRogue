@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 
 namespace GoRogue.Components
@@ -38,6 +39,9 @@ namespace GoRogue.Components
     /// It is worthy of note that, when given as a tag parameter, "null" is used to mean "no particular tag", rather
     /// than "no tag whatsoever"; a call to a function that retrieves components that is given a tag of "null" can
     /// retrieve any component meeting the type restrictions, regardless of whether it is associated with a tag.
+    ///
+    /// Finally, if components implementing <see cref="IParentAwareComponent"/> are added/removed, their parent field
+    /// will be automatically updated as needed.
     /// </remarks>
     [PublicAPI]
     [DataContract]
@@ -55,22 +59,65 @@ namespace GoRogue.Components
         /// <inheritdoc/>
         public int Count => _componentsToTags.Count;
 
+        private IObjectWithComponents? _parentForAddedComponents;
+
+        /// <inheritdoc/>
+        public IObjectWithComponents? ParentForAddedComponents
+        {
+            get => _parentForAddedComponents;
+            set
+            {
+                // Value hasn't changed so nothing to do
+                if (_parentForAddedComponents == value)
+                    return;
+
+                // Remove all components in that collection from their current object since they're being re-parented
+                foreach (var (component, _) in _componentsToTags)
+                {
+                    if (component is IParentAwareComponent c)
+                        c.Parent = null;
+                }
+
+                // Change parent value
+                _parentForAddedComponents = value;
+
+                // "Add" components on the collection to the new object
+                foreach (var (component, _) in _componentsToTags)
+                {
+                    if (component is IParentAwareComponent c)
+                        c.Parent = _parentForAddedComponents;
+                }
+            }
+        }
+
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ComponentCollection()
+        /// <param name="parentForAddedComponents">
+        /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
+        /// added to the collection.  If null is specified, nothing is set to the Parent field.
+        /// </param>
+        public ComponentCollection(IObjectWithComponents? parentForAddedComponents = null)
         {
             _components = new Dictionary<Type, List<object>>();
             _componentsToTags = new Dictionary<object, string?>(new ReferenceEqualityComparer());
             _tagsToComponents = new Dictionary<string, object>();
+            _parentForAddedComponents = parentForAddedComponents;
+
+            ComponentAdded += On_ComponentAdded;
+            ComponentRemoved += On_ComponentRemoved;
         }
 
         /// <summary>
         /// Constructor taking a set of starting components.
         /// </summary>
         /// <param name="objects">Components to initially add.</param>
-        public ComponentCollection(IEnumerable<object> objects)
-            : this()
+        /// <param name="parentForAddedComponents">
+        /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
+        /// added to the collection.  If null is specified, nothing is set to the Parent field.
+        /// </param>
+        public ComponentCollection(IEnumerable<object> objects, IObjectWithComponents? parentForAddedComponents = null)
+            : this(parentForAddedComponents)
         {
             foreach (var obj in objects)
             {
@@ -87,7 +134,22 @@ namespace GoRogue.Components
         /// </summary>
         /// <param name="objectsAndTags">Components to initially add and their corresponding tags.</param>
         public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags)
-            : this()
+            // Warning disabled because this explicit constructor is required for serialization
+            // ReSharper disable once IntroduceOptionalParameters.Global
+            : this(objectsAndTags, null)
+        {
+        }
+
+        /// <summary>
+        /// Constructor taking a set of starting components and their associated tags.
+        /// </summary>
+        /// <param name="objectsAndTags">Components to initially add and their corresponding tags.</param>
+        /// <param name="parentForAddedComponents">
+        /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
+        /// added to the collection.  If null is specified, nothing is set to the Parent field.
+        /// </param>
+        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags, IObjectWithComponents? parentForAddedComponents)
+            : this(parentForAddedComponents)
         {
             foreach (var (component, tag) in objectsAndTags)
             {
@@ -99,7 +161,6 @@ namespace GoRogue.Components
                 Add(component, tag);
             }
         }
-
 
         /// <inheritdoc />
         public event EventHandler<ComponentChangedEventArgs>? ComponentAdded;
@@ -335,5 +396,25 @@ namespace GoRogue.Components
         /// </summary>
         /// <returns/>
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        #region Parent-Aware Component Handlers
+        private void On_ComponentAdded(object? s, ComponentChangedEventArgs e)
+        {
+            if (!(e.Component is IParentAwareComponent c))
+                return;
+
+            if (c.Parent != null)
+                throw new ArgumentException(
+                    $"Components implementing {nameof(IParentAwareComponent)} cannot be added to multiple objects at once.");
+
+            c.Parent = _parentForAddedComponents;
+        }
+
+        private void On_ComponentRemoved(object? s, ComponentChangedEventArgs e)
+        {
+            if (e.Component is IParentAwareComponent c)
+                c.Parent = null;
+        }
+        #endregion
     }
 }

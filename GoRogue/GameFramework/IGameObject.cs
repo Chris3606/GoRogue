@@ -1,5 +1,6 @@
 ﻿using System;
 using GoRogue.Components;
+using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -44,7 +45,8 @@ namespace GoRogue.GameFramework
     /// <summary>
     /// Base interface required for any object that has a grid position and can be added to a <see cref="Map" />.
     /// Implements basic attributes generally common to all objects on a map, as well as properties/methods that
-    /// <see cref="Map"/> needs to function.  It also provides a container that you may attach arbitrary components to.
+    /// <see cref="Map"/> needs to function.  It also provides a container that you may attach arbitrary components to
+    /// (via the <see cref="IObjectWithTaggableComponents"/> interface).
     ///
     /// For a concrete implementation, see <see cref="GameObject"/>.
     /// </summary>
@@ -53,9 +55,16 @@ namespace GoRogue.GameFramework
     /// the need to avoid inheritance or change that implementation arises, please note that the interface contains
     /// events that you must fire appropriately when the corresponding property implementations are changed.
     /// GoRogue defines helper methods for this; it is recommended that you use GameObject as an example.
+    ///
+    /// Regardless of what implementation is used, however, if <see cref="ComponentCollection"/> (or some other custom
+    /// collection implementing the proper functionality) is used, this object provides support for its components to
+    /// (optionally) implement <see cref="IParentAwareComponent"/>, or inherit from <see cref="ParentAwareComponentBase"/>.
+    /// In this case, the <see cref="IParentAwareComponent.Parent"/> will be updated automatically as components are added/
+    /// removed.  Typically, you will want to inherit your components from <see cref="ParentAwareComponentBase{TParent}"/>,
+    /// where TParent would be IGameObject or some class implementing that interface.
     /// </remarks>
     [PublicAPI]
-    public interface IGameObject : IHasID, IHasLayer
+    public interface IGameObject : IHasID, IHasLayer, IObjectWithTaggableComponents
     {
         /// <summary>
         /// The current <see cref="Map" /> which this object resides on.  Returns null if the object has not been added to a map.
@@ -73,11 +82,6 @@ namespace GoRogue.GameFramework
         /// Fired when <see cref="IsTransparent"/> is changed.
         /// </summary>
         public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
-
-        /// <summary>
-        /// Container holding components that have been attached to this object.
-        /// </summary>
-        public ITaggableComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
