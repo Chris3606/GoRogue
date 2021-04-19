@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
+using GoRogue.Components.ParentAware;
 using GoRogue.Pathing;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
@@ -14,7 +15,8 @@ namespace GoRogue.GameFramework
     /// Base class for a map that consists of one or more objects of base type <see cref="IGameObject" />.  It
     /// implements basic functionality to manage and access these objects, as well as commonly needed functionality like
     /// tile exploration, FOV, and pathfinding.  It also provides methods to easily access these objects as instances of
-    /// some derived type.  This can be used to easily access functionality you've implemented in a subclass.
+    /// some derived type.  This can be used to easily access functionality you've implemented in a subclass.  Finally,
+    /// it provides the ability to attach components to the map.
     /// </summary>
     /// <remarks>
     /// A Map consists of <see cref="IGameObject" /> instances on one or more layers.  These layers are numbered, from
@@ -25,9 +27,16 @@ namespace GoRogue.GameFramework
     /// A map will typically also have some other layers, for non-terrain objects like monsters, items, etc.  The number
     /// of these layers present on the map, along with which of all the layers participate in collision detection, etc.,
     /// can be specified in the constructor.
+    ///
+    /// If <see cref="ComponentCollection"/> (or some other custom collection implementing the proper functionality) is
+    /// used, as the component collection, this object provides support for its components to (optionally) implement
+    /// <see cref="IParentAwareComponent"/>, or inherit from <see cref="ParentAwareComponentBase"/>.
+    /// In this case, the <see cref="IParentAwareComponent.Parent"/> will be updated automatically as components are added/
+    /// removed.  Typically, you will want to inherit your components from <see cref="ParentAwareComponentBase{TParent}"/>,
+    /// where TParent would be Map or some class inheriting from it.
     /// </remarks>
     [PublicAPI]
-    public class Map : GridViewBase<IEnumerable<IGameObject>>
+    public class Map : GridViewBase<IEnumerable<IGameObject>>, IObjectWithTaggableComponents
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
         private readonly ISettableGridView<IGameObject?> _terrain;
@@ -53,9 +62,7 @@ namespace GoRogue.GameFramework
             }
         }
 
-        /// <summary>
-        /// Container holding components that have been attached to this object.
-        /// </summary>
+        /// <inheritdoc/>
         public ITaggableComponentCollection GoRogueComponents { get; }
 
         /// <summary>
@@ -96,7 +103,7 @@ namespace GoRogue.GameFramework
         /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
         /// on the <see cref="Distance" /> passed to the Map in the constructor.
         /// </param>
-        /// <param name="customComponentContainer">
+        /// <param name="customComponentCollection">
         /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
         /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
         /// ComponentCollection is sufficient for nearly all use cases.
@@ -107,10 +114,10 @@ namespace GoRogue.GameFramework
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
                    FOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   ITaggableComponentCollection? customComponentContainer = null)
+                   ITaggableComponentCollection? customComponentCollection = null)
             : this(new ArrayView<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
                 layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
-                customPlayerFOV, customPather, customComponentContainer)
+                customPlayerFOV, customPather, customComponentCollection)
         { }
 
         /// <summary>
@@ -157,7 +164,7 @@ namespace GoRogue.GameFramework
         /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
         /// on the <see cref="Distance" /> passed to the Map in the constructor.
         /// </param>
-        /// <param name="customComponentContainer">
+        /// <param name="customComponentCollection">
         /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
         /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
         /// ComponentCollection is sufficient for nearly all use cases.
@@ -168,7 +175,7 @@ namespace GoRogue.GameFramework
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
                    FOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   ITaggableComponentCollection? customComponentContainer = null)
+                   ITaggableComponentCollection? customComponentCollection = null)
         {
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
@@ -196,7 +203,8 @@ namespace GoRogue.GameFramework
 
             AStar = customPather ?? new AStar(WalkabilityView, distanceMeasurement);
 
-            GoRogueComponents = customComponentContainer ?? new ComponentCollection();
+            GoRogueComponents = customComponentCollection ?? new ComponentCollection();
+            GoRogueComponents.ParentForAddedComponents = this;
         }
 
         /// <summary>
@@ -539,9 +547,9 @@ namespace GoRogue.GameFramework
         /// take a translation function.
         /// </remarks>
         /// <param name="overlay">
-        /// _grid view specifying the terrain apply to the map. Must have identical dimensions to the current map.
+        /// Grid view specifying the terrain apply to the map. Must have identical dimensions to the current map.
         /// </param>
-        public void ApplyTerrainOverlay(IGridView<IGameObject> overlay)
+        public void ApplyTerrainOverlay(IGridView<IGameObject?> overlay)
         {
             if (Height != overlay.Height || Width != overlay.Width)
                 throw new ArgumentException("Overlay size must match current map size.");
