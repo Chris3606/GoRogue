@@ -92,5 +92,47 @@ namespace GoRogue.GameFramework
                 throw;
             }
         }
+
+        /// <summary>
+        /// Sets the given map field to the given value, and fires the AddedToMap event and RemovedFromMap
+        /// event as necessary.
+        /// </summary>
+        /// <remarks>
+        /// This is a convenience function to set the backing field for <see cref="IGameObject.CurrentMap"/>
+        /// correctly, ensuring exceptions are handled and that events are fired properly.  Generally, this should
+        /// only be called from within an implementation of <see cref="IGameObject.OnMapChanged"/>.
+        ///
+        /// See the implementation of <see cref="GameObject.OnMapChanged"/> for an example of intended use.
+        /// </remarks>
+        /// <param name="self" />
+        /// <param name="currentMapField">Map field to set.</param>
+        /// <param name="newValue">New value to set to the map field.</param>
+        /// <param name="addedEvent">The <see cref="IGameObject.AddedToMap"/> event for the object whose map is being changed.</param>
+        /// <param name="removedEvent">The <see cref="IGameObject.RemovedFromMap"/> event for the object whose map is being changed.</param>
+        public static void SafelySetCurrentMap(this IGameObject self, ref Map? currentMapField, Map? newValue,
+            EventHandler<GameObjectCurrentMapChanged>? addedEvent, EventHandler<GameObjectCurrentMapChanged>? removedEvent)
+        {
+            // Nothing to do; the map hasn't changed
+            if (ReferenceEquals(currentMapField, newValue))
+                return;
+
+            // Set new value and fire events as needed
+            var oldValue = currentMapField;
+            currentMapField = newValue;
+            try
+            {
+                if (oldValue != null)
+                    removedEvent?.Invoke(self, new GameObjectCurrentMapChanged(oldValue));
+
+                if (newValue != null)
+                    addedEvent?.Invoke(self, new GameObjectCurrentMapChanged(newValue));
+            }
+            catch (InvalidOperationException)
+            {
+                // If exception, preserve old value for future
+                currentMapField = oldValue;
+                throw;
+            }
+        }
     }
 }

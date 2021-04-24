@@ -43,6 +43,28 @@ namespace GoRogue.GameFramework
     }
 
     /// <summary>
+    /// Event arguments for events fired when an <see cref="IGameObject"/> is added
+    /// to/removed from a <see cref="Map"/>.
+    /// </summary>
+    [PublicAPI]
+    public class GameObjectCurrentMapChanged : EventArgs
+    {
+        /// <summary>
+        /// The map that the object was added to/removed from.
+        /// </summary>
+        public readonly Map Map;
+
+        /// <summary>
+        /// Creates a new argument for events.
+        /// </summary>
+        /// <param name="map">Map the object was added to/removed from.</param>
+        public GameObjectCurrentMapChanged(Map map)
+        {
+            Map = map;
+        }
+    }
+
+    /// <summary>
     /// Base interface required for any object that has a grid position and can be added to a <see cref="Map" />.
     /// Implements basic attributes generally common to all objects on a map, as well as properties/methods that
     /// <see cref="Map"/> needs to function.  It also provides a container that you may attach arbitrary components to
@@ -71,6 +93,16 @@ namespace GoRogue.GameFramework
         /// An IGameObject is allowed to reside on only one map.
         /// </summary>
         Map? CurrentMap { get; }
+
+        /// <summary>
+        /// Fired when the object is added to a map.
+        /// </summary>
+        public event EventHandler<GameObjectCurrentMapChanged>? AddedToMap;
+
+        /// <summary>
+        /// Fired when the object is removed from a map.
+        /// </summary>
+        public event EventHandler<GameObjectCurrentMapChanged>? RemovedFromMap;
 
         /// <summary>
         /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
@@ -108,8 +140,9 @@ namespace GoRogue.GameFramework
         event EventHandler<GameObjectPropertyChanged<Point>>? Moved;
 
         /// <summary>
-        /// Internal use only, do not call manually!  Must, at minimum, update the <see cref="CurrentMap" /> field of the
-        /// IGameObject to reflect the change.
+        /// Internal use only, do not call manually!  Must, at minimum, call <see cref="GameObjectExtensions.SafelySetCurrentMap"/>
+        /// which will update the <see cref="CurrentMap" /> field of the IGameObject to reflect the change and fire map
+        /// added/removed events as appropriate (or provide equivalent functionality).
         /// </summary>
         /// <param name="newMap">New map to which the IGameObject has been added.</param>
         void OnMapChanged(Map? newMap);
