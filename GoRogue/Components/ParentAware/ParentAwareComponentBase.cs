@@ -75,11 +75,11 @@ namespace GoRogue.Components.ParentAware
         /// <typeparam name="TComponent">Type of the component this one is incompatible with.</typeparam>
         /// <param name="s"/>
         /// <param name="e"/>
-        public void IncompatibleWith<TComponent>(object s, EventArgs e)
+        public void IncompatibleWith<TComponent>(object? s, EventArgs e)
             where TComponent : class
         {
             if (Parent!.GoRogueComponents.GetAll<TComponent>().Any(i => !ReferenceEquals(this, i)))
-                throw new Exception($"{s.GetType().Name} components are marked as incompatible with {typeof(TComponent).Name} components, so the component couldn't be added.");
+                throw new Exception($"{GetType().Name} components are marked as incompatible with {typeof(TComponent).Name} components, so the component couldn't be added.");
         }
     }
 

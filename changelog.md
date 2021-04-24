@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - `ComponentCollection` now handles parent-aware components intrinsically (meaning `IGameObject` implementations don't need to worry about it anymore)
 
+### Fixed
+- `ParentAwareComponentBase.IncompatibleWith` component restriction now has proper nullability on parameter types to be compatible with the `ParentAwareComponentBase.Added` event
+
 ### Removed
 - Removed `GameFramework.IGameObjectComponent` interface (replaced with `IParentAwareComponent` and/or `ParentAwareComponentBase<T>`
 - Removed `GameFramework.ComponentBase` and `GameFramework.ComponentBase<T>` class (replaced) with `ParentAwareComponentBase` and `ParentAwareComponentBase<T>`
