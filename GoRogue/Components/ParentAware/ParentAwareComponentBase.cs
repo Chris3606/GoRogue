@@ -2,16 +2,16 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace GoRogue.GameFramework.Components
+namespace GoRogue.Components.ParentAware
 {
     /// <summary>
-    /// Simple (and optional) base class for components attached to a <see cref="GameObject"/> or other
-    /// <see cref="IGameObject"/> implementation that supports <see cref="IGameObjectComponent"/>.  Adds useful events
-    /// and some helper functions to allow performing type-checking of parent, or requiring that the object it's
-    /// attached to has or does not have certain types of components.
+    /// Simple (and optional) base class for components attached to a class implementing
+    /// <see cref="IObjectWithComponents"/>.  Adds useful events and some helper functions to allow performing
+    /// type-checking of parent, or requiring that the object it's attached to has or does not have certain types of
+    /// components.
     /// </summary>
     [PublicAPI]
-    public class ComponentBase : IGameObjectComponent
+    public class ParentAwareComponentBase : IParentAwareComponent
     {
         /// <summary>
         /// Fires when the component is attached to an object.
@@ -23,11 +23,11 @@ namespace GoRogue.GameFramework.Components
         /// </summary>
         public event EventHandler? Removed;
 
-        private IGameObject? _parent;
+        private IObjectWithComponents? _parent;
         /// <summary>
         /// The object the component is attached to.
         /// </summary>
-        public virtual IGameObject? Parent
+        public virtual IObjectWithComponents? Parent
         {
             get => _parent;
             set
@@ -38,8 +38,8 @@ namespace GoRogue.GameFramework.Components
                     Removed?.Invoke(this, EventArgs.Empty);
                 }
                 else if (_parent != null)
-                    throw new Exception($"{nameof(ComponentBase)} components inherit from " +
-                                        $"{nameof(IGameObjectComponent)}, so they can't be attached to multiple " +
+                    throw new Exception($"{nameof(ParentAwareComponentBase)} components inherit from " +
+                                        $"{nameof(IParentAwareComponent)}, so they can't be attached to multiple " +
                                         "objects simultaneously.");
 
                 _parent = value;
@@ -57,7 +57,7 @@ namespace GoRogue.GameFramework.Components
         public static void ParentTypeCheck<TParent>(object? s, EventArgs e)
         {
             // Null override because we control when these events are sent
-            var componentBase = (ComponentBase)s!;
+            var componentBase = (ParentAwareComponentBase)s!;
             if (componentBase.Parent is TParent)
                 return;
 
@@ -75,23 +75,23 @@ namespace GoRogue.GameFramework.Components
         /// <typeparam name="TComponent">Type of the component this one is incompatible with.</typeparam>
         /// <param name="s"/>
         /// <param name="e"/>
-        public void IncompatibleWith<TComponent>(object s, EventArgs e)
+        public void IncompatibleWith<TComponent>(object? s, EventArgs e)
             where TComponent : class
         {
             if (Parent!.GoRogueComponents.GetAll<TComponent>().Any(i => !ReferenceEquals(this, i)))
-                throw new Exception($"{s.GetType().Name} components are marked as incompatible with {typeof(TComponent).Name} components, so the component couldn't be added.");
+                throw new Exception($"{GetType().Name} components are marked as incompatible with {typeof(TComponent).Name} components, so the component couldn't be added.");
         }
     }
 
     /// <summary>
-    /// Optional base class for components attached to a <see cref="GameObject"/> or other <see cref="IGameObject"/>
-    /// implementation that supports <see cref="IGameObjectComponent"/>.  Adds all functionality of
-    /// <see cref="ComponentBase"/>, and additionally type-checks the object it's attached to to make sure it is of the
-    /// given type.  It also exposes its <see cref="Parent"/> property as that type instead of IGameObject.
+    /// Optional base class for components attached to a a class implementing <see cref="IObjectWithComponents"/>.
+    /// Adds all functionality of <see cref="ParentAwareComponentBase"/>, and additionally type-checks the object it's
+    /// attached to to make sure it is of the given type.  It also exposes its <see cref="Parent"/> property as that type
+    /// instead of IObjectWithComponents.
     /// </summary>
     /// <typeparam name="TParent">Type of the component's parent.</typeparam>
     [PublicAPI]
-    public class ComponentBase<TParent> : ComponentBase where TParent : class, IGameObject
+    public class ParentAwareComponentBase<TParent> : ParentAwareComponentBase where TParent : class, IObjectWithComponents
     {
         /// <summary>
         /// The object the component is attached to.
@@ -106,6 +106,6 @@ namespace GoRogue.GameFramework.Components
         /// <summary>
         /// Constructor.
         /// </summary>
-        public ComponentBase() => Added += ParentTypeCheck<TParent>;
+        public ParentAwareComponentBase() => Added += ParentTypeCheck<TParent>;
     }
 }

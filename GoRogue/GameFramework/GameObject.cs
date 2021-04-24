@@ -1,6 +1,5 @@
 ﻿using System;
 using GoRogue.Components;
-using GoRogue.GameFramework.Components;
 using GoRogue.Random;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
@@ -9,19 +8,12 @@ using SadRogue.Primitives;
 namespace GoRogue.GameFramework
 {
     /// <summary>
-    /// Concrete implementation of <see cref="IGameObject"/> that works for most use cases.  In addition to the
-    /// functionality guaranteed by IGameObject, it also defines some support for some additional functionality for
-    /// components.
+    /// Concrete implementation of <see cref="IGameObject"/> that works for most use cases.
     /// </summary>
     /// <remarks>
     /// Any component collection implementing the proper interface may be passed in at construction and used as the
     /// <see cref="GoRogueComponents"/> property value, however by default a <see cref="ComponentCollection"/> is used,
     /// and thus will accept components of any type and will properly support <see cref="ISortedComponent"/>.
-    ///
-    /// Regardless of what implementation is used, however, this object provides support for its components to
-    /// (optionally) implement <see cref="IGameObjectComponent"/>.  This interface has a
-    /// <see cref="IGameObjectComponent.Parent"/> property, which will automatically be updated to be set to the game
-    /// object that the component has been added to as it is added or removed.
     /// </remarks>
     [PublicAPI]
     public class GameObject : IGameObject
@@ -56,13 +48,13 @@ namespace GoRogue.GameFramework
         /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See
         /// the constructor remarks for details.
         /// </param>
-        /// <param name="customComponentContainer">
-        /// A custom component container to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
+        /// <param name="customComponentCollection">
+        /// A custom component collection to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
         /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
         /// use cases.
         /// </param>
         public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
-                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentContainer = null)
+                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentCollection = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -74,9 +66,8 @@ namespace GoRogue.GameFramework
             CurrentMap = null;
 
             ID = idGenerator();
-            GoRogueComponents = customComponentContainer ?? new ComponentCollection();
-            GoRogueComponents.ComponentAdded += On_ComponentAdded;
-            GoRogueComponents.ComponentRemoved += On_ComponentRemoved;
+            GoRogueComponents = customComponentCollection ?? new ComponentCollection();
+            GoRogueComponents.ParentForAddedComponents = this;
         }
 
         /// <inheritdoc />
@@ -128,25 +119,5 @@ namespace GoRogue.GameFramework
         {
             CurrentMap = newMap;
         }
-
-        #region Component Handlers
-        private void On_ComponentAdded(object? s, ComponentChangedEventArgs e)
-        {
-            if (!(e.Component is IGameObjectComponent c))
-                return;
-
-            if (c.Parent != null)
-                throw new ArgumentException(
-                    $"Components implementing {nameof(IGameObjectComponent)} cannot be added to multiple objects at once.");
-
-            c.Parent = this;
-        }
-
-        private void On_ComponentRemoved(object? s, ComponentChangedEventArgs e)
-        {
-            if (e.Component is IGameObjectComponent c)
-                c.Parent = null;
-        }
-        #endregion
     }
 }
