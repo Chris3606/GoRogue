@@ -22,7 +22,7 @@ namespace GoRogue.Components
     public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<ComponentTagPair>
     {
         /// <inheritdoc />
-        void IBasicComponentCollection.Add<T>(T component) where T : class => Add(this);
+        void IBasicComponentCollection.Add<T>(T component) where T : class => Add(component);
 
         /// <inheritdoc />
         [return: MaybeNull]
