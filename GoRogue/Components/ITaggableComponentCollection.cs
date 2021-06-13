@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 
 namespace GoRogue.Components
@@ -21,6 +22,13 @@ namespace GoRogue.Components
     [PublicAPI]
     public interface ITaggableComponentCollection : IBasicComponentCollection, IEnumerable<ComponentTagPair>
     {
+        /// <summary>
+        /// Object automatically set as the parent for any <see cref="IParentAwareComponent"/> added to the collection.
+        /// Useful if you have components associated with an object.  This defaults to null, and if its value is null,
+        /// no parent is set when components are added.
+        /// </summary>
+        public IObjectWithTaggableComponents? ParentForAddedComponents { get; set; }
+
         /// <inheritdoc />
         void IBasicComponentCollection.Add<T>(T component) where T : class => Add(component);
 
