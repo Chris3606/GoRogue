@@ -9,7 +9,7 @@ namespace GoRogue.Components
 {
     /// <summary>
     /// A type of a component and the tag expected to be associated with a component of that type in a
-    /// <see cref="ITaggableComponentCollection"/> or map generation step.
+    /// <see cref="IComponentCollection"/> or map generation step.
     /// </summary>
     [DataContract]
     [PublicAPI]

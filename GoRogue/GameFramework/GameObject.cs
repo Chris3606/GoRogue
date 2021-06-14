@@ -54,7 +54,7 @@ namespace GoRogue.GameFramework
         /// use cases.
         /// </param>
         public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
-                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentCollection = null)
+                          Func<uint>? idGenerator = null, IComponentCollection? customComponentCollection = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -63,7 +63,7 @@ namespace GoRogue.GameFramework
             IsWalkable = isWalkable;
             IsTransparent = isTransparent;
 
-            CurrentMap = null;
+            _currentMap = null;
 
             ID = idGenerator();
             GoRogueComponents = customComponentCollection ?? new ComponentCollection();
@@ -108,16 +108,22 @@ namespace GoRogue.GameFramework
         /// <inheritdoc />
         public int Layer { get; }
 
-        /// <inheritdoc />
-        public Map? CurrentMap { get; private set; }
+        private Map? _currentMap;
 
         /// <inheritdoc />
-        public ITaggableComponentCollection GoRogueComponents { get; }
+        public Map? CurrentMap => _currentMap;
+
+        /// <inheritdoc />
+        public event EventHandler<GameObjectCurrentMapChanged>? AddedToMap;
+
+        /// <inheritdoc />
+        public event EventHandler<GameObjectCurrentMapChanged>? RemovedFromMap;
+
+        /// <inheritdoc />
+        public IComponentCollection GoRogueComponents { get; }
 
         /// <inheritdoc />
         public void OnMapChanged(Map? newMap)
-        {
-            CurrentMap = newMap;
-        }
+            => this.SafelySetCurrentMap(ref _currentMap, newMap, AddedToMap, RemovedFromMap);
     }
 }

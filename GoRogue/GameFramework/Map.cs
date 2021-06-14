@@ -36,7 +36,7 @@ namespace GoRogue.GameFramework
     /// where TParent would be Map or some class inheriting from it.
     /// </remarks>
     [PublicAPI]
-    public class Map : GridViewBase<IEnumerable<IGameObject>>, IObjectWithTaggableComponents
+    public class Map : GridViewBase<IEnumerable<IGameObject>>, IObjectWithComponents
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
         private readonly ISettableGridView<IGameObject?> _terrain;
@@ -63,7 +63,7 @@ namespace GoRogue.GameFramework
         }
 
         /// <inheritdoc/>
-        public ITaggableComponentCollection GoRogueComponents { get; }
+        public IComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Whether or not each tile is considered explored.  Tiles start off unexplored, and become explored as soon as
@@ -114,7 +114,7 @@ namespace GoRogue.GameFramework
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
                    FOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   ITaggableComponentCollection? customComponentCollection = null)
+                   IComponentCollection? customComponentCollection = null)
             : this(new ArrayView<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
                 layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
                 customPlayerFOV, customPather, customComponentCollection)
@@ -175,7 +175,7 @@ namespace GoRogue.GameFramework
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
                    FOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   ITaggableComponentCollection? customComponentCollection = null)
+                   IComponentCollection? customComponentCollection = null)
         {
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
@@ -356,7 +356,7 @@ namespace GoRogue.GameFramework
                                        uint layersBlockingTransparency = uint.MaxValue,
                                        uint entityLayersSupportingMultipleItems = uint.MaxValue,
                                        FOV? customPlayerFOV = null, AStar? customPather = null,
-                                       ITaggableComponentCollection? customComponentContainer = null)
+                                       IComponentCollection? customComponentContainer = null)
             where T : class, IGameObject
         {
             var terrainMap =

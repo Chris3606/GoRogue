@@ -16,6 +16,7 @@ namespace GoRogue.Components
 
         public int GetHashCode(object obj) => RuntimeHelpers.GetHashCode(obj);
     }
+
     /// <summary>
     /// A class implementing a flexible, type-based system for keeping track of components that are added to objects.
     /// A ComponentCollection can simply be added as a member of an object that needs components attached to it, then
@@ -45,7 +46,7 @@ namespace GoRogue.Components
     /// </remarks>
     [PublicAPI]
     [DataContract]
-    public class ComponentCollection : ITaggableComponentCollection
+    public class ComponentCollection : IComponentCollection
     {
         private readonly Dictionary<Type, List<object>> _components;
 

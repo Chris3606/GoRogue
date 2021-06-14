@@ -19,8 +19,8 @@ namespace GoRogue.Components.ParentAware
         /// </summary>
         /// <remarks>
         /// Should not be assigned to manually, outside of a custom implementation of
-        /// <see cref="IBasicComponentCollection"/> or <see cref="ITaggableComponentCollection"/>.  It is set
-        /// automatically when added/removed from an object's component collection.
+        /// <see cref="IComponentCollection"/>.  It is set automatically when added/removed from an object's
+        /// component collection.
         /// </remarks>
         public IObjectWithComponents? Parent { get; set; }
     }

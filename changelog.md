@@ -4,20 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+None
+
+## [3.0.0-alpha03] - 2021-06-13
 
 ### Added
 - `Map` now has parent-aware component support via an optional interface (similar to what GameObjects support)
 - Added generic parent-aware component structure (objects that are aware of what they are attached to) that can support arbitrary parent types instead of just `GameObject` instances.
+- Added events to `IGameObject` that must be fired when an object is added to/removed from a map (helper method provided)
 
 ### Changed
 - `ComponentCollection` now handles parent-aware components intrinsically (meaning `IGameObject` implementations don't need to worry about it anymore)
+- `IGameObject` implementations should now call `SafelySetCurrentMap` in their `OnMapChanged` implementation (as demonstrated in GoRogue's GameObject implementation) to safely fire all events
+- `ITaggableComponentCollection` has been effectively renamed to `IComponentCollection`
 
 ### Fixed
 - `ParentAwareComponentBase.IncompatibleWith` component restriction now has proper nullability on parameter types to be compatible with the `ParentAwareComponentBase.Added` event
 
 ### Removed
 - Removed `GameFramework.IGameObjectComponent` interface (replaced with `IParentAwareComponent` and/or `ParentAwareComponentBase<T>`
-- Removed `GameFramework.ComponentBase` and `GameFramework.ComponentBase<T>` class (replaced) with `ParentAwareComponentBase` and `ParentAwareComponentBase<T>`
+- Removed `GameFramework.ComponentBase` and `GameFramework.ComponentBase<T>` classes (replaced with `ParentAwareComponentBase` and `ParentAwareComponentBase<T>`)
+- Removed `IBasicComponentCollection` interface (contents merged into `IComponentCollection`)
 
 ## [3.0.0-alpha02] - 2021-04-04
 
