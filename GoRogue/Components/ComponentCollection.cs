@@ -16,6 +16,7 @@ namespace GoRogue.Components
 
         public int GetHashCode(object obj) => RuntimeHelpers.GetHashCode(obj);
     }
+
     /// <summary>
     /// A class implementing a flexible, type-based system for keeping track of components that are added to objects.
     /// A ComponentCollection can simply be added as a member of an object that needs components attached to it, then
@@ -45,7 +46,7 @@ namespace GoRogue.Components
     /// </remarks>
     [PublicAPI]
     [DataContract]
-    public class ComponentCollection : ITaggableComponentCollection
+    public class ComponentCollection : IComponentCollection
     {
         private readonly Dictionary<Type, List<object>> _components;
 
@@ -59,10 +60,10 @@ namespace GoRogue.Components
         /// <inheritdoc/>
         public int Count => _componentsToTags.Count;
 
-        private IObjectWithTaggableComponents? _parentForAddedComponents;
+        private IObjectWithComponents? _parentForAddedComponents;
 
         /// <inheritdoc/>
-        public IObjectWithTaggableComponents? ParentForAddedComponents
+        public IObjectWithComponents? ParentForAddedComponents
         {
             get => _parentForAddedComponents;
             set
@@ -97,7 +98,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IObjectWithTaggableComponents? parentForAddedComponents = null)
+        public ComponentCollection(IObjectWithComponents? parentForAddedComponents = null)
         {
             _components = new Dictionary<Type, List<object>>();
             _componentsToTags = new Dictionary<object, string?>(new ReferenceEqualityComparer());
@@ -116,7 +117,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IEnumerable<object> objects, IObjectWithTaggableComponents? parentForAddedComponents = null)
+        public ComponentCollection(IEnumerable<object> objects, IObjectWithComponents? parentForAddedComponents = null)
             : this(parentForAddedComponents)
         {
             foreach (var obj in objects)
@@ -148,7 +149,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags, IObjectWithTaggableComponents? parentForAddedComponents)
+        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags, IObjectWithComponents? parentForAddedComponents)
             : this(parentForAddedComponents)
         {
             foreach (var (component, tag) in objectsAndTags)

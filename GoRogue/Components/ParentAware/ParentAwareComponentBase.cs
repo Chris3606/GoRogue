@@ -6,7 +6,7 @@ namespace GoRogue.Components.ParentAware
 {
     /// <summary>
     /// Simple (and optional) base class for components attached to a class implementing
-    /// <see cref="IObjectWithTaggableComponents"/>.  Adds useful events and some helper functions to allow performing
+    /// <see cref="IObjectWithComponents"/>.  Adds useful events and some helper functions to allow performing
     /// type-checking of parent, or requiring that the object it's attached to has or does not have certain types of
     /// components.
     /// </summary>
@@ -23,11 +23,11 @@ namespace GoRogue.Components.ParentAware
         /// </summary>
         public event EventHandler? Removed;
 
-        private IObjectWithTaggableComponents? _parent;
+        private IObjectWithComponents? _parent;
         /// <summary>
         /// The object the component is attached to.
         /// </summary>
-        public virtual IObjectWithTaggableComponents? Parent
+        public virtual IObjectWithComponents? Parent
         {
             get => _parent;
             set
@@ -84,14 +84,14 @@ namespace GoRogue.Components.ParentAware
     }
 
     /// <summary>
-    /// Optional base class for components attached to a a class implementing <see cref="IObjectWithTaggableComponents"/>.
+    /// Optional base class for components attached to a a class implementing <see cref="IObjectWithComponents"/>.
     /// Adds all functionality of <see cref="ParentAwareComponentBase"/>, and additionally type-checks the object it's
     /// attached to to make sure it is of the given type.  It also exposes its <see cref="Parent"/> property as that type
-    /// instead of IObjectWithTaggableComponents.
+    /// instead of IObjectWithComponents.
     /// </summary>
     /// <typeparam name="TParent">Type of the component's parent.</typeparam>
     [PublicAPI]
-    public class ParentAwareComponentBase<TParent> : ParentAwareComponentBase where TParent : class, IObjectWithTaggableComponents
+    public class ParentAwareComponentBase<TParent> : ParentAwareComponentBase where TParent : class, IObjectWithComponents
     {
         /// <summary>
         /// The object the component is attached to.

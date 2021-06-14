@@ -7,11 +7,11 @@ namespace GoRogue.Components.ParentAware
     /// with themselves.
     /// </summary>
     [PublicAPI]
-    public interface IObjectWithTaggableComponents
+    public interface IObjectWithComponents
     {
         /// <summary>
-        /// Collection holding components that GoRogue has recorded as being attached to this object.
+        /// Collection holding components that GoRogue has recorded as being attached to the implementing object.
         /// </summary>
-        public ITaggableComponentCollection GoRogueComponents { get; }
+        public IComponentCollection GoRogueComponents { get; }
     }
 }

@@ -8,7 +8,7 @@ using SadRogue.Primitives;
 namespace GoRogue.Components
 {
     /// <summary>
-    /// A component from a <see cref="ITaggableComponentCollection"/> and its associated tag.
+    /// A component from a <see cref="IComponentCollection"/> and its associated tag.
     /// </summary>
     [DataContract]
     [PublicAPI]

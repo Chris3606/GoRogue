@@ -68,7 +68,7 @@ namespace GoRogue.GameFramework
     /// Base interface required for any object that has a grid position and can be added to a <see cref="Map" />.
     /// Implements basic attributes generally common to all objects on a map, as well as properties/methods that
     /// <see cref="Map"/> needs to function.  It also provides a container that you may attach arbitrary components to
-    /// (via the <see cref="IObjectWithTaggableComponents"/> interface).
+    /// (via the <see cref="IObjectWithComponents"/> interface).
     ///
     /// For a concrete implementation, see <see cref="GameObject"/>.
     /// </summary>
@@ -86,7 +86,7 @@ namespace GoRogue.GameFramework
     /// where TParent would be IGameObject or some class implementing that interface.
     /// </remarks>
     [PublicAPI]
-    public interface IGameObject : IHasID, IHasLayer, IObjectWithTaggableComponents
+    public interface IGameObject : IHasID, IHasLayer, IObjectWithComponents
     {
         /// <summary>
         /// The current <see cref="Map" /> which this object resides on.  Returns null if the object has not been added to a map.

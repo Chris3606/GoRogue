@@ -54,7 +54,7 @@ namespace GoRogue.GameFramework
         /// use cases.
         /// </param>
         public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
-                          Func<uint>? idGenerator = null, ITaggableComponentCollection? customComponentCollection = null)
+                          Func<uint>? idGenerator = null, IComponentCollection? customComponentCollection = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
@@ -120,7 +120,7 @@ namespace GoRogue.GameFramework
         public event EventHandler<GameObjectCurrentMapChanged>? RemovedFromMap;
 
         /// <inheritdoc />
-        public ITaggableComponentCollection GoRogueComponents { get; }
+        public IComponentCollection GoRogueComponents { get; }
 
         /// <inheritdoc />
         public void OnMapChanged(Map? newMap)

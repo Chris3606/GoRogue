@@ -3,13 +3,13 @@
 namespace GoRogue.Components
 {
     /// <summary>
-    /// Interface that you may optionally implement on objects added to a <see cref="IBasicComponentCollection"/>
+    /// Interface that you may optionally implement on objects added to a <see cref="IComponentCollection"/>
     /// (for example, <see cref="ComponentCollection"/>) that enforces an order in which components are returned from
     /// functions that retrieve components.
     /// </summary>
     /// <remarks>
     /// When functions that return components are called on <see cref="ComponentCollection"/> or some other
-    /// <see cref="IBasicComponentCollection"/>, components with a lower <see cref="SortOrder"/> are returned before
+    /// <see cref="IComponentCollection"/>, components with a lower <see cref="SortOrder"/> are returned before
     /// components with a higher one.  Components that do not implement <see cref="ISortedComponent"/> are returned
     /// after any that do.
     ///
