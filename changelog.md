@@ -5,11 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- Created `GoRogue.FOV` namespace to hold everything related to FOV
+- `IFOV` interface now exists in the `GoRogue.FOV` namespace which defines the public interface for a method of calculating FOV
+- `FOVBase` abstract class has been added to the `GoRogue.FOV` namespace to simplify creating implementations of the `IFOV` interface
+
+
 ### Changed
 - Attaching `IParentAwareComponent` instances to two objects at once now produces a more helpful exception message
+- `FOV` renamed to `RecursiveShadowcastingFOV` and moved to the `GoRogue.FOV` namespace
+- FOV classes no longer implement `IGridView<double>`; instead, access their `DoubleResultView` field for equivalent behavior
+- FOV's `BooleanFOV` property renamed to `BooleanResultView`
+- The `GameFramework.Map.PlayerFOV` has changed types; it is now of type `IFOV` in order to support custom implementations of FOV calculations.
 
 ### Fixed
-- `ParentAwareComponentBase.Added` is no longer fired when the component is removed
+- `ParentAwareComponentBase.Added` is no longer fired when the component is detached from an object
 
 ## [3.0.0-alpha03] - 2021-06-13
 

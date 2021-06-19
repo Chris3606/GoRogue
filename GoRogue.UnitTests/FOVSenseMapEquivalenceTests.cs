@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using GoRogue.FOV;
 using GoRogue.SenseMapping;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
@@ -56,7 +57,7 @@ namespace GoRogue.UnitTests
         [MemberDataTuple(nameof(TestPositionsAndRadii))]
         public void SenseMapEquivalence(Point source, Radius shape)
         {
-            var fov = new FOV(_losMap);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
             var senseMap = new SenseMap(_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)
@@ -68,13 +69,13 @@ namespace GoRogue.UnitTests
             senseMap.Calculate();
 
             // Verify equivalence of LOS and SenseMap
-            Assert.Equal(_width, fov.Width);
+            Assert.Equal(_width, fov.DoubleResultView.Width);
             Assert.Equal(_width, senseMap.Width);
-            Assert.Equal(_height, fov.Height);
+            Assert.Equal(_height, fov.DoubleResultView.Height);
             Assert.Equal(_height, senseMap.Height);
 
-            foreach (var pos in fov.Positions())
-                Assert.Equal(fov[pos], senseMap[pos]);
+            foreach (var pos in fov.DoubleResultView.Positions())
+                Assert.Equal(fov.DoubleResultView[pos], senseMap[pos]);
         }
 
 
@@ -82,7 +83,7 @@ namespace GoRogue.UnitTests
         [MemberDataTuple(nameof(AngleRestrictedShortTestPositionsAndRadii))]
         public void SenseMapAngleEquivalence(Point source, Radius shape, int angle, int span)
         {
-            var fov = new FOV(_losMap);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
             var senseMap = new SenseMap(_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)
@@ -100,13 +101,13 @@ namespace GoRogue.UnitTests
             senseMap.Calculate();
 
             // Verify equivalence of LOS and SenseMap
-            Assert.Equal(_width, fov.Width);
+            Assert.Equal(_width, fov.DoubleResultView.Width);
             Assert.Equal(_width, senseMap.Width);
-            Assert.Equal(_height, fov.Height);
+            Assert.Equal(_height, fov.DoubleResultView.Height);
             Assert.Equal(_height, senseMap.Height);
 
-            foreach (var pos in fov.Positions())
-                Assert.Equal(fov[pos], senseMap[pos]);
+            foreach (var pos in fov.DoubleResultView.Positions())
+                Assert.Equal(fov.DoubleResultView[pos], senseMap[pos]);
         }
     }
 }

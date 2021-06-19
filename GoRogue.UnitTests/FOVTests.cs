@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using GoRogue.FOV;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -36,11 +37,11 @@ namespace GoRogue.UnitTests
         [MemberDataEnumerable(nameof(Radii))]
         public void OpenMapEqualToRadius(Radius shape)
         {
-            var los = new FOV(_losMap);
+            var los = new RecursiveShadowcastingFOV(_losMap);
             los.Calculate(_center.X, _center.Y, _radius, shape);
 
             var radArea = shape.PositionsInRadius(_center, _radius).ToHashSet();
-            var losArea = los.Positions().Where(pos => los[pos] > 0.0).ToHashSet();
+            var losArea = los.DoubleResultView.Positions().Where(pos => los.DoubleResultView[pos] > 0.0).ToHashSet();
 
             Assert.Equal(radArea, losArea);
         }
@@ -50,32 +51,33 @@ namespace GoRogue.UnitTests
         public void VisibilityStoppedByWalls(Radius shape)
         {
             // FOV over open map
-            var fov = new FOV(_losMapDoubleThickWalls);
+            var fov = new RecursiveShadowcastingFOV(_losMapDoubleThickWalls);
 
             // Calculate LOS with infinite radius
             fov.Calculate(_center, double.MaxValue, shape);
 
             // Verify that the only non-lit positions are the outer walls (which are blocked
             // by the inner ones)
-            var outerPositions = fov.Bounds().PerimeterPositions().ToHashSet();
-            foreach (var pos in fov.Positions())
-                Assert.NotEqual(outerPositions.Contains(pos), fov[pos] > 0.0);
+            var outerPositions = fov.DoubleResultView.Bounds().PerimeterPositions().ToHashSet();
+            foreach (var pos in fov.DoubleResultView.Positions())
+                Assert.NotEqual(outerPositions.Contains(pos), fov.DoubleResultView[pos] > 0.0);
         }
 
         [Theory]
         [MemberDataEnumerable(nameof(Radii))]
         public void BooleanOutput(Radius shape)
         {
-            var fov = new FOV(_losMap);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
             fov.Calculate(_center, _radius, shape);
 
             _output.WriteLine("FOV for reference:");
-            _output.WriteLine(fov.ToString(2));
+            //_output.WriteLine(fov.ToString(2));
+            _output.WriteLine(fov.ToString());
 
-            foreach (var pos in fov.Positions())
+            foreach (var pos in fov.DoubleResultView.Positions())
             {
-                var inFOV = Math.Abs(fov[pos]) > 0.0000000001;
-                Assert.Equal(inFOV, fov.BooleanFOV[pos]);
+                var inFOV = Math.Abs(fov.DoubleResultView[pos]) > 0.0000000001;
+                Assert.Equal(inFOV, fov.BooleanResultView[pos]);
             }
         }
 
@@ -83,7 +85,7 @@ namespace GoRogue.UnitTests
         [MemberDataEnumerable(nameof(Radii))]
         public void CurrentHash(Radius shape)
         {
-            var fov = new FOV(_losMap);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
 
             fov.Calculate(_center, _radius, shape);
 
@@ -91,14 +93,14 @@ namespace GoRogue.UnitTests
             var currentFov = new HashSet<Point>(fov.CurrentFOV);
 
             foreach (var pos in _losMap.Positions())
-                Assert.Equal(fov[pos] > 0.0, currentFov.Contains(pos));
+                Assert.Equal(fov.DoubleResultView[pos] > 0.0, currentFov.Contains(pos));
         }
 
         [Theory]
         [MemberDataEnumerable(nameof(Radii))]
         public void NewlySeenUnseen(Radius shape)
         {
-            var fov = new FOV(_losMap);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
 
             fov.Calculate(_center, _radius, shape);
             var prevFov = new HashSet<Point>(fov.CurrentFOV);
@@ -118,9 +120,9 @@ namespace GoRogue.UnitTests
         [Fact]
         public void AccessibleBeforeCalculate()
         {
-            var fov = new FOV(_losMap);
-            foreach (var pos in fov.Positions())
-                Assert.Equal(0.0, fov[pos]);
+            var fov = new RecursiveShadowcastingFOV(_losMap);
+            foreach (var pos in fov.DoubleResultView.Positions())
+                Assert.Equal(0.0, fov.DoubleResultView[pos]);
         }
     }
 }

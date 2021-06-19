@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using GoRogue.DiceNotation;
+using GoRogue.FOV;
 using GoRogue.MapGeneration;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
@@ -162,7 +163,7 @@ namespace GoRogue.UnitTests
         public void ManualPrintFOV()
         {
             var map = MockMaps.Rectangle(_width, _height);
-            var myFov = new FOV(map);
+            var myFov = new RecursiveShadowcastingFOV(map);
             myFov.Calculate(5, 5, 3);
 
             _output.WriteLine(myFov.ToString());
