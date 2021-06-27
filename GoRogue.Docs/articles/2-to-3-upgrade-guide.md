@@ -238,9 +238,13 @@ In GoRogue 2, FOV functionality consisted of a single class, `FOV`, which implem
 
 This worked well initially because users could either use the built-in FOV class, or create their own arbitrary algorithm if desired.  When `GameFramework` was introduced, however, this became problematic because its `Map` class had a property of type `FOV`; so if a user wanted to use a custom FOV algorithm, they had to give up the explored-tile functionality and anything else pertaining to FOV that the map provided.
 
+## Introduction of Abstraction
 GoRogue 3 addresses this by introducing a customizable abstraction for FOV calculations.  First, the `FOV` class has been renamed to `RecursiveShadowcastingFOV` and moved to the `GoRogue.FOV` namespace.  This new namespace also contains `IReadOnlyFOV`.  It also has an additional interface `IFOV`, which `RecursiveShadowcastingFOV` now implements.  This interface contains the entire public API of `FOV`, thus representing an abstraction over a method of calculating FOV.  Finally, this namespace also contains `FOVBase`, which is an abstract base class that implements `IFOV` and simplifies the interface by ensuring that a minimal subset of functions must be implemented by a user.
 
 In turn, `Map` now has a property of type `IFOV` for the player's FOV.  This allows a user to implement a custom FOV calculation and use it within the map framework.
+
+## Change in Interface
+Additionally, the fov classes no longer implement `IMapView<double>`.  Instead, there is a `DoubleResultView` property that exposes the results of the FOV calculation as a map.  Similarly, the `BooleanFOV` property has been renamed to `BooleanResultView`.  This change more easily facilitated the abstraction that was introduced, and as well provided a more consistent interface.
 
 # GameFramework Namespace Refactored
 A number of refactors have been performed on the `GoRogue.GameFramework` namespace.
