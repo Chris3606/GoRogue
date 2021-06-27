@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None.
+
+## [3.0.0-alpha04] - 2021-06-27
 ### Added
 - Created `GoRogue.FOV` namespace to hold everything related to FOV
 - `IFOV` interface now exists in the `GoRogue.FOV` namespace which defines the public interface for a method of calculating FOV
