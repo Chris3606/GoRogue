@@ -233,6 +233,15 @@ This change makes it much more obvious to the user when something unexpected hap
 
 Another associated change to spatial maps is the separation of the functionality for moving _all_ items at a location vs. moving only the ones that _can_ move.  In addition to `Move(T item)`, `ISpatialMap` now also contains `MoveAll` and `MoveValid` functions.  `MoveAll` attempts to move all items at a given location to the target location, throwing an `ArgumentException` if this fails.  `MoveValid` only moves the items that can move, returning precisely which items were moved.
 
+# FOV Changes
+In GoRogue 2, FOV functionality consisted of a single class, `FOV`, which implemented a recursive shadowcasting FOV algorithm.  GoRogue 2 also contained the `IReadOnlyFOV` interface, which was useful for exposing the result of FOV without allowing modification.
+
+This worked well initially because users could either use the built-in FOV class, or create their own arbitrary algorithm if desired.  When `GameFramework` was introduced, however, this became problematic because its `Map` class had a property of type `FOV`; so if a user wanted to use a custom FOV algorithm, they had to give up the explored-tile functionality and anything else pertaining to FOV that the map provided.
+
+GoRogue 3 addresses this by introducing a customizable abstraction for FOV calculations.  First, the `FOV` class has been renamed to `RecursiveShadowcastingFOV` and moved to the `GoRogue.FOV` namespace.  This new namespace also contains `IReadOnlyFOV`.  It also has an additional interface `IFOV`, which `RecursiveShadowcastingFOV` now implements.  This interface contains the entire public API of `FOV`, thus representing an abstraction over a method of calculating FOV.  Finally, this namespace also contains `FOVBase`, which is an abstract base class that implements `IFOV` and simplifies the interface by ensuring that a minimal subset of functions must be implemented by a user.
+
+In turn, `Map` now has a property of type `IFOV` for the player's FOV.  This allows a user to implement a custom FOV calculation and use it within the map framework.
+
 # GameFramework Namespace Refactored
 A number of refactors have been performed on the `GoRogue.GameFramework` namespace.
 

@@ -8,6 +8,7 @@ using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using GoRogue.FOV;
 
 namespace GoRogue.GameFramework
 {
@@ -41,12 +42,12 @@ namespace GoRogue.GameFramework
         private readonly LayeredSpatialMap<IGameObject> _entities;
         private readonly ISettableGridView<IGameObject?> _terrain;
 
-        private FOV _playerFOV;
+        private IFOV _playerFOV;
         /// <summary>
         /// FOV for the player.  By default, calculated based upon <see cref="TransparencyView"/>.
         /// <see cref="PlayerExplored"/> is updated automatically when this is calculated.
         /// </summary>
-        public FOV PlayerFOV
+        public IFOV PlayerFOV
         {
             get => _playerFOV;
 
@@ -95,8 +96,9 @@ namespace GoRogue.GameFramework
         /// location on the same layer.  Defaults to all layers.
         /// </param>
         /// <param name="customPlayerFOV">
-        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
-        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
+        /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
+        /// to not use <see cref="TransparencyView"/> for data.
         /// </param>
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
@@ -112,7 +114,7 @@ namespace GoRogue.GameFramework
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
-                   FOV? customPlayerFOV = null,
+                   IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
             : this(new ArrayView<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
@@ -156,8 +158,9 @@ namespace GoRogue.GameFramework
         /// location on the same layer.  Defaults to all layers.
         /// </param>
         /// <param name="customPlayerFOV">
-        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
-        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
+        /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
+        /// to not use <see cref="TransparencyView"/> for data.
         /// </param>
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
@@ -173,7 +176,7 @@ namespace GoRogue.GameFramework
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
-                   FOV? customPlayerFOV = null,
+                   IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
         {
@@ -198,7 +201,7 @@ namespace GoRogue.GameFramework
                 ? new LambdaGridView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
                 : new LambdaGridView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
 
-            _playerFOV = customPlayerFOV ?? new FOV(TransparencyView);
+            _playerFOV = customPlayerFOV ?? new RecursiveShadowcastingFOV(TransparencyView);
             _playerFOV.Recalculated += On_FOVRecalculated;
 
             AStar = customPather ?? new AStar(WalkabilityView, distanceMeasurement);
@@ -337,8 +340,9 @@ namespace GoRogue.GameFramework
         /// location on the same layer.  Defaults to all layers.
         /// </param>
         /// <param name="customPlayerFOV">
-        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Typically you will not need to specify this; it is normally
-        /// only useful if you want this property to not use <see cref="TransparencyView"/> for data.
+        /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
+        /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
+        /// to not use <see cref="TransparencyView"/> for data.
         /// </param>
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
@@ -355,7 +359,7 @@ namespace GoRogue.GameFramework
                                        Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
                                        uint entityLayersSupportingMultipleItems = uint.MaxValue,
-                                       FOV? customPlayerFOV = null, AStar? customPather = null,
+                                       IFOV? customPlayerFOV = null, AStar? customPather = null,
                                        IComponentCollection? customComponentContainer = null)
             where T : class, IGameObject
         {

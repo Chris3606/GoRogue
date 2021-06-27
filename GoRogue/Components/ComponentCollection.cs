@@ -405,8 +405,9 @@ namespace GoRogue.Components
                 return;
 
             if (c.Parent != null)
-                throw new ArgumentException(
-                    $"Components implementing {nameof(IParentAwareComponent)} cannot be added to multiple objects at once.");
+                throw new ArgumentException($"Components of type {c.Parent.GetType().Name} inherit from " +
+                                    $"{nameof(IParentAwareComponent)}, so they can't be attached to multiple " +
+                                    "objects simultaneously.");
 
             c.Parent = _parentForAddedComponents;
         }

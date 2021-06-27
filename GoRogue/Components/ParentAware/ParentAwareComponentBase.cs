@@ -32,18 +32,23 @@ namespace GoRogue.Components.ParentAware
             get => _parent;
             set
             {
+                if (value == _parent) return;
+
                 if (value == null)
                 {
                     _parent = value;
                     Removed?.Invoke(this, EventArgs.Empty);
                 }
-                else if (_parent != null)
-                    throw new Exception($"{nameof(ParentAwareComponentBase)} components inherit from " +
-                                        $"{nameof(IParentAwareComponent)}, so they can't be attached to multiple " +
-                                        "objects simultaneously.");
+                else
+                {
+                    if (_parent != null)
+                        throw new Exception($"Components of type {nameof(ParentAwareComponentBase)} inherit from " +
+                                            $"{nameof(IParentAwareComponent)}, so they can't be attached to multiple " +
+                                            "objects simultaneously.");
 
-                _parent = value;
-                Added?.Invoke(this, EventArgs.Empty);
+                    _parent = value;
+                    Added?.Invoke(this, EventArgs.Empty);
+                }
             }
         }
 

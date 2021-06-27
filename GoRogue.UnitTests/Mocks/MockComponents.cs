@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using GoRogue.Components;
+using GoRogue.Components.ParentAware;
 
 namespace GoRogue.UnitTests.Mocks
 {
@@ -35,5 +36,43 @@ namespace GoRogue.UnitTests.Mocks
         }
 
         public uint SortOrder { get; }
+    }
+
+    internal class MockObjectWithComponents : IObjectWithComponents
+    {
+        public IComponentCollection GoRogueComponents { get; }
+
+        public MockObjectWithComponents()
+        {
+            GoRogueComponents = new ComponentCollection(this);
+        }
+    }
+
+    internal class MockParentAwareComponentBase : ParentAwareComponentBase
+    {
+        public int TimesAddedCalled { get; private set; }
+        public int TimesRemovedCalled { get; private set; }
+
+        public MockParentAwareComponentBase()
+        {
+            Added += OnAdded;
+            Removed += OnRemoved;
+        }
+
+        private void OnRemoved(object? sender, EventArgs e)
+        {
+            TimesRemovedCalled++;
+        }
+
+        private void OnAdded(object? sender, EventArgs e)
+        {
+            TimesAddedCalled++;
+        }
+
+        public void ClearHistory()
+        {
+            TimesAddedCalled = 0;
+            TimesRemovedCalled = 0;
+        }
     }
 }
