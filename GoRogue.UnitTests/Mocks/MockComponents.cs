@@ -53,7 +53,7 @@ namespace GoRogue.UnitTests.Mocks
         public int TimesAddedCalled { get; private set; }
         public int TimesRemovedCalled { get; private set; }
 
-        public MockParentAwareComponentBase() : base()
+        public MockParentAwareComponentBase()
         {
             Added += OnAdded;
             Removed += OnRemoved;
