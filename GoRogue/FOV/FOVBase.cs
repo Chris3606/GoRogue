@@ -7,7 +7,7 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.FOV
 {
     /// <summary>
-    /// Base class that is convenient for creating custom imp
+    /// Base class that is convenient for creating custom implementations of the <see cref="IFOV"/> interface.
     /// </summary>
     [PublicAPI]
     public abstract class FOVBase : IFOV
@@ -78,7 +78,7 @@ namespace GoRogue.FOV
         /// The distance calculation used to determine what shape the radius has (or a type
         /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
         /// </param>
-        public abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc);
+        protected abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc);
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
@@ -106,7 +106,7 @@ namespace GoRogue.FOV
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
         /// <paramref name="angle" /> / 2 degrees are included on either side of the cone's center line.
         /// </param>
-        public abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span);
+        protected abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span);
 
         /// <summary>
         /// Calculates FOV given an origin point and a radius. If no radius is specified, simply

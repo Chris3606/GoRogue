@@ -5,7 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Fixed
+- `FOVBase.OnCalculate` function (all overloads) is now protected, as was intended originally
+- Summary documentation for `FOVBase` is now complete
 
 ## [3.0.0-alpha04] - 2021-06-27
 ### Added

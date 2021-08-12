@@ -120,7 +120,7 @@ namespace GoRogue.Pathing
                     if (!value.HasValue)
                         return null;
                     var weight = pair.Value;
-                    var weighted = value!.Value * weight;
+                    var weighted = value.Value * weight;
                     if (weight > 0.0)
                         result = Math.Abs(result) < 0.0000000001 ? weighted : result * weighted;
                     else

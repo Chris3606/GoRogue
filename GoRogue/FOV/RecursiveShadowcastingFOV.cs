@@ -41,7 +41,7 @@ namespace GoRogue.FOV
         public override IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
         /// <inheritdoc/>
-        public override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc)
+        protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
@@ -63,7 +63,7 @@ namespace GoRogue.FOV
         }
 
         /// <inheritdoc/>
-        public override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
+        protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
