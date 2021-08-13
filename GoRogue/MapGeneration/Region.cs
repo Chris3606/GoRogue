@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using GoRogue.Components;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -17,17 +18,17 @@ namespace GoRogue.MapGeneration
         #region properties
 
         /// <summary>
+        /// The GoRogueComponents on this region
+        /// </summary>
+        public IComponentCollection GoRogueComponents { get; set; }
+        /// <summary>
         /// All of the boundary points of this region.
         /// </summary>
-        /// <remarks>
-        /// Points in this collection can be removed, which might make them different
-        /// from the sum of each of the Boundary Points
-        /// </remarks>
         public IReadOnlyArea OuterPoints => _outerPoints;
         private readonly Area _outerPoints;
 
         /// <summary>
-        /// All of the points inside this region, excluding boundary points and connections
+        /// All of the points inside this region, excluding boundary points
         /// </summary>
         public IReadOnlyArea InnerPoints => _innerPoints;
         private readonly Area _innerPoints;
@@ -168,9 +169,7 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc />
         public Point this[int index] => Points.ToArray()[index];
-
         #endregion
-
 
         #region IReadOnlyArea Implementation
         /// <inheritdoc />
@@ -220,7 +219,6 @@ namespace GoRogue.MapGeneration
         #endregion
 
         #region Generation
-
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
@@ -228,7 +226,7 @@ namespace GoRogue.MapGeneration
         /// <param name="northEast">the North-East corner of this region</param>
         /// <param name="southEast">the South-East corner of this region</param>
         /// <param name="southWest">the South-West corner of this region</param>
-        public Region(Point northWest, Point northEast, Point southEast, Point southWest)
+        public Region(Point northWest, Point northEast, Point southEast, Point southWest, IComponentCollection? customComponentCollection = null)
         {
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
@@ -241,6 +239,8 @@ namespace GoRogue.MapGeneration
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
             _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary));
             _innerPoints = InnerFromOuterPoints(_outerPoints);
+
+            GoRogueComponents = customComponentCollection ?? new ComponentCollection();
         }
 
 
