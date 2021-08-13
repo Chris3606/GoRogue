@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using GoRogue.Components;
+using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -13,7 +14,7 @@ namespace GoRogue.MapGeneration
     /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
-    public class Region : IReadOnlyArea//, IMatchable<Region>
+    public class Region : IReadOnlyArea, IObjectWithComponents
     {
         #region properties
 
