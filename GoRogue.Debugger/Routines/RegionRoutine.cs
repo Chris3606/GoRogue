@@ -94,10 +94,10 @@ namespace GoRogue.Debugger.Routines
                     Point here = (x, y);
                     Region region = GlobalRandom.DefaultRNG.Next(4) switch
                     {
-                        0 => new Region("arbitrary", (2, 2) + here, (35, 35) + here, (49, 49) + here, (35, 14) + here),
+                        0 => new Region((2, 2) + here, (35, 35) + here, (49, 49) + here, (35, 14) + here),
                         1 => Region.RegularParallelogram("parallelogram", (2, 2) + here, 40, 40, 75),
-                        2 => Region.Rectangle("square", (2, 2) + here, 48, 48),
-                        3 => new Region("triangle", (2, 2) + here, (2, 2) + here, (2, 49) + here, (42, 24) + here),
+                        2 => Region.Rectangle( (2, 2) + here, 48, 48),
+                        3 => new Region((2, 2) + here, (2, 2) + here, (2, 49) + here, (42, 24) + here),
                         _ => throw new Exception("Invalid selection for region type.")
                     };
                     _originalRegions.Add(region);
