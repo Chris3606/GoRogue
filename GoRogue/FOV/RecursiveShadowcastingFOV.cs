@@ -46,10 +46,6 @@ namespace GoRogue.FOV
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
 
-            _previousFOV = _currentFOV;
-            _currentFOV = new HashSet<Point>();
-
-            InitializeLightMap();
             ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
@@ -72,10 +68,6 @@ namespace GoRogue.FOV
                     SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
             span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
-            _previousFOV = _currentFOV;
-            _currentFOV = new HashSet<Point>();
-
-            InitializeLightMap();
             ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
@@ -98,6 +90,20 @@ namespace GoRogue.FOV
                 distanceCalc, angle, span);
             ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnReset()
+        {
+            // Reset visibility
+            if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
+                ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
+            else
+                ResultView.Fill(0);
+
+            // Cycle current and previous FOVs
+            _previousFOV = _currentFOV;
+            _currentFOV = new HashSet<Point>();
         }
 
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
@@ -217,14 +223,6 @@ namespace GoRogue.FOV
                     }
                 }
             }
-        }
-
-        private void InitializeLightMap()
-        {
-            if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
-                ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
-            else
-                ResultView.Fill(0);
         }
     }
 }

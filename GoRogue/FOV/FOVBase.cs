@@ -19,6 +19,9 @@ namespace GoRogue.FOV
         public event EventHandler<FOVRecalculatedEventArgs>? Recalculated;
 
         /// <inheritdoc/>
+        public event EventHandler? VisibilityReset;
+
+        /// <inheritdoc/>
         public abstract IEnumerable<Point> CurrentFOV { get; }
 
         /// <inheritdoc/>
@@ -109,117 +112,83 @@ namespace GoRogue.FOV
         protected abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span);
 
         /// <summary>
-        /// Calculates FOV given an origin point and a radius. If no radius is specified, simply
-        /// calculates with a radius of maximum integer value, which is effectively infinite. Radius
-        /// is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// Resets all cells to not visible, and cycles current FOV to previous FOV, allowing a fresh set of
+        /// calculations to begin.
         /// </summary>
-        /// <param name="originX">Coordinate x-value of the origin.</param>
-        /// <param name="originY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// If no radius is specified, it is effectively infinite.
-        /// </param>
+        /// <remarks>
+        /// This is (indirectly) called automatically by all Calculate overloads.  Custom implementations should
+        /// implement this to reset their ResultView to all 0's in a way appropriate for their architecture, as well
+        /// as cycle the current FOV to the previous FOV to prepare for a fresh FOV calculation.
+        /// <see cref="Reset"/> also calls this function, along with firing relevant events.
+        /// </remarks>
+        protected abstract void OnReset();
+
+        /// <inheritdoc/>
         public void Calculate(int originX, int originY, double radius = double.MaxValue)
             => Calculate(originX, originY, radius, Radius.Circle);
 
-        /// <summary>
-        /// Calculates FOV given an origin point and a radius. If no radius is specified,
-        /// simply calculates with a radius of maximum integer value, which is effectively infinite.
-        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
-        /// </summary>
-        /// <param name="origin">Position of origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// If no radius is specified, it is effectively infinite.
-        /// </param>
+        /// <inheritdoc/>
+        public void CalculateAppend(int originX, int originY, double radius = double.MaxValue)
+            => CalculateAppend(originX, originY, radius, Radius.Circle);
+
+        /// <inheritdoc/>
         public void Calculate(Point origin, double radius = double.MaxValue)
             => Calculate(origin.X, origin.Y, radius, Radius.Circle);
 
-        /// <summary>
-        /// Calculates FOV given an origin point, a radius, and radius shape.
-        /// </summary>
-        /// <param name="originX">Coordinate x-value of the origin.</param>
-        /// <param name="originY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
-        /// </param>
+        /// <inheritdoc/>
+        public void CalculateAppend(Point origin, double radius = double.MaxValue)
+            => CalculateAppend(origin.X, origin.Y, radius, Radius.Circle);
+
+        /// <inheritdoc/>
         public void Calculate(int originX, int originY, double radius, Distance distanceCalc)
         {
-            OnCalculate(originX, originY, radius, distanceCalc);
+            Reset();
+            CalculateAppend(originX, originY, radius, distanceCalc);
+        }
 
+        /// <inheritdoc/>
+        public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc)
+        {
+            OnCalculate(originX, originY, radius, distanceCalc);
             Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc));
         }
 
-        /// <summary>
-        /// Calculates FOV given an origin point, a radius, and a radius shape.
-        /// </summary>
-        /// <param name="origin">Coordinate of the origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
-        /// </param>
+        /// <inheritdoc/>
         public void Calculate(Point origin, double radius, Distance distanceCalc)
             => Calculate(origin.X, origin.Y, radius, distanceCalc);
 
-        /// <summary>
-        /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
-        /// if unobstructed, will be a cone defined by the angle and span given.
-        /// </summary>
-        /// <param name="originX">Coordinate x-value of the origin.</param>
-        /// <param name="originY">Coordinate y-value of the origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
-        /// </param>
-        /// <param name="angle">
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
-        /// </param>
-        /// <param name="span">
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="angle" /> / 2 degrees are included on either side of the cone's center line.
-        /// </param>
+        /// <inheritdoc/>
+        public void CalculateAppend(Point origin, double radius, Distance distanceCalc)
+            => CalculateAppend(origin.X, origin.Y, radius, distanceCalc);
+
+        /// <inheritdoc/>
         public void Calculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
-            OnCalculate(originX, originY, radius, distanceCalc, angle, span);
+            Reset();
+            CalculateAppend(originX, originY, radius, distanceCalc, angle, span);
+        }
 
+        /// <inheritdoc/>
+        public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
+        {
+            OnCalculate(originX, originY, radius, distanceCalc, angle, span);
             Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc, angle, span));
         }
 
-        /// <summary>
-        /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
-        /// if unobstructed, will be a cone defined by the angle and span given.
-        /// </summary>
-        /// <param name="origin">Coordinate of the origin.</param>
-        /// <param name="radius">
-        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
-        /// </param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
-        /// </param>
-        /// <param name="angle">
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
-        /// </param>
-        /// <param name="span">
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="angle" /> / 2 degrees are included on either side of the span line.
-        /// </param>
+        /// <inheritdoc/>
         public void Calculate(Point origin, double radius, Distance distanceCalc, double angle, double span)
             => Calculate(origin.X, origin.Y, radius, distanceCalc, angle, span);
+
+        /// <inheritdoc/>
+        public void CalculateAppend(Point origin, double radius, Distance distanceCalc, double angle, double span)
+            => CalculateAppend(origin.X, origin.Y, radius, distanceCalc, angle, span);
+
+        /// <inheritdoc/>
+        public void Reset()
+        {
+            OnReset();
+            VisibilityReset?.Invoke(this, EventArgs.Empty);
+        }
 
         // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
 #pragma warning disable RECS0137
