@@ -255,7 +255,7 @@ namespace GoRogue.SenseMapping
         public double Angle
         {
             get => IsAngleRestricted ? _angle : 0.0;
-            set => _angle = value > 360.0 || value < 0 ? Math.IEEERemainder(value, 360.0) : value;
+            set => _angle = value > 360.0 || value < 0 ? MathHelpers.WrapAround(value, 360.0) : value;
         }
 
         /// <summary>

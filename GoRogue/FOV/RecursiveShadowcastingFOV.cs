@@ -64,7 +64,12 @@ namespace GoRogue.FOV
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
 
-            angle = (angle > 360.0 || angle < 0 ? Math.IEEERemainder(angle, 360.0) : angle) *
+            // Convert from 0 pointing up to 0 pointing right, which is what is expected by the ShadowCastLimited
+            // implementation
+            angle -= 90;
+
+            // Convert to radians
+            angle = (angle > 360.0 || angle < 0 ? MathHelpers.WrapAround(angle, 360.0) : angle) *
                     SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
             span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 

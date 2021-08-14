@@ -9,6 +9,20 @@ namespace GoRogue.FOV
     /// <summary>
     /// Base class that is convenient for creating custom implementations of the <see cref="IFOV"/> interface.
     /// </summary>
+    /// <remarks>
+    /// This class implements much of the boilerplate code required to implement <see cref="IFOV"/> properly, making
+    /// sure that the implementer has to implement only the minimal subset of functions and properties.
+    ///
+    /// An implementer should implement the OnCalculate overloads to perform their FOV calculation.  Notably, these
+    /// functions SHOULD NOT call <see cref="Reset"/> nor perform any equivalent functionality, and SHOULD NOT
+    /// fire the <see cref="Recalculated"/> or <see cref="VisibilityReset"/> events.  All of this is taken care of
+    /// by the Calculate and CalculateAppend functions, which call OnCalculate.
+    ///
+    /// The implementation of OnCalculate, therefore, must not make any assumptions that squares start at a light level
+    /// of 0, or any other light level.  It should responsibly handle overlapping with other values, an assume that any
+    /// value it does see at a location is a valid one.  Therefore, the highest of the number currently present and the
+    /// new number should always be kept.
+    /// </remarks>
     [PublicAPI]
     public abstract class FOVBase : IFOV
     {
@@ -103,7 +117,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
+        /// points up, and angle increases result in the cone moving clockwise (like a compass).
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
