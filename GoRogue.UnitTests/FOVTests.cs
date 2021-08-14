@@ -131,21 +131,24 @@ namespace GoRogue.UnitTests
         {
             var fov = new RecursiveShadowcastingFOV(_losMap);
             var decay = 1.0 / (_radius + 1);
+            Distance dist = shape;
 
             // Calculate two overlapping FOVs
             var point2 = _center + 5;
             fov.Calculate(_center, _radius, shape);
             fov.CalculateAppend(point2, _radius, shape);
 
+            // Print result, for reference
+            _output.WriteLine("Resulting FOV (For Reference):");
+            _output.WriteLine(fov.ToString());
 
-
-            // Make sure the distance factor is always the closest one
+            // Make sure the distance portion of the FOV always reflects the closest source (to ensure overlapping
+            // radii were handled properly)
             foreach (var pos in fov.DoubleResultView.Positions())
             {
-                double expectedDist = Math.Min(((Distance)shape).Calculate(pos, _center),
-                    Distance.Chebyshev.Calculate(pos, point2));
+                double minDist = Math.Min(dist.Calculate(pos, _center), dist.Calculate(pos, point2));
 
-                double expectedVal = expectedDist > _radius ? 0 : 1 - (decay * expectedDist);
+                double expectedVal = minDist > _radius ? 0 : 1.0 - (decay * minDist);
                 Assert.Equal(expectedVal, fov.DoubleResultView[pos]);
             }
         }
