@@ -10,8 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - FOV now also has a `Reset` function and a `VisibilityReset` event that may be useful in synchronizing visibility with FOV state
 
 ### Changed
-- `IFOV` interface (and all implementations) now takes angles on a scale where 0 points up, and angles proceed counter-clockwise
+- `IFOV` interface (and all implementations) now takes angles on a scale where 0 points up, and angles proceed clockwise
     - This matches better with bearing-finding functions in primitives library and correctly uses the common compass clockwise rotation scale
+- `SenseSource` now takes angles on a scale where 0 points up, and angles proceed clockwise (thus matching FOV)
 
 ### Fixed
 - `FOVBase.OnCalculate` function (all overloads) is now protected, as was intended originally
