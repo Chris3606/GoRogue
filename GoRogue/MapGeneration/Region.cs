@@ -22,41 +22,43 @@ namespace GoRogue.MapGeneration
         /// The GoRogueComponents on this region
         /// </summary>
         public IComponentCollection GoRogueComponents { get; set; }
+
         /// <summary>
         /// All of the boundary points of this region.
         /// </summary>
-        public IReadOnlyArea OuterPoints => _outerPoints;
-        private readonly Area _outerPoints;
+        public IReadOnlyArea OuterPoints => new Area(_westBoundary.Concat(_northBoundary).Concat(_eastBoundary).Concat(_southBoundary));
+        // public IReadOnlyArea OuterPoints => _outerPoints;
+        // private readonly Area _outerPoints = new Area();
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points
         /// </summary>
         public IReadOnlyArea InnerPoints => _innerPoints;
-        private readonly Area _innerPoints;
+        private Area _innerPoints = new Area();
 
         /// <summary>
         /// All of the outer points along the southern boundary
         /// </summary>
         public IReadOnlyArea SouthBoundary => _southBoundary;
-        private readonly Area _southBoundary;
+        private Area _southBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the northern boundary
         /// </summary>
         public IReadOnlyArea NorthBoundary => _northBoundary;
-        private readonly Area _northBoundary;
+        private Area _northBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the eastern boundary
         /// </summary>
         public IReadOnlyArea EastBoundary => _eastBoundary;
-        private readonly Area _eastBoundary;
+        private Area _eastBoundary = new Area();
 
         /// <summary>
         /// All of the outer points along the western boundary
         /// </summary>
         public IReadOnlyArea WestBoundary => _westBoundary;
-        private readonly Area _westBoundary;
+        private Area _westBoundary = new Area();
 
         /// <summary>
         /// The left-most X-value of the region's four corners
@@ -97,22 +99,22 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The South-East corner of the region
         /// </summary>
-        public readonly Point SouthEastCorner;
+        public Point SouthEastCorner { get; protected set; }
 
         /// <summary>
         /// The South-West corner of the region
         /// </summary>
-        public readonly Point SouthWestCorner;
+        public Point SouthWestCorner { get; protected set; }
 
         /// <summary>
         /// The North-West corner of the region
         /// </summary>
-        public readonly Point NorthWestCorner;
+        public Point NorthWestCorner { get; protected set; }
 
         /// <summary>
         /// the North-East corner of the region
         /// </summary>
-        public readonly Point NorthEastCorner;
+        public Point NorthEastCorner { get; protected set; }
 
         /// <summary>
         /// How Wide this region is
@@ -127,7 +129,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points in this region
         /// </summary>
-        public IEnumerable<Point> Points => _outerPoints.Concat(_innerPoints);
+        public IEnumerable<Point> Positions => OuterPoints.Concat(_innerPoints);
 
         /// <summary>
         /// The Center point of this region
@@ -139,40 +141,40 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int LeftAt(int y) => _outerPoints.LeftAt(y);
+        public int LeftAt(int y) => _westBoundary.LeftAt(y);
 
         /// <summary>
         /// The value of the right-most Point in the region at elevation y
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int RightAt(int y) => _outerPoints.RightAt(y);
+        public int RightAt(int y) => _eastBoundary.RightAt(y);
 
         /// <summary>
         /// The value of the top-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int TopAt(int x) => _outerPoints.TopAt(x);
+        public int TopAt(int x) => _northBoundary.TopAt(x);
 
         /// <summary>
         /// The value of the bottom-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int BottomAt(int x) => _outerPoints.BottomAt(x);
+        public int BottomAt(int x) => _southBoundary.BottomAt(x);
 
         /// <inheritdoc />
-        public Rectangle Bounds => _outerPoints.Bounds;
+        public Rectangle Bounds => _innerPoints.Bounds;
 
         /// <inheritdoc />
-        public int Count => Points.Count();
+        public int Count => Positions.Count();
 
         /// <inheritdoc />
-        public Point this[int index] => Points.ToArray()[index];
+        public Point this[int index] => Positions.ToArray()[index];
         #endregion
 
-        #region IReadOnlyArea Implementation
+        #region IReadOnlyArea
         /// <inheritdoc />
         public bool Matches(IReadOnlyArea? other)
         {
@@ -189,7 +191,7 @@ namespace GoRogue.MapGeneration
             if (Bounds != other.Bounds)
                 return false;
 
-            foreach (Point pos in Points)
+            foreach (Point pos in Positions)
                 if (!other.Contains(pos))
                     return false;
 
@@ -198,11 +200,13 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc />
         public bool Contains(IReadOnlyArea area)
-            => _innerPoints.Contains(area) || _outerPoints.Contains(area);
+            => _innerPoints.Contains(area) || _eastBoundary.Contains(area) || _westBoundary.Contains(area) ||
+               _southBoundary.Contains(area) || _northBoundary.Contains(area);
 
         /// <inheritdoc />
         public bool Contains(Point here)
-            => _outerPoints.Contains(here) || _innerPoints.Contains(here);
+            => _innerPoints.Contains(here) || _eastBoundary.Contains(here) || _westBoundary.Contains(here) ||
+               _southBoundary.Contains(here) || _northBoundary.Contains(here);
 
         /// <inheritdoc />
         public bool Contains(int positionX, int positionY)
@@ -210,16 +214,17 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc />
         public bool Intersects(IReadOnlyArea area)
-            => _innerPoints.Intersects(area) || _outerPoints.Intersects(area);
+            => _innerPoints.Intersects(area) || _eastBoundary.Intersects(area) || _westBoundary.Intersects(area) ||
+               _southBoundary.Intersects(area) || _northBoundary.Intersects(area);
 
         /// <inheritdoc />
-        public IEnumerator<Point> GetEnumerator() => Points.GetEnumerator();
+        public IEnumerator<Point> GetEnumerator() => Positions.GetEnumerator();
 
         /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         #endregion
 
-        #region Generation
+        #region Creation
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
@@ -227,21 +232,32 @@ namespace GoRogue.MapGeneration
         /// <param name="northEast">the North-East corner of this region</param>
         /// <param name="southEast">the South-East corner of this region</param>
         /// <param name="southWest">the South-West corner of this region</param>
-        public Region(Point northWest, Point northEast, Point southEast, Point southWest, IComponentCollection? customComponentCollection = null)
+        public Region(Point northWest, Point northEast, Point southEast, Point southWest)
         {
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
             NorthWestCorner = northWest;
             SouthWestCorner = southWest;
+            GenerateAreasFromCorners();
+            GoRogueComponents = new ComponentCollection();
+        }
 
+        private void GenerateAreasFromCorners()
+        {
             _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner));
             _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner));
             _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
-            _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary));
-            _innerPoints = InnerFromOuterPoints(_outerPoints);
+            _innerPoints = InnerFromOuterPoints(OuterPoints);
+        }
 
-            GoRogueComponents = customComponentCollection ?? new ComponentCollection();
+        private void ClearAreas()
+        {
+            _southBoundary.Remove(_southBoundary);
+            _northBoundary.Remove(_northBoundary);
+            _eastBoundary.Remove(_eastBoundary);
+            _westBoundary.Remove(_westBoundary);
+            _innerPoints.Remove(_innerPoints);
         }
 
 
@@ -251,6 +267,14 @@ namespace GoRogue.MapGeneration
         /// <param name="outer">An IEnumerable of Points that form a closed region of any shape and size</param>
         /// <returns>All points contained within the outer region</returns>
         public static Area InnerFromOuterPoints(IEnumerable<Point> outer)
+            => InnerFromOuterPoints(new Area(outer));
+
+        /// <summary>
+        /// Gets the points contains within a hollow area
+        /// </summary>
+        /// <param name="outer">The outer area</param>
+        /// <returns></returns>
+        public static Area InnerFromOuterPoints(Area outer)
         {
             var outerList = outer.OrderBy(x => x.X).ToList();
 
@@ -274,52 +298,61 @@ namespace GoRogue.MapGeneration
             return points;
         }
 
-         /// <summary>
-         /// Returns a new Region from a parameter set similar to GoRogue.Rectangle
-         /// </summary>
-         /// <param name="name">The Name of the region</param>
-         /// <param name="origin"></param>
-         /// <param name="width"></param>
-         /// <param name="height"></param>
-         /// <param name="degrees"></param>
-         /// <returns></returns>
-         /// <exception cref="ArgumentOutOfRangeException"></exception>
-         public static Region Rectangle(Point origin, int width, int height, int degrees = 0)
-         {
-             var northEast = origin + (width - 1, 0);
-             var southEast = origin + (width - 1, height - 1);
-             var southWest = origin + (0, height - 1);
-             Region answer = new Region(origin, northEast, southEast, southWest);
-             return answer.Rotate(degrees, origin);
-         }
+        /// <summary>
+        /// Returns a new Region from a parameter set similar to GoRogue.Rectangle
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="degrees"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        public static Region Rectangle(Point origin, int width, int height, int degrees = 0)
+            => FromRectangle(new Rectangle(origin, origin + (width, height)));
 
-         /// <summary>
-         /// Creates a new Region from a GoRogue.Rectangle.
-         /// </summary>
-         /// <param name="name">The name of this region.</param>
-         /// <param name="rectangle">The rectangle containing this region.</param>
-         /// <returns/>
-         public static Region FromRectangle(string name, Rectangle rectangle) => Rectangle(rectangle.MinExtent, rectangle.Width, rectangle.Height);
+        /// <summary>
+        /// Creates a new Region from a GoRogue.Rectangle.
+        /// </summary>
+        /// <param name="r">The rectangle</param>
+        /// <returns/>
+        public static Region FromRectangle(Rectangle r)
+            => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY), r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
 
 
          /// <summary>
-         /// Creates a new Region in the shape of a parallelogram.
+         /// Creates a new Region in the shape of a parallelogram, with diagonals going down and right.
          /// </summary>
-         /// <param name="name">The name of this region.</param>
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">Width of the parallelogram.</param>
          /// <param name="height">Height of the parallelogram.</param>
-         /// <param name="rotationDegrees">Rotation of the parallelogram.</param>
          /// <returns/>
-         public static Region RegularParallelogram(string name, Point origin, int width, int height, int rotationDegrees)
+         public static Region ParallelogramFromTopCorner(Point origin, int width, int height)
          {
              Point nw = origin;
              Point ne = origin + new Point(width, 0);
              Point se = origin + new Point(width * 2, height);
              Point sw = origin + new Point(width, height);
-             Region area = new Region(nw, ne, se, sw);
-             area = area.Rotate(rotationDegrees, origin);
-             return area;
+
+             return new Region(nw, ne, se, sw);;
+         }
+
+         /// <summary>
+         /// Creates a new Region in the shape of a parallelogram, with diagonals going up and right.
+         /// </summary>
+         /// <param name="origin">Origin of the parallelogram.</param>
+         /// <param name="width">The horizontal length of the top and bottom sides.</param>
+         /// <param name="height">Height of the parallelogram.</param>
+         /// <returns/>
+         public static Region ParallelogramFromBottomCorner(Point origin, int width, int height)
+         {
+             var negative = Direction.YIncreasesUpward ? 1 : -1;
+
+             Point nw = origin + (height, height * negative);
+             Point ne = origin + (height + width, height * negative);
+             Point se = origin + (width, 0);
+             Point sw = origin;
+
+             return new Region(nw, ne, se, sw);
          }
         #endregion
 
@@ -330,10 +363,6 @@ namespace GoRogue.MapGeneration
         public override string ToString()
             => $"Region: NW{NorthWestCorner.ToString()}=> NE{NorthEastCorner.ToString()}=> SE{SouthEastCorner.ToString()}=> SW{SouthWestCorner.ToString()}";
 
-
-
-        #region Management
-
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
@@ -343,6 +372,7 @@ namespace GoRogue.MapGeneration
             here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
 
 
+        #region Transformation
         /// <summary>
         /// Removes a point from the region.
         /// </summary>
@@ -353,8 +383,14 @@ namespace GoRogue.MapGeneration
         /// </remarks>
         public void Remove(in Point point)
         {
-            while (_outerPoints.Contains(point))
-                _outerPoints.Remove(point);
+            while (_westBoundary.Contains(point))
+                _westBoundary.Remove(point);
+            while (_eastBoundary.Contains(point))
+                _eastBoundary.Remove(point);
+            while (_northBoundary.Contains(point))
+                _northBoundary.Remove(point);
+            while (_southBoundary.Contains(point))
+                _southBoundary.Remove(point);
             while (_innerPoints.Contains(point))
                 _innerPoints.Remove(point);
         }
@@ -364,7 +400,8 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
         /// <returns>A region equal to the original region rotated by the given degree</returns>
-        public virtual Region Rotate(double degrees) => Rotate(degrees, Center);
+        public virtual Region Rotate(double degrees)
+            => Rotate(degrees, Center);
 
         /// <summary>
         /// Rotates this region by an arbitrary number of degrees
@@ -374,34 +411,88 @@ namespace GoRogue.MapGeneration
         /// <returns>This region, rotated.</returns>
         public virtual Region Rotate(double degrees, Point origin)
         {
-            degrees = MathHelpers.WrapAround(degrees, 360);
+            degrees %= 360;
 
             //figure out the new corners post-rotation
-            List<Point> corners = new List<Point>();
-            Point southwest = SouthWestCorner.Rotate(degrees, origin);
-            corners.Add(southwest);
-            Point southeast = SouthEastCorner.Rotate(degrees, origin);
-            corners.Add(southeast);
-            Point northwest = NorthWestCorner.Rotate(degrees, origin);
-            corners.Add(northwest);
-            Point northeast = NorthEastCorner.Rotate(degrees, origin);
-            corners.Add(northeast);
+            Point[] corners = new []
+            {
+                SouthWestCorner.Rotate(degrees, origin),
+                SouthEastCorner.Rotate(degrees, origin),
+                NorthWestCorner.Rotate(degrees, origin),
+                NorthEastCorner.Rotate(degrees, origin),
+            };
 
             //order the new corner by Y-value
-            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToList();
+            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToArray();
 
             //split that list in half and then sort by X-value
             Point[] topTwo = { corners[0], corners[1] };
             topTwo = topTwo.OrderBy(c => c.X).ToArray();
-            northwest = topTwo[0];
-            northeast = topTwo[1];
+            var northWest = topTwo[0];
+            var northEast  = topTwo[1];
 
             Point[] bottomTwo = { corners [2], corners [3] };
             bottomTwo = bottomTwo.OrderBy(c => c.X).ToArray();
-            southwest = bottomTwo[0];
-            southeast = bottomTwo[1];
+            var southWest = bottomTwo[0];
+            var southEast = bottomTwo[1];
 
-            return new Region(northwest, northeast, southeast, southwest);
+            return new Region(northWest, northEast, southEast, southWest);
+        }
+
+        /// <summary>
+        /// Returns a new region, flipped horizontally around an X-axis
+        /// </summary>
+        /// <param name="x">The value around which to flip.</param>
+        /// <returns>This region, flipped</returns>
+        public virtual Region FlipHorizontal(int x)
+        {
+            var nw = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+            var ne = (NorthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+            var se = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+            var sw = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+
+            return new Region(nw, ne, se, sw);
+        }
+
+        /// <summary>
+        /// Returns a new region, flipped vertically around a Y-axis
+        /// </summary>
+        /// <param name="y">The value around which to flip.</param>
+        /// <returns></returns>
+        public virtual Region FlipVertical(int y)
+        {
+            var nw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
+            var ne = (NorthEastCorner - (0, y)) * (1, -1) + (0, y);
+            var se = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
+            var sw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
+
+            return new Region(nw, ne, se, sw);
+        }
+
+        /// <summary>
+        /// Returns a new region with X and Y values inverted, respective to a diagonal line
+        /// </summary>
+        /// <param name="x">Any X-value of a point which intersects the line around which to transpose</param>
+        /// <param name="y">Any Y-value of a Point which intersects the line around which to transpose</param>
+        public Region Transpose(int x, int y)
+            => Transpose((x, y));
+
+        /// <summary>
+        /// Returns a new region with X and Y values inverted, respective to a diagonal line
+        /// </summary>
+        /// <param name="xy">Any point which intersects the line around which to transpose</param>
+        public Region Transpose(Point xy)
+        {
+            var nw = (NorthWestCorner - xy);
+            nw = (nw.Y, nw.X) + xy;
+            var ne = (NorthEastCorner - xy);
+            ne = (ne.Y, ne.X) + xy;
+            var se = (SouthEastCorner - xy);
+            se = (se.Y, se.X) + xy;
+            var sw = (SouthWestCorner - xy);
+            sw = (sw.Y, sw.X) + xy;
+
+            return new Region(nw, ne, se, sw);
         }
         #endregion
     }
