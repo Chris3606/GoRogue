@@ -8,6 +8,14 @@ namespace GoRogue.UnitTests.MapGeneration
 {
     public sealed class RegionTests : IDisposable
     {
+        /*   0 1 2 3 4 5 6 7
+         * 0        /--*
+         * 1   *+--+    \
+         * 2     \       \
+         * 3      \    +--+*
+         * 4       *--/
+         * 5
+         */
         private readonly Point _sw = new Point(3, 4);
         private readonly Point _nw = new Point(1, 1);
         private readonly Point _ne = new Point(5, 0);
@@ -129,11 +137,52 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(copyOfPrior.Matches(prior));
         }
 
-
         [Fact]
         public void InnerFromOuterPointsTest()
         {
             Assert.Equal(20, _area.InnerPoints.Count);
+        }
+
+        [Fact]
+        public void FlipVerticalTest()
+        {
+            var newArea = _area.FlipVertical(0);
+            Assert.Equal(_nw.X, newArea.NorthWestCorner.X);
+            Assert.Equal(-_nw.Y, newArea.NorthWestCorner.Y);
+            Assert.Equal(_ne.X, newArea.NorthEastCorner.X);
+            Assert.Equal(-_ne.Y, newArea.NorthEastCorner.Y);
+            Assert.Equal(_se.X, newArea.SouthEastCorner.X);
+            Assert.Equal(-_se.Y, newArea.SouthEastCorner.Y);
+            Assert.Equal(_sw.X, newArea.SouthWestCorner.X);
+            Assert.Equal(-_sw.Y, newArea.SouthWestCorner.Y);
+        }
+
+        [Fact]
+        public void FlipHorizontalTest()
+        {
+            var newArea = _area.FlipHorizontal(0);
+            Assert.Equal(-_nw.X, newArea.NorthWestCorner.X);
+            Assert.Equal(_nw.Y, newArea.NorthWestCorner.Y);
+            Assert.Equal(-_ne.X, newArea.NorthEastCorner.X);
+            Assert.Equal(_ne.Y, newArea.NorthEastCorner.Y);
+            Assert.Equal(-_se.X, newArea.SouthEastCorner.X);
+            Assert.Equal(_se.Y, newArea.SouthEastCorner.Y);
+            Assert.Equal(-_sw.X, newArea.SouthWestCorner.X);
+            Assert.Equal(_sw.Y, newArea.SouthWestCorner.Y);
+        }
+
+        [Fact]
+        public void TransposeTest()
+        {
+            var newArea = _area.Transpose(0,0);
+            Assert.Equal(_nw.Y, newArea.NorthWestCorner.X);
+            Assert.Equal(_nw.X, newArea.NorthWestCorner.Y);
+            Assert.Equal(_ne.Y, newArea.NorthEastCorner.X);
+            Assert.Equal(_ne.X, newArea.NorthEastCorner.Y);
+            Assert.Equal(_se.Y, newArea.SouthEastCorner.X);
+            Assert.Equal(_se.X, newArea.SouthEastCorner.Y);
+            Assert.Equal(_sw.Y, newArea.SouthWestCorner.X);
+            Assert.Equal(_sw.X, newArea.SouthWestCorner.Y);
         }
 
         public void Dispose()

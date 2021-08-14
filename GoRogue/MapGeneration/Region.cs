@@ -119,12 +119,12 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// How Wide this region is
         /// </summary>
-        public int Width => 1 + Right - Left;
+        public int Width => Right - Left + 1;
 
         /// <summary>
         /// how tall this region is
         /// </summary>
-        public int Height => 1 + (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top);
+        public int Height => (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top) + 1;
 
         /// <summary>
         /// All points in this region
@@ -141,28 +141,28 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int LeftAt(int y) => _westBoundary.LeftAt(y);
+        public int LeftAt(int y) => OuterPoints.LeftAt(y);
 
         /// <summary>
         /// The value of the right-most Point in the region at elevation y
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int RightAt(int y) => _eastBoundary.RightAt(y);
+        public int RightAt(int y) => OuterPoints.RightAt(y);
 
         /// <summary>
         /// The value of the top-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int TopAt(int x) => _northBoundary.TopAt(x);
+        public int TopAt(int x) => OuterPoints.TopAt(x);
 
         /// <summary>
         /// The value of the bottom-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int BottomAt(int x) => _southBoundary.BottomAt(x);
+        public int BottomAt(int x) => OuterPoints.BottomAt(x);
 
         /// <inheritdoc />
         public Rectangle Bounds => _innerPoints.Bounds;
@@ -249,15 +249,6 @@ namespace GoRogue.MapGeneration
             _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
             _innerPoints = InnerFromOuterPoints(OuterPoints);
-        }
-
-        private void ClearAreas()
-        {
-            _southBoundary.Remove(_southBoundary);
-            _northBoundary.Remove(_northBoundary);
-            _eastBoundary.Remove(_eastBoundary);
-            _westBoundary.Remove(_westBoundary);
-            _innerPoints.Remove(_innerPoints);
         }
 
 
