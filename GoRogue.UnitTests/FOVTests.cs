@@ -124,5 +124,30 @@ namespace GoRogue.UnitTests
             foreach (var pos in fov.DoubleResultView.Positions())
                 Assert.Equal(0.0, fov.DoubleResultView[pos]);
         }
+
+        [Theory]
+        [MemberDataEnumerable(nameof(Radii))]
+        public void MultipleFOVDistanceOverlap(Radius shape)
+        {
+            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var decay = 1.0 / (_radius + 1);
+
+            // Calculate two overlapping FOVs
+            var point2 = _center + 5;
+            fov.Calculate(_center, _radius, shape);
+            fov.CalculateAppend(point2, _radius, shape);
+
+
+
+            // Make sure the distance factor is always the closest one
+            foreach (var pos in fov.DoubleResultView.Positions())
+            {
+                double expectedDist = Math.Min(((Distance)shape).Calculate(pos, _center),
+                    Distance.Chebyshev.Calculate(pos, point2));
+
+                double expectedVal = expectedDist > _radius ? 0 : 1 - (decay * expectedDist);
+                Assert.Equal(expectedVal, fov.DoubleResultView[pos]);
+            }
+        }
     }
 }
