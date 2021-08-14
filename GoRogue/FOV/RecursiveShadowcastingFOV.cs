@@ -137,9 +137,11 @@ namespace GoRogue.FOV
                     if (deltaRadius <= radius)
                     {
                         var bright = 1 - decay * deltaRadius;
-                        lightMap[currentX, currentY] = bright;
-                        if (bright > 0.0)
+                        if (bright > lightMap[currentX, currentY])
+                        {
+                            lightMap[currentX, currentY] = bright;
                             fovSet.Add(new Point(currentX, currentY));
+                        }
                     }
 
                     if (blocked) // Previous cell was blocked
