@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using GoRogue.Components;
 using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
@@ -295,17 +293,15 @@ namespace GoRogue.MapGeneration
         /// <param name="origin"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        /// <param name="degrees"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public static Region Rectangle(Point origin, int width, int height, int degrees = 0)
+        /// <returns>A new region in the shape of a rectangle</returns>
+        public static Region Rectangle(Point origin, int width, int height)
             => FromRectangle(new Rectangle(origin, origin + (width, height)));
 
         /// <summary>
         /// Creates a new Region from a GoRogue.Rectangle.
         /// </summary>
         /// <param name="r">The rectangle</param>
-        /// <returns/>
+        /// <returns>A new region in the shape of a rectangle</returns>
         public static Region FromRectangle(Rectangle r)
             => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY), r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
 
@@ -316,7 +312,7 @@ namespace GoRogue.MapGeneration
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">Width of the parallelogram.</param>
          /// <param name="height">Height of the parallelogram.</param>
-         /// <returns/>
+         /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromTopCorner(Point origin, int width, int height)
          {
              Point nw = origin;
@@ -333,7 +329,7 @@ namespace GoRogue.MapGeneration
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">The horizontal length of the top and bottom sides.</param>
          /// <param name="height">Height of the parallelogram.</param>
-         /// <returns/>
+         /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromBottomCorner(Point origin, int width, int height)
          {
              var negative = Direction.YIncreasesUpward ? 1 : -1;
@@ -350,7 +346,6 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Returns a string detailing the region's corner locations.
         /// </summary>
-        /// <returns/>
         public override string ToString()
             => $"Region: NW{NorthWestCorner.ToString()}=> NE{NorthEastCorner.ToString()}=> SE{SouthEastCorner.ToString()}=> SW{SouthWestCorner.ToString()}";
 
@@ -358,39 +353,39 @@ namespace GoRogue.MapGeneration
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="here">the point to evaluate</param>
-        /// <returns>whether or not the point is within the region</returns>
         public bool IsCorner(Point here) =>
             here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
 
 
         #region Transformation
-        /// <summary>
-        /// Removes a point from the region.
-        /// </summary>
-        /// <param name="point">The point to remove.</param>
-        /// <remarks>
-        /// This removes a point from the inner, outer points, and connections. Does not remove a point
-        /// from a boundary, since those are generated from the corners.
-        /// </remarks>
-        public void Remove(in Point point)
-        {
-            while (_westBoundary.Contains(point))
-                _westBoundary.Remove(point);
-            while (_eastBoundary.Contains(point))
-                _eastBoundary.Remove(point);
-            while (_northBoundary.Contains(point))
-                _northBoundary.Remove(point);
-            while (_southBoundary.Contains(point))
-                _southBoundary.Remove(point);
-            while (_innerPoints.Contains(point))
-                _innerPoints.Remove(point);
-        }
 
+        /// <summary>
+        /// Moves the Region in the indicated direction.
+        /// </summary>
+        /// <param name="x">The X-value by which to shift the region</param>
+        /// <param name="y">The Y-value by which to shift the region</param>
+        /// <returns></returns>
+        public virtual Region Translate(int x, int y)
+            => Translate((x, y));
+
+        /// <summary>
+        /// Moves the region in the indicated direction.
+        /// </summary>
+        /// <param name="by">The amount (X and Y) to translate this region by.</param>
+        /// <returns>A new, translated region</returns>
+        public virtual Region Translate(Point by)
+        {
+            var nw = NorthWestCorner + by;
+            var ne = NorthEastCorner + by;
+            var se = SouthEastCorner + by;
+            var sw = SouthWestCorner + by;
+            return new Region(nw, ne, se, sw);
+        }
         /// <summary>
         /// Rotates a region around it's center.
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <returns>A region equal to the original region rotated by the given degree</returns>
+        /// <returns>A region, equal to the original region rotated by the given degree</returns>
         public virtual Region Rotate(double degrees)
             => Rotate(degrees, Center);
 
@@ -399,7 +394,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
         /// <param name="origin">The Point around which to rotate</param>
-        /// <returns>This region, rotated.</returns>
+        /// <returns>A region, equal to the original region rotated by the given degree</returns>
         public virtual Region Rotate(double degrees, Point origin)
         {
             degrees %= 360;
@@ -434,7 +429,7 @@ namespace GoRogue.MapGeneration
         /// Returns a new region, flipped horizontally around an X-axis
         /// </summary>
         /// <param name="x">The value around which to flip.</param>
-        /// <returns>This region, flipped</returns>
+        /// <returns>A region, equal to the original region flipped around the desired X-axis</returns>
         public virtual Region FlipHorizontal(int x)
         {
             var nw = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
@@ -449,7 +444,7 @@ namespace GoRogue.MapGeneration
         /// Returns a new region, flipped vertically around a Y-axis
         /// </summary>
         /// <param name="y">The value around which to flip.</param>
-        /// <returns></returns>
+        /// <returns>A region, equal to the original region flipped around the desired Y-axis</returns>
         public virtual Region FlipVertical(int y)
         {
             var nw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
