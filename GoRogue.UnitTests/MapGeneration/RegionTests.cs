@@ -30,7 +30,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void RegionTest()
         {
-            Assert.Equal(14, _area.OuterPoints.Count);
+            Assert.Equal(18, _area.OuterPoints.Count);
             Assert.Equal(20, _area.InnerPoints.Count);
             Assert.Equal(5, _area.NorthBoundary.Count);
             Assert.Equal(4, _area.WestBoundary.Count);

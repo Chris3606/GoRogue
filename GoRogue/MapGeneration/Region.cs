@@ -13,10 +13,12 @@ namespace GoRogue.MapGeneration
     public class Region : IReadOnlyArea
     {
         #region properties
+
         /// <summary>
         /// All of the boundary points of this region.
         /// </summary>
-        public IReadOnlyArea OuterPoints => new Area(_westBoundary.Concat(_northBoundary).Concat(_eastBoundary).Concat(_southBoundary));
+        public IReadOnlyArea OuterPoints => _outerPoints;
+        private MultiArea _outerPoints;
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points
@@ -129,31 +131,31 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int LeftAt(int y) => OuterPoints.LeftAt(y);
+        public int LeftAt(int y) => _outerPoints.LeftAt(y);
 
         /// <summary>
         /// The value of the right-most Point in the region at elevation y
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int RightAt(int y) => OuterPoints.RightAt(y);
+        public int RightAt(int y) => _outerPoints.RightAt(y);
 
         /// <summary>
         /// The value of the top-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int TopAt(int x) => OuterPoints.TopAt(x);
+        public int TopAt(int x) => _outerPoints.TopAt(x);
 
         /// <summary>
         /// The value of the bottom-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int BottomAt(int x) => OuterPoints.BottomAt(x);
+        public int BottomAt(int x) => _outerPoints.BottomAt(x);
 
         /// <inheritdoc />
-        public Rectangle Bounds => _innerPoints.Bounds;
+        public Rectangle Bounds => _outerPoints.Bounds;
 
         /// <inheritdoc />
         public int Count => Positions.Count();
@@ -188,13 +190,11 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc />
         public bool Contains(IReadOnlyArea area)
-            => _innerPoints.Contains(area) || _eastBoundary.Contains(area) || _westBoundary.Contains(area) ||
-               _southBoundary.Contains(area) || _northBoundary.Contains(area);
+            => _innerPoints.Contains(area) || _outerPoints.Contains(area);
 
         /// <inheritdoc />
         public bool Contains(Point here)
-            => _innerPoints.Contains(here) || _eastBoundary.Contains(here) || _westBoundary.Contains(here) ||
-               _southBoundary.Contains(here) || _northBoundary.Contains(here);
+            => _innerPoints.Contains(here) || _outerPoints.Contains(here);
 
         /// <inheritdoc />
         public bool Contains(int positionX, int positionY)
@@ -202,8 +202,7 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc />
         public bool Intersects(IReadOnlyArea area)
-            => _innerPoints.Intersects(area) || _eastBoundary.Intersects(area) || _westBoundary.Intersects(area) ||
-               _southBoundary.Intersects(area) || _northBoundary.Intersects(area);
+            => _innerPoints.Intersects(area) || _outerPoints.Intersects(area);
 
         /// <inheritdoc />
         public IEnumerator<Point> GetEnumerator() => Positions.GetEnumerator();
@@ -235,6 +234,12 @@ namespace GoRogue.MapGeneration
             _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner));
             _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
+
+            _outerPoints = new MultiArea()
+            {
+                _westBoundary, _northBoundary, _eastBoundary, _southBoundary
+            };
+
             _innerPoints = InnerFromOuterPoints(OuterPoints);
         }
 
