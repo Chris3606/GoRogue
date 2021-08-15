@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using System.Diagnostics.CodeAnalysis;
 
 namespace GoRogue.MapGeneration
 {
@@ -196,7 +195,7 @@ namespace GoRogue.MapGeneration
         public bool Matches(IReadOnlyArea? area) => _points.Matches(area);
 
         /// <inheritdoc />
-        public bool Contains(IReadOnlyArea? area) => _points.Contains(area);
+        public bool Contains(IReadOnlyArea area) => _points.Contains(area);
 
         /// <inheritdoc />
         public bool Contains(Point position) => _points.Contains(position);

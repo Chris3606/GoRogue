@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using Xunit;
