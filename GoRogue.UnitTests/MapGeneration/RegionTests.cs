@@ -184,6 +184,16 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(_sw.X, newArea.SouthWestCorner.Y);
         }
 
+        [Fact]
+        public void TranslateTest()
+        {
+            var newArea = _area.Translate(2, 3);
+            Assert.Equal(_ne + (2,3), newArea.NorthEastCorner);
+            Assert.Equal(_nw + (2,3), newArea.NorthWestCorner);
+            Assert.Equal(_se + (2,3), newArea.SouthEastCorner);
+            Assert.Equal(_sw + (2,3), newArea.SouthWestCorner);
+        }
+
         public void Dispose()
         {
 

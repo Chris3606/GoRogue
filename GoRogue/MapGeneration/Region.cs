@@ -67,7 +67,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points within the region
         /// </summary>
-        public IReadOnlyArea Points => _innerPoints;
+        public IReadOnlyArea Points => _points;
         private MultiArea _points;
 
         /// <summary>
@@ -257,9 +257,9 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="r">The rectangle</param>
         /// <returns>A new region in the shape of a rectangle</returns>
-        public static Region Rectangle(Rectangle r)
+        public static Region Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
-                r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
+                r.MaxExtent, (r.MinExtentX, r.MaxExtentY), algorithm);
 
 
          /// <summary>
@@ -269,7 +269,7 @@ namespace GoRogue.MapGeneration
          /// <param name="width">Width of the parallelogram.</param>
          /// <param name="height">Height of the parallelogram.</param>
          /// <returns>A new region in the shape of a parallelogram</returns>
-         public static Region ParallelogramFromTopCorner(Point origin, int width, int height)
+         public static Region ParallelogramFromTopCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
              var negative = Direction.YIncreasesUpward ? 1 : -1;
 
@@ -278,7 +278,7 @@ namespace GoRogue.MapGeneration
              Point se = origin + new Point(width * 2, height * negative);
              Point sw = origin + new Point(width, height * negative);
 
-             return new Region(nw, ne, se, sw);
+             return new Region(nw, ne, se, sw, algorithm);
          }
 
          /// <summary>
@@ -288,7 +288,7 @@ namespace GoRogue.MapGeneration
          /// <param name="width">The horizontal length of the top and bottom sides.</param>
          /// <param name="height">Height of the parallelogram.</param>
          /// <returns>A new region in the shape of a parallelogram</returns>
-         public static Region ParallelogramFromBottomCorner(Point origin, int width, int height)
+         public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
              var negative = Direction.YIncreasesUpward ? 1 : -1;
 
@@ -297,7 +297,7 @@ namespace GoRogue.MapGeneration
              Point se = origin + (width, 0);
              Point sw = origin;
 
-             return new Region(nw, ne, se, sw);
+             return new Region(nw, ne, se, sw, algorithm);
          }
         #endregion
 
@@ -324,7 +324,7 @@ namespace GoRogue.MapGeneration
             var ne = NorthEastCorner + delta;
             var se = SouthEastCorner + delta;
             var sw = SouthWestCorner + delta;
-            return new Region(nw, ne, se, sw);
+            return new Region(nw, ne, se, sw, Algorithm);
         }
         /// <summary>
         /// Rotates a region around it's center.
@@ -366,7 +366,7 @@ namespace GoRogue.MapGeneration
             var southWest = bottomTwo[0];
             var southEast = bottomTwo[1];
 
-            return new Region(northWest, northEast, southEast, southWest);
+            return new Region(northWest, northEast, southEast, southWest, Algorithm);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace GoRogue.MapGeneration
             var se = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
             var sw = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
 
-            return new Region(nw, ne, se, sw);
+            return new Region(nw, ne, se, sw, Algorithm);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace GoRogue.MapGeneration
             var se = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
             var sw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
 
-            return new Region(nw, ne, se, sw);
+            return new Region(nw, ne, se, sw, Algorithm);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace GoRogue.MapGeneration
             var sw = SouthWestCorner - xy;
             sw = (sw.Y, sw.X) + xy;
 
-            return new Region(nw, ne, se, sw);
+            return new Region(nw, ne, se, sw, Algorithm);
         }
         #endregion
     }
