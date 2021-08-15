@@ -76,10 +76,10 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.3.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

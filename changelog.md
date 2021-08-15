@@ -5,7 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Added
+- FOV now has `CalculateAppend` functions which calculate FOV from a given source, but add that FOV into the existing one, as opposed to replacing it
+- FOV now also has a `Reset` function and a `VisibilityReset` event that may be useful in synchronizing visibility with FOV state
+
+### Changed
+- `IFOV` interface (and all implementations) now takes angles on a scale where 0 points up, and angles proceed clockwise
+    - This matches better with bearing-finding functions in primitives library and correctly uses the common compass clockwise rotation scale
+- `SenseSource` now takes angles on a scale where 0 points up, and angles proceed clockwise (thus matching FOV)
+
+### Fixed
+- `FOVBase.OnCalculate` function (all overloads) is now protected, as was intended originally
+- Summary documentation for `FOVBase` is now complete
+- `FOV.RecursiveShadowcastingFOV` now handles negative angle values properly
+- `SenseMapping.SenseSource` now handles negative `Angle` values properly
 
 ## [3.0.0-alpha04] - 2021-06-27
 ### Added
