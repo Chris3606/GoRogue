@@ -14,12 +14,12 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The region containing the components
         /// </summary>
-        public Region Region { get; private set; }
+        public Region Region;
 
         /// <summary>
         /// The GoRogueComponents on this region
         /// </summary>
-        public IComponentCollection GoRogueComponents { get; set; }
+        public IComponentCollection GoRogueComponents { get; }
 
         /// <summary>
         /// Creates a new Region with Components
@@ -29,11 +29,10 @@ namespace GoRogue.MapGeneration
         /// <param name="southEastCorner"></param>
         /// <param name="southWestCorner"></param>
         /// <param name="components">The Component Collection</param>
-        public RegionWithComponents(Point northWestCorner, Point northEastCorner, Point southEastCorner, Point southWestCorner, IComponentCollection? components = null)
-        {
-            Region = new Region(northWestCorner, northEastCorner, southEastCorner, southWestCorner);
-            GoRogueComponents = components ?? new ComponentCollection();
-        }
+        public RegionWithComponents(Point northWestCorner, Point northEastCorner, Point southEastCorner,
+            Point southWestCorner, IComponentCollection? components = null)
+            : this(new Region(northWestCorner, northEastCorner, southEastCorner, southWestCorner), components)
+        { }
 
         /// <summary>
         /// Creates a new Region with Components
@@ -44,10 +43,11 @@ namespace GoRogue.MapGeneration
         {
             Region = region;
             GoRogueComponents = components ?? new ComponentCollection();
+            GoRogueComponents.ParentForAddedComponents = this;
         }
 
         /// <inheritdoc/>
-        public bool Matches(IReadOnlyArea other) => Region.Matches(other);
+        public bool Matches(IReadOnlyArea? area) => Region.Matches(area);
 
         /// <inheritdoc/>
         public IEnumerator<Point> GetEnumerator() => Region.GetEnumerator();
@@ -56,7 +56,7 @@ namespace GoRogue.MapGeneration
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc/>
-        public bool Contains(IReadOnlyArea area) => Region.Contains(area);
+        public bool Contains(IReadOnlyArea? area) => Region.Contains(area);
 
         /// <inheritdoc/>
         public bool Contains(Point position) => Region.Contains(position);

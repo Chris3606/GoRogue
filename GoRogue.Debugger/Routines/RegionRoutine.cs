@@ -118,7 +118,7 @@ namespace GoRogue.Debugger.Routines
         private void RemoveRegionsFromMap()
         {
             foreach (var region in _transformedRegions)
-                foreach (var point in region.Positions.Where(point => _map.Contains(point)))
+                foreach (var point in region.Where(point => _map.Contains(point)))
                     _map[point] = TileState.Wall;
         }
 
