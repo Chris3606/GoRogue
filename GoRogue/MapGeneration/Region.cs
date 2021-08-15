@@ -256,6 +256,7 @@ namespace GoRogue.MapGeneration
         /// Creates a new Region from a GoRogue.Rectangle.
         /// </summary>
         /// <param name="r">The rectangle</param>
+        /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
         /// <returns>A new region in the shape of a rectangle</returns>
         public static Region Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
@@ -268,6 +269,7 @@ namespace GoRogue.MapGeneration
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">Width of the parallelogram.</param>
          /// <param name="height">Height of the parallelogram.</param>
+         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
          /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromTopCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
@@ -287,6 +289,7 @@ namespace GoRogue.MapGeneration
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">The horizontal length of the top and bottom sides.</param>
          /// <param name="height">Height of the parallelogram.</param>
+         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
          /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
