@@ -14,13 +14,19 @@ namespace GoRogue.PerformanceTests
         [Benchmark]
         public Region CreateRectangle()
         {
-            return Region.Rectangle("RectangleCreation", new Point(0, 0), Size, Size);
+            return Region.Rectangle(new Rectangle(0, 0, Size, Size));
         }
 
         [Benchmark]
-        public Region CreateParallelogram()
+        public Region CreateParallelogramTopCorner()
         {
-            return Region.RegularParallelogram("ParallelogramCreation", new Point(0, 0), Size, Size, 10);
+            return Region.ParallelogramFromTopCorner(new Point(0, 0), Size, Size);
+        }
+
+        [Benchmark]
+        public Region CreateParallelogramBottomCorner()
+        {
+            return Region.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size);
         }
     }
 }

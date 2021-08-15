@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using Troschuetz.Random;
 
 namespace GoRogue.MapGeneration
 {
@@ -12,344 +11,421 @@ namespace GoRogue.MapGeneration
     /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
-    public partial class Region : IMatchable<Region>
+    public class Region : IReadOnlyArea
     {
-        #region Generation
-
         /// <summary>
         /// A region of the map with four corners of arbitrary shape and size
         /// </summary>
-        /// <param name="name">the name of this region</param>
         /// <param name="northWest">the North-West corner of this region</param>
         /// <param name="northEast">the North-East corner of this region</param>
         /// <param name="southEast">the South-East corner of this region</param>
         /// <param name="southWest">the South-West corner of this region</param>
-        public Region(string name, Point northWest, Point northEast, Point southEast, Point southWest)
+        /// <param name="algoToUse">which Line-getting algorithm to use</param>
+        public Region(Point northWest, Point northEast, Point southEast, Point southWest, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
         {
-            Name = name;
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
             NorthWestCorner = northWest;
             SouthWestCorner = southWest;
-
-            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner));
-            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner));
-            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner));
-            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner));
-            _outerPoints = new Area(_westBoundary.Concat(_eastBoundary).Concat(_southBoundary).Concat(_northBoundary));
-            _innerPoints = InnerFromOuterPoints(_outerPoints);
+            Algorithm = algoToUse;
+            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, Algorithm));
+            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, Algorithm));
+            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, Algorithm));
+            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, Algorithm));
+            _outerPoints = new MultiArea {_westBoundary, _northBoundary, _eastBoundary, _southBoundary};
+            _innerPoints = SetInnerFromOuterPoints();
+            _points = new MultiArea {_outerPoints, _innerPoints};
         }
-        #endregion
 
-        #region Overrides
+        #region properties
 
         /// <summary>
-        /// Returns whether or not this region is completely overlapping with the other region
+        /// Which Line-getting algorithm to use
         /// </summary>
-        /// <param name="other">the region against which to compare</param>
-        /// <returns></returns>
-        public bool Matches(Region? other)
-        {
-            if (other is null) return false;
-            if (Name != other.Name) return false;
-            if (NorthWestCorner != other.NorthWestCorner) return false;
-            if (SouthWestCorner != other.SouthWestCorner) return false;
-            if (NorthEastCorner != other.NorthEastCorner) return false;
-            if (SouthEastCorner != other.SouthEastCorner) return false;
-            if (Center != other.Center) return false;
+        public Lines.Algorithm Algorithm { get; set; }
 
-            return true;
-        }
+        /// <summary>
+        /// The South-East corner of the region
+        /// </summary>
+        public Point SouthEastCorner { get; private set; }
+
+        /// <summary>
+        /// The South-West corner of the region
+        /// </summary>
+        public Point SouthWestCorner { get; private set; }
+
+        /// <summary>
+        /// The North-West corner of the region
+        /// </summary>
+        public Point NorthWestCorner { get; private set; }
+
+        /// <summary>
+        /// the North-East corner of the region
+        /// </summary>
+        public Point NorthEastCorner { get; private set; }
+
+        /// <summary>
+        /// All points within the region
+        /// </summary>
+        public IReadOnlyArea Points => _points;
+        private MultiArea _points;
+
+        /// <summary>
+        /// All of the boundary points of this region.
+        /// </summary>
+        public IReadOnlyArea OuterPoints => _outerPoints;
+        private MultiArea _outerPoints;
+
+        /// <summary>
+        /// All of the points inside this region, excluding boundary points
+        /// </summary>
+        public IReadOnlyArea InnerPoints => _innerPoints;
+        private Area _innerPoints;
+
+        /// <summary>
+        /// All of the outer points along the southern boundary
+        /// </summary>
+        public IReadOnlyArea SouthBoundary => _southBoundary;
+        private Area _southBoundary;
+
+        /// <summary>
+        /// All of the outer points along the northern boundary
+        /// </summary>
+        public IReadOnlyArea NorthBoundary => _northBoundary;
+        private Area _northBoundary;
+
+        /// <summary>
+        /// All of the outer points along the eastern boundary
+        /// </summary>
+        public IReadOnlyArea EastBoundary => _eastBoundary;
+        private Area _eastBoundary;
+
+        /// <summary>
+        /// All of the outer points along the western boundary
+        /// </summary>
+        public IReadOnlyArea WestBoundary => _westBoundary;
+        private Area _westBoundary;
+
+        /// <summary>
+        /// The left-most X-value of the region's four corners
+        /// </summary>
+        public int Left => Math.Min(SouthWestCorner.X, NorthWestCorner.X);
+
+        /// <summary>
+        /// The right-most X-value of the region's four corners
+        /// </summary>
+        public int Right => Math.Max(SouthEastCorner.X, NorthEastCorner.X);
+
+        /// <summary>
+        /// The top-most Y-value of the region's four corners
+        /// </summary>
+        public int Top => Direction.YIncreasesUpward ?
+            Math.Max(NorthEastCorner.Y, NorthWestCorner.Y) :
+            Math.Min(NorthEastCorner.Y, NorthWestCorner.Y);
+
+        /// <summary>
+        /// The bottom-most Y-value of the region's four corners
+        /// </summary>
+        public int Bottom => Direction.YIncreasesUpward ?
+            Math.Min(SouthEastCorner.Y, SouthWestCorner.Y) :
+            Math.Max(SouthEastCorner.Y, SouthWestCorner.Y);
+
+        /// <summary>
+        /// How Wide this region is
+        /// </summary>
+        public int Width => Right - Left + 1;
+
+        /// <summary>
+        /// how tall this region is
+        /// </summary>
+        public int Height => (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top) + 1;
+
+        /// <summary>
+        /// The Center point of this region
+        /// </summary>
+        public Point Center => new Point((Left + Right) / 2, (Top + Bottom) / 2);
+
+        /// <inheritdoc />
+        public Rectangle Bounds => _outerPoints.Bounds;
+
+        /// <inheritdoc />
+        public int Count => _points.Count;
+
+        /// <inheritdoc />
+        public Point this[int index] => _points[index];
+        #endregion
+
+        #region access functions
+        //Functions to access information about regions
 
         /// <summary>
         /// Returns a string detailing the region's corner locations.
         /// </summary>
-        /// <returns/>
         public override string ToString()
-            => $"{Name}: NW{NorthWestCorner.ToString()}=> NE{NorthEastCorner.ToString()}=> SE{SouthEastCorner.ToString()}=> SW{SouthWestCorner.ToString()}";
-        #endregion
-
-        #region Management
-        /// <summary>
-        /// Gets all Points that overlap with another region
-        /// </summary>
-        /// <param name="other">The region to evaluate against</param>
-        /// <returns>All overlapping points</returns>
-        public IEnumerable<Point> Overlap(Region other)
-        {
-            foreach (Point c in Points)
-            {
-                if (other.Contains(c))
-                    yield return c;
-            }
-        }
-
-        /// <summary>
-        /// Whether or not this region contains a point
-        /// </summary>
-        /// <param name="here">The Point to evaluate</param>
-        /// <returns>If this region contains the given point</returns>
-        public bool Contains(Point here) =>
-            _outerPoints.Contains(here) || _innerPoints.Contains(here) || _connections.Contains(here);
+            => $"Region: NW{NorthWestCorner}=> NE{NorthEastCorner}=> SE{SouthEastCorner}=> SW{SouthWestCorner}";
 
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
-        /// <param name="here">the point to evaluate</param>
-        /// <returns>whether or not the point is within the region</returns>
-        public bool IsCorner(Point here) =>
-            here == NorthEastCorner || here == NorthWestCorner || here == SouthEastCorner || here == SouthWestCorner;
+        /// <param name="position">the point to evaluate</param>
+        public bool IsCorner(Point position)
+            => position == NorthEastCorner || position == NorthWestCorner || position == SouthEastCorner || position == SouthWestCorner;
 
+        /// <summary>
+        /// The value of the left-most Point in the region at elevation y
+        /// </summary>
+        /// <param name="y">The elevation to evaluate</param>
+        /// <returns>The X-value of a Point</returns>
+        public int LeftAt(int y) => _outerPoints.LeftAt(y);
+
+        /// <summary>
+        /// The value of the right-most Point in the region at elevation y
+        /// </summary>
+        /// <param name="y">The elevation to evaluate</param>
+        /// <returns>The X-value of a Point</returns>
+        public int RightAt(int y) => _outerPoints.RightAt(y);
+
+        /// <summary>
+        /// The value of the top-most Point in the region at longitude x
+        /// </summary>
+        /// <param name="x">The longitude to evaluate</param>
+        /// <returns>The Y-value of a Point</returns>
+        public int TopAt(int x) => _outerPoints.TopAt(x);
+
+        /// <summary>
+        /// The value of the bottom-most Point in the region at longitude x
+        /// </summary>
+        /// <param name="x">The longitude to evaluate</param>
+        /// <returns>The Y-value of a Point</returns>
+        public int BottomAt(int x) => _outerPoints.BottomAt(x);
+
+        /// <inheritdoc />
+        public bool Matches(IReadOnlyArea? area) => _points.Matches(area);
+
+        /// <inheritdoc />
+        public bool Contains(IReadOnlyArea area) => _points.Contains(area);
+
+        /// <inheritdoc />
+        public bool Contains(Point position) => _points.Contains(position);
+
+        /// <inheritdoc />
+        public bool Contains(int positionX, int positionY) => Contains((positionX, positionY));
+
+        /// <inheritdoc />
+        public bool Intersects(IReadOnlyArea area) => _points.Intersects(area);
+
+        /// <inheritdoc />
+        public IEnumerator<Point> GetEnumerator() => _points.GetEnumerator();
+
+        /// <inheritdoc />
+        IEnumerator IEnumerable.GetEnumerator() => _points.GetEnumerator();
         #endregion
 
-        #region Transform
+        #region creation
+        //non-constructor methods to help with Region Creation
+
         /// <summary>
-        /// Shifts the entire region by performing Point addition
+        /// Gets the inner points from the boundaries
         /// </summary>
-        /// <param name="distance">the distance and direction to shift the region</param>
-        /// <returns>This region shifted by the distance</returns>
-        public Region Shift(Point distance)
+        /// <returns></returns>
+        private Area SetInnerFromOuterPoints()
         {
-            Region region = new Region(Name, NorthWestCorner + distance, NorthEastCorner + distance, SouthEastCorner + distance, SouthWestCorner + distance);
-            foreach (var subRegion in SubRegions)
+            var outerList = _outerPoints.OrderBy(x => x.X).ToList();
+
+            if(outerList.Count == 0)
+                return new Area();
+
+            _innerPoints = new Area();
+
+            for (int i = outerList[0].X + 1; i < outerList[^1].X; i++)
             {
-                ((List<Region>) region.SubRegions).Add(subRegion);
-            }
-            return region;
-        }
-        /// <summary>
-        /// Cuts Points out of a parent region if that point exists in a subregion,
-        /// and cuts Points out of subregions if that point is already in a subregion
-        /// </summary>
-        /// <remarks>
-        /// This favors regions that were added later, like a stack.
-        /// </remarks>
-        public void DistinguishSubRegions()
-        {
-            List<Region> regionsDistinguished = new List<Region>();
-            List<Region> regionsReversed = SubRegions.ToList();
-            regionsReversed.Reverse();
-            foreach (Region region in regionsReversed)
-            {
-                List<Point> removeThese = new List<Point>();
-                foreach (Point point in region.Points.Distinct())
+                List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
+                if(row.Count > 0)
                 {
-                    foreach (Region distinguishedRegion in regionsDistinguished)
+                    for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
-                        if (distinguishedRegion.Contains(point))
-                        {
-                            if (region.Contains(point))
-                                removeThese.Add(point);
-                        }
+                        _innerPoints.Add(new Point(i, j));
                     }
                 }
-
-                foreach (var point in removeThese)
-                {
-                    region.Remove(point);
-                }
-                regionsDistinguished.Add(region);
             }
+
+            return _innerPoints;
         }
 
         /// <summary>
-        /// Removes a point from the region.
+        /// Creates a new Region from a GoRogue.Rectangle.
         /// </summary>
-        /// <param name="point">The point to remove.</param>
-        /// <remarks>
-        /// This removes a point from the inner, outer points, and connections. Does not remove a point
-        /// from a boundary, since those are generated from the corners.
-        /// </remarks>
-        public void Remove(in Point point)
-        {
-            while (_outerPoints.Contains(point))
-                _outerPoints.Remove(point);
-            while (_innerPoints.Contains(point))
-                _innerPoints.Remove(point);
-            while (_connections.Contains(point))
-                _connections.Remove(point);
-        }
+        /// <param name="r">The rectangle</param>
+        /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
+        /// <returns>A new region in the shape of a rectangle</returns>
+        public static Region Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+            => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
+                r.MaxExtent, (r.MinExtentX, r.MaxExtentY), algorithm);
+
+
+         /// <summary>
+         /// Creates a new Region in the shape of a parallelogram, with diagonals going down and right.
+         /// </summary>
+         /// <param name="origin">Origin of the parallelogram.</param>
+         /// <param name="width">Width of the parallelogram.</param>
+         /// <param name="height">Height of the parallelogram.</param>
+         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
+         /// <returns>A new region in the shape of a parallelogram</returns>
+         public static Region ParallelogramFromTopCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+         {
+             var negative = Direction.YIncreasesUpward ? 1 : -1;
+
+             Point nw = origin;
+             Point ne = origin + new Point(width, 0);
+             Point se = origin + new Point(width * 2, height * negative);
+             Point sw = origin + new Point(width, height * negative);
+
+             return new Region(nw, ne, se, sw, algorithm);
+         }
+
+         /// <summary>
+         /// Creates a new Region in the shape of a parallelogram, with diagonals going up and right.
+         /// </summary>
+         /// <param name="origin">Origin of the parallelogram.</param>
+         /// <param name="width">The horizontal length of the top and bottom sides.</param>
+         /// <param name="height">Height of the parallelogram.</param>
+         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
+         /// <returns>A new region in the shape of a parallelogram</returns>
+         public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+         {
+             var negative = Direction.YIncreasesUpward ? 1 : -1;
+
+             Point nw = origin + (height, height * negative);
+             Point ne = origin + (height + width, height * negative);
+             Point se = origin + (width, 0);
+             Point sw = origin;
+
+             return new Region(nw, ne, se, sw, algorithm);
+         }
+        #endregion
+
+        #region Transformation
+        //currently, these all return NEW regions, instead of rotating the region in-place
 
         /// <summary>
-        /// Does this region have a sub-region with a certain name?
+        /// Moves the Region in the indicated direction.
         /// </summary>
-        /// <param name="name">name of the region to analyze</param>
-        /// <returns>whether the specified region exists</returns>
-        public bool HasSubRegion(string name) => SubRegions.Any(r => r.Name == name);
-
-        /// <summary>
-        /// Removes a common point from the OuterPoints of both regions
-        /// and adds it to the Connections of both Regions
-        /// </summary>
-        /// <param name="a">the first region to evaluate</param>
-        /// <param name="b">the second region to evaluate</param>
-        /// <param name="rng">The RNG to use.  Defaults to <see cref="GlobalRandom.DefaultRNG"/>.</param>
-        public static void AddConnectionBetween(Region a, Region b, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            List<Point> possible = GetPossibleConnections(a, b).ToList();
-
-            if (possible.Count <= 2)
-                throw new ArgumentException("The two proposed regions have no overlapping points.");
-
-            possible.RemoveAt(0);
-            possible.RemoveAt(possible.Count - 1);
-            var connection = possible.RandomItem(rng);
-            a.AddConnection(connection);
-            b.AddConnection(connection);
-        }
-
-        /// <summary>
-        /// Gets a <see cref="IEnumerable{Point}"/> of all the OuterPoints shared by the left and right regions
-        /// </summary>
-        /// <param name="left">the first region to analyze</param>
-        /// <param name="right">the second region to analyze</param>
+        /// <param name="dx">The X-value by which to shift the region</param>
+        /// <param name="dy">The Y-value by which to shift the region</param>
         /// <returns></returns>
-        public static IEnumerable<Point> GetPossibleConnections(Region left, Region right) =>
-            left._outerPoints.Where(here => right._outerPoints.Contains(here) && !left.IsCorner(here) && !right.IsCorner(here));
-
-
-        /// <summary>
-        /// Adds a new connection to this region
-        /// </summary>
-        /// <param name="connection">The location of the connection</param>
-        public void AddConnection(Point connection)
-        {
-            if(!Contains(connection))
-                throw new ArgumentException("Connection must be within the region");
-
-            Remove(connection);
-            _connections.Add(connection);
-        }
+        public Region Translate(int dx, int dy)
+            => Translate(new Point(dx, dy));
 
         /// <summary>
-        /// Removes (from this region) the outer points shared in common
-        /// with the imposing region
+        /// Moves the region in the indicated direction.
         /// </summary>
-        /// <param name="imposing">the region to check for common outer points</param>
-        public void RemoveOverlappingOuterPoints(Region imposing)
+        /// <param name="delta">The amount (X and Y) to translate this region by.</param>
+        /// <returns>A new, translated region</returns>
+        public Region Translate(Point delta)
         {
-            foreach (Point c in imposing._outerPoints)
-            {
-                while (_outerPoints.Contains(c))
-                    _outerPoints.Remove(c);
-                while (_innerPoints.Contains(c))
-                    _innerPoints.Remove(c);
-            }
+            var nw = NorthWestCorner + delta;
+            var ne = NorthEastCorner + delta;
+            var se = SouthEastCorner + delta;
+            var sw = SouthWestCorner + delta;
+            return new Region(nw, ne, se, sw, Algorithm);
         }
-
-        /// <summary>
-        /// Removes (from this region) the inner points shared in common
-        /// with the imposing region
-        /// </summary>
-        /// <param name="imposing">the region to check for common outer points</param>
-        public void RemoveOverlappingInnerPoints(Region imposing)
-        {
-            foreach (Point c in imposing._innerPoints)
-            {
-                while (_outerPoints.Contains(c))
-                    _outerPoints.Remove(c);
-                while (_innerPoints.Contains(c))
-                    _innerPoints.Remove(c);
-            }
-        }
-        /// <summary>
-        /// Removes (from this region) the outer points shared in common
-        /// with the imposing region
-        /// </summary>
-        /// <param name="imposing">the region to check for common outer points</param>
-        public void RemoveOverlappingPoints(Region imposing)
-        {
-            foreach (Point c in imposing.Points)
-            {
-                while (_outerPoints.Contains(c))
-                    _outerPoints.Remove(c);
-                while (_innerPoints.Contains(c))
-                    _innerPoints.Remove(c);
-            }
-        }
-
         /// <summary>
         /// Rotates a region around it's center.
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <returns>A region equal to the original region rotated by the given degree</returns>
-        public virtual Region Rotate(double degrees) => Rotate(degrees, Center);
+        /// <returns>A region, equal to the original region rotated by the given degree</returns>
+        public Region Rotate(double degrees) => Rotate(degrees, Center);
 
         /// <summary>
         /// Rotates this region by an arbitrary number of degrees
         /// </summary>
         /// <param name="degrees">The amount of degrees to rotate this region</param>
         /// <param name="origin">The Point around which to rotate</param>
-        /// <returns>This region, rotated.</returns>
-        /// <remarks>
-        /// This is destructive to the region's <see cref="Connections"/>, so you should try to refrain from generating
-        /// those until after you've performed your rotations.
-        /// </remarks>
-        public virtual Region Rotate(double degrees, Point origin)
+        /// <returns>A region, equal to the original region rotated by the given degree</returns>
+        public Region Rotate(double degrees, Point origin)
         {
             degrees = MathHelpers.WrapAround(degrees, 360);
 
             //figure out the new corners post-rotation
-            List<Point> corners = new List<Point>();
-            Point southwest = SouthWestCorner.Rotate(degrees, origin);
-            corners.Add(southwest);
-            Point southeast = SouthEastCorner.Rotate(degrees, origin);
-            corners.Add(southeast);
-            Point northwest = NorthWestCorner.Rotate(degrees, origin);
-            corners.Add(northwest);
-            Point northeast = NorthEastCorner.Rotate(degrees, origin);
-            corners.Add(northeast);
+            Point[] corners = new []
+            {
+                SouthWestCorner.Rotate(degrees, origin),
+                SouthEastCorner.Rotate(degrees, origin),
+                NorthWestCorner.Rotate(degrees, origin),
+                NorthEastCorner.Rotate(degrees, origin),
+            };
 
             //order the new corner by Y-value
-            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToList();
+            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToArray();
 
             //split that list in half and then sort by X-value
             Point[] topTwo = { corners[0], corners[1] };
             topTwo = topTwo.OrderBy(c => c.X).ToArray();
-            northwest = topTwo[0];
-            northeast = topTwo[1];
+            var northWest = topTwo[0];
+            var northEast  = topTwo[1];
 
             Point[] bottomTwo = { corners [2], corners [3] };
             bottomTwo = bottomTwo.OrderBy(c => c.X).ToArray();
-            southwest = bottomTwo[0];
-            southeast = bottomTwo[1];
+            var southWest = bottomTwo[0];
+            var southEast = bottomTwo[1];
 
-            return new Region(Name, northwest, northeast, southeast, southwest);
-        }
-
-        #endregion
-
-        #region SubRegions
-        /// <summary>
-        /// Adds a sub-region to this region.
-        /// </summary>
-        /// <param name="region">The region you wish to add as a sub-region</param>
-        public void AddSubRegion(Region region)
-        {
-            _subRegions.Add(region);
-        }
-        /// <summary>
-        /// Removes a sub-region whose name matches with the string given.
-        /// </summary>
-        /// <param name="name">Key of sub-region to remove.</param>
-        public void RemoveSubRegion(string name)
-        {
-            if (HasSubRegion(name))
-                _subRegions.Remove(GetSubRegion(name));
+            return new Region(northWest, northEast, southEast, southWest, Algorithm);
         }
 
         /// <summary>
-        /// Get a sub-region by its name.
+        /// Returns a new region, flipped horizontally around an X-axis
         /// </summary>
-        /// <param name="name">The name of the region to find</param>
-        public Region GetSubRegion(string name)
+        /// <param name="x">The value around which to flip.</param>
+        /// <returns>A region, equal to the original region flipped around the desired X-axis</returns>
+        public Region FlipHorizontal(int x)
         {
-            if (HasSubRegion(name))
-                return SubRegions.First(r => r.Name == name);
-            else
-                throw new KeyNotFoundException("No sub-region named " + name + " was found");
+            var nw = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+            var ne = (NorthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+            var se = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+            var sw = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+
+            return new Region(nw, ne, se, sw, Algorithm);
+        }
+
+        /// <summary>
+        /// Returns a new region, flipped vertically around a Y-axis
+        /// </summary>
+        /// <param name="y">The value around which to flip.</param>
+        /// <returns>A region, equal to the original region flipped around the desired Y-axis</returns>
+        public Region FlipVertical(int y)
+        {
+            var nw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
+            var ne = (NorthEastCorner - (0, y)) * (1, -1) + (0, y);
+            var se = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
+            var sw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
+
+            return new Region(nw, ne, se, sw, Algorithm);
+        }
+
+        /// <summary>
+        /// Returns a new region with X and Y values inverted, respective to a diagonal line
+        /// </summary>
+        /// <param name="x">Any X-value of a point which intersects the line around which to transpose</param>
+        /// <param name="y">Any Y-value of a Point which intersects the line around which to transpose</param>
+        public Region Transpose(int x, int y)
+            => Transpose((x, y));
+
+        /// <summary>
+        /// Returns a new region with X and Y values inverted, respective to a diagonal line
+        /// </summary>
+        /// <param name="xy">Any point which intersects the line around which to transpose</param>
+        public Region Transpose(Point xy)
+        {
+            var nw = NorthWestCorner - xy;
+            nw = (nw.Y, nw.X) + xy;
+            var ne = NorthEastCorner - xy;
+            ne = (ne.Y, ne.X) + xy;
+            var se = SouthEastCorner - xy;
+            se = (se.Y, se.X) + xy;
+            var sw = SouthWestCorner - xy;
+            sw = (sw.Y, sw.X) + xy;
+
+            return new Region(nw, ne, se, sw, Algorithm);
         }
         #endregion
     }
