@@ -249,13 +249,22 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// If <see cref="IsAngleRestricted" /> is true, the angle in degrees that represents a line from the source's start to
-        /// the outermost center point of the cone formed by the source's calculated values.  0 degrees points right.
+        /// the outermost center point of the cone formed by the source's calculated values.  0 degrees points up, and
+        /// increases in angle move clockwise (like a compass).
         /// Otherwise, this will be 0.0 degrees.
         /// </summary>
         public double Angle
         {
-            get => IsAngleRestricted ? _angle : 0.0;
-            set => _angle = value > 360.0 || value < 0 ? Math.IEEERemainder(value, 360.0) : value;
+            get => IsAngleRestricted ? MathHelpers.WrapAround(_angle + 90, 360.0) : 0.0;
+            set
+            {
+                // Offset internal angle to 90 degrees being up instead of right
+                _angle = value - 90;
+
+                // Wrap angle to proper degrees
+                if (_angle > 360.0 || _angle < 0)
+                    _angle = MathHelpers.WrapAround(_angle, 360.0);
+            }
         }
 
         /// <summary>

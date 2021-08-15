@@ -28,7 +28,7 @@ namespace GoRogue.FOV
 
         /// <summary>
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
+        /// points upward, and increases move clockwise (like a compass)
         /// </summary>
         public readonly double Angle;
 
@@ -49,7 +49,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
+        /// points up, and increases move the cone clockwise (like a compass).
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
@@ -79,7 +79,7 @@ namespace GoRogue.FOV
     /// "true" indicates that a given position is transparent (i.e. does NOT block LOS), whereas a value of "false"
     /// indicates that a position DOES block line of sight.
     ///
-    /// The calculation may be implemented in the Calculate functions.  It should perform calculations such that
+    /// The calculation will be performed by the Calculate functions.  It should perform calculations such that
     /// the following fields produce the correct output (which is noted in the property documentation):
     ///     - <see cref="IReadOnlyFOV.BooleanResultView"/>
     ///     - <see cref="IReadOnlyFOV.DoubleResultView"/>
@@ -103,8 +103,13 @@ namespace GoRogue.FOV
         event EventHandler<FOVRecalculatedEventArgs>? Recalculated;
 
         /// <summary>
-        /// Calculates FOV given an origin point and a radius. If no radius is specified, simply
-        /// calculates with a radius of maximum integer value, which is effectively infinite. Radius
+        /// Fired when the existing FOV is reset prior to calculating a new one.
+        /// </summary>
+        event EventHandler? VisibilityReset;
+
+        /// <summary>
+        /// Calculates FOV given an origin point and a radius, overwriting the current FOV entirely. If no radius is
+        /// specified, simply calculates with a radius of maximum integer value, which is effectively infinite. Radius
         /// is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
         /// <param name="originX">Coordinate x-value of the origin.</param>
@@ -116,8 +121,21 @@ namespace GoRogue.FOV
         public void Calculate(int originX, int originY, double radius = double.MaxValue);
 
         /// <summary>
-        /// Calculates FOV given an origin point and a radius. If no radius is specified,
-        /// simply calculates with a radius of maximum integer value, which is effectively infinite.
+        /// Calculates FOV given an origin point and a radius, adding the result onto the currently visible cells. If no
+        /// radius is specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
+        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// </summary>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// If no radius is specified, it is effectively infinite.
+        /// </param>
+        public void CalculateAppend(int originX, int originY, double radius = double.MaxValue);
+
+        /// <summary>
+        /// Calculates FOV given an origin point and a radius, overwriting the current FOV entirely. If no radius is
+        /// specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
         /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
         /// </summary>
         /// <param name="origin">Position of origin.</param>
@@ -128,7 +146,19 @@ namespace GoRogue.FOV
         public void Calculate(Point origin, double radius = double.MaxValue);
 
         /// <summary>
-        /// Calculates FOV given an origin point, a radius, and radius shape.
+        /// Calculates FOV given an origin point and a radius, adding the result onto the currently visible cells. If no
+        /// radius is specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
+        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// </summary>
+        /// <param name="origin">Position of origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// If no radius is specified, it is effectively infinite.
+        /// </param>
+        public void CalculateAppend(Point origin, double radius = double.MaxValue);
+
+        /// <summary>
+        /// Calculates FOV given an origin point, a radius, and radius shape, overwriting the current FOV entirely.
         /// </summary>
         /// <param name="originX">Coordinate x-value of the origin.</param>
         /// <param name="originY">Coordinate y-value of the origin.</param>
@@ -142,7 +172,22 @@ namespace GoRogue.FOV
         public void Calculate(int originX, int originY, double radius, Distance distanceCalc);
 
         /// <summary>
-        /// Calculates FOV given an origin point, a radius, and a radius shape.
+        /// Calculates FOV given an origin point, a radius, and radius shape, adding the result onto the currently
+        /// visible cells.
+        /// </summary>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </param>
+        public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc);
+
+        /// <summary>
+        /// Calculates FOV given an origin point, a radius, and a radius shape, overwriting the current FOV entirely.
         /// </summary>
         /// <param name="origin">Coordinate of the origin.</param>
         /// <param name="radius">
@@ -155,9 +200,24 @@ namespace GoRogue.FOV
         public void Calculate(Point origin, double radius, Distance distanceCalc);
 
         /// <summary>
+        /// Calculates FOV given an origin point, a radius, and a radius shape, , adding the result onto the currently
+        /// visible cells.
+        /// </summary>
+        /// <param name="origin">Coordinate of the origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </param>
+        public void CalculateAppend(Point origin, double radius, Distance distanceCalc);
+
+        /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
-        /// if unobstructed, will be a cone defined by the angle and span given.
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The current field of view will be
+        /// entirely overwritten with the new one.  The resulting field of view, if unobstructed, will be a cone defined
+        /// by the angle and span given.
         /// </summary>
         /// <param name="originX">Coordinate x-value of the origin.</param>
         /// <param name="originY">Coordinate y-value of the origin.</param>
@@ -170,7 +230,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
+        /// points up, and angle increases result in the cone moving clockwise (like a compass).
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
@@ -181,7 +241,34 @@ namespace GoRogue.FOV
 
         /// <summary>
         /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
-        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The resulting field of view,
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The new field of view will be
+        /// added onto the current one.  The resulting field of view, if unobstructed, will be a cone defined
+        /// by the angle and span given.
+        /// </summary>
+        /// <param name="originX">Coordinate x-value of the origin.</param>
+        /// <param name="originY">Coordinate y-value of the origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </param>
+        /// <param name="angle">
+        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
+        /// points up, and angle increases result in the cone moving clockwise (like a compass).
+        /// </param>
+        /// <param name="span">
+        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
+        /// <paramref name="angle" /> / 2 degrees are included on either side of the cone's center line.
+        /// </param>
+        public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc, double angle,
+                              double span);
+
+        /// <summary>
+        /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The current field of view will be
+        /// entirely overwritten with the new one.  The resulting field of view,
         /// if unobstructed, will be a cone defined by the angle and span given.
         /// </summary>
         /// <param name="origin">Coordinate of the origin.</param>
@@ -194,13 +281,47 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points right.
+        /// points up, and angle increases result in the cone moving clockwise (like a compass).
         /// </param>
         /// <param name="span">
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
         /// <paramref name="angle" /> / 2 degrees are included on either side of the span line.
         /// </param>
         public void Calculate(Point origin, double radius, Distance distanceCalc, double angle, double span);
+
+        /// <summary>
+        /// Calculates FOV given an origin point, a radius, a radius shape, and the given field of view
+        /// restrictions <paramref name="angle" /> and <paramref name="span" />.  The new field of view will be
+        /// added onto the current one.  The resulting field of view, if unobstructed, will be a cone defined by the
+        /// angle and span given.
+        /// </summary>
+        /// <param name="origin">Coordinate of the origin.</param>
+        /// <param name="radius">
+        /// The maximum radius -- basically the maximum distance of the field of view if completely unobstructed.
+        /// </param>
+        /// <param name="distanceCalc">
+        /// The distance calculation used to determine what shape the radius has (or a type
+        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// </param>
+        /// <param name="angle">
+        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
+        /// points up, and angle increases result in the cone moving clockwise (like a compass).
+        /// </param>
+        /// <param name="span">
+        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
+        /// <paramref name="angle" /> / 2 degrees are included on either side of the span line.
+        /// </param>
+        public void CalculateAppend(Point origin, double radius, Distance distanceCalc, double angle, double span);
+
+        /// <summary>
+        /// Resets the given field of view to no tiles visible.
+        /// </summary>
+        /// <remarks>
+        /// After this function is called, any value in <see cref="IReadOnlyFOV.DoubleResultView"/> will be 0, and any
+        /// value in <see cref="IReadOnlyFOV.BooleanResultView"/> will be false.  Additionally,
+        /// <see cref="IReadOnlyFOV.CurrentFOV"/> will be blank.
+        /// </remarks>
+        public void Reset();
 
 
     }

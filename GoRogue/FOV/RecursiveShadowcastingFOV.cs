@@ -41,15 +41,11 @@ namespace GoRogue.FOV
         public override IEnumerable<Point> NewlyUnseen => _previousFOV.Where(pos => !_currentFOV.Contains(pos));
 
         /// <inheritdoc/>
-        public override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc)
+        protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
 
-            _previousFOV = _currentFOV;
-            _currentFOV = new HashSet<Point>();
-
-            InitializeLightMap();
             ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
@@ -63,19 +59,20 @@ namespace GoRogue.FOV
         }
 
         /// <inheritdoc/>
-        public override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
+        protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
             radius = Math.Max(1, radius);
             var decay = 1.0 / (radius + 1);
 
-            angle = (angle > 360.0 || angle < 0 ? Math.IEEERemainder(angle, 360.0) : angle) *
+            // Convert from 0 pointing up to 0 pointing right, which is what is expected by the ShadowCastLimited
+            // implementation
+            angle -= 90;
+
+            // Convert to radians
+            angle = (angle > 360.0 || angle < 0 ? MathHelpers.WrapAround(angle, 360.0) : angle) *
                     SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
             span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
-            _previousFOV = _currentFOV;
-            _currentFOV = new HashSet<Point>();
-
-            InitializeLightMap();
             ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
@@ -98,6 +95,20 @@ namespace GoRogue.FOV
                 distanceCalc, angle, span);
             ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnReset()
+        {
+            // Reset visibility
+            if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
+                ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
+            else
+                ResultView.Fill(0);
+
+            // Cycle current and previous FOVs
+            _previousFOV = _currentFOV;
+            _currentFOV = new HashSet<Point>();
         }
 
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
@@ -131,9 +142,11 @@ namespace GoRogue.FOV
                     if (deltaRadius <= radius)
                     {
                         var bright = 1 - decay * deltaRadius;
-                        lightMap[currentX, currentY] = bright;
-                        if (bright > 0.0)
+                        if (bright > lightMap[currentX, currentY])
+                        {
+                            lightMap[currentX, currentY] = bright;
                             fovSet.Add(new Point(currentX, currentY));
+                        }
                     }
 
                     if (blocked) // Previous cell was blocked
@@ -192,10 +205,11 @@ namespace GoRogue.FOV
                     if (deltaRadius <= radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5))
                     {
                         var bright = 1 - decay * deltaRadius;
-                        lightMap[currentX, currentY] = bright;
-
-                        if (bright > 0.0)
+                        if (bright > lightMap[currentX, currentY])
+                        {
+                            lightMap[currentX, currentY] = bright;
                             fovSet.Add(new Point(currentX, currentY));
+                        }
                     }
 
                     if (blocked) // Previous cell was blocking
@@ -217,14 +231,6 @@ namespace GoRogue.FOV
                     }
                 }
             }
-        }
-
-        private void InitializeLightMap()
-        {
-            if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
-                ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
-            else
-                ResultView.Fill(0);
         }
     }
 }
