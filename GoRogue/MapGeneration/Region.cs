@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using GoRogue.Components;
-using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -12,21 +10,13 @@ namespace GoRogue.MapGeneration
     /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
-    public class Region : IReadOnlyArea, IObjectWithComponents
+    public class Region : IReadOnlyArea
     {
         #region properties
-
-        /// <summary>
-        /// The GoRogueComponents on this region
-        /// </summary>
-        public IComponentCollection GoRogueComponents { get; set; }
-
         /// <summary>
         /// All of the boundary points of this region.
         /// </summary>
         public IReadOnlyArea OuterPoints => new Area(_westBoundary.Concat(_northBoundary).Concat(_eastBoundary).Concat(_southBoundary));
-        // public IReadOnlyArea OuterPoints => _outerPoints;
-        // private readonly Area _outerPoints = new Area();
 
         /// <summary>
         /// All of the points inside this region, excluding boundary points
@@ -237,7 +227,6 @@ namespace GoRogue.MapGeneration
             NorthWestCorner = northWest;
             SouthWestCorner = southWest;
             GenerateAreasFromCorners();
-            GoRogueComponents = new ComponentCollection();
         }
 
         private void GenerateAreasFromCorners()
