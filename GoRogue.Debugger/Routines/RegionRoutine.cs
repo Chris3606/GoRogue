@@ -11,6 +11,7 @@ namespace GoRogue.Debugger.Routines
     [UsedImplicitly]
     internal class RegionRoutine : IRoutine
     {
+        //A component for regions, so that multiple regions can share a common center of rotation
         private class CenterOfRotation
         {
             internal Point Origin;
