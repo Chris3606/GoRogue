@@ -39,7 +39,7 @@ namespace GoRogue.UnitTests.MapGeneration
         public void RegionTest()
         {
             Assert.Equal(18, _area.OuterPoints.Count);
-            Assert.Equal(20, _area.InnerPoints.Count);
+            Assert.Equal(8, _area.InnerPoints.Count);
             Assert.Equal(5, _area.NorthBoundary.Count);
             Assert.Equal(4, _area.WestBoundary.Count);
             Assert.Equal(5, _area.SouthBoundary.Count);
@@ -148,7 +148,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void InnerFromOuterPointsTest()
         {
-            Assert.Equal(20, _area.InnerPoints.Count);
+            Assert.Equal(8, _area.InnerPoints.Count);
         }
 
         [Fact]
