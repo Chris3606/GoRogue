@@ -111,8 +111,6 @@ namespace GoRogue.PerformanceTests.Regions
         #region Map Area Finder Method
         public static Area MapAreaFinderMethod(RegionMock region)
         {
-            region.InnerPoints = new Area();
-
             // Expand bounds one outside
             var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
 
@@ -140,8 +138,6 @@ namespace GoRogue.PerformanceTests.Regions
 
         public static Area MapAreaFinderArrayViewCacheMethod(RegionMock region)
         {
-            region.InnerPoints = new Area();
-
             // Expand bounds one outside
             var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
 
@@ -172,5 +168,28 @@ namespace GoRogue.PerformanceTests.Regions
         private static bool IsPerimeterPosition(this Rectangle rect, Point pos)
             => pos.X == rect.MinExtentX || pos.X == rect.MaxExtentX || pos.Y == rect.MinExtentY || pos.Y == rect.MaxExtentY;
         #endregion
+
+        // Uses the scan-line algorithm to determine inner points.  Source data is _outerPoints, which is an area.
+        public static Area ScanLineAreaContainsMethod(RegionMock region)
+        {
+            region.InnerPoints = new Area();
+
+            var outerBounds = region.OuterPoints.Bounds;
+            for (int y = outerBounds.MinExtentY; y <= outerBounds.MaxExtentY; y++)
+            {
+                // Find intersect points, sorted in X order.  We have to copy since we're basing _outerPoints on Area
+                var y1 = y;
+                var intersects = Enumerable.Range(outerBounds.MinExtentX, outerBounds.Width)
+                    .Where(x => region.OuterPoints.Contains(x, y1)).ToArray();
+
+                for (int i = 0; i < intersects.Length; i += 2)
+                {
+                    for (int x1 = intersects[i] + 1; x1 < intersects[i + 1]; x1++)
+                        region.InnerPoints.Add(x1, y);
+                }
+            }
+
+            return region.InnerPoints;
+        }
     }
 }
