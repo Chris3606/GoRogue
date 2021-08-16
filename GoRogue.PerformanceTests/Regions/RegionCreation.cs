@@ -5,6 +5,17 @@ using SadRogue.Primitives;
 
 namespace GoRogue.PerformanceTests.Regions
 {
+    /// <summary>
+    /// Set of tests for region creation methods.
+    /// </summary>
+    /// <remarks>
+    /// The tests with "Baseline" at the end of their name use the actual current GoRogue Region class.
+    ///
+    /// The tests with "GoRogue" at the end of their name implement the same method, but within the RegionMock system.
+    /// This allows verification that the RegionMock system itself is not introducing significant change in performance.
+    ///
+    /// Each set of other benchmarks test a new method of creating the inner points.
+    /// </remarks>
     public class RegionCreation
     {
         [UsedImplicitly]
@@ -12,66 +23,119 @@ namespace GoRogue.PerformanceTests.Regions
         [Params(10)]
         public int Size;
 
+        // Tests currently use DDA (which is NOT Region's current default), because one of the methods being tested
+        // requires a line generation algorithm that returns points in order from start to finish; therefore we must
+        // limit ourselves to DDA or BresenhamOrdered (Orthogonal requires further testing)
+        [UsedImplicitly]
+        [Params(Lines.Algorithm.DDA)]
+        public Lines.Algorithm LineAlgorithm;
+
+        // Actual GoRogue method, using GoRogue's region class
         #region Actual GoRogue Region (baseline)
         [Benchmark]
         public Region CreateRectangleBaseline()
         {
-            return Region.Rectangle(new Rectangle(0, 0, Size, Size));
+            return Region.Rectangle(new Rectangle(0, 0, Size, Size), LineAlgorithm);
         }
 
         [Benchmark]
         public Region CreateParallelogramTopCornerBaseline()
         {
-            return Region.ParallelogramFromTopCorner(new Point(0, 0), Size, Size);
+            return Region.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, LineAlgorithm);
         }
 
         [Benchmark]
         public Region CreateParallelogramBottomCornerBaseline()
         {
-            return Region.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size);
+            return Region.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, LineAlgorithm);
         }
         #endregion
 
+        // Same method implemented in GoRogue region, but implemented in mock test framework
         #region GoRogue Method (implemented in mock)
         [Benchmark]
         public RegionMock CreateRectangleGoRogue()
         {
-            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.GoRogueMethod);
+            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.GoRogueMethod, LineAlgorithm);
         }
 
         [Benchmark]
         public RegionMock CreateParallelogramTopCornerGoRogue()
         {
-            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.GoRogueMethod);
+            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.GoRogueMethod, LineAlgorithm);
         }
 
         [Benchmark]
         public RegionMock CreateParallelogramBottomCornerGoRogue()
         {
-            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.GoRogueMethod);
+            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.GoRogueMethod, LineAlgorithm);
         }
         #endregion
 
+        // Method that relies on ordering of lines returned from Lines.Get to iterate across rows.  These methods
+        // REQUIRE that the line-drawing method be something that returns points in order from start to finish.
         #region Ordered Line Method
         [Benchmark]
         public RegionMock CreateRectangleOrderedLine()
         {
-            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.OrderedLineMethod, Lines.Algorithm.DDA);
+            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.OrderedLineMethod, LineAlgorithm);
         }
 
         [Benchmark]
         public RegionMock CreateParallelogramTopCornerOrderedLine()
         {
-            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.OrderedLineMethod, Lines.Algorithm.DDA);
+            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.OrderedLineMethod, LineAlgorithm);
         }
 
         [Benchmark]
         public RegionMock CreateParallelogramBottomCornerOrderedLine()
         {
-            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.OrderedLineMethod, Lines.Algorithm.DDA);
+            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.OrderedLineMethod, LineAlgorithm);
         }
         #endregion
 
+        // Method that creates a map view one bigger than the area (with all edges "passable", and uses that as the
+        // map view for a map area finder (flood fill).  This calculates all areas, of which there should be only
+        // 2; the one that does not contain points on the outer edge is then the area we're looking for.
+        #region Map Area Finder Method
+        [Benchmark]
+        public RegionMock CreateRectangleMapAreaFinder()
+        {
+            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.MapAreaFinderMethod, LineAlgorithm);
+        }
 
+        [Benchmark]
+        public RegionMock CreateParallelogramTopCornerMapAreaFinder()
+        {
+            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.MapAreaFinderMethod, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public RegionMock CreateParallelogramBottomCornerMapAreaFinder()
+        {
+            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.MapAreaFinderMethod, LineAlgorithm);
+        }
+        #endregion
+
+        // Same as MapAreaViewMethod, but the grid view it uses is a cache of the values for each cell
+        #region Map Area Finder Cached Method
+        [Benchmark]
+        public RegionMock CreateRectangleMapAreaFinderCached()
+        {
+            return RegionMock.Rectangle(new Rectangle(0, 0, Size, Size), InnerFromOuterPointMethods.MapAreaFinderArrayViewCacheMethod, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public RegionMock CreateParallelogramTopCornerMapAreaFinderCached()
+        {
+            return RegionMock.ParallelogramFromTopCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.MapAreaFinderArrayViewCacheMethod, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public RegionMock CreateParallelogramBottomCornerMapAreaFinderCached()
+        {
+            return RegionMock.ParallelogramFromBottomCorner(new Point(0, 0), Size, Size, InnerFromOuterPointMethods.MapAreaFinderArrayViewCacheMethod, LineAlgorithm);
+        }
+        #endregion
     }
 }

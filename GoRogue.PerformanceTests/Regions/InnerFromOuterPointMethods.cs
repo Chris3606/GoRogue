@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using GoRogue.MapGeneration;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.PerformanceTests.Regions
 {
@@ -103,5 +107,70 @@ namespace GoRogue.PerformanceTests.Regions
 
             return region.InnerPoints;
         }
+
+        #region Map Area Finder Method
+        public static Area MapAreaFinderMethod(RegionMock region)
+        {
+            region.InnerPoints = new Area();
+
+            // Expand bounds one outside
+            var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
+
+            // Create grid view for map area finder
+            var finderView = new LambdaGridView<bool>(viewBounds.Width, viewBounds.Height, pos =>
+            {
+                if (viewBounds.IsPerimeterPosition(pos)) return true;
+                return !region.OuterPoints.Contains(pos);
+            });
+
+            // Find areas using map area finder and loop through
+            // TODO: Is cardinals sufficient here?
+            // TODO: This assumes only 2 areas
+            foreach (var area in MapAreaFinder.MapAreasFor(finderView, AdjacencyRule.Cardinals))
+            {
+                // The area we're looking for is the one that does NOT contain the top left corner
+                if (area.Contains(0, 0)) continue;
+
+                region.InnerPoints = area;
+                return region.InnerPoints;
+            }
+
+            throw new Exception("Algorithmic badness occured.");
+        }
+
+        public static Area MapAreaFinderArrayViewCacheMethod(RegionMock region)
+        {
+            region.InnerPoints = new Area();
+
+            // Expand bounds one outside
+            var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
+
+            // Create grid view for map area finder data, and cache in array map
+            var finderView = new ArrayView<bool>(viewBounds.Width, viewBounds.Height);
+            finderView.ApplyOverlay(pos =>
+            {
+                if (viewBounds.IsPerimeterPosition(pos)) return true;
+                return !region.OuterPoints.Contains(pos);
+            });
+
+            // Find areas using map area finder and loop through
+            // TODO: Is cardinals sufficient here?
+            // TODO: This assumes only 2 areas
+            foreach (var area in MapAreaFinder.MapAreasFor(finderView, AdjacencyRule.Cardinals))
+            {
+                // The area we're looking for is the one that does NOT contain the top left corner
+                if (area.Contains(0, 0)) continue;
+
+                region.InnerPoints = area;
+                return region.InnerPoints;
+            }
+
+            throw new Exception("Algorithmic badness occured.");
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool IsPerimeterPosition(this Rectangle rect, Point pos)
+            => pos.X == rect.MinExtentX || pos.X == rect.MaxExtentX || pos.Y == rect.MinExtentY || pos.Y == rect.MaxExtentY;
+        #endregion
     }
 }
