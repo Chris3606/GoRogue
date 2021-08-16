@@ -143,6 +143,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(prior.SouthEastCorner.Y < post.SouthEastCorner.Y);
 
             Assert.True(copyOfPrior.Matches(prior));
+            _output.WriteLine(GetRegionString(post));
         }
 
         [Fact]
@@ -155,42 +156,54 @@ namespace GoRogue.UnitTests.MapGeneration
         public void FlipVerticalTest()
         {
             var newArea = _area.FlipVertical(0);
-            Assert.Equal(_nw.X, newArea.NorthWestCorner.X);
-            Assert.Equal(-_nw.Y, newArea.NorthWestCorner.Y);
-            Assert.Equal(_ne.X, newArea.NorthEastCorner.X);
-            Assert.Equal(-_ne.Y, newArea.NorthEastCorner.Y);
-            Assert.Equal(_se.X, newArea.SouthEastCorner.X);
-            Assert.Equal(-_se.Y, newArea.SouthEastCorner.Y);
-            Assert.Equal(_sw.X, newArea.SouthWestCorner.X);
-            Assert.Equal(-_sw.Y, newArea.SouthWestCorner.Y);
+
+            //north-south values have flipped and became negative
+            Assert.Equal(_sw.X, newArea.NorthWestCorner.X);
+            Assert.Equal(-_sw.Y, newArea.NorthWestCorner.Y);
+            Assert.Equal(_se.X, newArea.NorthEastCorner.X);
+            Assert.Equal(-_se.Y, newArea.NorthEastCorner.Y);
+            Assert.Equal(_ne.X, newArea.SouthEastCorner.X);
+            Assert.Equal(-_ne.Y, newArea.SouthEastCorner.Y);
+            Assert.Equal(_nw.X, newArea.SouthWestCorner.X);
+            Assert.Equal(-_nw.Y, newArea.SouthWestCorner.Y);
+
+            _output.WriteLine(GetRegionString(newArea));
         }
 
         [Fact]
         public void FlipHorizontalTest()
         {
             var newArea = _area.FlipHorizontal(0);
-            Assert.Equal(-_nw.X, newArea.NorthWestCorner.X);
-            Assert.Equal(_nw.Y, newArea.NorthWestCorner.Y);
-            Assert.Equal(-_ne.X, newArea.NorthEastCorner.X);
-            Assert.Equal(_ne.Y, newArea.NorthEastCorner.Y);
-            Assert.Equal(-_se.X, newArea.SouthEastCorner.X);
-            Assert.Equal(_se.Y, newArea.SouthEastCorner.Y);
-            Assert.Equal(-_sw.X, newArea.SouthWestCorner.X);
-            Assert.Equal(_sw.Y, newArea.SouthWestCorner.Y);
+
+            //east-west values should have reversed and became negative
+            Assert.Equal(-_ne.X, newArea.NorthWestCorner.X);
+            Assert.Equal(_ne.Y, newArea.NorthWestCorner.Y);
+            Assert.Equal(-_nw.X, newArea.NorthEastCorner.X);
+            Assert.Equal(_nw.Y, newArea.NorthEastCorner.Y);
+            Assert.Equal(-_sw.X, newArea.SouthEastCorner.X);
+            Assert.Equal(_sw.Y, newArea.SouthEastCorner.Y);
+            Assert.Equal(-_se.X, newArea.SouthWestCorner.X);
+            Assert.Equal(_se.Y, newArea.SouthWestCorner.Y);
+
+            _output.WriteLine(GetRegionString(newArea));
         }
 
         [Fact]
         public void TransposeTest()
         {
             var newArea = _area.Transpose(0,0);
+
+            //northeast and southwest corners should have inverted
             Assert.Equal(_nw.Y, newArea.NorthWestCorner.X);
             Assert.Equal(_nw.X, newArea.NorthWestCorner.Y);
-            Assert.Equal(_ne.Y, newArea.NorthEastCorner.X);
-            Assert.Equal(_ne.X, newArea.NorthEastCorner.Y);
+            Assert.Equal(_sw.Y, newArea.NorthEastCorner.X);
+            Assert.Equal(_sw.X, newArea.NorthEastCorner.Y);
             Assert.Equal(_se.Y, newArea.SouthEastCorner.X);
             Assert.Equal(_se.X, newArea.SouthEastCorner.Y);
-            Assert.Equal(_sw.Y, newArea.SouthWestCorner.X);
-            Assert.Equal(_sw.X, newArea.SouthWestCorner.Y);
+            Assert.Equal(_ne.Y, newArea.SouthWestCorner.X);
+            Assert.Equal(_ne.X, newArea.SouthWestCorner.Y);
+
+            _output.WriteLine(GetRegionString(newArea));
         }
 
         [Fact]
@@ -201,6 +214,8 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(_nw + (2,3), newArea.NorthWestCorner);
             Assert.Equal(_se + (2,3), newArea.SouthEastCorner);
             Assert.Equal(_sw + (2,3), newArea.SouthWestCorner);
+
+            _output.WriteLine(GetRegionString(newArea));
         }
 
         public void Dispose()
@@ -211,15 +226,15 @@ namespace GoRogue.UnitTests.MapGeneration
         private string GetRegionString(Region region)
         {
             var bounds = region.Bounds;
-            var gv = new LambdaGridView<char>(_area.Width, _area.Height, pos =>
+            var gv = new LambdaGridView<char>(region.Width, region.Height, pos =>
             {
                 // Offset to grid view coords
-                pos += _area.Bounds.Position;
+                pos += region.Bounds.Position;
 
                 // Print proper char
-                if (_area.IsCorner(pos)) return 'C';
-                if (_area.OuterPoints.Contains(pos)) return 'O';
-                if (_area.InnerPoints.Contains(pos)) return 'I';
+                if (region.IsCorner(pos)) return 'C';
+                if (region.OuterPoints.Contains(pos)) return 'O';
+                if (region.InnerPoints.Contains(pos)) return 'I';
 
                 return '.';
             });
