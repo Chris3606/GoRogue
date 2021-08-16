@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Text;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
     public sealed class RegionTests : IDisposable
     {
+        private readonly ITestOutputHelper _output;
+
         /*   0 1 2 3 4 5 6 7
          * 0        /--*
          * 1   *+--+    \
@@ -21,9 +26,13 @@ namespace GoRogue.UnitTests.MapGeneration
         private readonly Point _se = new Point(7, 3);
         private readonly Region _area;
 
-        public RegionTests()
+        public RegionTests(ITestOutputHelper output)
         {
+            _output = output;
             _area = new Region(_nw, _ne, _se, _sw);
+
+            _output.WriteLine("Test Region:");
+            _output.WriteLine(GetRegionString(_area));
         }
 
         [Fact]
@@ -196,6 +205,40 @@ namespace GoRogue.UnitTests.MapGeneration
 
         public void Dispose()
         {
+
+        }
+
+        private string GetRegionString(Region region)
+        {
+            var bounds = region.Bounds;
+            var gv = new LambdaGridView<char>(_area.Width, _area.Height, pos =>
+            {
+                // Offset to grid view coords
+                pos += _area.Bounds.Position;
+
+                // Print proper char
+                if (_area.IsCorner(pos)) return 'C';
+                if (_area.OuterPoints.Contains(pos)) return 'O';
+                if (_area.InnerPoints.Contains(pos)) return 'I';
+
+                return '.';
+            });
+
+            var lines = gv.ToString().Split('\n');
+
+            var final = new StringBuilder();
+
+            // Generate x scale
+            final.Append(' ');
+            for (int i = 0; i < bounds.Width; i++)
+                final.Append($" {i + bounds.MinExtentX}");
+            final.Append('\n');
+
+            // Add each line with y-scale value
+            for (int i = 0; i < lines.Length; i++)
+                final.Append($"{i + bounds.MinExtentY} {lines[i]}\n");
+
+            return final.ToString();
 
         }
     }
