@@ -36,7 +36,6 @@ namespace GoRogue.PerformanceTests.Regions
         public Point Origin = new Point(0, 0);
 
         #endregion
-
         // Actual GoRogue method, using GoRogue's region class
         #region Actual GoRogue Region (baseline)
         [Benchmark]
@@ -78,6 +77,7 @@ namespace GoRogue.PerformanceTests.Regions
             return RegionMock.ParallelogramFromBottomCorner(Origin, Size, Size, InnerFromOuterPointMethods.GoRogueMethod, LineAlgorithm);
         }
         #endregion
+
 
         // Method that relies on ordering of lines returned from Lines.Get to iterate across rows.  These methods
         // REQUIRE that the line-drawing method be something that returns points in order from start to finish.

@@ -11,32 +11,29 @@ namespace GoRogue.PerformanceTests.Regions
     internal static class InnerFromOuterPointMethods
     {
         // GoRogue's current method
-        public static Area GoRogueMethod(RegionMock region)
+        public static void GoRogueMethod(RegionMock region)
         {
-            var outerList = region.OuterPoints.OrderBy(x => x.X).ToList();
-
-            if(outerList.Count == 0)
-                return new Area();
-
             region.InnerPoints = new Area();
 
-            for (int i = outerList[0].X + 1; i < outerList[^1].X; i++)
+            var outerList = region.OuterPoints.OrderBy(x => x.X).ToList();
+
+            for (int i = outerList[0].X; i < outerList[^1].X; i++)
             {
                 List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
                 if(row.Count > 0)
                 {
                     for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
-                        region.InnerPoints.Add(new Point(i, j));
+                        var p = new Point(i, j);
+                        if(!region.OuterPoints.Contains(p) && !region.IsCorner(p))
+                            region.InnerPoints.Add(p);
                     }
                 }
             }
-
-            return region.InnerPoints;
         }
 
         // Method that depends on the ordering of Lines.Get returns.  MUST be used with an ordered line type!
-        public static Area OrderedLineMethod(RegionMock region)
+        public static void OrderedLineMethod(RegionMock region)
         {
             region.InnerPoints = new Area();
 
@@ -104,12 +101,10 @@ namespace GoRogue.PerformanceTests.Regions
                     x -= 1;
                 }
             }
-
-            return region.InnerPoints;
         }
 
         #region Map Area Finder Method
-        public static Area MapAreaFinderMethod(RegionMock region)
+        public static void MapAreaFinderMethod(RegionMock region)
         {
             // Expand bounds one outside
             var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
@@ -130,13 +125,13 @@ namespace GoRogue.PerformanceTests.Regions
                 if (area.Contains(0, 0)) continue;
 
                 region.InnerPoints = area;
-                return region.InnerPoints;
+                return;
             }
 
             throw new Exception("Algorithmic badness occured.");
         }
 
-        public static Area MapAreaFinderArrayViewCacheMethod(RegionMock region)
+        public static void MapAreaFinderArrayViewCacheMethod(RegionMock region)
         {
             // Expand bounds one outside
             var viewBounds = region.OuterPoints.Bounds.Expand(1, 1);
@@ -158,7 +153,7 @@ namespace GoRogue.PerformanceTests.Regions
                 if (area.Contains(0, 0)) continue;
 
                 region.InnerPoints = area;
-                return region.InnerPoints;
+                return;
             }
 
             throw new Exception("Algorithmic badness occured.");
@@ -170,7 +165,7 @@ namespace GoRogue.PerformanceTests.Regions
         #endregion
 
         // Uses the scan-line algorithm to determine inner points.  Source data is _outerPoints, which is an area.
-        public static Area ScanLineAreaContainsMethod(RegionMock region)
+        public static void ScanLineAreaContainsMethod(RegionMock region)
         {
             region.InnerPoints = new Area();
 
@@ -188,8 +183,6 @@ namespace GoRogue.PerformanceTests.Regions
                         region.InnerPoints.Add(x1, y);
                 }
             }
-
-            return region.InnerPoints;
         }
     }
 }

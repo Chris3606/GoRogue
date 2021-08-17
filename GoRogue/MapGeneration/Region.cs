@@ -249,8 +249,9 @@ namespace GoRogue.MapGeneration
                 {
                     for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
-                        if(!_outerPoints.Contains((i,j)) && !IsCorner((i,j)))
-                            _innerPoints.Add((i, j));
+                        var p = new Point(i, j);
+                        if(!_outerPoints.Contains(p) && !IsCorner(p))
+                            _innerPoints.Add(p);
                     }
                 }
             }

@@ -23,14 +23,14 @@ namespace GoRogue.PerformanceTests.Regions
 
         public MultiArea Points;
         public MultiArea OuterPoints;
-        public Area InnerPoints;
+        public Area InnerPoints = null!;
 
         public Area SouthBoundary;
         public Area NorthBoundary;
         public Area EastBoundary;
         public Area WestBoundary;
 
-        public RegionMock(Point northWest, Point northEast, Point southEast, Point southWest, Func<RegionMock, Area> innerCreation, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
+        public RegionMock(Point northWest, Point northEast, Point southEast, Point southWest, Action<RegionMock> innerCreation, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
         {
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
@@ -41,16 +41,16 @@ namespace GoRogue.PerformanceTests.Regions
             EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse));
             NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse));
             OuterPoints = new MultiArea {WestBoundary, NorthBoundary, EastBoundary, SouthBoundary};
-            InnerPoints = innerCreation(this);
+            innerCreation(this);
             Points = new MultiArea {OuterPoints, InnerPoints};
         }
 
-        public static RegionMock Rectangle(Rectangle r, Func<RegionMock, Area> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        public static RegionMock Rectangle(Rectangle r, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             => new RegionMock(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY), innerCreation, algorithm);
 
 
-         public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Func<RegionMock, Area> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+         public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
              var negative = Direction.YIncreasesUpward ? 1 : -1;
 
@@ -62,7 +62,7 @@ namespace GoRogue.PerformanceTests.Regions
              return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
          }
 
-         public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Func<RegionMock, Area> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+         public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
              var negative = Direction.YIncreasesUpward ? 1 : -1;
 
@@ -73,5 +73,8 @@ namespace GoRogue.PerformanceTests.Regions
 
              return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
          }
+
+         public bool IsCorner(Point position)
+             => position == NorthEastCorner || position == NorthWestCorner || position == SouthEastCorner || position == SouthWestCorner;
     }
 }
