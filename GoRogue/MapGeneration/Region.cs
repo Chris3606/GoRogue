@@ -23,6 +23,15 @@ namespace GoRogue.MapGeneration
         /// <param name="algoToUse">which Line-getting algorithm to use</param>
         public Region(Point northWest, Point northEast, Point southEast, Point southWest, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
         {
+            if (northWest.X > northEast.X || southWest.X > southEast.X)
+                throw new ArgumentException("A region's east corners must be east of the corresponding west corners.");
+
+            var invalidNorthSouth = Direction.YIncreasesUpward
+                ? northEast.Y < southEast.Y || northWest.Y < southWest.Y
+                : northEast.Y > southEast.Y || northWest.Y > southWest.Y;
+            if (invalidNorthSouth)
+                throw new ArgumentException("A region's north corners must be north of the corresponding south corners.");
+
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
             NorthWestCorner = northWest;
@@ -33,11 +42,11 @@ namespace GoRogue.MapGeneration
             _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, Algorithm));
             _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, Algorithm));
             _outerPoints = new MultiArea {_westBoundary, _northBoundary, _eastBoundary, _southBoundary};
-            _innerPoints = SetInnerFromOuterPoints();
+            SetInnerFromOuterPoints();
             _points = new MultiArea {_outerPoints, _innerPoints};
         }
 
-        #region properties
+        #region Properties
 
         /// <summary>
         /// Which Line-getting algorithm to use
@@ -67,7 +76,6 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// All points within the region
         /// </summary>
-        public IReadOnlyArea Points => _points;
         private MultiArea _points;
 
         /// <summary>
@@ -80,7 +88,7 @@ namespace GoRogue.MapGeneration
         /// All of the points inside this region, excluding boundary points
         /// </summary>
         public IReadOnlyArea InnerPoints => _innerPoints;
-        private Area _innerPoints;
+        private Area _innerPoints = null!;
 
         /// <summary>
         /// All of the outer points along the southern boundary
@@ -155,8 +163,8 @@ namespace GoRogue.MapGeneration
         public Point this[int index] => _points[index];
         #endregion
 
-        #region access functions
         //Functions to access information about regions
+        #region Data Access Functions
 
         /// <summary>
         /// Returns a string detailing the region's corner locations.
@@ -221,35 +229,31 @@ namespace GoRogue.MapGeneration
         IEnumerator IEnumerable.GetEnumerator() => _points.GetEnumerator();
         #endregion
 
-        #region creation
-        //non-constructor methods to help with Region Creation
+        // Non-constructor methods to help with Region Creation
+        #region Creation
 
         /// <summary>
         /// Gets the inner points from the boundaries
         /// </summary>
         /// <returns></returns>
-        private Area SetInnerFromOuterPoints()
+        private void SetInnerFromOuterPoints()
         {
-            var outerList = _outerPoints.OrderBy(x => x.X).ToList();
-
-            if(outerList.Count == 0)
-                return new Area();
-
             _innerPoints = new Area();
 
-            for (int i = outerList[0].X + 1; i < outerList[^1].X; i++)
+            var outerList = _outerPoints.OrderBy(x => x.X).ToList();
+
+            for (int i = outerList[0].X; i < outerList[^1].X; i++)
             {
                 List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
                 if(row.Count > 0)
                 {
                     for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
-                        _innerPoints.Add(new Point(i, j));
+                        if(!_outerPoints.Contains((i,j)) && !IsCorner((i,j)))
+                            _innerPoints.Add((i, j));
                     }
                 }
             }
-
-            return _innerPoints;
         }
 
         /// <summary>
@@ -273,7 +277,7 @@ namespace GoRogue.MapGeneration
          /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromTopCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
+             var negative = Direction.YIncreasesUpward ? -1 : 1;
 
              Point nw = origin;
              Point ne = origin + new Point(width, 0);
@@ -293,7 +297,7 @@ namespace GoRogue.MapGeneration
          /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
+             var negative = Direction.YIncreasesUpward ? -1 : 1;
 
              Point nw = origin + (height, height * negative);
              Point ne = origin + (height + width, height * negative);
@@ -304,8 +308,9 @@ namespace GoRogue.MapGeneration
          }
         #endregion
 
+        // Functions that transform regions into new ones.  Currently, they all create new regions instead of performing
+        // in-place operations
         #region Transformation
-        //currently, these all return NEW regions, instead of rotating the region in-place
 
         /// <summary>
         /// Moves the Region in the indicated direction.
@@ -379,10 +384,17 @@ namespace GoRogue.MapGeneration
         /// <returns>A region, equal to the original region flipped around the desired X-axis</returns>
         public Region FlipHorizontal(int x)
         {
-            var nw = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
-            var ne = (NorthEastCorner - (x, 0)) * (-1,1) + (x, 0);
-            var se = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
-            var sw = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+            //northwest corner flips to become northeast corner
+            var ne = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
+
+            //northeast corner flips to become northwest corner
+            var nw = (NorthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+
+            //southeast corner flips to become southwest corner
+            var sw = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
+
+            //southwest corner flips to become southeast corner
+            var se = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
 
             return new Region(nw, ne, se, sw, Algorithm);
         }
@@ -394,10 +406,17 @@ namespace GoRogue.MapGeneration
         /// <returns>A region, equal to the original region flipped around the desired Y-axis</returns>
         public Region FlipVertical(int y)
         {
-            var nw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
-            var ne = (NorthEastCorner - (0, y)) * (1, -1) + (0, y);
-            var se = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
-            var sw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
+            //northwest corner flips to become southwest corner
+            var sw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
+
+            //northeast corner flips to become southeast corner
+            var se = (NorthEastCorner - (0, y)) * (1, -1) + (0, y);
+
+            //southeast corner flips to become northeast corner
+            var ne = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
+
+            //southwest corner flips to become northwest corner
+            var nw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
 
             return new Region(nw, ne, se, sw, Algorithm);
         }
@@ -416,14 +435,32 @@ namespace GoRogue.MapGeneration
         /// <param name="xy">Any point which intersects the line around which to transpose</param>
         public Region Transpose(Point xy)
         {
-            var nw = NorthWestCorner - xy;
-            nw = (nw.Y, nw.X) + xy;
-            var ne = NorthEastCorner - xy;
-            ne = (ne.Y, ne.X) + xy;
-            var se = SouthEastCorner - xy;
-            se = (se.Y, se.X) + xy;
-            var sw = SouthWestCorner - xy;
-            sw = (sw.Y, sw.X) + xy;
+            Point nw, ne, se, sw;
+
+            if (Direction.YIncreasesUpward)
+            {
+                //if direction increases upwards, then the northwest-southeast corners flop
+                se = NorthWestCorner - xy;
+                se = (se.Y, se.X) + xy;
+                ne = NorthEastCorner - xy;
+                ne = (ne.Y, ne.X) + xy;
+                nw = SouthEastCorner - xy;
+                nw = (nw.Y, nw.X) + xy;
+                sw = SouthWestCorner - xy;
+                sw = (sw.Y, sw.X) + xy;
+            }
+            else
+            {
+                //if direction increases downwards, then the northeast-southwest corners will flip.
+                nw = NorthWestCorner - xy;
+                nw = (nw.Y, nw.X) + xy;
+                ne = SouthWestCorner - xy;
+                ne = (ne.Y, ne.X) + xy;
+                se = SouthEastCorner - xy;
+                se = (se.Y, se.X) + xy;
+                sw = NorthEastCorner - xy;
+                sw = (sw.Y, sw.X) + xy;
+            }
 
             return new Region(nw, ne, se, sw, Algorithm);
         }
