@@ -2,6 +2,7 @@
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests.Regions
 {
@@ -36,10 +37,17 @@ namespace GoRogue.PerformanceTests.Regions
             NorthEastCorner = northEast;
             NorthWestCorner = northWest;
             SouthWestCorner = southWest;
-            WestBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, algoToUse));
-            SouthBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, algoToUse));
-            EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse));
-            NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse));
+
+            // This isn't a fully accurate max-x value; a more accurate one could be calculated by taking the max x/y
+            // of the corners being used to create the line.  However, it is still mathematically valid.
+            int maxX = Math.Max(NorthEastCorner.X, SouthEastCorner.X);
+            var hasher = new KnownSizeHasher(maxX);
+
+            // Determine outer boundaries between each corner
+            WestBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, algoToUse), hasher);
+            SouthBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
+            EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
+            NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
             OuterPoints = new MultiArea {WestBoundary, NorthBoundary, EastBoundary, SouthBoundary};
             innerCreation(this);
             Points = new MultiArea {OuterPoints, InnerPoints};

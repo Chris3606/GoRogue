@@ -57,6 +57,7 @@ namespace GoRogue.PerformanceTests.Regions
         }
         #endregion
 
+        /*
         // Same method implemented in GoRogue region, but implemented in mock test framework
         #region GoRogue Method (implemented in mock)
         [Benchmark]
@@ -166,5 +167,6 @@ namespace GoRogue.PerformanceTests.Regions
             return RegionMock.ParallelogramFromBottomCorner(Origin, Size, Size, InnerFromOuterPointMethods.ScanLineAreaContainsMethod, LineAlgorithm);
         }
         #endregion
+        */
     }
 }

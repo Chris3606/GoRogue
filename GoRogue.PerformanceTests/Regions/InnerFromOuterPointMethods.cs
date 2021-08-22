@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests.Regions
 {
@@ -13,7 +14,8 @@ namespace GoRogue.PerformanceTests.Regions
         // GoRogue's current method
         public static void GoRogueMethod(RegionMock region)
         {
-            region.InnerPoints = new Area();
+            int maxX = Math.Max(region.NorthEastCorner.X, region.SouthEastCorner.X);
+            region.InnerPoints = new Area(new KnownSizeHasher(maxX));
 
             var outerList = region.OuterPoints.OrderBy(x => x.X).ToList();
 
@@ -35,7 +37,8 @@ namespace GoRogue.PerformanceTests.Regions
         // Method that depends on the ordering of Lines.Get returns.  MUST be used with an ordered line type!
         public static void OrderedLineMethod(RegionMock region)
         {
-            region.InnerPoints = new Area();
+            int maxX = Math.Max(region.NorthEastCorner.X, region.SouthEastCorner.X);
+            region.InnerPoints = new Area(new KnownSizeHasher(maxX));
 
             // Guaranteed to be in order from North to South
             foreach (var point in region.WestBoundary)
@@ -167,7 +170,8 @@ namespace GoRogue.PerformanceTests.Regions
         // Uses the scan-line algorithm to determine inner points.  Source data is _outerPoints, which is an area.
         public static void ScanLineAreaContainsMethod(RegionMock region)
         {
-            region.InnerPoints = new Area();
+            int maxX = Math.Max(region.NorthEastCorner.X, region.SouthEastCorner.X);
+            region.InnerPoints = new Area(new KnownSizeHasher(maxX));
 
             var outerBounds = region.OuterPoints.Bounds;
             for (int y = outerBounds.MinExtentY; y <= outerBounds.MaxExtentY; y++)
