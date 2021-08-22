@@ -73,7 +73,7 @@ namespace GoRogue.MapGeneration
         /// will never be re-used.
         /// </summary>
         /// <param name="map">
-        /// _grid view indicating which cells should be considered part of a map area and which should not.
+        /// Grid view indicating which cells should be considered part of a map area and which should not.
         /// </param>
         /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
         /// <param name="pointHasher">
@@ -88,15 +88,38 @@ namespace GoRogue.MapGeneration
         }
 
         /// <summary>
+        /// Convenience function that creates a MapAreaFinder and returns the result of that
+        /// instance's <see cref="FillFrom(Point, bool)" /> function. Intended to be used for cases
+        /// in which the area finder will never be re-used.
+        /// </summary>
+        /// <param name="map">
+        /// Grid view indicating which cells should be considered part of a map area and which should not.
+        /// </param>
+        /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
+        /// <param name="position">The position to start from.</param>
+        /// <param name="pointHasher">
+        /// Point hashing algorithm to use for the areas created.  If set to null the default point hashing algorithm
+        /// will be used.
+        /// </param>
+        /// <returns>An IEnumerable of each (unique) map area.</returns>
+        public static Area? FillFrom(IGridView<bool> map, AdjacencyRule adjacencyMethod, Point position,
+                                     IEqualityComparer<Point>? pointHasher = null)
+        {
+            var areaFinder = new MapAreaFinder(map, adjacencyMethod, pointHasher);
+            return areaFinder.FillFrom(position);
+        }
+
+        /// <summary>
         /// Calculates the list of map areas, returning each unique map area.
         /// </summary>
+        /// <param name="clearVisited">
+        /// Whether or not to reset all cells to unvisited before finding areas.  Visited positions cannot be included
+        /// in any of the resulting areas.
+        /// </param>
         /// <returns>An IEnumerable of each (unique) map area.</returns>
-        public IEnumerable<Area> MapAreas()
+        public IEnumerable<Area> MapAreas(bool clearVisited = true)
         {
-            if (_visited == null || _visited.GetLength(1) != AreasView.Height || _visited.GetLength(0) != AreasView.Width)
-                _visited = new bool[AreasView.Width, AreasView.Height];
-            else
-                Array.Clear(_visited, 0, _visited.Length);
+            CheckAndResetVisited(clearVisited);
 
             for (var x = 0; x < AreasView.Width; x++)
                 for (var y = 0; y < AreasView.Height; y++)
@@ -104,9 +127,54 @@ namespace GoRogue.MapGeneration
                     // Don't bother with a function call or any allocation, because the starting point isn't valid
                     // (either can't be in any area, or already in another one found).
                     var position = new Point(x, y);
-                    if (AreasView[position] && !_visited[position.X, position.Y])
+                    if (AreasView[position] && !_visited![position.X, position.Y])
                         yield return Visit(new Point(x, y));
                 }
+        }
+
+        /// <summary>
+        /// Calculates and returns an area representing every point connected to the start point given.
+        /// </summary>
+        /// <param name="position">Position to start from.</param>
+        /// <param name="clearVisited">
+        /// Whether or not to reset all cells to unvisited before finding areas.  Visited positions cannot be included
+        /// in the resulting area.
+        /// </param>
+        /// <returns>
+        /// An area representing every point connected to the start point given, or null if there is no
+        /// valid area starting from that point.
+        /// </returns>
+        public Area? FillFrom(Point position, bool clearVisited = true)
+        {
+            if (!AreasView[position] || _visited != null && _visited[position.X, position.Y])
+                return null;
+
+            CheckAndResetVisited(clearVisited);
+
+            return Visit(position);
+        }
+
+        /// <summary>
+        /// Resets all positions to "unvisited".  Called automatically if area-finding algorithms have the reset flag
+        /// set to true.
+        /// </summary>
+        public void ResetVisitedPositions()
+        {
+            if (_visited == null || _visited.GetLength(1) != AreasView.Height || _visited.GetLength(0) != AreasView.Width)
+                _visited = new bool[AreasView.Width, AreasView.Height];
+            else
+                Array.Clear(_visited, 0, _visited.Length);
+        }
+
+        private void CheckAndResetVisited(bool canClearVisited)
+        {
+            if (canClearVisited)
+                ResetVisitedPositions();
+            else if (_visited == null) // Allocate
+                _visited = new bool[AreasView.Width, AreasView.Height];
+            else if (_visited.GetLength(1) != AreasView.Height || _visited.GetLength(0) != AreasView.Width)
+                throw new ArgumentException(
+                    "Fill algorithm not set to clear visited, but the map view size has changed since it was allocated.", nameof(canClearVisited));
         }
 
         private Area Visit(Point position)
