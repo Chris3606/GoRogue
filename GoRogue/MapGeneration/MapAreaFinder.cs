@@ -101,22 +101,18 @@ namespace GoRogue.MapGeneration
             for (var x = 0; x < AreasView.Width; x++)
                 for (var y = 0; y < AreasView.Height; y++)
                 {
-                    var area = Visit(new Point(x, y));
-
-                    if (!ReferenceEquals(null, area) && area.Count != 0)
-                        yield return area;
+                    // Don't bother with a function call or any allocation, because the starting point isn't valid
+                    // (either can't be in any area, or already in another one found).
+                    var position = new Point(x, y);
+                    if (AreasView[position] && !_visited[position.X, position.Y])
+                        yield return Visit(new Point(x, y));
                 }
         }
 
-        private Area? Visit(Point position)
+        private Area Visit(Point position)
         {
             // NOTE: This function can safely assume that _visited is NOT null, as this is enforced
             // by every public function that calls this one.
-
-            // Don't bother allocating a MapArea, because the starting point isn't valid (either not in any area,
-            // or already in another one found.
-            if (!AreasView[position] || _visited![position.X, position.Y])
-                return null;
 
             var stack = new Stack<Point>();
             var area = new Area(PointHasher);
