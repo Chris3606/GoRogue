@@ -33,13 +33,20 @@ namespace GoRogue.MapGeneration
         private readonly MultiArea _points;
 
         /// <summary>
+        /// Which Line-Drawing algorithm to use
+        /// </summary>
+        public Lines.Algorithm LineAlgorithm { get; set; }
+
+        /// <summary>
         /// Creates a new Polygon, with corners at the provided points
         /// </summary>
         /// <param name="corners">Each corner of the polygon, in the order in which they are connected</param>
+        /// <param name="algoToUse">Which Line Algorithm to use</param>
         /// <remarks>It is recommended to pass the points in clockwise</remarks>
-        public PolygonArea(IEnumerable<Point> corners)
+        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algoToUse = Lines.Algorithm.BresenhamOrdered)
         {
             _corners = corners.ToList();
+            LineAlgorithm = algoToUse;
             if (_corners.Count < 3)
                 throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
 
@@ -56,10 +63,10 @@ namespace GoRogue.MapGeneration
 
             for (int i = 0; i < count - 1; i++)
             {
-                _outerPoints.Add(new Area(Lines.Get(_corners[i], _corners[i+1])));
+                _outerPoints.Add(new Area(Lines.Get(_corners[i], _corners[i+1], LineAlgorithm)));
             }
 
-            _outerPoints.Add(new Area(Lines.Get(_corners[count - 1], _corners[0])));
+            _outerPoints.Add(new Area(Lines.Get(_corners[count - 1], _corners[0], LineAlgorithm)));
             _points.Add(_outerPoints);
         }
 
@@ -134,27 +141,43 @@ namespace GoRogue.MapGeneration
                     #region take three
                     if(_outerPoints.Contains((x,y)))
                     {
-                        var lines = GetBoundariesContaining(x, y).ToList();
-                        var count = lines.Count;
+                        var lines = GetBoundariesContaining(x, y).ToArray();
+                        var count = lines.Length;
 
-                        if (count == 1 && lastLine != lines[0])
+                        if (count == 1)
                         {
-                            lastLine = lines[0];
-                            inner = !inner;
+                            if (lastLine != lines[0])
+                            {
+                                lastLine = lines[0];
+                                if(lastLine.First().Y < lastLine.Last().Y)
+                                    tally++;
+                                if(lastLine.First().Y > lastLine.Last().Y)
+                                    tally--;
+                            }
                         }
-                        else if (count == 1 && lastLine == lines[0])
+                        else if (count == 2)
                         {
-                            continue;
+
+                            //corner
+                            if (lines[0].Last() == lines[1].First())
+                            {
+                                //lines[0] is the least-clockwise line
+                                lastLine = lines[1];
+                                //inner = !inner;
+                            }
+                            else if (lines[0].First() == lines[1].Last())
+                            {
+                                //lines[0] is the most-clockwise line
+                                lastLine = lines[0];
+                            }
                         }
-                        else if (count == 2 && lastLine == lines[0])
-                        {
-                            lastLine = lines[1];
-                            inner = !inner;
-                        }
+
+                        inner = tally != 0;
                     }
 
                     if(inner && !_outerPoints.Contains(x,y))
                         _innerPoints.Add(x,y);
+
                     #endregion
                 }
             }
@@ -167,7 +190,7 @@ namespace GoRogue.MapGeneration
             => _outerPoints.SubAreas.Where(sa => sa.Contains(x, y));
 
         /// <inheritdoc/>
-        public bool Matches(IReadOnlyArea other) => _points.Matches(other);
+        public bool Matches(IReadOnlyArea? other) => _points.Matches(other);
 
         /// <inheritdoc/>
         public IEnumerator<Point> GetEnumerator() => _points.GetEnumerator();
