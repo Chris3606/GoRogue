@@ -39,7 +39,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             }
         }
 
-        /*
+
         [Benchmark]
         public List<Area> GoRogueCurrentAreaFinder()
         {
@@ -58,13 +58,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             return OriginalSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
 
-        [Benchmark]
-        public List<Area> CachedDirectionAreaFinder()
-        {
-            return CachedDirectionMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
-        }
-        */
-
+        /*
         [Benchmark]
         public List<Area> AreaContainsDefaultHashAreaFinder()
         {

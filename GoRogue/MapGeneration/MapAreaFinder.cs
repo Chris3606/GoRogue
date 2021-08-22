@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -20,16 +21,32 @@ namespace GoRogue.MapGeneration
     public class MapAreaFinder
     {
         private bool[,]? _visited;
+        private Direction[] _adjacentDirs = null!;
 
+        private AdjacencyRule _adjacencyMethod;
         /// <summary>
         /// The method used for determining connectivity of the grid.
         /// </summary>
-        public AdjacencyRule AdjacencyMethod;
+        public AdjacencyRule AdjacencyMethod
+        {
+            get => _adjacencyMethod;
+            set
+            {
+                _adjacencyMethod = value;
+                _adjacentDirs = _adjacencyMethod.DirectionsOfNeighbors().ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Point hashing algorithm to use for the areas created.  If set to null, the default point hashing algorithm
+        /// will be used.
+        /// </summary>
+        public IEqualityComparer<Point>? PointHasher;
 
         /// <summary>
         /// Grid view indicating which cells should be considered part of a map area and which should not.
         /// </summary>
-        public IGridView<bool> _areasView;
+        public IGridView<bool> AreasView;
 
         /// <summary>
         /// Constructor.
@@ -38,11 +55,16 @@ namespace GoRogue.MapGeneration
         /// Grid view indicating which cells should be considered part of a map area and which should not.
         /// </param>
         /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
-        public MapAreaFinder(IGridView<bool> areasView, AdjacencyRule adjacencyMethod)
+        /// <param name="pointHasher">
+        /// Point hashing algorithm to use for the areas created.  If set to null the default point hashing algorithm
+        /// will be used.
+        /// </param>
+        public MapAreaFinder(IGridView<bool> areasView, AdjacencyRule adjacencyMethod, IEqualityComparer<Point>? pointHasher = null)
         {
-            _areasView = areasView;
+            AreasView = areasView;
             _visited = null;
             AdjacencyMethod = adjacencyMethod;
+            PointHasher = pointHasher;
         }
 
         /// <summary>
@@ -54,10 +76,14 @@ namespace GoRogue.MapGeneration
         /// _grid view indicating which cells should be considered part of a map area and which should not.
         /// </param>
         /// <param name="adjacencyMethod">The method used for determining connectivity of the grid.</param>
+        /// <param name="pointHasher">
+        /// Point hashing algorithm to use for the areas created.  If set to null the default point hashing algorithm
+        /// will be used.
+        /// </param>
         /// <returns>An IEnumerable of each (unique) map area.</returns>
-        public static IEnumerable<Area> MapAreasFor(IGridView<bool> map, AdjacencyRule adjacencyMethod)
+        public static IEnumerable<Area> MapAreasFor(IGridView<bool> map, AdjacencyRule adjacencyMethod, IEqualityComparer<Point>? pointHasher = null)
         {
-            var areaFinder = new MapAreaFinder(map, adjacencyMethod);
+            var areaFinder = new MapAreaFinder(map, adjacencyMethod, pointHasher);
             return areaFinder.MapAreas();
         }
 
@@ -67,13 +93,13 @@ namespace GoRogue.MapGeneration
         /// <returns>An IEnumerable of each (unique) map area.</returns>
         public IEnumerable<Area> MapAreas()
         {
-            if (_visited == null || _visited.GetLength(1) != _areasView.Height || _visited.GetLength(0) != _areasView.Width)
-                _visited = new bool[_areasView.Width, _areasView.Height];
+            if (_visited == null || _visited.GetLength(1) != AreasView.Height || _visited.GetLength(0) != AreasView.Width)
+                _visited = new bool[AreasView.Width, AreasView.Height];
             else
                 Array.Clear(_visited, 0, _visited.Length);
 
-            for (var x = 0; x < _areasView.Width; x++)
-                for (var y = 0; y < _areasView.Height; y++)
+            for (var x = 0; x < AreasView.Width; x++)
+                for (var y = 0; y < AreasView.Height; y++)
                 {
                     var area = Visit(new Point(x, y));
 
@@ -84,32 +110,37 @@ namespace GoRogue.MapGeneration
 
         private Area? Visit(Point position)
         {
-            // Don't bother allocating a MapArea, because the starting point isn't valid.
-            if (!_areasView[position])
+            // NOTE: This function can safely assume that _visited is NOT null, as this is enforced
+            // by every public function that calls this one.
+
+            // Don't bother allocating a MapArea, because the starting point isn't valid (either not in any area,
+            // or already in another one found.
+            if (!AreasView[position] || _visited![position.X, position.Y])
                 return null;
 
             var stack = new Stack<Point>();
-            var area = new Area();
+            var area = new Area(PointHasher);
             stack.Push(position);
 
             while (stack.Count != 0)
             {
                 position = stack.Pop();
-                // Already visited, or not part of any mapArea.  Also only called from functions that have allocated
-                // visited
-                if (_visited![position.X, position.Y] || !_areasView[position])
+                // Already visited, or not part of any mapArea (eg. visited since it was added via another path)
+                if (_visited![position.X, position.Y] || !AreasView[position])
                     continue;
 
                 area.Add(position);
                 _visited[position.X, position.Y] = true;
 
-                foreach (var c in AdjacencyMethod.Neighbors(position))
+                for (int i = 0; i < _adjacentDirs.Length; i++)
                 {
+                    var c = position + _adjacentDirs[i];
+
                     // Out of bounds, thus not actually a neighbor
-                    if (c.X < 0 || c.Y < 0 || c.X >= _areasView.Width || c.Y >= _areasView.Height)
+                    if (c.X < 0 || c.Y < 0 || c.X >= AreasView.Width || c.Y >= AreasView.Height)
                         continue;
 
-                    if (_areasView[c] && !_visited[c.X, c.Y])
+                    if (AreasView[c] && !_visited[c.X, c.Y])
                         stack.Push(c);
                 }
             }
