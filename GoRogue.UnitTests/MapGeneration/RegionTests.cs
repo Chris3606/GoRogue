@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
@@ -33,6 +35,36 @@ namespace GoRogue.UnitTests.MapGeneration
 
             _output.WriteLine("Test Region:");
             _output.WriteLine(GetRegionString(_area));
+        }
+
+        [Fact]
+        public void RegionFromRectangle()
+        {
+            var rect = new Rectangle(0, 0, 15, 10);
+            var region = Region.Rectangle(rect);
+            Assert.Equal(rect.Area, region.Count);
+            Assert.Equal(rect.PerimeterPositions().Count(), region.OuterPoints.Count);
+            Assert.Equal(new HashSet<Point>(rect.Expand(-1, -1).Positions()), new HashSet<Point>(region.InnerPoints));
+        }
+
+        [Fact]
+        public void RegionFromParallelogramTopCorner()
+        {
+            var region = Region.ParallelogramFromTopCorner((0, 0), 15, 10);
+
+            // TODO: Assert something useful
+            _output.WriteLine("\nRegion from Parallelogram Top Corner:");
+            _output.WriteLine(GetRegionString(region));
+        }
+
+        [Fact]
+        public void RegionFromParallelogramBottomCorner()
+        {
+            var region = Region.ParallelogramFromBottomCorner((15, 10), 15, 10);
+
+            // TODO: Assert something useful
+            _output.WriteLine("\nRegion from Parallelogram Bottom Corner:");
+            _output.WriteLine(GetRegionString(region));
         }
 
         [Fact]
