@@ -139,6 +139,7 @@ namespace GoRogue.MapGeneration
                     #endregion
 
                     #region take three
+                    /*
                     if(_outerPoints.Contains((x,y)))
                     {
                         var lines = GetBoundariesContaining(x, y).ToArray();
@@ -177,10 +178,58 @@ namespace GoRogue.MapGeneration
 
                     if(inner && !_outerPoints.Contains(x,y))
                         _innerPoints.Add(x,y);
+                    */
+                    #endregion
 
+                    #region take four
+                    //non-zero winding
+                    if (_outerPoints.Contains(x, y))
+                    {
+                        var boundaries = GetBoundariesContaining(x, y);
+
+                        if (boundaries.Count() == 1)
+                        {
+                            var line = boundaries.Single();
+                            if (lastLine != line)
+                            {
+                                lastLine = line;
+                                tally += Wind(lastLine);
+                            }
+                        }
+                        foreach (var boundary in boundaries)
+                        {
+                            if (lastLine == boundary)
+                            {
+
+                            }
+                            else
+                            {
+                                lastLine = boundary;
+                                tally += Wind(lastLine);
+                            }
+                        }
+                    }
+
+                    inner = tally != 0;
+
+                    if(inner && !_outerPoints.Contains(x,y))
+                        _innerPoints.Add(x,y);
                     #endregion
                 }
             }
+        }
+
+        private int Wind(IReadOnlyArea line)
+        {
+            var first = line.First();
+            var last = line.Last();
+
+            if (first.Y < last.Y)
+                return 1;
+            else if (first.Y > last.Y)
+                return -1;
+            else
+                return 0;
         }
 
         private IReadOnlyArea? GetBoundaryContaining(int x, int y)
