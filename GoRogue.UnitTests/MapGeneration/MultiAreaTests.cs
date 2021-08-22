@@ -14,7 +14,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
         private static readonly IEnumerable<Area> _subAreas = new[]
         {
-            new Area((1, 2), (3, 4), (5, 6)), new Area((9, 10), (11, 12), (14, 13))
+            new Area(null, (1, 2), (3, 4), (5, 6)), new Area(null, (9, 10), (11, 12), (14, 13))
         };
 
         private static readonly Rectangle _boundsOutsideAreas = new Rectangle(0, 0, 50, 50);
@@ -42,7 +42,7 @@ namespace GoRogue.UnitTests.MapGeneration
         public void CreateFromSingleArea()
         {
             // Create area for testing
-            var subArea = new Area((1, 2), (3, 4), (5, 6));
+            var subArea = new Area(null, (1, 2), (3, 4), (5, 6));
             var area = new MultiArea(subArea);
 
             // Should have one sub-area
@@ -95,7 +95,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             foreach (var point in _boundsOutsideAreas.Positions())
             {
-                var compArea = new Area(point);
+                var compArea = new Area(null, point);
                 bool subAreasContain = area.SubAreas.Any(i => i.Contains(compArea));
                 Assert.Equal(subAreasContain, area.Contains(compArea));
             }
@@ -107,7 +107,7 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             foreach (var point in _boundsOutsideAreas.Positions())
             {
-                var compArea = new Area(point);
+                var compArea = new Area(null, point);
                 bool subAreasIntersect = area.SubAreas.Any(i => i.Intersects(compArea));
                 Assert.Equal(subAreasIntersect, area.Intersects(compArea));
             }

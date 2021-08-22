@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests.MultiAreas
 {
@@ -31,9 +32,10 @@ namespace GoRogue.PerformanceTests.MultiAreas
         [GlobalSetup]
         public void GlobalSetup()
         {
+            // Use KnownSizeHasher so that the hashing algorithm is very efficient for the use case
             var areas = new Area[NumAreas];
             for (int i = 0; i < areas.Length; i++)
-                areas[i] = new Area(); // TODO: Known size hasher
+                areas[i] = new Area(new KnownSizeHasher(Size));
 
             var divisor = Size * Size / NumAreas;
             for (int i = 0; i < Size * Size; i++)
