@@ -12,7 +12,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders.Implementations
     /// </summary>
     public class AreaContainsSizeHashMapAreaFinder
     {
-        private MultiArea _foundAreas = null!;
+        private readonly MultiArea _foundAreas;
 
         public AdjacencyRule AdjacencyMethod;
 
@@ -22,6 +22,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders.Implementations
         {
             AreasView = areasView;
             AdjacencyMethod = adjacencyMethod;
+            _foundAreas = new MultiArea();
         }
 
         public static IEnumerable<Area> MapAreasFor(IGridView<bool> map, AdjacencyRule adjacencyMethod)
@@ -32,7 +33,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders.Implementations
 
         public IEnumerable<Area> MapAreas()
         {
-            _foundAreas = new MultiArea();
+            _foundAreas.Clear();
 
             for (var x = 0; x < AreasView.Width; x++)
                 for (var y = 0; y < AreasView.Height; y++)
@@ -56,6 +57,8 @@ namespace GoRogue.PerformanceTests.MapAreaFinders.Implementations
 
             var stack = new Stack<Point>();
             var area = new Area(new KnownSizeHasher(AreasView.Width));
+            _foundAreas.Add(area);
+
             stack.Push(position);
 
             while (stack.Count != 0)

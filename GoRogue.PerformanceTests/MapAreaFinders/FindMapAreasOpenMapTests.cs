@@ -39,6 +39,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             }
         }
 
+        /*
         [Benchmark]
         public List<Area> GoRogueCurrentAreaFinder()
         {
@@ -62,6 +63,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
         {
             return CachedDirectionMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
+        */
 
         [Benchmark]
         public List<Area> AreaContainsDefaultHashAreaFinder()
@@ -69,12 +71,14 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             return AreaContainsDefaultHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
 
+
         [Benchmark]
         public List<Area> AreaContainsSizeHashAreaFinder()
         {
             return AreaContainsSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
 
+        /*
         [Benchmark]
         public List<Area> HashSetDefaultHashAreaFinder()
         {
@@ -86,5 +90,6 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
         {
             return HashSetSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
+        */
     }
 }

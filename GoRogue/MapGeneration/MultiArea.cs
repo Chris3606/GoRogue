@@ -117,6 +117,11 @@ namespace GoRogue.MapGeneration
         public void AddRange(IEnumerable<IReadOnlyArea> subAreas) => _subAreas.AddRange(subAreas);
 
         /// <summary>
+        /// Clears all sub-areas from the MultiArea.
+        /// </summary>
+        public void Clear() => _subAreas.Clear();
+
+        /// <summary>
         /// Removes the given sub-area from the MultiArea.
         /// </summary>
         /// <param name="subArea">The sub-area to remove.</param>
