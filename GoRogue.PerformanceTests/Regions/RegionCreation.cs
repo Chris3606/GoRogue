@@ -20,8 +20,7 @@ namespace GoRogue.PerformanceTests.Regions
     {
         #region Test Parameters
         [UsedImplicitly]
-        //[Params(10, 50, 100, 200, 500)]
-        [Params(10)]
+        [Params(10, 50, 100, 200, 500)]
         public int Size;
 
         // Tests currently use DDA (which is NOT Region's current default), because one of the methods being tested
@@ -57,7 +56,7 @@ namespace GoRogue.PerformanceTests.Regions
         }
         #endregion
 
-        /*
+
         // Same method implemented in GoRogue region, but implemented in mock test framework
         #region GoRogue Method (implemented in mock)
         [Benchmark]
@@ -145,6 +144,10 @@ namespace GoRogue.PerformanceTests.Regions
             return RegionMock.ParallelogramFromBottomCorner(Origin, Size, Size, InnerFromOuterPointMethods.MapAreaFinderArrayViewCacheMethod, LineAlgorithm);
         }
         #endregion
+
+        /*
+
+         // NOTE: Currently commented because the implementations are buggy and incomplete
 
         // Implements scan-line technique, using `_outerPoints.Contains` on each value of a row  to determine intersect
         // points
