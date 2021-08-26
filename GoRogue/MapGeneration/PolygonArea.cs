@@ -68,172 +68,39 @@ namespace GoRogue.MapGeneration
 
             _outerPoints.Add(new Area(Lines.Get(_corners[count - 1], _corners[0], LineAlgorithm)));
             _points.Add(_outerPoints);
+
         }
 
         private void SetInnerPoints()
         {
-            int tally;
-            bool inner;
             var bounds = _points.Bounds;
             for(int y = bounds.MinExtentY; y < bounds.MaxExtentY; y++)
             {
                 IReadOnlyArea? lastLine = null;
-                tally = 0;
-                inner = false;
+                var linesEncountered = new List<IReadOnlyArea>();
                 for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
-                    #region take one
-                    /*
-                        if(_corners.Contains((x,y)))
-                        {
-                            continue;
-                        }
-                        else if (lastLine != null && lastLine.Contains(x,y))
-                        {
-                            continue;
-                        }
-                        else if(_outerPoints.Contains((x,y)))
-                        {
-                            lastLine = GetBoundaryContaining(x,y)!;
-
-                            if(lastLine.First().Y < lastLine.Last().Y)
-                                tally++;
-                            if(lastLine.First().Y > lastLine.Last().Y)
-                                tally--;
-                        }
-                        else
-                        {
-                            inner = tally != 0;
-                        }
-
-                        if(inner && !_outerPoints.Contains(x,y))
-                            _innerPoints.Add(x,y);
-                    */
-                    #endregion
-
-                    #region take two
-                    /*
-                    if(_corners.Contains((x,y)))
-                    {
-                        continue;
-                    }
-                    else if (lastLine != null && lastLine.Contains(x,y))
-                    {
-                        continue;
-                    }
-                    else if(_outerPoints.Contains((x,y)))
-                    {
-                        var lines = GetBoundariesContaining(x, y);
-                        var count = lines.Count();
-
-                        if (count % 2 == 1)
-                            inner = !inner;
-
-                        lastLine = lines.Last();
-
-                    }
-
-                    if(inner && !_outerPoints.Contains(x,y))
-                        _innerPoints.Add(x,y);
-                    */
-                    #endregion
-
-                    #region take three
-                    /*
-                    if(_outerPoints.Contains((x,y)))
-                    {
-                        var lines = GetBoundariesContaining(x, y).ToArray();
-                        var count = lines.Length;
-
-                        if (count == 1)
-                        {
-                            if (lastLine != lines[0])
-                            {
-                                lastLine = lines[0];
-                                if(lastLine.First().Y < lastLine.Last().Y)
-                                    tally++;
-                                if(lastLine.First().Y > lastLine.Last().Y)
-                                    tally--;
-                            }
-                        }
-                        else if (count == 2)
-                        {
-
-                            //corner
-                            if (lines[0].Last() == lines[1].First())
-                            {
-                                //lines[0] is the least-clockwise line
-                                lastLine = lines[1];
-                                //inner = !inner;
-                            }
-                            else if (lines[0].First() == lines[1].Last())
-                            {
-                                //lines[0] is the most-clockwise line
-                                lastLine = lines[0];
-                            }
-                        }
-
-                        inner = tally != 0;
-                    }
-
-                    if(inner && !_outerPoints.Contains(x,y))
-                        _innerPoints.Add(x,y);
-                    */
-                    #endregion
-
-                    #region take four
-                    //non-zero winding
                     if (_outerPoints.Contains(x, y))
                     {
-                        var boundaries = GetBoundariesContaining(x, y);
-
-                        if (boundaries.Count() == 1)
+                        foreach (var boundary in GetBoundariesContaining(x, y))
                         {
-                            var line = boundaries.Single();
-                            if (lastLine != line)
+                            if (boundary.Any(p => p.Y < y))
                             {
-                                lastLine = line;
-                                tally += Wind(lastLine);
-                            }
-                        }
-                        foreach (var boundary in boundaries)
-                        {
-                            if (lastLine == boundary)
-                            {
-
-                            }
-                            else
-                            {
-                                lastLine = boundary;
-                                tally += Wind(lastLine);
+                                if (!linesEncountered.Contains(boundary))
+                                {
+                                    linesEncountered.Add(boundary);
+                                }
                             }
                         }
                     }
-
-                    inner = tally != 0;
-
-                    if(inner && !_outerPoints.Contains(x,y))
-                        _innerPoints.Add(x,y);
-                    #endregion
+                    else
+                    {
+                        if(linesEncountered.Count % 2 == 1)
+                            _innerPoints.Add(x,y);
+                    }
                 }
             }
         }
-
-        private int Wind(IReadOnlyArea line)
-        {
-            var first = line.First();
-            var last = line.Last();
-
-            if (first.Y < last.Y)
-                return 1;
-            else if (first.Y > last.Y)
-                return -1;
-            else
-                return 0;
-        }
-
-        private IReadOnlyArea? GetBoundaryContaining(int x, int y)
-            => _outerPoints.SubAreas.FirstOrDefault(sa => sa.Contains(x, y));
 
         private IEnumerable<IReadOnlyArea> GetBoundariesContaining(int x, int y)
             => _outerPoints.SubAreas.Where(sa => sa.Contains(x, y));
