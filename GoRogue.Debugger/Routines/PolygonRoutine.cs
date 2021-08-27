@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
-using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -15,8 +13,9 @@ namespace GoRogue.Debugger.Routines
         // The Polygons to display
         private readonly List<PolygonArea> _polygons = new List<PolygonArea>();
 
+        private int _cornerAmount = 3;
         // _grid view set to indicate current state of each tile, so that it can be efficiently rendered.
-        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(300, 300);
+        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(100, 30);
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
         /// <inheritdoc />
         public IReadOnlyList<(string name, IGridView<char> view)> Views => _views.AsReadOnly();
@@ -39,7 +38,8 @@ namespace GoRogue.Debugger.Routines
             // Revert all points in current regions back to walls
             RemovePolygonsFromMap();
 
-            //todo: transform
+            _polygons.Clear();
+            _polygons.Add(Polygon(++_cornerAmount));
 
             // Update map to reflect new regions
             ApplyPolygonsToMap();
@@ -51,7 +51,11 @@ namespace GoRogue.Debugger.Routines
             // Revert all points in current regions back to walls
             RemovePolygonsFromMap();
 
-            //todo: transform
+            if (_cornerAmount > 3)
+            {
+                _polygons.Clear();
+                _polygons.Add(Polygon(--_cornerAmount));
+            }
 
             // Update map to reflect new regions
             ApplyPolygonsToMap();
@@ -64,25 +68,48 @@ namespace GoRogue.Debugger.Routines
             foreach (var pos in _map.Positions())
                 _map[pos] = TileState.Wall;
 
+            _polygons.Add(Polygon(_cornerAmount));
+
+            // Update map values based on regions
+            ApplyPolygonsToMap();
+        }
+
+        private PolygonArea Polygon(int cornerCount)
+        {
             var midPoint = new Point(_map.Width / 2, _map.Height / 2);
+            var dim = _map.Width < _map.Height ? _map.Width : _map.Height;
             var corners = new List<Point>();
-            //go around a circle three times in increments of 35 degrees
-            for (int i = 0; i < 360; i += 16)
+            bool star = false;
+            bool inner = false;
+            int radius;
+            //draw simple shapes up to hexagons
+            if(cornerCount >= 7)
+            {
+                cornerCount *= 2;
+                star = true;
+            }
+
+            for (int i = 0; i < 360; i += 360 / cornerCount)
             {
                 //each full rotation, increase the distance from the center we're placing our polygons
-                int radius = (i / 16) % 2 == 0 ? 24 : 10;
+                if (star)
+                {
+                    if (inner)
+                        radius = dim / 4;
+                    else
+                        radius = dim * 3 / 4;
+
+                    inner = !inner;
+                }
+                else
+                    radius = dim * 3 / 4;
 
                 var corner = new PolarCoordinate(radius, SadRogue.Primitives.MathHelpers.ToRadian(i)).ToCartesian();
                 corner += midPoint;
                 corners.Add(corner);
-
             }
-            //just one for now
-            var polygon = new PolygonArea(corners);
-            _polygons.Add(polygon);
 
-            // Update map values based on regions
-            ApplyPolygonsToMap();
+            return new PolygonArea(corners);
         }
 
         // Update map to effectively revert all region positions back to walls
