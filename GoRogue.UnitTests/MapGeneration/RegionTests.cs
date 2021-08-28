@@ -42,8 +42,10 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             var rect = new Rectangle(0, 0, 15, 10);
             var region = Region.Rectangle(rect);
-            Assert.Equal(rect.Area, region.Count);
-            Assert.Equal(rect.PerimeterPositions().Count(), region.OuterPoints.Count);
+
+            //Each Corner is included in two boundaries, so total number of points is offset by 4
+            Assert.Equal(rect.Area + 4, region.Count);
+            Assert.Equal(rect.PerimeterPositions().Count() + 4, region.OuterPoints.Count);
             Assert.Equal(new HashSet<Point>(rect.Expand(-1, -1).Positions()), new HashSet<Point>(region.InnerPoints));
         }
 
