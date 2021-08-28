@@ -8,11 +8,6 @@ namespace GoRogue.Debugger
     {
         Wall,
         Floor,
-        InnerRegionPoint,
-        OuterRegionPoint,
         Door,
-        SpiroNext,
-        SpiroNow,
-        SpiroLast
     }
 }

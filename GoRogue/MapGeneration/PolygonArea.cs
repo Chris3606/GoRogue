@@ -40,26 +40,35 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Creates a new Polygon, with corners at the provided points
         /// </summary>
-        /// <param name="corners">Each corner of the polygon, in the order in which they are connected</param>
+        /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
         public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
         {
             //corner initialization
-            if (corners is List<Point> crnrs)
-                _corners = crnrs;
-            else
-                _corners = corners.ToList();
-
-            if (_corners.Count < 3)
-                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-
-            //boundary initialization
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
-
+            _corners = corners.ToList();
+            CheckCorners(_corners.Count);
+            CheckAlgorithm(algorithm);
             LineAlgorithm = algorithm;
 
+            _outerPoints = new MultiArea();
+            _innerPoints = new Area();
+            _points = new MultiArea { _outerPoints, _innerPoints };
+            DrawFromCorners();
+            SetInnerPoints();
+        }
+
+        /// <summary>
+        /// Creates a new Polygon, with corners at the provided points
+        /// </summary>
+        /// <param name="corners">The corners of this polygon</param>
+        /// <param name="algorithm">Which Line Algorithm to use</param>
+        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        {
+            _corners = corners;
+            CheckCorners(_corners.Count);
+            CheckAlgorithm(algorithm);
+            LineAlgorithm = algorithm;
             _outerPoints = new MultiArea();
             _innerPoints = new Area();
             _points = new MultiArea { _outerPoints, _innerPoints };
@@ -72,28 +81,29 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
         /// <param name="corners">The points which are corners for this polygon</param>
-        public PolygonArea(Lines.Algorithm algorithm = Lines.Algorithm.DDA, params Point[] corners)
+        public PolygonArea(Lines.Algorithm algorithm, params Point[] corners) : this(corners, algorithm) { }
+
+        /// <summary>
+        /// Returns a new polygon with corners at the provided points, using the algorithm DDA to produce lines
+        /// </summary>
+        /// <param name="corners">The corners of the polygon</param>
+        public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
+
+        //Make sure that we have at least three corners to draw a polygon
+        private void CheckCorners(int corners)
         {
-            //corner initialization
-            _corners = corners.ToList();
-
-            if (_corners.Count < 3)
+            if (corners < 3)
                 throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-
-            //boundary initialization
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
-
-            LineAlgorithm = algorithm;
-
-            _outerPoints = new MultiArea();
-            _innerPoints = new Area();
-            _points = new MultiArea { _outerPoints, _innerPoints };
-
-            DrawFromCorners();
-            SetInnerPoints();
         }
 
+        //Make sure that our line algorithm is ordered!
+        private void CheckAlgorithm(Lines.Algorithm algorithm)
+        {
+            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
+                throw new ArgumentException("Line Algorithm must produce ordered lines.");
+        }
+
+        //Draws lines from each corner to the next
         private void DrawFromCorners()
         {
             for (int i = 0; i < _corners.Count - 1; i++)
@@ -104,9 +114,11 @@ namespace GoRogue.MapGeneration
             _outerPoints.Add(new Area(Lines.Get(_corners[^1], _corners[0], LineAlgorithm)));
         }
 
+        //Uses an odd-even rule to determine whether we are in the area or not
         private void SetInnerPoints()
         {
             var bounds = _points.Bounds;
+
             //The top and bottom rows can never contain an inner point, so skip them.
             for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
@@ -120,6 +132,7 @@ namespace GoRogue.MapGeneration
                     {
                         foreach (var boundary in GetBoundariesContaining(x, y))
                         {
+                            //todo - optimize
                             if (boundary.Any(p => p.Y < y))
                             {
                                 if (!linesEncountered.Contains(boundary))
@@ -138,6 +151,7 @@ namespace GoRogue.MapGeneration
             }
         }
 
+        //todo - optimize
         private IEnumerable<IReadOnlyArea> GetBoundariesContaining(int x, int y)
             => _outerPoints.SubAreas.Where(sa => sa.Contains(x, y));
 

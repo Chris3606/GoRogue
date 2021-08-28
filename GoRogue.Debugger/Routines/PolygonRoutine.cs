@@ -7,6 +7,14 @@ using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {
+    internal enum PolygonTileState
+    {
+        Exterior, //Exterior to the polygon
+        InnerPoint,
+        OuterPoint,
+        Corner
+    }
+
     [UsedImplicitly]
     internal class PolygonRoutine : IRoutine
     {
@@ -14,9 +22,11 @@ namespace GoRogue.Debugger.Routines
         private readonly List<PolygonArea> _polygons = new List<PolygonArea>();
 
         private int _cornerAmount = 3;
-        // _grid view set to indicate current state of each tile, so that it can be efficiently rendered.
-        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(100, 30);
+
+        // Grid view set to indicate current state of each tile, so that it can be efficiently rendered.
+        private readonly ArrayView<PolygonTileState> _map = new ArrayView<PolygonTileState>(100, 30);
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
+
         /// <inheritdoc />
         public IReadOnlyList<(string name, IGridView<char> view)> Views => _views.AsReadOnly();
 
@@ -66,7 +76,7 @@ namespace GoRogue.Debugger.Routines
         {
             // Initialize map for no regions
             foreach (var pos in _map.Positions())
-                _map[pos] = TileState.Wall;
+                _map[pos] = PolygonTileState.Exterior;
 
             _polygons.Add(Polygon(_cornerAmount));
 
@@ -76,12 +86,13 @@ namespace GoRogue.Debugger.Routines
 
         private PolygonArea Polygon(int cornerCount)
         {
-            var midPoint = new Point(_map.Width / 2, _map.Height / 2);
+            var midPoint = new Point(_map.Width / 2 - 5, _map.Height / 2 - 5);
             var dim = _map.Width < _map.Height ? _map.Width : _map.Height;
             var corners = new List<Point>();
             bool star = false;
             bool inner = false;
             int radius;
+
             //draw simple shapes up to hexagons
             if(cornerCount >= 7)
             {
@@ -117,7 +128,7 @@ namespace GoRogue.Debugger.Routines
         {
             foreach (var polygon in _polygons)
                 foreach (var point in polygon.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.Wall;
+                    _map[point] = PolygonTileState.Exterior;
         }
 
         // Apply proper values to map, based on regions
@@ -126,24 +137,22 @@ namespace GoRogue.Debugger.Routines
             foreach (var polygon in _polygons)
             {
                 foreach (var point in polygon.InnerPoints.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.InnerRegionPoint;
+                    _map[point] = PolygonTileState.InnerPoint;
 
                 foreach (var point in polygon.OuterPoints.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.OuterRegionPoint;
+                    _map[point] = PolygonTileState.OuterPoint;
 
                 foreach (var point in polygon.Corners.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.Door;
+                    _map[point] = PolygonTileState.Corner;
             }
         }
 
-        // Translate point to character based on whether or not the point is in the InnerPoints of a region,
-        // in the OuterPoints of a region, or not in any region
         private char RegionsView(Point pos)
             => _map[pos] switch
             {
-                TileState.InnerRegionPoint => '.',
-                TileState.OuterRegionPoint => '+',
-                TileState.Door => '#', //actually a corner, but that enum has enough junk in it
+                PolygonTileState.InnerPoint => '.',
+                PolygonTileState.OuterPoint => '+',
+                PolygonTileState.Corner => '#',
                 _ => ' ',
             };
     }

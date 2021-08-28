@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
@@ -8,6 +8,14 @@ using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {
+    //Enums for quickly swapping between the map data at a place and a char
+    public enum RegionTileState
+    {
+        Exterior, //exterior to the entire region
+        Inner,
+        Outer,
+    }
+
     [UsedImplicitly]
     internal class RegionRoutine : IRoutine
     {
@@ -29,7 +37,7 @@ namespace GoRogue.Debugger.Routines
         private readonly List<Region> _transformedRegions = new List<Region>();
 
         // _grid view set to indicate current state of each tile, so that it can be efficiently rendered.
-        private readonly ArrayView<TileState> _map = new ArrayView<TileState>(80, 80);
+        private readonly ArrayView<RegionTileState> _map = new ArrayView<RegionTileState>(80, 80);
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
         /// <inheritdoc />
         public IReadOnlyList<(string name, IGridView<char> view)> Views => _views.AsReadOnly();
@@ -98,7 +106,7 @@ namespace GoRogue.Debugger.Routines
         {
             // Initialize map for no regions
             foreach (var pos in _map.Positions())
-                _map[pos] = TileState.Wall;
+                _map[pos] = RegionTileState.Exterior;
 
             for (int i = 0; i < 360; i += 45)
             {
@@ -119,7 +127,7 @@ namespace GoRogue.Debugger.Routines
         {
             foreach (var region in _transformedRegions)
                 foreach (var point in region.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.Wall;
+                    _map[point] = RegionTileState.Exterior;
         }
 
         // Apply proper values to map, based on regions
@@ -128,10 +136,10 @@ namespace GoRogue.Debugger.Routines
             foreach (var region in _transformedRegions)
             {
                 foreach (var point in region.InnerPoints.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.InnerRegionPoint;
+                    _map[point] = RegionTileState.Inner;
 
                 foreach (var point in region.OuterPoints.Where(point => _map.Contains(point)))
-                    _map[point] = TileState.OuterRegionPoint;
+                    _map[point] = RegionTileState.Outer;
             }
         }
 
@@ -140,10 +148,9 @@ namespace GoRogue.Debugger.Routines
         private char RegionsView(Point pos)
             => _map[pos] switch
             {
-                TileState.Wall => ' ',
-                TileState.InnerRegionPoint => '.',
-                TileState.OuterRegionPoint => '#',
-                _ => throw new Exception("Regions view encountered unsupported tile settings.")
+                RegionTileState.Inner => '.',
+                RegionTileState.Outer => '#',
+                _ => ' '
             };
     }
 }
