@@ -58,7 +58,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             return OriginalSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
 
-        /*
+
         [Benchmark]
         public List<Area> AreaContainsDefaultHashAreaFinder()
         {
@@ -72,7 +72,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             return AreaContainsSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
 
-        /*
+
         [Benchmark]
         public List<Area> HashSetDefaultHashAreaFinder()
         {
@@ -84,6 +84,5 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
         {
             return HashSetSizeHashMapAreaFinder.MapAreasFor(_rects, NeighborRule).ToList();
         }
-        */
     }
 }
