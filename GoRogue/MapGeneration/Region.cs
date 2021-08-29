@@ -307,7 +307,7 @@ namespace GoRogue.MapGeneration
          /// <returns>A new region in the shape of a parallelogram</returns>
          public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
-             var negative = Direction.YIncreasesUpward ? -1 : 1;
+             var negative = Direction.YIncreasesUpward ? 1 : -1;
 
              Point nw = origin + (height, height * negative);
              Point ne = origin + (height + width, height * negative);
