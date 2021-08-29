@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.MapGeneration
@@ -9,6 +10,7 @@ namespace GoRogue.MapGeneration
     /// <summary>
     /// An area with an arbitrary number of sides and corners
     /// </summary>
+    [PublicAPI]
     public class PolygonArea : IReadOnlyArea
     {
 
@@ -43,38 +45,14 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
-        {
-            //corner initialization
-            _corners = corners.ToList();
-            CheckCorners(_corners.Count);
-            CheckAlgorithm(algorithm);
-            LineAlgorithm = algorithm;
-
-            _outerPoints = new MultiArea();
-            _innerPoints = new Area();
-            _points = new MultiArea { _outerPoints, _innerPoints };
-            DrawFromCorners();
-            SetInnerPoints();
-        }
+        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA) : this(corners.ToList(), algorithm) { }
 
         /// <summary>
         /// Creates a new Polygon, with corners at the provided points
         /// </summary>
         /// <param name="corners">The corners of this polygon</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
-        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
-        {
-            _corners = corners;
-            CheckCorners(_corners.Count);
-            CheckAlgorithm(algorithm);
-            LineAlgorithm = algorithm;
-            _outerPoints = new MultiArea();
-            _innerPoints = new Area();
-            _points = new MultiArea { _outerPoints, _innerPoints };
-            DrawFromCorners();
-            SetInnerPoints();
-        }
+        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA) : this(corners, algorithm) { }
 
         /// <summary>
         /// Returns a new PolygonArea with corners at the provided points.
@@ -89,18 +67,20 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">The corners of the polygon</param>
         public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
 
-        //Make sure that we have at least three corners to draw a polygon
-        private void CheckCorners(int corners)
+        private PolygonArea(List<Point> corners, Lines.Algorithm algorithm)
         {
-            if (corners < 3)
+            _corners = corners;
+            if (_corners.Count < 3)
                 throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-        }
 
-        //Make sure that our line algorithm is ordered!
-        private void CheckAlgorithm(Lines.Algorithm algorithm)
-        {
             if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
                 throw new ArgumentException("Line Algorithm must produce ordered lines.");
+            LineAlgorithm = algorithm;
+            _outerPoints = new MultiArea();
+            _innerPoints = new Area();
+            _points = new MultiArea { _outerPoints, _innerPoints };
+            DrawFromCorners();
+            SetInnerPoints();
         }
 
         //Draws lines from each corner to the next
