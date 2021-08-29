@@ -24,15 +24,15 @@ namespace GoRogue.Debugger.Routines
             => DefaultAlgorithms.BasicRandomRoomsMapSteps();
 
         /// <inheritdoc />
-        protected override void SetInitialMapValues(ISettableGridView<TileState> map) => map.Fill(TileState.Wall);
+        protected override void SetInitialMapValues(ISettableGridView<MapGenTileState> map) => map.Fill(MapGenTileState.Wall);
 
         /// <inheritdoc />
         protected override void UpdateMap()
         {
             // Apply current wall-floor state
             var wallFloorView = generator.Context.GetFirst<IGridView<bool>>();
-            Map.ApplyOverlay(new LambdaTranslationGridView<bool, TileState>(wallFloorView,
-                val => val ? TileState.Floor : TileState.Wall));
+            Map.ApplyOverlay(new LambdaTranslationGridView<bool, MapGenTileState>(wallFloorView,
+                val => val ? MapGenTileState.Floor : MapGenTileState.Wall));
 
             // Apply doors, if there are any
             var doorList = generator.Context.GetFirstOrDefault<DoorList>();
@@ -42,7 +42,7 @@ namespace GoRogue.Debugger.Routines
             foreach (var (_, doorsPerRoom) in doorList.DoorsPerRoom)
             {
                 foreach (var door in doorsPerRoom.Doors)
-                    Map[door] = TileState.Door;
+                    Map[door] = MapGenTileState.Door;
             }
         }
     }

@@ -6,6 +6,13 @@ using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.Debugger.Routines
 {
+    public enum MapGenTileState
+    {
+        Wall,
+        Floor,
+        Door,
+    }
+
     public abstract class MapGenDemoRoutine : IRoutine
     {
         /// <inheritdoc />
@@ -14,11 +21,11 @@ namespace GoRogue.Debugger.Routines
         private const int MapWidth = 80;
         private const int MapHeight = 25;
 
-        private readonly ArrayView<TileState> _underlyingMap;
+        private readonly ArrayView<MapGenTileState> _underlyingMap;
         /// <summary>
         /// Map used for displaying.
         /// </summary>
-        protected DiffAwareGridView<TileState> Map { get; }
+        protected DiffAwareGridView<MapGenTileState> Map { get; }
 
         /// <summary>
         /// The map generator being used.
@@ -41,8 +48,8 @@ namespace GoRogue.Debugger.Routines
             views = new List<(string name, IGridView<char> view)>();
 
             // Set up map
-            _underlyingMap = new ArrayView<TileState>(MapWidth, MapHeight);
-            Map = new DiffAwareGridView<TileState>(_underlyingMap);
+            _underlyingMap = new ArrayView<MapGenTileState>(MapWidth, MapHeight);
+            Map = new DiffAwareGridView<MapGenTileState>(_underlyingMap);
 
             // Set up basic generator and state for tracking step progress
             generator = new Generator(MapWidth, MapHeight);
@@ -121,7 +128,7 @@ namespace GoRogue.Debugger.Routines
         /// for the initial state.
         /// </summary>
         /// <param name="map">The map that the function should set values to.</param>
-        protected abstract void SetInitialMapValues(ISettableGridView<TileState> map);
+        protected abstract void SetInitialMapValues(ISettableGridView<MapGenTileState> map);
 
         /// <summary>
         /// Updates the map with new tiles based on current map generation context.
@@ -136,9 +143,9 @@ namespace GoRogue.Debugger.Routines
         protected char BasicDungeonView(Point pos)
             => Map[pos] switch
             {
-                TileState.Wall => '#',
-                TileState.Floor => '.',
-                TileState.Door => '+',
+                MapGenTileState.Wall => '#',
+                MapGenTileState.Floor => '.',
+                MapGenTileState.Door => '+',
                 _ => throw new Exception("BasicDungeonView view encountered unsupported tile settings.")
             };
     }

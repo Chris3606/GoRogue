@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.MapGeneration
 {
@@ -37,10 +38,17 @@ namespace GoRogue.MapGeneration
             NorthWestCorner = northWest;
             SouthWestCorner = southWest;
             Algorithm = algoToUse;
-            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, Algorithm));
-            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, Algorithm));
-            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, Algorithm));
-            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, Algorithm));
+
+            // This isn't a fully accurate max-x value; a more accurate one could be calculated by taking the max x/y
+            // of the corners being used to create the line.  However, it is still mathematically valid.
+            int maxX = Math.Max(NorthEastCorner.X, SouthEastCorner.X);
+            var hasher = new KnownSizeHasher(maxX);
+
+            // Determine outer boundaries between each corner
+            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, Algorithm), hasher);
+            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, Algorithm), hasher);
+            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, Algorithm), hasher);
+            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, Algorithm), hasher);
             _outerPoints = new MultiArea {_westBoundary, _northBoundary, _eastBoundary, _southBoundary};
             SetInnerFromOuterPoints();
             _points = new MultiArea {_outerPoints, _innerPoints};
@@ -238,7 +246,8 @@ namespace GoRogue.MapGeneration
         /// <returns></returns>
         private void SetInnerFromOuterPoints()
         {
-            _innerPoints = new Area();
+            int maxX = Math.Max(NorthEastCorner.X, SouthEastCorner.X);
+            _innerPoints = new Area(new KnownSizeHasher(maxX));
 
             var outerList = _outerPoints.OrderBy(x => x.X).ToList();
 

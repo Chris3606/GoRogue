@@ -26,12 +26,12 @@ namespace GoRogue.Debugger.Routines
         protected override void UpdateMap()
         {
             var wallFloorView = generator.Context.GetFirst<IGridView<bool>>();
-            Map.ApplyOverlay(new LambdaTranslationGridView<bool, TileState>(wallFloorView,
-                val => val ? TileState.Floor : TileState.Wall));
+            Map.ApplyOverlay(new LambdaTranslationGridView<bool, MapGenTileState>(wallFloorView,
+                val => val ? MapGenTileState.Floor : MapGenTileState.Wall));
         }
 
         /// <inheritdoc />
-        protected override void SetInitialMapValues(ISettableGridView<TileState> map)
-            => map.Fill(TileState.Wall);
+        protected override void SetInitialMapValues(ISettableGridView<MapGenTileState> map)
+            => map.Fill(MapGenTileState.Wall);
     }
 }

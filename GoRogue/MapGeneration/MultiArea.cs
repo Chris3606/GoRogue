@@ -69,8 +69,9 @@ namespace GoRogue.MapGeneration
             get
             {
                 int sum = 0;
-                foreach (var area in _subAreas)
+                for (int i = 0; i < _subAreas.Count; i++)
                 {
+                    var area = _subAreas[i];
                     if (sum + area.Count > index)
                         return area[index - sum];
 
@@ -114,6 +115,11 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="subAreas">The sub-areas to add.</param>
         public void AddRange(IEnumerable<IReadOnlyArea> subAreas) => _subAreas.AddRange(subAreas);
+
+        /// <summary>
+        /// Clears all sub-areas from the MultiArea.
+        /// </summary>
+        public void Clear() => _subAreas.Clear();
 
         /// <summary>
         /// Removes the given sub-area from the MultiArea.
@@ -181,8 +187,9 @@ namespace GoRogue.MapGeneration
             {
                 // Try to find this point in one of this area's sub-areas
                 bool found = false;
-                foreach (var subarea in _subAreas)
+                for (var i = 0; i < _subAreas.Count; i++)
                 {
+                    var subarea = _subAreas[i];
                     if (subarea.Contains(pos))
                     {
                         found = true;
@@ -208,9 +215,12 @@ namespace GoRogue.MapGeneration
         /// <returns>True if the specified position is within one of the subareas, false otherwise.</returns>
         public bool Contains(Point position)
         {
-            foreach (var subArea in _subAreas)
+            for (int i = 0; i < _subAreas.Count; i++)
+            {
+                var subArea = _subAreas[i];
                 if (subArea.Contains(position))
                     return true;
+            }
 
             return false;
         }
@@ -223,9 +233,12 @@ namespace GoRogue.MapGeneration
         /// <returns>True if the specified position is within one of the subareas, false otherwise.</returns>
         public bool Contains(int positionX, int positionY)
         {
-            foreach (var subArea in _subAreas)
+            for (int i = 0; i < _subAreas.Count; i++)
+            {
+                var subArea = _subAreas[i];
                 if (subArea.Contains(positionX, positionY))
                     return true;
+            }
 
             return false;
         }
@@ -240,9 +253,12 @@ namespace GoRogue.MapGeneration
         /// <returns>True if the given area intersects one of the current one's subareas, false otherwise.</returns>
         public bool Intersects(IReadOnlyArea area)
         {
-            foreach (var subArea in _subAreas)
+            for (int i = 0; i < _subAreas.Count; i++)
+            {
+                var subArea = _subAreas[i];
                 if (subArea.Intersects(area))
                     return true;
+            }
 
             return false;
         }
