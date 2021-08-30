@@ -60,7 +60,7 @@ namespace GoRogue.PerformanceTests.Regions
 
          public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
+             var negative = Direction.YIncreasesUpward ? -1 : 1;
 
              Point nw = origin;
              Point ne = origin + new Point(width, 0);
