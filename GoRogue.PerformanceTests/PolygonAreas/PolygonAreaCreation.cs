@@ -61,19 +61,19 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         // Same method implemented in GoRogue PolygonArea, but implemented in mock test framework
         #region GoRogue Method (implemented in mock)
         [Benchmark]
-        public PolygonAreaMock CreateRectangleGoRogue()
+        public PolygonAreaMock CreateRectangleOriginal()
         {
             return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
         }
 
         [Benchmark]
-        public PolygonAreaMock CreateParallelogramTopCornerGoRogue()
+        public PolygonAreaMock CreateParallelogramTopCornerOriginal()
         {
             return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
         }
 
         [Benchmark]
-        public PolygonAreaMock CreateParallelogramBottomCornerGoRogue()
+        public PolygonAreaMock CreateParallelogramBottomCornerOriginal()
         {
             return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
         }
