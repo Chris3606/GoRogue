@@ -1,12 +1,11 @@
 ﻿using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 
-namespace GoRogue.PerformanceTests.PolygonAreas
+namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
 {
     // Functions that generate PolygonAreas that are equivalent to regions, for comparison
-    public static class PolygonAreaRegionEquivalents
+    internal static class PolygonAreaRegionEquivalents
     {
-
         public static PolygonArea Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
             => new PolygonArea( algorithm, r.MinExtent, (r.MaxExtentX, r.MinExtentY),
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
