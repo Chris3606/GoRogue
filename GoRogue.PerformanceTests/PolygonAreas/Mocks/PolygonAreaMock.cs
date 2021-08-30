@@ -5,7 +5,7 @@ using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
-namespace GoRogue.PerformanceTests.PolygonAreas
+namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
 {
     // Object representing a polygon area's internal data and the general method of construction.  Necessary to allow the
     // benchmark functions to actually return a value which depends on the creation method, to avoid any of it being

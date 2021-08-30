@@ -7,7 +7,7 @@ using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using SadRogue.Primitives.PointHashers;
 
-namespace GoRogue.PerformanceTests.Regions
+namespace GoRogue.PerformanceTests.Regions.MocksAndImplementations
 {
     internal static class InnerFromOuterPointMethods
     {

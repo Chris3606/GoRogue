@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using GoRogue.PerformanceTests.PolygonAreas.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.PointHashers;
 
-namespace GoRogue.PerformanceTests.PolygonAreas
+namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
 {
-    [PublicAPI]
-    public static class InnerPointsMethods
+    internal static class InnerPointsMethods
     {
         // Originally implemented method using scan-lines and the odd-even method for detecting if points are inside
         // or outside the polygon

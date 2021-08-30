@@ -1,10 +1,11 @@
 ﻿using System;
+using GoRogue.PerformanceTests.PolygonAreas.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.PointHashers;
 
-namespace GoRogue.PerformanceTests.PolygonAreas
+namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
 {
-    public static class DrawFromCornersMethods
+    internal static class DrawFromCornersMethods
     {
         // Original method implemented in GoRogue that just draws lines using default hashing algorithms
         #region Original GoRogue Method

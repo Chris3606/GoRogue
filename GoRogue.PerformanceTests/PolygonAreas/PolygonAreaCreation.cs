@@ -1,5 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using GoRogue.MapGeneration;
+using GoRogue.PerformanceTests.PolygonAreas.Implementations;
+using GoRogue.PerformanceTests.PolygonAreas.Mocks;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
