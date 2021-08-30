@@ -99,5 +99,68 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, LineAlgorithm);
         }
         #endregion
+
+        // Original scan line method but with no LINQ usage
+        #region ScanLine No Linq
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleNoLinq()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerNoLinq()
+        {
+            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerNoLinq()
+        {
+            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
+        }
+        #endregion
+
+        // Original scan line method but with the call to Any replaced with a faster y-value check
+        #region ScanLine Faster Y-Check
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleFasterYCheck()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerFasterYCheck()
+        {
+            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerFasterYCheck()
+        {
+            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
+        }
+        #endregion
+
+        // Original scan line method but with the linesEncountered list turned into a HashSet.
+        #region ScanLine HashSet Encountered
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleHashSetEncountered()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerHashSetEncountered()
+        {
+            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerHashSetEncountered()
+        {
+            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+        }
+        #endregion
     }
 }
