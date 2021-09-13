@@ -1,15 +1,42 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
+using SadRogue.Primitives.GridViews;
 using Xunit;
+using Xunit.Abstractions;
 using XUnit.ValueTuples;
 
 namespace GoRogue.UnitTests.MapGeneration
 {
     public class PolygonAreaTests
     {
-        public struct PolygonTestCase
+        #region testdata
+        /*   0 1 2 3 4 5 6 7
+         * 0        /--*
+         * 1   *+--+    \
+         * 2     \       \
+         * 3      \    +--+*
+         * 4       *--/
+         * 5
+         */
+        private readonly Point _sw = new Point(3, 4);
+        private readonly Point _nw = new Point(1, 1);
+        private readonly Point _ne = new Point(5, 0);
+        private readonly Point _se = new Point(7, 3);
+        private readonly PolygonArea _area;
+
+        private readonly ITestOutputHelper _output;
+
+        public PolygonAreaTests(ITestOutputHelper output)
+        {
+            _area = new PolygonArea(_nw, _ne, _se, _sw);
+            _output = output;
+        }
+
+        public readonly struct PolygonTestCase
         {
             public int CornerCount => Corners.Length;
             public readonly int ExpectedOuterPoints;
@@ -37,6 +64,9 @@ namespace GoRogue.UnitTests.MapGeneration
             Lines.Algorithm.Bresenham,
         };
 
+        public static readonly IEnumerable<int> PolygonPointCount = new List<int>
+            {4, 8, 16, 32, 49, 55, 64, 72, 73, 89, 91, 128, 256, 301, 499, 512, 751, 800, 925, 1024};
+
         //All points lovingly calculated by hand
         public static readonly IEnumerable<PolygonTestCase> PolygonTestCases = new List<PolygonTestCase>
         {
@@ -58,6 +88,40 @@ namespace GoRogue.UnitTests.MapGeneration
                 (11,4),(10,7), (11,9),(16,9),(15,11),(15,13),(1,13))
         };
 
+        private string GetPolygonString(PolygonArea region)
+        {
+            var bounds = region.Bounds;
+            var final = new StringBuilder();
+
+            // Generate x scale
+            final.Append(' ');
+            for (int i = bounds.MinExtentX; i < bounds.MaxExtentX; i++)
+                final.Append($" {i + bounds.MinExtentX}");
+            final.Append('\n');
+
+            for (int y = bounds.MinExtentY; y <= bounds.MaxExtentY; y++)
+            {
+                final.Append($"{y + bounds.MinExtentY}");
+                for (int x = bounds.MinExtentX; x <= bounds.MaxExtentX; x++)
+                {
+                    if (region.Corners.Contains((x, y)))
+                        final.Append('#');
+                    else if (region.OuterPoints.Contains((x, y)))
+                        final.Append('+');
+                    else if (region.InnerPoints.Contains((x, y)))
+                        final.Append('.');
+                    else
+                        final.Append(' ');
+                }
+
+                final.Append('\n');
+            }
+
+            return final.ToString();
+        }
+
+        #endregion
+
         [Theory]
         [MemberDataEnumerable(nameof(PolygonTestCases))]
         public void PolygonSanityCheck(PolygonTestCase testCase)
@@ -66,8 +130,22 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(testCase.CornerCount, polygon.Corners.Count);
             Assert.Equal(testCase.ExpectedOuterPoints, polygon.OuterPoints.Count);
             Assert.Equal(testCase.ExpectedInnerPoints, polygon.InnerPoints.Count);
+            _output.WriteLine(GetPolygonString(polygon));
         }
 
+        [Fact]
+        public void TopTest() => Assert.Equal(0, _area.Top);
+
+        [Fact]
+        public void BottomTest() => Assert.Equal(4, _area.Bottom);
+        [Fact]
+        public void LeftTest() => Assert.Equal(1, _area.Left);
+
+        [Fact]
+        public void RightTest() => Assert.Equal(7, _area.Right);
+
+
+        #region creation tests
         [Theory]
         [MemberDataEnumerable(nameof(OrderedAlgorithms))]
         public void PolygonAreaUsesSpecifiedAlgorithmTest(Lines.Algorithm algorithm)
@@ -84,6 +162,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p3,p4, algorithm))));
             Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p4,p5, algorithm))));
             Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p5,p1, algorithm))));
+            _output.WriteLine(GetPolygonString(polygon));
         }
 
         [Theory]
@@ -96,5 +175,200 @@ namespace GoRogue.UnitTests.MapGeneration
 
             Assert.Throws<ArgumentException>(() => new PolygonArea(algorithm, p1, p2, p3));
         }
+
+        [Fact]
+        public void PolygonFromRectangle()
+        {
+            var rect = new Rectangle(0, 0, 15, 10);
+            var polygon = PolygonArea.Rectangle(rect);
+
+            //Each Corner is included in two boundaries, so total number of points is offset by 4
+            Assert.Equal(rect.Area + 4, polygon.Count);
+            Assert.Equal(rect.PerimeterPositions().Count() + 4, polygon.OuterPoints.Count);
+            Assert.Equal(new HashSet<Point>(rect.Expand(-1, -1).Positions()), new HashSet<Point>(polygon.InnerPoints));
+            _output.WriteLine(GetPolygonString(polygon));
+        }
+
+        [Fact]
+        public void PolygonParallelogram()
+        {
+            var polygon = PolygonArea.Parallelogram((30, 30), 15, 15);
+            Assert.Equal(4, polygon.Corners.Count);
+            Assert.Equal(196, polygon.InnerPoints.Count);
+            Assert.Equal(64, polygon.OuterPoints.Count);
+            _output.WriteLine(GetPolygonString(polygon));
+        }
+
+        private int Median(List<int> ints)
+        {
+            ints.Sort();
+            return ints[ints.Count / 2];
+        }
+        private int Mode(List<int> ints)
+        {
+            //track the amount of times we encounter each integer
+            var encountered = new Dictionary<int, int>();
+
+            foreach (var integer in ints)
+            {
+                //if we haven't seen it, track it once.
+                if (!encountered.ContainsKey(integer))
+                    encountered.Add(integer, 1);
+
+                //otherwise, increase the amount of times we've seen it
+                else
+                    encountered[integer]++;
+            }
+
+            return encountered.OrderByDescending(i => i.Value).First().Key;
+        }
+
+        private void AssertPolygonSidesAreEqual(PolygonArea polygon, bool isStar)
+        {
+            var outer = (MultiArea)polygon.OuterPoints;//Satan forgive me
+
+            var ints = new List<int>();
+            int total = 0;
+            var divisor = outer.SubAreas.Count;
+
+            foreach (var boundary in outer.SubAreas)
+            {
+                total += boundary.Count;
+                ints.Add(boundary.Count);
+            }
+
+            var mean = total / divisor;
+            var mode = Mode(ints);
+            var median = Median(ints);
+
+            string message = isStar ? "Regular Star" : "Regular Polygon";
+            var cornerCount = isStar ? polygon.Corners.Count / 2 : polygon.Corners.Count;
+
+            message += $" with {cornerCount} corners has a lopside. \r\n";
+            message += $"Mean: {mean}\r\nMedian: {median}\r\nMode: {mode}\r\nHas a side of length: ";
+            foreach (var i in ints)
+            {
+                Assert.True(i >= mean - 2 && i <= mean + 2, message + i);
+                Assert.True(i >= mode - 2 && i <= mode + 2, message + i);
+                Assert.True(i >= median - 2 && i <= median + 2, message + i);
+            }
+        }
+
+        [Theory]
+        [MemberDataEnumerable(nameof(PolygonPointCount))]
+        public void RegularPolygonTest(int cornerAmount)
+        {
+            var polygon = PolygonArea.RegularPolygon((0, 0), cornerAmount, cornerAmount);
+            AssertPolygonSidesAreEqual(polygon, false);
+        }
+
+
+        [Theory]
+        [MemberDataEnumerable(nameof(PolygonPointCount))]
+        public void RegularStarTest(int cornerAmount)
+        {
+            // ReSharper disable once PossibleLossOfFraction
+            var polygon = PolygonArea.RegularStar((0, 0), cornerAmount, cornerAmount, cornerAmount/2);
+            AssertPolygonSidesAreEqual(polygon, true);
+        }
+
+        #endregion
+        #region transformation tests
+        [Fact]
+        public void RotateTest()
+        {
+            /* (0,0 & 0,1)
+             * ###
+             * #  ##
+             * #    ##
+             *  #     ##
+             *  #       ##
+             *   #        ##
+             *   #          ## (14, 6)
+             *    #         #
+             *    #        #
+             *     #      #
+             *     #     #
+             *      #   #
+             *      #  #
+             *       ##
+             *       # (6, 14)
+             */
+            float degrees = 45.0f;
+            Point centerOfRotation = new Point(6,14);
+            PolygonArea prior = new PolygonArea(new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
+            PolygonArea copyOfPrior = new PolygonArea(new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
+            PolygonArea post = prior.Rotate(degrees, centerOfRotation);
+
+            _output.WriteLine("\nRotated Region:");
+            _output.WriteLine(GetPolygonString(post));
+
+            Assert.Equal(prior.Bottom, post.Bottom);
+            Assert.True(prior.Left < post.Left);
+            Assert.True(prior.Right < post.Right);
+            Assert.True(copyOfPrior.Matches(prior));
+        }
+
+        [Fact] //around 0
+        public void FlipVerticalTest()
+        {
+            var newArea = _area.FlipVertical(0);
+            _output.WriteLine("\nOriginal Region:");
+            _output.WriteLine(GetPolygonString(_area));
+            _output.WriteLine("\nVertically Flipped Region:");
+            _output.WriteLine(GetPolygonString(newArea));
+
+            //north-south values have flipped and became negative
+            Assert.Contains((_sw.X, -_sw.Y), newArea.Corners);
+            Assert.Contains((_ne.X, -_ne.Y), newArea.Corners);
+            Assert.Contains((_nw.X, -_nw.Y), newArea.Corners);
+            Assert.Contains((_se.X, -_se.Y), newArea.Corners);
+        }
+
+        [Fact] //around 0
+        public void FlipHorizontalTest()
+        {
+            var newArea = _area.FlipHorizontal(0);
+            _output.WriteLine("\nHorizontally Flipped Region:");
+            _output.WriteLine(GetPolygonString(newArea));
+
+            // east-west values should have reversed and became negative
+            Assert.Contains((-_sw.X, _sw.Y), newArea.Corners);
+            Assert.Contains((-_ne.X, _ne.Y), newArea.Corners);
+            Assert.Contains((-_nw.X, _nw.Y), newArea.Corners);
+            Assert.Contains((-_se.X, _se.Y), newArea.Corners);
+        }
+
+        [Fact]
+        public void TransposeTest() //around (0,0)
+        {
+            var transposed = _area.Transpose(0,0);
+            _output.WriteLine("\nTransposed Region:");
+            _output.WriteLine(GetPolygonString(transposed));
+
+            //should have same number of corners
+            Assert.Equal(4, transposed.Corners.Count);
+
+            //ne, se, sw reverse
+            Assert.Contains((_ne.Y, _ne.X), transposed.Corners);
+            Assert.Contains((_sw.Y, _sw.X), transposed.Corners);
+            Assert.Contains((_se.Y, _se.X), transposed.Corners);
+            Assert.Contains((_nw.Y, _nw.X), transposed.Corners);
+        }
+
+        [Fact]
+        public void TranslateTest()
+        {
+            var translated = _area.Translate(2, 3);
+            _output.WriteLine("\nTranslated Region:");
+            _output.WriteLine(GetPolygonString(translated));
+
+            Assert.Contains(_ne + (2,3), translated.Corners);
+            Assert.Contains(_nw + (2,3), translated.Corners);
+            Assert.Contains(_se + (2,3), translated.Corners);
+            Assert.Contains(_sw + (2,3), translated.Corners);
+        }
+        #endregion
+
     }
 }

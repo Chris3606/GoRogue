@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
@@ -14,27 +13,18 @@ namespace GoRogue.Debugger.Routines
         Exterior, //exterior to the entire region
         Inner,
         Outer,
+        Corner,
     }
 
     [UsedImplicitly]
-    internal class RegionRoutine : IRoutine
+    internal class RotationRoutine : IRoutine
     {
-        //A component for regions, so that multiple regions can share a common center of rotation
-        private class CenterOfRotation
-        {
-            internal Point Origin;
-
-            public CenterOfRotation(Point origin)
-            {
-                Origin = origin;
-            }
-        }
         // Current amount to rotate _originalRegions by
         private double _rotation;
 
         // Original regions, and regions rotated by _rotation degrees, respectively
-        private readonly List<RegionWithComponents> _originalRegions = new List<RegionWithComponents>();
-        private readonly List<Region> _transformedRegions = new List<Region>();
+        private readonly List<PolygonArea> _originalRegions = new List<PolygonArea>();
+        private readonly List<PolygonArea> _transformedRegions = new List<PolygonArea>();
 
         // _grid view set to indicate current state of each tile, so that it can be efficiently rendered.
         private readonly ArrayView<RegionTileState> _map = new ArrayView<RegionTileState>(80, 80);
@@ -68,10 +58,10 @@ namespace GoRogue.Debugger.Routines
 
             // Rotate each original region by the new amount about its center, and add
             // it to the list of transformed regions
-            foreach (RegionWithComponents region in _originalRegions)
+            foreach (var polygon in _originalRegions)
             {
-                var origin = region.GoRogueComponents.GetFirst<CenterOfRotation>().Origin;
-                _transformedRegions.Add(region.Region.Rotate(_rotation, origin));
+                var rotated = polygon.Rotate(_rotation, (40,40));
+                _transformedRegions.Add(rotated);
             }
 
             // Update map to reflect new regions
@@ -92,11 +82,9 @@ namespace GoRogue.Debugger.Routines
 
             // Rotate each original region by the new amount about its center, and add
             // it to the list of transformed regions
-            foreach (RegionWithComponents region in _originalRegions)
-            {
-                var origin = region.GoRogueComponents.GetFirst<CenterOfRotation>().Origin;
-                _transformedRegions.Add(region.Region.Rotate(_rotation, origin));
-            }
+            foreach (var polygon in _originalRegions)
+                _transformedRegions.Add(polygon.Rotate(_rotation, (40,40)));
+
             // Update map to reflect new regions
             ApplyRegionsToMap();
         }
@@ -111,11 +99,8 @@ namespace GoRogue.Debugger.Routines
             for (int i = 0; i < 360; i += 45)
             {
                 var center = (_map.Width / 2, _map.Height / 2);
-                var region = Region.ParallelogramFromTopCorner(center, 15, 15).Rotate(i, center);
-                var overRegion = new RegionWithComponents(region);
-                overRegion.GoRogueComponents.Add(new CenterOfRotation(center));
-                _originalRegions.Add(overRegion);
-                _transformedRegions.Add(region);
+                var region = PolygonArea.Parallelogram(center, 15, 15).Rotate(i, center);
+                _originalRegions.Add(region);
             }
 
             // Update map values based on regions
@@ -135,11 +120,12 @@ namespace GoRogue.Debugger.Routines
         {
             foreach (var region in _transformedRegions)
             {
+                foreach (var point in region.OuterPoints.Where(point => _map.Contains(point)))
+                    _map[point] = RegionTileState.Outer;
+
                 foreach (var point in region.InnerPoints.Where(point => _map.Contains(point)))
                     _map[point] = RegionTileState.Inner;
 
-                foreach (var point in region.OuterPoints.Where(point => _map.Contains(point)))
-                    _map[point] = RegionTileState.Outer;
             }
         }
 
@@ -149,7 +135,8 @@ namespace GoRogue.Debugger.Routines
             => _map[pos] switch
             {
                 RegionTileState.Inner => '.',
-                RegionTileState.Outer => '#',
+                RegionTileState.Outer => '+',
+                RegionTileState.Corner => '*',
                 _ => ' '
             };
     }
