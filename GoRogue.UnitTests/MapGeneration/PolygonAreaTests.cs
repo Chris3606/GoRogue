@@ -199,58 +199,47 @@ namespace GoRogue.UnitTests.MapGeneration
             _output.WriteLine(GetPolygonString(polygon));
         }
 
-        private int Median(List<int> ints)
-        {
-            ints.Sort();
-            return ints[ints.Count / 2];
-        }
-        private int Mode(List<int> ints)
-        {
-            //track the amount of times we encounter each integer
-            var encountered = new Dictionary<int, int>();
-
-            foreach (var integer in ints)
-            {
-                //if we haven't seen it, track it once.
-                if (!encountered.ContainsKey(integer))
-                    encountered.Add(integer, 1);
-
-                //otherwise, increase the amount of times we've seen it
-                else
-                    encountered[integer]++;
-            }
-
-            return encountered.OrderByDescending(i => i.Value).First().Key;
-        }
-
         private void AssertPolygonSidesAreEqual(PolygonArea polygon, bool isStar)
         {
             var outer = (MultiArea)polygon.OuterPoints;//Satan forgive me
 
-            var ints = new List<int>();
+            var allInts = new List<int>();
+            var intsEncountered = new Dictionary<int, int>();
             int total = 0;
             var divisor = outer.SubAreas.Count;
 
             foreach (var boundary in outer.SubAreas)
             {
-                total += boundary.Count;
-                ints.Add(boundary.Count);
+                var count = boundary.Count;
+                total += count;
+                //if we haven't seen it, track it once.
+                if (!intsEncountered.ContainsKey(count))
+                    intsEncountered.Add(count, 1);
+
+                //otherwise, increase the amount of times we've seen it
+                else
+                    intsEncountered[count]++;
+
+                allInts.Add(count);
             }
 
             var mean = total / divisor;
-            var mode = Mode(ints);
-            var median = Median(ints);
+            allInts.Sort();
+            var mode = allInts[allInts.Count / 2];
+            var median = intsEncountered.OrderByDescending(kvp => kvp.Value).First().Key;
 
             string message = isStar ? "Regular Star" : "Regular Polygon";
             var cornerCount = isStar ? polygon.Corners.Count / 2 : polygon.Corners.Count;
 
             message += $" with {cornerCount} corners has a lopside. \r\n";
             message += $"Mean: {mean}\r\nMedian: {median}\r\nMode: {mode}\r\nHas a side of length: ";
-            foreach (var i in ints)
+            foreach (var i in allInts)
             {
-                Assert.True(i >= mean - 2 && i <= mean + 2, message + i);
-                Assert.True(i >= mode - 2 && i <= mode + 2, message + i);
-                Assert.True(i >= median - 2 && i <= median + 2, message + i);
+                var variance = mode / 4;
+                variance = variance > 2 ? variance : 2;
+                bool withinMode = i >= mode - variance && i <= mode + variance;
+                bool withinMedian = i >= median - variance && i <= median + variance;
+                Assert.True(withinMode || withinMedian, message + i);
             }
         }
 
@@ -258,7 +247,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [MemberDataEnumerable(nameof(PolygonPointCount))]
         public void RegularPolygonTest(int cornerAmount)
         {
-            var polygon = PolygonArea.RegularPolygon((0, 0), cornerAmount, cornerAmount);
+            var polygon = PolygonArea.RegularPolygon((0, 0), cornerAmount, 300);
             AssertPolygonSidesAreEqual(polygon, false);
         }
 
@@ -267,8 +256,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [MemberDataEnumerable(nameof(PolygonPointCount))]
         public void RegularStarTest(int cornerAmount)
         {
-            // ReSharper disable once PossibleLossOfFraction
-            var polygon = PolygonArea.RegularStar((0, 0), cornerAmount, cornerAmount, cornerAmount/2);
+            var polygon = PolygonArea.RegularStar((0, 0), cornerAmount, 300, 150);
             AssertPolygonSidesAreEqual(polygon, true);
         }
 

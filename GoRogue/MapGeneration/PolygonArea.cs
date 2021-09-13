@@ -241,7 +241,7 @@ namespace GoRogue.MapGeneration
                 throw new ArgumentException("Line Algorithm must produce ordered lines.");
 
             var corners = new List<Point>();
-            var increment = 360 / numberOfSides;
+            var increment = 360.0 / numberOfSides;
 
             for (int i = 0; i < numberOfSides; i ++)
             {
@@ -251,7 +251,6 @@ namespace GoRogue.MapGeneration
                 corners.Add(corner);
             }
 
-            //possible bug, compare the output of PolygonRoutine with 72 corners versus 73
             return new PolygonArea(corners, algorithm);
         }
 
@@ -278,7 +277,7 @@ namespace GoRogue.MapGeneration
 
             points *= 2;
             var corners = new List<Point>();
-            var increment = 360 / points;
+            var increment = 360.0 / points;
 
             for (int i = 0; i < points; i ++)
             {
