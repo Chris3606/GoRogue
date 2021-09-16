@@ -65,7 +65,7 @@ namespace GoRogue.UnitTests.MapGeneration
         };
 
         public static readonly IEnumerable<int> PolygonPointCount = new List<int>
-            {4, 8, 16, 32, 49, 55, 64, 72, 73, 89, 91, 128, 256, 301, 499, 512, 751, 800, 925, 1024};
+            {5, 8, 9, 16, 17, 31, 32, 33, 47, 48, 49, 64, 65, 72, 73, 89, 90, 91, 101, 239, 347, 409};
 
         //All points lovingly calculated by hand
         public static readonly IEnumerable<PolygonTestCase> PolygonTestCases = new List<PolygonTestCase>
@@ -99,12 +99,14 @@ namespace GoRogue.UnitTests.MapGeneration
                 final.Append($" {i + bounds.MinExtentX}");
             final.Append('\n');
 
+            HashSet<Point> corners = new HashSet<Point>(region.Corners);
+
             for (int y = bounds.MinExtentY; y <= bounds.MaxExtentY; y++)
             {
                 final.Append($"{y + bounds.MinExtentY}");
                 for (int x = bounds.MinExtentX; x <= bounds.MaxExtentX; x++)
                 {
-                    if (region.Corners.Contains((x, y)))
+                    if (corners.Contains((x, y)))
                         final.Append('#');
                     else if (region.OuterPoints.Contains((x, y)))
                         final.Append('+');
@@ -203,8 +205,10 @@ namespace GoRogue.UnitTests.MapGeneration
         {
             var outer = (MultiArea)polygon.OuterPoints;//Satan forgive me
 
+            //we need to track duplicates as well so that we can sort them and find the median
             var allInts = new List<int>();
             var intsEncountered = new Dictionary<int, int>();
+
             int total = 0;
             var divisor = outer.SubAreas.Count;
 
@@ -224,19 +228,23 @@ namespace GoRogue.UnitTests.MapGeneration
             }
 
             var mean = total / divisor;
+
             allInts.Sort();
-            var mode = allInts[allInts.Count / 2];
-            var median = intsEncountered.OrderByDescending(kvp => kvp.Value).First().Key;
+            var median = allInts[allInts.Count / 2];
+            //now we're finished using allInts
+
+            var mode = intsEncountered.OrderByDescending(kvp => kvp.Value).First().Key;
+            var variance = mode / 4;
+            variance = variance > 2 ? variance : 2;
 
             string message = isStar ? "Regular Star" : "Regular Polygon";
             var cornerCount = isStar ? polygon.Corners.Count / 2 : polygon.Corners.Count;
 
             message += $" with {cornerCount} corners has a lopside. \r\n";
             message += $"Mean: {mean}\r\nMedian: {median}\r\nMode: {mode}\r\nHas a side of length: ";
-            foreach (var i in allInts)
+
+            foreach (var i in intsEncountered.Keys)
             {
-                var variance = mode / 4;
-                variance = variance > 2 ? variance : 2;
                 bool withinMode = i >= mode - variance && i <= mode + variance;
                 bool withinMedian = i >= median - variance && i <= median + variance;
                 Assert.True(withinMode || withinMedian, message + i);

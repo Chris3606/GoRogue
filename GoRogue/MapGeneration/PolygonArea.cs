@@ -49,44 +49,47 @@ namespace GoRogue.MapGeneration
         public Point this[int index] => _points[index];
 
         /// <summary>
-        /// The left-most X-value of the region's four corners
+        /// The left-most X-value of the corners
         /// </summary>
-        public int Left => _corners.OrderBy(p => p.X).First().X;
+        public int Left { get; }
 
         /// <summary>
-        /// The right-most X-value of the region's four corners
+        /// The right-most X-value of the corners
         /// </summary>
-        public int Right => _corners.OrderBy(p => p.X).Last().X;
+        public int Right { get; }
 
         /// <summary>
-        /// The top-most Y-value of the region's four corners
+        /// The top-most Y-value of the corners
         /// </summary>
-        public int Top => Direction.YIncreasesUpward
-            ? _corners.OrderBy(p => p.Y).Last().Y
-            : _corners.OrderBy(p => p.Y).First().Y;
+        public int Top { get; }
 
         /// <summary>
-        /// The bottom-most Y-value of the region's four corners
+        /// The bottom-most Y-value of the corners
         /// </summary>
-        public int Bottom => Direction.YIncreasesUpward
-            ? _corners.OrderBy(p => p.Y).First().Y
-            : _corners.OrderBy(p => p.Y).Last().Y;
+        public int Bottom { get; }
 
         /// <summary>
-        /// How Wide this region is
+        /// How Wide this Polygon is
         /// </summary>
-        public int Width => Right - Left + 1;
+        public int Width => Bounds.Width;
 
         /// <summary>
-        /// how tall this region is
+        /// how tall this Polygon is
         /// </summary>
-        public int Height => (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top) + 1;
+        public int Height => Bounds.Height;
 
         /// <summary>
-        /// The Center point of this region
+        /// The Center point of this Polygon
         /// </summary>
         /// <remarks>There is no guarantee that the center point lies within the polygon</remarks>
-        public Point Center => new Point((Left + Right) / 2, (Top + Bottom) / 2);
+        public Point Center { get; }
+
+        /// <summary>
+        /// Returns true if the position provided is a corner of this polygon
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public bool IsCorner(Point position) => Corners.Contains(position);
         #endregion
 
         #region constructors
@@ -96,40 +99,49 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA) : this(corners.ToList(), algorithm) { }
+        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+            : this(corners.ToList(), algorithm) { }
 
         /// <summary>
         /// Creates a new Polygon, with corners at the provided points
         /// </summary>
         /// <param name="corners">The corners of this polygon</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
-        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA) : this(corners, algorithm) { }
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
+        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+            : this(corners, algorithm) { }
 
         /// <summary>
         /// Returns a new PolygonArea with corners at the provided points.
         /// </summary>
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
         /// <param name="corners">The points which are corners for this polygon</param>
-        public PolygonArea(Lines.Algorithm algorithm, params Point[] corners) : this(corners, algorithm) { }
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
+        public PolygonArea(Lines.Algorithm algorithm, params Point[] corners)
+            : this(corners, algorithm) { }
 
         /// <summary>
         /// Returns a new polygon with corners at the provided points, using the algorithm DDA to produce lines
         /// </summary>
         /// <param name="corners">The corners of the polygon</param>
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
         public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
 
         private PolygonArea(List<Point> corners, Lines.Algorithm algorithm)
         {
             _corners = corners;
-            if (_corners.Count < 3)
-                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
             LineAlgorithm = algorithm;
+            CheckCorners();
+            CheckAlgorithm();
             _outerPoints = new MultiArea();
             _innerPoints = new Area();
             _points = new MultiArea { _outerPoints, _innerPoints };
+
+            Left = _corners.OrderBy(p => p.X).First().X;
+            Right =  _corners.OrderBy(p => p.X).Last().X;
+            Top = Direction.YIncreasesUpward ? _corners.OrderBy(p => p.Y).Last().Y : _corners.OrderBy(p => p.Y).First().Y;
+            Bottom = Direction.YIncreasesUpward ? _corners.OrderBy(p => p.Y).First().Y : _corners.OrderBy(p => p.Y).Last().Y;
+            Center = new Point((Left + Right) / 2, (Top + Bottom) / 2);
 
             DrawFromCorners();
             SetInnerPoints();
@@ -137,6 +149,21 @@ namespace GoRogue.MapGeneration
         #endregion
 
         #region private initialization
+
+        private void CheckCorners() => CheckCorners(_corners.Count);
+        private static void CheckCorners(int corners)
+        {
+            if (corners < 3)
+                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
+        }
+
+        private void CheckAlgorithm() => CheckAlgorithm(LineAlgorithm);
+        private static void CheckAlgorithm(Lines.Algorithm algorithm)
+        {
+            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
+                throw new ArgumentException("Line Algorithm must produce ordered lines.");
+        }
+
         //Draws lines from each corner to the next
         private void DrawFromCorners()
         {
@@ -188,27 +215,31 @@ namespace GoRogue.MapGeneration
 
         #region static creation methods
         /// <summary>
-        /// Creates a new Region from a GoRogue.Rectangle.
+        /// Creates a new Polygon from a GoRogue.Rectangle.
         /// </summary>
-        /// <param name="r">The rectangle</param>
+        /// <param name="rectangle">The rectangle</param>
         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
-        /// <returns>A new region in the shape of a rectangle</returns>
-        public static PolygonArea Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
-            => new PolygonArea(algorithm, r.MinExtent, (r.MaxExtentX, r.MinExtentY), r.MaxExtent,
-                (r.MinExtentX, r.MaxExtentY));
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
+        /// <returns>A new Polygon in the shape of a rectangle</returns>
+        public static PolygonArea Rectangle(Rectangle rectangle, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+            => new PolygonArea(algorithm, rectangle.MinExtent, (rectangle.MaxExtentX, rectangle.MinExtentY), rectangle.MaxExtent,
+                (rectangle.MinExtentX, rectangle.MaxExtentY));
 
         /// <summary>
-         /// Creates a new Region in the shape of a parallelogram, with diagonals going down and right.
+         /// Creates a new Polygon in the shape of a parallelogram.
          /// </summary>
          /// <param name="origin">Origin of the parallelogram.</param>
          /// <param name="width">Width of the parallelogram.</param>
          /// <param name="height">Height of the parallelogram.</param>
         /// <param name="fromTop">Whether the parallelogram extends downward-right or upwards-right from the start</param>
          /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
-         /// <returns>A new region in the shape of a parallelogram</returns>
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
+         /// <returns>A new Polygon in the shape of a parallelogram</returns>
          public static PolygonArea Parallelogram(Point origin, int width, int height, bool fromTop = false,
             Lines.Algorithm algorithm = Lines.Algorithm.DDA)
          {
+             CheckAlgorithm(algorithm);
+
              if (fromTop && Direction.YIncreasesUpward)
                  height *= -1;
 
@@ -230,15 +261,13 @@ namespace GoRogue.MapGeneration
         /// <param name="center">The center point of this polygon</param>
         /// <param name="numberOfSides">Number of sides and corners on this polygon</param>
         /// <param name="radius">The desired distance between the center and each corner</param>
-        /// <param name="algorithm">Which line-drawing algoirthm to use</param>
+        /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
+        /// <param name="algorithm">Which line-drawing algorithm to use</param>
         /// <returns></returns>
         public static PolygonArea RegularPolygon(Point center, int numberOfSides, double radius, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
         {
-            if(numberOfSides < 3)
-                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
+            CheckCorners(numberOfSides);
+            CheckAlgorithm(algorithm);
 
             var corners = new List<Point>();
             var increment = 360.0 / numberOfSides;
@@ -251,7 +280,7 @@ namespace GoRogue.MapGeneration
                 corners.Add(corner);
             }
 
-            return new PolygonArea(corners, algorithm);
+            return new PolygonArea(ref corners, algorithm);
         }
 
         /// <summary>
@@ -266,10 +295,9 @@ namespace GoRogue.MapGeneration
         public static PolygonArea RegularStar(Point center, int points, double outerRadius, double innerRadius,
             Lines.Algorithm algorithm = Lines.Algorithm.DDA)
         {
-            if(points < 3)
-                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
+            CheckCorners(points);
+            CheckAlgorithm(algorithm);
+
             if (outerRadius < 0)
                 throw new ArgumentException("outerRadius must be positive.");
             if (innerRadius < 0)
@@ -288,7 +316,7 @@ namespace GoRogue.MapGeneration
                 corners.Add(corner);
             }
 
-            return new PolygonArea(corners, algorithm);
+            return new PolygonArea(ref corners, algorithm);
         }
         #endregion
 
@@ -337,13 +365,13 @@ namespace GoRogue.MapGeneration
         /// <returns>A new, translated PolygonArea</returns>
         public PolygonArea Translate(Point delta)
         {
-            var corners = new Point[Corners.Count];
-            for (int i = 0; i < corners.Length; i++)
+            var corners = new List<Point>();
+            for (int i = 0; i < Corners.Count; i++)
             {
-                corners[i] = Corners[i] + delta;
+                corners.Add(Corners[i] + delta);
             }
 
-            return new PolygonArea(corners);
+            return new PolygonArea(ref corners);
         }
 
         /// <summary>
@@ -363,13 +391,13 @@ namespace GoRogue.MapGeneration
         {
             degrees = MathHelpers.WrapAround(degrees, 360);
 
-            var corners = new Point[Corners.Count];
-            for (int i = 0; i < corners.Length; i++)
+            var corners = new List<Point>();
+            for (int i = 0; i < Corners.Count; i++)
             {
-                corners[i] = Corners[i].Rotate(degrees, origin);
+                corners.Add(Corners[i].Rotate(degrees, origin));
             }
 
-            return new PolygonArea(corners);
+            return new PolygonArea(ref corners);
         }
 
         /// <summary>
@@ -379,13 +407,13 @@ namespace GoRogue.MapGeneration
         /// <returns>A new, flipped PolygonArea</returns>
         public PolygonArea FlipHorizontal(int x)
         {
-            var corners = new Point[Corners.Count];
-            for (int i = 0; i < corners.Length; i++)
+            var corners = new List<Point>();
+            for (int i = 0; i < Corners.Count; i++)
             {
-                corners[i] = (Corners[i] - (x,0)) * (-1, 1) + (x,0);
+                corners.Add((Corners[i] - (x,0)) * (-1, 1) + (x,0));
             }
 
-            return new PolygonArea(corners);
+            return new PolygonArea(ref corners);
         }
 
         /// <summary>
@@ -394,13 +422,13 @@ namespace GoRogue.MapGeneration
         /// <param name="y">The value around which to flip.</param>
         public PolygonArea FlipVertical(int y)
         {
-            var corners = new Point[Corners.Count];
-            for (int i = 0; i < corners.Length; i++)
+            var corners = new List<Point>();
+            for (int i = 0; i < Corners.Count; i++)
             {
-                corners[i] = (Corners[i] - (0,y)) * (1,-1) + (0,y);
+                corners.Add((Corners[i] - (0,y)) * (1,-1) + (0,y));
             }
 
-            return new PolygonArea(corners);
+            return new PolygonArea(ref corners);
         }
 
         /// <summary>
@@ -419,17 +447,17 @@ namespace GoRogue.MapGeneration
         /// <returns>A new PolygonArea</returns>
         public PolygonArea Transpose(Point xy)
         {
-            var corners = new Point[Corners.Count];
-            for (int i = 0; i < corners.Length; i++)
+            var corners = new List<Point>();
+            for (int i = 0; i < Corners.Count; i++)
             {
                 var corner = Corners[i];
                 corner -= xy;
                 corner = (corner.Y, corner.X);
                 corner += xy;
-                corners[i] = corner;
+                corners.Add(corner);
             }
 
-            return new PolygonArea(corners);
+            return new PolygonArea(ref corners);
         }
         #endregion
     }

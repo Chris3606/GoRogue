@@ -20,62 +20,64 @@ namespace GoRogue.MapGeneration
         /// The Area of this region
         /// </summary>
         public PolygonArea Area { get; set; }
+
         /// <inheritdoc/>
         public IComponentCollection GoRogueComponents { get; }
 
         /// <summary>
-        /// Creates a new Polygon, with corners at the provided points
+        /// Creates a new Region, with corners at the provided points
         /// </summary>
         /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <param name="components"></param>
         public Region(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA, IComponentCollection? components = null)
-            : this(corners.ToList(), algorithm) { }
+            : this(corners.ToList(), algorithm, components) { }
 
         /// <summary>
-        /// Creates a new Polygon, with corners at the provided points
+        /// Creates a new Region, with corners at the provided points
         /// </summary>
-        /// <param name="corners">The corners of this polygon</param>
+        /// <param name="corners">The corners of this region</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <param name="components">A collection of components to add to this region</param>
         public Region(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA, IComponentCollection? components = null)
             : this(corners, algorithm, components) { }
 
         /// <summary>
-        /// Returns a new PolygonArea with corners at the provided points.
+        /// Returns a new Region with corners at the provided points.
         /// </summary>
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
-        /// <param name="corners">The points which are corners for this polygon</param>
+        /// <param name="corners">The points which are corners for this region</param>
         public Region(Lines.Algorithm algorithm, params Point[] corners)
             : this(corners, algorithm, null) { }
 
         /// <summary>
-        /// Returns a new PolygonArea with corners at the provided points.
+        /// Returns a new Region with corners at the provided points.
         /// </summary>
         /// <param name="components">A component collection to use for this region</param>
-        /// <param name="corners">The points which are corners for this polygon</param>
-        public Region(IComponentCollection? components = null, params Point[] corners)
+        /// <param name="corners">The points which are corners for this region</param>
+        public Region(IComponentCollection? components, params Point[] corners)
             : this(corners, Lines.Algorithm.DDA, components) { }
 
         /// <summary>
-        /// Returns a new PolygonArea with corners at the provided points.
+        /// Returns a new Region with corners at the provided points.
         /// </summary>
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
         /// <param name="components">A component collection for this region</param>
-        /// <param name="corners">The points which are corners for this polygon</param>
+        /// <param name="corners">The points which are corners for this region</param>
         public Region(Lines.Algorithm algorithm, IComponentCollection? components, params Point[] corners)
             : this(corners, algorithm, components) { }
 
         /// <summary>
-        /// Returns a new polygon with corners at the provided points, using the algorithm DDA to produce lines
+        /// Returns a new Region with corners at the provided points, using the algorithm DDA to produce lines
         /// </summary>
-        /// <param name="corners">The corners of the polygon</param>
+        /// <param name="corners">The corners of the region</param>
         public Region(params Point[] corners) : this(corners, Lines.Algorithm.DDA, null) { }
 
-        private Region(List<Point> corners, Lines.Algorithm algorithm, IComponentCollection? components = null)
+        private Region(List<Point> corners, Lines.Algorithm algorithm, IComponentCollection? components)
         {
             Area = new PolygonArea(corners, algorithm);
             GoRogueComponents = components ?? new ComponentCollection();
+            GoRogueComponents.ParentForAddedComponents = this;
         }
 
         #region Properties
@@ -103,17 +105,17 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// How Wide this region is
         /// </summary>
-        public int Width => Right - Left + 1;
+        public int Width => Area.Width;
 
         /// <summary>
         /// how tall this region is
         /// </summary>
-        public int Height => (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top) + 1;
+        public int Height => Area.Height;
 
         /// <summary>
         /// The Center point of this region
         /// </summary>
-        public Point Center => new Point((Left + Right) / 2, (Top + Bottom) / 2);
+        public Point Center => Area.Center;
 
         /// <inheritdoc />
         public Rectangle Bounds => Area.Bounds;
@@ -143,7 +145,7 @@ namespace GoRogue.MapGeneration
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="position">the point to evaluate</param>
-        public bool IsCorner(Point position) => Area.Corners.Contains(position);
+        public bool IsCorner(Point position) => Area.IsCorner(position);
 
         /// <summary>
         /// The value of the left-most Point in the region at elevation y
