@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using GoRogue.Components;
 using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.MapGeneration
 {
@@ -48,7 +47,7 @@ namespace GoRogue.MapGeneration
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
         /// <param name="corners">The points which are corners for this region</param>
         public Region(Lines.Algorithm algorithm, params Point[] corners)
-            : this(corners, algorithm, null) { }
+            : this(corners, algorithm) { }
 
         /// <summary>
         /// Returns a new Region with corners at the provided points.
@@ -71,11 +70,11 @@ namespace GoRogue.MapGeneration
         /// Returns a new Region with corners at the provided points, using the algorithm DDA to produce lines
         /// </summary>
         /// <param name="corners">The corners of the region</param>
-        public Region(params Point[] corners) : this(corners, Lines.Algorithm.DDA, null) { }
+        public Region(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
 
         private Region(List<Point> corners, Lines.Algorithm algorithm, IComponentCollection? components)
         {
-            Area = new PolygonArea(corners, algorithm);
+            Area = new PolygonArea(ref corners, algorithm);
             GoRogueComponents = components ?? new ComponentCollection();
             GoRogueComponents.ParentForAddedComponents = this;
         }
@@ -135,10 +134,10 @@ namespace GoRogue.MapGeneration
         /// </summary>
         public override string ToString()
         {
-            var answer = "Region: ";
-            foreach (var corner in Area.Corners)
-                answer += $"{corner} => ";
-            return answer;
+            var answer = new StringBuilder("Region with ");
+            answer.Append($"{GoRogueComponents.Count} components and the following ");
+            answer.Append(Area);
+            return answer.ToString();
         }
 
         /// <summary>

@@ -4,6 +4,7 @@ using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+// ReSharper disable PossibleLossOfFraction
 
 namespace GoRogue.Debugger.Routines
 {
@@ -24,6 +25,7 @@ namespace GoRogue.Debugger.Routines
         private int _cornerAmount = 3;
 
         private Point _center => (50, 50);
+        
         // Grid view set to indicate current state of each tile, so that it can be efficiently rendered.
         private readonly ArrayView<PolygonTileState> _map = new ArrayView<PolygonTileState>(100, 100);
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
@@ -83,45 +85,6 @@ namespace GoRogue.Debugger.Routines
 
             // Update map values based on regions
             ApplyPolygonsToMap();
-        }
-
-        private PolygonArea Polygon(int cornerCount)
-        {
-            var midPoint = new Point(_map.Width / 2 - 5, _map.Height / 2 - 5);
-            var dim = _map.Width < _map.Height ? _map.Width / 2 : _map.Height / 2;
-            var corners = new List<Point>();
-            bool star = false;
-            bool inner = false;
-            int radius;
-
-            //draw simple shapes up to hexagons
-            if(cornerCount >= 7)
-            {
-                cornerCount *= 2;
-                star = true;
-            }
-
-            for (int i = 0; i < 360; i += 360 / cornerCount)
-            {
-                //each full rotation, increase the distance from the center we're placing our polygons
-                if (star)
-                {
-                    if (inner)
-                        radius = dim / 4;
-                    else
-                        radius = dim * 3 / 4;
-
-                    inner = !inner;
-                }
-                else
-                    radius = dim * 3 / 4;
-
-                var corner = new PolarCoordinate(radius, SadRogue.Primitives.MathHelpers.ToRadian(i)).ToCartesian();
-                corner += midPoint;
-                corners.Add(corner);
-            }
-
-            return new PolygonArea(corners);
         }
 
         // Update map to effectively revert all region positions back to walls

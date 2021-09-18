@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
-using SadRogue.Primitives.GridViews;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;

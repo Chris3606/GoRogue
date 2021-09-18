@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -49,24 +50,24 @@ namespace GoRogue.MapGeneration
         public Point this[int index] => _points[index];
 
         /// <summary>
-        /// The left-most X-value of the corners
+        /// The left-most X-value of the Polygon
         /// </summary>
-        public int Left { get; }
+        public int Left => Bounds.MinExtentX;
 
         /// <summary>
-        /// The right-most X-value of the corners
+        /// The right-most X-value of the Polygon
         /// </summary>
-        public int Right { get; }
+        public int Right => Bounds.MaxExtentX;
 
         /// <summary>
-        /// The top-most Y-value of the corners
+        /// The top-most Y-value of the Polygon
         /// </summary>
-        public int Top { get; }
+        public int Top => Direction.YIncreasesUpward ? Bounds.MaxExtentY : Bounds.MinExtentY;
 
         /// <summary>
-        /// The bottom-most Y-value of the corners
+        /// The bottom-most Y-value of the Polygon
         /// </summary>
-        public int Bottom { get; }
+        public int Bottom => Direction.YIncreasesUpward ? Bounds.MinExtentY : Bounds.MaxExtentY;
 
         /// <summary>
         /// How Wide this Polygon is
@@ -82,7 +83,7 @@ namespace GoRogue.MapGeneration
         /// The Center point of this Polygon
         /// </summary>
         /// <remarks>There is no guarantee that the center point lies within the polygon</remarks>
-        public Point Center { get; }
+        public Point Center => Bounds.Center;
 
         /// <summary>
         /// Returns true if the position provided is a corner of this polygon
@@ -90,6 +91,17 @@ namespace GoRogue.MapGeneration
         /// <param name="position"></param>
         /// <returns></returns>
         public bool IsCorner(Point position) => Corners.Contains(position);
+
+        /// <summary>
+        /// Returns a string detailing the region's corner locations.
+        /// </summary>
+        public override string ToString()
+        {
+            var answer = new StringBuilder("PolygonArea: ");
+            foreach (var corner in _corners)
+                answer.Append($"{corner} => ");
+            return answer.ToString();
+        }
         #endregion
 
         #region constructors
@@ -136,12 +148,6 @@ namespace GoRogue.MapGeneration
             _outerPoints = new MultiArea();
             _innerPoints = new Area();
             _points = new MultiArea { _outerPoints, _innerPoints };
-
-            Left = _corners.OrderBy(p => p.X).First().X;
-            Right =  _corners.OrderBy(p => p.X).Last().X;
-            Top = Direction.YIncreasesUpward ? _corners.OrderBy(p => p.Y).Last().Y : _corners.OrderBy(p => p.Y).First().Y;
-            Bottom = Direction.YIncreasesUpward ? _corners.OrderBy(p => p.Y).First().Y : _corners.OrderBy(p => p.Y).Last().Y;
-            Center = new Point((Left + Right) / 2, (Top + Bottom) / 2);
 
             DrawFromCorners();
             SetInnerPoints();
@@ -269,7 +275,7 @@ namespace GoRogue.MapGeneration
             CheckCorners(numberOfSides);
             CheckAlgorithm(algorithm);
 
-            var corners = new List<Point>();
+            var corners = new List<Point>(numberOfSides);
             var increment = 360.0 / numberOfSides;
 
             for (int i = 0; i < numberOfSides; i ++)
@@ -304,7 +310,7 @@ namespace GoRogue.MapGeneration
                 throw new ArgumentException("innerRadius must be positive.");
 
             points *= 2;
-            var corners = new List<Point>();
+            var corners = new List<Point>(points);
             var increment = 360.0 / points;
 
             for (int i = 0; i < points; i ++)
@@ -365,7 +371,7 @@ namespace GoRogue.MapGeneration
         /// <returns>A new, translated PolygonArea</returns>
         public PolygonArea Translate(Point delta)
         {
-            var corners = new List<Point>();
+            var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
                 corners.Add(Corners[i] + delta);
@@ -391,7 +397,7 @@ namespace GoRogue.MapGeneration
         {
             degrees = MathHelpers.WrapAround(degrees, 360);
 
-            var corners = new List<Point>();
+            var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
                 corners.Add(Corners[i].Rotate(degrees, origin));
@@ -407,7 +413,7 @@ namespace GoRogue.MapGeneration
         /// <returns>A new, flipped PolygonArea</returns>
         public PolygonArea FlipHorizontal(int x)
         {
-            var corners = new List<Point>();
+            var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
                 corners.Add((Corners[i] - (x,0)) * (-1, 1) + (x,0));
@@ -422,7 +428,7 @@ namespace GoRogue.MapGeneration
         /// <param name="y">The value around which to flip.</param>
         public PolygonArea FlipVertical(int y)
         {
-            var corners = new List<Point>();
+            var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
                 corners.Add((Corners[i] - (0,y)) * (1,-1) + (0,y));
