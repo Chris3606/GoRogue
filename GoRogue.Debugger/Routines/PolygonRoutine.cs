@@ -4,7 +4,6 @@ using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-// ReSharper disable PossibleLossOfFraction
 
 namespace GoRogue.Debugger.Routines
 {
@@ -25,7 +24,7 @@ namespace GoRogue.Debugger.Routines
         private int _cornerAmount = 3;
 
         private Point _center => (50, 50);
-        
+
         // Grid view set to indicate current state of each tile, so that it can be efficiently rendered.
         private readonly ArrayView<PolygonTileState> _map = new ArrayView<PolygonTileState>(100, 100);
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
@@ -81,7 +80,7 @@ namespace GoRogue.Debugger.Routines
             foreach (var pos in _map.Positions())
                 _map[pos] = PolygonTileState.Exterior;
 
-            _polygons.Add(PolygonArea.RegularPolygon((_map.Width/2, _map.Height/2),_cornerAmount,_map.Width/4));
+            _polygons.Add(PolygonArea.RegularPolygon((_map.Width/2, _map.Height/2),_cornerAmount,_map.Width/4.0));
 
             // Update map values based on regions
             ApplyPolygonsToMap();

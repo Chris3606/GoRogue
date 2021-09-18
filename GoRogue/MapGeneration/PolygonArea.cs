@@ -453,7 +453,7 @@ namespace GoRogue.MapGeneration
         /// <returns>A new PolygonArea</returns>
         public PolygonArea Transpose(Point xy)
         {
-            var corners = new List<Point>();
+            var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
                 var corner = Corners[i];
