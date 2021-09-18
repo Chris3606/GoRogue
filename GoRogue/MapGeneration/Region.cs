@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using GoRogue.Components;
+using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.MapGeneration
 {
@@ -12,163 +13,117 @@ namespace GoRogue.MapGeneration
     /// A region of the map with four sides of arbitrary shape and size
     /// </summary>
     [PublicAPI]
-    public class Region : IReadOnlyArea
+    public class Region : IObjectWithComponents, IReadOnlyArea
     {
         /// <summary>
-        /// A region of the map with four corners of arbitrary shape and size
+        /// The Area of this region
         /// </summary>
-        /// <param name="northWest">the North-West corner of this region</param>
-        /// <param name="northEast">the North-East corner of this region</param>
-        /// <param name="southEast">the South-East corner of this region</param>
-        /// <param name="southWest">the South-West corner of this region</param>
-        /// <param name="algoToUse">which Line-getting algorithm to use</param>
-        public Region(Point northWest, Point northEast, Point southEast, Point southWest, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
+        public PolygonArea Area { get; set; }
+
+        /// <inheritdoc/>
+        public IComponentCollection GoRogueComponents { get; }
+
+        /// <summary>
+        /// Creates a new Region, with corners at the provided points
+        /// </summary>
+        /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
+        /// <param name="algorithm">Which Line Algorithm to use</param>
+        /// <param name="components"></param>
+        public Region(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA, IComponentCollection? components = null)
+            : this(corners.ToList(), algorithm, components) { }
+
+        /// <summary>
+        /// Creates a new Region, with corners at the provided points
+        /// </summary>
+        /// <param name="corners">The corners of this region</param>
+        /// <param name="algorithm">Which Line Algorithm to use</param>
+        /// <param name="components">A collection of components to add to this region</param>
+        public Region(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA, IComponentCollection? components = null)
+            : this(corners, algorithm, components) { }
+
+        /// <summary>
+        /// Returns a new Region with corners at the provided points.
+        /// </summary>
+        /// <param name="algorithm">Which Line-drawing algorithm to use</param>
+        /// <param name="corners">The points which are corners for this region</param>
+        public Region(Lines.Algorithm algorithm, params Point[] corners)
+            : this(corners, algorithm) { }
+
+        /// <summary>
+        /// Returns a new Region with corners at the provided points.
+        /// </summary>
+        /// <param name="components">A component collection to use for this region</param>
+        /// <param name="corners">The points which are corners for this region</param>
+        public Region(IComponentCollection? components, params Point[] corners)
+            : this(corners, Lines.Algorithm.DDA, components) { }
+
+        /// <summary>
+        /// Returns a new Region with corners at the provided points.
+        /// </summary>
+        /// <param name="algorithm">Which Line-drawing algorithm to use</param>
+        /// <param name="components">A component collection for this region</param>
+        /// <param name="corners">The points which are corners for this region</param>
+        public Region(Lines.Algorithm algorithm, IComponentCollection? components, params Point[] corners)
+            : this(corners, algorithm, components) { }
+
+        /// <summary>
+        /// Returns a new Region with corners at the provided points, using the algorithm DDA to produce lines
+        /// </summary>
+        /// <param name="corners">The corners of the region</param>
+        public Region(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
+
+        private Region(List<Point> corners, Lines.Algorithm algorithm, IComponentCollection? components)
         {
-            if (northWest.X > northEast.X || southWest.X > southEast.X)
-                throw new ArgumentException("A region's east corners must be east of the corresponding west corners.");
-
-            var invalidNorthSouth = Direction.YIncreasesUpward
-                ? northEast.Y < southEast.Y || northWest.Y < southWest.Y
-                : northEast.Y > southEast.Y || northWest.Y > southWest.Y;
-            if (invalidNorthSouth)
-                throw new ArgumentException("A region's north corners must be north of the corresponding south corners.");
-
-            SouthEastCorner = southEast;
-            NorthEastCorner = northEast;
-            NorthWestCorner = northWest;
-            SouthWestCorner = southWest;
-            Algorithm = algoToUse;
-
-            // This isn't a fully accurate max-x value; a more accurate one could be calculated by taking the max x/y
-            // of the corners being used to create the line.  However, it is still mathematically valid.
-            int maxX = Math.Max(NorthEastCorner.X, SouthEastCorner.X);
-            var hasher = new KnownSizeHasher(maxX);
-
-            // Determine outer boundaries between each corner
-            _westBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, Algorithm), hasher);
-            _southBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, Algorithm), hasher);
-            _eastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, Algorithm), hasher);
-            _northBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, Algorithm), hasher);
-            _outerPoints = new MultiArea {_westBoundary, _northBoundary, _eastBoundary, _southBoundary};
-            SetInnerFromOuterPoints();
-            _points = new MultiArea {_outerPoints, _innerPoints};
+            Area = new PolygonArea(ref corners, algorithm);
+            GoRogueComponents = components ?? new ComponentCollection();
+            GoRogueComponents.ParentForAddedComponents = this;
         }
 
         #region Properties
 
         /// <summary>
-        /// Which Line-getting algorithm to use
-        /// </summary>
-        public Lines.Algorithm Algorithm { get; set; }
-
-        /// <summary>
-        /// The South-East corner of the region
-        /// </summary>
-        public Point SouthEastCorner { get; private set; }
-
-        /// <summary>
-        /// The South-West corner of the region
-        /// </summary>
-        public Point SouthWestCorner { get; private set; }
-
-        /// <summary>
-        /// The North-West corner of the region
-        /// </summary>
-        public Point NorthWestCorner { get; private set; }
-
-        /// <summary>
-        /// the North-East corner of the region
-        /// </summary>
-        public Point NorthEastCorner { get; private set; }
-
-        /// <summary>
-        /// All points within the region
-        /// </summary>
-        private MultiArea _points;
-
-        /// <summary>
-        /// All of the boundary points of this region.
-        /// </summary>
-        public IReadOnlyArea OuterPoints => _outerPoints;
-        private MultiArea _outerPoints;
-
-        /// <summary>
-        /// All of the points inside this region, excluding boundary points
-        /// </summary>
-        public IReadOnlyArea InnerPoints => _innerPoints;
-        private Area _innerPoints = null!;
-
-        /// <summary>
-        /// All of the outer points along the southern boundary
-        /// </summary>
-        public IReadOnlyArea SouthBoundary => _southBoundary;
-        private Area _southBoundary;
-
-        /// <summary>
-        /// All of the outer points along the northern boundary
-        /// </summary>
-        public IReadOnlyArea NorthBoundary => _northBoundary;
-        private Area _northBoundary;
-
-        /// <summary>
-        /// All of the outer points along the eastern boundary
-        /// </summary>
-        public IReadOnlyArea EastBoundary => _eastBoundary;
-        private Area _eastBoundary;
-
-        /// <summary>
-        /// All of the outer points along the western boundary
-        /// </summary>
-        public IReadOnlyArea WestBoundary => _westBoundary;
-        private Area _westBoundary;
-
-        /// <summary>
         /// The left-most X-value of the region's four corners
         /// </summary>
-        public int Left => Math.Min(SouthWestCorner.X, NorthWestCorner.X);
+        public int Left => Area.Left;
 
         /// <summary>
         /// The right-most X-value of the region's four corners
         /// </summary>
-        public int Right => Math.Max(SouthEastCorner.X, NorthEastCorner.X);
+        public int Right => Area.Right;
 
         /// <summary>
         /// The top-most Y-value of the region's four corners
         /// </summary>
-        public int Top => Direction.YIncreasesUpward ?
-            Math.Max(NorthEastCorner.Y, NorthWestCorner.Y) :
-            Math.Min(NorthEastCorner.Y, NorthWestCorner.Y);
+        public int Top => Area.Top;
 
         /// <summary>
         /// The bottom-most Y-value of the region's four corners
         /// </summary>
-        public int Bottom => Direction.YIncreasesUpward ?
-            Math.Min(SouthEastCorner.Y, SouthWestCorner.Y) :
-            Math.Max(SouthEastCorner.Y, SouthWestCorner.Y);
+        public int Bottom => Area.Bottom;
 
         /// <summary>
         /// How Wide this region is
         /// </summary>
-        public int Width => Right - Left + 1;
+        public int Width => Area.Width;
 
         /// <summary>
         /// how tall this region is
         /// </summary>
-        public int Height => (Direction.YIncreasesUpward ? Top - Bottom : Bottom - Top) + 1;
+        public int Height => Area.Height;
 
         /// <summary>
         /// The Center point of this region
         /// </summary>
-        public Point Center => new Point((Left + Right) / 2, (Top + Bottom) / 2);
+        public Point Center => Area.Center;
 
         /// <inheritdoc />
-        public Rectangle Bounds => _outerPoints.Bounds;
+        public Rectangle Bounds => Area.Bounds;
 
         /// <inheritdoc />
-        public int Count => _points.Count;
+        public int Count => Area.Count;
 
         /// <inheritdoc />
-        public Point this[int index] => _points[index];
+        public Point this[int index] => Area[index];
         #endregion
 
         //Functions to access information about regions
@@ -178,302 +133,67 @@ namespace GoRogue.MapGeneration
         /// Returns a string detailing the region's corner locations.
         /// </summary>
         public override string ToString()
-            => $"Region: NW{NorthWestCorner}=> NE{NorthEastCorner}=> SE{SouthEastCorner}=> SW{SouthWestCorner}";
+        {
+            var answer = new StringBuilder("Region with ");
+            answer.Append($"{GoRogueComponents.Count} components and the following ");
+            answer.Append(Area);
+            return answer.ToString();
+        }
 
         /// <summary>
         /// Is this Point one of the corners of the Region?
         /// </summary>
         /// <param name="position">the point to evaluate</param>
-        public bool IsCorner(Point position)
-            => position == NorthEastCorner || position == NorthWestCorner || position == SouthEastCorner || position == SouthWestCorner;
+        public bool IsCorner(Point position) => Area.IsCorner(position);
 
         /// <summary>
         /// The value of the left-most Point in the region at elevation y
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int LeftAt(int y) => _outerPoints.LeftAt(y);
+        public int LeftAt(int y) => Area.LeftAt(y);
 
         /// <summary>
         /// The value of the right-most Point in the region at elevation y
         /// </summary>
         /// <param name="y">The elevation to evaluate</param>
         /// <returns>The X-value of a Point</returns>
-        public int RightAt(int y) => _outerPoints.RightAt(y);
+        public int RightAt(int y) => Area.RightAt(y);
 
         /// <summary>
         /// The value of the top-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int TopAt(int x) => _outerPoints.TopAt(x);
+        public int TopAt(int x) => Area.TopAt(x);
 
         /// <summary>
         /// The value of the bottom-most Point in the region at longitude x
         /// </summary>
         /// <param name="x">The longitude to evaluate</param>
         /// <returns>The Y-value of a Point</returns>
-        public int BottomAt(int x) => _outerPoints.BottomAt(x);
+        public int BottomAt(int x) => Area.BottomAt(x);
 
         /// <inheritdoc />
-        public bool Matches(IReadOnlyArea? area) => _points.Matches(area);
+        public bool Matches(IReadOnlyArea? area) => Area.Matches(area);
 
         /// <inheritdoc />
-        public bool Contains(IReadOnlyArea area) => _points.Contains(area);
+        public bool Contains(IReadOnlyArea area) => Area.Contains(area);
 
         /// <inheritdoc />
-        public bool Contains(Point position) => _points.Contains(position);
+        public bool Contains(Point position) => Area.Contains(position);
 
         /// <inheritdoc />
         public bool Contains(int positionX, int positionY) => Contains((positionX, positionY));
 
         /// <inheritdoc />
-        public bool Intersects(IReadOnlyArea area) => _points.Intersects(area);
+        public bool Intersects(IReadOnlyArea area) => Area.Intersects(area);
 
         /// <inheritdoc />
-        public IEnumerator<Point> GetEnumerator() => _points.GetEnumerator();
+        public IEnumerator<Point> GetEnumerator() => Area.GetEnumerator();
 
         /// <inheritdoc />
-        IEnumerator IEnumerable.GetEnumerator() => _points.GetEnumerator();
-        #endregion
-
-        // Non-constructor methods to help with Region Creation
-        #region Creation
-
-        /// <summary>
-        /// Gets the inner points from the boundaries
-        /// </summary>
-        /// <returns></returns>
-        private void SetInnerFromOuterPoints()
-        {
-            int maxX = Math.Max(NorthEastCorner.X, SouthEastCorner.X);
-            _innerPoints = new Area(new KnownSizeHasher(maxX));
-
-            var outerList = _outerPoints.OrderBy(x => x.X).ToList();
-
-            for (int i = outerList[0].X; i < outerList[^1].X; i++)
-            {
-                List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
-                if(row.Count > 0)
-                {
-                    for (int j = row[0].Y; j <= row[^1].Y; j++)
-                    {
-                        var p = new Point(i, j);
-                        if(!_outerPoints.Contains(p) && !IsCorner(p))
-                            _innerPoints.Add(p);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates a new Region from a GoRogue.Rectangle.
-        /// </summary>
-        /// <param name="r">The rectangle</param>
-        /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
-        /// <returns>A new region in the shape of a rectangle</returns>
-        public static Region Rectangle(Rectangle r, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
-            => new Region(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
-                r.MaxExtent, (r.MinExtentX, r.MaxExtentY), algorithm);
-
-
-         /// <summary>
-         /// Creates a new Region in the shape of a parallelogram, with diagonals going down and right.
-         /// </summary>
-         /// <param name="origin">Origin of the parallelogram.</param>
-         /// <param name="width">Width of the parallelogram.</param>
-         /// <param name="height">Height of the parallelogram.</param>
-         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
-         /// <returns>A new region in the shape of a parallelogram</returns>
-         public static Region ParallelogramFromTopCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
-         {
-             var negative = Direction.YIncreasesUpward ? -1 : 1;
-
-             Point nw = origin;
-             Point ne = origin + new Point(width, 0);
-             Point se = origin + new Point(width * 2, height * negative);
-             Point sw = origin + new Point(width, height * negative);
-
-             return new Region(nw, ne, se, sw, algorithm);
-         }
-
-         /// <summary>
-         /// Creates a new Region in the shape of a parallelogram, with diagonals going up and right.
-         /// </summary>
-         /// <param name="origin">Origin of the parallelogram.</param>
-         /// <param name="width">The horizontal length of the top and bottom sides.</param>
-         /// <param name="height">Height of the parallelogram.</param>
-         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
-         /// <returns>A new region in the shape of a parallelogram</returns>
-         public static Region ParallelogramFromBottomCorner(Point origin, int width, int height, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
-         {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
-
-             Point nw = origin + (height, height * negative);
-             Point ne = origin + (height + width, height * negative);
-             Point se = origin + (width, 0);
-             Point sw = origin;
-
-             return new Region(nw, ne, se, sw, algorithm);
-         }
-        #endregion
-
-        // Functions that transform regions into new ones.  Currently, they all create new regions instead of performing
-        // in-place operations
-        #region Transformation
-
-        /// <summary>
-        /// Moves the Region in the indicated direction.
-        /// </summary>
-        /// <param name="dx">The X-value by which to shift the region</param>
-        /// <param name="dy">The Y-value by which to shift the region</param>
-        /// <returns></returns>
-        public Region Translate(int dx, int dy)
-            => Translate(new Point(dx, dy));
-
-        /// <summary>
-        /// Moves the region in the indicated direction.
-        /// </summary>
-        /// <param name="delta">The amount (X and Y) to translate this region by.</param>
-        /// <returns>A new, translated region</returns>
-        public Region Translate(Point delta)
-        {
-            var nw = NorthWestCorner + delta;
-            var ne = NorthEastCorner + delta;
-            var se = SouthEastCorner + delta;
-            var sw = SouthWestCorner + delta;
-            return new Region(nw, ne, se, sw, Algorithm);
-        }
-        /// <summary>
-        /// Rotates a region around it's center.
-        /// </summary>
-        /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <returns>A region, equal to the original region rotated by the given degree</returns>
-        public Region Rotate(double degrees) => Rotate(degrees, Center);
-
-        /// <summary>
-        /// Rotates this region by an arbitrary number of degrees
-        /// </summary>
-        /// <param name="degrees">The amount of degrees to rotate this region</param>
-        /// <param name="origin">The Point around which to rotate</param>
-        /// <returns>A region, equal to the original region rotated by the given degree</returns>
-        public Region Rotate(double degrees, Point origin)
-        {
-            degrees = MathHelpers.WrapAround(degrees, 360);
-
-            //figure out the new corners post-rotation
-            Point[] corners = new []
-            {
-                SouthWestCorner.Rotate(degrees, origin),
-                SouthEastCorner.Rotate(degrees, origin),
-                NorthWestCorner.Rotate(degrees, origin),
-                NorthEastCorner.Rotate(degrees, origin),
-            };
-
-            //order the new corner by Y-value
-            corners = corners.OrderBy(corner => Direction.YIncreasesUpward ? -corner.Y : corner.Y).ToArray();
-
-            //split that list in half and then sort by X-value
-            Point[] topTwo = { corners[0], corners[1] };
-            topTwo = topTwo.OrderBy(c => c.X).ToArray();
-            var northWest = topTwo[0];
-            var northEast  = topTwo[1];
-
-            Point[] bottomTwo = { corners [2], corners [3] };
-            bottomTwo = bottomTwo.OrderBy(c => c.X).ToArray();
-            var southWest = bottomTwo[0];
-            var southEast = bottomTwo[1];
-
-            return new Region(northWest, northEast, southEast, southWest, Algorithm);
-        }
-
-        /// <summary>
-        /// Returns a new region, flipped horizontally around an X-axis
-        /// </summary>
-        /// <param name="x">The value around which to flip.</param>
-        /// <returns>A region, equal to the original region flipped around the desired X-axis</returns>
-        public Region FlipHorizontal(int x)
-        {
-            //northwest corner flips to become northeast corner
-            var ne = (NorthWestCorner - (x, 0)) * (-1,1) + (x, 0);
-
-            //northeast corner flips to become northwest corner
-            var nw = (NorthEastCorner - (x, 0)) * (-1,1) + (x, 0);
-
-            //southeast corner flips to become southwest corner
-            var sw = (SouthEastCorner - (x, 0)) * (-1,1) + (x, 0);
-
-            //southwest corner flips to become southeast corner
-            var se = (SouthWestCorner - (x, 0)) * (-1,1) + (x, 0);
-
-            return new Region(nw, ne, se, sw, Algorithm);
-        }
-
-        /// <summary>
-        /// Returns a new region, flipped vertically around a Y-axis
-        /// </summary>
-        /// <param name="y">The value around which to flip.</param>
-        /// <returns>A region, equal to the original region flipped around the desired Y-axis</returns>
-        public Region FlipVertical(int y)
-        {
-            //northwest corner flips to become southwest corner
-            var sw = (NorthWestCorner - (0, y)) * (1, -1) + (0, y);
-
-            //northeast corner flips to become southeast corner
-            var se = (NorthEastCorner - (0, y)) * (1, -1) + (0, y);
-
-            //southeast corner flips to become northeast corner
-            var ne = (SouthEastCorner - (0, y)) * (1, -1) + (0, y);
-
-            //southwest corner flips to become northwest corner
-            var nw = (SouthWestCorner - (0, y)) * (1, -1) + (0, y);
-
-            return new Region(nw, ne, se, sw, Algorithm);
-        }
-
-        /// <summary>
-        /// Returns a new region with X and Y values inverted, respective to a diagonal line
-        /// </summary>
-        /// <param name="x">Any X-value of a point which intersects the line around which to transpose</param>
-        /// <param name="y">Any Y-value of a Point which intersects the line around which to transpose</param>
-        public Region Transpose(int x, int y)
-            => Transpose((x, y));
-
-        /// <summary>
-        /// Returns a new region with X and Y values inverted, respective to a diagonal line
-        /// </summary>
-        /// <param name="xy">Any point which intersects the line around which to transpose</param>
-        public Region Transpose(Point xy)
-        {
-            Point nw, ne, se, sw;
-
-            if (Direction.YIncreasesUpward)
-            {
-                //if direction increases upwards, then the northwest-southeast corners flop
-                se = NorthWestCorner - xy;
-                se = (se.Y, se.X) + xy;
-                ne = NorthEastCorner - xy;
-                ne = (ne.Y, ne.X) + xy;
-                nw = SouthEastCorner - xy;
-                nw = (nw.Y, nw.X) + xy;
-                sw = SouthWestCorner - xy;
-                sw = (sw.Y, sw.X) + xy;
-            }
-            else
-            {
-                //if direction increases downwards, then the northeast-southwest corners will flip.
-                nw = NorthWestCorner - xy;
-                nw = (nw.Y, nw.X) + xy;
-                ne = SouthWestCorner - xy;
-                ne = (ne.Y, ne.X) + xy;
-                se = SouthEastCorner - xy;
-                se = (se.Y, se.X) + xy;
-                sw = NorthEastCorner - xy;
-                sw = (sw.Y, sw.X) + xy;
-            }
-
-            return new Region(nw, ne, se, sw, Algorithm);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => Area.GetEnumerator();
         #endregion
     }
 }
