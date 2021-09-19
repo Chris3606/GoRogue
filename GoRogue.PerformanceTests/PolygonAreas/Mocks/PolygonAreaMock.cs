@@ -66,35 +66,30 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
         }
         #endregion
 
-        // Functions that generate PolygonAreaMocks that are equivalent to regions, for comparison
-        #region Equivalent Region Creation
+        // Functions that generate PolygonAreaMocks that are equivalent to PolygonArea, for comparison
+        #region Equivalent PolygonArea Creation
         public static PolygonAreaMock Rectangle(Rectangle r, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
             => new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, r.MinExtent, (r.MaxExtentX, r.MinExtentY),
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
 
-
-        public static PolygonAreaMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        public static PolygonAreaMock Parallelogram(Point origin, int width, int height,
+                                                    Action<PolygonAreaMock> drawFromCornersMethod,
+                                                    Action<PolygonAreaMock> innerPointsCreationMethod,
+                                                    bool fromTop = false, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
         {
-            var negative = Direction.YIncreasesUpward ? -1 : 1;
+            if (fromTop && Direction.YIncreasesUpward)
+                height *= -1;
 
-            Point nw = origin;
-            Point ne = origin + new Point(width, 0);
-            Point se = origin + new Point(width * 2, height * negative);
-            Point sw = origin + new Point(width, height * negative);
+            else if(!fromTop && !Direction.YIncreasesUpward)
+                height *= -1;
 
-            return new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, nw, ne, se, sw);
-        }
 
-        public static PolygonAreaMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
-        {
-            var negative = Direction.YIncreasesUpward ? 1 : -1;
+            Point p1 = origin;
+            Point p2 = origin + new Point(width, 0);
+            Point p3 = origin + new Point(width * 2, height);
+            Point p4 = origin + new Point(width, height);
 
-            Point nw = origin + (height, height * negative);
-            Point ne = origin + (height + width, height * negative);
-            Point se = origin + (width, 0);
-            Point sw = origin;
-
-            return new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, nw, ne, se, sw);
+            return new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, p1, p2, p3, p4);
         }
         #endregion
     }

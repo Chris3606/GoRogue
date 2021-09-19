@@ -15,8 +15,14 @@ namespace GoRogue.PerformanceTests.PolygonAreas
     ///
     /// The tests with "Default" at the end of their name implement the same method, but within the PolygonAreaMock system.
     /// This allows verification that the PolygonAreaMock system itself is not introducing significant change in performance.
+    /// TODO: These currently do not exist because right now they would be identical to ones with the suffix Original
     ///
-    /// Each set of other benchmarks test a new method of creating the inner points or drawing the lines.
+    /// The tests with "Original" at the end of their name implement the method originally in GoRogue, with no optimizations.
+    /// These are what all of the "optimized" methods are based on; unless the method is an entirely new algorithm, they
+    /// each make exactly one category of change from the Original, so that comparing performance impact is possible.
+    ///
+    /// Each set of other benchmarks test a new method of creating the inner points or drawing the lines, or one optimization
+    /// from the original.
     /// </remarks>
     public class PolygonAreaCreation
     {
@@ -36,30 +42,29 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         public Point Origin = new Point(0, 0);
         #endregion
 
-        // Actual GoRogue method, using GoRogue's PolygonArea class (and some helper methods that generate equivalent
-        // areas as Region would)
-        #region Actual GoRogue Region (baseline)
+        // Actual GoRogue method, using GoRogue's PolygonArea class
+        #region Actual GoRogue PolygonArea (baseline)
         [Benchmark]
         public PolygonArea CreateRectangleBaseline()
         {
-            return PolygonAreaRegionEquivalents.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), LineAlgorithm);
+            return PolygonArea.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonArea CreateParallelogramTopCornerBaseline()
         {
-            return PolygonAreaRegionEquivalents.ParallelogramFromTopCorner(Origin, Size, Size, LineAlgorithm);
+            return PolygonArea.Parallelogram(Origin, Size, Size, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonArea CreateParallelogramBottomCornerBaseline()
         {
-            return PolygonAreaRegionEquivalents.ParallelogramFromBottomCorner(Origin, Size, Size, LineAlgorithm);
+            return PolygonArea.Parallelogram(Origin, Size, Size, false, LineAlgorithm);
         }
         #endregion
 
-        // Same method implemented in GoRogue PolygonArea, but implemented in mock test framework
-        #region GoRogue Method (implemented in mock)
+        // Method originally implemented in GoRogue PolygonArea, with no optimizations
+        #region Original GoRogue Method
         [Benchmark]
         public PolygonAreaMock CreateRectangleOriginal()
         {
@@ -69,13 +74,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Benchmark]
         public PolygonAreaMock CreateParallelogramTopCornerOriginal()
         {
-            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonAreaMock CreateParallelogramBottomCornerOriginal()
         {
-            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, false, LineAlgorithm);
         }
         #endregion
 
@@ -90,13 +95,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Benchmark]
         public PolygonAreaMock CreateParallelogramTopCornerKnownSizeHash()
         {
-            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonAreaMock CreateParallelogramBottomCornerKnownSizeHash()
         {
-            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, false, LineAlgorithm);
         }
         #endregion
 
@@ -111,13 +116,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Benchmark]
         public PolygonAreaMock CreateParallelogramTopCornerNoLinq()
         {
-            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonAreaMock CreateParallelogramBottomCornerNoLinq()
         {
-            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, false, LineAlgorithm);
         }
         #endregion
 
@@ -132,13 +137,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Benchmark]
         public PolygonAreaMock CreateParallelogramTopCornerFasterYCheck()
         {
-            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonAreaMock CreateParallelogramBottomCornerFasterYCheck()
         {
-            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, false, LineAlgorithm);
         }
         #endregion
 
@@ -153,13 +158,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Benchmark]
         public PolygonAreaMock CreateParallelogramTopCornerHashSetEncountered()
         {
-            return PolygonAreaMock.ParallelogramFromTopCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, true, LineAlgorithm);
         }
 
         [Benchmark]
         public PolygonAreaMock CreateParallelogramBottomCornerHashSetEncountered()
         {
-            return PolygonAreaMock.ParallelogramFromBottomCorner(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, false, LineAlgorithm);
         }
         #endregion
     }
