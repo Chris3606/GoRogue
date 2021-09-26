@@ -48,12 +48,10 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
         private PolygonAreaMock(List<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm)
         {
             Corners = corners;
-            if (Corners.Count < 3)
-                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
-
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
-                throw new ArgumentException("Line Algorithm must produce ordered lines.");
             LineAlgorithm = algorithm;
+            CheckCorners();
+            CheckAlgorithm();
+
             OuterPoints = new MultiArea();
 
             // Rearranged ordering relative to original, in order to enable full customization of the generated areas
@@ -77,6 +75,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
                                                     Action<PolygonAreaMock> innerPointsCreationMethod,
                                                     bool fromTop = false, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
         {
+            CheckAlgorithm(algorithm);
+
             if (fromTop && Direction.YIncreasesUpward)
                 height *= -1;
 
@@ -90,6 +90,69 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
             Point p4 = origin + new Point(width, height);
 
             return new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, p1, p2, p3, p4);
+        }
+
+        public static PolygonAreaMock RegularPolygon(Point center, int numberOfSides, double radius, Action<PolygonAreaMock> drawFromCornersMethod,
+                                                 Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        {
+            CheckCorners(numberOfSides);
+            CheckAlgorithm(algorithm);
+
+            var corners = new List<Point>(numberOfSides);
+            var increment = 360.0 / numberOfSides;
+
+            for (int i = 0; i < numberOfSides; i ++)
+            {
+                var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);
+                var corner = new PolarCoordinate(radius, theta).ToCartesian();
+                corner += center;
+                corners.Add(corner);
+            }
+
+            return new PolygonAreaMock(ref corners, drawFromCornersMethod, innerPointsCreationMethod, algorithm);
+        }
+
+        public static PolygonAreaMock RegularStar(Point center, int points, double outerRadius, double innerRadius,
+                                                  Action<PolygonAreaMock> drawFromCornersMethod,
+                                                  Action<PolygonAreaMock> innerPointsCreationMethod,
+                                                  Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        {
+            CheckCorners(points);
+            CheckAlgorithm(algorithm);
+
+            if (outerRadius < 0)
+                throw new ArgumentException("outerRadius must be positive.");
+            if (innerRadius < 0)
+                throw new ArgumentException("innerRadius must be positive.");
+
+            points *= 2;
+            var corners = new List<Point>(points);
+            var increment = 360.0 / points;
+
+            for (int i = 0; i < points; i ++)
+            {
+                var radius = i % 2 == 0 ? outerRadius : innerRadius;
+                var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);
+                var corner = new PolarCoordinate(radius, theta).ToCartesian();
+                corner += center;
+                corners.Add(corner);
+            }
+
+            return new PolygonAreaMock(ref corners, drawFromCornersMethod, innerPointsCreationMethod, algorithm);
+        }
+
+        private void CheckAlgorithm() => CheckAlgorithm(LineAlgorithm);
+        private static void CheckAlgorithm(Lines.Algorithm algorithm)
+        {
+            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
+                throw new ArgumentException("Line Algorithm must produce ordered lines.");
+        }
+
+        private void CheckCorners() => CheckCorners(Corners.Count);
+        private static void CheckCorners(int corners)
+        {
+            if (corners < 3)
+                throw new ArgumentException("Polygons must have 3 or more sides to be representable in 2 dimensions");
         }
         #endregion
     }

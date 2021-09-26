@@ -8,10 +8,10 @@ using SadRogue.Primitives;
 namespace GoRogue.PerformanceTests.PolygonAreas
 {
     /// <summary>
-    /// Set of tests for PolygonArea creation methods.
+    /// Set of tests for PolygonArea creation methods that create quadrilaterals; eg. Rectangles and Parallelograms.
     /// </summary>
     /// <remarks>
-    /// The tests with "Baseline" at the end of their name use the actual current GoRogue Region class.
+    /// The tests with "Baseline" at the end of their name use the actual current GoRogue PolygonArea class.
     ///
     /// The tests with "Default" at the end of their name implement the same method, but within the PolygonAreaMock system.
     /// This allows verification that the PolygonAreaMock system itself is not introducing significant change in performance.
@@ -24,7 +24,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas
     /// Each set of other benchmarks test a new method of creating the inner points or drawing the lines, or one optimization
     /// from the original.
     /// </remarks>
-    public class PolygonAreaCreation
+    public class PolygonAreaQuadrilateralCreation
     {
         #region Test Parameters
         [UsedImplicitly]
@@ -37,7 +37,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Params(Lines.Algorithm.DDA)]
         public Lines.Algorithm LineAlgorithm;
 
-        // Origin point for all shapes that have one
+        // Origin point for all shapes
         [UsedImplicitly]
         public Point Origin = new Point(0, 0);
         #endregion
