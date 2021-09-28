@@ -28,11 +28,11 @@ namespace GoRogue.PerformanceTests.PolygonAreas
     {
         #region Test Parameters
         [UsedImplicitly]
-        [Params(3)]
+        [Params(40, 72, 73, 180)]
         public int NumberOfSidesOrCorners;
 
         [UsedImplicitly]
-        [Params(5, 10)]
+        [Params(40, 72, 73, 180)]
         public int ParameterizedRadius;
 
         // Tests currently use DDA; note that we must limit ourselves ordered lines, so DDA or BresenhamOrdered
@@ -53,6 +53,27 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         {
             return PolygonArea.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius, LineAlgorithm);
         }
+
+        [Benchmark]
+        public PolygonArea CreateRegularStarInnerOneFourthBaseline()
+        {
+            return PolygonArea.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0), LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonArea CreateRegularStarInnerOneHalfBaseline()
+        {
+            return PolygonArea.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0), LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonArea CreateRegularStarInnerThreeFourthsBaseline()
+        {
+            return PolygonArea.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75), LineAlgorithm);
+        }
         #endregion
 
         // Method originally implemented in GoRogue PolygonArea, with no optimizations
@@ -63,6 +84,34 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
                 DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault, LineAlgorithm);
         }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthOriginal()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfOriginal()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsOriginal()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenDefault,
+                LineAlgorithm);
+        }
+
         #endregion
 
         // Original scan line method but with known size hashing used for all areas
@@ -72,6 +121,33 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         {
             return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
                 DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthKnownSizeHash()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfKnownSizeHash()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsKnownSizeHash()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalKnownSizeHash, InnerPointsMethods.ScanlineOddEvenKnownSizeHash,
+                LineAlgorithm);
         }
 
         #endregion
@@ -84,6 +160,34 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
                 DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq, LineAlgorithm);
         }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthNoLinq()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfNoLinq()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsNoLinq()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenNoLinq,
+                LineAlgorithm);
+        }
+
         #endregion
 
         // Original scan line method but with the call to Any replaced with a faster y-value check
@@ -94,6 +198,33 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
                 DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck, LineAlgorithm);
         }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthFasterYCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfFasterYCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsFasterYCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenFasterYCheck,
+                LineAlgorithm);
+        }
         #endregion
 
         // Original scan line method but with the linesEncountered list turned into a HashSet.
@@ -103,6 +234,33 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         {
             return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
                 DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthHashSetEncountered()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfHashSetEncountered()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsHashSetEncountered()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered,
+                LineAlgorithm);
         }
         #endregion
     }
