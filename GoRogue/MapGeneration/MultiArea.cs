@@ -12,7 +12,7 @@ namespace GoRogue.MapGeneration
     /// "sub-areas".
     /// </summary>
     [PublicAPI]
-    public class MultiArea : IReadOnlyArea
+    public class MultiArea : IReadOnlyMultiArea
     {
         private readonly List<IReadOnlyArea> _subAreas;
 
