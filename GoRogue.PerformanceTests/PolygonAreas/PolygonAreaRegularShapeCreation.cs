@@ -263,5 +263,80 @@ namespace GoRogue.PerformanceTests.PolygonAreas
                 LineAlgorithm);
         }
         #endregion
+
+        // Original scan line method but optimized to not perform an unnecessary iteration over the SubAreas of outer
+        // points for each point processed.
+        #region ScanLine Omit Redundant Check
+        [Benchmark]
+        public PolygonAreaMock CreateRegularPolygonOmitRedundantCheck()
+        {
+            return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthOmitRedundantCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfOmitRedundantCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsOmitRedundantCheck()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck,
+                LineAlgorithm);
+        }
+        #endregion
+
+        // Original scan line method except for it caches OuterPoints in a hash set and uses that for contains operations.
+        #region ScanLine Cache Outer Points
+        [Benchmark]
+        public PolygonAreaMock CreateRegularPolygonCacheOuterPoints()
+        {
+            return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthCacheOuterPoints()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfCacheOuterPoints()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsCacheOuterPoints()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints,
+                LineAlgorithm);
+        }
+        #endregion
     }
 }

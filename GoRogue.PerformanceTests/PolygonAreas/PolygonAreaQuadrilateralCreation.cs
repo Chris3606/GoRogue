@@ -167,5 +167,48 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenHashSetEncountered, false, LineAlgorithm);
         }
         #endregion
+
+        // Original scan line method but optimized to not perform an unnecessary iteration over the SubAreas of outer
+        // points for each point processed.
+        #region ScanLine Omit Redundant check
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleOmitRedundantCheck()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerOmitRedundantCheck()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck, true, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerOmitRedundantCheck()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenOmitRedundantCheck, false, LineAlgorithm);
+        }
+        #endregion
+
+        // Original scan line method except for it caches OuterPoints in a hash set and uses that for contains operations.
+        #region ScanLine Cache Outer Points
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleCacheOuterPoints()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerCacheOuterPoints()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints, true, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerCacheOuterPoints()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints, false, LineAlgorithm);
+        }
+        #endregion
     }
 }

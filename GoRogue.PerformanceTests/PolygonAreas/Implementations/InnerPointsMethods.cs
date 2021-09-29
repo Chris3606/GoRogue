@@ -130,7 +130,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
 
         // Variation of ScanlineOddEvenDefault that changes the `Any` call to a more refined approach for checking
         // for lesser y-values in a boundary line
-        #region Scanlies FasterYValueCheck
+        #region Scanlines FasterYValueCheck
         public static void ScanlineOddEvenFasterYCheck(PolygonAreaMock polygon)
         {
             polygon.InnerPoints = new Area();
@@ -187,6 +187,88 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                 for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
+                    {
+                        foreach (var boundary in GetBoundariesContaining(polygon, x, y))
+                        {
+                            if (boundary.Any(p => p.Y < y))
+                            {
+                                if (!linesEncountered.Contains(boundary))
+                                    linesEncountered.Add(boundary);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x,y);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        // Original scan-lines implementation, but avoids iterating over OuterPoints' SubAreas twice in inner loop,
+        // instead iterating once
+        #region Scanlines Omit Redundant Check
+        public static void ScanlineOddEvenOmitRedundantCheck(PolygonAreaMock polygon)
+        {
+            polygon.InnerPoints = new Area();
+
+            var bounds = polygon.OuterPoints.Bounds;
+
+            // The top and bottom rows can never contain an inner point, so skip them.
+            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            {
+                var linesEncountered = new List<IReadOnlyArea>();
+
+                // Must include MinExtentX so that it can accurately count lines encountered.
+                // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
+                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                {
+                    bool foundInBoundary = false;
+                    foreach (var boundary in GetBoundariesContaining(polygon, x, y))
+                    {
+                        if (boundary.Any(p => p.Y < y))
+                        {
+                            if (!linesEncountered.Contains(boundary))
+                                linesEncountered.Add(boundary);
+                        }
+
+                        foundInBoundary = true;
+                    }
+                    if (!foundInBoundary)
+                    {
+                        if(linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x,y);
+                    }
+                }
+            }
+        }
+        #endregion
+
+        // Original scan-lines implementation, but avoids iterating over OuterPoints' SubAreas in cases where the point
+        // being processed is not an outer point, at the cost of caching the entire set of outer points in a hash set.
+        #region Scanlines Cache Outer Points
+        public static void ScanlineOddEvenCacheOuterPoints(PolygonAreaMock polygon)
+        {
+            polygon.InnerPoints = new Area();
+
+            // Cache outer points in a hash set so that we cut down on iteration proportional to number of sides
+            // per point when checking if a point is an outer point or not.
+            var outerPointsSet = new HashSet<Point>(polygon.OuterPoints);
+
+            var bounds = polygon.OuterPoints.Bounds;
+
+            // The top and bottom rows can never contain an inner point, so skip them.
+            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            {
+                var linesEncountered = new List<IReadOnlyArea>();
+
+                // Must include MinExtentX so that it can accurately count lines encountered.
+                // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
+                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                {
+                    if (outerPointsSet.Contains(new Point(x, y)))
                     {
                         foreach (var boundary in GetBoundariesContaining(polygon, x, y))
                         {
