@@ -341,7 +341,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas
 
         // Original scan line method except for it caches OuterPoints in a hash set and uses that for contains operations.
         // Uses a more efficient hashing algorithm.
-        #region ScanLine Cache Outer Points
+        #region ScanLine Cache Outer Points Other Hasher
         [Benchmark]
         public PolygonAreaMock CreateRegularPolygonCacheOuterPointsOtherHasher()
         {
