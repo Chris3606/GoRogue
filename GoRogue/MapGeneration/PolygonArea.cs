@@ -201,7 +201,6 @@ namespace GoRogue.MapGeneration
             // The top and bottom rows can never contain an inner point, so skip them.
             for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
-                //var linesEncountered = new List<IReadOnlyArea>();
                 var lineIndicesEncountered = new HashSet<int>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
