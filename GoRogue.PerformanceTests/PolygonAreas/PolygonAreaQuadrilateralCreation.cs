@@ -210,5 +210,27 @@ namespace GoRogue.PerformanceTests.PolygonAreas
             return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPoints, false, LineAlgorithm);
         }
         #endregion
+
+        // Original scan line method except for it caches OuterPoints in a hash set and uses that for contains operations.
+        // Uses a more efficient hashing algorithm.
+        #region ScanLine Cache Outer Points Other Hasher
+        [Benchmark]
+        public PolygonAreaMock CreateRectangleCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.Rectangle(new Rectangle(Origin.X, Origin.Y, Size, Size), DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramTopCornerCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher, true, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateParallelogramBottomCornerCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.Parallelogram(Origin, Size, Size, DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher, false, LineAlgorithm);
+        }
+        #endregion
     }
 }

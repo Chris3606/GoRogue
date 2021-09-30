@@ -338,5 +338,43 @@ namespace GoRogue.PerformanceTests.PolygonAreas
                 LineAlgorithm);
         }
         #endregion
+
+        // Original scan line method except for it caches OuterPoints in a hash set and uses that for contains operations.
+        // Uses a more efficient hashing algorithm.
+        #region ScanLine Cache Outer Points
+        [Benchmark]
+        public PolygonAreaMock CreateRegularPolygonCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.RegularPolygon(Center, NumberOfSidesOrCorners, ParameterizedRadius,
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher, LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneFourthCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 4.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerOneHalfCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius / 2.0),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher,
+                LineAlgorithm);
+        }
+
+        [Benchmark]
+        public PolygonAreaMock CreateRegularStarInnerThreeFourthsCacheOuterPointsOtherHasher()
+        {
+            return PolygonAreaMock.RegularStar(Center, NumberOfSidesOrCorners,
+                ParameterizedRadius, (int)(ParameterizedRadius * 0.75),
+                DrawFromCornersMethods.OriginalDefault, InnerPointsMethods.ScanlineOddEvenCacheOuterPointsOtherHasher,
+                LineAlgorithm);
+        }
+        #endregion
     }
 }
