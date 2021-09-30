@@ -5,11 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None.
+
+## [3.0.0-alpha05] - 2021-09-30
+
 ### Added
 - FOV now has `CalculateAppend` functions which calculate FOV from a given source, but add that FOV into the existing one, as opposed to replacing it
 - FOV now also has a `Reset` function and a `VisibilityReset` event that may be useful in synchronizing visibility with FOV state
 - `PolygonArea` class that implements the `IReadOnlyArea` interface by taking in a list of corners defining a polygon, and tracking the outer boundary points of the polygon, as well as the inner points
     - Also offers transformation operations
+- `Region` class (_not_ the same class as was previously named `Region`) that associates a polygon with components and provides a convenient interface for transformations
 - `MultiArea` now offers a `Clear()` function to remove all sub-areas
 - `MapAreaFinder` now has a function that lets you get a _single_ area based on a starting point (eg. boundary fill algorithm), rather than all areas in the map view
 
@@ -17,8 +22,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - `IFOV` interface (and all implementations) now takes angles on a scale where 0 points up, and angles proceed clockwise
     - This matches better with bearing-finding functions in primitives library and correctly uses the common compass clockwise rotation scale
 - `SenseSource` now takes angles on a scale where 0 points up, and angles proceed clockwise (thus matching FOV)
-- `Region` has been rewritten (pending more commits; changelog details to come!
+- `Region` has been rewritten and is replaced with `PolygonArea`
+    - `PolygonArea` supports arbitrary numbers of corners and now implements `IReadOnlyArea`
+    - Contains the static creation methods for rectangles and parallelograms previously on `Region`, as well as new ones for regular polygons and regular stars
+    - The class called `Region` associates a `PolygonArea` with a set of components and provides convenient accesses to the area's functions/interfaces
+        - This functions as a substitute for the sub-regions functionality previously on `Region`
 - Significant performance optimizations applied to `MultiArea` and `MapAreaFinder`
+- Updated minimum needed primitives library version to `1.1.1`
 
 ### Fixed
 - `FOVBase.OnCalculate` function (all overloads) is now protected, as was intended originally
