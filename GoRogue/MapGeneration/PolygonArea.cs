@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The exterior points of the polygon
         /// </summary>
-        public IReadOnlyArea OuterPoints => _outerPoints;
+        public IReadOnlyMultiArea OuterPoints => _outerPoints;
         private readonly MultiArea _outerPoints;
 
         /// <summary>

@@ -202,7 +202,7 @@ namespace GoRogue.UnitTests.MapGeneration
 
         private void AssertPolygonSidesAreEqual(PolygonArea polygon, bool isStar)
         {
-            var outer = (MultiArea)polygon.OuterPoints;//Satan forgive me
+            var outer = polygon.OuterPoints;
 
             //we need to track duplicates as well so that we can sort them and find the median
             var allInts = new List<int>();
