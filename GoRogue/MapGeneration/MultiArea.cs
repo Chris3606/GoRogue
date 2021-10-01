@@ -8,7 +8,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapGeneration
 {
     /// <summary>
-    /// A class implementing the <see cref="IReadOnlyArea"/> interface, that derives its area from multiple
+    /// A class implementing the <see cref="IReadOnlyMultiArea"/> interface, that derives its area from multiple
     /// "sub-areas".
     /// </summary>
     [PublicAPI]
@@ -16,9 +16,7 @@ namespace GoRogue.MapGeneration
     {
         private readonly List<IReadOnlyArea> _subAreas;
 
-        /// <summary>
-        /// List of all sub-areas in the MultiArea.
-        /// </summary>
+        /// <inheritdoc/>
         public IReadOnlyList<IReadOnlyArea> SubAreas => _subAreas.AsReadOnly();
 
         // TODO: Modify to be in ExpandToFit function in Rectangle
