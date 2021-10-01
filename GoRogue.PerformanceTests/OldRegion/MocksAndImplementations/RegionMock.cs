@@ -4,11 +4,12 @@ using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.PointHashers;
 
-namespace GoRogue.PerformanceTests.Regions
+namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
 {
-    // Object representing a region's internal data and the general method of construction.  Necessary to allow the
-    // benchmark functions to actually return a value which depends on the creation method, to avoid any of it being
-    // optimized out.
+    /// <summary>
+    /// DEPRECATED: Object representing performance testing framework for a previous version of Region which functioned
+    /// with only 4 points.  Exists only as a reference point for the corresponding inner points implementations.
+    /// </summary>
     [PublicAPI]
     public class RegionMock
     {
@@ -60,7 +61,7 @@ namespace GoRogue.PerformanceTests.Regions
 
          public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
          {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
+             var negative = Direction.YIncreasesUpward ? -1 : 1;
 
              Point nw = origin;
              Point ne = origin + new Point(width, 0);

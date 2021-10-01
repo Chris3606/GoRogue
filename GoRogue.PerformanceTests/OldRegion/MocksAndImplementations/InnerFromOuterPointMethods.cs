@@ -7,12 +7,17 @@ using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using SadRogue.Primitives.PointHashers;
 
-namespace GoRogue.PerformanceTests.Regions
+namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
 {
+    /// <summary>
+    /// DEPRECATED: These implementations are legacy implementations of methods used to calculate inner points,
+    /// using a Region implementation based on 4 corners.  They exist for reference purposes only and are not actively
+    /// used.
+    /// </summary>
     internal static class InnerFromOuterPointMethods
     {
-        // GoRogue's current method
-        public static void GoRogueMethod(RegionMock region)
+        // The original method used.
+        public static void OriginalMethod(RegionMock region)
         {
             int maxX = Math.Max(region.NorthEastCorner.X, region.SouthEastCorner.X);
             region.InnerPoints = new Area(new KnownSizeHasher(maxX));
@@ -106,6 +111,8 @@ namespace GoRogue.PerformanceTests.Regions
             }
         }
 
+        // Methods that find inner points by using a MapAreaFinder to implement boundary fill.
+        // Incorrect for arbitrary polygons, but generally more correct for 4-sided ones
         #region Map Area Finder Method
         public static void MapAreaFinderMethod(RegionMock region)
         {
@@ -167,26 +174,5 @@ namespace GoRogue.PerformanceTests.Regions
             => pos.X == rect.MinExtentX || pos.X == rect.MaxExtentX || pos.Y == rect.MinExtentY || pos.Y == rect.MaxExtentY;
         #endregion
 
-        // Uses the scan-line algorithm to determine inner points.  Source data is _outerPoints, which is an area.
-        public static void ScanLineAreaContainsMethod(RegionMock region)
-        {
-            int maxX = Math.Max(region.NorthEastCorner.X, region.SouthEastCorner.X);
-            region.InnerPoints = new Area(new KnownSizeHasher(maxX));
-
-            var outerBounds = region.OuterPoints.Bounds;
-            for (int y = outerBounds.MinExtentY; y <= outerBounds.MaxExtentY; y++)
-            {
-                // Find intersect points, sorted in X order.  We have to copy since we're basing _outerPoints on Area
-                var y1 = y;
-                var intersects = Enumerable.Range(outerBounds.MinExtentX, outerBounds.Width)
-                    .Where(x => region.OuterPoints.Contains(x, y1)).ToArray();
-
-                for (int i = 0; i < intersects.Length; i += 2)
-                {
-                    for (int x1 = intersects[i] + 1; x1 < intersects[i + 1]; x1++)
-                        region.InnerPoints.Add(x1, y);
-                }
-            }
-        }
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.MapGeneration
 {
@@ -14,7 +15,7 @@ namespace GoRogue.MapGeneration
     [PublicAPI]
     public class PolygonArea : IReadOnlyArea
     {
-        #region variables
+        #region Properties/Fields
         /// <summary>
         /// The corners of this polygon
         /// </summary>
@@ -104,7 +105,7 @@ namespace GoRogue.MapGeneration
         }
         #endregion
 
-        #region constructors
+        #region Constructors
         /// <summary>
         /// Creates a new Polygon, with corners at the provided points
         /// </summary>
@@ -146,15 +147,20 @@ namespace GoRogue.MapGeneration
             CheckCorners();
             CheckAlgorithm();
             _outerPoints = new MultiArea();
-            _innerPoints = new Area();
-            _points = new MultiArea { _outerPoints, _innerPoints };
 
+            // Draw corners
             DrawFromCorners();
+            // Create proper inner points area
+            var (minExtent, maxExtent) = _outerPoints.Bounds;
+            _innerPoints = new Area(new KnownRangeHasher(minExtent, maxExtent));
+            // Determine inner points based on outer points and bounds
             SetInnerPoints();
+
+            _points = new MultiArea { _outerPoints, _innerPoints };
         }
         #endregion
 
-        #region private initialization
+        #region Private Initialization Functions
 
         private void CheckCorners() => CheckCorners(_corners.Count);
         private static void CheckCorners(int corners)
@@ -170,56 +176,72 @@ namespace GoRogue.MapGeneration
                 throw new ArgumentException("Line Algorithm must produce ordered lines.");
         }
 
-        //Draws lines from each corner to the next
+        // Draws lines from each corner to the next
         private void DrawFromCorners()
         {
+            // TODO: It may be useful to change the hashing algorithm used by these areas as well since the bounds of each
+            // boundary are known before creation; however the computation does itself take some time; needs testing.
+            // The bulk of the performance gain that is achieved during creation specifically is achieved via caching
+            // outer points in SetInnerPoints anyway.
             for (int i = 0; i < _corners.Count - 1; i++)
-            {
                 _outerPoints.Add(new Area(Lines.Get(_corners[i], _corners[i+1], LineAlgorithm)));
-            }
 
             _outerPoints.Add(new Area(Lines.Get(_corners[^1], _corners[0], LineAlgorithm)));
         }
 
-        //Uses an odd-even rule to determine whether we are in the area or not
+        // Uses an odd-even rule to determine whether we are in the area or not and fills InnerPoints accordingly
         private void SetInnerPoints()
         {
-            var bounds = _points.Bounds;
+            // Calculate bounds and cache outer points so that we can efficiently check whether an arbitrary point
+            // is an outer point or not.
+            var bounds = _outerPoints.Bounds;
+            var outerPointsSet =
+                new HashSet<Point>(_outerPoints, new KnownRangeHasher(bounds.MinExtent, bounds.MaxExtent));
 
-            //The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            // The top and bottom rows can never contain an inner point, so skip them.
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
-                var linesEncountered = new List<IReadOnlyArea>();
+                var lineIndicesEncountered = new HashSet<int>();
 
-                //Must include MinExtentX so that it can accurately count lines encountered.
-                //Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                // Must include MinExtentX so that it can accurately count lines encountered.
+                // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
-                    if (_outerPoints.Contains(x, y))
+                    var curPoint = new Point(x, y);
+
+                    // If we find an outer point, we must count it as seen on this y-line
+                    if (outerPointsSet.Contains(curPoint))
                     {
-                        foreach (var boundary in GetBoundariesContaining(x, y))
+                        // Add all boundary lines that contain the point we've found.  Each point could be part
+                        // of 1 or 2 boundary lines (corners are in 2).  Note however that it is _not_ necessarily
+                        // sufficient to just check if the current point is a corner to know whether it's part of
+                        // only 1 or two, as non-corners could be a part of 2 lines if the angle between two boundaries
+                        // is extremely small (due to imprecision of representing lines on an integral grid).
+                        for (int i = 0; i < _outerPoints.SubAreas.Count; i++)
                         {
-                            //todo - optimize
-                            if (boundary.Any(p => p.Y < y))
-                            {
-                                if (!linesEncountered.Contains(boundary))
-                                {
-                                    linesEncountered.Add(boundary);
-                                }
-                            }
+                            var boundary = _outerPoints.SubAreas[i];
+                            if (!boundary.Contains(curPoint)) continue;
+
+                            // We must count the line as encountered IFF it contains a point with a y-value
+                            // less than the current point's y.  By definition of a line, such a point would _have_
+                            // to occur at one of the two ends.
+                            if (boundary[0].Y < y || boundary[^1].Y < y)
+                                lineIndicesEncountered.Add(i);
                         }
                     }
+                    // Otherwise, a point is an inner point IFF the scan-line has crossed an odd number of outer
+                    // boundaries on its way to the current point
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            _innerPoints.Add(x,y);
+                        if (lineIndicesEncountered.Count % 2 == 1)
+                            _innerPoints.Add(curPoint);
                     }
                 }
             }
         }
         #endregion
 
-        #region static creation methods
+        #region Static Creation Methods
         /// <summary>
         /// Creates a new Polygon from a GoRogue.Rectangle.
         /// </summary>
@@ -326,11 +348,7 @@ namespace GoRogue.MapGeneration
         }
         #endregion
 
-        #region IReadOnlyArea
-        //todo - optimize
-        private IEnumerable<IReadOnlyArea> GetBoundariesContaining(int x, int y)
-            => _outerPoints.SubAreas.Where(sa => sa.Contains(x, y));
-
+        #region IReadOnlyArea Implementation
         /// <inheritdoc/>
         public bool Matches(IReadOnlyArea? other) => _points.Matches(other);
 
