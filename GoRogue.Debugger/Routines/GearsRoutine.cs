@@ -19,7 +19,7 @@ namespace GoRogue.Debugger.Routines
     public class GearsRoutine : IRoutine
     {
         public string Name => "Gears in Motion";
-        private int _rotationDegrees = 0;
+        private int _rotationDegrees;
         public IReadOnlyList<(string name, IGridView<char> view)> Views => _views.AsReadOnly();
         private readonly List<(string name, IGridView<char> view)> _views = new List<(string name, IGridView<char> view)>();
         private readonly ArrayView<GearTileState> _map = new ArrayView<GearTileState>(100, 100);
@@ -27,7 +27,7 @@ namespace GoRogue.Debugger.Routines
         private readonly List<PolygonArea> _originalClockWiseGearPositions = new List<PolygonArea>();
         private readonly List<PolygonArea> _originalCounterClockWiseGearPositions = new List<PolygonArea>();
         private readonly List<PolygonArea> _originalClockWiseWindowPositions = new List<PolygonArea>();
-        private readonly List<PolygonArea> _originalCounterClockWiseWindowPositions = new List<PolygonArea>();
+        // private readonly List<PolygonArea> _originalCounterClockWiseWindowPositions = new List<PolygonArea>();
         private readonly List<PolygonArea> _currentGearPositions = new List<PolygonArea>();
         private readonly List<PolygonArea> _currentWindowPositions = new List<PolygonArea>();
 
@@ -39,7 +39,7 @@ namespace GoRogue.Debugger.Routines
             var gear = Gear(_center, innerRadius, outerRadius);
             _originalClockWiseGearPositions.Add(gear);
             _currentGearPositions.Add(gear);
-            var windows = Windows(_center, 5, outerRadius - 8);
+            var windows = Windows(_center, 5, outerRadius - 8).ToArray();
             _originalClockWiseWindowPositions.AddRange(windows);
             _currentWindowPositions.AddRange(windows);
 
@@ -52,7 +52,7 @@ namespace GoRogue.Debugger.Routines
                 gear = Gear(corner, innerRadius, outerRadius);
                 _originalCounterClockWiseGearPositions.Add(gear);
                 _currentGearPositions.Add(gear);
-                windows = Windows(corner, 3, outerRadius - 4);
+                windows = Windows(corner, 3, outerRadius - 4).ToArray();
                 // _originalCounterClockWiseWindowPositions.AddRange(windows);
             }
 
