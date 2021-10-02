@@ -277,8 +277,8 @@ namespace GoRogue.MapGeneration
 
              Point p1 = origin;
              Point p2 = origin + new Point(width, 0);
-             Point p3 = origin + new Point(width * 2, height);
-             Point p4 = origin + new Point(width, height);
+             Point p3 = origin + new Point(width + Math.Abs(height), height);
+             Point p4 = origin + new Point(Math.Abs(height), height);
 
              return new PolygonArea(algorithm, p1, p2, p3, p4);
          }
