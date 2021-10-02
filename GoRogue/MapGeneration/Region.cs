@@ -14,34 +14,28 @@ namespace GoRogue.MapGeneration
     /// Event fired when a region's Area is changed.
     /// </summary>
     [PublicAPI]
-    public class RegionAreaChanged : EventArgs
+    public class RegionAreaChangedEventArgs : EventArgs
     {
-        /// <summary>
-        /// The region whose area is changing
-        /// </summary>
-        public readonly Region Item;
-
         /// <summary>
         /// The previous Area
         /// </summary>
-        public readonly Area Old;
+        public readonly PolygonArea OldValue;
 
         /// <summary>
         /// The Area to which we update
         /// </summary>
-        public readonly Area New;
+        public readonly PolygonArea NewValue;
 
         /// <summary>
         /// The Event Arguments for when a region's area is changed
         /// </summary>
         /// <param name="item">The region whose area is changing</param>
-        /// <param name="oldArea">The former value of the Area</param>
-        /// <param name="newArea">The new value of the Area</param>
-        public RegionAreaChanged(Region item, Area oldArea, Area newArea)
+        /// <param name="oldValue">The former value of the Area</param>
+        /// <param name="newValue">The new value of the Area</param>
+        public RegionAreaChangedEventArgs(Region item, PolygonArea oldValue, PolygonArea newValue)
         {
-            Item = item;
-            Old = oldArea;
-            New = newArea;
+            OldValue = oldValue;
+            NewValue = newValue;
         }
     }
     /// <summary>
@@ -53,12 +47,24 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The Area of this region
         /// </summary>
-        public PolygonArea Area { get; set; }
+        public PolygonArea Area
+        {
+            get => _area;
+            set
+            {
+                if (value == _area) return;
+
+                var oldValue = _area;
+                _area = value;
+                AreaChanged?.Invoke(this, new RegionAreaChangedEventArgs(this, oldValue, value));
+            }
+        }
+        private PolygonArea _area;
 
         /// <summary>
         /// Fired when the Area is changed.
         /// </summary>
-        public EventHandler<RegionAreaChanged>? AreaChanged;
+        public EventHandler<RegionAreaChangedEventArgs>? AreaChanged;
 
         /// <inheritdoc/>
         public IComponentCollection GoRogueComponents { get; }
@@ -125,11 +131,8 @@ namespace GoRogue.MapGeneration
         }
 
         private Region(List<Point> corners, Lines.Algorithm algorithm, IComponentCollection? components)
-        {
-            Area = new PolygonArea(ref corners, algorithm);
-            GoRogueComponents = components ?? new ComponentCollection();
-            GoRogueComponents.ParentForAddedComponents = this;
-        }
+            : this(new PolygonArea(ref corners, algorithm))
+        { }
 
         /// <summary>
         /// Returns a string detailing the region's corner locations.
