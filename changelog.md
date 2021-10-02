@@ -13,6 +13,9 @@ None.
 - Added a constructor to `Region` that takes a `PolygonArea` as a parameter and avoided copies.
 - Added an event that will automatically fire when the `Area` property of a `Region` is changed.
 
+### Changed
+- Comparison of `PolygonArea` now compares exclusively based off of defined corner equivalency.
+
 ### Removed
 - All functions and constructors in `Region` that forwarded to corresponsding functions in `PolygonArea`.
     - Such functions and constructors are now only available by accessing `Area` property
