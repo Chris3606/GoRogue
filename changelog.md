@@ -21,7 +21,7 @@ None.
     - Such functions and constructors are now only available by accessing `Area` property
 
 ### Fixed
-- `Parallelogram` static creation method for `PolygonArea` now functions correctly for differing values of width/height
+- `Parallelogram` static creation method for `PolygonArea` now functions correctly for differing values of width/height (ensures correct 45 degree angles)
 
 ## [3.0.0-alpha05] - 2021-09-30
 
