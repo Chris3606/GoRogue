@@ -25,7 +25,6 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// The Event Arguments for when a region's area is changed
         /// </summary>
-        /// <param name="item">The region whose area is changing</param>
         /// <param name="oldValue">The former value of the Area</param>
         /// <param name="newValue">The new value of the Area</param>
         public RegionAreaChangedEventArgs(PolygonArea oldValue, PolygonArea newValue)

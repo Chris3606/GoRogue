@@ -193,10 +193,11 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void PolygonParallelogram()
         {
-            var polygon = PolygonArea.Parallelogram((30, 30), 15, 15);
+            var polygon = PolygonArea.Parallelogram((30, 30), 10, 15);
+            _output.WriteLine(GetPolygonString(polygon));
             Assert.Equal(4, polygon.Corners.Count);
-            Assert.Equal(196, polygon.InnerPoints.Count);
-            Assert.Equal(64, polygon.OuterPoints.Count);
+            Assert.Equal(126, polygon.InnerPoints.Count);
+            Assert.Equal(54, polygon.OuterPoints.Count);
             _output.WriteLine(GetPolygonString(polygon));
         }
 
