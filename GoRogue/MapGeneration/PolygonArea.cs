@@ -13,7 +13,7 @@ namespace GoRogue.MapGeneration
     /// An area with an arbitrary number of sides and corners
     /// </summary>
     [PublicAPI]
-    public class PolygonArea : IReadOnlyArea
+    public class PolygonArea : IReadOnlyArea, IMatchable<PolygonArea>
     {
         #region Properties/Fields
         /// <summary>
@@ -349,8 +349,13 @@ namespace GoRogue.MapGeneration
         #endregion
 
         #region IReadOnlyArea Implementation
+
         /// <inheritdoc/>
-        public bool Matches(IReadOnlyArea? other) => _points.Matches(other);
+        public bool Matches(IReadOnlyArea? other)
+        {
+            if (other is PolygonArea p) return Matches(p);
+            return _points.Matches(other);
+        }
 
         /// <inheritdoc/>
         public IEnumerator<Point> GetEnumerator() => _points.GetEnumerator();
@@ -369,6 +374,52 @@ namespace GoRogue.MapGeneration
 
         /// <inheritdoc/>
         public bool Intersects(IReadOnlyArea area) => _points.Intersects(area);
+        #endregion
+
+        #region IMatchable Implementation
+
+        /// <summary>
+        /// Compares the polygons to ensure that they are defined by the same corners, and thus represent the same area.
+        /// </summary>
+        /// <param name="other"/>
+        /// <returns>True if the polygons represent the same area; false otherwise.</returns>
+        public bool Matches(PolygonArea? other)
+        {
+            if (other is null) return false;
+            if (other.Corners.Count != Corners.Count) return false;
+
+            // Find starting points.  Note:
+            //    - Each corner can occur in the Corners list exactly once to fit the definition of a closed
+            //      polygon
+            //    - Two polygons are equivalent if they contain precisely the same corners in the same order,
+            //      BUT the starting point is independent
+            //        - [(0, 1), (5, 0), (1, 2)] == [(5, 0), (1, 2), (0, 1)]
+            //        - [(0, 1), (5, 0), (1, 2)] != [(5, 0), (0, 1), (1, 2)]
+            Point start = Corners[0];
+            int size = Corners.Count;
+            int otherStartIdx = -1;
+            for (int i = 0; i < size; i++)
+                if (other.Corners[i].Matches(start))
+                {
+                    otherStartIdx = i;
+                    break;
+                }
+
+            if (otherStartIdx == -1) return false;
+
+            // Compare from starting point to make sure order is valid. The starting point for thisIdx does NOT need
+            // modulo, because size must be at least 3 to have a valid polygon.  Similarly, we know that the two corner
+            // lists are the same length, so we can simply increment thisIdx by 1 and guarantee it won't run into an
+            // out of range index.
+            int thisIdx = 1;
+            for (int otherIdx = (otherStartIdx + 1) % size; otherIdx != otherStartIdx; otherIdx = (otherIdx + 1) % size)
+            {
+                if (!other.Corners[otherIdx].Matches(Corners[thisIdx])) return false;
+                thisIdx += 1;
+            }
+
+            return true;
+        }
         #endregion
 
         #region Transformation
