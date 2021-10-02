@@ -366,5 +366,38 @@ namespace GoRogue.UnitTests.MapGeneration
         }
         #endregion
 
+        #region Comparison Tests
+
+        [Fact]
+        public void MatchesTest()
+        {
+            // Two identical polygons (separate instances)
+            var poly1 = new PolygonArea((0, 1), (5, 0), (1, 2));
+            var poly2 = new PolygonArea((0, 1), (5, 0), (1, 2));
+
+            // Equivalent polygon just with the corners defined using a different starting point
+            var poly3 = new PolygonArea((5, 0), (1, 2), (0, 1));
+
+            // Not equivalent polygon
+            var poly4 = new PolygonArea((5, 0), (0, 1), (1, 2));
+
+            Assert.True(poly1.Matches(poly2));
+            Assert.True(poly1.Matches(poly3));
+
+            Assert.False(poly1.Matches(poly4));
+
+            // Repeat the tests with the objects casted to an interface to ensure the comparison propagates
+            var area1 = poly1 as IReadOnlyArea;
+            var area2 = poly2 as IReadOnlyArea;
+            var area3 = poly3 as IReadOnlyArea;
+            var area4 = poly4 as IReadOnlyArea;
+
+            Assert.True(area1.Matches(area2));
+            Assert.True(area1.Matches(area3));
+
+            Assert.False(area1.Matches(area4));
+        }
+        #endregion
+
     }
 }
