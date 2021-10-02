@@ -7,6 +7,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None.
 
+## [3.0.0-alpha06] - 2021-10-02
+
+### Added
+- Added a constructor to `Region` that takes a `PolygonArea` as a parameter and avoided copies.
+- Added an event that will automatically fire when the `Area` property of a `Region` is changed.
+
+### Removed
+- All functions and constructors in `Region` that forwarded to corresponsding functions in `PolygonArea`.
+    - Such functions and constructors are now only available by accessing `Area` property
+
+### Fixed
+- `Parallelogram` static creation method for `PolygonArea` now functions correctly for differing values of width/height
+
 ## [3.0.0-alpha05] - 2021-09-30
 
 ### Added
