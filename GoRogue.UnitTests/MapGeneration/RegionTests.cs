@@ -23,7 +23,8 @@ namespace GoRogue.UnitTests.MapGeneration
 
         public RegionTests()
         {
-            _area = new Region(_nw, _ne, _se, _sw);
+            var polygon = new PolygonArea(_nw, _ne, _se, _sw);
+            _area = new Region(polygon);
         }
 
         [Fact]
