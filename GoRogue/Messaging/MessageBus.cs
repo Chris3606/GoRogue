@@ -108,10 +108,10 @@ namespace GoRogue.Messaging
         public void Send<TMessage>(TMessage message) where TMessage : notnull
         {
             var runtimeMessageType = message.GetType();
-            if (!_typeTreeCache.ContainsKey(runtimeMessageType))
-                _typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
+            if (!_typeTreeCache.TryGetValue(runtimeMessageType, out Type[]? types))
+                types = _typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
 
-            foreach (var type in _typeTreeCache[runtimeMessageType])
+            foreach (var type in types)
                 if (_subscriberRefs.TryGetValue(type, out List<ISubscriberRef>? handlerRefs))
                     foreach (var handlerRef in handlerRefs)
                         handlerRef.Handler(message);
