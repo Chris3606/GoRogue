@@ -34,6 +34,7 @@ namespace GoRogue.PerformanceTests.Messaging
         private ExpressionMessageBus _expressionBus = null!;
         private OptimizedAndCacheSubsMessageBus _cachedSubsBus = null!;
         private OptimizedAndToArrayMessageBus _toArrayBus = null!;
+        private OptimizedAndToArrayAllMessageBus _toArrayAllBus = null!;
 
         [GlobalSetup]
         public void GlobalSetup()
@@ -43,14 +44,17 @@ namespace GoRogue.PerformanceTests.Messaging
             _expressionBus = new ExpressionMessageBus();
             _cachedSubsBus = new OptimizedAndCacheSubsMessageBus();
             _toArrayBus = new OptimizedAndToArrayMessageBus();
+            _toArrayAllBus = new OptimizedAndToArrayAllMessageBus();
 
             for (int i = 0; i < Subscribers; i++)
             {
                 _originalBus.RegisterSubscriber(new BenchmarkSubscriber());
                 _noForeachBus.RegisterSubscriber(new BenchmarkSubscriber());
                 _expressionBus.RegisterSubscriber(new BenchmarkSubscriber());
+                _cachedSubsBus.RegisterSubscriber(new BenchmarkSubscriber());
+                _toArrayBus.RegisterSubscriber(new BenchmarkSubscriber());
+                _toArrayAllBus.RegisterSubscriber(new BenchmarkSubscriber());
             }
-
         }
 
         [Benchmark]
@@ -86,6 +90,13 @@ namespace GoRogue.PerformanceTests.Messaging
         {
             for (int i = 0; i < Messages; i++)
                 _toArrayBus.Send(Message);
+        }
+
+        [Benchmark]
+        public void OptimizeToArrayAll()
+        {
+            for (int i = 0; i < Messages; i++)
+                _toArrayAllBus.Send(Message);
         }
 
     }

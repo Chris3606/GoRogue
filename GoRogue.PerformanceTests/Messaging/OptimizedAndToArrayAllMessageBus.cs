@@ -5,19 +5,16 @@ using GoRogue.Messaging;
 
 namespace GoRogue.PerformanceTests.Messaging
 {
-    public class OptimizedAndCacheSubsMessageBus
+    public class OptimizedAndToArrayAllMessageBus
     {
         private readonly Dictionary<Type, List<(object subscriber, Action<object> handler)>> _subscriberRefs;
         private readonly Dictionary<Type, Type[]> _typeTreeCache;
 
-        private readonly List<Action<object>> _currentSubscribers;
-
-        public OptimizedAndCacheSubsMessageBus()
+        public OptimizedAndToArrayAllMessageBus()
         {
             _subscriberRefs = new Dictionary<Type, List<(object subscriber, Action<object> handler)>>();
             _typeTreeCache = new Dictionary<Type, Type[]>();
             SubscriberCount = 0;
-            _currentSubscribers = new List<Action<object>>();
         }
 
         public int SubscriberCount { get; private set; }
@@ -66,20 +63,23 @@ namespace GoRogue.PerformanceTests.Messaging
             if (!_typeTreeCache.TryGetValue(runtimeMessageType, out Type[]? types))
                 types = _typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
 
-            // Cache list of subscribers so that subscribers can Register/Unregister freely without causing exception
+            // Cache all subscriber lists we are about to iterate over, to ensure that calls to registration functions
+            // don't interfere with the current sending
+            var cache = new (object subscriber, Action<object> handler)[]?[types.Length];
             for (int i = 0; i < types.Length; i++)
+                if (_subscriberRefs.TryGetValue(types[i],
+                    out List<(object subscriber, Action<object> handler)>? handlerRefs))
+                    cache[i] = handlerRefs.ToArray();
+
+            // Call all handlers, from cache generated
+            for (int i = 0; i < cache.Length; i++)
             {
-                if (!_subscriberRefs.TryGetValue(types[i], out var curSubCache)) continue;
-                for (int j = 0; j < curSubCache.Count; j++)
-                    _currentSubscribers.Add(curSubCache[j].handler);
+                var curCache = cache[i];
+                if (curCache == null) continue;
+
+                for (int j = 0; j < curCache.Length; j++)
+                    curCache[j].handler(message);
             }
-
-            // Call subscribers based on cache
-            for (int i = 0; i < _currentSubscribers.Count; i++)
-                _currentSubscribers[i](message);
-
-            // Clear cache for next Send
-            _currentSubscribers.Clear();
         }
     }
 }
