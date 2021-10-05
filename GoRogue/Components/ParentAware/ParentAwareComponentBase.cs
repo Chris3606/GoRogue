@@ -10,6 +10,7 @@ namespace GoRogue.Components.ParentAware
     /// <typeparam name="T">The type of the parent being passed.</typeparam>
     [PublicAPI]
     public class ParentAwareComponentRemovedEventArgs<T> : EventArgs
+        where T : IObjectWithComponents
     {
         /// <summary>
         /// The parent from which the object was detached.
