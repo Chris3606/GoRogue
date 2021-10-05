@@ -13,7 +13,7 @@ namespace GoRogue.Messaging
     [PublicAPI]
     public class MessageBus
     {
-        private readonly Dictionary<Type, List<ISubscriberRef>> _subscriberRefs;
+        private readonly Dictionary<Type, List<(object subscriber, Action<object> handler)>> _subscriberRefs;
         private readonly Dictionary<Type, Type[]> _typeTreeCache;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace GoRogue.Messaging
         /// </summary>
         public MessageBus()
         {
-            _subscriberRefs = new Dictionary<Type, List<ISubscriberRef>>();
+            _subscriberRefs = new Dictionary<Type, List<(object subscriber, Action<object> handler)>>();
             _typeTreeCache = new Dictionary<Type, Type[]>();
             SubscriberCount = 0;
         }
@@ -54,11 +54,11 @@ namespace GoRogue.Messaging
             var messageType = typeof(TMessage);
 
             if (!_subscriberRefs.ContainsKey(messageType))
-                _subscriberRefs[messageType] = new List<ISubscriberRef>();
-            else if (_subscriberRefs[messageType].Any(i => ReferenceEquals(i.Subscriber, subscriber)))
+                _subscriberRefs[messageType] = new List<(object subscriber, Action<object> handler)>();
+            else if (_subscriberRefs[messageType].Any(i => ReferenceEquals(i.subscriber, subscriber)))
                 throw new ArgumentException("Subscriber added to message bus twice.", nameof(subscriber));
 
-            _subscriberRefs[messageType].Add(new SubscriberRef<TMessage>(subscriber));
+            _subscriberRefs[messageType].Add((subscriber, msg => subscriber.Handle((TMessage)msg)));
             SubscriberCount++;
 
             return subscriber;
@@ -81,9 +81,9 @@ namespace GoRogue.Messaging
         {
             var messageType = typeof(TMessage);
 
-            if (_subscriberRefs.TryGetValue(messageType, out List<ISubscriberRef>? handlerRefs))
+            if (_subscriberRefs.TryGetValue(messageType, out List<(object subscriber, Action<object> handler)>? handlerRefs))
             {
-                var item = handlerRefs.FindIndex(i => ReferenceEquals(i.Subscriber, subscriber));
+                var item = handlerRefs.FindIndex(i => ReferenceEquals(i.subscriber, subscriber));
 
                 if (item == -1)
                     throw new ArgumentException(
@@ -111,31 +111,24 @@ namespace GoRogue.Messaging
             if (!_typeTreeCache.TryGetValue(runtimeMessageType, out Type[]? types))
                 types = _typeTreeCache[runtimeMessageType] = ReflectionAddons.GetTypeTree(runtimeMessageType).ToArray();
 
-            foreach (var type in types)
-                if (_subscriberRefs.TryGetValue(type, out List<ISubscriberRef>? handlerRefs))
-                    foreach (var handlerRef in handlerRefs)
-                        handlerRef.Handler(message);
-        }
+            // Cache all subscriber lists we are about to iterate over, to ensure that calls to registration functions
+            // don't interfere with the current sending
+            var cache = new (object subscriber, Action<object> handler)[]?[types.Length];
+            for (int i = 0; i < types.Length; i++)
+                if (_subscriberRefs.TryGetValue(types[i],
+                    out List<(object subscriber, Action<object> handler)>? handlerRefs))
+                    cache[i] = handlerRefs.ToArray();
 
-        // Non-template interface for object-level handler functions
-        internal interface ISubscriberRef
-        {
-            // Used for reference-equals comparison, so it can be safely stored as type object
-            object Subscriber { get; }
-            Action<object> Handler { get; }
-        }
-
-        // Creates handler based on ISubscriber passed in that casts the object and calls the subscribers handle.
-        internal class SubscriberRef<TMessage> : ISubscriberRef
-        {
-            public SubscriberRef(ISubscriber<TMessage> subscriber)
+            // Call all handlers, from cache generated
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (int i = 0; i < cache.Length; i++)
             {
-                Subscriber = subscriber;
-                Handler = o => subscriber.Handle((TMessage)o);
-            }
+                var curCache = cache[i];
+                if (curCache == null) continue;
 
-            public object Subscriber { get; }
-            public Action<object> Handler { get; }
+                for (int j = 0; j < curCache.Length; j++)
+                    curCache[j].handler(message);
+            }
         }
     }
 }

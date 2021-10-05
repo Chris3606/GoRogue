@@ -29,7 +29,8 @@ namespace GoRogue.PerformanceTests.Messaging
         [Params("message")]
         public string Message = null!;
 
-        private MessageBus _originalBus = null!;
+        private MessageBus _currentGoRogueBus = null!;
+        private OriginalMessageBus _originalBus = null!;
         private NoForEachMessageBus _noForeachBus = null!;
         private ExpressionMessageBus _expressionBus = null!;
         private OptimizedAndCacheSubsMessageBus _cachedSubsBus = null!;
@@ -39,7 +40,8 @@ namespace GoRogue.PerformanceTests.Messaging
         [GlobalSetup]
         public void GlobalSetup()
         {
-            _originalBus = new MessageBus();
+            _currentGoRogueBus = new MessageBus();
+            _originalBus = new OriginalMessageBus();
             _noForeachBus = new NoForEachMessageBus();
             _expressionBus = new ExpressionMessageBus();
             _cachedSubsBus = new OptimizedAndCacheSubsMessageBus();
@@ -48,6 +50,7 @@ namespace GoRogue.PerformanceTests.Messaging
 
             for (int i = 0; i < Subscribers; i++)
             {
+                _currentGoRogueBus.RegisterSubscriber(new BenchmarkSubscriber());
                 _originalBus.RegisterSubscriber(new BenchmarkSubscriber());
                 _noForeachBus.RegisterSubscriber(new BenchmarkSubscriber());
                 _expressionBus.RegisterSubscriber(new BenchmarkSubscriber());
@@ -58,12 +61,19 @@ namespace GoRogue.PerformanceTests.Messaging
         }
 
         [Benchmark]
+        public void CurrentGoRogue()
+        {
+            for (int i = 0; i < Messages; i++)
+                _currentGoRogueBus.Send(Message);
+        }
+
+        [Benchmark]
         public void Original()
         {
             for (int i = 0; i < Messages; i++)
                 _originalBus.Send(Message);
         }
-
+        
         [Benchmark]
         public void NoForEach()
         {

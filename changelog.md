@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Changed
+- MessageBus now has improved performance
+- MessageBus also now supports subscribers being registered while a Send is in progress
+    - No subscribers added will be called by the in-progress Send call, however any subsequent Send calls (including nested ones) will see the new subscribers
+
 
 ## [3.0.0-alpha06] - 2021-10-02
 
