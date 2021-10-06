@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- GameObject now has constructors that omit the parameter for starting position
+
 ### Changed
 - MessageBus now has improved performance
 - MessageBus also now supports subscribers being registered while a Send is in progress
