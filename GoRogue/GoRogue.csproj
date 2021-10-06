@@ -11,7 +11,7 @@
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha06</Version>
+    <Version>3.0.0-alpha07</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
