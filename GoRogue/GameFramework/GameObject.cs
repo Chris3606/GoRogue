@@ -55,10 +55,47 @@ namespace GoRogue.GameFramework
         /// </param>
         public GameObject(Point position, int layer, bool isWalkable = true, bool isTransparent = true,
                           Func<uint>? idGenerator = null, IComponentCollection? customComponentCollection = null)
+            : this(layer, isWalkable, isTransparent, idGenerator, customComponentCollection)
+        {
+            Position = position;
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="idGenerator" /> is used to generate an ID which is assigned to the <see cref="ID"/>
+        /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
+        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
+        /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
+        /// implementation is required, override this function to return an appropriate ID. Keep in mind a relatively
+        /// high degree of uniqueness is necessary for efficient placement in an ISpatialMap implementation.
+        /// </remarks>
+        /// <param name="layer">The layer of of a <see cref="Map" /> the object is assigned to.</param>
+        /// <param name="isWalkable">
+        /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
+        /// on can be traversed by other, non-walkable objects on the same <see cref="Map" />.  Effectively, whether or
+        /// not this object collides.
+        /// </param>
+        /// <param name="isTransparent">
+        /// Whether or not the object is considered "transparent", eg. whether or not light passes through it
+        /// for the sake of calculating the FOV of a <see cref="Map" />.
+        /// </param>
+        /// <param name="idGenerator">
+        /// The function used to generate and return an unsigned integer to use assign to the <see cref="ID" /> field.
+        /// Most of the time, you will not need to specify this as the default implementation will be sufficient.  See
+        /// the constructor remarks for details.
+        /// </param>
+        /// <param name="customComponentCollection">
+        /// A custom component collection to use for objects.  If not specified, a <see cref="ComponentCollection"/> is
+        /// used.  Typically you will not need to specify this, as a ComponentCollection is sufficient for nearly all
+        /// use cases.
+        /// </param>
+        public GameObject(int layer, bool isWalkable = true, bool isTransparent = true,
+                          Func<uint>? idGenerator = null, IComponentCollection? customComponentCollection = null)
         {
             idGenerator ??= GlobalRandom.DefaultRNG.NextUInt;
 
-            _position = position;
             Layer = layer;
             IsWalkable = isWalkable;
             IsTransparent = isTransparent;

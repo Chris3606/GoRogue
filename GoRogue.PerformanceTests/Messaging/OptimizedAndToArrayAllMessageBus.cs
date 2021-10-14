@@ -1,54 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using GoRogue.Messaging;
 
-namespace GoRogue.Messaging
+namespace GoRogue.PerformanceTests.Messaging
 {
-    /// <summary>
-    /// A messaging system that can have subscribers added to it, and send messages.  When messages are sent, it will call any
-    /// handlers that requested to handle messages
-    /// of the proper types, based on the type-tree/interface-tree of the messages.
-    /// </summary>
-    [PublicAPI]
-    public class MessageBus
+    public class OptimizedAndToArrayAllMessageBus
     {
         private readonly Dictionary<Type, List<(object subscriber, Action<object> handler)>> _subscriberRefs;
         private readonly Dictionary<Type, Type[]> _typeTreeCache;
 
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        public MessageBus()
+        public OptimizedAndToArrayAllMessageBus()
         {
             _subscriberRefs = new Dictionary<Type, List<(object subscriber, Action<object> handler)>>();
             _typeTreeCache = new Dictionary<Type, Type[]>();
             SubscriberCount = 0;
         }
 
-        /// <summary>
-        /// Number of subscribers currently listening on this message bus.
-        /// </summary>
         public int SubscriberCount { get; private set; }
 
-        /// <summary>
-        /// Adds the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages
-        /// that can cast to <typeparamref name="TMessage" /> are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
-        /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
-        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> when they are disposed of, to avoid the bus
-        /// preventing
-        /// the handler from being garbage collected.
-        /// </summary>
-        /// <typeparam name="TMessage">
-        /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
-        /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
-        /// message types.
-        /// </typeparam>
-        /// <param name="subscriber">Subscriber to add.</param>
-        /// <returns>
-        /// The subscriber that was added, in case a reference is needed to later call
-        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" />.
-        /// </returns>
         public ISubscriber<TMessage> RegisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
         {
             var messageType = typeof(TMessage);
@@ -64,19 +34,6 @@ namespace GoRogue.Messaging
             return subscriber;
         }
 
-        /// <summary>
-        /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
-        /// a shorter lifetime than the
-        /// MessageBus object it subscribed with, handlers MUST be removed when disposed of so they can be garbage collected -- an
-        /// object cannot be garbage-collected
-        /// so long as it is registered as a subscriber to a message bus (unless the bus is also being garbage-collected).
-        /// </summary>
-        /// <typeparam name="TMessage">
-        /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
-        /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
-        /// message types.
-        /// </typeparam>
-        /// <param name="subscriber">Subscriber to remove.</param>
         public void UnregisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
         {
             var messageType = typeof(TMessage);
@@ -100,11 +57,6 @@ namespace GoRogue.Messaging
                     $"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
         }
 
-        /// <summary>
-        /// Sends the specified message on the message bus, automatically calling any appropriate registered handlers.
-        /// </summary>
-        /// <typeparam name="TMessage"></typeparam>
-        /// <param name="message"></param>
         public void Send<TMessage>(TMessage message) where TMessage : notnull
         {
             var runtimeMessageType = message.GetType();
@@ -120,7 +72,6 @@ namespace GoRogue.Messaging
                     cache[i] = handlerRefs.ToArray();
 
             // Call all handlers, from cache generated
-            // ReSharper disable once ForCanBeConvertedToForeach
             for (int i = 0; i < cache.Length; i++)
             {
                 var curCache = cache[i];
