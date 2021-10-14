@@ -5,14 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None.
+
+## [3.0.0-alpha07] - 2021-10-13
+
 ### Added
 - GameObject now has constructors that omit the parameter for starting position
 
 ### Changed
-- MessageBus now has improved performance
-- MessageBus also now supports subscribers being registered while a Send is in progress
-    - No subscribers added will be called by the in-progress Send call, however any subsequent Send calls (including nested ones) will see the new subscribers
-- ParentAwareComponentBase now specifies old parent in `Removed` event.
+- `MessageBus` now has improved performance
+- `MessageBus` also now supports subscribers being registered while a `Send` is in progress
+    - No subscribers added will be called by the in-progress `Send` call, however any subsequent `Send` calls (including nested ones) will see the new subscribers
+- `ParentAwareComponentBase` now specifies old parent in `Removed` event.
 
 ## [3.0.0-alpha06] - 2021-10-02
 

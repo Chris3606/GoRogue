@@ -16,7 +16,7 @@
 
 	<!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha06---2021-10-02.</PackageReleaseNotes>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha07---2021-10-13.</PackageReleaseNotes>
 	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
