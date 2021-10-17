@@ -258,7 +258,7 @@ namespace GoRogue.UnitTests.GameFramework
 
             var obj2 = new GameObject((2, 2), 1, false);
             map.AddEntity(obj2);
-            var obj3 = new GameObject((2, 1), 2,false);
+            var obj3 = new GameObject((2, 1), 2, false);
             map.AddEntity(obj3);
 
             Assert.True(map.WalkabilityView[obj.Position]);
