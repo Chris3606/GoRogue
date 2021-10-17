@@ -249,5 +249,34 @@ namespace GoRogue.UnitTests.GameFramework
             obj.IsWalkable = true;
             Assert.True(map.WalkabilityView[obj.Position]);
         }
+        [Fact]
+        public void InvalidEntityWalkabilityChange()
+        {
+            var map = new Map(10, 10, 2, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1);
+            map.AddEntity(obj);
+
+            var obj2 = new GameObject((2, 2), 1, false);
+            map.AddEntity(obj2);
+            var obj3 = new GameObject((2, 1), 2,false);
+            map.AddEntity(obj3);
+
+            Assert.True(map.WalkabilityView[obj.Position]);
+            Assert.False(map.WalkabilityView[obj2.Position]);
+            Assert.False(map.WalkabilityView[obj3.Position]);
+
+            obj.Position = obj2.Position;
+            // obj2 is non-walkable and also at this location
+            Assert.Throws<InvalidOperationException>(() => obj.IsWalkable = false);
+            // Should have reset the IsWalkable to true so the error is recoverable
+            Assert.True(obj.IsWalkable);
+
+            obj.Position = obj3.Position;
+            // obj3 is non-walkable and also at this location
+            Assert.Throws<InvalidOperationException>(() => obj.IsWalkable = false);
+            // Should have reset the IsWalkable to true so the error is recoverable
+            Assert.True(obj.IsWalkable);
+        }
+
     }
 }
