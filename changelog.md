@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None.
 
+## [3.0.0-alpha08] - 2021-10-17
+
+### Added
+- Added the `IGameObject.WalkabilityChanging` event that is fired directly _before_ the walkability of the object is changed.
+- Added the `IGameObject.TransparencyChanging` event that is fired directly _before_ the transparency of the object is changed.
+- Added `IGameObject.SafelySetProperty` overload that can deal with "changing" (pre) events as well as "changed" (post) events.
+
+### Fixed
+- Fixed bug in `GameFramework.Map` that prevented setting of the walkability of map objects.
+
 ## [3.0.0-alpha07] - 2021-10-13
 
 ### Added

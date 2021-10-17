@@ -470,7 +470,7 @@ namespace GoRogue.GameFramework
 
             terrain.OnMapChanged(this);
             terrain.Moved += OnGameObjectMoved;
-            terrain.WalkabilityChanged += OnWalkabilityChanged;
+            terrain.WalkabilityChanging += OnWalkabilityChanging;
             ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
         }
 
@@ -488,7 +488,7 @@ namespace GoRogue.GameFramework
             _terrain[terrain.Position] = null;
 
             terrain.Moved -= OnGameObjectMoved;
-            terrain.WalkabilityChanged -= OnWalkabilityChanged;
+            terrain.WalkabilityChanging -= OnWalkabilityChanging;
             ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
             terrain.OnMapChanged(null);
         }
@@ -620,7 +620,7 @@ namespace GoRogue.GameFramework
             entity.CurrentMap?.RemoveEntity(entity);
             entity.OnMapChanged(this);
             entity.Moved += OnGameObjectMoved;
-            entity.WalkabilityChanged += OnWalkabilityChanged;
+            entity.WalkabilityChanging += OnWalkabilityChanging;
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace GoRogue.GameFramework
             _entities.Remove(entity);
             entity.OnMapChanged(null);
             entity.Moved -= OnGameObjectMoved;
-            entity.WalkabilityChanged -= OnWalkabilityChanged;
+            entity.WalkabilityChanging -= OnWalkabilityChanging;
         }
 
         #endregion
@@ -929,7 +929,7 @@ namespace GoRogue.GameFramework
 
             return value || WalkabilityView[gameObject.Position];
         }
-        private void OnWalkabilityChanged(object? s, GameObjectPropertyChanged<bool> e)
+        private void OnWalkabilityChanging(object? s, GameObjectPropertyChanged<bool> e)
         {
             if (!e.NewValue && !WalkabilityView[e.Item.Position])
                 throw new InvalidOperationException(

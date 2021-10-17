@@ -177,6 +177,15 @@ namespace GoRogue.UnitTests.GameFramework
         }
 
         [Fact]
+        public void EntityAddedAsTerrainError()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1);
+
+            Assert.Throws<ArgumentException>(() => map.SetTerrain(obj));
+        }
+
+        [Fact]
         public void ValidEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
@@ -184,6 +193,15 @@ namespace GoRogue.UnitTests.GameFramework
 
             map.AddEntity(obj);
             Assert.Single(map.Entities);
+        }
+
+        [Fact]
+        public void TerrainAddedAsEntityError()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 0);
+
+            Assert.Throws<ArgumentException>(() => map.AddEntity(obj));
         }
 
         [Fact]
@@ -197,5 +215,68 @@ namespace GoRogue.UnitTests.GameFramework
             obj.Position = five;
             Assert.Equal(five, obj.Position);
         }
+
+        [Fact]
+        public void ValidTerrainWalkabilityChange()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 0);
+            map.SetTerrain(obj);
+
+            Assert.True(map.WalkabilityView[obj.Position]);
+
+
+            obj.IsWalkable = false;
+            Assert.False(map.WalkabilityView[obj.Position]);
+
+            obj.IsWalkable = true;
+            Assert.True(map.WalkabilityView[obj.Position]);
+        }
+
+        [Fact]
+        public void ValidEntityWalkabilityChange()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1);
+            map.AddEntity(obj);
+
+            Assert.True(map.WalkabilityView[obj.Position]);
+
+
+            obj.IsWalkable = false;
+            Assert.False(map.WalkabilityView[obj.Position]);
+
+            obj.IsWalkable = true;
+            Assert.True(map.WalkabilityView[obj.Position]);
+        }
+        [Fact]
+        public void InvalidEntityWalkabilityChange()
+        {
+            var map = new Map(10, 10, 2, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1);
+            map.AddEntity(obj);
+
+            var obj2 = new GameObject((2, 2), 1, false);
+            map.AddEntity(obj2);
+            var obj3 = new GameObject((2, 1), 2, false);
+            map.AddEntity(obj3);
+
+            Assert.True(map.WalkabilityView[obj.Position]);
+            Assert.False(map.WalkabilityView[obj2.Position]);
+            Assert.False(map.WalkabilityView[obj3.Position]);
+
+            obj.Position = obj2.Position;
+            // obj2 is non-walkable and also at this location
+            Assert.Throws<InvalidOperationException>(() => obj.IsWalkable = false);
+            // Should have reset the IsWalkable to true so the error is recoverable
+            Assert.True(obj.IsWalkable);
+
+            obj.Position = obj3.Position;
+            // obj3 is non-walkable and also at this location
+            Assert.Throws<InvalidOperationException>(() => obj.IsWalkable = false);
+            // Should have reset the IsWalkable to true so the error is recoverable
+            Assert.True(obj.IsWalkable);
+        }
+
     }
 }
