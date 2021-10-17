@@ -121,8 +121,11 @@ namespace GoRogue.GameFramework
         public bool IsWalkable
         {
             get => _isWalkable;
-            set => this.SafelySetProperty(ref _isWalkable, value, WalkabilityChanged);
+            set => this.SafelySetProperty(ref _isWalkable, value, WalkabilityChanging, WalkabilityChanged);
         }
+
+        /// <inheritdoc />
+        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanging;
 
         /// <inheritdoc />
         public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
@@ -133,8 +136,11 @@ namespace GoRogue.GameFramework
         public bool IsTransparent
         {
             get => _isTransparent;
-            set => this.SafelySetProperty(ref _isTransparent, value, TransparencyChanged);
+            set => this.SafelySetProperty(ref _isTransparent, value, TransparencyChanging, TransparencyChanged);
         }
+
+        /// <inheritdoc />
+        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanging;
 
         /// <inheritdoc />
         public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;

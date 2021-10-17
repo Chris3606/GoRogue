@@ -111,6 +111,11 @@ namespace GoRogue.GameFramework
         bool IsTransparent { get; set; }
 
         /// <summary>
+        /// Fired when <see cref="IsTransparent"/> is about to be changed.
+        /// </summary>
+        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanging;
+
+        /// <summary>
         /// Fired when <see cref="IsTransparent"/> is changed.
         /// </summary>
         public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
@@ -121,6 +126,11 @@ namespace GoRogue.GameFramework
         /// not this object collides.
         /// </summary>
         bool IsWalkable { get; set; }
+
+        /// <summary>
+        /// Fired when <see cref="IsWalkable"/> is about to changed.
+        /// </summary>
+        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanging;
 
         /// <summary>
         /// Fired when <see cref="IsWalkable"/> is changed.
