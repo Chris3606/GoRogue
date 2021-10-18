@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
@@ -155,17 +156,23 @@ namespace GoRogue.Pathing
             _openNodes = new FastPriorityQueue<AStarNode>(maxSize);
         }
 
+        private Direction[] _neighborDirections;
+
+        private Distance _distanceMeasurement;
         /// <summary>
         /// The distance calculation being used to determine distance between points. <see cref="Distance.Manhattan" />
         /// implies 4-way connectivity, while <see cref="Distance.Chebyshev" /> or <see cref="Distance.Euclidean" /> imply
         /// 8-way connectivity for the purpose of determining adjacent coordinates.
         /// </summary>
-        public Distance
-            DistanceMeasurement
+        public Distance DistanceMeasurement
         {
-            get;
-            set;
-        } // Has to be a property for default heuristic to update properly when this is changed
+            get => _distanceMeasurement;
+            set
+            {
+                _distanceMeasurement = value;
+                _neighborDirections = ((AdjacencyRule)_distanceMeasurement).DirectionsOfNeighbors().ToArray();
+            }
+        }
 
         /// <summary>
         /// The map view being used to determine whether or not each tile is walkable.
@@ -290,9 +297,9 @@ namespace GoRogue.Pathing
                     return new Path(result);
                 }
 
-                foreach (var dir in ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors())
+                for (int i = 0; i < _neighborDirections.Length; i++)
                 {
-                    var neighborPos = current.Position + dir;
+                    var neighborPos = current.Position + _neighborDirections[i];
 
                     // Not a valid map position, ignore
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityView.Width ||
