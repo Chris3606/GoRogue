@@ -40,5 +40,18 @@ namespace GoRogue.UnitTests.Pathing
                 Assert.Equal(_goal, pos);
             }
         }
+
+        [Fact]
+        public void OpenEdgedMapSupported()
+        {
+            var goalMapData = new ArrayView<GoalState>(_width, _height);
+            goalMapData.Fill(GoalState.Clear);
+            goalMapData[_width / 2, _height / 2] = GoalState.Goal;
+
+            var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
+            goalMap.Update();
+
+            // TODO: Verify goal map leads to goal
+        }
     }
 }

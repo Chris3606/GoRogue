@@ -44,5 +44,22 @@ namespace GoRogue.UnitTests.Pathing
                 Assert.NotEqual(_goal, pos);
             }
         }
+
+        [Fact]
+        public void OpenEdgedMapSupported()
+        {
+            var goalMapData = new ArrayView<GoalState>(_width, _height);
+            goalMapData.Fill(GoalState.Clear);
+            goalMapData[_width / 2, _height / 2] = GoalState.Goal;
+
+            var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
+            var fleeMap = new FleeMap(goalMap);
+            goalMap.Update();
+
+            foreach (var pos in fleeMap.Positions())
+                Assert.NotNull(fleeMap[pos]);
+
+            // TODO: Verify flee map leads away from goal
+        }
     }
 }
