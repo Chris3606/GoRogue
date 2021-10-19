@@ -31,7 +31,7 @@ namespace GoRogue.Pathing
 
         private readonly HashSet<Point> _closedSet;
 
-        private readonly HashSet<Point> _edgeSet;
+        private readonly Queue<Point> _openEdges;
 
         private readonly ArrayView<double?> _goalMap;
 
@@ -55,7 +55,7 @@ namespace GoRogue.Pathing
 
             var hasher = new KnownSizeHasher(baseMap.Width);
             _closedSet = new HashSet<Point>(hasher);
-            _edgeSet = new HashSet<Point>(hasher);
+            _openEdges = new Queue<Point>();
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             Update();
@@ -182,7 +182,7 @@ namespace GoRogue.Pathing
         public bool UpdatePathsOnly()
         {
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
-            _edgeSet.Clear();
+            _openEdges.Clear();
             _closedSet.Clear();
 
             var mapBounds = _goalMap.Bounds();
@@ -196,40 +196,35 @@ namespace GoRogue.Pathing
                 else
                 {
                     _goalMap[point] = 0.0;
-                    _edgeSet.Add(point);
+                    _openEdges.Enqueue(point);
                 }
             }
 
-            while (_edgeSet.Count > 0)
+            while (_openEdges.Count > 0)
             {
-                // Cache so we can modify _edgeSet during iteration
-                var edgeArray = _edgeSet.ToArray();
-                for (int i = 0; i < edgeArray.Length; i++)
+                var point = _openEdges.Dequeue();
+
+                // Known to be not null since the else condition above will have assigned to it.
+                var current = _goalMap[point]!.Value;
+                for (int j = 0; j < _neighborDirections.Length; j++)
                 {
-                    var point = edgeArray[i];
-                    // Known to be not null since the else condition above will have assigned to it.
-                    var current = _goalMap[point]!.Value;
-                    for (int j = 0; j < _neighborDirections.Length; j++)
+                    // We only want to process walkable, non-visited cells that are within the map
+                    var openPoint = point + _neighborDirections[j];
+                    if (!mapBounds.Contains(openPoint)) continue;
+                    if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
+                        continue;
+
+                    // Known to be not null since it must be walkable.
+                    var neighborValue = _goalMap[openPoint]!.Value;
+                    var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
+                    if (newValue < neighborValue)
                     {
-                        // We only want to process walkable, non-visited cells that are within the map
-                        var openPoint = point + _neighborDirections[j];
-                        if (!mapBounds.Contains(openPoint)) continue;
-                        if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
-                            continue;
-
-                        // Known to be not null since it must be walkable.
-                        var neighborValue = _goalMap[openPoint]!.Value;
-                        var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
-                        if (newValue < neighborValue)
-                        {
-                            _goalMap[openPoint] = newValue;
-                            _edgeSet.Add(openPoint);
-                        }
+                        _goalMap[openPoint] = newValue;
+                        _openEdges.Enqueue(openPoint);
                     }
-
-                    _edgeSet.Remove(point);
-                    _closedSet.Add(point);
                 }
+
+                _closedSet.Add(point);
             }
 
             Updated();
