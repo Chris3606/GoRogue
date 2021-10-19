@@ -26,6 +26,8 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
+        private readonly Direction[] _neighborDirections;
+
         private readonly HashSet<Point> _closedSet = new HashSet<Point>();
 
         private readonly HashSet<Point> _edgeSet = new HashSet<Point>();
@@ -48,6 +50,7 @@ namespace GoRogue.Pathing
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
+            _neighborDirections = ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             Update();
@@ -61,7 +64,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The distance measurement the GoalMap is using to calculate distance.
         /// </summary>
-        public Distance DistanceMeasurement { get; }
+        public readonly Distance DistanceMeasurement;
 
         internal IEnumerable<Point> Walkable => _walkable;
 
@@ -173,8 +176,6 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
         {
-            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
-
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _edgeSet.Clear();
             _closedSet.Clear();
@@ -191,13 +192,17 @@ namespace GoRogue.Pathing
             }
 
             while (_edgeSet.Count > 0)
-                foreach (var point in _edgeSet.ToArray())
+            {
+                // Cache so we can modify _edgeSet during iteration
+                var edgeArray = _edgeSet.ToArray();
+                for (int i = 0; i < edgeArray.Length; i++)
                 {
-                    var current =
-                        _goalMap[point]!
-                            .Value; // Known to be not null since the else condition above will have assigned to it.
-                    foreach (var openPoint in adjacencyRule.Neighbors(point))
+                    var point = edgeArray[i];
+                    // Known to be not null since the else condition above will have assigned to it.
+                    var current = _goalMap[point]!.Value;
+                    for (int j = 0; j < _neighborDirections.Length; j++)
                     {
+                        var openPoint = point + _neighborDirections[j];
                         if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
                             continue;
                         var neighborValue =
@@ -213,6 +218,7 @@ namespace GoRogue.Pathing
                     _edgeSet.Remove(point);
                     _closedSet.Add(point);
                 }
+            }
 
             Updated();
             return _closedSet.Count > 0;

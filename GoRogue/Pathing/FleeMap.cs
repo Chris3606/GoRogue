@@ -28,6 +28,9 @@ namespace GoRogue.Pathing
         // Nodes for the priority queue used in Update.
         private readonly ArrayView<PositionNode> _nodes;
 
+        // Cached directions based on goal map, to ensure maximum performance in the Update loop.
+        private readonly Direction[] _neighborDirections;
+
         /// <summary>
         /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
         /// and a magnitude to use (defaulting to 1.2).
@@ -42,6 +45,8 @@ namespace GoRogue.Pathing
             _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
+
+            _neighborDirections = ((AdjacencyRule)_baseMap.DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             _baseMap.Updated += Update;
 
@@ -133,14 +138,12 @@ namespace GoRogue.Pathing
 
         private void Update()
         {
-            var adjacencyRule = (AdjacencyRule)_baseMap.DistanceMeasurement;
             var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
 
             foreach (var point in _baseMap.Walkable)
             {
-                var newPoint =
-                    _baseMap[point]!.Value *
-                    -Magnitude; // Value won't be null as null only happens for non-walkable squares
+                // Value won't be null as null only happens for non-walkable squares
+                var newPoint = _baseMap[point]!.Value * -Magnitude;
                 _goalMap[point] = newPoint;
 
                 openSet.Enqueue(_nodes[point], newPoint);
@@ -149,22 +152,33 @@ namespace GoRogue.Pathing
             var edgeSet = new HashSet<Point>();
             var closedSet = new HashSet<Point>();
 
-            while (openSet.Count > 0) //multiple runs are needed to deal with islands
+            while (openSet.Count > 0) // Multiple runs are needed to deal with islands
             {
                 var minNode = openSet.Dequeue();
                 closedSet.Add(minNode.Position);
 
-                foreach (var openPoint in adjacencyRule.Neighbors(minNode.Position))
+                for (int i = 0; i < _neighborDirections.Length; i++)
+                {
+                    var openPoint = minNode.Position + _neighborDirections[i];
                     if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
                         edgeSet.Add(openPoint);
+                }
+
                 while (edgeSet.Count > 0)
-                    foreach (var point in edgeSet.ToArray())
+                {
+                    // Cache so we can modify edgeSet during iteration
+                    var edgeArray = edgeSet.ToArray();
+                    for (int i = 0; i < edgeArray.Length; i++)
                     {
+                        var point = edgeArray[i];
                         var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
-                        foreach (var openPoint in adjacencyRule.Neighbors(point))
+
+                        for (int j = 0; j < _neighborDirections.Length; j++)
                         {
+                            var openPoint = point + _neighborDirections[j];
                             if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
                                 continue;
+
                             var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
                             var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
                             if (newValue < neighborValue)
@@ -179,6 +193,7 @@ namespace GoRogue.Pathing
                         closedSet.Add(point);
                         openSet.Remove(_nodes[point]);
                     }
+                }
             }
         }
 
