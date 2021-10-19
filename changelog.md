@@ -5,7 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Fixed
+- FleeMaps now properly support goal maps where the base map has open edges (fixes #211)
+
+### Changed
+- Applied performance optimizations to A* algorithm
+    - ~20% improvements to speed when generating paths on open maps
+    - Performance gain varies on other test cases but should generally be measurable
+- Applied performance optimizations to GoalMap and FleeMap algorithms
+    - Nearly 50% improvement on a full-update operation, using a wide-open (obstacle free) base map
+    - Performance gain varies on other test cases but should generally be measurable
 
 ## [3.0.0-alpha08] - 2021-10-17
 
