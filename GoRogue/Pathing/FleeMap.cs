@@ -139,6 +139,7 @@ namespace GoRogue.Pathing
         private void Update()
         {
             var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
+            var mapBounds = _goalMap.Bounds();
 
             var walkable = _baseMap.Walkable;
             for (int i = 0; i < walkable.Count; i++)
@@ -163,6 +164,8 @@ namespace GoRogue.Pathing
                 for (int i = 0; i < _neighborDirections.Length; i++)
                 {
                     var openPoint = minNode.Position + _neighborDirections[i];
+                    if (!mapBounds.Contains(openPoint)) continue;
+
                     if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
                         edgeSet.Add(openPoint);
                 }
@@ -174,11 +177,14 @@ namespace GoRogue.Pathing
                     for (int i = 0; i < edgeArray.Length; i++)
                     {
                         var point = edgeArray[i];
+                        if (!mapBounds.Contains(point)) continue;
+
                         var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
 
                         for (int j = 0; j < _neighborDirections.Length; j++)
                         {
                             var openPoint = point + _neighborDirections[j];
+                            if (!mapBounds.Contains(openPoint)) continue;
                             if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
                                 continue;
 

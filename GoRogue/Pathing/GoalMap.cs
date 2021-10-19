@@ -179,6 +179,9 @@ namespace GoRogue.Pathing
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _edgeSet.Clear();
             _closedSet.Clear();
+
+            var mapBounds = _goalMap.Bounds();
+
             for (int i = 0; i < _walkable.Count; i++)
             {
                 var point = _walkable[i];
@@ -203,8 +206,9 @@ namespace GoRogue.Pathing
                     var current = _goalMap[point]!.Value;
                     for (int j = 0; j < _neighborDirections.Length; j++)
                     {
-                        // We only want to process walkable, non-visited cells
+                        // We only want to process walkable, non-visited cells that are within the map
                         var openPoint = point + _neighborDirections[j];
+                        if (!mapBounds.Contains(openPoint)) continue;
                         if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
                             continue;
 
