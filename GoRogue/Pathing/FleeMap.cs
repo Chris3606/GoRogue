@@ -140,8 +140,11 @@ namespace GoRogue.Pathing
         {
             var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
 
-            foreach (var point in _baseMap.Walkable)
+            var walkable = _baseMap.Walkable;
+            for (int i = 0; i < walkable.Count; i++)
             {
+                var point = walkable[i];
+
                 // Value won't be null as null only happens for non-walkable squares
                 var newPoint = _baseMap[point]!.Value * -Magnitude;
                 _goalMap[point] = newPoint;

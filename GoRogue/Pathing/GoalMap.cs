@@ -34,7 +34,7 @@ namespace GoRogue.Pathing
 
         private readonly ArrayView<double?> _goalMap;
 
-        private readonly HashSet<Point> _walkable = new HashSet<Point>();
+        private readonly List<Point> _walkable = new List<Point>();
 
         /// <summary>
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
@@ -66,7 +66,7 @@ namespace GoRogue.Pathing
         /// </summary>
         public readonly Distance DistanceMeasurement;
 
-        internal IEnumerable<Point> Walkable => _walkable;
+        internal IReadOnlyList<Point> Walkable => _walkable.AsReadOnly();
 
         /// <summary>
         /// Height of the goal map.
@@ -179,8 +179,9 @@ namespace GoRogue.Pathing
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _edgeSet.Clear();
             _closedSet.Clear();
-            foreach (var point in _walkable)
+            for (int i = 0; i < _walkable.Count; i++)
             {
+                var point = _walkable[i];
                 var state = BaseMap[point];
                 if (state == GoalState.Clear)
                     _goalMap[point] = highVal;
@@ -202,11 +203,13 @@ namespace GoRogue.Pathing
                     var current = _goalMap[point]!.Value;
                     for (int j = 0; j < _neighborDirections.Length; j++)
                     {
+                        // We only want to process walkable, non-visited cells
                         var openPoint = point + _neighborDirections[j];
-                        if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
+                        if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
                             continue;
-                        var neighborValue =
-                            _goalMap[openPoint]!.Value; // Known to be not null since it must be walkable.
+
+                        // Known to be not null since it must be walkable.
+                        var neighborValue = _goalMap[openPoint]!.Value;
                         var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
                         if (newValue < neighborValue)
                         {
