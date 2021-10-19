@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -28,9 +29,9 @@ namespace GoRogue.Pathing
     {
         private readonly Direction[] _neighborDirections;
 
-        private readonly HashSet<Point> _closedSet = new HashSet<Point>();
+        private readonly HashSet<Point> _closedSet;
 
-        private readonly HashSet<Point> _edgeSet = new HashSet<Point>();
+        private readonly HashSet<Point> _edgeSet;
 
         private readonly ArrayView<double?> _goalMap;
 
@@ -51,6 +52,10 @@ namespace GoRogue.Pathing
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
             _neighborDirections = ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors().ToArray();
+
+            var hasher = new KnownSizeHasher(baseMap.Width);
+            _closedSet = new HashSet<Point>(hasher);
+            _edgeSet = new HashSet<Point>(hasher);
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             Update();

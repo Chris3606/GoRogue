@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -153,8 +154,9 @@ namespace GoRogue.Pathing
                 openSet.Enqueue(_nodes[point], newPoint);
             }
 
-            var edgeSet = new HashSet<Point>();
-            var closedSet = new HashSet<Point>();
+            var hasher = new KnownSizeHasher(_goalMap.Width);
+            var edgeSet = new HashSet<Point>(hasher);
+            var closedSet = new HashSet<Point>(hasher);
 
             while (openSet.Count > 0) // Multiple runs are needed to deal with islands
             {
