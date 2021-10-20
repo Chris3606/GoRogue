@@ -155,7 +155,7 @@ namespace GoRogue.Pathing
             }
 
             var hasher = new KnownSizeHasher(_goalMap.Width);
-            var edgeSet = new HashSet<Point>(hasher);
+            var edgeSet = new Queue<Point>();
             var closedSet = new HashSet<Point>(hasher);
 
             while (openSet.Count > 0) // Multiple runs are needed to deal with islands
@@ -169,41 +169,35 @@ namespace GoRogue.Pathing
                     if (!mapBounds.Contains(openPoint)) continue;
 
                     if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
-                        edgeSet.Add(openPoint);
+                        edgeSet.Enqueue(openPoint);
                 }
 
                 while (edgeSet.Count > 0)
                 {
-                    // Cache so we can modify edgeSet during iteration
-                    var edgeArray = edgeSet.ToArray();
-                    for (int i = 0; i < edgeArray.Length; i++)
+                    var point = edgeSet.Dequeue();
+                    if (!mapBounds.Contains(point) || closedSet.Contains(point)) continue;
+
+                    var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
+
+                    for (int j = 0; j < _neighborDirections.Length; j++)
                     {
-                        var point = edgeArray[i];
-                        if (!mapBounds.Contains(point)) continue;
+                        var openPoint = point + _neighborDirections[j];
+                        if (!mapBounds.Contains(openPoint)) continue;
+                        if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
+                            continue;
 
-                        var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
-
-                        for (int j = 0; j < _neighborDirections.Length; j++)
+                        var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
+                        var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
+                        if (newValue < neighborValue)
                         {
-                            var openPoint = point + _neighborDirections[j];
-                            if (!mapBounds.Contains(openPoint)) continue;
-                            if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
-                                continue;
-
-                            var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
-                            var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
-                            if (newValue < neighborValue)
-                            {
-                                _goalMap[openPoint] = newValue;
-                                openSet.UpdatePriority(_nodes[openPoint], newValue);
-                                edgeSet.Add(openPoint);
-                            }
+                            _goalMap[openPoint] = newValue;
+                            openSet.UpdatePriority(_nodes[openPoint], newValue);
+                            edgeSet.Enqueue(openPoint);
                         }
-
-                        edgeSet.Remove(point);
-                        closedSet.Add(point);
-                        openSet.Remove(_nodes[point]);
                     }
+
+                    closedSet.Add(point);
+                    openSet.Remove(_nodes[point]);
                 }
             }
         }
