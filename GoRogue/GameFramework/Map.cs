@@ -183,8 +183,8 @@ namespace GoRogue.GameFramework
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
 
-            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, 1,
-                entityLayersSupportingMultipleItems);
+            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers,  startingLayer: 1,
+                 layersSupportingMultipleItems: entityLayersSupportingMultipleItems);
 
             LayersBlockingWalkability = layersBlockingWalkability;
             LayersBlockingTransparency = layersBlockingTransparency;

@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+- Spatial map implementations now allow you to specify a custom point hashing algorithm to use
+
 ### Fixed
 - FleeMaps now properly support goal maps where the base map has open edges (fixes #211)
 

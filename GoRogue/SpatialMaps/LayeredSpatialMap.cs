@@ -34,42 +34,51 @@ namespace GoRogue.SpatialMaps
 
         private readonly ISpatialMap<T>[] _layers;
 
-        private readonly HashSet<Point>
-            _positionCache; // Cached hash-set used for returning all positions in the LayeredSpatialMap
+        // Cached hash-set used for returning all positions in the LayeredSpatialMap
+        private readonly HashSet<Point> _positionCache;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="comparer">
+        /// <param name="itemComparer">
         /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
         /// efficiency of its GetHashCode function, as it will determine the efficiency of
         /// many AdvancedLayeredSpatialMap functions.
         /// </param>
         /// <param name="numberOfLayers">Number of layers to include.</param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AdvancedLayeredSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
         /// <param name="startingLayer">Index to use for the first layer.</param>
         /// <param name="layersSupportingMultipleItems">
         /// A layer mask indicating which layers should support multiple items residing at the same
         /// location on that layer. Defaults to no layers.
         /// </param>
-        public AdvancedLayeredSpatialMap(IEqualityComparer<T> comparer, int numberOfLayers, int startingLayer = 0,
+        public AdvancedLayeredSpatialMap(IEqualityComparer<T> itemComparer, int numberOfLayers,
+                                         IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
                                          uint layersSupportingMultipleItems = 0)
         {
             if (numberOfLayers > 32 - startingLayer)
                 throw new ArgumentOutOfRangeException(nameof(numberOfLayers),
                     $"More than {32 - startingLayer} layers is not supported by {nameof(AdvancedLayeredSpatialMap<T>)} starting at layer {startingLayer}");
 
+            pointComparer ??= EqualityComparer<Point>.Default;
+
             _layers = new ISpatialMap<T>[numberOfLayers];
             StartingLayer = startingLayer;
-            _positionCache = new HashSet<Point>();
+            _positionCache = new HashSet<Point>(pointComparer);
 
             LayerMasker = new LayerMasker(numberOfLayers + startingLayer);
             _internalLayerMasker = new LayerMasker(numberOfLayers);
 
             for (var i = 0; i < _layers.Length; i++)
                 if (LayerMasker.HasLayer(layersSupportingMultipleItems, i + StartingLayer))
-                    _layers[i] = new AdvancedMultiSpatialMap<T>(comparer);
+                    _layers[i] = new AdvancedMultiSpatialMap<T>(itemComparer, pointComparer);
                 else
-                    _layers[i] = new AdvancedSpatialMap<T>(comparer);
+                    _layers[i] = new AdvancedSpatialMap<T>(itemComparer, pointComparer);
 
             foreach (var layer in _layers)
             {
@@ -581,13 +590,20 @@ namespace GoRogue.SpatialMaps
         /// be included in the spatial map.
         /// </remarks>
         /// <param name="numberOfLayers">Number of layers to include.</param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many LayeredSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
         /// <param name="startingLayer">Index to use for the first layer.</param>
         /// <param name="layersSupportingMultipleItems">
         /// A layer mask indicating which layers should support multiple items residing at the same
         /// location on that layer. Defaults to no layers.  Generate this layer mask via <see cref="LayerMasker.DEFAULT" />.
         /// </param>
-        public LayeredSpatialMap(int numberOfLayers, int startingLayer = 0, uint layersSupportingMultipleItems = 0)
-            : base(new IDComparer<T>(), numberOfLayers, startingLayer, layersSupportingMultipleItems)
+        public LayeredSpatialMap(int numberOfLayers, IEqualityComparer<Point>? pointComparer = null,
+                                 int startingLayer = 0, uint layersSupportingMultipleItems = 0)
+            : base(new IDComparer<T>(), numberOfLayers, pointComparer, startingLayer, layersSupportingMultipleItems)
         { }
     }
 }

@@ -30,19 +30,26 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="comparer">
+        /// <param name="itemComparer">
         /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
         /// efficiency of its GetHashCode function, as it will determine the efficiency of many AdvancedSpatialMap
         /// functions.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AdvancedSpatialMap functions.  Defaults to the default equality comparer for
+        /// Point, which uses a fairly efficient generalized hashing algorithm.
         /// </param>
         /// <param name="initialCapacity">
         /// The initial maximum number of elements the AdvancedSpatialMap can hold before it has to
         /// internally resize data structures. Defaults to 32.
         /// </param>
-        public AdvancedSpatialMap(IEqualityComparer<T> comparer, int initialCapacity = 32)
+        public AdvancedSpatialMap(IEqualityComparer<T> itemComparer, IEqualityComparer<Point>? pointComparer = null,
+                                  int initialCapacity = 32)
         {
-            _itemMapping = new Dictionary<T, Point>(initialCapacity, comparer);
-            _positionMapping = new Dictionary<Point, T>(initialCapacity);
+            _itemMapping = new Dictionary<T, Point>(initialCapacity, itemComparer);
+            _positionMapping = new Dictionary<Point, T>(initialCapacity, pointComparer ?? EqualityComparer<Point>.Default);
         }
 
         /// <inheritdoc />
@@ -529,12 +536,18 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Constructor.
         /// </summary>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many SpatialMap functions.  Defaults to the default equality comparer for
+        /// Point.
+        /// </param>
         /// <param name="initialCapacity">
         /// The initial maximum number of elements the SpatialMap can hold before it has to
         /// internally resize data structures. Defaults to 32.
         /// </param>
-        public SpatialMap(int initialCapacity = 32)
-            : base(new IDComparer<T>(), initialCapacity)
+        public SpatialMap(IEqualityComparer<Point>? pointComparer = null, int initialCapacity = 32)
+            : base(new IDComparer<T>(), pointComparer, initialCapacity)
         { }
     }
 }
