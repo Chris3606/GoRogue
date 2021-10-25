@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using GoRogue.FOV;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.GameFramework
 {
@@ -95,6 +96,12 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AMap functions.  Defaults to a fast hashing algorithm that generates
+        /// a unique integer for each point based on the width of the map.
+        /// </param>
         /// <param name="customPlayerFOV">
         /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
         /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
@@ -114,12 +121,13 @@ namespace GoRogue.GameFramework
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                   IEqualityComparer<Point>? pointComparer = null,
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
             : this(new ArrayView<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
                 layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
-                customPlayerFOV, customPather, customComponentCollection)
+                pointComparer, customPlayerFOV, customPather, customComponentCollection)
         { }
 
         /// <summary>
@@ -157,6 +165,12 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AMap functions.  Defaults to a fast hashing algorithm that generates
+        /// a unique integer for each point based on the width of the map.
+        /// </param>
         /// <param name="customPlayerFOV">
         /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
         /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
@@ -176,6 +190,7 @@ namespace GoRogue.GameFramework
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                   IEqualityComparer<Point>? pointComparer = null,
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
@@ -183,8 +198,9 @@ namespace GoRogue.GameFramework
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
 
-            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers,  startingLayer: 1,
-                 layersSupportingMultipleItems: entityLayersSupportingMultipleItems);
+            pointComparer ??= new KnownSizeHasher(terrainLayer.Width);
+            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, pointComparer, 1,
+                entityLayersSupportingMultipleItems);
 
             LayersBlockingWalkability = layersBlockingWalkability;
             LayersBlockingTransparency = layersBlockingTransparency;
@@ -339,6 +355,12 @@ namespace GoRogue.GameFramework
         /// Layer mask containing those layers that should be allowed to have multiple objects at the same
         /// location on the same layer.  Defaults to all layers.
         /// </param>
+        /// /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AMap functions.  Defaults to a fast hashing algorithm that generates
+        /// a unique integer for each point based on the width of the map.
+        /// </param>
         /// <param name="customPlayerFOV">
         /// Custom FOV to use for <see cref="PlayerFOV"/>.  Defaults to a GoRogue's recursive shadow-casting
         /// implementation.  It may also be useful to specify this if you want the <see cref="PlayerFOV"/> property
@@ -359,6 +381,7 @@ namespace GoRogue.GameFramework
                                        Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
                                        uint entityLayersSupportingMultipleItems = uint.MaxValue,
+                                       IEqualityComparer<Point>? pointComparer = null,
                                        IFOV? customPlayerFOV = null, AStar? customPather = null,
                                        IComponentCollection? customComponentContainer = null)
             where T : class, IGameObject
@@ -367,7 +390,7 @@ namespace GoRogue.GameFramework
                 new LambdaSettableTranslationGridView<T?, IGameObject?>(terrainLayer, t => t,
                     g => (T?)g); // Assignment is fine here
             return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
-                layersBlockingTransparency, entityLayersSupportingMultipleItems, customPlayerFOV, customPather,
+                layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather,
                 customComponentContainer);
         }
 
