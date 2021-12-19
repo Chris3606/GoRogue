@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None.
+
+# [3.0.0-alpha09] - 2021-12-19
+
 ### Added
 - Spatial map implementations now allow you to specify a custom point hashing algorithm to use
 - Added similar hashing algorithm parameter to `GameFramework.Map`
