@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -28,6 +29,9 @@ namespace GoRogue.Pathing
         // Nodes for the priority queue used in Update.
         private readonly ArrayView<PositionNode> _nodes;
 
+        // Cached directions based on goal map, to ensure maximum performance in the Update loop.
+        private readonly Direction[] _neighborDirections;
+
         /// <summary>
         /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
         /// and a magnitude to use (defaulting to 1.2).
@@ -42,6 +46,8 @@ namespace GoRogue.Pathing
             _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
+
+            _neighborDirections = ((AdjacencyRule)_baseMap.DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             _baseMap.Updated += Update;
 
@@ -133,52 +139,66 @@ namespace GoRogue.Pathing
 
         private void Update()
         {
-            var adjacencyRule = (AdjacencyRule)_baseMap.DistanceMeasurement;
             var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
+            var mapBounds = _goalMap.Bounds();
 
-            foreach (var point in _baseMap.Walkable)
+            var walkable = _baseMap.Walkable;
+            for (int i = 0; i < walkable.Count; i++)
             {
-                var newPoint =
-                    _baseMap[point]!.Value *
-                    -Magnitude; // Value won't be null as null only happens for non-walkable squares
+                var point = walkable[i];
+
+                // Value won't be null as null only happens for non-walkable squares
+                var newPoint = _baseMap[point]!.Value * -Magnitude;
                 _goalMap[point] = newPoint;
 
                 openSet.Enqueue(_nodes[point], newPoint);
             }
 
-            var edgeSet = new HashSet<Point>();
-            var closedSet = new HashSet<Point>();
+            var hasher = new KnownSizeHasher(_goalMap.Width);
+            var edgeSet = new Queue<Point>();
+            var closedSet = new HashSet<Point>(hasher);
 
-            while (openSet.Count > 0) //multiple runs are needed to deal with islands
+            while (openSet.Count > 0) // Multiple runs are needed to deal with islands
             {
                 var minNode = openSet.Dequeue();
                 closedSet.Add(minNode.Position);
 
-                foreach (var openPoint in adjacencyRule.Neighbors(minNode.Position))
-                    if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
-                        edgeSet.Add(openPoint);
-                while (edgeSet.Count > 0)
-                    foreach (var point in edgeSet.ToArray())
-                    {
-                        var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
-                        foreach (var openPoint in adjacencyRule.Neighbors(point))
-                        {
-                            if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
-                                continue;
-                            var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
-                            var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
-                            if (newValue < neighborValue)
-                            {
-                                _goalMap[openPoint] = newValue;
-                                openSet.UpdatePriority(_nodes[openPoint], newValue);
-                                edgeSet.Add(openPoint);
-                            }
-                        }
+                for (int i = 0; i < _neighborDirections.Length; i++)
+                {
+                    var openPoint = minNode.Position + _neighborDirections[i];
+                    if (!mapBounds.Contains(openPoint)) continue;
 
-                        edgeSet.Remove(point);
-                        closedSet.Add(point);
-                        openSet.Remove(_nodes[point]);
+                    if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
+                        edgeSet.Enqueue(openPoint);
+                }
+
+                while (edgeSet.Count > 0)
+                {
+                    var point = edgeSet.Dequeue();
+                    if (!mapBounds.Contains(point) || closedSet.Contains(point)) continue;
+
+                    var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
+
+                    for (int j = 0; j < _neighborDirections.Length; j++)
+                    {
+                        var openPoint = point + _neighborDirections[j];
+                        if (!mapBounds.Contains(openPoint)) continue;
+                        if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
+                            continue;
+
+                        var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
+                        var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
+                        if (newValue < neighborValue)
+                        {
+                            _goalMap[openPoint] = newValue;
+                            openSet.UpdatePriority(_nodes[openPoint], newValue);
+                            edgeSet.Enqueue(openPoint);
+                        }
                     }
+
+                    closedSet.Add(point);
+                    openSet.Remove(_nodes[point]);
+                }
             }
         }
 

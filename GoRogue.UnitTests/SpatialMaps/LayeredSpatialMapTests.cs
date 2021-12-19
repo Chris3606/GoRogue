@@ -40,7 +40,7 @@ namespace GoRogue.UnitTests.SpatialMaps
 
             // Set up items on all but one layer of the spatial map.  No layers
             // support multiple items.
-            _spatialMap = new LayeredSpatialMap<MockSpatialMapItem>(NumLayers, StartingLayer);
+            _spatialMap = new LayeredSpatialMap<MockSpatialMapItem>(NumLayers, startingLayer: StartingLayer);
 
             foreach (int layer in _validLayers)
             {
@@ -337,7 +337,8 @@ namespace GoRogue.UnitTests.SpatialMaps
 
             // Test multiple item layers
             var multipleItemLayerMask = LayerMasker.DEFAULT.Mask(1, 2, 5);
-            sm = new LayeredSpatialMap<MockSpatialMapItem>(10, 0, multipleItemLayerMask);
+            sm = new LayeredSpatialMap<MockSpatialMapItem>(10, startingLayer: 0,
+                layersSupportingMultipleItems: multipleItemLayerMask);
             Assert.Equal(10, sm.NumberOfLayers);
             Assert.Equal(0, sm.StartingLayer);
 
@@ -352,7 +353,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             // Test arbitrary starting layer (initial values)
             const int startingLayer = 1;
             const int numberOfLayers = 5;
-            sm = new LayeredSpatialMap<MockSpatialMapItem>(numberOfLayers, startingLayer);
+            sm = new LayeredSpatialMap<MockSpatialMapItem>(numberOfLayers, startingLayer: startingLayer);
 
             Assert.Equal(numberOfLayers, sm.NumberOfLayers);
             Assert.Equal(startingLayer, sm.StartingLayer);

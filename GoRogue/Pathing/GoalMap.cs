@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -26,13 +27,15 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
-        private readonly HashSet<Point> _closedSet = new HashSet<Point>();
+        private readonly Direction[] _neighborDirections;
 
-        private readonly HashSet<Point> _edgeSet = new HashSet<Point>();
+        private readonly HashSet<Point> _closedSet;
+
+        private readonly Queue<Point> _openEdges;
 
         private readonly ArrayView<double?> _goalMap;
 
-        private readonly HashSet<Point> _walkable = new HashSet<Point>();
+        private readonly List<Point> _walkable = new List<Point>();
 
         /// <summary>
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
@@ -48,6 +51,11 @@ namespace GoRogue.Pathing
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
+            _neighborDirections = ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors().ToArray();
+
+            var hasher = new KnownSizeHasher(baseMap.Width);
+            _closedSet = new HashSet<Point>(hasher);
+            _openEdges = new Queue<Point>();
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             Update();
@@ -61,9 +69,9 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The distance measurement the GoalMap is using to calculate distance.
         /// </summary>
-        public Distance DistanceMeasurement { get; }
+        public readonly Distance DistanceMeasurement;
 
-        internal IEnumerable<Point> Walkable => _walkable;
+        internal IReadOnlyList<Point> Walkable => _walkable.AsReadOnly();
 
         /// <summary>
         /// Height of the goal map.
@@ -173,46 +181,51 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
         {
-            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
-
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
-            _edgeSet.Clear();
+            _openEdges.Clear();
             _closedSet.Clear();
-            foreach (var point in _walkable)
+
+            var mapBounds = _goalMap.Bounds();
+
+            for (int i = 0; i < _walkable.Count; i++)
             {
+                var point = _walkable[i];
                 var state = BaseMap[point];
                 if (state == GoalState.Clear)
                     _goalMap[point] = highVal;
                 else
                 {
                     _goalMap[point] = 0.0;
-                    _edgeSet.Add(point);
+                    _openEdges.Enqueue(point);
                 }
             }
 
-            while (_edgeSet.Count > 0)
-                foreach (var point in _edgeSet.ToArray())
-                {
-                    var current =
-                        _goalMap[point]!
-                            .Value; // Known to be not null since the else condition above will have assigned to it.
-                    foreach (var openPoint in adjacencyRule.Neighbors(point))
-                    {
-                        if (_closedSet.Contains(openPoint) || !_walkable.Contains(openPoint))
-                            continue;
-                        var neighborValue =
-                            _goalMap[openPoint]!.Value; // Known to be not null since it must be walkable.
-                        var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
-                        if (newValue < neighborValue)
-                        {
-                            _goalMap[openPoint] = newValue;
-                            _edgeSet.Add(openPoint);
-                        }
-                    }
+            while (_openEdges.Count > 0)
+            {
+                var point = _openEdges.Dequeue();
 
-                    _edgeSet.Remove(point);
-                    _closedSet.Add(point);
+                // Known to be not null since the else condition above will have assigned to it.
+                var current = _goalMap[point]!.Value;
+                for (int j = 0; j < _neighborDirections.Length; j++)
+                {
+                    // We only want to process walkable, non-visited cells that are within the map
+                    var openPoint = point + _neighborDirections[j];
+                    if (!mapBounds.Contains(openPoint)) continue;
+                    if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
+                        continue;
+
+                    // Known to be not null since it must be walkable.
+                    var neighborValue = _goalMap[openPoint]!.Value;
+                    var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
+                    if (newValue < neighborValue)
+                    {
+                        _goalMap[openPoint] = newValue;
+                        _openEdges.Enqueue(openPoint);
+                    }
                 }
+
+                _closedSet.Add(point);
+            }
 
             Updated();
             return _closedSet.Count > 0;

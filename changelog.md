@@ -7,6 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None.
 
+# [3.0.0-alpha09] - 2021-12-19
+
+### Added
+- Spatial map implementations now allow you to specify a custom point hashing algorithm to use
+- Added similar hashing algorithm parameter to `GameFramework.Map`
+
+### Fixed
+- FleeMaps now properly support goal maps where the base map has open edges (fixes #211)
+
+### Changed
+- Applied performance optimizations to A* algorithm
+    - ~20% improvements to speed when generating paths on open maps
+    - Performance gain varies on other test cases but should generally be measurable
+- Applied performance optimizations to GoalMap and FleeMap algorithms
+    - ~50% improvement on a full-update operation, using a wide-open (obstacle free) base map
+    - Performance gain varies on other test cases but should generally be measurable
+- Defaulted to a usually faster hashing algorithm (one based on the Map's width) in Map's SpatialMaps
+
 ## [3.0.0-alpha08] - 2021-10-17
 
 ### Added
