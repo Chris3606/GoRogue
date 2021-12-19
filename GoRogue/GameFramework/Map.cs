@@ -386,9 +386,8 @@ namespace GoRogue.GameFramework
                                        IComponentCollection? customComponentContainer = null)
             where T : class, IGameObject
         {
-            var terrainMap =
-                new LambdaSettableTranslationGridView<T?, IGameObject?>(terrainLayer, t => t,
-                    g => (T?)g); // Assignment is fine here
+            // Assignment is fine here
+            var terrainMap = new LambdaSettableTranslationGridView<T?, IGameObject?>(terrainLayer, t => t, g => (T?)g);
             return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather,
                 customComponentContainer);
