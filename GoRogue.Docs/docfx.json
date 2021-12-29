@@ -64,6 +64,10 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+	"xref": [
+      "https://thesadrogue.github.io/TheSadRogue.Primitives/xrefmap.yml"
+    ],
+	"xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
   }
 }
