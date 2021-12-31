@@ -236,11 +236,6 @@ namespace GoRogue.SpatialMaps
                     nameof(item));
             }
 
-            if (_positionMapping.ContainsKey(target))
-                throw new ArgumentException(
-                    $"Tried to move item in {GetType().Name}, but the target position already contains an item.",
-                    nameof(target));
-
             try
             {
                 _positionMapping.Add(target, item);
