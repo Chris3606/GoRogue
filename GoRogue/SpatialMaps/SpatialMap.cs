@@ -224,19 +224,35 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Location to move item to.</param>
         public void Move(T item, Point target)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point oldPos;
+            try
+            {
+                oldPos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the item does not exist.",
                     nameof(item));
+            }
 
             if (_positionMapping.ContainsKey(target))
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the target position already contains an item.",
                     nameof(target));
 
-            var oldPos = _itemMapping[item];
+            try
+            {
+                _positionMapping.Add(target, item);
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException(
+                    $"Tried to move item in {GetType().Name}, but the target position already contains an item.",
+                    nameof(target));
+            }
+
             _positionMapping.Remove(oldPos);
-            _positionMapping.Add(target, item);
             _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
