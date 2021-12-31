@@ -281,11 +281,35 @@ namespace GoRogue.SpatialMaps
         IEnumerable<T> IReadOnlySpatialMap<T>.GetItemsAt(int x, int y) => GetItemsAt(x, y);
 
         /// <inheritdoc />
+        public Point? GetPositionOfOrNull(T item)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return null;
+
+            return _layers[relativeLayer].GetPositionOfOrNull(item);
+        }
+
+        /// <inheritdoc />
+        public bool TryGetPositionOf(T item, out Point position)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+            {
+                position = default;
+                return false;
+            }
+
+            return _layers[relativeLayer].TryGetPositionOf(item, out position);
+        }
+
+        /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
             var relativeLayer = item.Layer - StartingLayer;
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-                return Point.None;
+                throw new ArgumentException("Tried to retrieve the position of an item with an invalid layer.",
+                    nameof(item));
 
             return _layers[relativeLayer].GetPositionOf(item);
         }

@@ -166,8 +166,28 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="item">The item to get the position for.</param>
         /// <returns>
-        /// The position associated with the given item, if it exists in the spatial map, or <see cref="Point.None" />
+        /// The position associated with the given item, if it exists in the spatial map, or null
         /// if the item does not exist.
+        /// </returns>
+        Point? GetPositionOfOrNull(T item);
+
+        /// <summary>
+        /// Attempts to get the position of the given item in the spatial map.  If successful, the function will return
+        /// true and the position will be stored in the <paramref name="position"/> parameter.  If the item was not found,
+        /// <paramref name="position"/> will have the default value for Point, and the function will return false.
+        /// </summary>
+        /// <param name="item">Item to retrieve the position of.</param>
+        /// <param name="position">The position of the item if found, or default(Point) if not.</param>
+        /// <returns>True if the item was found in the spatial map, false otherwise.</returns>
+        bool TryGetPositionOf(T item, out Point position);
+
+        /// <summary>
+        /// Gets the position associated with the given item in the spatial map.  If the item does not exist in the
+        /// spatial map, throws ArgumentException.
+        /// </summary>
+        /// <param name="item">The item to get the position for.</param>
+        /// <returns>
+        /// The position associated with the given item.
         /// </returns>
         Point GetPositionOf(T item);
 

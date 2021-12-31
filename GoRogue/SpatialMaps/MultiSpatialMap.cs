@@ -165,11 +165,31 @@ namespace GoRogue.SpatialMaps
         public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
         /// <inheritdoc />
+        public Point? GetPositionOfOrNull(T item)
+        {
+            if (_itemMapping.TryGetValue(item, out var pos))
+                return pos;
+
+            return null;
+        }
+
+        /// <inheritdoc />
+        public bool TryGetPositionOf(T item, out Point position) => _itemMapping.TryGetValue(item, out position);
+
+        /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
-            _itemMapping.TryGetValue(item, out var pos);
-            return pos;
+            if (_itemMapping.TryGetValue(item, out var pos))
+                return pos;
+
+            throw new ArgumentException("Item position requested for an item that was not in the spatial map.", nameof(item));
         }
+
+        // public Point TryGetPositionOf(T item)
+        // {
+        //     _itemMapping.TryGetValue(item, out var pos);
+        //     return pos;
+        // }
 
         /// <summary>
         /// Moves the item specified to the position specified. If the item does not exist in the
