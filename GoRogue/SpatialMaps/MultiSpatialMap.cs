@@ -185,12 +185,6 @@ namespace GoRogue.SpatialMaps
             throw new ArgumentException("Item position requested for an item that was not in the spatial map.", nameof(item));
         }
 
-        // public Point TryGetPositionOf(T item)
-        // {
-        //     _itemMapping.TryGetValue(item, out var pos);
-        //     return pos;
-        // }
-
         /// <summary>
         /// Moves the item specified to the position specified. If the item does not exist in the
         /// spatial map or is already at the target position, the function throws ArgumentException.
@@ -199,26 +193,37 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">The position to move it to.</param>
         public void Move(T item, Point target)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point oldPos;
+            try
+            {
+                oldPos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the item does not exist.",
                     nameof(item));
+            }
 
-            var oldPos = _itemMapping[item];
             if (oldPos == target)
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the item was already at the target position.",
                     nameof(target));
 
-            _positionMapping[oldPos].Remove(item);
-            if (_positionMapping[oldPos].Count == 0)
+            // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
+            var oldPosList = _positionMapping[oldPos];
+            oldPosList.Remove(item);
+            if (oldPosList.Count == 0)
                 _positionMapping.Remove(oldPos);
 
-            if (!_positionMapping.ContainsKey(target))
-                _positionMapping[target] = new List<T>();
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
+            // max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+                _positionMapping[target] = targetList = new List<T>();
+            targetList.Add(item);
 
             _itemMapping[item] = target;
-            _positionMapping[target].Add(item);
+
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
 
