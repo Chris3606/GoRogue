@@ -926,7 +926,16 @@ namespace GoRogue.GameFramework
                                                     + "it would collide with another non-walkable object.");
 
             // Validate move via spatial map and synchronize the object's position in the spatial map.
-            _entities.Move(e.Item, e.NewValue);
+            // We must translate an error to InvalidOperationException so the property setters safely transform the
+            // position value back to its original value if there is an error (via the SafelySetProperty function).
+            try
+            {
+                _entities.Move(e.Item, e.NewValue);
+            }
+            catch (ArgumentException exc)
+            {
+                throw new InvalidOperationException(exc.Message);
+            }
         }
         #endregion
 
