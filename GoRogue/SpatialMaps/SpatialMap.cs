@@ -261,6 +261,25 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetY">Y-value of the location to move item to.</param>
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
+        /// <inheritdoc />
+        public bool TryMove(T item, Point target)
+        {
+            if (!_itemMapping.TryGetValue(item, out Point oldPos))
+                return false;
+
+            if (!_positionMapping.TryAdd(target, item))
+                return false;
+
+            _positionMapping.Remove(oldPos);
+            _itemMapping[item] = target;
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
+
         /// <summary>
         /// Moves whatever is at position current, if anything, to the target position, if it is a valid move.
         /// If something was moved, it returns what was moved. If nothing was moved, eg. either there was nothing at

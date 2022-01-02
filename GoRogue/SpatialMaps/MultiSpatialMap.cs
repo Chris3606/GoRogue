@@ -237,6 +237,36 @@ namespace GoRogue.SpatialMaps
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
+        public bool TryMove(T item, Point target)
+        {
+            if (!_itemMapping.TryGetValue(item, out Point oldPos))
+                return false;
+
+            if (oldPos == target)
+                return false;
+
+            // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
+            var oldPosList = _positionMapping[oldPos];
+            oldPosList.Remove(item);
+            if (oldPosList.Count == 0)
+                _positionMapping.Remove(oldPos);
+
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
+            // max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+                _positionMapping[target] = targetList = new List<T>();
+            targetList.Add(item);
+
+            _itemMapping[item] = target;
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
+
+        /// <inheritdoc />
         public List<T> MoveValid(Point current, Point target)
         {
             var result = new List<T>();

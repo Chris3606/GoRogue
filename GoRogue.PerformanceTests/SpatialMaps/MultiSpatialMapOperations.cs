@@ -39,25 +39,25 @@ namespace GoRogue.PerformanceTests.SpatialMaps
             return _moveMap.Count; // Ensure nothing is optimized out
         }
 
-        // [Benchmark]
-        // public int TryMoveTwiceOriginal()
-        // {
-        //     if (_moveMap.CanMove(_trackedObject, _moveToPosition))
-        //     {
-        //         _moveMap.Move(_trackedObject, _moveToPosition);
-        //         _moveMap.Move(_trackedObject, _initialPosition);
-        //     }
-        //
-        //     return _moveMap.Count;
-        // }
-        //
-        // [Benchmark]
-        // public int TryMoveTwice()
-        // {
-        //     _moveMap.TryMove(_trackedObject, _moveToPosition);
-        //     _moveMap.TryMove(_trackedObject, _initialPosition);
-        //
-        //     return _moveMap.Count;
-        // }
+        [Benchmark]
+        public int TryMoveTwiceOriginal()
+        {
+            if (_moveMap.CanMove(_trackedObject, _moveToPosition))
+            {
+                _moveMap.Move(_trackedObject, _moveToPosition);
+                _moveMap.Move(_trackedObject, _initialPosition);
+            }
+
+            return _moveMap.Count;
+        }
+
+        [Benchmark]
+        public int TryMoveTwice()
+        {
+            _moveMap.TryMove(_trackedObject, _moveToPosition);
+            _moveMap.TryMove(_trackedObject, _initialPosition);
+
+            return _moveMap.Count;
+        }
     }
 }

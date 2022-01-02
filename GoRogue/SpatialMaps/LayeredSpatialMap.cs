@@ -344,6 +344,21 @@ namespace GoRogue.SpatialMaps
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
+        public bool TryMove(T item, Point target)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return false;
+
+            return _layers[relativeLayer].TryMove(item, target);
+        }
+
+        /// <inheritdoc />
+        public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
+
+
+        /// <inheritdoc />
         List<T> ISpatialMap<T>.MoveValid(Point current, Point target)
             => MoveValid(current.X, current.Y, target.X, target.Y);
 

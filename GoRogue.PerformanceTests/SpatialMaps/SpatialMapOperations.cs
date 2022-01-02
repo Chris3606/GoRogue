@@ -53,14 +53,14 @@ namespace GoRogue.PerformanceTests.SpatialMaps
 
             return _moveMap.Count;
         }
-        //
-        // [Benchmark]
-        // public int TryMoveTwice()
-        // {
-        //     _moveMap.TryMove(_trackedObject, _moveToPosition);
-        //     _moveMap.TryMove(_trackedObject, _initialPosition);
-        //
-        //     return _moveMap.Count;
-        // }
+
+        [Benchmark]
+        public int TryMoveTwice()
+        {
+            _moveMap.TryMove(_trackedObject, _moveToPosition);
+            _moveMap.TryMove(_trackedObject, _initialPosition);
+
+            return _moveMap.Count;
+        }
     }
 }
