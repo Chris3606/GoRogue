@@ -102,7 +102,7 @@ namespace GoRogue.SpatialMaps
                     nameof(item));
             }
 
-            if (!_positionMapping.TryGetValue(position, out List<T> positionList))
+            if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
                 _positionMapping[position] = positionList = new List<T>();
 
             positionList.Add(item);
@@ -130,7 +130,7 @@ namespace GoRogue.SpatialMaps
             if (!_itemMapping.TryAdd(item, position))
                 return false;
 
-            if (!_positionMapping.TryGetValue(position, out List<T> positionList))
+            if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
                 _positionMapping[position] = positionList = new List<T>();
 
             positionList.Add(item);
