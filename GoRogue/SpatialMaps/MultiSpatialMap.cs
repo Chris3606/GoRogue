@@ -91,17 +91,21 @@ namespace GoRogue.SpatialMaps
         /// <param name="position">The position at which to add the new item.</param>
         public void Add(T item, Point position)
         {
-            if (_itemMapping.ContainsKey(item))
+            try
+            {
+                _itemMapping.Add(item, position);
+            }
+            catch (ArgumentException)
+            {
                 throw new ArgumentException(
                     $"Item added to {GetType().Name} when it has already been added.",
                     nameof(item));
+            }
 
-            _itemMapping.Add(item, position);
+            if (!_positionMapping.TryGetValue(position, out List<T> positionList))
+                _positionMapping[position] = positionList = new List<T>();
 
-            if (!_positionMapping.ContainsKey(position))
-                _positionMapping.Add(position, new List<T>());
-
-            _positionMapping[position].Add(item);
+            positionList.Add(item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
         }
 
@@ -306,16 +310,24 @@ namespace GoRogue.SpatialMaps
         /// <param name="item">The item to remove.</param>
         public void Remove(T item)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point pos;
+            try
+            {
+                pos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to remove an item from the {GetType().Name} that has not been added.",
                     nameof(item));
+            }
 
-            var pos = _itemMapping[item];
             _itemMapping.Remove(item);
-            _positionMapping[pos].Remove(item);
 
-            if (_positionMapping[pos].Count == 0)
+            // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
+            var posList = _positionMapping[pos];
+            posList.Remove(item);
+            if (posList.Count == 0)
                 _positionMapping.Remove(pos);
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
