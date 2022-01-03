@@ -93,18 +93,29 @@ namespace GoRogue.SpatialMaps
         /// <param name="position">Position to add item to.</param>
         public void Add(T item, Point position)
         {
-            if (_itemMapping.ContainsKey(item))
+            try
+            {
+                _itemMapping.Add(item, position);
+            }
+            catch (ArgumentException)
+            {
                 throw new ArgumentException(
                     $"Item added to {GetType().Name} when it has already been added.",
                     nameof(item));
+            }
 
-            if (_positionMapping.ContainsKey(position))
+            try
+            {
+                _positionMapping.Add(position, item);
+            }
+            catch (ArgumentException)
+            {
+                _itemMapping.Remove(item);
                 throw new ArgumentException(
                     $"Item added to {GetType().Name} at a position already occupied by another item.",
                     nameof(position));
+            }
 
-            _itemMapping.Add(item, position);
-            _positionMapping.Add(position, item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
         }
 
@@ -341,14 +352,21 @@ namespace GoRogue.SpatialMaps
         /// <param name="item">The item to remove.</param>
         public void Remove(T item)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point itemPos;
+            try
+            {
+                itemPos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to remove an item from the {GetType().Name} that has not been added.",
                     nameof(item));
+            }
 
-            var itemPos = _itemMapping[item];
             _itemMapping.Remove(item);
             _positionMapping.Remove(itemPos);
+
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, itemPos));
         }
 
