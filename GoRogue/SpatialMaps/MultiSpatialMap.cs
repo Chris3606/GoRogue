@@ -118,6 +118,37 @@ namespace GoRogue.SpatialMaps
         /// <param name="y">y-value of the position to add item to.</param>
         public void Add(T item, int x, int y) => Add(item, new Point(x, y));
 
+        /// <summary>
+        /// Adds the given item at the given position, provided the item is not already in the
+        /// spatial map. If the item is already added, returns false.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        /// <param name="position">The position at which to add the new item.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        public bool TryAdd(T item, Point position)
+        {
+            if (!_itemMapping.TryAdd(item, position))
+                return false;
+
+            if (!_positionMapping.TryGetValue(position, out List<T> positionList))
+                _positionMapping[position] = positionList = new List<T>();
+
+            positionList.Add(item);
+            ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adds the given item at the given position, provided the item is not already in the
+        /// spatial map. If the item is already added, returns false.
+        /// </summary>
+        /// <param name="item">The item to add.</param>
+        /// <param name="x">x-value of the position to add item to.</param>
+        /// <param name="y">y-value of the position to add item to.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        public bool TryAdd(T item, int x, int y) => TryAdd(item, new Point(x, y));
+
         /// <inheritdoc />
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
 
@@ -331,6 +362,29 @@ namespace GoRogue.SpatialMaps
                 _positionMapping.Remove(pos);
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
+        }
+
+        /// <summary>
+        /// Removes the item specified, if it exists.  If the item is not in the spatial map, returns false.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>True if the item was successfully removed; false otherwise.</returns>
+        public bool TryRemove(T item)
+        {
+            if (!_itemMapping.TryGetValue(item, out var pos))
+                return false;
+
+            _itemMapping.Remove(item);
+
+            // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
+            var posList = _positionMapping[pos];
+            posList.Remove(item);
+            if (posList.Count == 0)
+                _positionMapping.Remove(pos);
+
+            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
+
+            return true;
         }
 
         /// <inheritdoc />
