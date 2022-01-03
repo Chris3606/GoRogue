@@ -5,7 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Added
+- Spatial map implementations now have `TryMove`, `TryAdd`, and `TryRemove` functions which return false instead of throwing exception when an operation fails
+    - Assuming current implementations 5-10% faster than the old method of first checking with the appropriate`Can` method then doing the appropiate operation
+    - Note that `Add`, `Remove`, and `Move` have been optimized as well so this will likely produce a greater speed increase than 5-10% in existing code
+- Spatial map implementations now have a `TryGetPositionOf` function which returns false instead of throwing exception when item given doesn't exist
+- Spatial map implementations now have a `GetPositionOfOrNull` functionw which returns `null` instead of throwing exception when item given doesn't exist
+    - Note that, unlike the original `GetPositionOf` implementation, it returns `null`, not `default(T)` or `Point.None`
+
+### Changed
+- The `GetPositionOf` function on spatial map implementations now throws exception if the position doesn't exist
+    - Note other methods have been added that return null or false
+- `Move`, `Add`, and `Remove` function of spatial map implementations have been optimized
+    - Gains vary but can be as much as 15-20% per operation, for some implementations and circumstances
 
 # [3.0.0-alpha09] - 2021-12-19
 
