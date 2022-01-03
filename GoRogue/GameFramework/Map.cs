@@ -125,14 +125,16 @@ namespace GoRogue.GameFramework
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
-            : this(new ArrayView<IGameObject?>(width, height), numberOfEntityLayers, distanceMeasurement,
+            : this(new ArrayView<IGameObject?>(width, height), distanceMeasurement, numberOfEntityLayers,
                 layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
                 pointComparer, customPlayerFOV, customPather, customComponentCollection)
         { }
 
         /// <summary>
         /// Constructor.  Constructs map with the given terrain layer, determining width/height based on the
-        /// width/height of that terrain layer.
+        /// width/height of that terrain layer.  Note that the terrainLayer you pass it is subject to some very specific
+        /// restrictions; see the remarks for details.  Consider using <see cref="ApplyTerrainOverlay{T}"/> instead of
+        /// this constructor for more use cases.
         /// </summary>
         /// <remarks>
         /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" />
@@ -140,13 +142,27 @@ namespace GoRogue.GameFramework
         /// <see cref="ISettableGridView{T}" /> where T is a type that derives from or implements
         /// <see cref="IGameObject" />.  If you need to use a map view storing some type T rather than IGameObject, use
         /// the <see cref="CreateMap{T}"/> function to create the map.
+        ///
+        /// Note that this constructor exists pretty much entirely for maximum compatibility; however using it is subject
+        /// to a few restrictions.  Primarily, the <paramref name="terrainLayer"/> given must:
+        ///
+        /// 1. Always consist of persistent objects.  This is to say, the layer _cannot_ be creating objects whenever
+        ///    they are requested via the indexer.  For example, a SettableLambdaGridView which creates a new GameObject
+        ///    based on some other data is NOT a valid <paramref name="terrainLayer"/>.  For this use case,
+        ///    <see cref="ApplyTerrainOverlay{T}"/> is recommended instead.
+        ///
+        /// 2. Always have its values swapped out via <see cref="SetTerrain(IGameObject)"/> function  after it is passed to this
+        ///    constructor, rather than via its set indexer.  Basically, the terrain view must not be changed by anything
+        ///    other than the map after this constructor takes it.
+        ///
+        /// Violating either of these conditions will create desync bugs that can leave the map in a completely unusable
+        /// state.  Generally, this constructor should be used as a matter of last resort when there isn't a better way
+        /// to accomplish your integration goals.  You should probably prefer the <see cref="ApplyTerrainOverlay{T}"/>
+        /// approach until/unless you have a reason not to.
         /// </remarks>
         /// <param name="terrainLayer">
-        /// The <see cref="ISettableGridView{T}" /> that represents the terrain layer for this map.  After the
-        /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
-        /// values in this map view, rather than setting the values via the map view itself -- if you re-assign the
-        /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
-        /// NOT guaranteed to be called, and many invariants of map may not be properly enforced.
+        /// The <see cref="ISettableGridView{T}" /> that represents the terrain layer for this map.  See the remarks
+        /// section for some invariants that _must_ be adhered to regarding this parameter.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
@@ -194,6 +210,28 @@ namespace GoRogue.GameFramework
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
+            : this(terrainLayer, distanceMeasurement, numberOfEntityLayers, layersBlockingWalkability,
+                layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV,
+                customPather, customComponentCollection)
+        {
+            // Ensure any initial terrain from the grid view gets initialized properly
+            foreach (var pos in terrainLayer.Positions())
+            {
+                var terrain = _terrain[pos];
+                if (terrain != null)
+                    SetTerrain(terrain, false);
+            }
+        }
+
+        // Note: Swaps the order of distanceMeasurement and numberOfEntityLayers to disambiguate it from the public
+        // constructors.  This constructor does NOT perform any initialization on the terrain provided in the terrainLayer;
+        // it effectively assumes the terrainLayer is empty.  We still want to do most of this from a constructor, since
+        // many of the fields/properties are read-only outside of one, which is why we use this constructor instead of
+        // a utility function.
+        private Map(ISettableGridView<IGameObject?> terrainLayer, Distance distanceMeasurement, int numberOfEntityLayers,
+                   uint layersBlockingWalkability, uint layersBlockingTransparency, uint entityLayersSupportingMultipleItems,
+                   IEqualityComparer<Point>? pointComparer, IFOV? customPlayerFOV, AStar? customPather,
+                   IComponentCollection? customComponentCollection)
         {
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
@@ -313,7 +351,8 @@ namespace GoRogue.GameFramework
         /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableGridView{T}" /> for the
         /// terrain map, where type T can be any type that implements <see cref="IGameObject" />.  Note that a Map that
         /// is constructed using this function will throw an <see cref="InvalidCastException" /> if any IGameObject is
-        /// given to <see cref="SetTerrain(IGameObject)" /> that cannot be cast to type T.
+        /// given to <see cref="SetTerrain(IGameObject)" /> that cannot be cast to type T.  Also, the terrain layer given
+        /// is subject to the same restrictions as noted in the corresponding map constructor.
         /// </summary>
         /// <remarks>
         /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.
@@ -326,6 +365,23 @@ namespace GoRogue.GameFramework
         /// translates to/from IGameObject as needed,
         /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in
         /// the map and in the original ISettableGridView.
+        ///
+        /// Note that the terrain view passed in is subject to the same restrictions as in the constructor which takes
+        /// a custom terrain layer:
+        ///
+        /// 1. Always consist of persistent objects.  This is to say, the layer _cannot_ be creating objects whenever
+        ///    they are requested via the indexer.  For example, a SettableLambdaGridView which creates a new GameObject
+        ///    based on some other data is NOT a valid <paramref name="terrainLayer"/>.  For this use case,
+        ///    <see cref="ApplyTerrainOverlay{T}"/> is recommended instead.
+        ///
+        /// 2. Always have its values swapped out via <see cref="SetTerrain(IGameObject)"/> function  after it is passed to this
+        ///    constructor, rather than via its set indexer.  Basically, the terrain view must not be changed by anything
+        ///    other than the map after this constructor takes it.
+        ///
+        /// Violating either of these conditions will create desync bugs that can leave the map in a completely unusable
+        /// state.  Generally, this helper-constructor should be used as a matter of last resort when there isn't a better way
+        /// to accomplish your integration goals.  You should probably prefer the <see cref="ApplyTerrainOverlay{T}"/>
+        /// approach until/unless you have a reason not to.
         /// </remarks>
         /// <typeparam name="T">
         /// The type of terrain that will be stored in the created Map.  Can be any type that implements
@@ -467,7 +523,12 @@ namespace GoRogue.GameFramework
         /// Terrain to replace the current terrain with. <paramref name="terrain" /> must have its
         /// <see cref="IHasLayer.Layer" /> must be 0, or an exception will be thrown.
         /// </param>
-        public void SetTerrain(IGameObject terrain)
+        public void SetTerrain(IGameObject terrain) => SetTerrain(terrain, true);
+
+        // If performStandardChecks is false, we assume we're initializing with a new terrain map view, so we'll
+        // avoid firing events and performing checks that will require using the "existing" terrain layer, and also
+        // assume that the terrain given is actually already in the terrain layer.
+        private void SetTerrain(IGameObject terrain, bool performStandardChecks)
         {
             if (terrain.Layer != 0)
                 throw new ArgumentException("Terrain for Map must reside on layer 0.", nameof(terrain));
@@ -484,16 +545,20 @@ namespace GoRogue.GameFramework
                         throw new Exception(
                             "Tried to place non-walkable terrain at a location that already has another non-walkable item.");
 
-            var oldTerrain = _terrain[terrain.Position];
-            if (oldTerrain != null)
-                RemoveTerrain(oldTerrain);
+            if (performStandardChecks)
+            {
+                var oldTerrain = _terrain[terrain.Position];
+                if (oldTerrain != null)
+                    RemoveTerrain(oldTerrain);
 
-            _terrain[terrain.Position] = terrain;
+                _terrain[terrain.Position] = terrain;
+            }
 
             terrain.OnMapChanged(this);
             terrain.Moved += OnGameObjectMoved;
             terrain.WalkabilityChanging += OnWalkabilityChanging;
-            ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
+            if (performStandardChecks)
+                ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
         }
 
         /// <summary>
