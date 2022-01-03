@@ -65,7 +65,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="item">Item to add.</param>
         /// <param name="position">Position to add item to.</param>
         /// <returns>True if the item was successfully added; false otherwise.</returns>
-        bool TryAdd(T item, Point position);
+        //bool TryAdd(T item, Point position);
 
         /// <summary>
         /// Tries to add the given item at the given position.  Does nothing and returns false if the item cannot be added.
@@ -74,7 +74,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="x">X-value of the position to add item to.</param>
         /// <param name="y">Y-value of the position to add item to.</param>
         /// <returns>True if the item was successfully added; false otherwise.</returns>
-        bool TryAdd(T item, int x, int y);
+        //bool TryAdd(T item, int x, int y);
 
         /// <summary>
         /// Clears all items out of the spatial map.
@@ -168,7 +168,7 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="item">The item to remove.</param>
         /// <returns>True if the item was successfully removed; false otherwise.</returns>
-        bool TryRemove(T item);
+        //bool TryRemove(T item);
 
         /// <summary>
         /// Removes all items at the specified location from the spatial map. Returns all items

@@ -9,6 +9,8 @@ namespace GoRogue.PerformanceTests.SpatialMaps
     {
         private readonly Point _initialPosition = (0, 1);
         private readonly Point _moveToPosition = (5, 6);
+        private readonly Point _addPosition = (1, 1);
+        private readonly IDObject _addedObject = new IDObject();
         private readonly IDObject _trackedObject = new IDObject();
         private readonly int _width = 10;
         private MultiSpatialMap<IDObject> _moveMap = null!;
@@ -56,6 +58,15 @@ namespace GoRogue.PerformanceTests.SpatialMaps
         {
             _moveMap.TryMove(_trackedObject, _moveToPosition);
             _moveMap.TryMove(_trackedObject, _initialPosition);
+
+            return _moveMap.Count;
+        }
+
+        [Benchmark]
+        public int AddAndRemove()
+        {
+            _moveMap.Add(_addedObject, _addPosition);
+            _moveMap.Remove(_addedObject); // Must remove as well to avoid spoiling next invocation
 
             return _moveMap.Count;
         }
