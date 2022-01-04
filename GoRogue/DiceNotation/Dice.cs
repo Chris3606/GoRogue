@@ -13,7 +13,7 @@ namespace GoRogue.DiceNotation
     {
         /// <summary>
         /// The parser that will be used to parse dice expressions given to the <see cref="Parse(string)" /> and
-        /// <see cref="Roll(string, IGenerator)" />
+        /// <see cref="Roll(string, IGenerator?)" />
         /// functions. If you want to use a custom parser, you can assign an instance to this field.
         /// </summary>
         public static IParser DiceParser = new Parser();
@@ -24,12 +24,12 @@ namespace GoRogue.DiceNotation
         /// instance representing the given dice expression.
         /// </summary>
         /// <remarks>
-        /// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IGenerator)" /> method is extremely fast.
+        /// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IGenerator?)" /> method is extremely fast.
         /// However, if
         /// you are repeating a dice roll many times, in a case where maximum performance is absolutely necessary, there is some
         /// benefit to
         /// retrieving a <see cref="DiceExpression" /> instance instead
-        /// of using the Roll function, and calling that expression's <see cref="DiceExpression.Roll(IGenerator)" /> method
+        /// of using the Roll function, and calling that expression's <see cref="DiceExpression.Roll(IGenerator?)" /> method
         /// whenever a result
         /// is required.
         /// </remarks>
