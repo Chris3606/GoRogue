@@ -7,7 +7,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
 {
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two
-    /// points. In the case that <see cref="Distance.Manhattan" /> is being used, the line is calculated via the
+    /// points. In the case that <see cref="SadRogue.Primitives.Distance.Manhattan" /> is being used, the line is calculated via the
     /// <see cref="Lines.Algorithm.Orthogonal" /> algorithm.  Otherwise, the line is calculated using
     /// <see cref="Lines.Algorithm.Bresenham" />.
     /// </summary>

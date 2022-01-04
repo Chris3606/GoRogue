@@ -7,14 +7,14 @@ namespace GoRogue.Random
     /// <summary>
     /// Wraps a continuous distribution and allows it to be used as discrete, by rounding double
     /// values produced by <see cref="NextDouble" /> to the nearest int. Its minimum, maximum, mean, median, variance,
-    /// and mode(s) are exactly the same as its underlying <see cref="IContinuousDistribution" />.
+    /// and mode(s) are exactly the same as its underlying <see cref="Troschuetz.Random.IContinuousDistribution" />.
     /// </summary>
     /// <remarks>
     /// Takes a value of type T so that its <see cref="ContinuousDistribution" /> can return a value of the
     /// exact wrapped type, which still enables access to any distribution-specified fields, etc.
     /// </remarks>
     /// <typeparam name="T">
-    /// The type of continuous distribution being wrapped. Must implement <see cref="IContinuousDistribution" />.
+    /// The type of continuous distribution being wrapped. Must implement <see cref="Troschuetz.Random.IContinuousDistribution" />.
     /// </typeparam>
     [PublicAPI]
     public class DiscreteConverter<T> : IDiscreteDistribution where T : IContinuousDistribution
@@ -37,7 +37,7 @@ namespace GoRogue.Random
         public bool CanReset => ContinuousDistribution.CanReset;
 
         /// <summary>
-        /// Gets the <see cref="IGenerator" /> object that is used as underlying random number generator.
+        /// Gets the <see cref="Troschuetz.Random.IGenerator" /> object that is used as underlying random number generator.
         /// </summary>
         public IGenerator Generator => ContinuousDistribution.Generator;
 

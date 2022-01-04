@@ -4,7 +4,7 @@ using SadRogue.Primitives;
 namespace GoRogue.MapGeneration.ConnectionPointSelectors
 {
     /// <summary>
-    /// Implements a the selection algorithm that selects the two points closest to each other in the given <see cref="Area" />
+    /// Implements a the selection algorithm that selects the two points closest to each other in the given <see cref="SadRogue.Primitives.Area" />
     /// instances.
     /// </summary>
     [PublicAPI]

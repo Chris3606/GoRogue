@@ -5,7 +5,7 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
 {
     /// <summary>
     /// Implements a the selection algorithm that selects the center points of the bounding boxes of the given
-    /// <see cref="Area" /> instances as connection points.
+    /// <see cref="SadRogue.Primitives.Area" /> instances as connection points.
     /// </summary>
     [PublicAPI]
     public class CenterBoundsConnectionPointSelector : IConnectionPointSelector

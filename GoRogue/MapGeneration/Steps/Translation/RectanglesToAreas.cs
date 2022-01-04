@@ -35,7 +35,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         public bool RemoveSourceComponent;
 
         /// <summary>
-        /// Creates a new step for translation of <see cref="Rectangle" /> lists to <see cref="Area" /> lists.
+        /// Creates a new step for translation of <see cref="SadRogue.Primitives.Rectangle" /> lists to <see cref="SadRogue.Primitives.Area" /> lists.
         /// </summary>
         /// <param name="name">The name of the generation step.  Defaults to <see cref="RectanglesToAreas" />.</param>
         /// <param name="rectanglesComponentTag">Tag that must be associated with the component used as input rectangles.</param>
@@ -48,7 +48,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
         }
 
         /// <summary>
-        /// Creates a new step for translation of <see cref="Rectangle" /> lists to <see cref="Area" /> lists, with the name
+        /// Creates a new step for translation of <see cref="SadRogue.Primitives.Rectangle" /> lists to <see cref="SadRogue.Primitives.Area" /> lists, with the name
         /// <see cref="RectanglesToAreas" />.
         /// </summary>
         /// <param name="rectanglesComponentTag">Tag that must be associated with the component used as input rectangles.</param>

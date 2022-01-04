@@ -24,7 +24,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Rooms"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>

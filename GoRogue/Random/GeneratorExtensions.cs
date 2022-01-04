@@ -5,7 +5,7 @@ using Troschuetz.Random;
 namespace GoRogue.Random
 {
     /// <summary>
-    /// Class containing some extension methods for <see cref="IGenerator" /> instances.
+    /// Class containing some extension methods for <see cref="Troschuetz.Random.IGenerator" /> instances.
     /// </summary>
     [PublicAPI]
     public static class GeneratorExtensions

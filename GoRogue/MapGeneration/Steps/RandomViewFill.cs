@@ -7,7 +7,7 @@ using Troschuetz.Random;
 namespace GoRogue.MapGeneration.Steps
 {
     /// <summary>
-    /// Randomly fills a boolean <see cref="IGridView{T}"/> with true/false values.  Creates a grid view
+    /// Randomly fills a boolean <see cref="SadRogue.Primitives.GridViews.IGridView{T}"/> with true/false values.  Creates a grid view
     /// with the given tag if none is present.
     /// </summary>
     [PublicAPI]

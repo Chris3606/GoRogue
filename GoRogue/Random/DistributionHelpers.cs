@@ -23,7 +23,7 @@ namespace GoRogue.Random
         /// Number of deviations from the mean at which to place the lower and upper values given.
         /// </param>
         /// <returns>
-        /// A <see cref="NormalDistribution" /> constructed such that the mean is precisely in between the lower and
+        /// A <see cref="Troschuetz.Random.Distributions.Continuous.NormalDistribution" /> constructed such that the mean is precisely in between the lower and
         /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>
@@ -37,14 +37,14 @@ namespace GoRogue.Random
         /// values given, and the upper and lower values will both be exactly <paramref name="deviationsFromMean" />
         /// deviations away from the mean.
         /// </summary>
-        /// <param name="seed">The seed to pass the default <see cref="XorShift128Generator" /> that is created.</param>
+        /// <param name="seed">The seed to pass the default <see cref="Troschuetz.Random.Generators.XorShift128Generator" /> that is created.</param>
         /// <param name="lower">Lower value by which to define the distribution.</param>
         /// <param name="upper">Upper value by which to define the distribution.</param>
         /// <param name="deviationsFromMean">
         /// Number of deviations from the mean at which to place the lower and upper values given.
         /// </param>
         /// <returns>
-        /// A <see cref="NormalDistribution" /> constructed such that the mean is precisely in between the lower and
+        /// A <see cref="Troschuetz.Random.Distributions.Continuous.NormalDistribution" /> constructed such that the mean is precisely in between the lower and
         /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>
@@ -67,7 +67,7 @@ namespace GoRogue.Random
         /// Number of deviations from the mean at which to place the lower and upper values given.
         /// </param>
         /// <returns>
-        /// A <see cref="NormalDistribution" /> constructed such that the mean is precisely in between the lower and
+        /// A <see cref="Troschuetz.Random.Distributions.Continuous.NormalDistribution" /> constructed such that the mean is precisely in between the lower and
         /// upper values given, and the lower and upper values are exactly the specified number of
         /// deviations away from the mean.
         /// </returns>

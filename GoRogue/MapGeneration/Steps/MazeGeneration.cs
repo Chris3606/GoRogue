@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Tunnels"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -40,7 +40,7 @@ namespace GoRogue.MapGeneration.Steps
     /// one is created.  It also sets the all locations inside the tunnels to true in the map's "WallFloor" map view context
     /// component.  If the
     /// GenerationContext has an existing "WallFloor" context component, that component is used.  If not, an
-    /// <see cref="ArrayView{T}" /> where T is bool is
+    /// <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" /> where T is bool is
     /// created and added to the map context, whose width/height match <see cref="GenerationContext.Width" />/
     /// <see cref="GenerationContext.Height" />.
     /// </remarks>

@@ -75,13 +75,13 @@ namespace GoRogue.GameFramework
         public ArrayView<bool> PlayerExplored;
 
         /// <summary>
-        /// Constructor.  Constructs terrain map as <see cref="ArrayView{T}" />; with the given width/height.
+        /// Constructor.  Constructs terrain map as <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" />; with the given width/height.
         /// </summary>
         /// <param name="width">Width of the map.</param>
         /// <param name="height">Height of the map.</param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
-        /// <see cref="Distance" /> measurement to use for pathfinding/measuring distance on the
+        /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
         /// <param name="layersBlockingWalkability">
@@ -110,7 +110,7 @@ namespace GoRogue.GameFramework
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
         /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
-        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// on the <see cref="SadRogue.Primitives.Distance" /> passed to the Map in the constructor.
         /// </param>
         /// <param name="customComponentCollection">
         /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
@@ -138,8 +138,8 @@ namespace GoRogue.GameFramework
         /// </summary>
         /// <remarks>
         /// Because of the way polymorphism works for custom classes in C#, the <paramref name="terrainLayer" />
-        /// parameter MUST be of type <see cref="ISettableGridView{IGameObject}" />, rather than
-        /// <see cref="ISettableGridView{T}" /> where T is a type that derives from or implements
+        /// parameter MUST be of type <see cref="SadRogue.Primitives.GridViews.ISettableGridView{IGameObject}" />, rather than
+        /// <see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is a type that derives from or implements
         /// <see cref="IGameObject" />.  If you need to use a map view storing some type T rather than IGameObject, use
         /// the <see cref="CreateMap{T}"/> function to create the map.
         ///
@@ -161,12 +161,12 @@ namespace GoRogue.GameFramework
         /// approach until/unless you have a reason not to.
         /// </remarks>
         /// <param name="terrainLayer">
-        /// The <see cref="ISettableGridView{T}" /> that represents the terrain layer for this map.  See the remarks
+        /// The <see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> that represents the terrain layer for this map.  See the remarks
         /// section for some invariants that _must_ be adhered to regarding this parameter.
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
-        /// <see cref="Distance" /> measurement to use for pathfinding/measuring distance on the
+        /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
         /// <param name="layersBlockingWalkability">
@@ -195,7 +195,7 @@ namespace GoRogue.GameFramework
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
         /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
-        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// on the <see cref="SadRogue.Primitives.Distance" /> passed to the Map in the constructor.
         /// </param>
         /// <param name="customComponentCollection">
         /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a
@@ -292,13 +292,13 @@ namespace GoRogue.GameFramework
         public uint LayersBlockingTransparency { get; }
 
         /// <summary>
-        /// <see cref="IGridView{T}" /> representing transparency values for each tile.  Each location returns true
+        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> representing transparency values for each tile.  Each location returns true
         /// if the location is transparent (there are no non-transparent objects at that location), and false otherwise.
         /// </summary>
         public IGridView<bool> TransparencyView { get; }
 
         /// <summary>
-        /// <see cref="IGridView{T}" /> representing walkability values for each tile.  Each location is true if
+        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> representing walkability values for each tile.  Each location is true if
         /// the location is walkable (there are no non-walkable objects at that location), and false otherwise.
         /// </summary>
         public IGridView<bool> WalkabilityView { get; }
@@ -306,12 +306,12 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// A* pathfinder for the map.  By default, uses <see cref="WalkabilityView" /> to determine which locations can
-        /// be reached, and calculates distance based on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// be reached, and calculates distance based on the <see cref="SadRogue.Primitives.Distance" /> passed to the Map in the constructor.
         /// </summary>
         public AStar AStar { get; set; }
 
         /// <summary>
-        /// <see cref="Distance" /> measurement used for pathfinding and measuring distance on the map.
+        /// <see cref="SadRogue.Primitives.Distance" /> measurement used for pathfinding and measuring distance on the map.
         /// </summary>
         public Distance DistanceMeasurement => AStar.DistanceMeasurement;
 
@@ -348,7 +348,7 @@ namespace GoRogue.GameFramework
         public event EventHandler<ItemMovedEventArgs<IGameObject>>? ObjectMoved;
 
         /// <summary>
-        /// Effectively a helper-constructor.  Constructs a map using an <see cref="ISettableGridView{T}" /> for the
+        /// Effectively a helper-constructor.  Constructs a map using an <see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> for the
         /// terrain map, where type T can be any type that implements <see cref="IGameObject" />.  Note that a Map that
         /// is constructed using this function will throw an <see cref="InvalidCastException" /> if any IGameObject is
         /// given to <see cref="SetTerrain(IGameObject)" /> that cannot be cast to type T.  Also, the terrain layer given
@@ -357,11 +357,11 @@ namespace GoRogue.GameFramework
         /// <remarks>
         /// Suppose you have a class MyTerrain that inherits from BaseClass and implements <see cref="IGameObject" />.
         /// This construction function allows you to construct your map using an
-        /// <see cref="ISettableGridView{MyTerrain}" /> instance as the terrain map, which you cannot do with the regular
-        /// constructor since <see cref="ISettableGridView{MyTerrain}" /> does not satisfy the constructor's type
-        /// requirement of <see cref="ISettableGridView{IGameObject}" />.
+        /// <see cref="SadRogue.Primitives.GridViews.ISettableGridView{MyTerrain}" /> instance as the terrain map, which you cannot do with the regular
+        /// constructor since <see cref="SadRogue.Primitives.GridViews.ISettableGridView{MyTerrain}" /> does not satisfy the constructor's type
+        /// requirement of <see cref="SadRogue.Primitives.GridViews.ISettableGridView{IGameObject}" />.
         ///
-        /// Since this function under the hood creates a <see cref="SettableTranslationGridView{T1,T2}" /> that
+        /// Since this function under the hood creates a <see cref="SadRogue.Primitives.GridViews.SettableTranslationGridView{T1,T2}" /> that
         /// translates to/from IGameObject as needed,
         /// any change made using the map's <see cref="SetTerrain(IGameObject)" /> function will be reflected both in
         /// the map and in the original ISettableGridView.
@@ -388,7 +388,7 @@ namespace GoRogue.GameFramework
         /// <see cref="IGameObject" />.
         /// </typeparam>
         /// <param name="terrainLayer">
-        /// The <see cref="ISettableGridView{T}" /> that represents the terrain layer for this map.  After the
+        /// The <see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> that represents the terrain layer for this map.  After the
         /// map has been created, you should use the <see cref="SetTerrain(IGameObject)" /> function to modify the
         /// values in this map view, rather than setting the values via the map view itself.  If you re-assign the
         /// value at a location via the map view, the <see cref="ObjectAdded" />/<see cref="ObjectRemoved" /> events are
@@ -396,7 +396,7 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <param name="numberOfEntityLayers">Number of non-terrain layers for the map.</param>
         /// <param name="distanceMeasurement">
-        /// <see cref="Distance" /> measurement to use for pathfinding/measuring distance on the
+        /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
         /// <param name="layersBlockingWalkability">
@@ -425,7 +425,7 @@ namespace GoRogue.GameFramework
         /// <param name="customPather">
         /// Custom A* pathfinder for the map.  Typically, you wont' need to specify this; By default, uses
         /// <see cref="WalkabilityView" /> to determine which locations can be reached, and calculates distance based
-        /// on the <see cref="Distance" /> passed to the Map in the constructor.
+        /// on the <see cref="SadRogue.Primitives.Distance" /> passed to the Map in the constructor.
         /// </param>
         /// <param name="customComponentContainer">
         /// A custom component container to use for <see cref="GoRogueComponents"/>.  If not specified, a

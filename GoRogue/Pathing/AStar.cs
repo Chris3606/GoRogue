@@ -15,9 +15,9 @@ namespace GoRogue.Pathing
     /// </summary>
     /// <remarks>
     /// Like most GoRogue algorithms, AStar takes as a construction parameter an IGridView representing the map.
-    /// Specifically, it takes an <see cref="IGridView{T}" />, where true indicates that a tile should be
+    /// Specifically, it takes an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where true indicates that a tile should be
     /// considered walkable, and false indicates that a tile should be considered impassable.
-    /// For details on the map view system in general, see <see cref="IGridView{T}" />.  As well, there is an article
+    /// For details on the map view system in general, see <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />.  As well, there is an article
     /// explaining the map view system at the GoRogue documentation page
     /// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
     /// If truly shortest paths are not strictly necessary, you may want to consider <see cref="FastAStar" /> instead.
@@ -160,8 +160,8 @@ namespace GoRogue.Pathing
 
         private Distance _distanceMeasurement;
         /// <summary>
-        /// The distance calculation being used to determine distance between points. <see cref="Distance.Manhattan" />
-        /// implies 4-way connectivity, while <see cref="Distance.Chebyshev" /> or <see cref="Distance.Euclidean" /> imply
+        /// The distance calculation being used to determine distance between points. <see cref="SadRogue.Primitives.Distance.Manhattan" />
+        /// implies 4-way connectivity, while <see cref="SadRogue.Primitives.Distance.Chebyshev" /> or <see cref="SadRogue.Primitives.Distance.Euclidean" /> imply
         /// 8-way connectivity for the purpose of determining adjacent coordinates.
         /// </summary>
         public Distance DistanceMeasurement
@@ -206,7 +206,7 @@ namespace GoRogue.Pathing
         // NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
         /// <summary>
         /// Multiplier that is used in the tie-breaking/smoothing element of the default heuristic. This value is based on the
-        /// maximum possible <see cref="Point.EuclideanDistanceMagnitude(Point, Point)" /> between two points on the map.
+        /// maximum possible <see cref="SadRogue.Primitives.Point.EuclideanDistanceMagnitude(Point, Point)" /> between two points on the map.
         /// Typically you don't need this value unless you're creating a custom heuristic an introducing the same
         /// tie-breaking/smoothing element as the default heuristic.
         /// </summary>

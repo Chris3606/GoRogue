@@ -5,7 +5,7 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.Pathing
 {
     /// <summary>
-    /// Contains extensions for <see cref="IGridView{T}" />, that pertain generally to goal maps.
+    /// Contains extensions for <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, that pertain generally to goal maps.
     /// </summary>
     [PublicAPI]
     public static class GoalMapExtensions
@@ -17,7 +17,7 @@ namespace GoRogue.Pathing
         /// <param name="position">The position to get the minimum value for.</param>
         /// <param name="adjacencyRule">The adjacency rule to use to determine neighbors.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public static Direction GetDirectionOfMinValue(this IGridView<double?> goalMap, Point position,
@@ -51,7 +51,7 @@ namespace GoRogue.Pathing
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <param name="adjacencyRule">The adjacency rule to use to determine neighbors.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public static Direction GetDirectionOfMinValue(this IGridView<double?> goalMap, int positionX, int positionY,

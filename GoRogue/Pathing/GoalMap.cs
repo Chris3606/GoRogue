@@ -19,7 +19,7 @@ namespace GoRogue.Pathing
     /// level change, the GoalMap instance will need to be updated. Call <see cref="Update" /> if obstacles
     /// have changed, or <see cref="UpdatePathsOnly" /> if the goals have changed but not the obstacles.
     /// This class exposes the resulting goal map to you via indexers -- GoalMap implements
-    /// <see cref="IGridView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
+    /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
     /// and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
     /// contains a goal.
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)" />
@@ -42,10 +42,10 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="baseMap">
         /// A map view that represents the map as
-        /// <see cref="IGridView{T}" />GoalStates.
+        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />GoalStates.
         /// </param>
         /// <param name="distanceMeasurement">
-        /// The distance measurement (and implicitly the <see cref="AdjacencyRule" />) to use for calculation.
+        /// The distance measurement (and implicitly the <see cref="SadRogue.Primitives.AdjacencyRule" />) to use for calculation.
         /// </param>
         public GoalMap(IGridView<GoalState> baseMap, Distance distanceMeasurement)
         {
@@ -100,7 +100,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="position">The position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(Point position)
@@ -112,7 +112,7 @@ namespace GoRogue.Pathing
         /// <param name="positionX">The x-value of the position to get the minimum value for.</param>
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(int positionX, int positionY)

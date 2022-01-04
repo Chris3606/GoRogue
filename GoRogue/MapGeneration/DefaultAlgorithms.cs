@@ -234,7 +234,7 @@ namespace GoRogue.MapGeneration
         /// </param>
         /// <param name="distanceCalculation">
         /// The distance calculation that determines distance/neighbors for determining unique areas and connecting
-        /// them.  Defaults to <see cref="Distance.Manhattan"/>.
+        /// them.  Defaults to <see cref="SadRogue.Primitives.Distance.Manhattan"/>.
         /// </param>
         /// <param name="connectionPointSelector">
         /// The area connection strategy to use. Not all methods function on maps with concave areas

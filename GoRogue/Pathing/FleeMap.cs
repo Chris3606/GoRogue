@@ -84,7 +84,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="position">The position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(Point position)
@@ -96,7 +96,7 @@ namespace GoRogue.Pathing
         /// <param name="positionX">The x-value of the position to get the minimum value for.</param>
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(int positionX, int positionY)

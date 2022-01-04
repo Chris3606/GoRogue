@@ -27,7 +27,7 @@ namespace GoRogue.Pathing
         /// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
         /// </summary>
         /// <remarks>
-        /// When adding a new goal map, its <see cref="IGridView{T}.Width" /> and <see cref="IGridView{T}.Height" />
+        /// When adding a new goal map, its <see cref="SadRogue.Primitives.GridViews.IGridView{T}.Width" /> and <see cref="SadRogue.Primitives.GridViews.IGridView{T}.Height" />
         /// should be identical to the WeightedGoalMap's <see cref="Width" /> and
         /// <see cref="Height" />.
         /// </remarks>

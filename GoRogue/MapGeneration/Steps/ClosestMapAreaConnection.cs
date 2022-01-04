@@ -25,7 +25,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Areas"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -50,7 +50,7 @@ namespace GoRogue.MapGeneration.Steps
     /// default) containing areas to connect, and "WallFloor" map view context component
     /// that indicates wall/floor status for each location on the map.  It then connects the map areas in the list, generating
     /// tunnels in the process.  Each location comprising
-    /// the generated tunnels is set to "true" in the "WallFloor" component.  Additionally, an <see cref="Area" /> representing
+    /// the generated tunnels is set to "true" in the "WallFloor" component.  Additionally, an <see cref="SadRogue.Primitives.Area" /> representing
     /// each tunnel created is added to the <see cref="ItemList{Area}" /> context
     /// component (with the tag "Tunnels", by default).
     /// If an appropriate component with the specified tag exists for the resulting tunnels, the Areas are added to that

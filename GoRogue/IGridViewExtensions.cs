@@ -9,7 +9,7 @@ using Troschuetz.Random;
 namespace SadRogue.Primitives.GridViews
 {
     /// <summary>
-    /// Extensions for <see cref="IGridView{T}" /> implementations that provide more basic utility functions
+    /// Extensions for <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> implementations that provide more basic utility functions
     /// for them.
     /// </summary>
     [PublicAPI]
