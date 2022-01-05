@@ -5,10 +5,9 @@
         {
           "src": "../",
           "files": [
-            "GoRogue/**.csproj"
+            "GoRogue/bin/Debug/net5.0/GoRogue.dll"
           ],
 		  "exclude": [
-            "**/bin/**",
             "**/obj/**"
           ]
         }
