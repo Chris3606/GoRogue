@@ -122,9 +122,9 @@ namespace GoRogue.Pathing
                     var weight = pair.Value;
                     var weighted = value.Value * weight;
                     if (weight > 0.0)
-                        result = Math.Abs(result) < 0.0000000001 ? weighted : result * weighted;
+                        result = Math.Abs(result) < 0.0000000001 ? weighted : result + weighted;
                     else
-                        negResult = Math.Abs(negResult) < 0.0000000001 ? weighted : negResult * weighted;
+                        negResult = Math.Abs(negResult) < 0.0000000001 ? weighted : negResult + weighted;
                 }
 
                 return result + negResult;

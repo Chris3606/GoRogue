@@ -53,5 +53,26 @@ namespace GoRogue.UnitTests.Pathing
 
             // TODO: Verify goal map leads to goal
         }
+
+        [Fact]
+        public void GetDirectionOfMinValueChecksMapBoundaryForOpenEdgedMaps()
+        {
+            var map = MockMaps.Rectangle(2, 1);
+
+            var goalMapData = new ArrayView<GoalState>(map.Width, map.Height);
+            goalMapData.Fill(GoalState.Clear);
+
+            var goalPos = new Point(1, 0);
+
+            goalMapData[goalPos] = GoalState.Goal;
+
+            var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
+            goalMap.Update();
+
+            var startPos = new Point(0, 0);
+            var dir = goalMap.GetDirectionOfMinValue(startPos);
+
+            Assert.Equal(goalPos, startPos + dir);
+        }
     }
 }

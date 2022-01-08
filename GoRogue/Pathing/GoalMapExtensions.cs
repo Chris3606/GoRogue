@@ -29,7 +29,8 @@ namespace GoRogue.Pathing
             foreach (var dir in adjacencyRule.DirectionsOfNeighbors())
             {
                 var newPosition = position + dir;
-                if (!goalMap[newPosition].HasValue)
+
+                if (!goalMap.Contains(newPosition) || !goalMap[newPosition].HasValue)
                     continue;
 
                 if (goalMap[newPosition]!.Value <= min
