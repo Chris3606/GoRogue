@@ -7,10 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Spatial map implementations now have `TryMove`, `TryAdd`, and `TryRemove` functions which return false instead of throwing exception when an operation fails
-    - Assuming current implementations 5-10% faster than the old method of first checking with the appropriate`Can` method then doing the appropiate operation
+    - Assuming current implementations 5-10% faster than the old method of first checking with the appropriate `Can` method then doing the appropiate operation
     - Note that `Add`, `Remove`, and `Move` have been optimized as well so this will likely produce a greater speed increase than 5-10% in existing code
 - Spatial map implementations now have a `TryGetPositionOf` function which returns false instead of throwing exception when item given doesn't exist
-- Spatial map implementations now have a `GetPositionOfOrNull` functionw which returns `null` instead of throwing exception when item given doesn't exist
+- Spatial map implementations now have a `GetPositionOfOrNull` function which returns `null` instead of throwing exception when item given doesn't exist
     - Note that, unlike the original `GetPositionOf` implementation, it returns `null`, not `default(T)` or `Point.None`
 
 ### Changed
@@ -18,6 +18,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Note other methods have been added that return null or false
 - `Move`, `Add`, and `Remove` function of spatial map implementations have been optimized
     - Gains vary but can be as much as 15-20% per operation, for some implementations and circumstances
+- Updated primitives library to 1.2.0
+- GoRogue algorithms now use the primitives library's cache for directions of neighbors, instead of creating their own
+-  Various performance improvements to goal maps
+    - `WeightedGoalMap` up to 50-80% faster for value indexer and `GetDirectionOfMinValue` operations
+    - Other goal maps will see more limited performance increase in `GetDirectionOfMinValue` calls
+
+### Fixed
+- The `GetDirectionOfMinValue` function for goal maps now supports maps with open edges (thanks DavidFridge)
+- The `WeightedGoalMap` calculation is now additive, as the supplemental article indicates it should be (thanks thanks DavidFridge)
+- API documentation now properly cross-references types in primitives library
+- Map constructor taking custom terrain grid view now properly initializes existing terrain on that grid view (fixes #254)
+    - NOTE: Caveats about this constructor's usage have now been properly documented in API documentation
+
 
 # [3.0.0-alpha09] - 2021-12-19
 
