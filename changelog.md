@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Spatial map implementations now have a `TryGetPositionOf` function which returns false instead of throwing exception when item given doesn't exist
 - Spatial map implementations now have a `GetPositionOfOrNull` function which returns `null` instead of throwing exception when item given doesn't exist
     - Note that, unlike the original `GetPositionOf` implementation, it returns `null`, not `default(T)` or `Point.None`
+- `MessageBus` now has `TryRegisterSubscriber` and `TryUnregisterSubscriber` functions which return false instead of throw an exception on failure (fixes #248).
 
 ### Changed
 - The `GetPositionOf` function on spatial map implementations now throws exception if the position doesn't exist
