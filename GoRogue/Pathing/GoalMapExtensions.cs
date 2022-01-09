@@ -26,22 +26,22 @@ namespace GoRogue.Pathing
             var min = goalMap[position].HasValue ? goalMap[position]!.Value : double.MaxValue;
             var minDir = Direction.None;
 
-            foreach (var dir in adjacencyRule.DirectionsOfNeighbors())
+            for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
             {
-                var newPosition = position + dir;
+                var newPosition = position + adjacencyRule.DirectionsOfNeighborsCache[i];
 
                 if (!goalMap.Contains(newPosition) || !goalMap[newPosition].HasValue)
                     continue;
 
-                if (goalMap[newPosition]!.Value <= min
-                ) // <= to prefer movement over non movement; known to be not null thanks to above continue
+                // <= to prefer movement over non movement; known to be not null thanks to above continue
+                if (goalMap[newPosition]!.Value <= min)
                 {
                     min = goalMap[newPosition]!.Value; // Again known to be not null thanks to above continue
-                    minDir = dir;
+                    minDir = adjacencyRule.DirectionsOfNeighborsCache[i];
                 }
             }
 
-            return minDir; // Direction.NONE if all obstacles
+            return minDir; // Direction.None if all obstacles
         }
 
         /// <summary>

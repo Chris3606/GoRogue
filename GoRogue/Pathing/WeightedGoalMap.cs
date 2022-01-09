@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -31,7 +30,7 @@ namespace GoRogue.Pathing
         /// should be identical to the WeightedGoalMap's <see cref="Width" /> and
         /// <see cref="Height" />.
         /// </remarks>
-        public readonly Dictionary<IGridView<double?>, double> Weights;
+        public readonly List<GoalMapWeightPair> Weights;
 
         /// <summary>
         /// Constructor. Takes a single goal map and assigns it a weight of 1.0.
@@ -39,7 +38,7 @@ namespace GoRogue.Pathing
         /// <param name="map">The goal map.</param>
         public WeightedGoalMap(IGridView<double?> map)
         {
-            Weights = new Dictionary<IGridView<double?>, double> { { map, 1 } };
+            Weights = new List<GoalMapWeightPair>{ new GoalMapWeightPair( map, 1 ) };
             Width = map.Width;
             Height = map.Height;
         }
@@ -47,21 +46,22 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Constructor. Takes a sequence of goal maps and assigns each one a weight of 1.0.
         /// </summary>
-        /// <param name="maps">The goal maps. Each one should be of the same size.</param>
+        /// <param name="maps">The goal maps. Each one must be of the same size.</param>
         public WeightedGoalMap(IEnumerable<IGridView<double?>> maps)
         {
-            Weights = new Dictionary<IGridView<double?>, double>();
+            Weights = new List<GoalMapWeightPair>();
             foreach (var map in maps)
             {
-                Weights.Add(map, 1);
+                Weights.Add(new GoalMapWeightPair(map, 1));
 
                 if (Height == 0)
                 {
                     Width = map.Width;
                     Height = map.Height;
                 }
-                else
-                    Debug.Assert(Height == map.Height && Width == map.Width);
+                else if (Height != map.Height || Width != map.Width)
+                    throw new ArgumentException(
+                        $"All goal maps used in a {nameof(WeightedGoalMap)} must have the same size.", nameof(maps));
             }
         }
 
@@ -69,28 +69,24 @@ namespace GoRogue.Pathing
         /// Constructor. Takes an existing goal map dictionary and copies it.
         /// </summary>
         /// <param name="maps">
-        /// The goal maps. Each one should be of the same size, and all weights should have a nonzero value.
+        /// The goal maps. Each one must be of the same size, and all weights should have a nonzero value.
         /// </param>
-        public WeightedGoalMap(IDictionary<IGridView<double?>, double> maps)
+        public WeightedGoalMap(IEnumerable<GoalMapWeightPair> maps)
         {
-            Weights = new Dictionary<IGridView<double?>, double>();
+            Weights = new List<GoalMapWeightPair>();
 
-            foreach (var (key, value) in maps)
+            foreach (var pair in maps)
             {
-                if (Math.Abs(value) <= 0.0000000001)
-                    throw new ArgumentException(
-                        $"No goal map used in a {nameof(WeightedGoalMap)} may have a weight of 0.0.", nameof(maps));
-
                 if (Height == 0)
                 {
-                    Width = key.Width;
-                    Height = key.Height;
+                    Width = pair.GoalMap.Width;
+                    Height = pair.GoalMap.Height;
                 }
-                else if (Height != key.Height || Width != key.Width)
+                else if (Height != pair.GoalMap.Height || Width != pair.GoalMap.Width)
                     throw new ArgumentException(
                         $"All goal maps used in a {nameof(WeightedGoalMap)} must have the same size.", nameof(maps));
 
-                Weights.Add(key, value);
+                Weights.Add(pair);
             }
         }
 
@@ -112,22 +108,21 @@ namespace GoRogue.Pathing
         {
             get
             {
-                var result = 0.0;
-                var negResult = 0.0;
-                foreach (var pair in Weights)
+                double result = 0.0;
+                int length = Weights.Count;
+                for (int i = 0; i < length; i++)
                 {
-                    var value = pair.Key[point];
-                    if (!value.HasValue)
+                    var (map, weight) = Weights[i];
+                    var mapValue = map[point];
+                    if (!mapValue.HasValue)
                         return null;
-                    var weight = pair.Value;
-                    var weighted = value.Value * weight;
-                    if (weight > 0.0)
-                        result = Math.Abs(result) < 0.0000000001 ? weighted : result + weighted;
-                    else
-                        negResult = Math.Abs(negResult) < 0.0000000001 ? weighted : negResult + weighted;
+
+                    var weighted = mapValue.Value * weight;
+                    result += weighted;
+
                 }
 
-                return result + negResult;
+                return result;
             }
         }
 
@@ -138,9 +133,8 @@ namespace GoRogue.Pathing
         public ArrayView<double?> Combine()
         {
             var result = new ArrayView<double?>(Width, Height);
-            for (var y = 0; y < Height; ++y)
-                for (var x = 0; x < Width; ++x)
-                    result[x, y] = this[x, y];
+            result.ApplyOverlay(this);
+
             return result;
         }
     }
