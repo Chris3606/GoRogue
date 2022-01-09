@@ -38,8 +38,9 @@ namespace GoRogue.Pathing
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
         /// </summary>
         /// <param name="baseMap">
-        /// A map view that represents the map as
-        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />GoalStates.
+        /// A map view that represents the map as an
+        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> of <see cref="GoalState"/>.  Must not change
+        /// width/height after the goal map has been constructed.
         /// </param>
         /// <param name="distanceMeasurement">
         /// The distance measurement (and implicitly the <see cref="SadRogue.Primitives.AdjacencyRule" />) to use for calculation.
@@ -58,7 +59,8 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// The map view of the underlying map used to determine where obstacles/goals are.
+        /// The map view of the underlying map used to determine where obstacles/goals are.  Must not change width or
+        /// height after the <see cref="GoalMap"/> has been constructed.
         /// </summary>
         public IGridView<GoalState> BaseMap { get; private set; }
 
@@ -156,6 +158,10 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool Update()
         {
+            if (BaseMap.Bounds() != this.Bounds())
+                throw new InvalidOperationException(
+                    $"Grid views used as the {nameof(BaseMap)} for {nameof(GoalMap)} instances must not change size.");
+
             _walkable.Clear();
             for (var y = 0; y < BaseMap.Height; ++y)
                 for (var x = 0; x < BaseMap.Width; ++x)
@@ -167,7 +173,7 @@ namespace GoRogue.Pathing
                         _walkable.Add(new Point(x, y));
                 }
 
-            return UpdatePathsOnly();
+            return UpdatePathsOnlyUnchecked();
         }
 
         /// <summary>
@@ -176,6 +182,15 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
+        {
+            if (BaseMap.Bounds() != this.Bounds())
+                throw new InvalidOperationException(
+                    $"Grid views used as the {nameof(BaseMap)} for {nameof(GoalMap)} instances must not change size.");
+
+            return UpdatePathsOnlyUnchecked();
+        }
+
+        private bool UpdatePathsOnlyUnchecked()
         {
             var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
             var highVal = (double)(BaseMap.Width * BaseMap.Height);

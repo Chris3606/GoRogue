@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 -  Various performance improvements to goal maps
     - `WeightedGoalMap` up to 50-80% faster for value indexer and `GetDirectionOfMinValue` operations
     - Other goal maps will see more limited performance increase in `GetDirectionOfMinValue` calls
+- `GoalMap` instances now explicitly reject base grid views that change width/height (although doing so would not function appropriately in most cases previously anyway)
 
 ### Fixed
 - The `GetDirectionOfMinValue` function for goal maps now supports maps with open edges (thanks DavidFridge)

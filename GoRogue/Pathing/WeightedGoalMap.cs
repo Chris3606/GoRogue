@@ -18,6 +18,9 @@ namespace GoRogue.Pathing
     /// inverts the map, turning its goal into something to avoid.  Inverting the weight does not
     /// create a "safety map" as described in the article, as the resulting goal map will show no
     /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap" />.
+    ///
+    /// Note that all the grid views held by this class must have the same width and height.  If their width and height
+    /// change after they are added such that this is not the case, unexpected behavior will occur.
     /// </remarks>
     [PublicAPI]
     public sealed class WeightedGoalMap : GridViewBase<double?>
