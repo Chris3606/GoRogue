@@ -20,23 +20,23 @@ namespace GoRogue.Pathing
         /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
-        public static Direction GetDirectionOfMinValue(this IGridView<double?> goalMap, Point position,
+        public static Direction GetDirectionOfMinValue(this IGridView<double> goalMap, Point position,
                                                        AdjacencyRule adjacencyRule)
         {
-            var min = goalMap[position].HasValue ? goalMap[position]!.Value : double.MaxValue;
+            var min = goalMap[position];
             var minDir = Direction.None;
 
             for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
             {
                 var newPosition = position + adjacencyRule.DirectionsOfNeighborsCache[i];
 
-                if (!goalMap.Contains(newPosition) || !goalMap[newPosition].HasValue)
+                if (!goalMap.Contains(newPosition) || goalMap[newPosition] >= double.MaxValue)
                     continue;
 
                 // <= to prefer movement over non movement; known to be not null thanks to above continue
-                if (goalMap[newPosition]!.Value <= min)
+                if (goalMap[newPosition] <= min)
                 {
-                    min = goalMap[newPosition]!.Value; // Again known to be not null thanks to above continue
+                    min = goalMap[newPosition]; // Again known to be not null thanks to above continue
                     minDir = adjacencyRule.DirectionsOfNeighborsCache[i];
                 }
             }
@@ -55,7 +55,7 @@ namespace GoRogue.Pathing
         /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
-        public static Direction GetDirectionOfMinValue(this IGridView<double?> goalMap, int positionX, int positionY,
+        public static Direction GetDirectionOfMinValue(this IGridView<double> goalMap, int positionX, int positionY,
                                                        AdjacencyRule adjacencyRule)
             => goalMap.GetDirectionOfMinValue(new Point(positionX, positionY), adjacencyRule);
     }

@@ -24,13 +24,13 @@ namespace GoRogue.Pathing
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)" />
     /// </remarks>
     [PublicAPI]
-    public class GoalMap : GridViewBase<double?>
+    public class GoalMap : GridViewBase<double>
     {
         private readonly HashSet<Point> _closedSet;
 
         private readonly Queue<Point> _openEdges;
 
-        private readonly ArrayView<double?> _goalMap;
+        private readonly ArrayView<double> _goalMap;
 
         private readonly List<Point> _walkable = new List<Point>();
 
@@ -53,7 +53,7 @@ namespace GoRogue.Pathing
             _closedSet = new HashSet<Point>(hasher);
             _openEdges = new Queue<Point>();
 
-            _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
+            _goalMap = new ArrayView<double>(baseMap.Width, baseMap.Height);
             Update();
         }
 
@@ -84,7 +84,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="pos">The position to return the goal-map value for.</param>
         /// <returns>The goal-map value for the given position.</returns>
-        public override double? this[Point pos] => _goalMap[pos];
+        public override double this[Point pos] => _goalMap[pos];
 
         /// <summary>
         /// Triggers when the GoalMap is updated.
@@ -120,7 +120,7 @@ namespace GoRogue.Pathing
         /// <returns>A string representing the goal map values.</returns>
         public override string ToString() =>
             // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            _goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
+            _goalMap.ToString(val => val < double.MaxValue ? val.ToString() : "null");
 
         /// <summary>
         /// Returns the goal-map values represented as a 2D-grid-style string, where any value that
@@ -129,7 +129,7 @@ namespace GoRogue.Pathing
         /// <param name="formatString">Format string to use for non-null values.</param>
         /// <returns>A string representing the goal-map values.</returns>
         public string ToString(string formatString) =>
-            _goalMap.ToString(val => val.HasValue ? val.Value.ToString(formatString) : "null");
+            _goalMap.ToString(val => val < double.MaxValue ? val.ToString(formatString) : "null");
 
         /// <summary>
         /// Returns the goal-map values represented as a 2D-grid-style string, with the given field size.
@@ -147,7 +147,7 @@ namespace GoRogue.Pathing
         /// <param name="formatString">Format string to use for non-null values.</param>
         /// <returns>A string representing the goal-map values.</returns>
         public string ToString(int fieldSize, string formatString)
-            => _goalMap.ToString(fieldSize, val => val.HasValue ? val.Value.ToString(formatString) : "null");
+            => _goalMap.ToString(fieldSize, val => val < double.MaxValue ? val.ToString(formatString) : "null");
 
         /// <summary>
         /// Re-evaluates the entire goal map. Should be called when obstacles change. If the
@@ -162,7 +162,7 @@ namespace GoRogue.Pathing
                 {
                     var state = BaseMap[x, y];
                     if (state == GoalState.Obstacle)
-                        _goalMap[x, y] = null;
+                        _goalMap[x, y] = double.MaxValue;
                     else
                         _walkable.Add(new Point(x, y));
                 }
@@ -202,7 +202,7 @@ namespace GoRogue.Pathing
                 var point = _openEdges.Dequeue();
 
                 // Known to be not null since the else condition above will have assigned to it.
-                var current = _goalMap[point]!.Value;
+                var current = _goalMap[point];
                 for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                 {
                     // We only want to process walkable, non-visited cells that are within the map
@@ -212,7 +212,7 @@ namespace GoRogue.Pathing
                         continue;
 
                     // Known to be not null since it must be walkable.
-                    var neighborValue = _goalMap[openPoint]!.Value;
+                    var neighborValue = _goalMap[openPoint];
                     var newValue = current + DistanceMeasurement.Calculate(point, openPoint);
                     if (newValue < neighborValue)
                     {

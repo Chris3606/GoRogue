@@ -18,7 +18,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// The goal map.
         /// </summary>
-        public readonly IGridView<double?> GoalMap;
+        public readonly IGridView<double> GoalMap;
 
         /// <summary>
         /// The weight of the specified goal map.
@@ -30,7 +30,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="goalMap">The goal map.</param>
         /// <param name="weight">Weight for the specified goal map.</param>
-        public GoalMapWeightPair(IGridView<double?> goalMap, double weight)
+        public GoalMapWeightPair(IGridView<double> goalMap, double weight)
         {
             GoalMap = goalMap;
             Weight = weight;
@@ -43,7 +43,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="goalMap"/>
         /// <param name="weight"/>
-        public void Deconstruct(out IGridView<double?> goalMap, out double weight)
+        public void Deconstruct(out IGridView<double> goalMap, out double weight)
         {
             goalMap = GoalMap;
             weight = Weight;
@@ -54,14 +54,14 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="pair"/>
         /// <returns/>
-        public static implicit operator (IGridView<double?> goalMap, double weight)(GoalMapWeightPair pair) => pair.ToTuple();
+        public static implicit operator (IGridView<double> goalMap, double weight)(GoalMapWeightPair pair) => pair.ToTuple();
 
         /// <summary>
         /// Implicitly converts a tuple to its equivalent GoalMapWeightPair.
         /// </summary>
         /// <param name="tuple"/>
         /// <returns/>
-        public static implicit operator GoalMapWeightPair((IGridView<double?> goalMap, double weight) tuple)
+        public static implicit operator GoalMapWeightPair((IGridView<double> goalMap, double weight) tuple)
             => FromTuple(tuple);
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace GoRogue.Pathing
         /// <returns/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public (IGridView<double?> goalMap, double weight) ToTuple() => (GoalMap, Weight);
+        public (IGridView<double> goalMap, double weight) ToTuple() => (GoalMap, Weight);
 
         /// <summary>
         /// Converts the tuple to an equivalent ComponentTypeTagPair.
@@ -78,7 +78,7 @@ namespace GoRogue.Pathing
         /// <param name="tuple"/>
         /// <returns/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static GoalMapWeightPair FromTuple((IGridView<double?> goalMap, double weight) tuple)
+        public static GoalMapWeightPair FromTuple((IGridView<double> goalMap, double weight) tuple)
             => new GoalMapWeightPair(tuple.goalMap, tuple.weight);
         #endregion
 

@@ -57,7 +57,7 @@ namespace GoRogue.UnitTests.Pathing
             goalMap.Update();
 
             foreach (var pos in fleeMap.Positions())
-                Assert.NotNull(fleeMap[pos]);
+                Assert.NotEqual(double.MaxValue, fleeMap[pos]);
 
             // TODO: Verify flee map leads away from goal
         }

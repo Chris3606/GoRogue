@@ -20,7 +20,7 @@ namespace GoRogue.Pathing
     /// concept of global vs. local avoidance.  For that functionality, see <see cref="FleeMap" />.
     /// </remarks>
     [PublicAPI]
-    public sealed class WeightedGoalMap : GridViewBase<double?>
+    public sealed class WeightedGoalMap : GridViewBase<double>
     {
         /// <summary>
         /// The list of weighted goal maps. Can be used to add or remove goal maps, or change their weights.
@@ -36,7 +36,7 @@ namespace GoRogue.Pathing
         /// Constructor. Takes a single goal map and assigns it a weight of 1.0.
         /// </summary>
         /// <param name="map">The goal map.</param>
-        public WeightedGoalMap(IGridView<double?> map)
+        public WeightedGoalMap(IGridView<double> map)
         {
             Weights = new List<GoalMapWeightPair>{ new GoalMapWeightPair( map, 1 ) };
             Width = map.Width;
@@ -47,7 +47,7 @@ namespace GoRogue.Pathing
         /// Constructor. Takes a sequence of goal maps and assigns each one a weight of 1.0.
         /// </summary>
         /// <param name="maps">The goal maps. Each one must be of the same size.</param>
-        public WeightedGoalMap(IEnumerable<IGridView<double?>> maps)
+        public WeightedGoalMap(IEnumerable<IGridView<double>> maps)
         {
             Weights = new List<GoalMapWeightPair>();
             foreach (var map in maps)
@@ -104,7 +104,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Returns the value of the combined goal maps at any given point.
         /// </summary>
-        public override double? this[Point point]
+        public override double this[Point point]
         {
             get
             {
@@ -114,10 +114,10 @@ namespace GoRogue.Pathing
                 {
                     var (map, weight) = Weights[i];
                     var mapValue = map[point];
-                    if (!mapValue.HasValue)
-                        return null;
+                    if (mapValue >= double.MaxValue)
+                        return double.MaxValue;
 
-                    var weighted = mapValue.Value * weight;
+                    var weighted = mapValue * weight;
                     result += weighted;
 
                 }
@@ -130,9 +130,9 @@ namespace GoRogue.Pathing
         /// Computes the entire aggregate goal map and returns it, effectively caching the result.
         /// This may be useful in situations where the goals are shared between many characters and do not change frequently.
         /// </summary>
-        public ArrayView<double?> Combine()
+        public ArrayView<double> Combine()
         {
-            var result = new ArrayView<double?>(Width, Height);
+            var result = new ArrayView<double>(Width, Height);
             result.ApplyOverlay(this);
 
             return result;

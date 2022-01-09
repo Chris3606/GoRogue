@@ -19,11 +19,11 @@ namespace GoRogue.Pathing
     /// </remarks>
 #pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
     [PublicAPI]
-    public class FleeMap : GridViewBase<double?>, IDisposable
+    public class FleeMap : GridViewBase<double>, IDisposable
 #pragma warning restore CA1063
     {
         private readonly GoalMap _baseMap;
-        private readonly ArrayView<double?> _goalMap;
+        private readonly ArrayView<double> _goalMap;
 
         // Nodes for the priority queue used in Update.
         private readonly ArrayView<PositionNode> _nodes;
@@ -38,7 +38,7 @@ namespace GoRogue.Pathing
         {
             _baseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             Magnitude = magnitude;
-            _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
+            _goalMap = new ArrayView<double>(baseMap.Width, baseMap.Height);
             _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
@@ -71,7 +71,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="pos">The position to return the value for.</param>
         /// <returns>The flee-map value for the given location.</returns>
-        public override double? this[Point pos] => _goalMap[pos];
+        public override double this[Point pos] => _goalMap[pos];
 
         /// <summary>
         /// Gets the direction of the neighbor with the minimum flee-map value from the given position.
@@ -102,7 +102,7 @@ namespace GoRogue.Pathing
         /// <returns>A string representing the flee map values.</returns>
         public override string ToString() =>
             // ReSharper disable once SpecifyACultureInStringConversionExplicitly
-            _goalMap.ToString(val => val.HasValue ? val.Value.ToString() : "null");
+            _goalMap.ToString(val => val < double.MaxValue ? val.ToString() : "null");
 
         /// <summary>
         /// Returns the flee-map values represented as a 2D-grid-style string, where any value that
@@ -111,7 +111,7 @@ namespace GoRogue.Pathing
         /// <param name="formatString">Format string to use for non-null values.</param>
         /// <returns>A string representing the flee-map values.</returns>
         public string ToString(string formatString) =>
-            _goalMap.ToString(val => val.HasValue ? val.Value.ToString(formatString) : "null");
+            _goalMap.ToString(val => val < double.MaxValue ? val.ToString(formatString) : "null");
 
         /// <summary>
         /// Returns the flee-map values represented as a 2D-grid-style string, with the given field size.
@@ -129,7 +129,7 @@ namespace GoRogue.Pathing
         /// <param name="formatString">Format string to use for non-null values.</param>
         /// <returns>A string representing the flee-map values.</returns>
         public string ToString(int fieldSize, string formatString)
-            => _goalMap.ToString(fieldSize, val => val.HasValue ? val.Value.ToString(formatString) : "null");
+            => _goalMap.ToString(fieldSize, val => val < double.MaxValue ? val.ToString(formatString) : "null");
 
         private void Update()
         {
@@ -144,7 +144,7 @@ namespace GoRogue.Pathing
                 var point = walkable[i];
 
                 // Value won't be null as null only happens for non-walkable squares
-                var newPoint = _baseMap[point]!.Value * -Magnitude;
+                var newPoint = _baseMap[point] * -Magnitude;
                 _goalMap[point] = newPoint;
 
                 openSet.Enqueue(_nodes[point], newPoint);
@@ -173,7 +173,7 @@ namespace GoRogue.Pathing
                     var point = edgeSet.Dequeue();
                     if (!mapBounds.Contains(point) || closedSet.Contains(point)) continue;
 
-                    var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
+                    var current = _goalMap[point]; // Never added non-nulls so this is fine
 
                     for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                     {
@@ -182,7 +182,7 @@ namespace GoRogue.Pathing
                         if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
                             continue;
 
-                        var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
+                        var neighborValue = _goalMap[openPoint]; // Never added non-nulls so this is fine
                         var newValue = current + _baseMap.DistanceMeasurement.Calculate(point, openPoint);
                         if (newValue < neighborValue)
                         {
