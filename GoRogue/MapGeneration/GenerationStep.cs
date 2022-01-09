@@ -146,7 +146,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="message" />
         public RegenerateMapException(string message)
-            : base(message)
+            : base(message + "  This exception is expected for some generation steps; consider using ConfigAndGenerateSafe to automatically handle it.")
         { }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace GoRogue.MapGeneration
         /// <param name="message" />
         /// <param name="innerException" />
         public RegenerateMapException(string message, Exception innerException)
-            : base(message, innerException)
+            : base(message + "  This exception is expected for some generation steps; consider using ConfigAndGenerateSafe to automatically handle it.", innerException)
         { }
     }
 
