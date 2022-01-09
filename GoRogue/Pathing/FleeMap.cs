@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
@@ -29,9 +28,6 @@ namespace GoRogue.Pathing
         // Nodes for the priority queue used in Update.
         private readonly ArrayView<PositionNode> _nodes;
 
-        // Cached directions based on goal map, to ensure maximum performance in the Update loop.
-        private readonly Direction[] _neighborDirections;
-
         /// <summary>
         /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
         /// and a magnitude to use (defaulting to 1.2).
@@ -46,8 +42,6 @@ namespace GoRogue.Pathing
             _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
-
-            _neighborDirections = ((AdjacencyRule)_baseMap.DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             _baseMap.Updated += Update;
 
@@ -139,6 +133,8 @@ namespace GoRogue.Pathing
 
         private void Update()
         {
+            AdjacencyRule adjacencyRule = _baseMap.DistanceMeasurement;
+
             var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
             var mapBounds = _goalMap.Bounds();
 
@@ -163,9 +159,9 @@ namespace GoRogue.Pathing
                 var minNode = openSet.Dequeue();
                 closedSet.Add(minNode.Position);
 
-                for (int i = 0; i < _neighborDirections.Length; i++)
+                for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
                 {
-                    var openPoint = minNode.Position + _neighborDirections[i];
+                    var openPoint = minNode.Position + adjacencyRule.DirectionsOfNeighborsCache[i];
                     if (!mapBounds.Contains(openPoint)) continue;
 
                     if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
@@ -179,9 +175,9 @@ namespace GoRogue.Pathing
 
                     var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
 
-                    for (int j = 0; j < _neighborDirections.Length; j++)
+                    for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                     {
-                        var openPoint = point + _neighborDirections[j];
+                        var openPoint = point + adjacencyRule.DirectionsOfNeighborsCache[j];
                         if (!mapBounds.Contains(openPoint)) continue;
                         if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
                             continue;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -27,8 +26,6 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
-        private readonly Direction[] _neighborDirections;
-
         private readonly HashSet<Point> _closedSet;
 
         private readonly Queue<Point> _openEdges;
@@ -51,7 +48,6 @@ namespace GoRogue.Pathing
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
-            _neighborDirections = ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             var hasher = new KnownSizeHasher(baseMap.Width);
             _closedSet = new HashSet<Point>(hasher);
@@ -181,6 +177,7 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
         {
+            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _openEdges.Clear();
             _closedSet.Clear();
@@ -206,10 +203,10 @@ namespace GoRogue.Pathing
 
                 // Known to be not null since the else condition above will have assigned to it.
                 var current = _goalMap[point]!.Value;
-                for (int j = 0; j < _neighborDirections.Length; j++)
+                for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                 {
                     // We only want to process walkable, non-visited cells that are within the map
-                    var openPoint = point + _neighborDirections[j];
+                    var openPoint = point + adjacencyRule.DirectionsOfNeighborsCache[j];
                     if (!mapBounds.Contains(openPoint)) continue;
                     if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
                         continue;

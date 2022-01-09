@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
@@ -156,23 +155,12 @@ namespace GoRogue.Pathing
             _openNodes = new FastPriorityQueue<AStarNode>(maxSize);
         }
 
-        private Direction[] _neighborDirections;
-
-        private Distance _distanceMeasurement;
         /// <summary>
         /// The distance calculation being used to determine distance between points. <see cref="SadRogue.Primitives.Distance.Manhattan" />
         /// implies 4-way connectivity, while <see cref="SadRogue.Primitives.Distance.Chebyshev" /> or <see cref="SadRogue.Primitives.Distance.Euclidean" /> imply
         /// 8-way connectivity for the purpose of determining adjacent coordinates.
         /// </summary>
-        public Distance DistanceMeasurement
-        {
-            get => _distanceMeasurement;
-            set
-            {
-                _distanceMeasurement = value;
-                _neighborDirections = ((AdjacencyRule)_distanceMeasurement).DirectionsOfNeighbors().ToArray();
-            }
-        }
+        public Distance DistanceMeasurement { get; set; }
 
         /// <summary>
         /// The map view being used to determine whether or not each tile is walkable.
@@ -228,6 +216,8 @@ namespace GoRogue.Pathing
         /// <returns>The shortest path between the two points, or <see langword="null" /> if no valid path exists.</returns>
         public Path? ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
         {
+            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
+
             // Don't waste initialization time if there is definitely no path
             if (!assumeEndpointsWalkable && (!WalkabilityView[start] || !WalkabilityView[end]))
                 return null; // There is no path
@@ -297,9 +287,9 @@ namespace GoRogue.Pathing
                     return new Path(result);
                 }
 
-                for (int i = 0; i < _neighborDirections.Length; i++)
+                for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
                 {
-                    var neighborPos = current.Position + _neighborDirections[i];
+                    var neighborPos = current.Position + adjacencyRule.DirectionsOfNeighborsCache[i];
 
                     // Not a valid map position, ignore
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityView.Width ||
