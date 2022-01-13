@@ -23,7 +23,7 @@ namespace SadRogue.Primitives.GridViews
         /// <param name="gridView" />
         /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG" />.</param>
         /// <returns>The item at a random position in the IGridView.</returns>
-        public static T RandomItem<T>(this IGridView<T> gridView, IGenerator? rng = null)
+        public static T RandomItem<T>(this IGridView<T> gridView, IEnhancedRandom? rng = null)
             => gridView[RandomPosition(gridView, rng)];
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace SadRogue.Primitives.GridViews
         /// <returns>
         /// The item at a random position in the IGridView for which the selector returns true.
         /// </returns>
-        public static T RandomItem<T>(this IGridView<T> gridView, Func<Point, T, bool> selector, IGenerator? rng = null)
+        public static T RandomItem<T>(this IGridView<T> gridView, Func<Point, T, bool> selector, IEnhancedRandom? rng = null)
             => gridView[RandomPosition(gridView, selector, rng)];
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace SadRogue.Primitives.GridViews
         /// </param>
         /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG" />.</param>
         /// <returns>A random position whose value in the current IGridView is equal to the one specified.</returns>
-        public static Point RandomPosition<T>(this IGridView<T> gridView, T validValue, IGenerator? rng = null)
+        public static Point RandomPosition<T>(this IGridView<T> gridView, T validValue, IEnhancedRandom? rng = null)
             => gridView.RandomPosition((c, i) => i?.Equals(validValue) ?? validValue == null, rng);
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace SadRogue.Primitives.GridViews
         /// A random position whose value in this IGridView is equal to one of the values specified.
         /// </returns>
         public static Point RandomPosition<T>(this IGridView<T> gridView, IEnumerable<T> validValues,
-                                              IGenerator? rng = null)
+                                              IEnhancedRandom? rng = null)
             => gridView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace SadRogue.Primitives.GridViews
         /// <returns>
         /// A random position whose value in this IGridView is equal to one of the values specified.
         /// </returns>
-        public static Point RandomPosition<T>(this IGridView<T> gridView, HashSet<T> validValues, IGenerator? rng = null)
+        public static Point RandomPosition<T>(this IGridView<T> gridView, HashSet<T> validValues, IEnhancedRandom? rng = null)
             => gridView.RandomPosition((c, i) => validValues.Contains(i), rng);
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace SadRogue.Primitives.GridViews
         /// <returns>
         /// A random position whose value in this IGridView is equal to one of the values specified.
         /// </returns>
-        public static Point RandomPosition<T>(this IGridView<T> gridView, IGenerator? rng = null, params T[] validValues)
+        public static Point RandomPosition<T>(this IGridView<T> gridView, IEnhancedRandom? rng = null, params T[] validValues)
             => RandomPosition(gridView, validValues, rng);
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace SadRogue.Primitives.GridViews
         /// <param name="rng">The rng to use. Defaults to<see cref="GlobalRandom.DefaultRNG" />.</param>
         /// <returns>A random position in the IGridView for which the selector returns true.</returns>
         public static Point RandomPosition<T>(this IGridView<T> gridView, Func<Point, T, bool> selector,
-                                              IGenerator? rng = null)
+                                              IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -144,7 +144,7 @@ namespace SadRogue.Primitives.GridViews
         /// <param name="gridView" />
         /// <param name="rng">The rng to use. Defaults to <see cref="GlobalRandom.DefaultRNG" />.</param>
         /// <returns>A random position within the IGridView.</returns>
-        public static Point RandomPosition<T>(this IGridView<T> gridView, IGenerator? rng = null)
+        public static Point RandomPosition<T>(this IGridView<T> gridView, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 

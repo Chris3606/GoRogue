@@ -15,13 +15,13 @@ namespace GoRogue.MapGeneration.TunnelCreators
     [PublicAPI]
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
-        private readonly IGenerator _rng;
+        private readonly IEnhancedRandom _rng;
 
         /// <summary>
         /// Creates a new tunnel creator.
         /// </summary>
         /// <param name="rng">RNG to use for movement selection.</param>
-        public HorizontalVerticalTunnelCreator(IGenerator? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
+        public HorizontalVerticalTunnelCreator(IEnhancedRandom? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
 
         /// <inheritdoc />
         public Area CreateTunnel(ISettableGridView<bool> map, Point tunnelStart, Point tunnelEnd)

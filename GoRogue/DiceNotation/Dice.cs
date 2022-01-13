@@ -1,5 +1,6 @@
 ﻿using GoRogue.Random;
 using JetBrains.Annotations;
+using ShaiRandom.Generators;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation
@@ -13,7 +14,7 @@ namespace GoRogue.DiceNotation
     {
         /// <summary>
         /// The parser that will be used to parse dice expressions given to the <see cref="Parse(string)" /> and
-        /// <see cref="Roll(string, IGenerator?)" />
+        /// <see cref="Roll(string, IEnhancedRandom?)" />
         /// functions. If you want to use a custom parser, you can assign an instance to this field.
         /// </summary>
         public static IParser DiceParser = new Parser();
@@ -24,12 +25,12 @@ namespace GoRogue.DiceNotation
         /// instance representing the given dice expression.
         /// </summary>
         /// <remarks>
-        /// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IGenerator?)" /> method is extremely fast.
+        /// Generally speaking, dice-parsing via the standard <see cref="Roll(string, IEnhancedRandom?)" /> method is extremely fast.
         /// However, if
         /// you are repeating a dice roll many times, in a case where maximum performance is absolutely necessary, there is some
         /// benefit to
         /// retrieving a <see cref="DiceExpression" /> instance instead
-        /// of using the Roll function, and calling that expression's <see cref="DiceExpression.Roll(IGenerator?)" /> method
+        /// of using the Roll function, and calling that expression's <see cref="DiceExpression.Roll(IEnhancedRandom?)" /> method
         /// whenever a result
         /// is required.
         /// </remarks>
@@ -53,7 +54,7 @@ namespace GoRogue.DiceNotation
         /// RNG to use to perform the roll. If null is specified, the default RNG is used.
         /// </param>
         /// <returns>The result of evaluating the dice expression given.</returns>
-        public static int Roll(string expression, IGenerator? random = null)
+        public static int Roll(string expression, IEnhancedRandom? random = null)
         {
             random ??= GlobalRandom.DefaultRNG;
             return DiceParser.Parse(expression).Roll(random);

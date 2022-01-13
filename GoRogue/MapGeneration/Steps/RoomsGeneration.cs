@@ -83,7 +83,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for room creation/placement.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// The maximum size allowed for rooms.  Rounded up to an odd number.  Defaults to 7.

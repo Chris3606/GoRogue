@@ -21,7 +21,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// The RNG to use for filling the view.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Represents the percent chance that a given cell will be a floor cell when the map is

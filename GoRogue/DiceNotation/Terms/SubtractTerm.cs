@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using JetBrains.Annotations;
+using ShaiRandom.Generators;
 using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
@@ -37,7 +38,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The rng to used -- passed to other terms.</param>
         /// <returns>The result of evaluating <see cref="Term1" /> - <see cref="Term2" />.</returns>
-        public int GetResult(IGenerator rng) => Term1.GetResult(rng) - Term2.GetResult(rng);
+        public int GetResult(IEnhancedRandom rng) => Term1.GetResult(rng) - Term2.GetResult(rng);
 
         /// <summary>
         /// Returns a parenthesized string representing the operation.

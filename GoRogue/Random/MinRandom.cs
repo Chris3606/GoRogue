@@ -1,39 +1,28 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.Random
 {
     /// <summary>
-    /// A "random" number generator that always returns the minValue parameter given, or 0 on the
-    /// Next overload that only takes maxValue. Again, may be useful for testing. Also used in
-    /// <see cref="DiceNotation.DiceExpression" /> for certain minimum roll functions.
+    /// A "random" number generator that always returns the minimum possible value for a given function call.
+    /// May be useful for testing. Also used in <see cref="DiceNotation.DiceExpression" /> for certain minimum roll
+    /// functions.
     /// </summary>
     [PublicAPI]
-    public class MinRandom : IGenerator
+    public class MinRandom : IEnhancedRandom
     {
         /// <summary>
-        /// Whether or not the RNG is capable of resetting, such that it will return the same series
-        /// of values again.
+        /// Returns int.MinValue.
         /// </summary>
-        public bool CanReset => true;
+        /// <returns>int.MinValue</returns>
+        public int NextInt() => int.MinValue;
 
         /// <summary>
-        /// Since this RNG returns the maximum possible value, this field will always return 0.
+        /// Returns 0.
         /// </summary>
-        public uint Seed => 0;
-
-        /// <summary>
-        /// Returns 0.0
-        /// </summary>
-        /// <returns>0.0</returns>
-        public int Next() => 0;
-
-        /// <summary>
-        /// Returns 0.0
-        /// </summary>
-        /// <returns>0.0</returns>
-        public int Next(int maxValue) => 0;
+        /// <returns>0</returns>
+        public int NextInt(int maxValue) => 0;
 
         /// <summary>
         /// Returns <paramref name="minValue" />.
@@ -43,28 +32,124 @@ namespace GoRogue.Random
         /// </param>
         /// <param name="maxValue">
         /// The maximum value for the returned number (which is unused since this generator always
-        /// returns the minimum.
+        /// returns the minimum).
         /// </param>
         /// <returns>
         ///     <paramref name="minValue" />
         /// </returns>
-        public int Next(int minValue, int maxValue) => minValue;
+        public int NextInt(int minValue, int maxValue) => minValue;
 
         /// <summary>
         /// Returns false.
         /// </summary>
         /// <returns>false</returns>
-        public bool NextBoolean() => false;
+        public bool NextBool() => false;
 
         /// <summary>
-        /// Fills the given buffer with bytes of value 0.
+        /// Returns 0.0.
         /// </summary>
-        /// <param name="buffer">The buffer to fill.</param>
-        public void NextBytes(byte[] buffer)
-        {
-            for (var i = 0; i < buffer.Length; i++)
-                buffer[i] = 0;
-        }
+        /// <returns>0.0</returns>
+        public float NextFloat() => 0.0f;
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <param name="outerBound">Outer bound for returned value; unused since this function always returns the min (0).</param>
+        /// <returns>0.0</returns>
+        public float NextFloat(float outerBound) => 0;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/>.
+        /// </summary>
+        /// <param name="innerBound">Inner bound for the returned value; always returned by this function.</param>
+        /// <param name="outerBound">Outer bound for returned value; unused since this function always returns the min (0).</param>
+        /// <returns>0.0</returns>
+        public float NextFloat(float innerBound, float outerBound) => innerBound;
+
+        /// <summary>
+        /// Does nothing since this generator has no state.
+        /// </summary>
+        /// <param name="seed"/>
+        public void Seed(ulong seed)
+        { }
+
+        /// <summary>
+        /// Simply creates a new min random; there is no state to copy.
+        /// </summary>
+        /// <returns>A new MinRandom generator.</returns>
+        public IEnhancedRandom Copy() => new MinRandom();
+
+        /// <summary>
+        /// This generator does not support serialization.
+        /// </summary>
+        public string StringSerialize()
+            => throw new NotSupportedException($"{nameof(MinRandom)} does not support serialization.");
+
+        /// <summary>
+        /// This generator does not support serialization.
+        /// </summary>
+        public IEnhancedRandom StringDeserialize(string data)
+            => throw new NotSupportedException($"{nameof(MinRandom)} does not support serialization.");
+
+        /// <summary>
+        /// Does nothing since this generator has no state.
+        /// </summary>
+        public ulong SelectState(int selection) => 0;
+
+        /// <summary>
+        /// Does nothing since this generator has no state.
+        /// </summary>
+        public void SetSelectedState(int selection, ulong value)
+        { }
+
+        /// <summary>
+        /// Returns 0.
+        /// </summary>
+        /// <returns>0</returns>
+        public ulong NextULong() => 0;
+
+        /// <summary>
+        /// Returns 0.
+        /// </summary>
+        /// <param name="bound"/>
+        /// <returns>0</returns>
+        public ulong NextULong(ulong bound) => 0;
+
+        /// <summary>
+        /// Returns <paramref name="inner"/>.
+        /// </summary>
+        /// <param name="inner"/>
+        /// <param name="outer"/>
+        /// <returns><paramref name="inner"/></returns>
+        public ulong NextULong(ulong inner, ulong outer) => inner;
+
+        /// <summary>
+        /// Returns long.MinValue.
+        /// </summary>
+        /// <returns>long.MinValue</returns>
+        public long NextLong() => long.MinValue;
+
+        /// <summary>
+        /// Returns 0.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>0</returns>
+        public long NextLong(long outerBound) => 0;
+
+        /// <summary>
+        /// Returns <paramref name="inner"/>.
+        /// </summary>
+        /// <param name="inner"/>
+        /// <param name="outer"/>
+        /// <returns><paramref name="inner"/></returns>
+        public long NextLong(long inner, long outer) => inner;
+
+        /// <summary>
+        /// Returns a number with all bits 0.
+        /// </summary>
+        /// <param name="bits"/>
+        /// <returns>0</returns>
+        public uint NextBits(int bits) => 0;
 
         /// <summary>
         /// Fills the given buffer with bytes of value 0.
@@ -106,10 +191,125 @@ namespace GoRogue.Random
         public double NextDouble(double minValue, double maxValue) => minValue;
 
         /// <summary>
-        /// Returns 0.
+        /// Returns 0.0.
+        /// </summary>
+        /// <returns>0.0</returns>
+        public double NextInclusiveDouble() => 0.0;
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>0.0</returns>
+        public double NextInclusiveDouble(double outerBound) => 0.0;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/>
+        /// </summary>
+        /// <param name="innerBound"/>
+        /// <param name="outerBound"/>
+        /// <returns><paramref name="innerBound"/></returns>
+        public double NextInclusiveDouble(double innerBound, double outerBound) => innerBound;
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <returns>0.0</returns>
+        public float NextInclusiveFloat() => 0.0f;
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>0.0</returns>
+        public float NextInclusiveFloat(float outerBound) => 0.0f;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/>
+        /// </summary>
+        /// <param name="innerBound"/>
+        /// <param name="outerBound"/>
+        /// <returns><paramref name="innerBound"/></returns>
+        public float NextInclusiveFloat(float innerBound, float outerBound) => innerBound;
+
+        /// <summary>
+        /// Returns double.Epsilon.
+        /// </summary>
+        /// <returns>double.Epsilon</returns>
+        public double NextExclusiveDouble() => double.Epsilon;
+
+        /// <summary>
+        /// Returns double.Epsilon.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>double.Epsilon</returns>
+        public double NextExclusiveDouble(double outerBound) => double.Epsilon;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/> + double.Epsilon.
+        /// </summary>
+        /// <param name="innerBound"/>
+        /// <param name="outerBound"/>
+        /// <returns><paramref name="innerBound"/> + double.Epsilon</returns>
+        public double NextExclusiveDouble(double innerBound, double outerBound) => innerBound + double.Epsilon;
+
+        /// <summary>
+        /// Returns float.Epsilon.
+        /// </summary>
+        /// <returns>float.Epsilon</returns>
+        public float NextExclusiveFloat() => float.Epsilon;
+
+        /// <summary>
+        /// Returns float.Epsilon.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>float.Epsilon</returns>
+        public float NextExclusiveFloat(float outerBound) => float.Epsilon;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/> + float.Epsilon.
+        /// </summary>
+        /// <param name="innerBound"/>
+        /// <param name="outerBound"/>
+        /// <returns><paramref name="innerBound"/> + float.Epsilon</returns>
+        public float NextExclusiveFloat(float innerBound, float outerBound) => innerBound + float.Epsilon;
+
+        /// <summary>
+        /// Supported, but does nothing since the unbounded generation functions always return the same value.
         /// </summary>
         /// <returns>0</returns>
-        public int NextInclusiveMaxValue() => 0;
+        public ulong Skip(ulong distance) => 0;
+
+        /// <summary>
+        /// Supported, but does nothing since the unbounded generation functions always return the same value.
+        /// </summary>
+        /// <returns>0</returns>
+        public ulong PreviousULong() =>  0;
+
+        /// <summary>
+        /// 0, since this generator has no states.
+        /// </summary>
+        public int StateCount => 0;
+
+        /// <summary>
+        /// This generator supports <see cref="SelectState"/>, although its implementation does nothing.
+        /// </summary>
+        public bool SupportsReadAccess => true;
+
+        /// <summary>
+        /// This generator supports <see cref="SetSelectedState"/>, although its implementation does nothing.
+        /// </summary>
+        public bool SupportsWriteAccess => true;
+
+        /// <summary>
+        /// This generator supports <see cref="Skip"/>, although its implementation does nothing.
+        /// </summary>
+        public bool SupportsSkip => true;
+
+        /// <summary>
+        /// This generator supports <see cref="PreviousULong"/>, although its implementation does nothing.
+        /// </summary>
+        public bool SupportsPrevious => true;
 
         /// <summary>
         /// Returns 0.
@@ -137,30 +337,5 @@ namespace GoRogue.Random
         ///     <paramref name="minValue" />
         /// </returns>
         public uint NextUInt(uint minValue, uint maxValue) => minValue;
-
-        /// <summary>
-        /// Returns 0.
-        /// </summary>
-        /// <returns>0</returns>
-        public uint NextUIntExclusiveMaxValue() => 0;
-
-        /// <summary>
-        /// Returns 0.
-        /// </summary>
-        /// <returns>0</returns>
-        public uint NextUIntInclusiveMaxValue() => 0;
-
-        /// <summary>
-        /// Simply returns true, since this generator has no state.
-        /// </summary>
-        /// <returns>true</returns>
-        public bool Reset() => true;
-
-        /// <summary>
-        /// Simply returns true, since this generator has no state.
-        /// </summary>
-        /// <param name="seed">Unused, since this generator has no seed.</param>
-        /// <returns>true</returns>
-        public bool Reset(uint seed) => true;
     }
 }

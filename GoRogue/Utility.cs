@@ -6,7 +6,6 @@ using System.Text;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
 
 namespace GoRogue
 {
@@ -263,31 +262,6 @@ namespace GoRogue
                 elementSeparator, endRow, end);
 
         /// <summary>
-        /// Extension method for <see cref="IList{T}" /> that implements a fisher-yates shuffle. Modifies the list it is
-        /// called on to randomly rearrange the elements therein.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used
-        /// </param>
-        public static void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            var n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-        /// <summary>
         /// "Multiplies", aka repeats, a string the given number of times.
         /// </summary>
         /// <param name="str" />
@@ -306,7 +280,7 @@ namespace GoRogue
         /// to be used.
         /// </param>
         /// <returns>The index selected.</returns>
-        public static int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
+        public static int RandomIndex<T>(this IReadOnlyList<T> list, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -331,7 +305,7 @@ namespace GoRogue
         /// to be used.
         /// </param>
         /// <returns>Index selected.</returns>
-        public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
+        public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -356,7 +330,7 @@ namespace GoRogue
         /// to be used.
         /// </param>
         /// <returns>Item selected.</returns>
-        public static T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
+        public static T RandomItem<T>(this IReadOnlyList<T> list, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -379,7 +353,7 @@ namespace GoRogue
         /// to be used.
         /// </param>
         /// <returns>Item selected.</returns>
-        public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
+        public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -464,7 +438,7 @@ namespace SadRogue.Primitives
         /// to be used.
         /// </param>
         /// <returns>The index selected.</returns>
-        public static int RandomIndex(this IReadOnlyArea area, IGenerator? rng = null)
+        public static int RandomIndex(this IReadOnlyArea area, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -488,7 +462,7 @@ namespace SadRogue.Primitives
         /// to be used.
         /// </param>
         /// <returns>Index selected.</returns>
-        public static int RandomIndex(this IReadOnlyArea area, Func<int, bool> selector, IGenerator? rng = null)
+        public static int RandomIndex(this IReadOnlyArea area, Func<int, bool> selector, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -512,7 +486,7 @@ namespace SadRogue.Primitives
         /// to be used.
         /// </param>
         /// <returns>Item selected.</returns>
-        public static Point RandomItem(this IReadOnlyArea area, IGenerator? rng = null)
+        public static Point RandomItem(this IReadOnlyArea area, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 
@@ -534,7 +508,7 @@ namespace SadRogue.Primitives
         /// to be used.
         /// </param>
         /// <returns>Item selected.</returns>
-        public static Point RandomItem(this IReadOnlyArea area, Func<Point, bool> selector, IGenerator? rng = null)
+        public static Point RandomItem(this IReadOnlyArea area, Func<Point, bool> selector, IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 

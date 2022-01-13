@@ -55,7 +55,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for randomization or room order (if randomization is enabled).
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Creates a new ordered area connection step.

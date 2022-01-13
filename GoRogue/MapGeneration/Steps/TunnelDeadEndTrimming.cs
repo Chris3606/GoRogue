@@ -67,7 +67,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for percentage checks.  Defaults to <see cref="GlobalRandom.DefaultRNG" />.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// The chance out of 100 that a dead end is left alone.  Defaults to 40.

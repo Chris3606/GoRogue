@@ -109,7 +109,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// The RNG to use for connections.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Creates a new maze generation step.

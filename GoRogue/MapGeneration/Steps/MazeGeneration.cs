@@ -68,7 +68,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for maze generation.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Creates a new maze generation step.
@@ -206,7 +206,7 @@ namespace GoRogue.MapGeneration.Steps
             tunnelList.AddRange(crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0), Name);
         }
 
-        private static Point FindEmptySquare(IGridView<bool> map, IGenerator rng)
+        private static Point FindEmptySquare(IGridView<bool> map, IEnhancedRandom rng)
         {
             // Try random positions first
             for (var i = 0; i < 100; i++)
@@ -229,7 +229,7 @@ namespace GoRogue.MapGeneration.Steps
             return Point.None;
         }
 
-        private static int GetDirectionIndex(bool[] validDirections, IGenerator rng)
+        private static int GetDirectionIndex(bool[] validDirections, IEnhancedRandom rng)
         {
             // 10 tries to find random ok valid
             var randomSuccess = false;
