@@ -6,7 +6,7 @@ using GoRogue.MapGeneration.TunnelCreators;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration
 {

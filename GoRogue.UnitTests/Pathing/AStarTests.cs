@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using GoRogue.MapGeneration;
 using GoRogue.Pathing;
+using GoRogue.Random;
 using GoRogue.UnitTests.Mocks;
 using Roy_T.AStar.Graphs;
 using Roy_T.AStar.Paths;
 using Roy_T.AStar.Primitives;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using ShaiRandom.Generators;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;
@@ -61,10 +63,10 @@ namespace GoRogue.UnitTests.Pathing
                     var testPoints = new List<(Point start, Point end)>();
                     for (int i = 0; i < _pathsPerMap; i++)
                     {
-                        Point start = item.RandomPosition(true);
+                        Point start = GlobalRandom.DefaultRNG.RandomPosition(item, true);
                         Point end = start;
                         while (end == start)
-                            end = item.RandomPosition(true);
+                            end = GlobalRandom.DefaultRNG.RandomPosition(item, true);
 
                         testPoints.Add((start, end));
                     }

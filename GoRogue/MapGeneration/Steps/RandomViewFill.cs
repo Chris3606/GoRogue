@@ -2,7 +2,7 @@
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
         /// Represents the percent chance that a given cell will be a floor cell when the map is
         /// initially randomly filled.
         /// </summary>
-        public ushort FillProbability = 40;
+        public float FillProbability = 40f;
 
         /// <summary>
         /// Whether or not to exclude the perimeter points from the random fill.

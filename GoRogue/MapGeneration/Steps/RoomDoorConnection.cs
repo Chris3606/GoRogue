@@ -5,7 +5,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -223,7 +223,7 @@ namespace GoRogue.MapGeneration.Steps
                 // If the total sides we can select from is greater than the maximum amount of sides we are allowed to select per room,
                 // then we must randomly remove sides until we are within the max parameter
                 while (validSides.Count > MaxSidesToConnect)
-                    validSides.RemoveAt(validSides.RandomIndex(RNG));
+                    validSides.RemoveAt(RNG.RandomIndex(validSides));
 
                 // If there are some extra sides that we could remove and still stay within the minimum sides parameter,
                 // then check the side cancellation chance and remove if needed.
@@ -255,7 +255,7 @@ namespace GoRogue.MapGeneration.Steps
                     while (validPositions[side].Count > 0)
                     {
                         // Select a position from the list
-                        var newConnectionPoint = validPositions[side].RandomItem(RNG);
+                        var newConnectionPoint = RNG.RandomElement(validPositions[side]);
                         validPositions.Remove(newConnectionPoint);
 
                         // If point is by two valid walls, we'll carve it.  This might not be the case if we happened to select the point next to it

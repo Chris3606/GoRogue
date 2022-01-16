@@ -6,7 +6,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -209,9 +209,10 @@ namespace GoRogue.MapGeneration.Steps
         private static Point FindEmptySquare(IGridView<bool> map, IEnhancedRandom rng)
         {
             // Try random positions first
+            // TODO: Port to retries option
             for (var i = 0; i < 100; i++)
             {
-                var location = map.RandomPosition(false, rng);
+                var location = rng.RandomPosition(map, false);
 
                 if (IsPointConsideredEmpty(map, location))
                     return location;
@@ -237,7 +238,7 @@ namespace GoRogue.MapGeneration.Steps
 
             for (var randomCounter = 0; randomCounter < 10; randomCounter++)
             {
-                tempDirectionIndex = rng.Next(4);
+                tempDirectionIndex = rng.NextInt(4);
                 if (!validDirections[tempDirectionIndex]) continue;
 
                 randomSuccess = true;

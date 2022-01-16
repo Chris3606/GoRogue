@@ -5,7 +5,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -72,7 +72,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// The chance out of 100 that a dead end is left alone.  Defaults to 40.
         /// </summary>
-        public ushort SaveDeadEndChance = 40;
+        public float SaveDeadEndChance = 40f;
 
         /// <summary>
         /// Creates a new dead end trimming generation step.

@@ -53,7 +53,7 @@ namespace GoRogue.PerformanceTests
                             new Change
                             {
                                 Position = pos,
-                                Value = GlobalRandom.DefaultRNG.Next(1, 6)
+                                Value = GlobalRandom.DefaultRNG.NextInt(1, 6)
                             });
                 }
             }

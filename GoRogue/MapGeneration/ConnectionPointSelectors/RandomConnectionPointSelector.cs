@@ -1,7 +1,7 @@
 ﻿using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.ConnectionPointSelectors
 {
@@ -22,6 +22,6 @@ namespace GoRogue.MapGeneration.ConnectionPointSelectors
 
         /// <inheritdoc />
         public AreaConnectionPointPair SelectConnectionPoints(IReadOnlyArea area1, IReadOnlyArea area2)
-            => new AreaConnectionPointPair(area1.RandomItem(_rng), area2.RandomItem(_rng));
+            => new AreaConnectionPointPair(_rng.RandomPosition(area1), _rng.RandomPosition(area2));
     }
 }

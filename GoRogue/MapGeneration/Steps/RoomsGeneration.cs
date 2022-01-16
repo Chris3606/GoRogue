@@ -5,7 +5,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -153,7 +153,7 @@ namespace GoRogue.MapGeneration.Steps
             );
 
             // Determine how many rooms to generate
-            var roomCounter = RNG.Next(MinRooms, MaxRooms + 1);
+            var roomCounter = RNG.NextInt(MinRooms, MaxRooms + 1);
 
             // Get or create/add a rooms context component
             var roomsContext = context.GetFirstOrNew(
@@ -170,7 +170,7 @@ namespace GoRogue.MapGeneration.Steps
                 // Attempt to create the room until either we reach max attempts or we create and place a room in a valid location
                 while (tryCounterCreate != 0)
                 {
-                    var roomSize = RNG.Next(RoomMinSize, RoomMaxSize + 1);
+                    var roomSize = RNG.NextInt(RoomMinSize, RoomMaxSize + 1);
                     var width =
                         (int)(roomSize * RoomSizeRatioX); // This helps with non square fonts. So rooms don't look odd
                     var height = (int)(roomSize * RoomSizeRatioY);
@@ -181,8 +181,8 @@ namespace GoRogue.MapGeneration.Steps
 
                     if (adjustmentBase != 0)
                     {
-                        var adjustment = RNG.Next(-adjustmentBase, adjustmentBase + 1);
-                        var adjustmentChance = RNG.Next(0, 2);
+                        var adjustment = RNG.NextInt(-adjustmentBase, adjustmentBase + 1);
+                        var adjustmentChance = RNG.NextInt(0, 2);
 
                         if (adjustmentChance == 0)
                             width += (int)(adjustment * RoomSizeRatioX);
@@ -211,9 +211,9 @@ namespace GoRogue.MapGeneration.Steps
 
                         // Generate the rooms at odd positions, to make door/tunnel placement easier
                         while (xPos % 2 == 0)
-                            xPos = RNG.Next(3, wallFloorContext.Width - roomInnerRect.Width - 3);
+                            xPos = RNG.NextInt(3, wallFloorContext.Width - roomInnerRect.Width - 3);
                         while (yPos % 2 == 0)
-                            yPos = RNG.Next(3, wallFloorContext.Height - roomInnerRect.Height - 3);
+                            yPos = RNG.NextInt(3, wallFloorContext.Height - roomInnerRect.Height - 3);
 
                         // Record a rectangle for the inner and outer bounds of the room we've created
                         roomInnerRect = roomInnerRect.WithPosition(new Point(xPos, yPos));

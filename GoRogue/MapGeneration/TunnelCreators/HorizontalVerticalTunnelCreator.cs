@@ -4,7 +4,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.TunnelCreators
 {
@@ -28,7 +28,7 @@ namespace GoRogue.MapGeneration.TunnelCreators
         {
             var tunnel = new Area();
 
-            if (_rng.NextBoolean())
+            if (_rng.NextBool())
             {
                 tunnel.Add(CreateHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelStart.Y));
                 tunnel.Add(CreateVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelEnd.X));

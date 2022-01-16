@@ -9,12 +9,10 @@ using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random.Generators;
+using ShaiRandom.Generators;
 using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;
-
-//using System.Drawing;
 
 namespace GoRogue.UnitTests
 {
@@ -84,7 +82,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintDungeonMazeMap()
         {
-            var rng = new XorShift128Generator(12345);
+            var rng = new MizuchiRandom(12345);
 
             var generator = new Generator(40, 30);
             generator.ConfigAndGenerateSafe(gen =>
