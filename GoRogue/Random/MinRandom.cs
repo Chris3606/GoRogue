@@ -275,6 +275,27 @@ namespace GoRogue.Random
         public float NextExclusiveFloat(float innerBound, float outerBound) => innerBound + float.Epsilon;
 
         /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <returns>0.0.</returns>
+        public decimal NextDecimal() => 0.0M;
+
+        /// <summary>
+        /// Returns 0.0.
+        /// </summary>
+        /// <param name="outerBound"/>
+        /// <returns>0.0</returns>
+        public decimal NextDecimal(decimal outerBound) => 0.0M;
+
+        /// <summary>
+        /// Returns <paramref name="innerBound"/>.
+        /// </summary>
+        /// <param name="innerBound"/>
+        /// <param name="outerBound"/>
+        /// <returns><paramref name="innerBound"/></returns>
+        public decimal NextDecimal(decimal innerBound, decimal outerBound) => innerBound;
+
+        /// <summary>
         /// Supported, but does nothing since the unbounded generation functions always return the same value.
         /// </summary>
         /// <returns>0</returns>
@@ -310,6 +331,11 @@ namespace GoRogue.Random
         /// This generator supports <see cref="PreviousULong"/>, although its implementation does nothing.
         /// </summary>
         public bool SupportsPrevious => true;
+
+        /// <summary>
+        /// Throws exception since the generator does not support serialization.
+        /// </summary>
+        public string Tag => throw new NotSupportedException();
 
         /// <summary>
         /// Returns 0.

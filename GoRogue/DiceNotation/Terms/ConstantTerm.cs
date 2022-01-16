@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using ShaiRandom.Generators;
-using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {

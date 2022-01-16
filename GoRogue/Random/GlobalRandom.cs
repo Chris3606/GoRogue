@@ -1,7 +1,5 @@
 ﻿using JetBrains.Annotations;
 using ShaiRandom.Generators;
-using Troschuetz.Random;
-using Troschuetz.Random.Generators;
 
 namespace GoRogue.Random
 {

@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
 using ShaiRandom.Generators;
-using Troschuetz.Random;
 
 namespace GoRogue.DiceNotation.Terms
 {

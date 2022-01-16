@@ -72,8 +72,10 @@ namespace GoRogue.Random
         /// </summary>
         public double Variance => ContinuousDistribution.Variance;
 
+        /// <inheritdoc />
         public int Steps => ContinuousDistribution.Steps;
 
+        /// <inheritdoc />
         public int ParameterCount => ContinuousDistribution.ParameterCount;
 
         /// <summary>
@@ -92,8 +94,10 @@ namespace GoRogue.Random
         /// <returns>A distributed double-precision floating point number.</returns>
         public double NextDouble() => ContinuousDistribution.NextDouble();
 
+        /// <inheritdoc />
         public string ParameterName(int index) => ContinuousDistribution.ParameterName(index);
 
+        /// <inheritdoc />
         public double ParameterValue(int index) => ContinuousDistribution.ParameterValue(index);
     }
 }

@@ -12,6 +12,8 @@ namespace GoRogue.Random
     [PublicAPI]
     public class MaxRandom : IEnhancedRandom
     {
+        private const decimal DecimalEpsilon = 0.0000000000000000000000000001M;
+
         /// <summary>
         /// Returns <see cref="int.MaxValue" />.
         /// </summary>
@@ -274,6 +276,25 @@ namespace GoRogue.Random
             => Math.Max(innerBound + float.Epsilon, outerBound - float.Epsilon);
 
         /// <summary>
+        /// Returns a number very close to (but still less than) 1.0.
+        /// </summary>
+        /// <returns>A number very close to (but still less than) 1.0.</returns>
+        public decimal NextDecimal() => 1.0M - DecimalEpsilon;
+
+        /// <summary>
+        /// Returns a number very close to (but still less than) <paramref name="outerBound"/>.
+        /// </summary>
+        /// <returns>A number very close to (but still less than) <paramref name="outerBound"/>.</returns>
+        public decimal NextDecimal(decimal outerBound) => outerBound - DecimalEpsilon;
+
+        /// <summary>
+        /// Returns a number very close to (but still less than) <paramref name="outerBound"/>, or
+        /// <paramref name="innerBound"/> if the outerBound is below innerBound..
+        /// </summary>
+        /// <returns>Math.Max(innerBound, outerBound - 0.0000000000000000000000000001M).</returns>
+        public decimal NextDecimal(decimal innerBound, decimal outerBound) => Math.Max(innerBound, outerBound - DecimalEpsilon);
+
+        /// <summary>
         /// Supported, but does nothing since the unbounded generation functions always return the same value.
         /// </summary>
         /// <returns>ulong.MaxValue</returns>
@@ -309,6 +330,12 @@ namespace GoRogue.Random
         /// This generator supports <see cref="PreviousULong"/>, although its implementation does nothing.
         /// </summary>
         public bool SupportsPrevious => true;
+
+        /// <summary>
+        /// Throws exception since this generator does not support serialization.
+        /// </summary>
+        /// <exception cref="NotImplementedException"></exception>
+        public string Tag => throw new NotSupportedException();
 
         /// <summary>
         /// Returns <see cref="uint.MaxValue" />.

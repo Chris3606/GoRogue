@@ -10,10 +10,6 @@ using SadRogue.Primitives.GridViews;
 // ReSharper disable once CheckNamespace
 namespace ShaiRandom.Generators
 {
-    // TODO: Temp (replace with Shai alpha2 version)
-    class MaxAttemptsReachedException : Exception
-    { }
-
     /// <summary>
     /// Class containing some extension methods for <see cref="IEnhancedRandom" /> instances.
     /// </summary>
