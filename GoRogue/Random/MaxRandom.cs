@@ -92,7 +92,7 @@ namespace GoRogue.Random
         /// <summary>
         /// This generator does not support serialization.
         /// </summary>
-        public IEnhancedRandom StringDeserialize(string data)
+        public IEnhancedRandom StringDeserialize(ReadOnlySpan<char> data)
             => throw new NotSupportedException($"{nameof(MaxRandom)} does not support serialization.");
 
         /// <summary>
@@ -232,6 +232,27 @@ namespace GoRogue.Random
         public float NextInclusiveFloat(float innerBound, float outerBound) => Math.Max(innerBound, outerBound);
 
         /// <summary>
+        /// Returns 1.0.
+        /// </summary>
+        /// <returns>1.0</returns>
+        public decimal NextInclusiveDecimal() => 1.0M;
+
+        /// <summary>
+        /// Returns the maximum of <paramref name="outerBound"/> and 0.
+        /// </summary>
+        /// <param name="outerBound">Outer bound to return, inclusive.</param>
+        /// <returns>Math.Max(0, outerBound)</returns>
+        public decimal NextInclusiveDecimal(decimal outerBound) => Math.Max(outerBound, 0);
+
+        /// <summary>
+        /// Returns the maximum of <paramref name="outerBound"/> and <paramref name="innerBound"/>.
+        /// </summary>
+        /// <param name="innerBound">Inner bound to return, inclusive.</param>
+        /// <param name="outerBound">Outer bound to return, inclusive.</param>
+        /// <returns>Math.Max(<paramref name="innerBound"/>, <paramref name="outerBound"/>)</returns>
+        public decimal NextInclusiveDecimal(decimal innerBound, decimal outerBound) => Math.Max(innerBound, outerBound);
+
+        /// <summary>
         /// Returns 1 - double.Epsilon.
         /// </summary>
         /// <returns>1 - double.Epsilon.</returns>
@@ -274,6 +295,12 @@ namespace GoRogue.Random
         /// <returns>Math.Max(innerBound + float.Epsilon, outerBound - float.Epsilon)</returns>
         public float NextExclusiveFloat(float innerBound, float outerBound)
             => Math.Max(innerBound + float.Epsilon, outerBound - float.Epsilon);
+
+        public decimal NextExclusiveDecimal() => 1.0M - DecimalEpsilon;
+
+        public decimal NextExclusiveDecimal(decimal outerBound) => Math.Max(DecimalEpsilon, outerBound - DecimalEpsilon);
+
+        public decimal NextExclusiveDecimal(decimal innerBound, decimal outerBound) => Math.Max(innerBound + DecimalEpsilon, outerBound - DecimalEpsilon);
 
         /// <summary>
         /// Returns a number very close to (but still less than) 1.0.

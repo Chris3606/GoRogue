@@ -12,6 +12,8 @@ namespace GoRogue.Random
     [PublicAPI]
     public class MinRandom : IEnhancedRandom
     {
+        private const decimal DecimalEpsilon = 0.0000000000000000000000000001M;
+
         /// <summary>
         /// Returns int.MinValue.
         /// </summary>
@@ -88,7 +90,7 @@ namespace GoRogue.Random
         /// <summary>
         /// This generator does not support serialization.
         /// </summary>
-        public IEnhancedRandom StringDeserialize(string data)
+        public IEnhancedRandom StringDeserialize(ReadOnlySpan<char> data)
             => throw new NotSupportedException($"{nameof(MinRandom)} does not support serialization.");
 
         /// <summary>
@@ -232,6 +234,12 @@ namespace GoRogue.Random
         /// <returns><paramref name="innerBound"/></returns>
         public float NextInclusiveFloat(float innerBound, float outerBound) => innerBound;
 
+        public decimal NextInclusiveDecimal() => 0;
+
+        public decimal NextInclusiveDecimal(decimal outerBound) => Math.Min(0, outerBound);
+
+        public decimal NextInclusiveDecimal(decimal innerBound, decimal outerBound) => Math.Min(innerBound, outerBound);
+
         /// <summary>
         /// Returns double.Epsilon.
         /// </summary>
@@ -273,6 +281,12 @@ namespace GoRogue.Random
         /// <param name="outerBound"/>
         /// <returns><paramref name="innerBound"/> + float.Epsilon</returns>
         public float NextExclusiveFloat(float innerBound, float outerBound) => innerBound + float.Epsilon;
+
+        public decimal NextExclusiveDecimal() => DecimalEpsilon;
+
+        public decimal NextExclusiveDecimal(decimal outerBound) => NextExclusiveDecimal(0, outerBound);
+
+        public decimal NextExclusiveDecimal(decimal innerBound, decimal outerBound) => Math.Min(innerBound + DecimalEpsilon, outerBound - DecimalEpsilon);
 
         /// <summary>
         /// Returns 0.0.
