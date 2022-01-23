@@ -24,15 +24,17 @@ namespace GoRogue.UnitTests
         private readonly IGenerator _wrapped;
         private readonly List<int> _ints;
         private readonly List<float> _floats;
+        private readonly List<bool> _booleans;
 
         public TroschuetzRecorder(IGenerator wrapped)
         {
             _wrapped = wrapped;
             _ints = new List<int>();
             _floats = new List<float>();
+            _booleans = new List<bool>();
         }
 
-        public KnownSeriesRandom ToKnownSeries() => new KnownSeriesRandom(_ints, floatSeries: _floats);
+        public KnownSeriesRandom ToKnownSeries() => new KnownSeriesRandom(_ints, floatSeries: _floats, boolSeries: _booleans);
 
         #region IEnhancedRandom Implementation
         public void Seed(ulong seed) => throw new NotSupportedException();
@@ -93,7 +95,13 @@ namespace GoRogue.UnitTests
             return val;
         }
 
-        public bool NextBool() => throw new NotSupportedException();
+        public bool NextBool()
+        {
+            bool val = _wrapped.NextBoolean();
+            _booleans.Add(val);
+
+            return val;
+        }
 
         public float NextFloat()
         {
@@ -102,7 +110,7 @@ namespace GoRogue.UnitTests
             // invoke the old behavior of PercentageCheck, convert it to a value that will produce an equivalent result
             // in the modern one, and go on our way.  This is NOT a generic solution, and will utterly break in an extremely
             // large number of cases.
-            float val = _wrapped.Next(1, 101) * 0.01f;
+            float val = (_wrapped.Next(1, 101) - 1) * 0.01f;
             // Again, we know the percent checked for IN THE PARTICULAR CASES THIS IS USED FOR was a whole number...
             // So we'll defeat the evil floating-point imprecision by just rounding.
             val = MathF.Round(val, 2);

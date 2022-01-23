@@ -85,7 +85,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="ShaiRandom" Version="0.0.1-alpha03" />
+    <PackageReference Include="ShaiRandom" Version="0.0.1-alpha04" />
     <PackageReference Include="TheSadRogue.Primitives" Version="1.2.0" />
     <PackageReference Include="Troschuetz.Random" Version="5.0.1" />
   </ItemGroup>
