@@ -12,7 +12,9 @@ namespace GoRogue.Random
     [PublicAPI]
     public class MaxRandom : IEnhancedRandom
     {
-        private const decimal DecimalEpsilon = 0.0000000000000000000000000001M;
+        private static readonly float s_floatAdjust = MathF.Pow(2f, -24f);
+        private static readonly double s_doubleAdjust = Math.Pow(2.0, -53.0);
+        //private const decimal DecimalEpsilon = 0.0000000000000000000000000001M;
 
         /// <summary>
         /// Returns <see cref="int.MaxValue" />.
@@ -48,15 +50,14 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns a number very close to (but still less than) 1.0.
         /// </summary>
-        /// <remarks>Value returned is 1 - float.Epsilon.</remarks>
         /// <returns>A number very close to (but still less than) 1.0.</returns>
-        public float NextFloat() => 1 - float.Epsilon;
+        public float NextFloat() => 1.0f - s_floatAdjust;
 
         /// <summary>
         /// Returns a float very close to (but still less than) <paramref name="outerBound" />, or 0 if outerBound &lt;= 0.
         /// </summary>
         /// <param name="outerBound">Maximum value for the returned value (exclusive).</param>
-        /// <returns>Math.Max(0, outerBound - float.Epsilon).</returns>
+        /// <returns/>
         public float NextFloat(float outerBound) => NextFloat(0, outerBound);
 
         /// <summary>
@@ -67,8 +68,8 @@ namespace GoRogue.Random
         /// Minimum value for the returned value. Unused unless outerBound &lt; innerBound.
         /// </param>
         /// <param name="outerBound">Maximum value for the returned value (exclusive).</param>
-        /// <returns>Math.Max(<paramref name="innerBound"/>, <paramref name="outerBound"/>outerBound - float.Epsilon).</returns>
-        public float NextFloat(float innerBound, float outerBound) => Math.Max(innerBound, outerBound - float.Epsilon);
+        /// <returns/>
+        public float NextFloat(float innerBound, float outerBound) => Math.Max(innerBound, (1.0f - s_floatAdjust) * outerBound);
 
         /// <summary>
         /// Does nothing since this generator has no state.
@@ -169,14 +170,14 @@ namespace GoRogue.Random
         /// <summary>
         /// Returns a number very close to (but still less than) 1.0.
         /// </summary>
-        /// <returns>1 - double.Epsilon</returns>
-        public double NextDouble() => 1 - double.Epsilon;
+        /// <returns/>
+        public double NextDouble() => 1.0 - s_doubleAdjust;
 
         /// <summary>
         /// Returns a double very close to (but still less than) <paramref name="maxValue" />, or 0 if maxValue &lt;= 0.
         /// </summary>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
-        /// <returns>Math.Max(0, maxValue - double.Epsilon).</returns>
+        /// <returns/>
         public double NextDouble(double maxValue) => NextDouble(0, maxValue);
 
         /// <summary>
@@ -186,8 +187,8 @@ namespace GoRogue.Random
         /// Minimum value for the returned value. Unused unless maxValue &lt;= minValue.
         /// </param>
         /// <param name="maxValue">Maximum value for the returned value (exclusive).</param>
-        /// <returns>Math.Max(minValue, maxValue - double.Epsilon).</returns>
-        public double NextDouble(double minValue, double maxValue) => maxValue - double.Epsilon;
+        /// <returns/>
+        public double NextDouble(double minValue, double maxValue) => (1.0 - s_doubleAdjust) * maxValue;
 
         /// <summary>
         /// Returns 1.0.
@@ -242,7 +243,7 @@ namespace GoRogue.Random
         /// </summary>
         /// <param name="outerBound">Outer bound to return, inclusive.</param>
         /// <returns>Math.Max(0, outerBound)</returns>
-        public decimal NextInclusiveDecimal(decimal outerBound) => Math.Max(outerBound, 0);
+        public decimal NextInclusiveDecimal(decimal outerBound) => NextInclusiveDecimal(0, outerBound);
 
         /// <summary>
         /// Returns the maximum of <paramref name="outerBound"/> and <paramref name="innerBound"/>.
@@ -253,48 +254,51 @@ namespace GoRogue.Random
         public decimal NextInclusiveDecimal(decimal innerBound, decimal outerBound) => Math.Max(innerBound, outerBound);
 
         /// <summary>
-        /// Returns 1 - double.Epsilon.
+        /// Returns a number very close to, but still less than, 1.0.
         /// </summary>
-        /// <returns>1 - double.Epsilon.</returns>
+        /// <returns/>
         public double NextExclusiveDouble() => NextDouble();
 
         /// <summary>
-        /// Returns the outerBound - double.Epsilon, with a minimum value of double.Epsilon
+        /// Returns a value very close to (but still within the bounds) of the range (0.0, outerBound) (both exclusive)
         /// </summary>
         /// <param name="outerBound">Upper bound for the returned double (exclusive)</param>
-        /// <returns>Math.Max(double.Epsilon, outerBound - double.Epsilon)</returns>
-        public double NextExclusiveDouble(double outerBound) => NextExclusiveDouble(0, outerBound);
+        /// <returns/>
+        public double NextExclusiveDouble(double outerBound)
+            => Math.Max(outerBound < 0 ? -double.Epsilon : double.Epsilon, (1.0 - s_doubleAdjust) * outerBound);
 
         /// <summary>
-        /// Returns the outerBound - double.Epsilon, with a minimum value of innerBound + double.Epsilon
+        /// Returns the maximum of either a value very close to (but still greater than) the maximum bound, or a value
+        /// very close to (but still less than) the specified bound.
         /// </summary>
         /// <param name="innerBound">Lower bound for the returned double (exclusive).  Unused unless outerBound &lt;= innerBound</param>
         /// <param name="outerBound">Upper bound for the returned double (exclusive)</param>
-        /// <returns>Math.Max(innerBound + double.Epsilon, outerBound - double.Epsilon)</returns>
+        /// <returns>A value very close to, but still less than, the maximum bound specified.</returns>
         public double NextExclusiveDouble(double innerBound, double outerBound)
-            => Math.Max(innerBound + double.Epsilon, outerBound - double.Epsilon);
+            => Math.Max((1.0 - s_doubleAdjust) * innerBound, (1.0 - s_doubleAdjust) * outerBound);
 
         /// <summary>
-        /// Returns 1 - float.Epsilon.
+        /// Returns a number very close to, but still less than, 1.0f.
         /// </summary>
-        /// <returns>1 - float.Epsilon.</returns>
-        public float NextExclusiveFloat() => 1.0f - float.Epsilon;
+        /// <returns/>
+        public float NextExclusiveFloat() => NextFloat();
 
         /// <summary>
-        /// Returns the outerBound - float.Epsilon, with a minimum value of float.Epsilon
+        /// Returns a value very close to (but still within the bounds) of the range (0.0f, outerBound) (both exclusive)
         /// </summary>
         /// <param name="outerBound">Upper bound for the returned float (exclusive)</param>
-        /// <returns>Math.Max(float.Epsilon, outerBound - float.Epsilon)</returns>
+        /// <returns/>
         public float NextExclusiveFloat(float outerBound) => NextExclusiveFloat(0, outerBound);
 
         /// <summary>
-        /// Returns the outerBound - float.Epsilon, with a minimum value of innerBound + float.Epsilon
+        /// Returns the maximum of either a value very close to (but still greater than) the maximum bound, or a value
+        /// very close to (but still less than) the specified bound.
         /// </summary>
-        /// <param name="innerBound">Lower bound for the returned float (exclusive).  Unused unless outerBound &lt;= innerBound</param>
-        /// <param name="outerBound">Upper bound for the returned float (exclusive)</param>
-        /// <returns>Math.Max(innerBound + float.Epsilon, outerBound - float.Epsilon)</returns>
+        /// <param name="innerBound">Lower bound for the returned double (exclusive).  Unused unless outerBound &lt;= innerBound</param>
+        /// <param name="outerBound">Upper bound for the returned double (exclusive)</param>
+        /// <returns>A value very close to, but still less than, the maximum bound specified.</returns>
         public float NextExclusiveFloat(float innerBound, float outerBound)
-            => Math.Max(innerBound + float.Epsilon, outerBound - float.Epsilon);
+            => Math.Max((1.0f - s_floatAdjust) * innerBound, (1.0f - s_floatAdjust) * outerBound);
 
         public decimal NextExclusiveDecimal() => 1.0M - DecimalEpsilon;
 
