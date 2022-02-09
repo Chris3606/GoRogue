@@ -183,7 +183,7 @@ namespace GoRogue.UnitTests
 
         public bool SupportsPrevious => throw new NotSupportedException();
 
-        public string Tag => throw new NotSupportedException();
+        public string DefaultTag => throw new NotSupportedException();
         #endregion
     }
     /// <summary>
