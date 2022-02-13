@@ -68,7 +68,7 @@ namespace GoRogue.SenseMapping
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] _light;
 
-        internal bool[,] _nearLight;
+        private bool[,] _nearLight;
 
         // Analyzer gets this wrong because it's returned by ref
 #pragma warning disable IDE0044
