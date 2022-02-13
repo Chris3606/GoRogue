@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
@@ -32,7 +33,7 @@ namespace GoRogue.Pathing
         private int _cachedWidth;
 
         // Stored as separate array for performance reasons since it must be cleared at each run
-        private bool[] _closed;
+        private BitArray _closed;
 
         private Func<Point, Point, double> _heuristic;
 
@@ -148,7 +149,7 @@ namespace GoRogue.Pathing
 
             var maxSize = walkabilityView.Width * walkabilityView.Height;
             _nodes = new AStarNode?[maxSize];
-            _closed = new bool[maxSize];
+            _closed = new BitArray(maxSize);
             _cachedWidth = walkabilityView.Width;
             _cachedHeight = walkabilityView.Height;
 
@@ -243,7 +244,7 @@ namespace GoRogue.Pathing
             {
                 var length = WalkabilityView.Width * WalkabilityView.Height;
                 _nodes = new AStarNode[length];
-                _closed = new bool[length];
+                _closed = new BitArray(length);
                 _openNodes = new FastPriorityQueue<AStarNode>(length);
 
                 _cachedWidth = WalkabilityView.Width;
@@ -253,7 +254,7 @@ namespace GoRogue.Pathing
                     new Point(WalkabilityView.Width, WalkabilityView.Height));
             }
             else
-                Array.Clear(_closed, 0, _closed.Length);
+                _closed.SetAll(false);
 
             var result = new List<Point>();
             var index = start.ToIndex(WalkabilityView.Width);
