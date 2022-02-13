@@ -445,7 +445,7 @@ namespace ShaiRandom.Generators
 
         /// <summary>
         /// Gets a random position in the grid view, for which the selector returns true. Random
-        /// positions will continuously be generated until one that qualifies is found, or <see cref="maxTries"/>
+        /// positions will continuously be generated until one that qualifies is found, or <paramref name="maxTries"/>
         /// selections occur.
         /// </summary>
         /// <exception cref="ArgumentException">An empty grid view was provided.</exception>

@@ -15,7 +15,7 @@ namespace GoRogue.Random
     /// exact wrapped type, which still enables access to any distribution-specified fields, etc.
     /// </remarks>
     /// <typeparam name="T">
-    /// The type of continuous distribution being wrapped. Must implement <see cref="Troschuetz.Random.IContinuousDistribution" />.
+    /// The type of continuous distribution being wrapped. Must implement <see cref="ShaiRandom.Distributions.IEnhancedContinuousDistribution" />.
     /// </typeparam>
     [PublicAPI]
     public class DiscreteConverter<T> : IEnhancedDiscreteDistribution where T : IEnhancedContinuousDistribution
