@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -26,7 +27,8 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
-        private readonly HashSet<Point> _closedSet;
+        //private readonly HashSet<Point> _closedSet;
+        private readonly BitArray _closedSet;
 
         private readonly Queue<Point> _openEdges;
 
@@ -50,8 +52,7 @@ namespace GoRogue.Pathing
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
 
-            var hasher = new KnownSizeHasher(baseMap.Width);
-            _closedSet = new HashSet<Point>(hasher);
+            _closedSet = new BitArray(baseMap.Width * baseMap.Height);
             _openEdges = new Queue<Point>();
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
@@ -192,10 +193,11 @@ namespace GoRogue.Pathing
 
         private bool UpdatePathsOnlyUnchecked()
         {
+            bool visitedNodes = false;
             var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _openEdges.Clear();
-            _closedSet.Clear();
+            _closedSet.SetAll(false);
 
             var mapBounds = _goalMap.Bounds();
 
@@ -223,7 +225,7 @@ namespace GoRogue.Pathing
                     // We only want to process walkable, non-visited cells that are within the map
                     var openPoint = point + adjacencyRule.DirectionsOfNeighborsCache[j];
                     if (!mapBounds.Contains(openPoint)) continue;
-                    if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
+                    if (_closedSet[openPoint.ToIndex(Width)] || BaseMap[openPoint] == GoalState.Obstacle)
                         continue;
 
                     // Known to be not null since it must be walkable.
@@ -236,11 +238,12 @@ namespace GoRogue.Pathing
                     }
                 }
 
-                _closedSet.Add(point);
+                _closedSet[point.ToIndex(Width)] = true;
+                visitedNodes = true;
             }
 
             Updated();
-            return _closedSet.Count > 0;
+            return visitedNodes;
         }
     }
 }
