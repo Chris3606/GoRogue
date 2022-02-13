@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -27,7 +26,6 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
-        //private readonly HashSet<Point> _closedSet;
         private readonly BitArray _closedSet;
 
         private readonly Queue<Point> _openEdges;
