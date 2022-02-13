@@ -5,7 +5,7 @@
         {
           "src": "../",
           "files": [
-            "GoRogue/bin/Debug/net5.0/GoRogue.dll"
+            "GoRogue/bin/Debug/net6.0/GoRogue.dll"
           ],
 		  "exclude": [
             "**/obj/**"
