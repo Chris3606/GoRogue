@@ -68,7 +68,7 @@ namespace GoRogue.SenseMapping
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] _light;
 
-        internal bool[,] _nearLight;
+        private bool[,] _nearLight;
 
         // Analyzer gets this wrong because it's returned by ref
 #pragma warning disable IDE0044
@@ -92,7 +92,7 @@ namespace GoRogue.SenseMapping
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, such as <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
 #pragma warning disable CS8618 // Uninitialized non-nullable variable for light and nearLight is incorrect, as the Radius setter initializes them.
@@ -130,7 +130,7 @@ namespace GoRogue.SenseMapping
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, such as <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the cone formed
@@ -166,7 +166,7 @@ namespace GoRogue.SenseMapping
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, such as <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the cone formed
@@ -198,7 +198,7 @@ namespace GoRogue.SenseMapping
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, such as <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="intensity">The starting intensity value of the source. Defaults to 1.0.</param>
         public SenseSource(SourceType type, int positionX, int positionY, double radius, Distance distanceCalc,
@@ -208,7 +208,7 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, such as <see cref="SadRogue.Primitives.Radius" />).
         /// </summary>
         public Distance DistanceCalc { get; set; }
 

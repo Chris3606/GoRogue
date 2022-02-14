@@ -1,5 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -14,6 +14,6 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The rng to use.</param>
         /// <returns>The result of evaluating the term.</returns>
-        int GetResult(IGenerator rng);
+        int GetResult(IEnhancedRandom rng);
     }
 }

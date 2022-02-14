@@ -6,7 +6,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"Tunnels"</description>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -40,7 +40,7 @@ namespace GoRogue.MapGeneration.Steps
     /// one is created.  It also sets the all locations inside the tunnels to true in the map's "WallFloor" map view context
     /// component.  If the
     /// GenerationContext has an existing "WallFloor" context component, that component is used.  If not, an
-    /// <see cref="ArrayView{T}" /> where T is bool is
+    /// <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" /> where T is bool is
     /// created and added to the map context, whose width/height match <see cref="GenerationContext.Width" />/
     /// <see cref="GenerationContext.Height" />.
     /// </remarks>
@@ -68,7 +68,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for maze generation.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Creates a new maze generation step.
@@ -206,12 +206,13 @@ namespace GoRogue.MapGeneration.Steps
             tunnelList.AddRange(crawlers.Select(c => c.AllPositions).Where(a => a.Count != 0), Name);
         }
 
-        private static Point FindEmptySquare(IGridView<bool> map, IGenerator rng)
+        private static Point FindEmptySquare(IGridView<bool> map, IEnhancedRandom rng)
         {
             // Try random positions first
+            // TODO: Port to retries option
             for (var i = 0; i < 100; i++)
             {
-                var location = map.RandomPosition(false, rng);
+                var location = rng.RandomPosition(map, false);
 
                 if (IsPointConsideredEmpty(map, location))
                     return location;
@@ -229,7 +230,7 @@ namespace GoRogue.MapGeneration.Steps
             return Point.None;
         }
 
-        private static int GetDirectionIndex(bool[] validDirections, IGenerator rng)
+        private static int GetDirectionIndex(bool[] validDirections, IEnhancedRandom rng)
         {
             // 10 tries to find random ok valid
             var randomSuccess = false;
@@ -237,7 +238,7 @@ namespace GoRogue.MapGeneration.Steps
 
             for (var randomCounter = 0; randomCounter < 10; randomCounter++)
             {
-                tempDirectionIndex = rng.Next(4);
+                tempDirectionIndex = rng.NextInt(4);
                 if (!validDirections[tempDirectionIndex]) continue;
 
                 randomSuccess = true;

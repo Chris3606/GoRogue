@@ -6,7 +6,7 @@ using GoRogue.MapGeneration.TunnelCreators;
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration
 {
@@ -48,7 +48,7 @@ namespace GoRogue.MapGeneration
         /// The tunnel creation strategy to use. Defaults to <see cref="HorizontalVerticalTunnelCreator"/> using
         /// the given RNG.</param>
         /// <returns>A set of map generation steps that generate a map with rectangular rooms connected to each other.</returns>
-        public static IEnumerable<GenerationStep> BasicRandomRoomsMapSteps(IGenerator? rng = null, int minRooms = 4,
+        public static IEnumerable<GenerationStep> BasicRandomRoomsMapSteps(IEnhancedRandom? rng = null, int minRooms = 4,
                                                                       int maxRooms = 10, int roomMinSize = 3,
                                                                       int roomMaxSize = 7, float roomSizeRatioX = 1f,
                                                                       float roomSizeRatioY = 1f,
@@ -141,7 +141,7 @@ namespace GoRogue.MapGeneration
         /// trimming.  Defaults to infinity.
         /// </param>
         /// <returns>A set of map generation steps that generate a map with rectangular rooms connected by a maze of tunnels.</returns>
-        public static IEnumerable<GenerationStep> DungeonMazeMapSteps(IGenerator? rng = null, int minRooms = 4,
+        public static IEnumerable<GenerationStep> DungeonMazeMapSteps(IEnhancedRandom? rng = null, int minRooms = 4,
                                                                       int maxRooms = 10, int roomMinSize = 3,
                                                                       int roomMaxSize = 7, float roomSizeRatioX = 1f,
                                                                       float roomSizeRatioY = 1f,
@@ -234,7 +234,7 @@ namespace GoRogue.MapGeneration
         /// </param>
         /// <param name="distanceCalculation">
         /// The distance calculation that determines distance/neighbors for determining unique areas and connecting
-        /// them.  Defaults to <see cref="Distance.Manhattan"/>.
+        /// them.  Defaults to <see cref="SadRogue.Primitives.Distance.Manhattan"/>.
         /// </param>
         /// <param name="connectionPointSelector">
         /// The area connection strategy to use. Not all methods function on maps with concave areas
@@ -246,7 +246,7 @@ namespace GoRogue.MapGeneration
         /// given distance's adjacency rules.
         /// </param>
         /// <returns>A set of map generation steps that generate a cave-like map using the cellular automata algorithm.</returns>
-        public static IEnumerable<GenerationStep> CellularAutomataGenerationSteps(IGenerator? rng = null,
+        public static IEnumerable<GenerationStep> CellularAutomataGenerationSteps(IEnhancedRandom? rng = null,
                                                                                   ushort fillProbability = 40,
                                                                                   int totalIterations = 7,
                                                                                   int cutoffBigAreaFill = 4,

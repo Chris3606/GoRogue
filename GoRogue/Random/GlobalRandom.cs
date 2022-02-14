@@ -1,6 +1,5 @@
 ﻿using JetBrains.Annotations;
-using Troschuetz.Random;
-using Troschuetz.Random.Generators;
+using ShaiRandom.Generators;
 
 namespace GoRogue.Random
 {
@@ -13,9 +12,9 @@ namespace GoRogue.Random
     public static class GlobalRandom
     {
         /// <summary>
-        /// Settable field that specifies what <see cref="IGenerator" /> instance should be considered the default
-        /// RNG. Defaults to an <see cref="XorShift128Generator" /> with a time-dependent value used as a seed.
+        /// Settable field that specifies what <see cref="IEnhancedRandom" /> instance should be considered the default
+        /// RNG. Defaults to an <see cref="ShaiRandom.Generators.MizuchiRandom" />, with a random state.
         /// </summary>
-        public static IGenerator DefaultRNG = new XorShift128Generator();
+        public static IEnhancedRandom DefaultRNG = new MizuchiRandom();
     }
 }

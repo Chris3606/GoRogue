@@ -205,14 +205,10 @@ namespace GoRogue.SpatialMaps
         /// <param name="position">Position to add item at.</param>
         public void Add(T item, Point position)
         {
-            var relativeLayer = item.Layer - StartingLayer;
-
-            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+            if (!TryAdd(item, position))
                 throw new ArgumentException(
                     $"Tried to add item to {GetType().Name} on layer {item.Layer}, but no such layer exists.",
                     nameof(item));
-
-            _layers[relativeLayer].Add(item, position);
         }
 
         /// <summary>
@@ -224,6 +220,35 @@ namespace GoRogue.SpatialMaps
         /// <param name="x">X-value of position to add item at.</param>
         /// <param name="y">Y-value of position to add item at.</param>
         public void Add(T item, int x, int y) => Add(item, new Point(x, y));
+
+        /// <summary>
+        /// Adds the given item at the given position on the correct layer.  If the layer is
+        /// invalid or the item otherwise cannot be added to its layer, does nothing and returns false.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="position">Position to add item at.</param>
+        /// <returns>True if the item was added, false otherwise.</returns>
+        public bool TryAdd(T item, Point position)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return false;
+
+            _layers[relativeLayer].Add(item, position);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Adds the given item at the given position on the correct layer.  If the layer is
+        /// invalid or the item otherwise cannot be added to its layer, does nothing and returns false.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="x">X-value of position to add item at.</param>
+        /// <param name="y">Y-value of position to add item at.</param>
+        /// <returns>True if the item was added, false otherwise.</returns>
+        public bool TryAdd(T item, int x, int y) => TryAdd(item, new Point(x, y));
 
         /// <inheritdoc />
         IReadOnlySpatialMap<T> IReadOnlySpatialMap<T>.AsReadOnly() => this;
@@ -281,11 +306,35 @@ namespace GoRogue.SpatialMaps
         IEnumerable<T> IReadOnlySpatialMap<T>.GetItemsAt(int x, int y) => GetItemsAt(x, y);
 
         /// <inheritdoc />
+        public Point? GetPositionOfOrNull(T item)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return null;
+
+            return _layers[relativeLayer].GetPositionOfOrNull(item);
+        }
+
+        /// <inheritdoc />
+        public bool TryGetPositionOf(T item, out Point position)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+            {
+                position = default;
+                return false;
+            }
+
+            return _layers[relativeLayer].TryGetPositionOf(item, out position);
+        }
+
+        /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
             var relativeLayer = item.Layer - StartingLayer;
             if (relativeLayer < 0 || relativeLayer >= _layers.Length)
-                return Point.None;
+                throw new ArgumentException("Tried to retrieve the position of an item with an invalid layer.",
+                    nameof(item));
 
             return _layers[relativeLayer].GetPositionOf(item);
         }
@@ -299,14 +348,10 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Position to move the given item to.</param>
         public void Move(T item, Point target)
         {
-            var relativeLayer = item.Layer - StartingLayer;
-
-            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+            if (!TryMove(item, target))
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name} on layer {item.Layer}, but no such layer exists.",
                     nameof(item));
-
-            _layers[relativeLayer].Move(item, target);
         }
 
         /// <summary>
@@ -320,6 +365,21 @@ namespace GoRogue.SpatialMaps
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
+        public bool TryMove(T item, Point target)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return false;
+
+            return _layers[relativeLayer].TryMove(item, target);
+        }
+
+        /// <inheritdoc />
+        public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
+
+
+        /// <inheritdoc />
         List<T> ISpatialMap<T>.MoveValid(Point current, Point target)
             => MoveValid(current.X, current.Y, target.X, target.Y);
 
@@ -330,13 +390,22 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public void Remove(T item)
         {
-            var relativeLayer = item.Layer - StartingLayer;
-            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+            if (!TryRemove(item))
                 throw new ArgumentException(
                     $"Tried to remove item from {GetType().Name} on layer {item.Layer}, but no such layer exists.",
                     nameof(item));
+        }
+
+        /// <inheritdoc />
+        public bool TryRemove(T item)
+        {
+            var relativeLayer = item.Layer - StartingLayer;
+            if (relativeLayer < 0 || relativeLayer >= _layers.Length)
+                return false;
 
             _layers[relativeLayer].Remove(item);
+
+            return true;
         }
 
         /// <inheritdoc />

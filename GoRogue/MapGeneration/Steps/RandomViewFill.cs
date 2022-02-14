@@ -2,12 +2,12 @@
 using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
     /// <summary>
-    /// Randomly fills a boolean <see cref="IGridView{T}"/> with true/false values.  Creates a grid view
+    /// Randomly fills a boolean <see cref="SadRogue.Primitives.GridViews.IGridView{T}"/> with true/false values.  Creates a grid view
     /// with the given tag if none is present.
     /// </summary>
     [PublicAPI]
@@ -21,13 +21,13 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// The RNG to use for filling the view.
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Represents the percent chance that a given cell will be a floor cell when the map is
         /// initially randomly filled.
         /// </summary>
-        public ushort FillProbability = 40;
+        public float FillProbability = 40f;
 
         /// <summary>
         /// Whether or not to exclude the perimeter points from the random fill.

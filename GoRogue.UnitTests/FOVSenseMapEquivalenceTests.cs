@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GoRogue.FOV;
+using GoRogue.Random;
 using GoRogue.SenseMapping;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using ShaiRandom.Generators;
 using Xunit;
 using XUnit.ValueTuples;
 
@@ -26,7 +28,7 @@ namespace GoRogue.UnitTests
 
         // Positions to test on _losMap
         private static readonly Point[] _testPositions =
-            Enumerable.Range(0, 100).Select(i => _losMap.RandomPosition(true)).ToArray();
+            Enumerable.Range(0, 100).Select(i => GlobalRandom.DefaultRNG.RandomPosition(_losMap, true)).ToArray();
 
         // Positions paired with radius shapes
         public static IEnumerable<(Point, Radius)> TestPositionsAndRadii => _testPositions.Combinate(_radii);

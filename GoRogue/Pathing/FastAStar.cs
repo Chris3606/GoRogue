@@ -11,7 +11,7 @@ namespace GoRogue.Pathing
     /// </summary>
     /// <remarks>
     /// This class is exactly like a regular <see cref="AStar" /> instance, but sets the heuristic by default to the
-    /// <see cref="Distance.Manhattan" />
+    /// <see cref="SadRogue.Primitives.Distance.Manhattan" />
     /// calculate function (with the same tie-breaking/smoothing element as regular AStar. In the case that euclidean or
     /// chebyshev distance is used, this
     /// heuristic is over-estimating -- that is, it may in some cases produce a value that is greater than the actual shortest

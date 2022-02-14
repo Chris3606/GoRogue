@@ -7,6 +7,52 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None.
 
+# [3.0.0-alpha10] - 2022-02-13
+
+### Added
+- Spatial map implementations now have `TryMove`, `TryAdd`, and `TryRemove` functions which return false instead of throwing exception when an operation fails
+    - Assuming current implementations, this is 5-10% faster than the old method of first checking with the appropriate `Can` method then doing the appropiate operation
+    - Note that `Add`, `Remove`, and `Move` have been optimized as well so this will likely produce a greater speed increase than 5-10% in existing code
+- Spatial map implementations now have a `TryGetPositionOf` function which returns false instead of throwing exception when item given doesn't exist
+- Spatial map implementations now have a `GetPositionOfOrNull` function which returns `null` instead of throwing exception when item given doesn't exist
+    - Note that, unlike the original `GetPositionOf` implementation, it returns `null`, not `default(T)` or `Point.None`
+- `MessageBus` now has `TryRegisterSubscriber` and `TryUnregisterSubscriber` functions which return false instead of throw an exception on failure (fixes #248).
+- `SadRogue.Primitives.GridViews` namespace now has a class `BitArrayView`, which is a grid view of boolean values implemented via a C# `BitArray`
+    - Recommend using this instead of `bool[]` or `ArrayView<bool>` (and sometimes instead of `HashSet<Point>`) to represent a set of locations within a grid
+
+### Changed
+- The `GetPositionOf` function on spatial map implementations now throws exception if the position doesn't exist
+    - Note other methods have been added that return null or false
+- `Move`, `Add`, and `Remove` function of spatial map implementations have been optimized
+    - Gains vary but can be as much as 15-20% per operation, for some implementations and circumstances
+- Updated primitives library to 1.3.0
+- GoRogue algorithms now use the primitives library's cache for directions of neighbors, instead of creating their own
+-  Various performance improvements to goal maps/flee maps
+    - `WeightedGoalMap` up to 50-80% faster for value indexer and `GetDirectionOfMinValue` operations
+        - Other goal maps will see more limited performance increase in `GetDirectionOfMinValue` calls
+    - 45-55% speed increase in calls to `Update()` for goal maps and flee maps on open maps
+    - Goal maps, and flee maps should now also use less memory (or at least produce less allocations)
+- `GoalMap` instances now explicitly reject base grid views that change width/height (although doing so would not function appropriately in most cases previously anyway)
+- Optimized memory usage for `AStar`
+    - Saves about 8.5 kb over a 100x100 map, and produces less allocation during `ShortestPath()`
+- `RegenerateMapException` message now contains more details about intended fix (fixes #253)
+- GoRogue now uses ShaiRandom instead of Troschuetz.Random instead of its RNG library
+    - Many changes, some breaking; check the v2 to v3 porting guide for details
+    - In summary: new RNG algorithms, performance improvements, more access to generating different types of numbers, more access to generator state, more serialization control
+    - `KnownSeriesRandom` has moved to `ShaiRandom.Generators`; a host of bugs were fixed in this class in the process
+    - `MinRandom` and `MaxRandom` have been moved to `ShaiRandom.Generators`, and now support floating-point numbers
+    - `RandomItem`, `RandomPosition`, and `RandomIndex` methods for classes are now extension of `IEnhancedGenerator`, instead of extensions of the container class
+    - GoRogue's `RandomItem` and `RandomIndex` functions for built-in C# types are now part of ShaiRandom
+
+### Fixed
+- The `GetDirectionOfMinValue` function for goal maps now supports maps with open edges (thanks DavidFridge)
+- The `WeightedGoalMap` calculation is now additive, as the supplemental article indicates it should be (thanks DavidFridge)
+- API documentation now properly cross-references types in primitives library
+- Map constructor taking custom terrain grid view now properly initializes existing terrain on that grid view (fixes #254)
+    - NOTE: Caveats about this constructor's usage have now been properly documented in API documentation
+- If moving the position of an entity on the map throws an exception, the map state will now recover properly
+
+
 # [3.0.0-alpha09] - 2021-12-19
 
 ### Added

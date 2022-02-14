@@ -12,7 +12,7 @@ namespace GoRogue.MapGeneration
     /// area of the map.
     /// </summary>
     /// <remarks>
-    /// The class takes in an <see cref="IGridView{T}" />, where a value of true for a given position indicates it
+    /// The class takes in an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where a value of true for a given position indicates it
     /// should be part of a map area, and false indicates it should not be part of any map area. In a
     /// classic roguelike dungeon example, this might be a view of "walkability" where floors return a
     /// value of true and walls return a value of false.

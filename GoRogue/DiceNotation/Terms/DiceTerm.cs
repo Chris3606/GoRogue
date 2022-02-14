@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -41,13 +41,13 @@ namespace GoRogue.DiceNotation.Terms
 
         /// <summary>
         /// The result of evaluating the <see cref="Multiplicity" /> term that was used during the last call to
-        /// <see cref="GetResult(IGenerator)" />.
+        /// <see cref="GetResult(IEnhancedRandom)" />.
         /// </summary>
         public int LastMultiplicity { get; private set; }
 
         /// <summary>
         /// The result of evaluating the <see cref="Sides" /> term that was used during the last call to
-        /// <see cref="GetResult(IGenerator)" />.
+        /// <see cref="GetResult(IEnhancedRandom)" />.
         /// </summary>
         public int LastSidedness { get; private set; }
 
@@ -66,7 +66,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The RNG to use for rolling,</param>
         /// <returns>The sum of the roll.</returns>
-        public int GetResult(IGenerator rng)
+        public int GetResult(IEnhancedRandom rng)
         {
             _diceResults.Clear();
             var sum = 0;
@@ -81,7 +81,7 @@ namespace GoRogue.DiceNotation.Terms
 
             for (var i = 0; i < LastMultiplicity; i++)
             {
-                var diceVal = rng.Next(1, LastSidedness + 1);
+                var diceVal = rng.NextInt(1, LastSidedness + 1);
                 sum += diceVal;
                 _diceResults.Add(diceVal);
             }

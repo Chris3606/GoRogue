@@ -1,10 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -19,7 +18,7 @@ namespace GoRogue.Pathing
     /// level change, the GoalMap instance will need to be updated. Call <see cref="Update" /> if obstacles
     /// have changed, or <see cref="UpdatePathsOnly" /> if the goals have changed but not the obstacles.
     /// This class exposes the resulting goal map to you via indexers -- GoalMap implements
-    /// <see cref="IGridView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
+    /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where <see langword="null" /> indicates a square is an obstacle,
     /// and any other value indicates distance from the nearest goal.  Thus, a value of 0 indicates a tile
     /// contains a goal.
     /// For items following the GoalMap, they can simply call <see cref="GetDirectionOfMinValue(Point)" />
@@ -27,9 +26,7 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class GoalMap : GridViewBase<double?>
     {
-        private readonly Direction[] _neighborDirections;
-
-        private readonly HashSet<Point> _closedSet;
+        private readonly BitArray _closedSet;
 
         private readonly Queue<Point> _openEdges;
 
@@ -41,20 +38,19 @@ namespace GoRogue.Pathing
         /// Constructor. Takes a base map and a distance measurement to use for calculation.
         /// </summary>
         /// <param name="baseMap">
-        /// A map view that represents the map as
-        /// <see cref="IGridView{T}" />GoalStates.
+        /// A map view that represents the map as an
+        /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> of <see cref="GoalState"/>.  Must not change
+        /// width/height after the goal map has been constructed.
         /// </param>
         /// <param name="distanceMeasurement">
-        /// The distance measurement (and implicitly the <see cref="AdjacencyRule" />) to use for calculation.
+        /// The distance measurement (and implicitly the <see cref="SadRogue.Primitives.AdjacencyRule" />) to use for calculation.
         /// </param>
         public GoalMap(IGridView<GoalState> baseMap, Distance distanceMeasurement)
         {
             BaseMap = baseMap ?? throw new ArgumentNullException(nameof(baseMap));
             DistanceMeasurement = distanceMeasurement;
-            _neighborDirections = ((AdjacencyRule)DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
-            var hasher = new KnownSizeHasher(baseMap.Width);
-            _closedSet = new HashSet<Point>(hasher);
+            _closedSet = new BitArray(baseMap.Width * baseMap.Height);
             _openEdges = new Queue<Point>();
 
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
@@ -62,7 +58,8 @@ namespace GoRogue.Pathing
         }
 
         /// <summary>
-        /// The map view of the underlying map used to determine where obstacles/goals are.
+        /// The map view of the underlying map used to determine where obstacles/goals are.  Must not change width or
+        /// height after the <see cref="GoalMap"/> has been constructed.
         /// </summary>
         public IGridView<GoalState> BaseMap { get; private set; }
 
@@ -100,7 +97,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="position">The position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(Point position)
@@ -112,7 +109,7 @@ namespace GoRogue.Pathing
         /// <param name="positionX">The x-value of the position to get the minimum value for.</param>
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(int positionX, int positionY)
@@ -160,6 +157,10 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool Update()
         {
+            if (BaseMap.Bounds() != this.Bounds())
+                throw new InvalidOperationException(
+                    $"Grid views used as the {nameof(BaseMap)} for {nameof(GoalMap)} instances must not change size.");
+
             _walkable.Clear();
             for (var y = 0; y < BaseMap.Height; ++y)
                 for (var x = 0; x < BaseMap.Width; ++x)
@@ -171,7 +172,7 @@ namespace GoRogue.Pathing
                         _walkable.Add(new Point(x, y));
                 }
 
-            return UpdatePathsOnly();
+            return UpdatePathsOnlyUnchecked();
         }
 
         /// <summary>
@@ -181,9 +182,20 @@ namespace GoRogue.Pathing
         /// <returns>False if no goals were produced by the evaluator, true otherwise</returns>
         public bool UpdatePathsOnly()
         {
+            if (BaseMap.Bounds() != this.Bounds())
+                throw new InvalidOperationException(
+                    $"Grid views used as the {nameof(BaseMap)} for {nameof(GoalMap)} instances must not change size.");
+
+            return UpdatePathsOnlyUnchecked();
+        }
+
+        private bool UpdatePathsOnlyUnchecked()
+        {
+            bool visitedNodes = false;
+            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
             var highVal = (double)(BaseMap.Width * BaseMap.Height);
             _openEdges.Clear();
-            _closedSet.Clear();
+            _closedSet.SetAll(false);
 
             var mapBounds = _goalMap.Bounds();
 
@@ -206,12 +218,12 @@ namespace GoRogue.Pathing
 
                 // Known to be not null since the else condition above will have assigned to it.
                 var current = _goalMap[point]!.Value;
-                for (int j = 0; j < _neighborDirections.Length; j++)
+                for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                 {
                     // We only want to process walkable, non-visited cells that are within the map
-                    var openPoint = point + _neighborDirections[j];
+                    var openPoint = point + adjacencyRule.DirectionsOfNeighborsCache[j];
                     if (!mapBounds.Contains(openPoint)) continue;
-                    if (_closedSet.Contains(openPoint) || BaseMap[openPoint] == GoalState.Obstacle)
+                    if (_closedSet[openPoint.ToIndex(Width)] || BaseMap[openPoint] == GoalState.Obstacle)
                         continue;
 
                     // Known to be not null since it must be walkable.
@@ -224,11 +236,12 @@ namespace GoRogue.Pathing
                     }
                 }
 
-                _closedSet.Add(point);
+                _closedSet[point.ToIndex(Width)] = true;
+                visitedNodes = true;
             }
 
             Updated();
-            return _closedSet.Count > 0;
+            return visitedNodes;
         }
     }
 }

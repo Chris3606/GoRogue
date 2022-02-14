@@ -60,6 +60,23 @@ namespace GoRogue.SpatialMaps
         void Add(T item, int x, int y);
 
         /// <summary>
+        /// Tries to add the given item at the given position.  Does nothing and returns false if the item cannot be added.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="position">Position to add item to.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        bool TryAdd(T item, Point position);
+
+        /// <summary>
+        /// Tries to add the given item at the given position.  Does nothing and returns false if the item cannot be added.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="x">X-value of the position to add item to.</param>
+        /// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        bool TryAdd(T item, int x, int y);
+
+        /// <summary>
         /// Clears all items out of the spatial map.
         /// </summary>
         void Clear();
@@ -80,6 +97,25 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetX">X-value of the location to move item to.</param>
         /// <param name="targetY">Y-value of the location to move item to.</param>
         void Move(T item, int targetX, int targetY);
+
+        /// <summary>
+        /// Attempts to move the given item from its current location to the specified one. Does nothing and returns
+        /// false if the item cannot be moved to the given location.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="target">Location to move item to.</param>
+        /// <returns>True if the item was moved; false if not.</returns>
+        bool TryMove(T item, Point target);
+
+        /// <summary>
+        /// Attempts to move the given item from its current location to the specified one. Does nothing and returns
+        /// false if the item cannot be moved to the given location.
+        /// </summary>
+        /// <param name="item">Item to move.</param>
+        /// <param name="targetX">X-value of the location to move item to.</param>
+        /// <param name="targetY">Y-value of the location to move item to.</param>
+        /// <returns>True if the item was moved; false if not.</returns>
+        bool TryMove(T item, int targetX, int targetY);
 
         /// <summary>
         /// Moves all items at the specified source location to the target location.  Throws ArgumentException if one or
@@ -125,6 +161,14 @@ namespace GoRogue.SpatialMaps
         /// </summary>
         /// <param name="item">The item to remove.</param>
         void Remove(T item);
+
+        /// <summary>
+        /// Attempts to remove the given item from the spatial map.  Does nothing and return false if the item cannot be
+        /// removed.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>True if the item was successfully removed; false otherwise.</returns>
+        bool TryRemove(T item);
 
         /// <summary>
         /// Removes all items at the specified location from the spatial map. Returns all items

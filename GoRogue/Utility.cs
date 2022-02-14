@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
 
 namespace GoRogue
 {
@@ -263,135 +261,12 @@ namespace GoRogue
                 elementSeparator, endRow, end);
 
         /// <summary>
-        /// Extension method for <see cref="IList{T}" /> that implements a fisher-yates shuffle. Modifies the list it is
-        /// called on to randomly rearrange the elements therein.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used
-        /// </param>
-        public static void FisherYatesShuffle<T>(this IList<T> list, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            var n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                var k = rng.Next(n + 1);
-                var value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-        /// <summary>
         /// "Multiplies", aka repeats, a string the given number of times.
         /// </summary>
         /// <param name="str" />
         /// <param name="numTimes">The number of times to repeat the string.</param>
         /// <returns>The current string repeated <paramref name="numTimes" /> times.</returns>
         public static string Multiply(this string str, int numTimes) => string.Concat(Enumerable.Repeat(str, numTimes));
-
-        /// <summary>
-        /// Extension method that selects and returns a random valid index from the list, using the
-        /// rng specified. -1 is returned if the list is empty.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>The index selected.</returns>
-        public static int RandomIndex<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (list.Count == 0)
-                return -1;
-
-            return rng.Next(list.Count);
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random valid index from the list for which
-        /// the selector function given returns true, using the rng specified. Indices are repeatedly
-        /// selected until a qualifying index is found. -1 is returned if the list is empty.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="selector">
-        /// Function that returns true if the given index is valid selection, false otherwise.
-        /// </param>
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Index selected.</returns>
-        public static int RandomIndex<T>(this IReadOnlyList<T> list, Func<int, bool> selector, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (list.Count == 0)
-                return -1;
-
-            var index = rng.Next(list.Count);
-            while (!selector(index))
-                index = rng.Next(list.Count);
-
-            return index;
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random item from the list, using the rng
-        /// specified. default(T) is returned if the list is empty.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Item selected.</returns>
-        public static T RandomItem<T>(this IReadOnlyList<T> list, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (list.Count == 0)
-                throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
-
-            return list[rng.Next(list.Count)];
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random item from the list for which the given
-        /// selector returns true, using the rng specified. Items are repeatedly selected until a
-        /// qualifying item is found. default(T) is returned if the list is empty.
-        /// </summary>
-        /// <typeparam name="T" />
-        /// <param name="list" />
-        /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Item selected.</returns>
-        public static T RandomItem<T>(this IReadOnlyList<T> list, Func<T, bool> selector, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (list.Count == 0)
-                throw new ArgumentException("Cannot select random item from empty list.", nameof(list));
-
-            var item = list[rng.Next(list.Count)];
-            while (!selector(item))
-                item = list[rng.Next(list.Count)];
-
-            return item;
-        }
 
         /// <summary>
         /// Swaps the values pointed to by <paramref name="lhs" /> and <paramref name="rhs" />.
@@ -401,9 +276,7 @@ namespace GoRogue
         /// <param name="rhs" />
         public static void Swap<T>(ref T lhs, ref T rhs)
         {
-            var temp = lhs;
-            lhs = rhs;
-            rhs = temp;
+            (lhs, rhs) = (rhs, lhs);
         }
 
         /// <summary>
@@ -442,110 +315,6 @@ namespace GoRogue
             foreach (var list in lists)
                 foreach (var i in list)
                     yield return i;
-        }
-    }
-}
-
-namespace SadRogue.Primitives
-{
-    /// <summary>
-    /// A series of useful extension methods for classes in the primitives library.
-    /// </summary>
-    [PublicAPI]
-    public static class PrimitivesExtensions
-    {
-        /// <summary>
-        /// Extension method that selects and returns a random valid index of a position in the Area, using the
-        /// rng specified. -1 is returned if the area is empty.
-        /// </summary>
-        /// <param name="area" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>The index selected.</returns>
-        public static int RandomIndex(this IReadOnlyArea area, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (area.Count == 0)
-                return -1;
-
-            return rng.Next(area.Count);
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random valid index fpr some position in the Area for which
-        /// the selector function given returns true, using the rng specified. Indices are repeatedly
-        /// selected until a qualifying index is found. -1 is returned if the area is empty.
-        /// </summary>
-        /// <param name="area" />
-        /// <param name="selector">
-        /// Function that returns true if the given index is valid selection, false otherwise.
-        /// </param>
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Index selected.</returns>
-        public static int RandomIndex(this IReadOnlyArea area, Func<int, bool> selector, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (area.Count == 0)
-                return -1;
-
-            var index = rng.Next(area.Count);
-            while (!selector(index))
-                index = rng.Next(area.Count);
-
-            return index;
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random position from the Area, using the rng
-        /// specified. An exception is thrown if the area is empty.
-        /// </summary>
-        /// <param name="area" />
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Item selected.</returns>
-        public static Point RandomItem(this IReadOnlyArea area, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (area.Count == 0)
-                throw new ArgumentException("Cannot select random item from empty area.", nameof(area));
-
-            return area[rng.Next(area.Count)];
-        }
-
-        /// <summary>
-        /// Extension method that selects and returns a random position from the list for which the given
-        /// selector returns true, using the rng specified. Items are repeatedly selected until a
-        /// qualifying item is found. default(T) is returned if the list is empty.
-        /// </summary>
-        /// <param name="area" />
-        /// <param name="selector">Function that returns true if the given item is valid selection, false otherwise.</param>
-        /// <param name="rng">
-        /// RNG to use.  Specifying null causes <see cref="GlobalRandom.DefaultRNG" />
-        /// to be used.
-        /// </param>
-        /// <returns>Item selected.</returns>
-        public static Point RandomItem(this IReadOnlyArea area, Func<Point, bool> selector, IGenerator? rng = null)
-        {
-            rng ??= GlobalRandom.DefaultRNG;
-
-            if (area.Count == 0)
-                throw new ArgumentException("Cannot select random item from empty area.", nameof(area));
-
-            var item = area[rng.Next(area.Count)];
-            while (!selector(item))
-                item = area[rng.Next(area.Count)];
-
-            return item;
         }
     }
 }

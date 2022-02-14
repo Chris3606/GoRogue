@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using GoRogue.DiceNotation.Exceptions;
 using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -44,7 +44,7 @@ namespace GoRogue.DiceNotation.Terms
         /// The sum of the highest n rolls of the dice term being operated on, where n is equal to
         /// the value of the keep variable taken in the constructor.
         /// </returns>
-        public int GetResult(IGenerator rng)
+        public int GetResult(IEnhancedRandom rng)
         {
             var keepVal = Keep.GetResult(rng);
 

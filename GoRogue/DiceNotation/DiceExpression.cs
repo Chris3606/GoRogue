@@ -2,7 +2,7 @@
 using GoRogue.DiceNotation.Terms;
 using GoRogue.Random;
 using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.DiceNotation
 {
@@ -30,20 +30,20 @@ namespace GoRogue.DiceNotation
         /// Returns the maximum possible result of the dice expression.
         /// </summary>
         /// <returns>The maximum possible result of the dice expression.</returns>
-        public int MaxRoll() => Roll(new MaxRandom());
+        public int MaxRoll() => Roll(MaxRandom.Instance);
 
         /// <summary>
         /// Returns the minimum possible result of the dice expression.
         /// </summary>
         /// <returns>The minimum possible result of the dice expression.</returns>
-        public int MinRoll() => Roll(new MinRandom());
+        public int MinRoll() => Roll(MinRandom.Instance);
 
         /// <summary>
         /// Rolls the expression using the RNG given, returning the result.
         /// </summary>
         /// <param name="rng">The RNG to use. If null is specified, the default RNG is used.</param>
         /// <returns>The result obtained by rolling the dice expression.</returns>
-        public int Roll(IGenerator? rng = null)
+        public int Roll(IEnhancedRandom? rng = null)
         {
             rng ??= GlobalRandom.DefaultRNG;
 

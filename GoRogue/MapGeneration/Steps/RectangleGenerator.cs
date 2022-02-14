@@ -16,7 +16,7 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>Default Tag</description>
     ///     </listheader>
     ///     <item>
-    ///         <term><see cref="ISettableGridView{T}" /> where T is bool</term>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
@@ -27,7 +27,7 @@ namespace GoRogue.MapGeneration.Steps
     /// This generation step simply turns the map into a giant rectangular room.  It sets the interior positions to
     /// true, and outer-edge points to false, in the map context's map view with the given tag.  If the
     /// GenerationContext has an existing map view context component, that component is used.  If not, an
-    /// <see cref="ArrayView{T}" /> where T is bool is created and added to the map context, whose width/height
+    /// <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" /> where T is bool is created and added to the map context, whose width/height
     /// match <see cref="GenerationContext.Width" />/<see cref="GenerationContext.Height" />.
     /// </remarks>
     [PublicAPI]

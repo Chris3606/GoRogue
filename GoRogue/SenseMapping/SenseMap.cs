@@ -20,7 +20,7 @@ namespace GoRogue.SenseMapping
     /// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate" />
     /// when you wish to re-calculate the SenseMap.
     /// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IGridView that represents
-    /// the map.  Specifically, it takes an <see cref="IGridView{T}" />, where the double value at each location
+    /// the map.  Specifically, it takes an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where the double value at each location
     /// represents the "resistance" that location has to the passing of source values through it.  The values must be >= 0.0,
     /// where 0.0 means that a location has no resistance to spreading of source values, and greater values represent greater
     /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="SenseSource.Intensity" /> of
@@ -28,7 +28,7 @@ namespace GoRogue.SenseMapping
     /// is subtracted from the source's value (plus the normal fall-of for distance).
     /// The map can be calculated by calling the <see cref="Calculate" /> function.
     /// This class exposes the resulting sensory values values to you via indexers -- SenseMap implements
-    /// <see cref="IGridView{T}" />, where 0.0 indicates no sources were able to spread to the given location (eg, either
+    /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where 0.0 indicates no sources were able to spread to the given location (eg, either
     /// it was
     /// stopped or fell off due to distance), and a value greater than 0.0 indicates the combined intensity of any sources
     /// that reached the given location.

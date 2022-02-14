@@ -4,7 +4,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.TunnelCreators
 {
@@ -15,20 +15,20 @@ namespace GoRogue.MapGeneration.TunnelCreators
     [PublicAPI]
     public class HorizontalVerticalTunnelCreator : ITunnelCreator
     {
-        private readonly IGenerator _rng;
+        private readonly IEnhancedRandom _rng;
 
         /// <summary>
         /// Creates a new tunnel creator.
         /// </summary>
         /// <param name="rng">RNG to use for movement selection.</param>
-        public HorizontalVerticalTunnelCreator(IGenerator? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
+        public HorizontalVerticalTunnelCreator(IEnhancedRandom? rng = null) => _rng = rng ?? GlobalRandom.DefaultRNG;
 
         /// <inheritdoc />
         public Area CreateTunnel(ISettableGridView<bool> map, Point tunnelStart, Point tunnelEnd)
         {
             var tunnel = new Area();
 
-            if (_rng.NextBoolean())
+            if (_rng.NextBool())
             {
                 tunnel.Add(CreateHTunnel(map, tunnelStart.X, tunnelEnd.X, tunnelStart.Y));
                 tunnel.Add(CreateVTunnel(map, tunnelStart.Y, tunnelEnd.Y, tunnelEnd.X));

@@ -5,10 +5,189 @@ using System.IO;
 using System.Linq;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+//using ShaiRandom.Generators;
+//using Troschuetz.Random;
 using Xunit;
 
 namespace GoRogue.UnitTests
 {
+    // Class intentionally commented out since it is unused, Troschuetz is no longer a dependency of GoRogue, and Troschuetz
+    // is unlisted
+    // /// <summary>
+    // /// Class used to wrap Troschuetz generators, and record their outputs in a format that can be converted to a
+    // /// KnownSeriesGenerator.
+    // /// </summary>
+    // /// <remarks>
+    // /// Only the portions of this class that are strictly necessary for porting GoRogue unit tests have been implemented,
+    // /// and it by no means represents a production product.
+    // /// </remarks>
+    // public class TroschuetzRecorder : IEnhancedRandom
+    // {
+    //     private readonly IGenerator _wrapped;
+    //     private readonly List<int> _ints;
+    //     private readonly List<float> _floats;
+    //     private readonly List<bool> _booleans;
+    //
+    //     public TroschuetzRecorder(IGenerator wrapped)
+    //     {
+    //         _wrapped = wrapped;
+    //         _ints = new List<int>();
+    //         _floats = new List<float>();
+    //         _booleans = new List<bool>();
+    //     }
+    //
+    //     public KnownSeriesRandom ToKnownSeries() => new KnownSeriesRandom(_ints, floatSeries: _floats, boolSeries: _booleans);
+    //
+    //     #region IEnhancedRandom Implementation
+    //     public void Seed(ulong seed) => throw new NotSupportedException();
+    //
+    //     public IEnhancedRandom Copy() => throw new NotSupportedException();
+    //
+    //     public string StringSerialize() => throw new NotSupportedException();
+    //
+    //     public IEnhancedRandom StringDeserialize(ReadOnlySpan<char> data) => throw new NotSupportedException();
+    //
+    //     public ulong SelectState(int selection) => throw new NotSupportedException();
+    //
+    //     public void SetSelectedState(int selection, ulong value) => throw new NotSupportedException();
+    //
+    //     public ulong NextULong() => throw new NotSupportedException();
+    //
+    //     public long NextLong() => throw new NotSupportedException();
+    //
+    //     public ulong NextULong(ulong bound) => throw new NotSupportedException();
+    //
+    //     public long NextLong(long outerBound) => throw new NotSupportedException();
+    //
+    //     public ulong NextULong(ulong inner, ulong outer) => throw new NotSupportedException();
+    //
+    //     public long NextLong(long inner, long outer) => throw new NotSupportedException();
+    //
+    //     public uint NextBits(int bits) => throw new NotSupportedException();
+    //
+    //     public void NextBytes(Span<byte> bytes) => throw new NotSupportedException();
+    //
+    //     public int NextInt()
+    //     {
+    //         int val = _wrapped.NextInclusiveMaxValue();
+    //         _ints.Add(val);
+    //
+    //         return val;
+    //     }
+    //
+    //     public uint NextUInt() => throw new NotSupportedException();
+    //
+    //     public uint NextUInt(uint bound) => throw new NotSupportedException();
+    //
+    //     public int NextInt(int outerBound)
+    //     {
+    //         int val = _wrapped.Next(outerBound);
+    //         _ints.Add(val);
+    //
+    //         return val;
+    //     }
+    //
+    //     public uint NextUInt(uint innerBound, uint outerBound) => throw new NotSupportedException();
+    //
+    //     public int NextInt(int innerBound, int outerBound)
+    //     {
+    //         int val = _wrapped.Next(innerBound, outerBound);
+    //         _ints.Add(val);
+    //
+    //         return val;
+    //     }
+    //
+    //     public bool NextBool()
+    //     {
+    //         bool val = _wrapped.NextBoolean();
+    //         _booleans.Add(val);
+    //
+    //         return val;
+    //     }
+    //
+    //     public float NextFloat()
+    //     {
+    //         // Troschuetz doesn't support float generation specifically, so any calls to it in our specific cases happen to be the result
+    //         // of the new implementation of PercentageCheck.  So, in a godawful series of hacks, we will simply
+    //         // invoke the old behavior of PercentageCheck, convert it to a value that will produce an equivalent result
+    //         // in the modern one, and go on our way.  This is NOT a generic solution, and will utterly break in an extremely
+    //         // large number of cases.
+    //         float val = (_wrapped.Next(1, 101) - 1) * 0.01f;
+    //         // Again, we know the percent checked for IN THE PARTICULAR CASES THIS IS USED FOR was a whole number...
+    //         // So we'll defeat the evil floating-point imprecision by just rounding.
+    //         val = MathF.Round(val, 2);
+    //         _floats.Add(val);
+    //
+    //         return val;
+    //     }
+    //
+    //     public float NextFloat(float outerBound) => throw new NotSupportedException();
+    //
+    //     public float NextFloat(float innerBound, float outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextDouble() => throw new NotSupportedException();
+    //
+    //     public double NextDouble(double outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextDouble(double innerBound, double outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextInclusiveDouble() => throw new NotSupportedException();
+    //
+    //     public double NextInclusiveDouble(double outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextInclusiveDouble(double innerBound, double outerBound) => throw new NotSupportedException();
+    //
+    //     public float NextInclusiveFloat() => throw new NotSupportedException();
+    //
+    //     public float NextInclusiveFloat(float outerBound) => throw new NotSupportedException();
+    //
+    //     public float NextInclusiveFloat(float innerBound, float outerBound) => throw new NotSupportedException();
+    //     public decimal NextInclusiveDecimal() => throw new NotSupportedException();
+    //
+    //     public decimal NextInclusiveDecimal(decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public decimal NextInclusiveDecimal(decimal innerBound, decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextExclusiveDouble() => throw new NotSupportedException();
+    //
+    //     public double NextExclusiveDouble(double outerBound) => throw new NotSupportedException();
+    //
+    //     public double NextExclusiveDouble(double innerBound, double outerBound) => throw new NotSupportedException();
+    //
+    //     public float NextExclusiveFloat() => throw new NotSupportedException();
+    //
+    //     public float NextExclusiveFloat(float outerBound) => throw new NotSupportedException();
+    //
+    //     public float NextExclusiveFloat(float innerBound, float outerBound) => throw new NotSupportedException();
+    //     public decimal NextExclusiveDecimal() => throw new NotSupportedException();
+    //
+    //     public decimal NextExclusiveDecimal(decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public decimal NextExclusiveDecimal(decimal innerBound, decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public decimal NextDecimal() => throw new NotSupportedException();
+    //
+    //     public decimal NextDecimal(decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public decimal NextDecimal(decimal innerBound, decimal outerBound) => throw new NotSupportedException();
+    //
+    //     public ulong Skip(ulong distance) => throw new NotSupportedException();
+    //
+    //     public ulong PreviousULong() => throw new NotSupportedException();
+    //
+    //     public int StateCount => throw new NotSupportedException();
+    //
+    //     public bool SupportsReadAccess => throw new NotSupportedException();
+    //
+    //     public bool SupportsWriteAccess => throw new NotSupportedException();
+    //
+    //     public bool SupportsSkip => throw new NotSupportedException();
+    //
+    //     public bool SupportsPrevious => throw new NotSupportedException();
+    //
+    //     public string DefaultTag => throw new NotSupportedException();
+    //     #endregion
+    // }
     /// <summary>
     /// Static/extension methods to help with creating test variables/enumerables for XUnit
     /// </summary>

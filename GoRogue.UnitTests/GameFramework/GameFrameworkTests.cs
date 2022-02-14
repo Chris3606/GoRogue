@@ -145,6 +145,37 @@ namespace GoRogue.UnitTests.GameFramework
         }
 
         [Fact]
+        public void CreateMapHelperConstructorInitializesCurrentMap()
+        {
+            var grMap = new Generator(10, 10)
+                .AddSteps(DefaultAlgorithms.RectangleMapSteps())
+                .Generate()
+                .Context.GetFirstOrDefault<ISettableGridView<bool>>();
+
+            TestUtils.NotNull(grMap);
+
+            // Create our own terrain layer and pass it to the map.
+            //
+            // Note: DO NOT actually write this functionality like this in production; use ApplyTerrainOverlay instead.
+            // This is done via the CreateMap function/Map constructor taking a custom terrain view ONLY as a test case
+            // for that map constructor
+            var translator = new LambdaTranslationGridView<bool, GameObject>(grMap, (pos, b) => b
+                    ? new GameObject(pos, 0)
+                    : new GameObject(pos, 0, true, false));
+            var terrain = new ArrayView<GameObject?>(grMap.Width, grMap.Height);
+            terrain.ApplyOverlay(translator);
+            var map = Map.CreateMap(terrain, 1, Distance.Chebyshev);
+            TestUtils.NotNull(map);
+
+            // Check each terrain's CurrentMap to ensure it was set properly and that the object wasn't changed out
+            foreach (var pos in map.Positions())
+            {
+                Assert.Equal(terrain[pos], map.GetTerrainAt(pos));
+                Assert.Equal(map, map.GetTerrainAt(pos)?.CurrentMap);
+            }
+        }
+
+        [Fact]
         public void OutOfBoundsEntityAdd()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);
@@ -277,6 +308,5 @@ namespace GoRogue.UnitTests.GameFramework
             // Should have reset the IsWalkable to true so the error is recoverable
             Assert.True(obj.IsWalkable);
         }
-
     }
 }

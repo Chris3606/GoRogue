@@ -6,7 +6,7 @@ using GoRogue.Random;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
@@ -55,7 +55,7 @@ namespace GoRogue.MapGeneration.Steps
         /// <summary>
         /// RNG to use for randomization or room order (if randomization is enabled).
         /// </summary>
-        public IGenerator RNG = GlobalRandom.DefaultRNG;
+        public IEnhancedRandom RNG = GlobalRandom.DefaultRNG;
 
         /// <summary>
         /// Creates a new ordered area connection step.
@@ -98,7 +98,7 @@ namespace GoRogue.MapGeneration.Steps
             if (RandomizeOrder)
             {
                 var list = new List<Area>(areasToConnectOriginal.Items);
-                list.FisherYatesShuffle(RNG);
+                RNG.Shuffle(list);
                 areasToConnect = list;
             }
             else

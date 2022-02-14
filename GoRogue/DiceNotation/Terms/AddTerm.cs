@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using JetBrains.Annotations;
-using Troschuetz.Random;
+using ShaiRandom.Generators;
 
 namespace GoRogue.DiceNotation.Terms
 {
@@ -37,7 +37,7 @@ namespace GoRogue.DiceNotation.Terms
         /// </summary>
         /// <param name="rng">The rng to use, passed to other terms.</param>
         /// <returns>The result of adding <see cref="Term1" /> and <see cref="Term2" />.</returns>
-        public int GetResult(IGenerator rng) => Term1.GetResult(rng) + Term2.GetResult(rng);
+        public int GetResult(IEnhancedRandom rng) => Term1.GetResult(rng) + Term2.GetResult(rng);
 
         /// <summary>
         /// Converts to a parenthesized string.

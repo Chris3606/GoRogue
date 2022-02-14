@@ -93,18 +93,29 @@ namespace GoRogue.SpatialMaps
         /// <param name="position">Position to add item to.</param>
         public void Add(T item, Point position)
         {
-            if (_itemMapping.ContainsKey(item))
+            try
+            {
+                _itemMapping.Add(item, position);
+            }
+            catch (ArgumentException)
+            {
                 throw new ArgumentException(
                     $"Item added to {GetType().Name} when it has already been added.",
                     nameof(item));
+            }
 
-            if (_positionMapping.ContainsKey(position))
+            try
+            {
+                _positionMapping.Add(position, item);
+            }
+            catch (ArgumentException)
+            {
+                _itemMapping.Remove(item);
                 throw new ArgumentException(
                     $"Item added to {GetType().Name} at a position already occupied by another item.",
                     nameof(position));
+            }
 
-            _itemMapping.Add(item, position);
-            _positionMapping.Add(position, item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
         }
 
@@ -117,6 +128,40 @@ namespace GoRogue.SpatialMaps
         /// <param name="x">X-value of the position to add item to.</param>
         /// <param name="y">Y-value of the position to add item to.</param>
         public void Add(T item, int x, int y) => Add(item, new Point(x, y));
+
+        /// <summary>
+        /// Tries to add the given item at the given position, provided the item is not already in the
+        /// spatial map and the position is not already filled. If either of those are the case,
+        /// returns false.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="position">Position to add item to.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        public bool TryAdd(T item, Point position)
+        {
+            if (!_itemMapping.TryAdd(item, position))
+                return false;
+            if (!_positionMapping.TryAdd(position, item))
+            {
+                _itemMapping.Remove(item);
+                return false;
+            }
+
+            ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
+
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to add the given item at the given position, provided the item is not already in the
+        /// spatial map and the position is not already filled. If either of those are the case,
+        /// returns false.
+        /// </summary>
+        /// <param name="item">Item to add.</param>
+        /// <param name="x">X-value of the position to add item to.</param>
+        /// <param name="y">Y-value of the position to add item to.</param>
+        /// <returns>True if the item was successfully added; false otherwise.</returns>
+        public bool TryAdd(T item, int x, int y) => TryAdd(item, new Point(x, y));
 
         /// <inheritdoc />
         public IReadOnlySpatialMap<T> AsReadOnly() => this;
@@ -195,11 +240,26 @@ namespace GoRogue.SpatialMaps
         public IEnumerable<T> GetItemsAt(int x, int y) => GetItemsAt(new Point(x, y));
 
         /// <inheritdoc />
+        public Point? GetPositionOfOrNull(T item)
+        {
+            if (_itemMapping.TryGetValue(item, out var pos))
+                return pos;
+
+            return null;
+        }
+
+        /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
-            _itemMapping.TryGetValue(item, out var pos);
-            return pos;
+            if (_itemMapping.TryGetValue(item, out var pos))
+                return pos;
+
+            throw new ArgumentException("Item position requested for an item that was not in the spatial map.", nameof(item));
         }
+
+        /// <inheritdoc />
+        public bool TryGetPositionOf(T item, out Point position)
+            => _itemMapping.TryGetValue(item, out position);
 
         /// <summary>
         /// Moves the item specified to the position specified. Throws ArgumentException if the item
@@ -209,19 +269,30 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Location to move item to.</param>
         public void Move(T item, Point target)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point oldPos;
+            try
+            {
+                oldPos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the item does not exist.",
                     nameof(item));
+            }
 
-            if (_positionMapping.ContainsKey(target))
+            try
+            {
+                _positionMapping.Add(target, item);
+            }
+            catch (ArgumentException)
+            {
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name}, but the target position already contains an item.",
                     nameof(target));
+            }
 
-            var oldPos = _itemMapping[item];
             _positionMapping.Remove(oldPos);
-            _positionMapping.Add(target, item);
             _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
@@ -234,6 +305,25 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetX">X-value of the location to move item to.</param>
         /// <param name="targetY">Y-value of the location to move item to.</param>
         public void Move(T item, int targetX, int targetY) => Move(item, new Point(targetX, targetY));
+
+        /// <inheritdoc />
+        public bool TryMove(T item, Point target)
+        {
+            if (!_itemMapping.TryGetValue(item, out Point oldPos))
+                return false;
+
+            if (!_positionMapping.TryAdd(target, item))
+                return false;
+
+            _positionMapping.Remove(oldPos);
+            _itemMapping[item] = target;
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
         /// <summary>
         /// Moves whatever is at position current, if anything, to the target position, if it is a valid move.
@@ -296,15 +386,40 @@ namespace GoRogue.SpatialMaps
         /// <param name="item">The item to remove.</param>
         public void Remove(T item)
         {
-            if (!_itemMapping.ContainsKey(item))
+            Point itemPos;
+            try
+            {
+                itemPos = _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ArgumentException(
                     $"Tried to remove an item from the {GetType().Name} that has not been added.",
                     nameof(item));
+            }
 
-            var itemPos = _itemMapping[item];
             _itemMapping.Remove(item);
             _positionMapping.Remove(itemPos);
+
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, itemPos));
+        }
+
+        /// <summary>
+        /// Removes the item specified. If the item specified was not in the spatial map, does nothing and returns false.
+        /// </summary>
+        /// <param name="item">The item to remove.</param>
+        /// <returns>True if the item was removed; false otherwise.</returns>
+        public bool TryRemove(T item)
+        {
+            if (!_itemMapping.TryGetValue(item, out var itemPos))
+                return false;
+
+            _itemMapping.Remove(item);
+            _positionMapping.Remove(itemPos);
+
+            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, itemPos));
+
+            return true;
         }
 
         /// <summary>

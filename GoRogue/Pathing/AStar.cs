@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
@@ -15,9 +15,9 @@ namespace GoRogue.Pathing
     /// </summary>
     /// <remarks>
     /// Like most GoRogue algorithms, AStar takes as a construction parameter an IGridView representing the map.
-    /// Specifically, it takes an <see cref="IGridView{T}" />, where true indicates that a tile should be
+    /// Specifically, it takes an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where true indicates that a tile should be
     /// considered walkable, and false indicates that a tile should be considered impassable.
-    /// For details on the map view system in general, see <see cref="IGridView{T}" />.  As well, there is an article
+    /// For details on the map view system in general, see <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />.  As well, there is an article
     /// explaining the map view system at the GoRogue documentation page
     /// <a href="https://chris3606.github.io/GoRogue/articles">here</a>
     /// If truly shortest paths are not strictly necessary, you may want to consider <see cref="FastAStar" /> instead.
@@ -33,7 +33,7 @@ namespace GoRogue.Pathing
         private int _cachedWidth;
 
         // Stored as separate array for performance reasons since it must be cleared at each run
-        private bool[] _closed;
+        private BitArray _closed;
 
         private Func<Point, Point, double> _heuristic;
 
@@ -149,30 +149,19 @@ namespace GoRogue.Pathing
 
             var maxSize = walkabilityView.Width * walkabilityView.Height;
             _nodes = new AStarNode?[maxSize];
-            _closed = new bool[maxSize];
+            _closed = new BitArray(maxSize);
             _cachedWidth = walkabilityView.Width;
             _cachedHeight = walkabilityView.Height;
 
             _openNodes = new FastPriorityQueue<AStarNode>(maxSize);
         }
 
-        private Direction[] _neighborDirections;
-
-        private Distance _distanceMeasurement;
         /// <summary>
-        /// The distance calculation being used to determine distance between points. <see cref="Distance.Manhattan" />
-        /// implies 4-way connectivity, while <see cref="Distance.Chebyshev" /> or <see cref="Distance.Euclidean" /> imply
+        /// The distance calculation being used to determine distance between points. <see cref="SadRogue.Primitives.Distance.Manhattan" />
+        /// implies 4-way connectivity, while <see cref="SadRogue.Primitives.Distance.Chebyshev" /> or <see cref="SadRogue.Primitives.Distance.Euclidean" /> imply
         /// 8-way connectivity for the purpose of determining adjacent coordinates.
         /// </summary>
-        public Distance DistanceMeasurement
-        {
-            get => _distanceMeasurement;
-            set
-            {
-                _distanceMeasurement = value;
-                _neighborDirections = ((AdjacencyRule)_distanceMeasurement).DirectionsOfNeighbors().ToArray();
-            }
-        }
+        public Distance DistanceMeasurement { get; set; }
 
         /// <summary>
         /// The map view being used to determine whether or not each tile is walkable.
@@ -206,7 +195,7 @@ namespace GoRogue.Pathing
         // NOTE: This HAS to be a property instead of a field for default heuristic to update properly when this is changed
         /// <summary>
         /// Multiplier that is used in the tie-breaking/smoothing element of the default heuristic. This value is based on the
-        /// maximum possible <see cref="Point.EuclideanDistanceMagnitude(Point, Point)" /> between two points on the map.
+        /// maximum possible <see cref="SadRogue.Primitives.Point.EuclideanDistanceMagnitude(Point, Point)" /> between two points on the map.
         /// Typically you don't need this value unless you're creating a custom heuristic an introducing the same
         /// tie-breaking/smoothing element as the default heuristic.
         /// </summary>
@@ -228,6 +217,8 @@ namespace GoRogue.Pathing
         /// <returns>The shortest path between the two points, or <see langword="null" /> if no valid path exists.</returns>
         public Path? ShortestPath(Point start, Point end, bool assumeEndpointsWalkable = true)
         {
+            var adjacencyRule = (AdjacencyRule)DistanceMeasurement;
+
             // Don't waste initialization time if there is definitely no path
             if (!assumeEndpointsWalkable && (!WalkabilityView[start] || !WalkabilityView[end]))
                 return null; // There is no path
@@ -253,7 +244,7 @@ namespace GoRogue.Pathing
             {
                 var length = WalkabilityView.Width * WalkabilityView.Height;
                 _nodes = new AStarNode[length];
-                _closed = new bool[length];
+                _closed = new BitArray(length);
                 _openNodes = new FastPriorityQueue<AStarNode>(length);
 
                 _cachedWidth = WalkabilityView.Width;
@@ -263,7 +254,7 @@ namespace GoRogue.Pathing
                     new Point(WalkabilityView.Width, WalkabilityView.Height));
             }
             else
-                Array.Clear(_closed, 0, _closed.Length);
+                _closed.SetAll(false);
 
             var result = new List<Point>();
             var index = start.ToIndex(WalkabilityView.Width);
@@ -297,9 +288,9 @@ namespace GoRogue.Pathing
                     return new Path(result);
                 }
 
-                for (int i = 0; i < _neighborDirections.Length; i++)
+                for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
                 {
-                    var neighborPos = current.Position + _neighborDirections[i];
+                    var neighborPos = current.Position + adjacencyRule.DirectionsOfNeighborsCache[i];
 
                     // Not a valid map position, ignore
                     if (neighborPos.X < 0 || neighborPos.Y < 0 || neighborPos.X >= WalkabilityView.Width ||

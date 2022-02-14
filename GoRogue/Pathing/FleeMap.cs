@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Priority_Queue;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.Pathing
 {
@@ -25,12 +24,12 @@ namespace GoRogue.Pathing
     {
         private readonly GoalMap _baseMap;
         private readonly ArrayView<double?> _goalMap;
+        private readonly GenericPriorityQueue<PositionNode, double> _openSet;
+        private readonly Queue<Point> _edgeSet;
+        private readonly BitArray _closedSet;
 
         // Nodes for the priority queue used in Update.
         private readonly ArrayView<PositionNode> _nodes;
-
-        // Cached directions based on goal map, to ensure maximum performance in the Update loop.
-        private readonly Direction[] _neighborDirections;
 
         /// <summary>
         /// Constructor. Takes a goal map where in all goals are treated as threats to be avoided,
@@ -44,10 +43,11 @@ namespace GoRogue.Pathing
             Magnitude = magnitude;
             _goalMap = new ArrayView<double?>(baseMap.Width, baseMap.Height);
             _nodes = new ArrayView<PositionNode>(baseMap.Width, baseMap.Height);
+            _openSet = new GenericPriorityQueue<PositionNode, double>(baseMap.Width * baseMap.Height);
+            _edgeSet = new Queue<Point>();
+            _closedSet = new BitArray(baseMap.Width * baseMap.Height);
             foreach (var pos in _nodes.Positions())
                 _nodes[pos] = new PositionNode(pos);
-
-            _neighborDirections = ((AdjacencyRule)_baseMap.DistanceMeasurement).DirectionsOfNeighbors().ToArray();
 
             _baseMap.Updated += Update;
 
@@ -84,7 +84,7 @@ namespace GoRogue.Pathing
         /// </summary>
         /// <param name="position">The position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(Point position)
@@ -96,7 +96,7 @@ namespace GoRogue.Pathing
         /// <param name="positionX">The x-value of the position to get the minimum value for.</param>
         /// <param name="positionY">The y-value of the position to get the minimum value for.</param>
         /// <returns>
-        /// The direction that has the minimum value in the goal-map, or <see cref="Direction.None" /> if the
+        /// The direction that has the minimum value in the goal-map, or <see cref="SadRogue.Primitives.Direction.None" /> if the
         /// neighbors are all obstacles.
         /// </returns>
         public Direction GetDirectionOfMinValue(int positionX, int positionY)
@@ -139,7 +139,9 @@ namespace GoRogue.Pathing
 
         private void Update()
         {
-            var openSet = new GenericPriorityQueue<PositionNode, double>(Width * Height);
+            int width = Width;
+            AdjacencyRule adjacencyRule = _baseMap.DistanceMeasurement;
+
             var mapBounds = _goalMap.Bounds();
 
             var walkable = _baseMap.Walkable;
@@ -151,39 +153,39 @@ namespace GoRogue.Pathing
                 var newPoint = _baseMap[point]!.Value * -Magnitude;
                 _goalMap[point] = newPoint;
 
-                openSet.Enqueue(_nodes[point], newPoint);
+                _openSet.Enqueue(_nodes[point], newPoint);
             }
 
-            var hasher = new KnownSizeHasher(_goalMap.Width);
-            var edgeSet = new Queue<Point>();
-            var closedSet = new HashSet<Point>(hasher);
+            _edgeSet.Clear();
+            _closedSet.SetAll(false);
 
-            while (openSet.Count > 0) // Multiple runs are needed to deal with islands
+            while (_openSet.Count > 0) // Multiple runs are needed to deal with islands
             {
-                var minNode = openSet.Dequeue();
-                closedSet.Add(minNode.Position);
+                var minNode = _openSet.Dequeue();
+                _closedSet[minNode.Position.ToIndex(width)] = true;
 
-                for (int i = 0; i < _neighborDirections.Length; i++)
+                for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
                 {
-                    var openPoint = minNode.Position + _neighborDirections[i];
+                    var openPoint = minNode.Position + adjacencyRule.DirectionsOfNeighborsCache[i];
                     if (!mapBounds.Contains(openPoint)) continue;
 
-                    if (!closedSet.Contains(openPoint) && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
-                        edgeSet.Enqueue(openPoint);
+                    if (!_closedSet[openPoint.ToIndex(width)] && _baseMap.BaseMap[openPoint] != GoalState.Obstacle)
+                        _edgeSet.Enqueue(openPoint);
                 }
 
-                while (edgeSet.Count > 0)
+                while (_edgeSet.Count > 0)
                 {
-                    var point = edgeSet.Dequeue();
-                    if (!mapBounds.Contains(point) || closedSet.Contains(point)) continue;
+                    var point = _edgeSet.Dequeue();
+                    var pointIndex = point.ToIndex(width);
+                    if (!mapBounds.Contains(point) || _closedSet[pointIndex]) continue;
 
                     var current = _goalMap[point]!.Value; // Never added non-nulls so this is fine
 
-                    for (int j = 0; j < _neighborDirections.Length; j++)
+                    for (int j = 0; j < adjacencyRule.DirectionsOfNeighborsCache.Length; j++)
                     {
-                        var openPoint = point + _neighborDirections[j];
+                        var openPoint = point + adjacencyRule.DirectionsOfNeighborsCache[j];
                         if (!mapBounds.Contains(openPoint)) continue;
-                        if (closedSet.Contains(openPoint) || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
+                        if (_closedSet[openPoint.ToIndex(width)] || _baseMap.BaseMap[openPoint] == GoalState.Obstacle)
                             continue;
 
                         var neighborValue = _goalMap[openPoint]!.Value; // Never added non-nulls so this is fine
@@ -191,13 +193,13 @@ namespace GoRogue.Pathing
                         if (newValue < neighborValue)
                         {
                             _goalMap[openPoint] = newValue;
-                            openSet.UpdatePriority(_nodes[openPoint], newValue);
-                            edgeSet.Enqueue(openPoint);
+                            _openSet.UpdatePriority(_nodes[openPoint], newValue);
+                            _edgeSet.Enqueue(openPoint);
                         }
                     }
 
-                    closedSet.Add(point);
-                    openSet.Remove(_nodes[point]);
+                    _closedSet[pointIndex] = true;
+                    _openSet.Remove(_nodes[point]);
                 }
             }
         }

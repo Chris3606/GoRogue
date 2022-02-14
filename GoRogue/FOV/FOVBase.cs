@@ -93,7 +93,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         protected abstract void OnCalculate(int originX, int originY, double radius, Distance distanceCalc);
 
@@ -113,7 +113,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees

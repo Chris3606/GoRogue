@@ -51,17 +51,41 @@ namespace GoRogue.Messaging
         /// </returns>
         public ISubscriber<TMessage> RegisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
         {
+            if (!TryRegisterSubscriber(subscriber))
+                throw new ArgumentException("Subscriber added to message bus twice.", nameof(subscriber));
+
+            return subscriber;
+        }
+
+        /// <summary>
+        /// Tries to add the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages
+        /// that can cast to <typeparamref name="TMessage" /> are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
+        /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
+        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> when they are disposed of, to avoid the bus
+        /// preventing the handler from being garbage collected.
+        /// </summary>
+        /// <typeparam name="TMessage">
+        /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
+        /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
+        /// message types.
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to add.</param>
+        /// <returns>
+        /// True if the subscriber was added; false if it was already identically registered.
+        /// </returns>
+        public bool TryRegisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
+        {
             var messageType = typeof(TMessage);
 
             if (!_subscriberRefs.ContainsKey(messageType))
                 _subscriberRefs[messageType] = new List<(object subscriber, Action<object> handler)>();
             else if (_subscriberRefs[messageType].Any(i => ReferenceEquals(i.subscriber, subscriber)))
-                throw new ArgumentException("Subscriber added to message bus twice.", nameof(subscriber));
+                return false;
 
             _subscriberRefs[messageType].Add((subscriber, msg => subscriber.Handle((TMessage)msg)));
             SubscriberCount++;
 
-            return subscriber;
+            return true;
         }
 
         /// <summary>
@@ -79,15 +103,36 @@ namespace GoRogue.Messaging
         /// <param name="subscriber">Subscriber to remove.</param>
         public void UnregisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
         {
+            if (!TryUnregisterSubscriber(subscriber))
+                throw new ArgumentException(
+                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
+        }
+
+        /// <summary>
+        /// Tries to remove the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
+        /// a shorter lifetime than the
+        /// MessageBus object it subscribed with, handlers MUST be removed when disposed of so they can be garbage collected -- an
+        /// object cannot be garbage-collected
+        /// so long as it is registered as a subscriber to a message bus (unless the bus is also being garbage-collected).
+        /// </summary>
+        /// <typeparam name="TMessage">
+        /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
+        /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
+        /// message types.
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to remove.</param>
+        /// <returns>True if the subscriber was successfully removed; false if it was never registered.</returns>
+        public bool TryUnregisterSubscriber<TMessage>(ISubscriber<TMessage> subscriber)
+        {
             var messageType = typeof(TMessage);
 
-            if (_subscriberRefs.TryGetValue(messageType, out List<(object subscriber, Action<object> handler)>? handlerRefs))
+            if (_subscriberRefs.TryGetValue(messageType,
+                    out List<(object subscriber, Action<object> handler)>? handlerRefs))
             {
                 var item = handlerRefs.FindIndex(i => ReferenceEquals(i.subscriber, subscriber));
 
                 if (item == -1)
-                    throw new ArgumentException(
-                        $"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
+                    return false;
 
                 handlerRefs.RemoveAt(item);
                 if (handlerRefs.Count == 0)
@@ -96,8 +141,9 @@ namespace GoRogue.Messaging
                 SubscriberCount--;
             }
             else
-                throw new ArgumentException(
-                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
+                return false;
+
+            return true;
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace GoRogue.FOV
 
         /// <summary>
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </summary>
         public readonly Distance DistanceCalc;
 
@@ -45,7 +45,7 @@ namespace GoRogue.FOV
         /// <param name="radius">The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.</param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -110,7 +110,7 @@ namespace GoRogue.FOV
         /// <summary>
         /// Calculates FOV given an origin point and a radius, overwriting the current FOV entirely. If no radius is
         /// specified, simply calculates with a radius of maximum integer value, which is effectively infinite. Radius
-        /// is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// is computed as a circle around the source (type <see cref="SadRogue.Primitives.Radius.Circle" />).
         /// </summary>
         /// <param name="originX">Coordinate x-value of the origin.</param>
         /// <param name="originY">Coordinate y-value of the origin.</param>
@@ -123,7 +123,7 @@ namespace GoRogue.FOV
         /// <summary>
         /// Calculates FOV given an origin point and a radius, adding the result onto the currently visible cells. If no
         /// radius is specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
-        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// Radius is computed as a circle around the source (type <see cref="SadRogue.Primitives.Radius.Circle" />).
         /// </summary>
         /// <param name="originX">Coordinate x-value of the origin.</param>
         /// <param name="originY">Coordinate y-value of the origin.</param>
@@ -136,7 +136,7 @@ namespace GoRogue.FOV
         /// <summary>
         /// Calculates FOV given an origin point and a radius, overwriting the current FOV entirely. If no radius is
         /// specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
-        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// Radius is computed as a circle around the source (type <see cref="SadRogue.Primitives.Radius.Circle" />).
         /// </summary>
         /// <param name="origin">Position of origin.</param>
         /// <param name="radius">
@@ -148,7 +148,7 @@ namespace GoRogue.FOV
         /// <summary>
         /// Calculates FOV given an origin point and a radius, adding the result onto the currently visible cells. If no
         /// radius is specified, simply calculates with a radius of maximum integer value, which is effectively infinite.
-        /// Radius is computed as a circle around the source (type <see cref="Radius.Circle" />).
+        /// Radius is computed as a circle around the source (type <see cref="SadRogue.Primitives.Radius.Circle" />).
         /// </summary>
         /// <param name="origin">Position of origin.</param>
         /// <param name="radius">
@@ -167,7 +167,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         public void Calculate(int originX, int originY, double radius, Distance distanceCalc);
 
@@ -182,7 +182,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc);
 
@@ -195,7 +195,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         public void Calculate(Point origin, double radius, Distance distanceCalc);
 
@@ -209,7 +209,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         public void CalculateAppend(Point origin, double radius, Distance distanceCalc);
 
@@ -226,7 +226,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -252,7 +252,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -277,7 +277,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
@@ -301,7 +301,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="distanceCalc">
         /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="Distance" />, eg. <see cref="Radius" />).
+        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
         /// </param>
         /// <param name="angle">
         /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
