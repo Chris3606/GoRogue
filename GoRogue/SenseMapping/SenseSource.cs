@@ -304,9 +304,8 @@ namespace GoRogue.SenseMapping
                 // Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
                 _halfSize = _size / 2;
                 _light = new double[_size, _size];
-                _nearLight =
-                    new bool[_size,
-                        _size]; // Allocate whether we use shadow or not, just to support.  Could be lazy but its just booleans
+                // Allocate whether we use shadow or not, just to support.  Could be lazy but its just booleans
+                _nearLight = new bool[_size, _size];
 
                 _decay = _intensity / (_radius + 1);
             }
@@ -477,8 +476,7 @@ namespace GoRogue.SenseMapping
                     {
                         _light[x2, y2] = surroundingLight;
                         if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
-                            dq.AddLast(new Point(x2,
-                                y2)); // Need to redo neighbors, since we just changed this entry's light.
+                            dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
                     }
                 }
             }
