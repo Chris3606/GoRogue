@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -72,7 +73,8 @@ namespace GoRogue.SenseMapping
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] _light;
 
-        private bool[,] _nearLight;
+        private BitArray _nearLight;
+        //private bool[,] _nearLight;
 
         // Pre-allocated list
         private List<Point> _neighbors;
@@ -314,8 +316,8 @@ namespace GoRogue.SenseMapping
                 // Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
                 _halfSize = _size / 2;
                 _light = new double[_size, _size];
-                // Allocate whether we use shadow or not, just to support.  Could be lazy but its just booleans
-                _nearLight = new bool[_size, _size];
+                // Allocate whether we use shadow or not, just to support. TODO: Lazy?
+                _nearLight = new BitArray(_size * _size);
 
                 _decay = _intensity / (_radius + 1);
             }
@@ -425,7 +427,7 @@ namespace GoRogue.SenseMapping
                 var p = dq.First!.Value;
                 dq.RemoveFirst();
 
-                if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
+                if (_light[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(_size)])
                     continue; // Nothing left to spread!
 
                 for (int i = 0; i < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; i++)
@@ -464,7 +466,7 @@ namespace GoRogue.SenseMapping
                 var p = dq.First!.Value;
                 dq.RemoveFirst();
 
-                if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
+                if (_light[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(_size)])
                     continue; // Nothing left to spread!
 
                 for (int i = 0; i < s_counterClockWiseDirectionCache.Length; i++)
@@ -503,7 +505,7 @@ namespace GoRogue.SenseMapping
             Array.Clear(_light, 0, _light.Length);
             _light[_halfSize, _halfSize] = _intensity; // source light is center, starts out at our intensity
             if (Type != SourceType.Shadow) // Only clear if we are using it, since this is called at each calculate
-                Array.Clear(_nearLight, 0, _nearLight.Length);
+                _nearLight.SetAll(false);
         }
 
         private double NearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors,
@@ -567,7 +569,7 @@ namespace GoRogue.SenseMapping
                 if (_light[pointX, pointY] > 0)
                 {
                     lit++;
-                    if (_nearLight[pointX, pointY])
+                    if (_nearLight[Point.ToIndex(pointX, pointY, _size)])
                         indirects++;
 
                     var dist = DistanceCalc.Calculate(x, y, pointX, pointY);
@@ -580,7 +582,7 @@ namespace GoRogue.SenseMapping
             }
 
             if (map[globalX, globalY] >= _intensity || indirects >= lit)
-                _nearLight[x, y] = true;
+                _nearLight[Point.ToIndex(x, y, _size)] = true;
 
             _neighbors.Clear();
             return curLight;
