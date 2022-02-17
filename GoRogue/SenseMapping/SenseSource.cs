@@ -412,7 +412,6 @@ namespace GoRogue.SenseMapping
                     return 6;
 
                 default:
-                    Console.Error.WriteLine("Unrecognized ripple type, defaulting to RIPPLE...");
                     return RippleValue(SourceType.Ripple);
             }
         }
@@ -530,19 +529,24 @@ namespace GoRogue.SenseMapping
                 if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
                 {
                     var tmpDistance = DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2);
-                    var idx = 0;
+                    int idx = 0;
 
-                    for (var i = 0; i < _neighbors.Count && i <= rippleNeighbors; i++)
+                    int count = _neighbors.Count;
+                    for (; idx < count && idx < rippleNeighbors; idx++)
                     {
-                        var c = _neighbors[i];
+                        var c = _neighbors[idx];
                         var testDistance = DistanceCalc.Calculate(_halfSize, _halfSize, c.X, c.Y);
                         if (tmpDistance < testDistance)
                             break;
-
-                        idx++;
                     }
-
-                    _neighbors.Insert(idx, new Point(x2, y2));
+                    // No point in inserting it after this point, it'd never be counted anyway.  Otherwise, if we're kicking
+                    // an existing element off the end, we'll just remove it to prevent shifting it down pointlessly
+                    if (idx < rippleNeighbors)
+                    {
+                        if (count >= rippleNeighbors)
+                            _neighbors.RemoveAt(rippleNeighbors - 1);
+                        _neighbors.Insert(idx, new Point(x2, y2));
+                    }
                 }
             }
 
