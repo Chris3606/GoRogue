@@ -75,7 +75,7 @@ namespace GoRogue.SenseMapping
         private bool[,] _nearLight;
 
         // Pre-allocated list
-        //private List<Point> _neighbors;
+        private List<Point> _neighbors;
 
         // Analyzer gets this wrong because it's returned by ref
 #pragma warning disable IDE0044
@@ -126,7 +126,7 @@ namespace GoRogue.SenseMapping
             Intensity = intensity;
 
             // Stores max of 8 neighbors
-            //_neighbors = new List<Point>(8);
+            _neighbors = new List<Point>(8);
         }
 
         /// <summary>
@@ -513,7 +513,6 @@ namespace GoRogue.SenseMapping
             if (x == _halfSize && y == _halfSize)
                 return _intensity;
 
-            List<Point> neighbors = new List<Point>();
             for (int dirIdx = 0; dirIdx < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; dirIdx++)
             {
                 var di = AdjacencyRule.EightWay.DirectionsOfNeighborsCache[dirIdx];
@@ -533,9 +532,9 @@ namespace GoRogue.SenseMapping
                     var tmpDistance = DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2);
                     var idx = 0;
 
-                    for (var i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
+                    for (var i = 0; i < _neighbors.Count && i <= rippleNeighbors; i++)
                     {
-                        var c = neighbors[i];
+                        var c = _neighbors[i];
                         var testDistance = DistanceCalc.Calculate(_halfSize, _halfSize, c.X, c.Y);
                         if (tmpDistance < testDistance)
                             break;
@@ -543,20 +542,20 @@ namespace GoRogue.SenseMapping
                         idx++;
                     }
 
-                    neighbors.Insert(idx, new Point(x2, y2));
+                    _neighbors.Insert(idx, new Point(x2, y2));
                 }
             }
 
-            if (neighbors.Count == 0)
+            if (_neighbors.Count == 0)
                 return 0;
 
-            int maxNeighborIdx = Math.Min(neighbors.Count, rippleNeighbors);
+            int maxNeighborIdx = Math.Min(_neighbors.Count, rippleNeighbors);
 
             double curLight = 0;
             int lit = 0, indirects = 0;
             for (int neighborIdx = 0; neighborIdx < maxNeighborIdx; neighborIdx++)
             {
-                var (pointX, pointY) = neighbors[neighborIdx];
+                var (pointX, pointY) = _neighbors[neighborIdx];
 
                 var gpx = Position.X - (int)Radius + pointX;
                 var gpy = Position.Y - (int)Radius + pointY;
@@ -579,6 +578,7 @@ namespace GoRogue.SenseMapping
             if (map[globalX, globalY] >= _intensity || indirects >= lit)
                 _nearLight[x, y] = true;
 
+            _neighbors.Clear();
             return curLight;
         }
 
