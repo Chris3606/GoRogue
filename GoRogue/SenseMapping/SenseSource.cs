@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -57,6 +58,9 @@ namespace GoRogue.SenseMapping
     [PublicAPI]
     public class SenseSource
     {
+        private static readonly Direction[] s_counterClockWiseDirectionCache =
+            AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right).ToArray();
+
         private static readonly string[] s_typeWriteValues = Enum.GetNames(typeof(SourceType));
 
         private double _angle;
@@ -69,6 +73,9 @@ namespace GoRogue.SenseMapping
         internal double[,] _light;
 
         private bool[,] _nearLight;
+
+        // Pre-allocated list
+        //private List<Point> _neighbors;
 
         // Analyzer gets this wrong because it's returned by ref
 #pragma warning disable IDE0044
@@ -117,6 +124,9 @@ namespace GoRogue.SenseMapping
 
             IsAngleRestricted = false;
             Intensity = intensity;
+
+            // Stores max of 8 neighbors
+            //_neighbors = new List<Point>(8);
         }
 
         /// <summary>
@@ -371,8 +381,10 @@ namespace GoRogue.SenseMapping
                         ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, _resMap, angle, span);
                     }
                     else
-                        foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
+                        for (int i = 0; i < AdjacencyRule.Diagonals.DirectionsOfNeighborsCache.Length; i++)
                         {
+                            var d = AdjacencyRule.Diagonals.DirectionsOfNeighborsCache[i];
+
                             ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, _resMap);
                             ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, _resMap);
                         }
@@ -417,8 +429,10 @@ namespace GoRogue.SenseMapping
                 if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
                     continue; // Nothing left to spread!
 
-                foreach (var dir in AdjacencyRule.EightWay.DirectionsOfNeighbors())
+                for (int i = 0; i < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; i++)
                 {
+                    var dir = AdjacencyRule.EightWay.DirectionsOfNeighborsCache[i];
+
                     var x2 = p.X + dir.DeltaX;
                     var y2 = p.Y + dir.DeltaY;
                     var globalX2 = Position.X - (int)Radius + x2;
@@ -454,8 +468,10 @@ namespace GoRogue.SenseMapping
                 if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
                     continue; // Nothing left to spread!
 
-                foreach (var dir in AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right))
+                for (int i = 0; i < s_counterClockWiseDirectionCache.Length; i++)
                 {
+                    var dir = s_counterClockWiseDirectionCache[i];
+
                     var x2 = p.X + dir.DeltaX;
                     var y2 = p.Y + dir.DeltaY;
                     var globalX2 = Position.X - (int)Radius + x2;
@@ -498,9 +514,10 @@ namespace GoRogue.SenseMapping
                 return _intensity;
 
             List<Point> neighbors = new List<Point>();
-
-            foreach (var di in AdjacencyRule.EightWay.DirectionsOfNeighbors())
+            for (int dirIdx = 0; dirIdx < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; dirIdx++)
             {
+                var di = AdjacencyRule.EightWay.DirectionsOfNeighborsCache[dirIdx];
+
                 var x2 = x + di.DeltaX;
                 var y2 = y + di.DeltaY;
 
@@ -533,12 +550,14 @@ namespace GoRogue.SenseMapping
             if (neighbors.Count == 0)
                 return 0;
 
-            neighbors = neighbors.GetRange(0, Math.Min(neighbors.Count, rippleNeighbors));
+            int maxNeighborIdx = Math.Min(neighbors.Count, rippleNeighbors);
 
             double curLight = 0;
             int lit = 0, indirects = 0;
-            foreach (var (pointX, pointY) in neighbors)
+            for (int neighborIdx = 0; neighborIdx < maxNeighborIdx; neighborIdx++)
             {
+                var (pointX, pointY) = neighbors[neighborIdx];
+
                 var gpx = Position.X - (int)Radius + pointX;
                 var gpy = Position.Y - (int)Radius + pointY;
 
