@@ -5,7 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+### Changed
+- Optimized `SenseSource` algorithm and structure
+    - ~30% faster
+    - Notably less memory usage and allocations performed
 
 # [3.0.0-alpha10] - 2022-02-13
 
