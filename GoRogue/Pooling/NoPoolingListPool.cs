@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 
 namespace GoRogue.Pooling
 {
@@ -9,13 +10,9 @@ namespace GoRogue.Pooling
     /// or algorithm which takes a list pool.
     /// </summary>
     /// <typeparam name="T">Type of items in the list.</typeparam>
+    [PublicAPI]
     public sealed class NoPoolingListPool<T> : IListPool<T>
     {
-        /// <summary>
-        /// Settable, but ignored.
-        /// </summary>
-        public int MaxLists { get; set; }
-
         /// <summary>
         /// Creates a new list and returns it.
         /// </summary>
@@ -29,6 +26,12 @@ namespace GoRogue.Pooling
         /// <param name="list">List to "return".</param>
         /// <param name="clear">Ignored.</param>
         public void Return(List<T> list, bool clear = true)
+        { }
+
+        /// <summary>
+        /// Does nothing, since this list pool implementation does not maintain a pool.
+        /// </summary>
+        public void Clear()
         { }
     }
 }

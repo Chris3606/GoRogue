@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace GoRogue.Pooling
 {
@@ -13,29 +14,28 @@ namespace GoRogue.Pooling
     /// doesn't have any way to take into account list capacity when requesting a list.
     /// </remarks>
     /// <typeparam name="T">Type of items being stored in the list.</typeparam>
+    [PublicAPI]
     public interface IListPool<T>
     {
-        /// <summary>
-        /// Maximum number of lists that are allowed to be in the pool at any given time.  Any lists beyond this number
-        /// which are returned, are allowed to be GCed.
-        /// </summary>
-        int MaxLists { get; set; }
-
         /// <summary>
         /// Retrieve a list from the pool, or allocate a new one if there are no lists available.
         /// </summary>
         /// <returns>A list from the pool, or a new list if no lists are available in the pool.</returns>
-        public List<T> Rent();
+        List<T> Rent();
 
         /// <summary>
-        /// Returns the given list to the pool.  The list will be discarded (and allowed to be queued for GC) if
-        /// there are already at least <see cref="MaxLists"/> unused lists in the pool.
+        /// Returns the given list to the pool.
         /// </summary>
         /// <param name="list">The list to return.</param>
         /// <param name="clear">
         /// Whether or not to clear the list given before adding it to the pool.  Should be set to true unless you are
         /// absolutely sure the list is cleared via other means before passing it.
         /// </param>
-        public void Return(List<T> list, bool clear = true);
+        void Return(List<T> list, bool clear = true);
+
+        /// <summary>
+        /// Clears the pool of all lists.
+        /// </summary>
+        void Clear();
     }
 }

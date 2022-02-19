@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using GoRogue.Pooling;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -28,7 +29,7 @@ namespace GoRogue.SpatialMaps
     public class AdvancedLayeredSpatialMap<T> : ISpatialMap<T>, IReadOnlyLayeredSpatialMap<T>
         where T : IHasLayer
     {
-        // Same as above but startingLayers less layers, for actual use, since we view our layers as
+        // Same as LayerMasker property, but startingLayers less layers, for actual use, since we view our layers as
         // 0 -> numberOfLayers - 1
         private readonly LayerMasker _internalLayerMasker;
 
@@ -60,6 +61,40 @@ namespace GoRogue.SpatialMaps
         public AdvancedLayeredSpatialMap(IEqualityComparer<T> itemComparer, int numberOfLayers,
                                          IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
                                          uint layersSupportingMultipleItems = 0)
+            : this(itemComparer, numberOfLayers,
+                _ => new ListPool<T>(50, 16), pointComparer, startingLayer,
+                layersSupportingMultipleItems)
+        {
+        }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="itemComparer">
+        /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+        /// efficiency of its GetHashCode function, as it will determine the efficiency of
+        /// many AdvancedLayeredSpatialMap functions.
+        /// </param>
+        /// <param name="numberOfLayers">Number of layers to include.</param>
+        /// <param name="listPoolCreator">
+        /// A function used to determine the list pool implementation used for the spatial maps which support multiple
+        /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AdvancedLayeredSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
+        /// <param name="startingLayer">Index to use for the first layer.</param>
+        /// <param name="layersSupportingMultipleItems">
+        /// A layer mask indicating which layers should support multiple items residing at the same
+        /// location on that layer. Defaults to no layers.
+        /// </param>
+        public AdvancedLayeredSpatialMap(IEqualityComparer<T> itemComparer,
+                                         int numberOfLayers, Func<int, IListPool<T>> listPoolCreator,
+                                         IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
+                                         uint layersSupportingMultipleItems = 0)
         {
             if (numberOfLayers > 32 - startingLayer)
                 throw new ArgumentOutOfRangeException(nameof(numberOfLayers),
@@ -74,11 +109,15 @@ namespace GoRogue.SpatialMaps
             LayerMasker = new LayerMasker(numberOfLayers + startingLayer);
             _internalLayerMasker = new LayerMasker(numberOfLayers);
 
-            for (var i = 0; i < _layers.Length; i++)
-                if (LayerMasker.HasLayer(layersSupportingMultipleItems, i + StartingLayer))
-                    _layers[i] = new AdvancedMultiSpatialMap<T>(itemComparer, pointComparer);
+            // Create layers based on mask parameters
+            for (int i = 0; i < _layers.Length; i++)
+            {
+                var layerNum = i + startingLayer;
+                if (LayerMasker.HasLayer(layersSupportingMultipleItems, layerNum))
+                    _layers[i] = new AdvancedMultiSpatialMap<T>(itemComparer, listPoolCreator(layerNum), pointComparer);
                 else
                     _layers[i] = new AdvancedSpatialMap<T>(itemComparer, pointComparer);
+            }
 
             foreach (var layer in _layers)
             {
@@ -135,8 +174,8 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public IEnumerable<IReadOnlySpatialMap<T>> GetLayersInMask(uint layerMask = uint.MaxValue)
         {
-            foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer)
-            ) // LayerMasking will ignore layers that don't actually exist
+            // LayerMasking will ignore layers that don't actually exist
+            foreach (var num in _internalLayerMasker.Layers(layerMask >> StartingLayer))
                 yield return _layers[num - StartingLayer];
         }
 
@@ -348,6 +387,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Position to move the given item to.</param>
         public void Move(T item, Point target)
         {
+            // TODO: This exception is a bug; not just thrown in layer doesn't exist cases
             if (!TryMove(item, target))
                 throw new ArgumentException(
                     $"Tried to move item in {GetType().Name} on layer {item.Layer}, but no such layer exists.",

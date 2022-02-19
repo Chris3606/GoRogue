@@ -47,19 +47,42 @@ namespace GoRogue.SpatialMaps
         /// The initial maximum number of elements the AdvancedMultiSpatialMap can hold before it has to
         /// internally resize data structures. Defaults to 32.
         /// </param>
-        /// <param name="poolLists">
-        /// Whether or not to use a <see cref="ListPool{T}"/> for the item lists stored internally.  Generally, having
-        /// this on will improve memory and/or runtime performance, however you may turn it off in order to suit very
-        /// specific circumstances (if, for instance, there are significant differences between the two in a benchmark).
-        /// </param>
         public AdvancedMultiSpatialMap(IEqualityComparer<T> itemComparer, IEqualityComparer<Point>? pointComparer = null,
-                                       int initialCapacity = 32, bool poolLists = true)
+                                       int initialCapacity = 32)
+            : this(itemComparer, new ListPool<T>(50, 16), pointComparer, initialCapacity)
+        { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="itemComparer">
+        /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+        /// efficiency of its GetHashCode function, as it will determine the efficiency of many AdvancedMultiSpatialMap
+        /// functions.
+        /// </param>
+        /// <param name="listPool">
+        /// The list pool implementation to use.  Specify <see cref="NoPoolingListPool{T}"/> to disable pooling entirely.
+        /// This implementation _may_ be shared with other spatial maps if you wish, however be aware that no thread safety is implemented
+        /// by the default list pool implementations or the spatial map itself.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AdvancedMultiSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
+        /// <param name="initialCapacity">
+        /// The initial maximum number of elements the AdvancedMultiSpatialMap can hold before it has to
+        /// internally resize data structures. Defaults to 32.
+        /// </param>
+        public AdvancedMultiSpatialMap(IEqualityComparer<T> itemComparer, IListPool<T> listPool,
+                                       IEqualityComparer<Point>? pointComparer = null,
+                                       int initialCapacity = 32)
         {
             _itemMapping = new Dictionary<T, Point>(initialCapacity, itemComparer);
             _positionMapping = new Dictionary<Point, List<T>>(initialCapacity, pointComparer ?? EqualityComparer<Point>.Default);
 
-            // TODO: Consider allowing customization of the pool used?
-            _itemListPool = poolLists ? (IListPool<T>)new ListPool<T>(100) : new NoPoolingListPool<T>();
+            _itemListPool = listPool;
         }
 
         /// <inheritdoc />
@@ -567,6 +590,28 @@ namespace GoRogue.SpatialMaps
     [PublicAPI]
     public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="listPool">
+        /// The list pool implementation to use.  Specify <see cref="NoPoolingListPool{T}"/> to disable pooling entirely.
+        /// This implementation _may_ be shared with other spatial maps if you wish, however be aware that no thread safety is implemented
+        /// by the default list pool implementations or the spatial map itself.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many MultiSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
+        /// <param name="initialCapacity">
+        /// The initial maximum number of elements the spatial map can hold before it has to
+        /// internally resize data structures. Defaults to 32.
+        /// </param>
+        public MultiSpatialMap(IListPool<T> listPool, IEqualityComparer<Point>? pointComparer = null, int initialCapacity = 32)
+            : base(new IDComparer<T>(), listPool, pointComparer, initialCapacity)
+        { }
+
         /// <summary>
         /// Constructor.
         /// </summary>
