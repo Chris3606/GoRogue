@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoRogue.Pooling;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -26,6 +27,8 @@ namespace GoRogue.SpatialMaps
         private readonly Dictionary<T, Point> _itemMapping;
         private readonly Dictionary<Point, List<T>> _positionMapping;
 
+        private readonly IListPool<T> _itemListPool;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -44,11 +47,19 @@ namespace GoRogue.SpatialMaps
         /// The initial maximum number of elements the AdvancedMultiSpatialMap can hold before it has to
         /// internally resize data structures. Defaults to 32.
         /// </param>
+        /// <param name="poolLists">
+        /// Whether or not to use a <see cref="ListPool{T}"/> for the item lists stored internally.  Generally, having
+        /// this on will improve memory and/or runtime performance, however you may turn it off in order to suit very
+        /// specific circumstances (if, for instance, there are significant differences between the two in a benchmark).
+        /// </param>
         public AdvancedMultiSpatialMap(IEqualityComparer<T> itemComparer, IEqualityComparer<Point>? pointComparer = null,
-                                       int initialCapacity = 32)
+                                       int initialCapacity = 32, bool poolLists = true)
         {
             _itemMapping = new Dictionary<T, Point>(initialCapacity, itemComparer);
             _positionMapping = new Dictionary<Point, List<T>>(initialCapacity, pointComparer ?? EqualityComparer<Point>.Default);
+
+            // TODO: Consider allowing customization of the pool used?
+            _itemListPool = poolLists ? (IListPool<T>)new ListPool<T>(100) : new NoPoolingListPool<T>();
         }
 
         /// <inheritdoc />
@@ -103,7 +114,7 @@ namespace GoRogue.SpatialMaps
             }
 
             if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
-                _positionMapping[position] = positionList = new List<T>();
+                _positionMapping[position] = positionList = _itemListPool.Rent();
 
             positionList.Add(item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
@@ -131,7 +142,7 @@ namespace GoRogue.SpatialMaps
                 return false;
 
             if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
-                _positionMapping[position] = positionList = new List<T>();
+                _positionMapping[position] = positionList = _itemListPool.Rent();
 
             positionList.Add(item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
@@ -156,6 +167,9 @@ namespace GoRogue.SpatialMaps
         public void Clear()
         {
             _itemMapping.Clear();
+
+            foreach (var val in _positionMapping.Values)
+                _itemListPool.Return(val);
             _positionMapping.Clear();
         }
 
@@ -249,12 +263,15 @@ namespace GoRogue.SpatialMaps
             var oldPosList = _positionMapping[oldPos];
             oldPosList.Remove(item);
             if (oldPosList.Count == 0)
+            {
+                _itemListPool.Return(oldPosList, false);
                 _positionMapping.Remove(oldPos);
+            }
 
             // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
             // max.
             if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = new List<T>();
+                _positionMapping[target] = targetList = _itemListPool.Rent();
             targetList.Add(item);
 
             _itemMapping[item] = target;
@@ -284,12 +301,15 @@ namespace GoRogue.SpatialMaps
             var oldPosList = _positionMapping[oldPos];
             oldPosList.Remove(item);
             if (oldPosList.Count == 0)
+            {
+                _itemListPool.Return(oldPosList, false);
                 _positionMapping.Remove(oldPos);
+            }
 
             // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
             // max.
             if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = new List<T>();
+                _positionMapping[target] = targetList = _itemListPool.Rent();
             targetList.Add(item);
 
             _itemMapping[item] = target;
@@ -308,8 +328,9 @@ namespace GoRogue.SpatialMaps
             if (!_positionMapping.ContainsKey(current) || current == target)
                 return result;
 
+            // TODO: Limit indexers
             if (!_positionMapping.ContainsKey(target))
-                _positionMapping.Add(target, new List<T>());
+                _positionMapping.Add(target, _itemListPool.Rent());
 
             foreach (var item in _positionMapping[current])
             {
@@ -322,10 +343,15 @@ namespace GoRogue.SpatialMaps
             _positionMapping.Remove(current);
 
             if (ItemMoved == null)
+            {
+                _itemListPool.Return(list);
                 return result;
+            }
 
             foreach (var item in list)
                 ItemMoved(this, new ItemMovedEventArgs<T>(item, current, target));
+
+            _itemListPool.Return(list);
 
             return result;
         }
@@ -359,7 +385,10 @@ namespace GoRogue.SpatialMaps
             var posList = _positionMapping[pos];
             posList.Remove(item);
             if (posList.Count == 0)
+            {
+                _itemListPool.Return(posList, false);
                 _positionMapping.Remove(pos);
+            }
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
         }
@@ -380,7 +409,10 @@ namespace GoRogue.SpatialMaps
             var posList = _positionMapping[pos];
             posList.Remove(item);
             if (posList.Count == 0)
+            {
+                _itemListPool.Return(posList, false);
                 _positionMapping.Remove(pos);
+            }
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
 
@@ -406,6 +438,8 @@ namespace GoRogue.SpatialMaps
             if (ItemRemoved != null)
                 foreach (var item in list)
                     ItemRemoved(this, new ItemEventArgs<T>(item, position));
+
+            _itemListPool.Return(list);
 
             return result;
         }
