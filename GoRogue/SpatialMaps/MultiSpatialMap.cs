@@ -585,7 +585,7 @@ namespace GoRogue.SpatialMaps
         {
             if (!_positionMapping.ContainsKey(current))
                 throw new ArgumentException(
-                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at the that position.",
+                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at that position.",
                     nameof(current));
 
             if (current == target)
