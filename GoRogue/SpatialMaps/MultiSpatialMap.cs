@@ -284,6 +284,35 @@ namespace GoRogue.SpatialMaps
 
             // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
             var oldPosList = _positionMapping[oldPos];
+
+            // We'll get the target list now as well, since we can do some special case shortcutting if the target doesn't
+            // exist and the source has only one element.  C# doesn't offer a nice Get-Or-Insert type function, so this
+            // will have to do.  This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If the existing list has only the item we're moving, and the target doesn't exist, we'll just
+                // switch the list over to avoid any removing and interacting with the pool.  This also handles a special case
+                // where no list exists in the pool, but the one for the old position is about to be freed.  This ensures
+                // that, in this case, the list will simply be hot-swapped over instead of a new one allocated then the
+                // old one added to the pool after.
+                if (oldPosList.Count == 1)
+                {
+                    _positionMapping[target] = oldPosList;
+                    _positionMapping.Remove(oldPos);
+                    _itemMapping[item] = target;
+                    ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+                    return;
+                }
+
+                // Otherwise, we'll have to get a new list.
+                _positionMapping[target] = targetList = _itemListPool.Rent();
+            }
+
+            // Add item to target list
+            targetList.Add(item);
+
+            // Remove the old one, and if it was the last item, return the list to the pool.  It could be the last
+            // item if and only if the target list already existed (so the above code does not return)
             oldPosList.Remove(item);
             if (oldPosList.Count == 0)
             {
@@ -291,14 +320,8 @@ namespace GoRogue.SpatialMaps
                 _positionMapping.Remove(oldPos);
             }
 
-            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
-            // max.
-            if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = _itemListPool.Rent();
-            targetList.Add(item);
-
+            // Switch position of item in spatial map, and fire moved event.
             _itemMapping[item] = target;
-
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
 
@@ -322,6 +345,35 @@ namespace GoRogue.SpatialMaps
 
             // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
             var oldPosList = _positionMapping[oldPos];
+
+            // We'll get the target list now as well, since we can do some special case shortcutting if the target doesn't
+            // exist and the source has only one element.  C# doesn't offer a nice Get-Or-Insert type function, so this
+            // will have to do.  This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If the existing list has only the item we're moving, and the target doesn't exist, we'll just
+                // switch the list over to avoid any removing and interacting with the pool.  This also handles a special case
+                // where no list exists in the pool, but the one for the old position is about to be freed.  This ensures
+                // that, in this case, the list will simply be hot-swapped over instead of a new one allocated then the
+                // old one added to the pool after.
+                if (oldPosList.Count == 1)
+                {
+                    _positionMapping[target] = oldPosList;
+                    _positionMapping.Remove(oldPos);
+                    _itemMapping[item] = target;
+                    ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+                    return true;
+                }
+
+                // Otherwise, we'll have to get a new list.
+                _positionMapping[target] = targetList = _itemListPool.Rent();
+            }
+
+            // Add item to target list
+            targetList.Add(item);
+
+            // Remove the old one, and if it was the last item, return the list to the pool.  It could be the last
+            // item if and only if the target list already existed (so the above code does not return)
             oldPosList.Remove(item);
             if (oldPosList.Count == 0)
             {
@@ -329,12 +381,7 @@ namespace GoRogue.SpatialMaps
                 _positionMapping.Remove(oldPos);
             }
 
-            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
-            // max.
-            if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = _itemListPool.Rent();
-            targetList.Add(item);
-
+            // Switch position of item in spatial map, and fire moved event.
             _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
 
@@ -344,6 +391,7 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
+        // Equivalent to MoveAll for this implementation, but with an extra List<T>.
         /// <inheritdoc />
         public List<T> MoveValid(Point current, Point target)
         {
