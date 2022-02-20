@@ -251,10 +251,14 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public Point GetPositionOf(T item)
         {
-            if (_itemMapping.TryGetValue(item, out var pos))
-                return pos;
-
-            throw new ArgumentException("Item position requested for an item that was not in the spatial map.", nameof(item));
+            try
+            {
+                return _itemMapping[item];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException("Item position requested for an item that was not in the spatial map.", nameof(item));
+            }
         }
 
         /// <inheritdoc />
@@ -337,23 +341,27 @@ namespace GoRogue.SpatialMaps
         /// <param name="current">The position of the item to move.</param>
         /// <param name="target">The position to move the item to.</param>
         /// <returns>
-        /// The item moved as a 1-element IEnumerable if something was moved, or nothing if no item
+        /// The item moved as a 1-element list if something was moved, or nothing if no item
         /// was moved.
         /// </returns>
         public List<T> MoveValid(Point current, Point target)
         {
-            var result = new List<T>();
+            if (current == target)
+                return new List<T>();
 
-            if (_positionMapping.ContainsKey(current) && !_positionMapping.ContainsKey(target))
-            {
-                var item = _positionMapping[current];
-                _positionMapping.Remove(current);
-                _positionMapping.Add(target, item);
-                _itemMapping[item] = target;
-                result.Add(item);
+            if (!_positionMapping.TryGetValue(current, out var item))
+                return new List<T>();
 
-                ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
-            }
+            if (_positionMapping.ContainsKey(target))
+                return new List<T>();
+
+            var result = new List<T>(1) {item};
+
+            _positionMapping.Remove(current);
+            _positionMapping[target] = item;
+            _itemMapping[item] = target;
+
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
 
             return result;
         }
@@ -437,16 +445,14 @@ namespace GoRogue.SpatialMaps
         /// </returns>
         public List<T> Remove(Point position)
         {
-            var result = new List<T>();
+            if (!_positionMapping.TryGetValue(position, out var item))
+                return new List<T>();
 
-            _positionMapping.TryGetValue(position, out var item);
-            if (item == null)
-                return result;
+            var result = new List<T>(1){item};
 
             _positionMapping.Remove(position);
             _itemMapping.Remove(item);
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, position));
-            result.Add(item);
 
             return result;
         }
@@ -560,22 +566,26 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Location to move items to.</param>
         public void MoveAll(Point current, Point target)
         {
-            if (!_positionMapping.ContainsKey(current))
-                throw new ArgumentException(
-                    $"Tried to move item from {current} in {GetType().Name}, but there was nothing at the that position.",
-                    nameof(current));
-
             if (current == target)
                 throw new ArgumentException(
                     $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.",
                     nameof(target));
+
+            if (!_positionMapping.TryGetValue(current, out var item))
+                throw new ArgumentException(
+                    $"Tried to move item from {current} in {GetType().Name}, but there was nothing at the that position.",
+                    nameof(current));
 
             if (_positionMapping.ContainsKey(target))
                 throw new ArgumentException(
                     $"Tried to move item at a location in {GetType().Name}, but the target position already contains an item.",
                     nameof(target));
 
-            MoveValid(current, target);
+            _positionMapping.Remove(current);
+            _positionMapping[target] = item;
+            _itemMapping[item] = target;
+
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
         }
 
         /// <summary>
@@ -591,6 +601,46 @@ namespace GoRogue.SpatialMaps
             => MoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
+        /// Gets the item at the given position.  Throws ArgumentException no item exists at the given location.
+        /// </summary>
+        /// <exception cref="ArgumentException">No item is present in the spatial map at the given position.</exception>
+        /// <remarks>
+        /// Intended to be a more convenient function as compared to <see cref="GetItemsAt(Point)" />, since
+        /// this spatial map implementation only allows a single item to at any given location at a time.
+        /// </remarks>
+        /// <param name="position">The position to return the item for.</param>
+        /// <returns>
+        /// The item at the given position.
+        /// </returns>
+        public T GetItem(Point position)
+        {
+            try
+            {
+                return _positionMapping[position];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException(
+                    $"Tried to get the item at position {position}, but there was no item at that position.");
+            }
+        }
+
+        /// <summary>
+        /// Gets the item at the given position.  Throws ArgumentException no item exists at the given location.
+        /// </summary>
+        /// <exception cref="ArgumentException">No item is present in the spatial map at the given position.</exception>
+        /// <remarks>
+        /// Intended to be a more convenient function as compared to <see cref="GetItemsAt(Point)" />, since
+        /// this spatial map implementation only allows a single item to at any given location at a time.
+        /// </remarks>
+        /// <param name="x">The x-value of the position to return the item for.</param>
+        /// <param name="y">The y-value of the position to return the item for.</param>
+        /// <returns>
+        /// The item at the given position.
+        /// </returns>
+        public T GetItem(int x, int y) => GetItem(new Point(x, y));
+
+        /// <summary>
         /// Gets the item at the given position, or default(T) if no item exists.
         /// </summary>
         /// <remarks>
@@ -602,7 +652,7 @@ namespace GoRogue.SpatialMaps
         /// The item at the given position, or default(T) if no item exists at that location.
         /// </returns>
         [return: MaybeNull]
-        public T GetItem(Point position)
+        public T GetItemOrDefault(Point position)
         {
             _positionMapping.TryGetValue(position, out var item);
             return item;
@@ -621,7 +671,7 @@ namespace GoRogue.SpatialMaps
         /// The item at the given position, or default(T) if no item exists at that location.
         /// </returns>
         [return: MaybeNull]
-        public T GetItem(int x, int y) => GetItem(new Point(x, y));
+        public T GetItemOrDefault(int x, int y) => GetItemOrDefault(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map.
@@ -646,7 +696,7 @@ namespace GoRogue.SpatialMaps
     /// and be a reference-type.
     /// </typeparam>
     [PublicAPI]
-    public class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
+    public sealed class SpatialMap<T> : AdvancedSpatialMap<T> where T : class, IHasID
     {
         /// <summary>
         /// Constructor.

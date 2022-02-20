@@ -684,7 +684,7 @@ namespace GoRogue.SpatialMaps
     /// spatial map.
     /// </typeparam>
     [PublicAPI]
-    public class LayeredSpatialMap<T> : AdvancedLayeredSpatialMap<T> where T : class, IHasLayer, IHasID
+    public sealed class LayeredSpatialMap<T> : AdvancedLayeredSpatialMap<T> where T : class, IHasLayer, IHasID
     {
         /// <summary>
         /// Constructor.

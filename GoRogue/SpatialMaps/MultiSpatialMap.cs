@@ -693,7 +693,7 @@ namespace GoRogue.SpatialMaps
     /// a reference-type.
     /// </typeparam>
     [PublicAPI]
-    public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
+    public sealed class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
     {
         /// <summary>
         /// Constructor.
