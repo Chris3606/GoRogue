@@ -225,10 +225,9 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public IEnumerable<T> GetItemsAt(Point position)
         {
-            if (!_positionMapping.ContainsKey(position))
+            if (!_positionMapping.TryGetValue(position, out var positionList))
                 yield break;
 
-            var positionList = _positionMapping[position];
             for (var i = positionList.Count - 1; i >= 0; i--)
                 yield return positionList[i];
         }
@@ -507,24 +506,28 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public List<T> Remove(Point position)
         {
-            var result = new List<T>();
+            if (!_positionMapping.TryGetValue(position, out var posList))
+                return new List<T>();
 
-            if (!_positionMapping.ContainsKey(position))
-                return result;
-
-            foreach (var item in _positionMapping[position])
-            {
-                _itemMapping.Remove(item);
-                result.Add(item);
-            }
-
-            var list = _positionMapping[position];
+            // We'll create a new list to return.  We could just return the one that
+            // is in the _positionMapping, but we'll return it to the list pool instead
+            // in order to ensure it's available for a potential future Add operation
+            // (which could often be paired with remove)
+            var result = new List<T>(posList);
             _positionMapping.Remove(position);
+
+            // Remove each object that we're removing from the item mapping
+            int count = posList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping.Remove(posList[i]);
+
+            // Fire ItemRemoved event for each item we're removing
             if (ItemRemoved != null)
-                foreach (var item in list)
+                foreach (var item in posList)
                     ItemRemoved(this, new ItemEventArgs<T>(item, position));
 
-            _itemListPool.Return(list);
+            // Return list to pool and return result
+            _itemListPool.Return(posList);
 
             return result;
         }
