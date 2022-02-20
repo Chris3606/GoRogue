@@ -391,38 +391,52 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
-        // Equivalent to MoveAll for this implementation, but with an extra List<T>.
         /// <inheritdoc />
         public List<T> MoveValid(Point current, Point target)
         {
-            var result = new List<T>();
-            if (!_positionMapping.ContainsKey(current) || current == target)
-                return result;
+            // Nothing to move in these cases
+            if (current == target)
+                return new List<T>();
 
-            // TODO: Limit indexers
-            if (!_positionMapping.ContainsKey(target))
-                _positionMapping.Add(target, _itemListPool.Rent());
+            if (!_positionMapping.TryGetValue(current, out var currentList))
+                return new List<T>();
 
-            foreach (var item in _positionMapping[current])
-            {
-                _itemMapping[item] = target;
-                _positionMapping[target].Add(item);
-                result.Add(item);
-            }
-
-            var list = _positionMapping[current];
+            // Anything will successfully move to anywhere; so we know at this point that everything will move to target.
+            // So, we'll just bulk copy the list over and remove it from the old position
+            var result = new List<T>(currentList);
             _positionMapping.Remove(current);
 
-            if (ItemMoved == null)
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
             {
-                _itemListPool.Return(list);
-                return result;
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it, and put the original list back
+                // in the pool.  One alternative would be to use the currentList as the return value, which could
+                // avoid the allocation of a new one; however it would affect the number of lists in the pool, so
+                // in theory, long-term, it should be more beneficial to keep the two list pool separate (because it
+                // should make future move operations faster)
+                targetList.AddRange(currentList);
+                _itemListPool.Return(currentList);
             }
 
-            foreach (var item in list)
-                ItemMoved(this, new ItemMovedEventArgs<T>(item, current, target));
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = result.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping[result[i]] = target;
 
-            _itemListPool.Return(list);
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = 0; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(result[i], current, target));
+            }
 
             return result;
         }
@@ -583,17 +597,57 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Location to move items to.</param>
         public void MoveAll(Point current, Point target)
         {
-            if (!_positionMapping.ContainsKey(current))
-                throw new ArgumentException(
-                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at that position.",
-                    nameof(current));
-
             if (current == target)
                 throw new ArgumentException(
                     $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.",
                     nameof(target));
 
-            MoveValid(current, target);
+            List<T> currentList;
+            try
+            {
+                currentList = _positionMapping[current];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException(
+                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at that position.",
+                    nameof(current));
+            }
+
+            // We know the move will succeed, since they don't fail in MultiSpatialMap; so we can go ahead and remove
+            // the old position list now.
+            _positionMapping.Remove(current);
+
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it.
+                targetList.AddRange(currentList);
+            }
+
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = currentList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping[currentList[i]] = target;
+
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = 0; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(currentList[i], current, target));
+            }
+
+            // Add the currentList to the pool if we didn't re-use it as targetList
+            if (targetList != null)
+                _itemListPool.Return(currentList);
         }
 
         /// <summary>
