@@ -213,10 +213,8 @@ namespace GoRogue.UnitTests.SpatialMaps
             _spatialMap.Add(lastItem, _newItemsPos);
             Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
-            // There is one item that is blocked (by lastItem), so this should fail and no items should be moved.
+            // There is one item that is blocked (by lastItem), so this should fail.  Some items will be moved.
             Assert.Throws<ArgumentException>(() => _spatialMap.MoveAll(_initialItemsPos, _newItemsPos));
-            Assert.Single(_spatialMap.GetItemsAt(_newItemsPos));
-            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_initialItemsPos).Count());
         }
 
         [Fact]
@@ -242,10 +240,8 @@ namespace GoRogue.UnitTests.SpatialMaps
             _spatialMap.Add(lastItem, _newItemsPos);
             Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
-            // There is one item that is blocked (by lastItem), so this should fail and no items should be moved.
+            // There is one item that is blocked (by lastItem), so this should fail.  Some items will be moved.
             Assert.Throws<ArgumentException>(() => _spatialMap.MoveAll(_initialItemsPos, _newItemsPos, _spatialMap.LayerMasker.Mask(1, 3, 5)));
-            Assert.Single(_spatialMap.GetItemsAt(_newItemsPos));
-            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_initialItemsPos).Count());
         }
 
 
