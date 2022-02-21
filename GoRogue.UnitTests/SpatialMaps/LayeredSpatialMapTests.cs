@@ -244,8 +244,41 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Throws<ArgumentException>(() => _spatialMap.MoveAll(_initialItemsPos, _newItemsPos, _spatialMap.LayerMasker.Mask(1, 3, 5)));
         }
 
+        [Fact]
+        public void TryMoveAllItemsLayerMaskValid()
+        {
+            // Create item and add it to a different position
+            var lastItem = new MockSpatialMapItem(3);
+            _spatialMap.Add(lastItem, _newItemsPos);
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
+            // The only item blocked is not included in the layer mask, so should succeed
+            var val = _spatialMap.TryMoveAll(_initialItemsPos, _newItemsPos, ~_spatialMap.LayerMasker.Mask(3));
+            Assert.True(val);
+            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_newItemsPos).Count());
+            Assert.Single(_spatialMap.GetItemsAt(_initialItemsPos));
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
+        }
 
+        [Fact]
+        public void TryMoveAllItemsLayerMaskSomeValid()
+        {
+            // Mask used for operations
+            uint mask = _spatialMap.LayerMasker.Mask(1, 2, 3);
+            const int layersInMask = 3;
+
+            // Create item and add it to a different position
+            var lastItem = new MockSpatialMapItem(3);
+            _spatialMap.Add(lastItem, _newItemsPos);
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
+
+            // Most of the objects can move; 1 is blocked by lastItem
+            var val = _spatialMap.TryMoveAll(_initialItemsPos, _newItemsPos, mask);
+            Assert.False(val);
+            Assert.Equal(2, layersInMask - 1);
+            Assert.Equal(_initialItems.Count - 2, _spatialMap.GetItemsAt(_initialItemsPos).Count());
+            Assert.Equal(2 + 1, _spatialMap.GetItemsAt(_newItemsPos).Count());
+        }
 
         [Fact]
         public void MoveValidItemsLayerMaskAllValid()

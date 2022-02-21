@@ -9,22 +9,6 @@ namespace GoRogue.UnitTests.SpatialMaps
 {
     public class MultiSpatialMapTests
     {
-        private MultiSpatialMap<MyIDImpl> _spatialMap;
-        private MyIDImpl[] _mapObjects;
-
-        public MultiSpatialMapTests()
-        {
-            _spatialMap = new MultiSpatialMap<MyIDImpl>();
-            _mapObjects = new MyIDImpl[4];
-
-            for (int i = 0; i < _mapObjects.Length; i++)
-                _mapObjects[i] = new MyIDImpl(i);
-        }
-
-        private void AddNItems(int n)
-        {
-        }
-
         [Fact]
         public void MultiSpatialMapAdd()
         {
@@ -141,6 +125,47 @@ namespace GoRogue.UnitTests.SpatialMaps
 
 
             Assert.Empty(mySpatialMap.Remove((5, 6)));
+        }
+
+        [Fact]
+        public void MultiSpatialMapTryMoveAll()
+        {
+            var mySpatialMap = new MultiSpatialMap<MyIDImpl>();
+
+            var myId1 = new MyIDImpl(0);
+            var myId2 = new MyIDImpl(1);
+            var myId3 = new MyIDImpl(2);
+            var myId4 = new MyIDImpl(3);
+
+            mySpatialMap.Add(myId1, (1, 2));
+            mySpatialMap.Add(myId2, (2, 3));
+            mySpatialMap.Add(myId3, (3, 4));
+            mySpatialMap.Add(myId4, (1, 2));
+
+            // Move the two items at (1, 2) to (3, 4) (already occupied location)
+            var val = mySpatialMap.TryMoveAll((1, 2), (3, 4));
+            Assert.True(val);
+            Assert.Equal(new Point(3, 4), mySpatialMap.GetPositionOf(myId1));
+            Assert.Equal(new Point(3, 4), mySpatialMap.GetPositionOf(myId4));
+            Assert.Equal(3, mySpatialMap.GetItemsAt((3, 4)).Count());
+
+            var retVal = mySpatialMap.Contains((3, 4));
+            Assert.True(retVal);
+
+            retVal = mySpatialMap.Contains((1, 2));
+            Assert.False(retVal);
+
+            retVal = mySpatialMap.Contains((2, 3));
+            Assert.True(retVal);
+
+            // Move the one item at (2, 3) to (6, 7) (unoccupied location)
+            val = mySpatialMap.TryMoveAll((2, 3), (6, 7));
+
+            Assert.True(val);
+            Assert.False(mySpatialMap.Contains((2, 3)));
+            Assert.True(mySpatialMap.Contains((6, 7)));
+
+            Assert.Single(mySpatialMap.GetItemsAt((6, 7)));
         }
 
         [Fact]

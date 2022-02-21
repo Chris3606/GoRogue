@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using GoRogue.Pooling;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -391,18 +392,28 @@ namespace GoRogue.SpatialMaps
         public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public List<T> MoveValid(Point current, Point target)
+        {
+            var result = new List<T>(0);
+            MoveValid(current, target, result);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public void MoveValid(Point current, Point target, List<T> itemsMovedOutput)
         {
             // Nothing to move in these cases
             if (current == target)
-                return new List<T>();
+                return;
 
             if (!_positionMapping.TryGetValue(current, out var currentList))
-                return new List<T>();
+                return;
 
             // Anything will successfully move to anywhere; so we know at this point that everything will move to target.
             // So, we'll just bulk copy the list over and remove it from the old position
-            var result = new List<T>(currentList);
+            int startingIdx = itemsMovedOutput.Count;
+            itemsMovedOutput.AddRange(currentList);
             _positionMapping.Remove(current);
 
             // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
@@ -425,23 +436,25 @@ namespace GoRogue.SpatialMaps
             }
 
             // Shift the item-to-position mappings for everything that was just moved
-            int count = result.Count;
-            for (int i = 0; i < count; i++)
-                _itemMapping[result[i]] = target;
+            int count = itemsMovedOutput.Count;
+            for (int i = startingIdx; i < count; i++)
+                _itemMapping[itemsMovedOutput[i]] = target;
 
             // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
             // data structure state has been updated for the entire move operation
             if (ItemMoved != null)
             {
-                for (int i = 0; i < count; i++)
-                    ItemMoved(this, new ItemMovedEventArgs<T>(result[i], current, target));
+                for (int i = startingIdx; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(itemsMovedOutput[i], current, target));
             }
-
-            return result;
         }
 
         /// <inheritdoc />
         public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
+            => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
+
+        /// <inheritdoc/>
+        public void MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
@@ -506,6 +519,7 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public List<T> Remove(Point position)
         {
+            // Duplicating TryRemove code to ensure we keep to 1 dictionary lookup for _positionMapping
             if (!_positionMapping.TryGetValue(position, out var posList))
                 return new List<T>();
 
@@ -523,8 +537,8 @@ namespace GoRogue.SpatialMaps
 
             // Fire ItemRemoved event for each item we're removing
             if (ItemRemoved != null)
-                foreach (var item in posList)
-                    ItemRemoved(this, new ItemEventArgs<T>(item, position));
+                for (int i = 0; i < count; i++)
+                    ItemRemoved(this, new ItemEventArgs<T>(posList[i], position));
 
             // Return list to pool and return result
             _itemListPool.Return(posList);
@@ -532,8 +546,35 @@ namespace GoRogue.SpatialMaps
             return result;
         }
 
+        /// <inheritdoc/>
+        public bool TryRemove(Point position)
+        {
+            if (!_positionMapping.TryGetValue(position, out var posList))
+                return false;
+
+            _positionMapping.Remove(position);
+
+            // Remove each object that we're removing from the item mapping
+            int count = posList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping.Remove(posList[i]);
+
+            // Fire ItemRemoved event for each item we're removing
+            if (ItemRemoved != null)
+                for (int i = 0; i < count; i++)
+                    ItemRemoved(this, new ItemEventArgs<T>(posList[i], position));
+
+            // Return list to pool and return result
+            _itemListPool.Return(posList);
+
+            return true;
+        }
+
         /// <inheritdoc />
         public List<T> Remove(int x, int y) => Remove(new Point(x, y));
+
+        /// <inheritdoc/>
+        public bool TryRemove(int x, int y) => TryRemove(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the
@@ -652,6 +693,57 @@ namespace GoRogue.SpatialMaps
             if (targetList != null)
                 _itemListPool.Return(currentList);
         }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(Point current, Point target)
+        {
+            if (current == target)
+                return false;
+
+            if (!_positionMapping.TryGetValue(current, out var currentList))
+                return false;
+
+            // We know the move will succeed, since they don't fail in MultiSpatialMap; so we can go ahead and remove
+            // the old position list now.
+            _positionMapping.Remove(current);
+
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it.
+                targetList.AddRange(currentList);
+            }
+
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = currentList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping[currentList[i]] = target;
+
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = 0; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(currentList[i], current, target));
+            }
+
+            // Add the currentList to the pool if we didn't re-use it as targetList
+            if (targetList != null)
+                _itemListPool.Return(currentList);
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(int currentX, int currentY, int targetX, int targetY)
+            => TryMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
         /// Moves all items at the specified source location to the target location.  Throws ArgumentException if there are

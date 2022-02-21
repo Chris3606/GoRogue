@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -344,26 +345,34 @@ namespace GoRogue.SpatialMaps
         /// The item moved as a 1-element list if something was moved, or nothing if no item
         /// was moved.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public List<T> MoveValid(Point current, Point target)
         {
+            var result = new List<T>(0);
+            MoveValid(current, target, result);
+
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public void MoveValid(Point current, Point target, List<T> itemsMovedOutput)
+        {
             if (current == target)
-                return new List<T>();
+                return;
 
             if (!_positionMapping.TryGetValue(current, out var item))
-                return new List<T>();
+                return;
 
             if (_positionMapping.ContainsKey(target))
-                return new List<T>();
+                return;
 
-            var result = new List<T>(1) {item};
+            itemsMovedOutput.Add(item);
 
             _positionMapping.Remove(current);
             _positionMapping[target] = item;
             _itemMapping[item] = target;
 
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
-
-            return result;
         }
 
         /// <summary>
@@ -386,6 +395,10 @@ namespace GoRogue.SpatialMaps
         /// </returns>
         public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
+
+        /// <inheritdoc/>
+        public void MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput)
+            => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY), itemsMovedOutput);
 
         /// <summary>
         /// Removes the item specified. Throws ArgumentException if the item specified was
@@ -457,6 +470,19 @@ namespace GoRogue.SpatialMaps
             return result;
         }
 
+        /// <inheritdoc/>
+        public bool TryRemove(Point position)
+        {
+            if (!_positionMapping.TryGetValue(position, out var item))
+                return false;
+
+            _positionMapping.Remove(position);
+            _itemMapping.Remove(item);
+            ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, position));
+
+            return true;
+        }
+
         /// <summary>
         /// Removes whatever is at the given position, if anything, and returns the item removed as a
         /// 1-element IEnumerable. Returns nothing if no item was at the position specified.
@@ -472,6 +498,9 @@ namespace GoRogue.SpatialMaps
         /// was found at that position.
         /// </returns>
         public List<T> Remove(int x, int y) => Remove(new Point(x, y));
+
+        /// <inheritdoc/>
+        public bool TryRemove(int x, int y) => TryRemove(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the spatial map's
@@ -587,6 +616,30 @@ namespace GoRogue.SpatialMaps
 
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
         }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(Point current, Point target)
+        {
+            if (current == target)
+                return false;
+
+            if (!_positionMapping.TryGetValue(current, out var item))
+                return false;
+
+            if (_positionMapping.ContainsKey(target))
+                return false;
+
+            _positionMapping.Remove(current);
+            _positionMapping[target] = item;
+            _itemMapping[item] = target;
+
+            ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, current, target));
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(int currentX, int currentY, int targetX, int targetY)
+            => TryMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
         /// Moves the item at the specified source location to the target location.  Throws ArgumentException if one or

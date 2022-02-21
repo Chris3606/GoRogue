@@ -90,6 +90,16 @@ namespace GoRogue.PerformanceTests.SpatialMaps
         }
 
         [Benchmark]
+        public int TryMoveAllTwice()
+        {
+            _testMap.TryMoveAll(_initialPosition, _moveToPosition);
+            // Move it back to not spoil next benchmark.  Valid since the GlobalSetup function used for this benchmark
+            // doesn't put anything at _moveToPosition in the initial state.
+            _testMap.TryMoveAll(_moveToPosition, _initialPosition);
+            return _testMap.Count; // Ensure nothing is optimized out
+        }
+
+        [Benchmark]
         public (List<IDObject> l1, List<IDObject> l2) MoveValidTwice()
         {
             var list1 = _testMap.MoveValid(_initialPosition, _moveToPosition);

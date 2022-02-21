@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using GoRogue.Pooling;
 using JetBrains.Annotations;
@@ -419,14 +420,21 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
-
         /// <inheritdoc />
         List<T> ISpatialMap<T>.MoveValid(Point current, Point target)
             => MoveValid(current.X, current.Y, target.X, target.Y);
 
         /// <inheritdoc />
+        void ISpatialMap<T>.MoveValid(Point current, Point target, List<T> itemsMovedOutput)
+            => MoveValid(current, target, itemsMovedOutput);
+
+        /// <inheritdoc />
         List<T> ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY)
             => MoveValid(currentX, currentY, targetX, targetY);
+
+        /// <inheritdoc />
+        void ISpatialMap<T>.MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput)
+            => MoveValid(currentX, currentY, targetX, targetY, itemsMovedOutput);
 
         /// <inheritdoc />
         public void Remove(T item)
@@ -454,7 +462,13 @@ namespace GoRogue.SpatialMaps
         List<T> ISpatialMap<T>.Remove(Point position) => Remove(position);
 
         /// <inheritdoc />
+        bool ISpatialMap<T>.TryRemove(Point position) => TryRemove(position);
+
+        /// <inheritdoc />
         List<T> ISpatialMap<T>.Remove(int x, int y) => Remove(x, y);
+
+        /// <inheritdoc />
+        bool ISpatialMap<T>.TryRemove(int x, int y) => TryRemove(x, y);
 
         /// <summary>
         /// Returns a string representation of each item in the spatial map, with elements
@@ -540,6 +554,13 @@ namespace GoRogue.SpatialMaps
         void ISpatialMap<T>.MoveAll(Point current, Point target) => MoveAll(current, target);
 
         /// <inheritdoc />
+        bool ISpatialMap<T>.TryMoveAll(Point current, Point target) => TryMoveAll(current, target);
+
+        /// <inheritdoc />
+        bool ISpatialMap<T>.TryMoveAll(int currentX, int currentY, int targetX, int targetY)
+            => TryMoveAll(currentX, currentY, targetX, targetY);
+
+        /// <inheritdoc />
         void ISpatialMap<T>.MoveAll(int currentX, int currentY, int targetX, int targetY)
             => MoveAll(currentX, currentY, targetX, targetY);
 
@@ -553,15 +574,11 @@ namespace GoRogue.SpatialMaps
         /// Layer mask specifying which layers to search for items on. Defaults to all layers.
         /// </param>
         /// <returns>All items moved.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public List<T> MoveValid(Point current, Point target, uint layerMask = uint.MaxValue)
         {
-            if (current == target)
-                return new List<T>();
-
-            var result = new List<T>();
-            foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
-                result.AddRange(_layers[relativeLayerNumber].MoveValid(current, target));
-
+            var result = new List<T>(0);
+            MoveValid(current, target, result, layerMask);
             return result;
         }
 
@@ -579,6 +596,41 @@ namespace GoRogue.SpatialMaps
         /// <returns>All items moved.</returns>
         public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY), layerMask);
+
+        /// <summary>
+        /// Moves all items that can be moved, that are at the given position and on any layer specified by the given layer
+        /// mask, to the new position. If no layer mask is specified, defaults to all layers.
+        /// </summary>
+        /// <param name="current">Position to move all items from.</param>
+        /// <param name="target">Position to move all items to.</param>
+        /// <param name="itemsMovedOutput">List in which to place all moved items.</param>
+        /// <param name="layerMask">
+        /// Layer mask specifying which layers to search for items on. Defaults to all layers.
+        /// </param>
+        public void MoveValid(Point current, Point target, List<T> itemsMovedOutput, uint layerMask = uint.MaxValue)
+        {
+            if (current == target)
+                return;
+
+            foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+                _layers[relativeLayerNumber].MoveValid(current, target, itemsMovedOutput);
+        }
+
+        /// <summary>
+        /// Moves all items that can be moved, that are at the given position and on any layer specified by the given layer
+        /// mask, to the new position. If no layer mask is specified, defaults to all layers.
+        /// </summary>
+        /// <param name="currentX">X-value of the position to move items from.</param>
+        /// <param name="currentY">Y-value of the position to move items from.</param>
+        /// <param name="targetX">X-value of the position to move items to.</param>
+        /// <param name="targetY">Y-value of the position to move items from.</param>
+        /// <param name="itemsMovedOutput">List in which to place all moved items.</param>
+        /// <param name="layerMask">
+        /// Layer mask specifying which layers to search for items on. Defaults to all layers.
+        /// </param>
+        public void MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput,
+                              uint layerMask = uint.MaxValue)
+            => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY), itemsMovedOutput, layerMask);
 
         /// <summary>
         /// Removes all items at the specified location that are on any layer included in the given
@@ -599,6 +651,20 @@ namespace GoRogue.SpatialMaps
             return list;
         }
 
+        public bool TryRemove(Point position, uint layerMask = uint.MaxValue)
+        {
+            // TODO: Fix try interfaces to configurably return true or false on position non-existent to make this more efficient (avoid contains?)
+            bool result = true;
+            foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
+            {
+                var layer = _layers[relativeLayerNumber];
+                if (layer.Contains(position))
+                    result = result && _layers[relativeLayerNumber].TryRemove(position);
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Removes all items at the specified location that are on any layer included in the given
         /// layer mask from the spatial map. Returns any items that were removed. Defaults to searching
@@ -612,6 +678,9 @@ namespace GoRogue.SpatialMaps
         /// <returns>Any items that were removed, or nothing if no items were removed.</returns>
         public List<T> Remove(int x, int y, uint layerMask = uint.MaxValue)
             => Remove(new Point(x, y), layerMask);
+
+        public bool TryRemove(int x, int y, uint layerMask = uint.MaxValue)
+            => TryRemove(new Point(x, y), layerMask);
 
         /// <summary>
         /// Returns a string representation of each layer in the spatial map.
@@ -665,6 +734,26 @@ namespace GoRogue.SpatialMaps
         /// <param name="layerMask">The layer mask to use to find items.</param>
         public void MoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
             => MoveAll(new Point(currentX, currentY), new Point(targetX, targetY), layerMask);
+
+        public bool TryMoveAll(Point current, Point target, uint layerMask = uint.MaxValue)
+        {
+            uint mask = layerMask >> StartingLayer;
+            bool result = true;
+
+            // TODO: Efficiency?
+            foreach (int relativeLayerNumber in _internalLayerMasker.Layers(mask))
+            {
+                var layer = _layers[relativeLayerNumber];
+                if (layer.Contains(current))
+                    result = layer.TryMoveAll(current, target) && result;
+            }
+
+            // No items should return false
+            return result;
+        }
+
+        public bool TryMoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
+            => TryMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
     }
 
     /// <summary>
