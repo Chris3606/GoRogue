@@ -34,7 +34,7 @@ namespace GoRogue.PerformanceTests.SpatialMaps
             }
         }
 
-        [GlobalSetup(Targets = new []{nameof(MoveAllTwice), nameof(MoveValidTwice)})]
+        [GlobalSetup(Targets = new []{nameof(MoveAllTwice), nameof(MoveValidTwice), nameof(TryMoveAllTwice)})]
         public void GlobalSetupNoObjectsAtMoveToLocation()
         {
             _testMap = new MultiSpatialMap<IDObject> { { _trackedObject, _initialPosition } };
