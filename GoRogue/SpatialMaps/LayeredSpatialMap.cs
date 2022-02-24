@@ -796,7 +796,7 @@ namespace GoRogue.SpatialMaps
         /// <param name="startingLayer">Index to use for the first layer.</param>
         /// <param name="layersSupportingMultipleItems">
         /// A layer mask indicating which layers should support multiple items residing at the same
-        /// location on that layer. Defaults to no layers.  Generate this layer mask via <see cref="LayerMasker.DEFAULT" />.
+        /// location on that layer. Defaults to no layers.  Generate this layer mask via <see cref="LayerMasker.Default" />.
         /// </param>
         public LayeredSpatialMap(int numberOfLayers, IEqualityComparer<Point>? pointComparer = null,
                                  int startingLayer = 0, uint layersSupportingMultipleItems = 0)

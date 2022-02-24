@@ -80,10 +80,10 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Equal(2147483648, mask);
 
             mask = masker.Mask(Enumerable.Range(0, 32));
-            Assert.Equal(uint.MaxValue, masker.ALL_LAYERS);
-            Assert.Equal(masker.ALL_LAYERS, mask);
+            Assert.Equal(uint.MaxValue, masker.AllLayers);
+            Assert.Equal(masker.AllLayers, mask);
 
-            mask = masker.NO_LAYERS;
+            mask = masker.NoLayers;
             Assert.Equal((uint)0, mask);
 
             masker = new LayerMasker(3);
@@ -91,8 +91,8 @@ namespace GoRogue.UnitTests.SpatialMaps
             Assert.Equal((uint)5, mask); // 5 should be excluded since only 3 layers
 
             mask = masker.Mask(Enumerable.Range(0, 32));
-            Assert.Equal((uint)7, masker.ALL_LAYERS);
-            Assert.Equal(masker.ALL_LAYERS, mask); // All layers that don't exist are ignored
+            Assert.Equal((uint)7, masker.AllLayers);
+            Assert.Equal(masker.AllLayers, mask); // All layers that don't exist are ignored
         }
 
         [Fact]
@@ -140,15 +140,15 @@ namespace GoRogue.UnitTests.SpatialMaps
 
             masker = new LayerMasker(3);
             mask = masker.MaskAllBelow(2);
-            Assert.Equal(masker.ALL_LAYERS, mask);
-            Assert.Equal((uint)7, masker.ALL_LAYERS);
+            Assert.Equal(masker.AllLayers, mask);
+            Assert.Equal((uint)7, masker.AllLayers);
 
             mask = masker.MaskAllBelow(1);
             Assert.Equal((uint)3, mask);
 
             mask = masker.MaskAllBelow(31);
-            Assert.Equal((uint)7, masker.ALL_LAYERS);
-            Assert.Equal(masker.ALL_LAYERS, mask); // Layers should be ignored that don't exist
+            Assert.Equal((uint)7, masker.AllLayers);
+            Assert.Equal(masker.AllLayers, mask); // Layers should be ignored that don't exist
         }
     }
 }

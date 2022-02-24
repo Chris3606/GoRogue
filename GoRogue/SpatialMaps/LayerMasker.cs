@@ -94,7 +94,7 @@ namespace GoRogue.SpatialMaps
     /// to an operation or given set of functionality.
     /// LayeredSpatialMap and Map both define their own LayerMask variable that should be used to retrieve
     /// layer masks whenever possible.  For layer masks needed outside of that, or when constructing
-    /// those classes, use <see cref="LayerMasker.DEFAULT" />.  There are also constants defined in
+    /// those classes, use <see cref="Default" />.  There are also constants defined in
     /// LayerMasker to represent "all layers" and "no layers".
     /// </remarks>
     [PublicAPI]
@@ -103,17 +103,17 @@ namespace GoRogue.SpatialMaps
         /// <summary>
         /// Default layer masker, that excludes no possible layers from its results.
         /// </summary>
-        public static readonly LayerMasker DEFAULT = new LayerMasker();
+        public static readonly LayerMasker Default = new LayerMasker();
 
         /// <summary>
         /// Layer-mask representing all layers.
         /// </summary>
-        public readonly uint ALL_LAYERS;
+        public readonly uint AllLayers;
 
         /// <summary>
         /// Layer mask representing no layers.
         /// </summary>
-        public readonly uint NO_LAYERS;
+        public readonly uint NoLayers;
 
         /// <summary>
         /// Constructor. Takes the number of layers allowed, which must be more than 0 and less than
@@ -127,9 +127,9 @@ namespace GoRogue.SpatialMaps
                     $"{nameof(LayerMasker)} must support 1 and can support a maximum of 32 layers.");
 
             NumberOfLayers = numberOfLayers; // Cast is fine since it's under 32 and obviously above 0
-            ALL_LAYERS = (uint)1 << (NumberOfLayers - 1); // Last layer index
-            ALL_LAYERS |= ALL_LAYERS - 1; // Propagate the right-most 1-bit all the way down
-            NO_LAYERS = 0;
+            AllLayers = (uint)1 << (NumberOfLayers - 1); // Last layer index
+            AllLayers |= AllLayers - 1; // Propagate the right-most 1-bit all the way down
+            NoLayers = 0;
         }
 
         /// <summary>
@@ -149,7 +149,15 @@ namespace GoRogue.SpatialMaps
         /// whether they were within the supported number of layers), as well as the new layers
         /// provided (provided they are within the supported number of layers).
         /// </returns>
-        public uint AddLayers(uint mask, params int[] layers) => AddLayers(mask, (IEnumerable<int>)layers);
+        public uint AddLayers(uint mask, params int[] layers)
+        {
+            uint newMask = 0;
+            foreach (int layer in layers)
+                newMask |= (uint)1 << layer;
+
+            newMask &= AllLayers;
+            return mask | newMask;
+        }
 
         /// <summary>
         /// Adds the given layers to the given layer mask, provided those layers are within the
@@ -165,12 +173,24 @@ namespace GoRogue.SpatialMaps
         public uint AddLayers(uint mask, IEnumerable<int> layers)
         {
             uint newMask = 0;
-            foreach (var layer in layers)
+            foreach (int layer in layers)
                 newMask |= (uint)1 << layer;
 
-            newMask &= ALL_LAYERS;
+            newMask &= AllLayers;
             return mask | newMask;
         }
+
+        /// <summary>
+        /// Adds layers active in the mask <paramref name="addMask"/> to the <paramref name="mask"/> value, and returns
+        /// the result.  The result will include all layers on in the original mask, as well as all layers on in
+        /// <paramref name="addMask"/>, provided those layers are within the supported number of layers. Any layer
+        /// outside of this range will not be added.
+        /// </summary>
+        /// <param name="mask"></param>
+        /// <param name="addMask"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint AddLayers(uint mask, uint addMask) => (mask | addMask) & AllLayers;
 
         /// <summary>
         /// Returns whether or not a layer is contained within the given layer mask. Returns false if
@@ -182,7 +202,8 @@ namespace GoRogue.SpatialMaps
         /// True if the given layer is present in the given layer mask, false if it is not or the
         /// layer is outside the supported number of layers for this LayerMasker.
         /// </returns>
-        public bool HasLayer(uint mask, int layer) => (mask & ((uint)1 << layer) & ALL_LAYERS) != 0;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool HasLayer(uint mask, int layer) => (mask & ((uint)1 << layer) & AllLayers) != 0;
 
         /// <summary>
         /// Returns a custom enumerator that will enumerate all layers contained within the given layer mask (that fall
@@ -213,6 +234,7 @@ namespace GoRogue.SpatialMaps
         /// All layers contained within the given layer mask that fall within the supported number of
         /// layers for this LayerMasker.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public LayerCollectionEnumerable Layers(uint mask) => new LayerCollectionEnumerable(mask, NumberOfLayers);
 
         /// <summary>
@@ -224,7 +246,16 @@ namespace GoRogue.SpatialMaps
         /// A layer mask including exactly those layers in the input that were within the supported
         /// number of layers.
         /// </returns>
-        public uint Mask(params int[] layers) => Mask((IEnumerable<int>)layers);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public uint Mask(params int[] layers)
+        {
+            uint mask = 0;
+
+            foreach (var layer in layers)
+                mask |= (uint)1 << layer;
+
+            return mask & AllLayers; // And to ensure we do not set any layers that are out of the ones we care about
+        }
 
         /// <summary>
         /// Gets a layer mask including exactly the given layer indices. Any layer given outside the
@@ -235,6 +266,7 @@ namespace GoRogue.SpatialMaps
         /// A layer mask including exactly those layers in the input that were within the supported
         /// number of layers.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint Mask(IEnumerable<int> layers)
         {
             uint mask = 0;
@@ -242,7 +274,7 @@ namespace GoRogue.SpatialMaps
             foreach (var layer in layers)
                 mask |= (uint)1 << layer;
 
-            return mask & ALL_LAYERS; // And to ensure we do not set any layers that are out of the ones we care about
+            return mask & AllLayers; // And to ensure we do not set any layers that are out of the ones we care about
         }
 
         /// <summary>
@@ -255,14 +287,15 @@ namespace GoRogue.SpatialMaps
         /// A layer mask including the specified layer and all layers above it, provided those layers
         /// fall within the supported number of layers.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint MaskAllAbove(int layer)
         {
             if (layer == 0) // Special case to avoid signing issues (shifting by negative number very bad)
-                return ALL_LAYERS;
+                return AllLayers;
 
             var mask = (uint)1 << (layer - 1);
             mask |= mask - 1; // Propagate the right-most 1-bit all the way down
-            return ~mask & ALL_LAYERS; // Invert so 1's are in upper half
+            return ~mask & AllLayers; // Invert so 1's are in upper half
         }
 
         /// <summary>
@@ -275,11 +308,12 @@ namespace GoRogue.SpatialMaps
         /// A layer mask including the specified layer and all layers below it, provided those layers
         /// fall within the supported number of layers.
         /// </returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public uint MaskAllBelow(int layer)
         {
             var mask = (uint)1 << layer;
             mask |= mask - 1; // Propagate the right-most 1-bit all the way down
-            return mask & ALL_LAYERS;
+            return mask & AllLayers;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace GoRogue.UnitTests
         public void ManualPrintLayeredSpatialMap()
         {
             var map = new LayeredSpatialMap<MockSpatialMapItem>(3, startingLayer: 1,
-                layersSupportingMultipleItems: LayerMasker.DEFAULT.Mask(2))
+                layersSupportingMultipleItems: LayerMasker.Default.Mask(2))
             {
                 { new MockSpatialMapItem(1), (1, 2) },
                 { new MockSpatialMapItem(1), (3, 4) },
