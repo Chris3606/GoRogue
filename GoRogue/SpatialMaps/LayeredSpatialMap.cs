@@ -653,7 +653,6 @@ namespace GoRogue.SpatialMaps
 
         public bool TryRemove(Point position, uint layerMask = uint.MaxValue)
         {
-            // TODO: Fix try interfaces to configurably return true or false on position non-existent to make this more efficient (avoid contains?)
             bool result = true;
             foreach (var relativeLayerNumber in _internalLayerMasker.Layers(layerMask >> StartingLayer))
             {
@@ -704,7 +703,6 @@ namespace GoRogue.SpatialMaps
             // For each operation, we'll check to ensure there are actually items to move first.  This is an extra
             // dictionary lookup per layer, but ensures that MoveAll doesn't throw exceptions if one layer (of many)
             // doesn't have an item.  It's only an exception for LayeredSpatialMap if no layers have any items.
-            // TODO: Consider revising MoveAll interface to make this more efficient
             //
             // Note: This will _not_ preserve the state of the LayeredSpatialMap on exception; however doing so
             // would drastically slow down this function, and recovering to original state is not typically a desired
@@ -740,7 +738,6 @@ namespace GoRogue.SpatialMaps
             uint mask = layerMask >> StartingLayer;
             bool result = true;
 
-            // TODO: Efficiency?
             foreach (int relativeLayerNumber in _internalLayerMasker.Layers(mask))
             {
                 var layer = _layers[relativeLayerNumber];
