@@ -47,7 +47,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             int[] layers = { 0, 2, 5 };
 
             var mask = masker.Mask(layers);
-            var layerReturn = masker.Layers(mask).ToArray();
+            var layerReturn = masker.Layers(mask).ToEnumerable().ToArray();
 
             layers = layers.OrderByDescending(i => i).ToArray();
 
@@ -61,7 +61,7 @@ namespace GoRogue.UnitTests.SpatialMaps
                 Assert.Equal(layers[i], layerReturn[i]);
 
             masker = new LayerMasker(3);
-            layerReturn = masker.Layers(mask).ToArray();
+            layerReturn = masker.Layers(mask).ToEnumerable().ToArray();
             layers = layers.OrderByDescending(i => i).Where(i => i < 3).ToArray();
             Assert.Equal(layers.Length, layerReturn.Length);
             for (var i = 0; i < layers.Length; i++)
