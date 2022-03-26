@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using GoRogue.FOV;
+using GoRogue.Pooling;
 using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.GameFramework
@@ -84,6 +85,11 @@ namespace GoRogue.GameFramework
         /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
+        /// <param name="customListPoolCreator">
+        /// A function used to determine the list pool implementation used for the spatial maps which support multiple
+        /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// If no custom creator is specified, a ListPool is used.
+        /// </param>
         /// <param name="layersBlockingWalkability">
         /// Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.
@@ -118,6 +124,7 @@ namespace GoRogue.GameFramework
         /// ComponentCollection is sufficient for nearly all use cases.
         /// </param>
         public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement,
+                   Func<int, IListPool<IGameObject>>? customListPoolCreator = null,
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
@@ -126,8 +133,8 @@ namespace GoRogue.GameFramework
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
             : this(new ArrayView<IGameObject?>(width, height), distanceMeasurement, numberOfEntityLayers,
-                layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems,
-                pointComparer, customPlayerFOV, customPather, customComponentCollection)
+                customListPoolCreator, layersBlockingWalkability, layersBlockingTransparency,
+                entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather, customComponentCollection)
         { }
 
         /// <summary>
@@ -169,6 +176,11 @@ namespace GoRogue.GameFramework
         /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
+        /// <param name="customListPoolCreator">
+        /// A function used to determine the list pool implementation used for the spatial maps which support multiple
+        /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// If no custom creator is specified, a ListPool is used.
+        /// </param>
         /// <param name="layersBlockingWalkability">
         /// Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.
@@ -203,6 +215,7 @@ namespace GoRogue.GameFramework
         /// ComponentCollection is sufficient for nearly all use cases.
         /// </param>
         public Map(ISettableGridView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement,
+                   Func<int, IListPool<IGameObject>>? customListPoolCreator = null,
                    uint layersBlockingWalkability = uint.MaxValue,
                    uint layersBlockingTransparency = uint.MaxValue,
                    uint entityLayersSupportingMultipleItems = uint.MaxValue,
@@ -210,7 +223,7 @@ namespace GoRogue.GameFramework
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
                    IComponentCollection? customComponentCollection = null)
-            : this(terrainLayer, distanceMeasurement, numberOfEntityLayers, layersBlockingWalkability,
+            : this(terrainLayer, distanceMeasurement, numberOfEntityLayers, customListPoolCreator, layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV,
                 customPather, customComponentCollection)
         {
@@ -229,7 +242,8 @@ namespace GoRogue.GameFramework
         // many of the fields/properties are read-only outside of one, which is why we use this constructor instead of
         // a utility function.
         private Map(ISettableGridView<IGameObject?> terrainLayer, Distance distanceMeasurement, int numberOfEntityLayers,
-                   uint layersBlockingWalkability, uint layersBlockingTransparency, uint entityLayersSupportingMultipleItems,
+                    Func<int, IListPool<IGameObject>>? customListPoolCreator, uint layersBlockingWalkability,
+                    uint layersBlockingTransparency, uint entityLayersSupportingMultipleItems,
                    IEqualityComparer<Point>? pointComparer, IFOV? customPlayerFOV, AStar? customPather,
                    IComponentCollection? customComponentCollection)
         {
@@ -237,8 +251,8 @@ namespace GoRogue.GameFramework
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
 
             pointComparer ??= new KnownSizeHasher(terrainLayer.Width);
-            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, pointComparer, 1,
-                entityLayersSupportingMultipleItems);
+            _entities = new LayeredSpatialMap<IGameObject>(numberOfEntityLayers, customListPoolCreator, pointComparer,
+                1, entityLayersSupportingMultipleItems);
 
             LayersBlockingWalkability = layersBlockingWalkability;
             LayersBlockingTransparency = layersBlockingTransparency;
@@ -399,6 +413,11 @@ namespace GoRogue.GameFramework
         /// <see cref="SadRogue.Primitives.Distance" /> measurement to use for pathfinding/measuring distance on the
         /// map.
         /// </param>
+        /// <param name="customListPoolCreator">
+        /// A function used to determine the list pool implementation used for the spatial maps which support multiple
+        /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// If no custom creator is specified, a ListPool is used.
+        /// </param>
         /// <param name="layersBlockingWalkability">
         /// Layer mask containing those layers that should be allowed to have items that block walkability.
         /// Defaults to all layers.
@@ -434,7 +453,9 @@ namespace GoRogue.GameFramework
         /// </param>
         /// <returns>A new Map whose terrain is created using the given terrainLayer, and with the given parameters.</returns>
         public static Map CreateMap<T>(ISettableGridView<T?> terrainLayer, int numberOfEntityLayers,
-                                       Distance distanceMeasurement, uint layersBlockingWalkability = uint.MaxValue,
+                                       Distance distanceMeasurement,
+                                       Func<int, IListPool<IGameObject>>? customListPoolCreator = null,
+                                       uint layersBlockingWalkability = uint.MaxValue,
                                        uint layersBlockingTransparency = uint.MaxValue,
                                        uint entityLayersSupportingMultipleItems = uint.MaxValue,
                                        IEqualityComparer<Point>? pointComparer = null,
@@ -444,9 +465,9 @@ namespace GoRogue.GameFramework
         {
             // Assignment is fine here
             var terrainMap = new LambdaSettableTranslationGridView<T?, IGameObject?>(terrainLayer, t => t, g => (T?)g);
-            return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, layersBlockingWalkability,
-                layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather,
-                customComponentContainer);
+            return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, customListPoolCreator,
+                layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer,
+                customPlayerFOV, customPather, customComponentContainer);
         }
 
         private bool FullIsTransparent(Point position)

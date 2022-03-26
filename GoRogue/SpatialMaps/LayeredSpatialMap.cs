@@ -48,38 +48,10 @@ namespace GoRogue.SpatialMaps
         /// many AdvancedLayeredSpatialMap functions.
         /// </param>
         /// <param name="numberOfLayers">Number of layers to include.</param>
-        /// <param name="pointComparer">
-        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
-        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
-        /// determine the efficiency of many AdvancedLayeredSpatialMap functions.  Defaults to the default equality
-        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
-        /// </param>
-        /// <param name="startingLayer">Index to use for the first layer.</param>
-        /// <param name="layersSupportingMultipleItems">
-        /// A layer mask indicating which layers should support multiple items residing at the same
-        /// location on that layer. Defaults to no layers.
-        /// </param>
-        public AdvancedLayeredSpatialMap(IEqualityComparer<T> itemComparer, int numberOfLayers,
-                                         IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
-                                         uint layersSupportingMultipleItems = 0)
-            : this(itemComparer, numberOfLayers,
-                _ => new ListPool<T>(50, 16), pointComparer, startingLayer,
-                layersSupportingMultipleItems)
-        {
-        }
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="itemComparer">
-        /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
-        /// efficiency of its GetHashCode function, as it will determine the efficiency of
-        /// many AdvancedLayeredSpatialMap functions.
-        /// </param>
-        /// <param name="numberOfLayers">Number of layers to include.</param>
-        /// <param name="listPoolCreator">
+        /// <param name="customListPoolCreator">
         /// A function used to determine the list pool implementation used for the spatial maps which support multiple
         /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// If no custom creator is specified, a ListPool is used.
         /// </param>
         /// <param name="pointComparer">
         /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
@@ -93,7 +65,7 @@ namespace GoRogue.SpatialMaps
         /// location on that layer. Defaults to no layers.
         /// </param>
         public AdvancedLayeredSpatialMap(IEqualityComparer<T> itemComparer,
-                                         int numberOfLayers, Func<int, IListPool<T>> listPoolCreator,
+                                         int numberOfLayers, Func<int, IListPool<T>>? customListPoolCreator = null,
                                          IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
                                          uint layersSupportingMultipleItems = 0)
         {
@@ -101,6 +73,7 @@ namespace GoRogue.SpatialMaps
                 throw new ArgumentOutOfRangeException(nameof(numberOfLayers),
                     $"More than {32 - startingLayer} layers is not supported by {nameof(AdvancedLayeredSpatialMap<T>)} starting at layer {startingLayer}");
 
+            customListPoolCreator ??= _ => new ListPool<T>(50, 16);
             pointComparer ??= EqualityComparer<Point>.Default;
 
             _layers = new ISpatialMap<T>[numberOfLayers];
@@ -115,7 +88,7 @@ namespace GoRogue.SpatialMaps
             {
                 var layerNum = i + startingLayer;
                 if (LayerMasker.HasLayer(layersSupportingMultipleItems, layerNum))
-                    _layers[i] = new AdvancedMultiSpatialMap<T>(itemComparer, listPoolCreator(layerNum), pointComparer);
+                    _layers[i] = new AdvancedMultiSpatialMap<T>(itemComparer, customListPoolCreator(layerNum), pointComparer);
                 else
                     _layers[i] = new AdvancedSpatialMap<T>(itemComparer, pointComparer);
             }
@@ -651,6 +624,16 @@ namespace GoRogue.SpatialMaps
             return list;
         }
 
+        /// <summary>
+        /// Attempts to remove all items at the specified location that are on any layer included in the given
+        /// layer mask from the spatial map. Returns true if the items were successfully removed; false if one or more
+        /// failed.
+        /// </summary>
+        /// <param name="position">Position to remove items from.</param>
+        /// <param name="layerMask">
+        /// The layer mask indicating which layers to search for items. Defaults to all layers.
+        /// </param>
+        /// <returns>True if the items were successfully removed; false otherwise</returns>
         public bool TryRemove(Point position, uint layerMask = uint.MaxValue)
         {
             bool result = true;
@@ -678,6 +661,17 @@ namespace GoRogue.SpatialMaps
         public List<T> Remove(int x, int y, uint layerMask = uint.MaxValue)
             => Remove(new Point(x, y), layerMask);
 
+        /// <summary>
+        /// Attempts to remove all items at the specified location that are on any layer included in the given
+        /// layer mask from the spatial map. Returns true if the items were successfully removed; false if one or more
+        /// failed.
+        /// </summary>
+        /// <param name="x">X-value of the position to remove items from.</param>
+        /// <param name="y">Y-value of the position to remove items from.</param>
+        /// <param name="layerMask">
+        /// The layer mask indicating which layers to search for items. Defaults to all layers.
+        /// </param>
+        /// <returns>True if the items were successfully removed; false otherwise</returns>
         public bool TryRemove(int x, int y, uint layerMask = uint.MaxValue)
             => TryRemove(new Point(x, y), layerMask);
 
@@ -733,6 +727,17 @@ namespace GoRogue.SpatialMaps
         public void MoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
             => MoveAll(new Point(currentX, currentY), new Point(targetX, targetY), layerMask);
 
+        /// <summary>
+        /// Moves all items that are on layers in <paramref name="layerMask" /> at the specified source location to the
+        /// target location.  Returns false if one or more items cannot be moved or there are no items to be moved.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+        /// <param name="target">Location to move items to.</param>
+        /// <param name="layerMask">The layer mask to use to find items.</param>
+        /// <returns>
+        /// True if all items at <paramref name="current"/> on layers within the mask given were moved to
+        /// <paramref name="target"/>; false otherwise.
+        /// </returns>
         public bool TryMoveAll(Point current, Point target, uint layerMask = uint.MaxValue)
         {
             uint mask = layerMask >> StartingLayer;
@@ -749,6 +754,19 @@ namespace GoRogue.SpatialMaps
             return result;
         }
 
+        /// <summary>
+        /// Moves all items that are on layers in <paramref name="layerMask" /> at the specified source location to the
+        /// target location.  Returns false if one or more items cannot be moved or there are no items to be moved.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="layerMask">The layer mask to use to find items.</param>
+        /// <returns>
+        /// True if all items at the current position on layers within the mask given were moved to
+        /// the target position; false otherwise.
+        /// </returns>
         public bool TryMoveAll(int currentX, int currentY, int targetX, int targetY, uint layerMask = uint.MaxValue)
             => TryMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
     }
@@ -787,6 +805,11 @@ namespace GoRogue.SpatialMaps
         /// be included in the spatial map.
         /// </remarks>
         /// <param name="numberOfLayers">Number of layers to include.</param>
+        /// <param name="customListPoolCreator">
+        /// A function used to determine the list pool implementation used for the spatial maps which support multiple
+        /// items in a location (if any).  The function takes the layer it is creating the pool for as a parameter.
+        /// If no custom creator is specified, a ListPool is used.
+        /// </param>
         /// <param name="pointComparer">
         /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
         /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
@@ -798,9 +821,10 @@ namespace GoRogue.SpatialMaps
         /// A layer mask indicating which layers should support multiple items residing at the same
         /// location on that layer. Defaults to no layers.  Generate this layer mask via <see cref="LayerMasker.Default" />.
         /// </param>
-        public LayeredSpatialMap(int numberOfLayers, IEqualityComparer<Point>? pointComparer = null,
-                                 int startingLayer = 0, uint layersSupportingMultipleItems = 0)
-            : base(new IDComparer<T>(), numberOfLayers, pointComparer, startingLayer, layersSupportingMultipleItems)
+        public LayeredSpatialMap(int numberOfLayers, Func<int, IListPool<T>>? customListPoolCreator = null,
+                                 IEqualityComparer<Point>? pointComparer = null, int startingLayer = 0,
+                                 uint layersSupportingMultipleItems = 0)
+            : base(new IDComparer<T>(), numberOfLayers, customListPoolCreator, pointComparer, startingLayer, layersSupportingMultipleItems)
         { }
     }
 }
