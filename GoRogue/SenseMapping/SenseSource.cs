@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -57,6 +59,9 @@ namespace GoRogue.SenseMapping
     [PublicAPI]
     public class SenseSource
     {
+        private static readonly Direction[] s_counterClockWiseDirectionCache =
+            AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right).ToArray();
+
         private static readonly string[] s_typeWriteValues = Enum.GetNames(typeof(SourceType));
 
         private double _angle;
@@ -68,7 +73,11 @@ namespace GoRogue.SenseMapping
         // Local calculation arrays, internal so SenseMap can easily copy them.
         internal double[,] _light;
 
-        private bool[,] _nearLight;
+        private BitArray _nearLight;
+        //private bool[,] _nearLight;
+
+        // Pre-allocated list
+        private List<Point> _neighbors;
 
         // Analyzer gets this wrong because it's returned by ref
 #pragma warning disable IDE0044
@@ -117,6 +126,9 @@ namespace GoRogue.SenseMapping
 
             IsAngleRestricted = false;
             Intensity = intensity;
+
+            // Stores max of 8 neighbors
+            _neighbors = new List<Point>(8);
         }
 
         /// <summary>
@@ -304,9 +316,8 @@ namespace GoRogue.SenseMapping
                 // Any times 2 is even, plus one is odd. rad 3, 3*2 = 6, +1 = 7. 7/2=3, so math works
                 _halfSize = _size / 2;
                 _light = new double[_size, _size];
-                _nearLight =
-                    new bool[_size,
-                        _size]; // Allocate whether we use shadow or not, just to support.  Could be lazy but its just booleans
+                // Allocate whether we use shadow or not, just to support. TODO: Lazy?
+                _nearLight = new BitArray(_size * _size);
 
                 _decay = _intensity / (_radius + 1);
             }
@@ -372,8 +383,10 @@ namespace GoRogue.SenseMapping
                         ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, _resMap, angle, span);
                     }
                     else
-                        foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
+                        for (int i = 0; i < AdjacencyRule.Diagonals.DirectionsOfNeighborsCache.Length; i++)
                         {
+                            var d = AdjacencyRule.Diagonals.DirectionsOfNeighborsCache[i];
+
                             ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, _resMap);
                             ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, _resMap);
                         }
@@ -401,7 +414,6 @@ namespace GoRogue.SenseMapping
                     return 6;
 
                 default:
-                    Console.Error.WriteLine("Unrecognized ripple type, defaulting to RIPPLE...");
                     return RippleValue(SourceType.Ripple);
             }
         }
@@ -415,11 +427,13 @@ namespace GoRogue.SenseMapping
                 var p = dq.First!.Value;
                 dq.RemoveFirst();
 
-                if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
+                if (_light[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(_size)])
                     continue; // Nothing left to spread!
 
-                foreach (var dir in AdjacencyRule.EightWay.DirectionsOfNeighbors())
+                for (int i = 0; i < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; i++)
                 {
+                    var dir = AdjacencyRule.EightWay.DirectionsOfNeighborsCache[i];
+
                     var x2 = p.X + dir.DeltaX;
                     var y2 = p.Y + dir.DeltaY;
                     var globalX2 = Position.X - (int)Radius + x2;
@@ -452,11 +466,13 @@ namespace GoRogue.SenseMapping
                 var p = dq.First!.Value;
                 dq.RemoveFirst();
 
-                if (_light[p.X, p.Y] <= 0 || _nearLight[p.X, p.Y])
+                if (_light[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(_size)])
                     continue; // Nothing left to spread!
 
-                foreach (var dir in AdjacencyRule.EightWay.DirectionsOfNeighborsCounterClockwise(Direction.Right))
+                for (int i = 0; i < s_counterClockWiseDirectionCache.Length; i++)
                 {
+                    var dir = s_counterClockWiseDirectionCache[i];
+
                     var x2 = p.X + dir.DeltaX;
                     var y2 = p.Y + dir.DeltaY;
                     var globalX2 = Position.X - (int)Radius + x2;
@@ -477,8 +493,7 @@ namespace GoRogue.SenseMapping
                     {
                         _light[x2, y2] = surroundingLight;
                         if (map[globalX2, globalY2] < _intensity) // Not a wall (fully blocking)
-                            dq.AddLast(new Point(x2,
-                                y2)); // Need to redo neighbors, since we just changed this entry's light.
+                            dq.AddLast(new Point(x2, y2)); // Need to redo neighbors, since we just changed this entry's light.
                     }
                 }
             }
@@ -490,7 +505,7 @@ namespace GoRogue.SenseMapping
             Array.Clear(_light, 0, _light.Length);
             _light[_halfSize, _halfSize] = _intensity; // source light is center, starts out at our intensity
             if (Type != SourceType.Shadow) // Only clear if we are using it, since this is called at each calculate
-                Array.Clear(_nearLight, 0, _nearLight.Length);
+                _nearLight.SetAll(false);
         }
 
         private double NearRippleLight(int x, int y, int globalX, int globalY, int rippleNeighbors,
@@ -499,10 +514,10 @@ namespace GoRogue.SenseMapping
             if (x == _halfSize && y == _halfSize)
                 return _intensity;
 
-            List<Point> neighbors = new List<Point>();
-
-            foreach (var di in AdjacencyRule.EightWay.DirectionsOfNeighbors())
+            for (int dirIdx = 0; dirIdx < AdjacencyRule.EightWay.DirectionsOfNeighborsCache.Length; dirIdx++)
             {
+                var di = AdjacencyRule.EightWay.DirectionsOfNeighborsCache[dirIdx];
+
                 var x2 = x + di.DeltaX;
                 var y2 = y + di.DeltaY;
 
@@ -516,38 +531,45 @@ namespace GoRogue.SenseMapping
                 if (globalX2 >= 0 && globalX2 < map.Width && globalY2 >= 0 && globalY2 < map.Height)
                 {
                     var tmpDistance = DistanceCalc.Calculate(_halfSize, _halfSize, x2, y2);
-                    var idx = 0;
+                    int idx = 0;
 
-                    for (var i = 0; i < neighbors.Count && i <= rippleNeighbors; i++)
+                    int count = _neighbors.Count;
+                    for (; idx < count && idx < rippleNeighbors; idx++)
                     {
-                        var c = neighbors[i];
+                        var c = _neighbors[idx];
                         var testDistance = DistanceCalc.Calculate(_halfSize, _halfSize, c.X, c.Y);
                         if (tmpDistance < testDistance)
                             break;
-
-                        idx++;
                     }
-
-                    neighbors.Insert(idx, new Point(x2, y2));
+                    // No point in inserting it after this point, it'd never be counted anyway.  Otherwise, if we're kicking
+                    // an existing element off the end, we'll just remove it to prevent shifting it down pointlessly
+                    if (idx < rippleNeighbors)
+                    {
+                        if (count >= rippleNeighbors)
+                            _neighbors.RemoveAt(rippleNeighbors - 1);
+                        _neighbors.Insert(idx, new Point(x2, y2));
+                    }
                 }
             }
 
-            if (neighbors.Count == 0)
+            if (_neighbors.Count == 0)
                 return 0;
 
-            neighbors = neighbors.GetRange(0, Math.Min(neighbors.Count, rippleNeighbors));
+            int maxNeighborIdx = Math.Min(_neighbors.Count, rippleNeighbors);
 
             double curLight = 0;
             int lit = 0, indirects = 0;
-            foreach (var (pointX, pointY) in neighbors)
+            for (int neighborIdx = 0; neighborIdx < maxNeighborIdx; neighborIdx++)
             {
+                var (pointX, pointY) = _neighbors[neighborIdx];
+
                 var gpx = Position.X - (int)Radius + pointX;
                 var gpy = Position.Y - (int)Radius + pointY;
 
                 if (_light[pointX, pointY] > 0)
                 {
                     lit++;
-                    if (_nearLight[pointX, pointY])
+                    if (_nearLight[Point.ToIndex(pointX, pointY, _size)])
                         indirects++;
 
                     var dist = DistanceCalc.Calculate(x, y, pointX, pointY);
@@ -560,8 +582,9 @@ namespace GoRogue.SenseMapping
             }
 
             if (map[globalX, globalY] >= _intensity || indirects >= lit)
-                _nearLight[x, y] = true;
+                _nearLight[Point.ToIndex(x, y, _size)] = true;
 
+            _neighbors.Clear();
             return curLight;
         }
 

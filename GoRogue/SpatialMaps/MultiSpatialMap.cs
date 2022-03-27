@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using GoRogue.Pooling;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -26,6 +28,8 @@ namespace GoRogue.SpatialMaps
         private readonly Dictionary<T, Point> _itemMapping;
         private readonly Dictionary<Point, List<T>> _positionMapping;
 
+        private readonly IListPool<T> _itemListPool;
+
         /// <summary>
         /// Constructor.
         /// </summary>
@@ -46,9 +50,40 @@ namespace GoRogue.SpatialMaps
         /// </param>
         public AdvancedMultiSpatialMap(IEqualityComparer<T> itemComparer, IEqualityComparer<Point>? pointComparer = null,
                                        int initialCapacity = 32)
+            : this(itemComparer, new ListPool<T>(50, 16), pointComparer, initialCapacity)
+        { }
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="itemComparer">
+        /// Equality comparer to use for comparison and hashing of type T. Be especially mindful of the
+        /// efficiency of its GetHashCode function, as it will determine the efficiency of many AdvancedMultiSpatialMap
+        /// functions.
+        /// </param>
+        /// <param name="listPool">
+        /// The list pool implementation to use.  Specify <see cref="NoPoolingListPool{T}"/> to disable pooling entirely.
+        /// This implementation _may_ be shared with other spatial maps if you wish, however be aware that no thread safety is implemented
+        /// by the default list pool implementations or the spatial map itself.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many AdvancedMultiSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
+        /// <param name="initialCapacity">
+        /// The initial maximum number of elements the AdvancedMultiSpatialMap can hold before it has to
+        /// internally resize data structures. Defaults to 32.
+        /// </param>
+        public AdvancedMultiSpatialMap(IEqualityComparer<T> itemComparer, IListPool<T> listPool,
+                                       IEqualityComparer<Point>? pointComparer = null,
+                                       int initialCapacity = 32)
         {
             _itemMapping = new Dictionary<T, Point>(initialCapacity, itemComparer);
             _positionMapping = new Dictionary<Point, List<T>>(initialCapacity, pointComparer ?? EqualityComparer<Point>.Default);
+
+            _itemListPool = listPool;
         }
 
         /// <inheritdoc />
@@ -103,7 +138,7 @@ namespace GoRogue.SpatialMaps
             }
 
             if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
-                _positionMapping[position] = positionList = new List<T>();
+                _positionMapping[position] = positionList = _itemListPool.Rent();
 
             positionList.Add(item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
@@ -131,7 +166,7 @@ namespace GoRogue.SpatialMaps
                 return false;
 
             if (!_positionMapping.TryGetValue(position, out List<T>? positionList))
-                _positionMapping[position] = positionList = new List<T>();
+                _positionMapping[position] = positionList = _itemListPool.Rent();
 
             positionList.Add(item);
             ItemAdded?.Invoke(this, new ItemEventArgs<T>(item, position));
@@ -156,6 +191,9 @@ namespace GoRogue.SpatialMaps
         public void Clear()
         {
             _itemMapping.Clear();
+
+            foreach (var val in _positionMapping.Values)
+                _itemListPool.Return(val);
             _positionMapping.Clear();
         }
 
@@ -188,10 +226,9 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public IEnumerable<T> GetItemsAt(Point position)
         {
-            if (!_positionMapping.ContainsKey(position))
+            if (!_positionMapping.TryGetValue(position, out var positionList))
                 yield break;
 
-            var positionList = _positionMapping[position];
             for (var i = positionList.Count - 1; i >= 0; i--)
                 yield return positionList[i];
         }
@@ -247,18 +284,44 @@ namespace GoRogue.SpatialMaps
 
             // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
             var oldPosList = _positionMapping[oldPos];
-            oldPosList.Remove(item);
-            if (oldPosList.Count == 0)
-                _positionMapping.Remove(oldPos);
 
-            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
-            // max.
+            // We'll get the target list now as well, since we can do some special case shortcutting if the target doesn't
+            // exist and the source has only one element.  C# doesn't offer a nice Get-Or-Insert type function, so this
+            // will have to do.  This at least keeps it to two lookups max.
             if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = new List<T>();
+            {
+                // If the existing list has only the item we're moving, and the target doesn't exist, we'll just
+                // switch the list over to avoid any removing and interacting with the pool.  This also handles a special case
+                // where no list exists in the pool, but the one for the old position is about to be freed.  This ensures
+                // that, in this case, the list will simply be hot-swapped over instead of a new one allocated then the
+                // old one added to the pool after.
+                if (oldPosList.Count == 1)
+                {
+                    _positionMapping[target] = oldPosList;
+                    _positionMapping.Remove(oldPos);
+                    _itemMapping[item] = target;
+                    ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+                    return;
+                }
+
+                // Otherwise, we'll have to get a new list.
+                _positionMapping[target] = targetList = _itemListPool.Rent();
+            }
+
+            // Add item to target list
             targetList.Add(item);
 
-            _itemMapping[item] = target;
+            // Remove the old one, and if it was the last item, return the list to the pool.  It could be the last
+            // item if and only if the target list already existed (so the above code does not return)
+            oldPosList.Remove(item);
+            if (oldPosList.Count == 0)
+            {
+                _itemListPool.Return(oldPosList, false);
+                _positionMapping.Remove(oldPos);
+            }
 
+            // Switch position of item in spatial map, and fire moved event.
+            _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
         }
 
@@ -282,16 +345,43 @@ namespace GoRogue.SpatialMaps
 
             // Key guaranteed to exist due to state invariant of spatial map (oldPos existed in the other map)
             var oldPosList = _positionMapping[oldPos];
-            oldPosList.Remove(item);
-            if (oldPosList.Count == 0)
-                _positionMapping.Remove(oldPos);
 
-            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.  Keeps it to two lookups
-            // max.
+            // We'll get the target list now as well, since we can do some special case shortcutting if the target doesn't
+            // exist and the source has only one element.  C# doesn't offer a nice Get-Or-Insert type function, so this
+            // will have to do.  This at least keeps it to two lookups max.
             if (!_positionMapping.TryGetValue(target, out var targetList))
-                _positionMapping[target] = targetList = new List<T>();
+            {
+                // If the existing list has only the item we're moving, and the target doesn't exist, we'll just
+                // switch the list over to avoid any removing and interacting with the pool.  This also handles a special case
+                // where no list exists in the pool, but the one for the old position is about to be freed.  This ensures
+                // that, in this case, the list will simply be hot-swapped over instead of a new one allocated then the
+                // old one added to the pool after.
+                if (oldPosList.Count == 1)
+                {
+                    _positionMapping[target] = oldPosList;
+                    _positionMapping.Remove(oldPos);
+                    _itemMapping[item] = target;
+                    ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
+                    return true;
+                }
+
+                // Otherwise, we'll have to get a new list.
+                _positionMapping[target] = targetList = _itemListPool.Rent();
+            }
+
+            // Add item to target list
             targetList.Add(item);
 
+            // Remove the old one, and if it was the last item, return the list to the pool.  It could be the last
+            // item if and only if the target list already existed (so the above code does not return)
+            oldPosList.Remove(item);
+            if (oldPosList.Count == 0)
+            {
+                _itemListPool.Return(oldPosList, false);
+                _positionMapping.Remove(oldPos);
+            }
+
+            // Switch position of item in spatial map, and fire moved event.
             _itemMapping[item] = target;
             ItemMoved?.Invoke(this, new ItemMovedEventArgs<T>(item, oldPos, target));
 
@@ -302,36 +392,69 @@ namespace GoRogue.SpatialMaps
         public bool TryMove(T item, int targetX, int targetY) => TryMove(item, new Point(targetX, targetY));
 
         /// <inheritdoc />
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public List<T> MoveValid(Point current, Point target)
         {
-            var result = new List<T>();
-            if (!_positionMapping.ContainsKey(current) || current == target)
-                return result;
+            var result = new List<T>(0);
+            MoveValid(current, target, result);
+            return result;
+        }
 
-            if (!_positionMapping.ContainsKey(target))
-                _positionMapping.Add(target, new List<T>());
+        /// <inheritdoc/>
+        public void MoveValid(Point current, Point target, List<T> itemsMovedOutput)
+        {
+            // Nothing to move in these cases
+            if (current == target)
+                return;
 
-            foreach (var item in _positionMapping[current])
-            {
-                _itemMapping[item] = target;
-                _positionMapping[target].Add(item);
-                result.Add(item);
-            }
+            if (!_positionMapping.TryGetValue(current, out var currentList))
+                return;
 
-            var list = _positionMapping[current];
+            // Anything will successfully move to anywhere; so we know at this point that everything will move to target.
+            // So, we'll just bulk copy the list over and remove it from the old position
+            int startingIdx = itemsMovedOutput.Count;
+            itemsMovedOutput.AddRange(currentList);
             _positionMapping.Remove(current);
 
-            if (ItemMoved == null)
-                return result;
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it, and put the original list back
+                // in the pool.  One alternative would be to use the currentList as the return value, which could
+                // avoid the allocation of a new one; however it would affect the number of lists in the pool, so
+                // in theory, long-term, it should be more beneficial to keep the two list pool separate (because it
+                // should make future move operations faster)
+                targetList.AddRange(currentList);
+                _itemListPool.Return(currentList);
+            }
 
-            foreach (var item in list)
-                ItemMoved(this, new ItemMovedEventArgs<T>(item, current, target));
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = itemsMovedOutput.Count;
+            for (int i = startingIdx; i < count; i++)
+                _itemMapping[itemsMovedOutput[i]] = target;
 
-            return result;
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = startingIdx; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(itemsMovedOutput[i], current, target));
+            }
         }
 
         /// <inheritdoc />
         public List<T> MoveValid(int currentX, int currentY, int targetX, int targetY)
+            => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
+
+        /// <inheritdoc/>
+        public void MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput)
             => MoveValid(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
@@ -359,7 +482,10 @@ namespace GoRogue.SpatialMaps
             var posList = _positionMapping[pos];
             posList.Remove(item);
             if (posList.Count == 0)
+            {
+                _itemListPool.Return(posList, false);
                 _positionMapping.Remove(pos);
+            }
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
         }
@@ -380,7 +506,10 @@ namespace GoRogue.SpatialMaps
             var posList = _positionMapping[pos];
             posList.Remove(item);
             if (posList.Count == 0)
+            {
+                _itemListPool.Return(posList, false);
                 _positionMapping.Remove(pos);
+            }
 
             ItemRemoved?.Invoke(this, new ItemEventArgs<T>(item, pos));
 
@@ -390,28 +519,62 @@ namespace GoRogue.SpatialMaps
         /// <inheritdoc />
         public List<T> Remove(Point position)
         {
-            var result = new List<T>();
+            // Duplicating TryRemove code to ensure we keep to 1 dictionary lookup for _positionMapping
+            if (!_positionMapping.TryGetValue(position, out var posList))
+                return new List<T>();
 
-            if (!_positionMapping.ContainsKey(position))
-                return result;
-
-            foreach (var item in _positionMapping[position])
-            {
-                _itemMapping.Remove(item);
-                result.Add(item);
-            }
-
-            var list = _positionMapping[position];
+            // We'll create a new list to return.  We could just return the one that
+            // is in the _positionMapping, but we'll return it to the list pool instead
+            // in order to ensure it's available for a potential future Add operation
+            // (which could often be paired with remove)
+            var result = new List<T>(posList);
             _positionMapping.Remove(position);
+
+            // Remove each object that we're removing from the item mapping
+            int count = posList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping.Remove(posList[i]);
+
+            // Fire ItemRemoved event for each item we're removing
             if (ItemRemoved != null)
-                foreach (var item in list)
-                    ItemRemoved(this, new ItemEventArgs<T>(item, position));
+                for (int i = 0; i < count; i++)
+                    ItemRemoved(this, new ItemEventArgs<T>(posList[i], position));
+
+            // Return list to pool and return result
+            _itemListPool.Return(posList);
 
             return result;
         }
 
+        /// <inheritdoc/>
+        public bool TryRemove(Point position)
+        {
+            if (!_positionMapping.TryGetValue(position, out var posList))
+                return false;
+
+            _positionMapping.Remove(position);
+
+            // Remove each object that we're removing from the item mapping
+            int count = posList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping.Remove(posList[i]);
+
+            // Fire ItemRemoved event for each item we're removing
+            if (ItemRemoved != null)
+                for (int i = 0; i < count; i++)
+                    ItemRemoved(this, new ItemEventArgs<T>(posList[i], position));
+
+            // Return list to pool and return result
+            _itemListPool.Return(posList);
+
+            return true;
+        }
+
         /// <inheritdoc />
         public List<T> Remove(int x, int y) => Remove(new Point(x, y));
+
+        /// <inheritdoc/>
+        public bool TryRemove(int x, int y) => TryRemove(new Point(x, y));
 
         /// <summary>
         /// Returns a string representation of the spatial map, allowing display of the
@@ -478,18 +641,109 @@ namespace GoRogue.SpatialMaps
         /// <param name="target">Location to move items to.</param>
         public void MoveAll(Point current, Point target)
         {
-            if (!_positionMapping.ContainsKey(current))
-                throw new ArgumentException(
-                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at the that position.",
-                    nameof(current));
-
             if (current == target)
                 throw new ArgumentException(
                     $"Tried to move all items from {current} in {GetType().Name}, but the current and target positions were the same.",
                     nameof(target));
 
-            MoveValid(current, target);
+            List<T> currentList;
+            try
+            {
+                currentList = _positionMapping[current];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ArgumentException(
+                    $"Tried to move all items from {current} in {GetType().Name}, but there was nothing at that position.",
+                    nameof(current));
+            }
+
+            // We know the move will succeed, since they don't fail in MultiSpatialMap; so we can go ahead and remove
+            // the old position list now.
+            _positionMapping.Remove(current);
+
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it.
+                targetList.AddRange(currentList);
+            }
+
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = currentList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping[currentList[i]] = target;
+
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = 0; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(currentList[i], current, target));
+            }
+
+            // Add the currentList to the pool if we didn't re-use it as targetList
+            if (targetList != null)
+                _itemListPool.Return(currentList);
         }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(Point current, Point target)
+        {
+            if (current == target)
+                return false;
+
+            if (!_positionMapping.TryGetValue(current, out var currentList))
+                return false;
+
+            // We know the move will succeed, since they don't fail in MultiSpatialMap; so we can go ahead and remove
+            // the old position list now.
+            _positionMapping.Remove(current);
+
+            // C# doesn't offer a nice Get-Or-Insert type function, so this will have to do.
+            // This at least keeps it to two lookups max.
+            if (!_positionMapping.TryGetValue(target, out var targetList))
+            {
+                // If there isn't a target list, we can just switch the old list over to the new one to avoid
+                // any allocations or unnecessary interaction with the list pool.
+                _positionMapping[target] = currentList;
+            }
+            else
+            {
+                // When the target list already exists, we'll have to append to it.
+                targetList.AddRange(currentList);
+            }
+
+            // Shift the item-to-position mappings for everything that was just moved
+            int count = currentList.Count;
+            for (int i = 0; i < count; i++)
+                _itemMapping[currentList[i]] = target;
+
+            // Fire moved events as needed for what was just moved and return; making sure we do this _after_ the actual
+            // data structure state has been updated for the entire move operation
+            if (ItemMoved != null)
+            {
+                for (int i = 0; i < count; i++)
+                    ItemMoved(this, new ItemMovedEventArgs<T>(currentList[i], current, target));
+            }
+
+            // Add the currentList to the pool if we didn't re-use it as targetList
+            if (targetList != null)
+                _itemListPool.Return(currentList);
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public bool TryMoveAll(int currentX, int currentY, int targetX, int targetY)
+            => TryMoveAll(new Point(currentX, currentY), new Point(targetX, targetY));
 
         /// <summary>
         /// Moves all items at the specified source location to the target location.  Throws ArgumentException if there are
@@ -531,8 +785,30 @@ namespace GoRogue.SpatialMaps
     /// a reference-type.
     /// </typeparam>
     [PublicAPI]
-    public class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
+    public sealed class MultiSpatialMap<T> : AdvancedMultiSpatialMap<T> where T : class, IHasID
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="listPool">
+        /// The list pool implementation to use.  Specify <see cref="NoPoolingListPool{T}"/> to disable pooling entirely.
+        /// This implementation _may_ be shared with other spatial maps if you wish, however be aware that no thread safety is implemented
+        /// by the default list pool implementations or the spatial map itself.
+        /// </param>
+        /// <param name="pointComparer">
+        /// Equality comparer to use for comparison and hashing of points, as object are added to/removed from/moved
+        /// around the spatial map.  Be especially mindful of the efficiency of its GetHashCode function, as it will
+        /// determine the efficiency of many MultiSpatialMap functions.  Defaults to the default equality
+        /// comparer for Point, which uses a fairly efficient generalized hashing algorithm.
+        /// </param>
+        /// <param name="initialCapacity">
+        /// The initial maximum number of elements the spatial map can hold before it has to
+        /// internally resize data structures. Defaults to 32.
+        /// </param>
+        public MultiSpatialMap(IListPool<T> listPool, IEqualityComparer<Point>? pointComparer = null, int initialCapacity = 32)
+            : base(new IDComparer<T>(), listPool, pointComparer, initialCapacity)
+        { }
+
         /// <summary>
         /// Constructor.
         /// </summary>

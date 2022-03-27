@@ -1,4 +1,5 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -63,6 +64,36 @@ namespace GoRogue.PerformanceTests.SpatialMaps
             _testMap.TryMove(_trackedObject, _initialPosition);
 
             return _testMap.Count;
+        }
+
+        [Benchmark]
+        public int MoveAllTwice()
+        {
+            _testMap.MoveAll(_initialPosition, _moveToPosition);
+            // Move it back to not spoil next benchmark.  Valid since the GlobalSetup function used for this benchmark
+            // doesn't put anything at _moveToPosition in the initial state.
+            _testMap.MoveAll(_moveToPosition, _initialPosition);
+            return _testMap.Count; // Ensure nothing is optimized out
+        }
+
+        [Benchmark]
+        public int TryMoveAllTwice()
+        {
+            _testMap.TryMoveAll(_initialPosition, _moveToPosition);
+            // Move it back to not spoil next benchmark.  Valid since the GlobalSetup function used for this benchmark
+            // doesn't put anything at _moveToPosition in the initial state.
+            _testMap.TryMoveAll(_moveToPosition, _initialPosition);
+            return _testMap.Count; // Ensure nothing is optimized out
+        }
+
+        [Benchmark]
+        public (List<IDObject> l1, List<IDObject> l2) MoveValidTwice()
+        {
+            var list1 = _testMap.MoveValid(_initialPosition, _moveToPosition);
+            // Move it back to not spoil next benchmark.  Valid since the GlobalSetup function used for this benchmark
+            // doesn't put anything at _moveToPosition in the initial state.
+            var list2 = _testMap.MoveValid(_moveToPosition, _initialPosition);
+            return (list1, list2); // Ensure nothing is optimized out
         }
 
         [Benchmark]

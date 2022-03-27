@@ -4,19 +4,19 @@
     <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
 	<RootNamespace>GoRogue</RootNamespace>
 	<Authors>Chris3606</Authors>
-	<Copyright>Copyright © 2021 Christopher Ridley (Chris3606)</Copyright>
+	<Copyright>Copyright © 2022 Christopher Ridley (Chris3606)</Copyright>
 	<Description>Roguelike/2D game utility library.</Description>
 
     <!--
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha10</Version>
+    <Version>3.0.0-alpha11</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha10---2022-02-13.</PackageReleaseNotes>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha11---2022-03-26.</PackageReleaseNotes>
 	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>

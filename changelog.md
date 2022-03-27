@@ -5,9 +5,47 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None.
+None
 
-# [3.0.0-alpha10] - 2022-02-13
+
+## [3.0.0-alpha11] - 2022-03-26
+
+### Added
+- Spatial maps now have a `MoveValid` overload which takes a list to fill instead of returning one as a result
+- Spatial maps now have `TryMoveAll` and `TryRemove` functions which return false instead of throwing exceptions when the operations fail
+    - More performant in cases where failure is expected
+- Miscellaneous functions added which can increase performance compared to the alternative for their use case
+- Pooling for `List<T>` structures (similar to `System.Buffers.ArrayPool` but for lists) is now provided in the `GoRogue.Pooling` namespace
+    - An interface is provided which encompasses the core functionality; as well as a basic implementation of that interface, and a "dummy" implementation that can be used to disable pooling entirely (it simply allocations/GCs as you would do without the pool).
+- `MultiSpatialMap`, `LayeredSpatialMap`, and `GameFramework.Map` now have optional constructor parameters which allow you to specify what list pool is used for the creation of internal lists.
+- Added convenience functions to `LayerMasker` that allow you to more easily add a mask to another mask.
+
+
+### Changed
+- Optimized `SenseSource` algorithm and structure
+    - ~30% faster
+    - Notably less memory usage and allocations performed
+- Optimized `SpatialMap` (most functions)
+    - Degree of speedup varies based on circumstance
+- Optimized existing `MultiSpatialMap` functions
+    - ~2x faster move operations in some cases
+    - Minor add/remove performance increases
+    - ~20-30% faster `TryAdd`
+    - Significant reduction in number of allocations performed during most move operations
+- Optimized `LayeredSpatialMap` functions
+    - Since `LayeredSpatialMap` uses `MultiSpatialMap`, all of those performance benefits translate here as well.  IN ADDITION to those benefits, the following also apply.
+    - `MoveAll` an additional 2x faster
+    - `MoveValid` an additional 40% faster
+- Optimized `LayerMasker`
+    - The `Layers` function now returns a custom enumerable instead of `IEnumerable<int>`, which significantly cuts down performance overhead
+- `MultiSpatialMap`, `LayeredSpatialMap`, and `GameFramework.Map` now implement "list pooling" by default, which reduce the amount of reallocations that take place during add, remove, and move operations.
+    - List pooling can be disabled or customized via a constructor parameter.
+- Renamed `LayerMasker.DEFAULT` to `LayerMasker.Default` in order to match typical C# and GoRogue naming conventions.
+- If a move operation fails, spatial maps now do not guarantee that state will be restored to what it was before any objects were moved.
+    - This allows notable performance increase, and exceptions thrown by functions such as `MoveAll` generally should not be recovered from; the `TryMoveAll`, `CanMove`, and/or `MoveValid` functions should be used instead.
+
+
+## [3.0.0-alpha10] - 2022-02-13
 
 ### Added
 - Spatial map implementations now have `TryMove`, `TryAdd`, and `TryRemove` functions which return false instead of throwing exception when an operation fails

@@ -213,10 +213,8 @@ namespace GoRogue.UnitTests.SpatialMaps
             _spatialMap.Add(lastItem, _newItemsPos);
             Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
-            // There is one item that is blocked (by lastItem), so this should fail and no items should be moved.
+            // There is one item that is blocked (by lastItem), so this should fail.  Some items will be moved.
             Assert.Throws<ArgumentException>(() => _spatialMap.MoveAll(_initialItemsPos, _newItemsPos));
-            Assert.Single(_spatialMap.GetItemsAt(_newItemsPos));
-            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_initialItemsPos).Count());
         }
 
         [Fact]
@@ -242,14 +240,45 @@ namespace GoRogue.UnitTests.SpatialMaps
             _spatialMap.Add(lastItem, _newItemsPos);
             Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
-            // There is one item that is blocked (by lastItem), so this should fail and no items should be moved.
+            // There is one item that is blocked (by lastItem), so this should fail.  Some items will be moved.
             Assert.Throws<ArgumentException>(() => _spatialMap.MoveAll(_initialItemsPos, _newItemsPos, _spatialMap.LayerMasker.Mask(1, 3, 5)));
-            Assert.Single(_spatialMap.GetItemsAt(_newItemsPos));
-            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_initialItemsPos).Count());
         }
 
+        [Fact]
+        public void TryMoveAllItemsLayerMaskValid()
+        {
+            // Create item and add it to a different position
+            var lastItem = new MockSpatialMapItem(3);
+            _spatialMap.Add(lastItem, _newItemsPos);
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
 
+            // The only item blocked is not included in the layer mask, so should succeed
+            var val = _spatialMap.TryMoveAll(_initialItemsPos, _newItemsPos, ~_spatialMap.LayerMasker.Mask(3));
+            Assert.True(val);
+            Assert.Equal(_initialItems.Count, _spatialMap.GetItemsAt(_newItemsPos).Count());
+            Assert.Single(_spatialMap.GetItemsAt(_initialItemsPos));
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
+        }
 
+        [Fact]
+        public void TryMoveAllItemsLayerMaskSomeValid()
+        {
+            // Mask used for operations
+            uint mask = _spatialMap.LayerMasker.Mask(1, 2, 3);
+            const int layersInMask = 3;
+
+            // Create item and add it to a different position
+            var lastItem = new MockSpatialMapItem(3);
+            _spatialMap.Add(lastItem, _newItemsPos);
+            Assert.Equal(_initialItems.Count + 1, _spatialMap.Count);
+
+            // Most of the objects can move; 1 is blocked by lastItem
+            var val = _spatialMap.TryMoveAll(_initialItemsPos, _newItemsPos, mask);
+            Assert.False(val);
+            Assert.Equal(2, layersInMask - 1);
+            Assert.Equal(_initialItems.Count - 2, _spatialMap.GetItemsAt(_initialItemsPos).Count());
+            Assert.Equal(2 + 1, _spatialMap.GetItemsAt(_newItemsPos).Count());
+        }
 
         [Fact]
         public void MoveValidItemsLayerMaskAllValid()
@@ -336,7 +365,7 @@ namespace GoRogue.UnitTests.SpatialMaps
                 Assert.True(layer is AdvancedSpatialMap<MockSpatialMapItem>);
 
             // Test multiple item layers
-            var multipleItemLayerMask = LayerMasker.DEFAULT.Mask(1, 2, 5);
+            var multipleItemLayerMask = LayerMasker.Default.Mask(1, 2, 5);
             sm = new LayeredSpatialMap<MockSpatialMapItem>(10, startingLayer: 0,
                 layersSupportingMultipleItems: multipleItemLayerMask);
             Assert.Equal(10, sm.NumberOfLayers);
@@ -345,7 +374,7 @@ namespace GoRogue.UnitTests.SpatialMaps
             int layerNum = 0;
             foreach (var layer in sm.Layers)
             {
-                Assert.Equal(LayerMasker.DEFAULT.HasLayer(multipleItemLayerMask, layerNum),
+                Assert.Equal(LayerMasker.Default.HasLayer(multipleItemLayerMask, layerNum),
                     layer is AdvancedMultiSpatialMap<MockSpatialMapItem>);
                 layerNum++;
             }

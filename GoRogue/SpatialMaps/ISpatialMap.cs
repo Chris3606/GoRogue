@@ -127,6 +127,15 @@ namespace GoRogue.SpatialMaps
         void MoveAll(Point current, Point target);
 
         /// <summary>
+        /// Moves all items at the specified source location to the target location.  Returns false if one or
+        /// more items cannot be moved or there are no items to be moved.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+        /// <param name="target">Location to move items to.</param>
+        /// <returns>True if all items at <paramref name="current"/> were moved to <paramref name="target"/>; false otherwise.</returns>
+        bool TryMoveAll(Point current, Point target);
+
+        /// <summary>
         /// Moves all items at the specified source location to the target location.  Throws ArgumentException if one or
         /// more items cannot be moved or there are no items
         /// to be moved.
@@ -138,13 +147,33 @@ namespace GoRogue.SpatialMaps
         void MoveAll(int currentX, int currentY, int targetX, int targetY);
 
         /// <summary>
+        /// Moves all items at the specified source location to the target location.  Returns false if one or
+        /// more items cannot be moved or there are no items to be moved.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <returns>True if all items at (currentX, currentY) were moved to (targetX, targetY); false otherwise.</returns>
+        bool TryMoveAll(int currentX, int currentY, int targetX, int targetY);
+
+        /// <summary>
         /// Moves all items at the specified source location that can be moved to the target location. Returns all items that were
         /// moved.
         /// </summary>
         /// <param name="current">Location to move items from.</param>
         /// <param name="target">Location to move items to.</param>
-        /// <returns>All items that were moved, or nothing if no items were moved.</returns>
+        /// <returns>All items that were moved, or an empty list if no items were moved.</returns>
         List<T> MoveValid(Point current, Point target);
+
+        /// <summary>
+        /// Moves all items at the specified source location that can be moved to the target location. Adds all items that were
+        /// moved to the given list.
+        /// </summary>
+        /// <param name="current">Location to move items from.</param>
+        /// <param name="target">Location to move items to.</param>
+        /// <param name="itemsMovedOutput">A list to which all items successfully moved are added.</param>
+        void MoveValid(Point current, Point target, List<T> itemsMovedOutput);
 
         /// <summary>
         /// Moves all items at the specified location that can be moved to the target one. Returns all items that were moved.
@@ -155,6 +184,17 @@ namespace GoRogue.SpatialMaps
         /// <param name="targetY">Y-value of the location to move items to.</param>
         /// <returns>All items that were moved, or nothing if no items were moved.</returns>
         List<T> MoveValid(int currentX, int currentY, int targetX, int targetY);
+
+        /// <summary>
+        /// Moves all items at the specified source location that can be moved to the target location. Adds all items that were
+        /// moved to the given list.
+        /// </summary>
+        /// <param name="currentX">X-value of the location to move items from.</param>
+        /// <param name="currentY">Y-value of the location to move items from.</param>
+        /// <param name="targetX">X-value of the location to move items to.</param>
+        /// <param name="targetY">Y-value of the location to move items to.</param>
+        /// <param name="itemsMovedOutput">A list to which all items successfully moved are added.</param>
+        void MoveValid(int currentX, int currentY, int targetX, int targetY, List<T> itemsMovedOutput);
 
         /// <summary>
         /// Removes the given item from the spatial map.  Throws ArgumentException if the item cannot be removed.
@@ -175,8 +215,16 @@ namespace GoRogue.SpatialMaps
         /// that were removed.
         /// </summary>
         /// <param name="position">Position to remove items from.</param>
-        /// <returns>All items that were removed, or nothing if no items were removed.</returns>
+        /// <returns>All items that were removed, or an empty list if no items were removed.</returns>
         List<T> Remove(Point position);
+
+        /// <summary>
+        /// Attempts to remove all items at the specified location from the spatial map. Returns true if the items
+        /// were successfully removed; false if one or more failed.
+        /// </summary>
+        /// <param name="position">Position to remove items from.</param>
+        /// <returns>True if the items were successfully removed; false otherwise</returns>
+        bool TryRemove(Point position);
 
         /// <summary>
         /// Removes all items at the specified location from the spatial map. Returns all items
@@ -186,6 +234,15 @@ namespace GoRogue.SpatialMaps
         /// <param name="y">Y-value of the position to remove items from.</param>
         /// <returns>All items that were removed, or nothing if no items were removed.</returns>
         List<T> Remove(int x, int y);
+
+        /// <summary>
+        /// Attempts to remove all items at the specified location from the spatial map. Returns true if the items
+        /// were successfully removed; false if one or more failed.
+        /// </summary>
+        /// <param name="x">X-value of the position to remove items from.</param>
+        /// <param name="y">Y-value of the position to remove items from.</param>
+        /// <returns>True if the items were successfully removed; false otherwise</returns>
+        bool TryRemove(int x, int y);
     }
 
     /// <summary>
