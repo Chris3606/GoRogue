@@ -3,9 +3,26 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+
 ## [Unreleased]
 
 None
+
+
+## [3.0.0-alpha12] - 2022-04-16
+
+### Added
+- `GameFramework.Map` now has `TryAddEntity`, `CanAddEntity`, and `TryRemoveEntity` which match the equivalent functions from spatial maps
+    - Allows users to check if an add will succeed/has succeeded without involving exceptions
+
+
+### Changed
+- `IDGenerator` now exposes its state via read-only properties
+- `IDGenerator` now supports `DataContract` serialization (including JSON)
+- `IDGenerator` constructor now supports specifying the boolean parameter used to record the "last ID assigned state" (useful mostly for serialization)
+
+### Fixed
+- `ShaiRandom` will now function properly when debugging via SourceLink (bumped version to 0.0.1-beta03 which has appropriate symbols uploaded) 
 
 
 ## [3.0.0-alpha11] - 2022-03-26
