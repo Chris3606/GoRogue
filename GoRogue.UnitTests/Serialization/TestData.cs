@@ -39,6 +39,10 @@ namespace GoRogue.UnitTests.Serialization
             new ComponentTagPair(new Component2() { Value = 91 }, null),
             new ItemStepPair<string>("MyItem", "MyStep"),
             new ItemStepPair<string>("MyItem2", "MyStep2"),
+            // Simple classes which meet the constraints and have no expressive versions
+            // IDGenerator
+            new IDGenerator(10, false),
+            // Actual serialized types
             // ComponentCollection
             new ComponentCollectionSerialized
             {
@@ -154,7 +158,7 @@ namespace GoRogue.UnitTests.Serialization
         private static readonly object[] _nonExpressiveJsonObjects =
         {
             // DiceExpressions
-            Dice.Parse("(3d(1d12))k2+4"),
+            Dice.Parse("(3d(1d12))k2+4")
         };
 
         /// <summary>
@@ -173,6 +177,7 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(DiceExpressionSerialized), new [] { "Expression" } },
             { typeof(FactorySerialized<FactoryItem>), new [] { "Blueprints" } },
             { typeof(AdvancedFactorySerialized<int, FactoryItem>), new [] { "Blueprints" } },
+            { typeof(IDGenerator), new[] { "CurrentInteger", "LastAssigned" } },
             { typeof(ItemStepPair<string>), new []{ "Item", "Step" } },
             { typeof(ItemListSerialized<string>), new []{ "Items" } },
             { typeof(DoorListSerialized), new []{ "RoomsAndDoors" } },
