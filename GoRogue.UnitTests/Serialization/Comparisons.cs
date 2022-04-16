@@ -31,6 +31,7 @@ namespace GoRogue.UnitTests.Serialization
                 { typeof(DoorList), CompareDoorList },
                 { typeof(DoorListSerialized), CompareDoorListSerialized },
                 { typeof(ItemList<string>), CompareItemList },
+                { typeof(IDGenerator), CompareIDGenerator },
                 { typeof(ItemListSerialized<string>), CompareItemListSerialized },
                 { typeof(RoomDoors), CompareRoomDoors },
                 { typeof(RoomDoorsSerialized), CompareRoomDoorsSerialized },
@@ -103,6 +104,14 @@ namespace GoRogue.UnitTests.Serialization
             var f2 = (AdvancedFactorySerialized<int, FactoryItem>)o2;
 
             return HashSetEquality(f1.Blueprints.ToHashSet(), f2.Blueprints.ToHashSet());
+        }
+
+        private static bool CompareIDGenerator(object o1, object o2)
+        {
+            var i1 = (IDGenerator)o1;
+            var i2 = (IDGenerator)o2;
+
+            return i1.Matches(i2);
         }
 
         private static bool CompareDoorList(object o1, object o2)

@@ -685,8 +685,7 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part
-        /// of.  Throws ArgumentException if the entity could not be added
-        /// (eg., collision detection would not allow it, etc.)
+        /// of.  Throws ArgumentException if the entity could not be added (eg., collision detection would not allow it, etc.)
         /// </summary>
         /// <param name="entity">Entity to add.</param>
         public void AddEntity(IGameObject entity)
@@ -729,6 +728,56 @@ namespace GoRogue.GameFramework
             entity.OnMapChanged(this);
             entity.Moved += OnGameObjectMoved;
             entity.WalkabilityChanging += OnWalkabilityChanging;
+        }
+
+        /// <summary>
+        /// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part
+        /// of.  Returns false if the entity could not be added (eg., collision detection would not allow it, etc.); true otherwise.
+        /// </summary>
+        /// <param name="entity">Entity to add.</param>
+        /// <returns>True if the entity was successfully added; false otherwise.</returns>
+        public bool TryAddEntity(IGameObject entity)
+        {
+            if (!CanAddEntity(entity)) return false;
+
+            _entities.Add(entity, entity.Position);
+
+            entity.CurrentMap?.RemoveEntity(entity);
+            entity.OnMapChanged(this);
+            entity.Moved += OnGameObjectMoved;
+            entity.WalkabilityChanging += OnWalkabilityChanging;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Returns true if the entity given can be added to this map; false otherwise.
+        /// </summary>
+        /// <param name="entity">The entity to add.</param>
+        /// <returns>true if the entity given can be added to this map; false otherwise.</returns>
+        public bool CanAddEntity(IGameObject entity)
+        {
+            if (entity.CurrentMap == this)
+                return false;
+
+            if (entity.Layer < 1)
+                return false;
+
+            if (!this.Contains(entity.Position))
+                return false;
+
+            if (!entity.IsWalkable)
+            {
+                if (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer))
+                    return false;
+                if (!WalkabilityView[entity.Position])
+                    return false;
+            }
+
+            if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
+                return false;
+
+            return true;
         }
 
         /// <summary>
@@ -820,6 +869,22 @@ namespace GoRogue.GameFramework
             entity.OnMapChanged(null);
             entity.Moved -= OnGameObjectMoved;
             entity.WalkabilityChanging -= OnWalkabilityChanging;
+        }
+
+        /// <summary>
+        /// Removes the given entity (non-terrain object) from the map.  Does nothing and returns false if the entity
+        /// was not part of this map; returns true and removes it otherwise.
+        /// </summary>
+        /// <param name="entity">The entity to remove from the map.</param>
+        /// <returns>True if the given entity was removed from the map; false otherwise (eg the entity given was not in the map).</returns>
+        public bool TryRemoveEntity(IGameObject entity)
+        {
+            if (!_entities.TryRemove(entity)) return false;
+
+            entity.OnMapChanged(null);
+            entity.Moved -= OnGameObjectMoved;
+            entity.WalkabilityChanging -= OnWalkabilityChanging;
+            return true;
         }
 
         #endregion
