@@ -1,78 +1,97 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Basic package info -->
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>GoRogue</PackageId>
-    <Version>2.6.4</Version>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+	<RootNamespace>GoRogue</RootNamespace>
+	<Authors>Chris3606</Authors>
+	<Copyright>Copyright © 2022 Christopher Ridley (Chris3606)</Copyright>
+	<Description>Roguelike/2D game utility library.</Description>
+
+    <!--
+    Configure versioning information, making sure to append "debug" to Debug version to allow publishing
+    to NuGet seperately from Release version.
+    -->
+    <Version>3.0.0-alpha12</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
-    <Authors>Chris3606</Authors>
-    <Description>Roguelike/2D game utility library.</Description>
+
+	<!-- More nuget package settings-->
+    <PackageId>GoRogue</PackageId>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha12---2022-04-16.</PackageReleaseNotes>
+	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/Chris3606/GoRogue</PackageProjectUrl>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>Troschuetz bugfix.  See https://github.com/Chris3606/GoRogue/releases/tag/2.6.4 for details.</PackageReleaseNotes>
-    <Copyright>Copyright © 2020 Christopher Ridley (Chris3606)</Copyright>
-    <PackageTags>roguelike roguelikes rogue library 2d game games</PackageTags>
-    <!-- Add symbols package -->
     <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <GeneratePackageOnBuild Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'">true</GeneratePackageOnBuild>
-    
-    <!-- Configurations for nuget (where MonoGame private asset doesn't require monogame to be present), and minimal versions for DLL builds where that doesn't work properly -->
-    <Configurations>Debug;Release;Debug Minimal Dependencies;Release Minimal Dependencies</Configurations>
+    <IncludeSource>true</IncludeSource>
+	<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageTags>roguelike;roguelikes;rogue;library;2d;game;games</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+	<!-- Enable C# 8.0 and its nullable reference feature -->
+    <LangVersion>8.0</LangVersion>
+	<Nullable>enable</Nullable>
+
+    <!--
+    Warnings disabled project-wide:
+        - CA1043: We explicitly permit non-integral/string values to be used as indexers (Point for IMapView)
+        - CA1303: Exception strings are non-localized to avoid generating an exception within an exception
+        - CA1814: Multi-dimensional array usage in GoRogue is for maps and thus will not waste space
+        - CA1710: Suffix of IEnumerable implementations containing collection does not make sense for GoRogue
+                  structures; example: Region => PointCollection??  What would Area be?  This convention only makes
+                  sense for standard library, generic data structures/additions
+        - CA1305: Format providers are not used in string exception messages (again to avoid potentially generating an
+                  exception inside an exception).
+        - CA1051: Microsoft guidance on preferring readonly fields to get-only properties to avoid defensive copies
+                  when it comes to structs directly contradicts this warning.  Instance fields are necessary for maximum
+                  performance in many instances with value types.  Further, field exposure is required to allow passing
+                  a parameter via "ref".
+        - CA1307: In string comparisons in GoRogue, ordinal behavior is desired, as they are only compared for
+                  equality, not sort-order.
+        - CA2211: GoRogue specifically allows static mutable fields for configuration options like
+                  GlobalRandom.DefaultRNG and Dice parsers.  These fields explicitly document that changing them is not
+                  thread-safe behavior, and that they are meant as configuration to be performed during application
+                  initialization.  This addresses the main concerns with static mutable fields (thread safety), without
+                  costing non-trivial code complexity and performance.
+        - CA1062: Nullability validation is performed by C#8 nullable reference types in GoRogue.
+    -->
+    <NoWarn>CA1043;CA1303;CA1814;CA1710;CA1305;CA1051;CA1307;CA2211;CA1062</NoWarn>
+
+    <!-- Generate documentation files for all configurations since Debug and Release are published to NuGet. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-  
-  <!-- Release warning disables and configuration -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Release Minimal Dependencies'">
-    <DocumentationFile>bin\$(Configuration)\netstandard2.0\GoRogue.xml</DocumentationFile>
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <NoWarn>1701;1702;1705;RECS0145;RECS0129</NoWarn>
+
+  <!-- Define trace constant for debug builds. -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  
-  <!-- Debug warning disables and configuration -->
-  <PropertyGroup Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Debug Minimal Dependencies'">
-    <OutputPath>bin\$(Configuration)\</OutputPath>
-    <NoWarn>1701;1702;1705;RECS0145;</NoWarn>
-    <DocumentationFile>bin\$(Configuration)\netstandard2.0\GoRogue.xml</DocumentationFile>
-  </PropertyGroup>
-  
-  <!-- When packing, copy the nuget files to the nuget output directory -->
-  <Target Name="CopyPackage" Condition="'$(Configuration)'=='Debug' Or '$(Configuration)'=='Release'" AfterTargets="Pack">
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
-    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\..\nuget" />
-  </Target>
-  
+
   <!-- Pack a read-me with the nuget package, so it displays when installed -->
   <ItemGroup>
-    <None Include="readme.txt" Pack="true" PackagePath="." />
+    <Content Include="readme.txt">
+      <Pack>true</Pack>
+      <PackagePath>.</PackagePath>
+    </Content>
   </ItemGroup>
 
-  <!-- In Debug and Release builds only, set the ALLCONVERSIONS constant so MonoGame parts compile, and include the monogame reference. -->
-  <PropertyGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'">
-    <DefineConstants>ALLCONVERSIONS</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Minimal Dependencies|AnyCPU'">
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Minimal Dependencies|AnyCPU'">
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)'=='Release' Or '$(Configuration)'=='Debug'">
-    <PackageReference Include="MonoGame.Framework.DesktopGL.Core" Version="3.7.0.7" PrivateAssets="All" />
-  </ItemGroup>
-  
-  <!-- Dependencies that apply to all builds -->
+  <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="InheritDoc" Version="2.0.2" PrivateAssets="All">
-      <NoWarn>NU1701</NoWarn>
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0">
+	  <PrivateAssets>all</PrivateAssets>
+	</PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="Troschuetz.Random" Version="4.4.0" />
+    <PackageReference Include="ShaiRandom" Version="0.0.1-beta03" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.3.0" />
   </ItemGroup>
-  
-  <!-- Run InheritDoc on the final builds.  This isn't used right now becuase of bugs with docfx and inheriting docs from template classes, but may be in the future -->
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="&quot;%userprofile%\.nuget\packages\inheritdoc\2.0.2\tools\InheritDoc.exe&quot; -o -b &quot;$(OutDir)\&quot;" />
+
+  <!-- When packing, copy the nuget files to the nuget output directory -->
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg" DestinationFolder="$(OutputPath)..\..\..\nuget" />
+    <Copy SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).snupkg" DestinationFolder="$(OutputPath)..\..\..\nuget" />
   </Target>
 </Project>

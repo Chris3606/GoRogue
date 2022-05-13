@@ -3,151 +3,91 @@
 [![Join us on Reddit](https://img.shields.io/badge/reddit-GoRogueLib-red.svg)](http://reddit.com/r/goroguelib)
 [![NuGet](https://img.shields.io/nuget/v/GoRogue.svg)](http://www.nuget.org/packages/GoRogue/)
 
-Welcome to the homepage for GoRogue, the .NET Standard roguelike/2D game utility library!  This library is compatible with all .NET Standard 2.0+ projects, and offers a number of features that may be useful in roguelike development, including coordinate/grid system utilities, random number generation interfaces, dice notation parsing/rolling methods, unobtrusive and flexible algorithms for map generation, FOV, and lighting/sense mapping, a robust effects system, and various math/utility functions, data structures, and more features to come!  See feature list below for details.
-
-## Table of Contents
-- [GoRogue](#gorogue)
-	- [Documentation](#documentation)
-	- [Feature List](#feature-list)
-		- [.NET Standard 2.0 Compatibility](#net-standard-20-compatibility)
-		- [Unobtrusive Algorithms](#unobtrusive-algorithms)
-		- [Coordinate/Grid System](#coordinategrid-system)
-		- [Random Number Generation](#random-number-generation)
-		- [Dice Notation Parser](#dice-notation-parser)
-		- [Map Generation](#map-generation)
-		- [FOV/Lighting/Sense Mapping](#fovlightingsense-mapping)
-		- [Pathfinding](#pathfinding)
-		- [Line Drawing](#line-drawing)
-		- [Robust Effects System](#robust-effects-system)
-		- [Utility](#utility)
-	- [Licensing](#licensing)
-		- [GoRogue](#gorogue-1)
-		- [Other Licenses](#other-licenses)
-	- [Credits](#credits)
-		- [Dice Notation .NET](#dice-notation-net)
-		- [RogueSharp](#roguesharp)
-		- [Doryen Library (libtcod)](#doryen-library-libtcod)
-		- [SquidLib](#squidlib)
+Welcome to the homepage for GoRogue, a modern .NET Standard roguelike/2D game utility library!  This library offers a number of features that may be useful for 2D grid-based/roguelike game development, including algorithms for calculating FOV, pathfinding, generating maps, drawing lines, generating random numbers, creating messaging system architectures, and much more!  See feature list below for details.
 
 ## Documentation
-Instructions for getting started with GoRogue, articles detailing its features, and the API documentation can be found on the [documentation website](https://chris3606.github.io/GoRogue/index.html). In addition to being on the website, the API documentation show up in Visual Studio as normal.  GoRogue also has a subreddit at [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/) and a [discord server](https://discord.gg/fxj5kPq).
-
-The GitHub wiki also contains articles, but these are outdated and are currently in the process of being moved to the above documetation website.
+You can find getting started instructions, tutorial articles, and the API documentation on the [documentation website](http://www.roguelib.com). Additionally, the API documentation will show up in your IDE as you would expect.  GoRogue also has a subreddit at [r/GoRogueLib](https://www.reddit.com/r/GoRogueLib/) and a [discord server](https://discord.gg/fxj5kPq).
 
 ## Feature List
-### .NET Standard 2.0 Compatibility
-   - Library will function with any framework that supports .NET Standard 2.0, which includes both .NET Framework and .NET Core.
-   
-### Unobtrusive Algorithms
-- FOV, Lighting/SenseMapping, and Map Generation algorithms operate on an abstract interface (IMapView), thus allowing the features to be used without imposing limitations and how/where data is actually stored within the game.
-- Convenient default implementations of the IMapView interface is provided, to allow for ease of use in straightforward cases or during prototyping:
-   - ArrayMap implements IMapView and stores data in a 2D array for cases when a simple/straightforward IMapView implementation is needed.
-   - Classes that allow supplying "translation" functions as lambdas or delegates for simple cases are also provided.
-  
-### Coordinate/Grid System
-- Coord class provides a way to store 2D grid (integer) coordinates:
-   - Pooling is used to allow extensive use without significant allocation and memory overhead.
-   - Numerous operators are provided to allow for seamless addition, subtraction, multiplication, and division of Coord instances, as well as addition/subtraction/multiplication/division by constants.
-    - Static flag provided for whether Y-values decrease or increase in the downward direction, so that such functions can be used regardless of what coordinate scheme is being used.
-   - Functions are provided to perform utility functions such as determining the bearing of a line, as well as retrieval of all points on a given line (via Brensham's), or cardinal line.
-   - Also provides methods that implement other mathmematical grid functions, including midpoint formula, and translation of 2D coordinates to a 1D array index and back.
-   - Provides hashing function that has a very low collision rate, particularly when considering coordiates between (-3, -3) and (255, 255).
-- Direction class pairs with Coord to provide convenient ways to model movement to adjacent grid coordinates, as well as iterations through adjacent "neighbors" of a given location in both 4-way and 8-way movement schemes:
-   - Directions can be added to Coord instances to get the Coord directly adjacent to the original, in the direction specified.
-   - Methods that generation IEnumerables of neighboring directions in various orders are provided.
-   - Functions are given to determine direction most closely matching a line between two points.
-- Distance class models 2D distance calculations in an abstract way, allowing algorithms to function no matter which distance calculation is being used:
-   - Manhattan, Chebyshev, and Euclician distance calculations are implemented.
-- Radius type models the radius shapes assumed by above distance calculations:
-   - Explicitly castable to Distance types and back.
-   - RadiusAreaProvider class allows the easy retrieval of all coordinates within a defined radius (and optionally a bounding box).
-- Rectangle class represents a rectangular area on a 2D grid, and provides useful operations for such areas:
-- ISpatialMap implementations provide storing of object(s) at a given location in an efficient way:
-   - Provides average-case constant time lookup of object(s) at a location.
-   - Retrieval of all objects in the SpatialMap in linear time (equivalent efficiency to vector).
-   - Less memory overhead than storing objects in 2D array.
+**Nullable Reference Types Support:** GoRogue is fully annotated to support code that enables the [nullable reference type](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references) feature introduced in C# 8.  It doesn't affect or break code that doesn't enable that feature, but for projects using it provides more compile-time safety, allowing you to build working, reliable code more quickly.
 
-### Random Number Generation
-- Provides easy to use random number generators, that wrap around the C# default RNGs, as well as create custom distributions:
-   - DotNetRandom provides a wrapper around the default C# RNG that implements the IRandom interface.
-   - GaussianRandom implements an RNG that returns numbers on a bell curve, with the capability to specify min and max values.
-   - IRandom implementations intended for testing are provided, to allow for easier unit testing/debugging of functions that use RNGs:
-      - KnownSeriesRandom returns a specified series of numbers (looping through).
-      - MaxRandom always returns the max parameter specified to the Next function.
-      - MinRandom always returns the min parameter specified to the Next function.
-- SingletonRandom provides a static field that can be used to conveniently set the default RNG that functions needing RNGs will use if a particular one is not specified.
+**Convenient Primitive Types:** GoRogue is based on the `SadRogue.Primitives` library, which provides comprehensive, easy-to-use, and flexible primitive types for coordinates, rectangles, grids, and more.  As well, `SadRogue.Primitives` provides integration packages for other common libraries that define those types (MonoGame, SFML, etc) that allow easy integration with those library's equivalent types.  It also provides functionality to easily operate on and work with grids, which includes operations such as determining locations in a radius, moving a position around on a grid, and calculating distance.
 
-### Dice Notation Parser
-- Provides a system for parsing expressions in Dice notation format, and rolling those dice using the library's provided number generators.
-- Expression objects are provided to avoid expensive parsing operations every time a roll is completed.
+**Unobtrusive Algorithms:** GoRogue algorithms are based upon a simple abstraction for input/output data, so that GoRogue can easily integrate into many different existing systems/libraries without requiring duplication of data or merging of data structures.
 
-### Map Generation
-- Map generation algorithms operate on MapView<bool> types, to avoid intrusiveness.
-- Algorithms are modularized, as to provide maximum reuse:
-   - Generation and connectivity algorithms are seperated to provide maximum flexibility.
-   - Different common components of connectivity algorithms are also separated.
-   - In all these cases, reasonable defaults are provided to prevent the addition of unnecessary complexity to simple/prototyping cases.
-- Various methods of generation are provided:
-   - RectangleMapGenerator generates a simple rectangle, with walls along the edges, and floor elsewhere.
-   - RandomRoomsGenerator generates a dungeon with multiple rectangular, connected rooms. Number of rooms, as well as size ranges for rooms and maximum number of tries to place a room, is parameterized.
-   - CellularAutomataGenerator generates a dungeon using the cellular automata smoothing process detailed [here](http://www.roguebasin.com/index.php?title=Cellular_Automata_Method_for_Generating_Random_Cave-Like_Levels).
-- MapArea and MapAreaFinder provide convenient ways of representing arbitrarily-shaped sections of the map, and locating all such distinct regions.
+**Flexible Component System:** GoRogue implements a performant, type-safe component "container" structure that allows you to easily attach instances of arbitrary classes to objects as components, and retrieve them by type or tag.
 
-### FOV/Lighting/Sense Mapping
-- LOS class offers fairly standard 2D FOV using shadowcasting:
-   - FOV can be calculated in any of several shapes (modeled by Radius class instances).
-   - Length of the radius can be specified, or infinite.
-   - Resulting FOV is a lightmap -- an array of doubles in range \[0.0, 1.0], such that the value decreases from 1.0 proportionally as distance from the source increases.
-   - Provides convenience fields to access only those (new) cells in/out of FOV.
-- SenseMap/SenseSource pair to offer much more advanced FOV/lighting features:
-   - RIPPLE algorithm can be used to model light spreading around corners, which allows locations to only partially block spread of light.
-   - Sources may use either the RIPPLE algorithm variations, or shadowcasting, to model their spreading.
-   - Tracks and calculates multiple, mobile light sources, in a multi-threaded manner, and consolidates them into a single light map.
-   - SenseMap can also be used to model other sensory perceptions.
-   
-### Pathfinding
-   - AStar pathfinding allows quick and efficient (shortest) paths between two points on a map.
-      - Uses same MapView system as other algorithms to provide a convenient interface.
-      
-### Line Drawing
-   - Provides functions implementing common-line drawing algorithms.
-      - Bresenham's implementation
-      - DDA (Digital Differential Analyzer) implementation that produces very similar results to Bresenham's, but often faster.
-      - Orthogonal line-drawing algorithm that creates steps that follow only cardinal directions.
+**Dice Notation Parser:** GoRogue implements a dice notation parser that can take complex dice expresssions, simulate them using RNGs, and return the results.
 
-### Robust Effects System
-- Provides a system of representing both instant duration, and over-time "effects", with arbitrary duration units.
-- EffectTrigger can be used to trigger effects at certain arbitrary points, automatically reducing their duration:
-   - Effects can be canceled and have infinite duration.
-   - Effects are automatically removed from an EffectTrigger when their duration expires.
+**Factory Framework:** GoRogue provides an object-oriented framework for implementing the [factory method pattern](https://en.wikipedia.org/wiki/Factory_method_pattern) by defining "blueprints" and calling upon them to instantiate an object by their name.
 
-### Utility
-- Provides math functions to handle properly wrapping array/menu indices, radian-degree conversions, and wrapping to nearest multiples.
-- Extension method provided for List that implements a Fisher-Yates shuffle.
-- Extension methods for IList are provided to select either a random index or random value from an IList.
-- Extension method provided for IEnumerable to convert the IEnumerable to a List.
-- Provides basic integer-based DisjointSet data structure, that implements path compression.
+**Concrete System for Map/Object Representation:** In addition to providing generic core algorithms, GoRogue also provides a concrete "GameFramework" system that provides a ready-to-use way to represent a map and objects on it, and integrates many core GoRogue features such as FOV, Pathing, and the component system such that they work out of the box.
+
+**Versatile Map Generation Framework:** GoRogue provides quick ways to get started with map generation that allow you to generate maps in common ways.  It includes each step as a distinct "step" that is usable in custom map generation as well.  It also provides a class framework for map generation that makes it easy to design debuggable, distinct custom map generation steps and apply them in sequence to generate a final map.
+
+**Message Bus System:** GoRogue provides a simple, type-safe system for creating a "message-bus" architecture wherein messages can be sent across a message bus, and various systems can subscribe and respond to messages of the appropriate type.
+
+**Pathfinding:** GoRogue provides a number of pathfinding algorithms.  These include an extremely performant A* pathfinding algorithm, and an implementation of "goal maps", also known as [dijkstra maps](http://www.roguebasin.com/index.php?title=The_Incredible_Power_of_Dijkstra_Maps).  GoRogue also provides a "flee map" implementation.
+
+**Random Number Generation:** GoRogue builds off of the [Troschuetz.Random](https://gitlab.com/pomma89/troschuetz-random) library, which provides generators that use various methods for conventiently generating random numbers and sequences, as well as the capability to serialize those generator.  GoRogue adds some facilities for easily providing a custom generator to use for GoRogue functions that require one, as well as some custom number generators that may be useful in debugging/unit testing.
+
+**Field-of-View:** GoRogue provides a versatile implementation of [recursive shadowcasting](http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting) for calculating field-of-view that supports both distance-restricted and angle-restricted cones.
+
+**Sense Maps:** In addition to its field-of-view algorithms, GoRogue provides a framework for primitively modeling the spread of sound, light, heat, etc. using various algorithms.
+
+**Useful Data Structures:** GoRogue provides a number of data structures that are commonly created during roguelike development.  These include "spatial maps", which are an efficient way to store and layer objects positioned on a grid, and a [disjoint set](https://en.wikipedia.org/wiki/Disjoint-set_data_structure) structure that implements path compression.
+
+**Effects System:**  GoRogue provides a robust, type-safe effects system that can be used to model "effects", with or without a duration, in a turn-based game system.  It provides methods of dealing with effects with duration (in arbitrary units), instant effects, and infinite effects.  It also provides a structure to group and automatically trigger effects that also supports effect cancellation.
+
+**Line Algorithms:**  GoRogue currently provides implementations of [Bresenham's](https://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm) line algorithm, as well as a few other algorithms for determining lines on a grid.  These will be moved to `TheSadRogue.Primitives` before GoRogue 3.0 is out of alpha.
+
+**Math Utility:** GoRogue adds to the mathematical utility functions provided by `TheSadRogue.Primitives` with a number of useful methods to wrap numbers around array indices, round to the nearest multiple of a number, and approximate certain trigonometric functions.  These may be moved to `TheSadRogue.Primitives` before GoRogue 3.0 is out of alpha.
+
+**Utility Functions:** GoRogue adds many miscellaneous utility functions as extension methods to various classes.  These include methods to select random items/indices out of lists with GoRogue's random number generation framework, methods to create a string representing the elements of lists and other enumerable objects sensibly, methods to shuffle the items in a list, and more!
+
+**Serialization (WIP):** Support for serialization in GoRogue 3 is still a work-in-progress.  Currently, GoRogue plans to provide serialization via the [data-contract serialization](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.datacontractserializer?view=net-5.0) facilities built into C#.  A `GoRogue.JSON` package is also planned that will allow the serialization facilities to function cleanly with [Newtonsoft.JSON](https://www.newtonsoft.com/json).
 
 ## Licensing
 ### GoRogue
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
 ### Other Licenses
-See links to licenses in the credits for respective libraries.
+Licenses for other projects which GoRogue depends on or from which inspiration was taken are listed in the credits section.
 
 ## Credits
+GoRogue depends on some other .NET Standard libraries for some of its functionality, and additionally takes some inspiration from other great roguelike/2D game related projects.  Those projects and their licenses are listed below.
+
+### TheSadRogue.Primitives
+This library provides the foundational classes and algorithms for working with 2D grids that GoRogue uses in its core algorithms.  Many of its features were originally part of GoRogue v2.  This project is also licensed under MIT, and is maintained by myself and Thraka (creator of SadConsole):
+- [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives)
+- [TheSadRogue.Primitives License](https://github.com/thesadrogue/TheSadRogue.Primitives/blob/master/LICENSE)
+
+### Troschuetz.Random
+GoRogue depends on this library for the foundation of its RNG functionality.  This project is also licensed under MIT:
+- [Troschuetz.Random](https://gitlab.com/pomma89/troschuetz-random/-/tree/master)
+- [Troschuetz.Random License](https://gitlab.com/pomma89/troschuetz-random/-/blob/master/LICENSE)
+
+### Optimized Priority Queue
+GoRogue depends on this library to provide the queue it uses in its pathfinding algorithms.  This project is also licensed under MIT:
+- [OptimizedPriorityQueue](https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp)
+- [OptimizedPriorityQueue License](https://github.com/BlueRaja/High-Speed-Priority-Queue-for-C-Sharp/blob/master/LICENSE.txt)
+
+### SquidLib
+This Java roguelike library is another big inspiration for much of the functionality of GoRogue.  A similar RIPPLE algorithm is used in `SenseMap`, and the concept of "spatial map" was originally taken from SquidLib's implementations.  No source code from SquidLib is directly used, and no project in GoRogue depends on SquidLib or uses SquidLib binaries.
+- [SquidLib](https://github.com/SquidPony/SquidLib)
+- [SquidLib License](https://github.com/SquidPony/SquidLib/blob/master/LICENSE.txt)
+
 ### Dice Notation .NET
-General inspiration for the architecture of the GoRogue.DiceNotation namespace was taken from the Dice Notatation .NET library.  This project is also licensed under MIT:
-- [Dice Notation .NET](https://dicenotation.codeplex.com/SourceControl/latest)
-- [Dice Notation .NET License](https://dicenotation.codeplex.com/license)
+General inspiration for the functionality of the `GoRogue.DiceNotation` namespace was taken from the Dice Notatation .NET library.  This project is also licensed under MIT:
+- [Dice Notation .NET](https://github.com/eropple/DiceNotation)
+- [Dice Notation .NET License](https://github.com/eropple/DiceNotation/blob/develop/LICENSE.txt)
+
 ### RogueSharp
-General inspiration for some algorithms available in the GoRogue.MapGeneration namespace were taken from the C# library RogueSharp.  This project is also licensed under MIT:
+General inspiration for some algorithms available in the `GoRogue.MapGeneration` namespace were taken from the C# library RogueSharp.  This project is also licensed under MIT:
 - [RogueSharp](https://bitbucket.org/FaronBracy/roguesharp)
 - [RogueSharp License](https://bitbucket.org/FaronBracy/roguesharp/src/master/LICENSE.txt?at=master)
 ### Doryen Library (libtcod)
-This classic roguelike toolkit library was a significant general inspiration for GoRogue.
-- [Libtcod](https://bitbucket.org/libtcod/libtcod)
-- [Libtcod License](https://bitbucket.org/libtcod/libtcod/src/default/LIBTCOD-LICENSE.txt?at=default)
-### SquidLib
-This Java roguelike library is another big inspiration for much of the functionality of GoRogue.  A similar RIPPLE algorithm is used in SenseMap/LOS. As well, inspiration for the way Coord and SpatialMap function is taken from SquidLib's implementations.  No source code from SquidLib is directly used, and no project in GoRogue depends on SquidLib or uses SquidLib binaries.
-- [SquidLib](https://github.com/SquidPony/SquidLib)
-- [SquidLib License](https://github.com/SquidPony/SquidLib/blob/master/LICENSE.txt)
+This classic roguelike toolkit library gave general inspiration for a number of GoRogue's features.
+- [Libtcod](https://github.com/libtcod/libtcod)
+- [Libtcod License](https://github.com/libtcod/libtcod/blob/develop/LICENSE.txt)
+

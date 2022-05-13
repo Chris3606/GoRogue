@@ -5,17 +5,19 @@
         {
           "src": "../",
           "files": [
-            "GoRogue/**.csproj"
+            "GoRogue/bin/Debug/net6.0/GoRogue.dll"
           ],
 		  "exclude": [
-            "**/bin/**",
             "**/obj/**"
           ]
         }
       ],
       "dest": "api",
       "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "disableDefaultFilter": false,
+	  "properties": {
+		  "TargetFramework": "net6"
+	  }
     }
   ],
   "build": {
@@ -64,6 +66,10 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+	"xref": [
+      "https://thesadrogue.github.io/TheSadRogue.Primitives/xrefmap.yml"
+    ],
+	"xrefService": [ "https://xref.docs.microsoft.com/query?uid={uid}" ],
   }
 }
