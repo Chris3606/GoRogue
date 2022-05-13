@@ -41,7 +41,7 @@ namespace GoRogue.UnitTests.Serialization
             new ItemStepPair<string>("MyItem2", "MyStep2"),
             // Simple classes which meet the constraints and have no expressive versions
             // IDGenerator
-            new IDGenerator(10, false),
+            new IDGenerator(10),
             // Actual serialized types
             // ComponentCollection
             new ComponentCollectionSerialized
