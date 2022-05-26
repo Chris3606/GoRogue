@@ -1,12 +1,21 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System;
+using System.Collections.Generic;
+using BenchmarkDotNet.Attributes;
 using GoRogue.FOV;
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests
 {
+    public enum PointHashAlgorithms
+    {
+        Default,
+        KnownSizeHasher
+    };
+
     public class FOVAlgorithms
     {
         [UsedImplicitly]
@@ -20,6 +29,10 @@ namespace GoRogue.PerformanceTests
         [UsedImplicitly]
         [Params(10, 20, 30)]
         public int FOVRadius;
+
+        [UsedImplicitly]
+        [ParamsAllValues]
+        public PointHashAlgorithms PointComparer;
 
         [UsedImplicitly]
         [Params(Radius.Types.Diamond, Radius.Types.Square, Radius.Types.Circle)]
@@ -42,8 +55,16 @@ namespace GoRogue.PerformanceTests
             // Extract wall-floor map which we can use as transparency view
             var transparencyView = gen.Context.GetFirst<IGridView<bool>>("WallFloor");
 
+            // Create appropriate point hashing algorithm
+            var pointHasher = PointComparer switch
+            {
+                PointHashAlgorithms.Default => null,
+                PointHashAlgorithms.KnownSizeHasher => new KnownSizeHasher(transparencyView.Width),
+                _ => throw new Exception("Unsupported hashing algorithm.")
+            };
+
             // Create FOV structure to use
-            _fov = new RecursiveShadowcastingFOV(transparencyView);
+            _fov = new RecursiveShadowcastingFOV(transparencyView, pointHasher);
         }
 
         [Benchmark]

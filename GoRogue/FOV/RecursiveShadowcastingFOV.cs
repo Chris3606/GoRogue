@@ -24,11 +24,14 @@ namespace GoRogue.FOV
         /// non-blocking (transparent) to line of sight, while false values are considered
         /// to be blocking.
         /// </param>
-        public RecursiveShadowcastingFOV(IGridView<bool> transparencyView)
+        /// <param name="hasher">The hashing algorithm to use for points in hash sets.  Defaults to the default hash algorithm for Points.</param>
+        public RecursiveShadowcastingFOV(IGridView<bool> transparencyView, IEqualityComparer<Point>? hasher = null)
             : base(transparencyView, new ArrayView<double>(transparencyView.Width, transparencyView.Height))
         {
-            _currentFOV = new HashSet<Point>();
-            _previousFOV = new HashSet<Point>();
+            hasher ??= EqualityComparer<Point>.Default;
+            
+            _currentFOV = new HashSet<Point>(hasher);
+            _previousFOV = new HashSet<Point>(hasher);
         }
 
         /// <inheritdoc />
@@ -107,8 +110,8 @@ namespace GoRogue.FOV
                 ResultView.Fill(0);
 
             // Cycle current and previous FOVs
-            _previousFOV = _currentFOV;
-            _currentFOV = new HashSet<Point>();
+            (_previousFOV, _currentFOV) = (_currentFOV, _previousFOV);
+            _currentFOV.Clear();
         }
 
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
