@@ -37,7 +37,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataEnumerable(nameof(Radii))]
         public void OpenMapEqualToRadius(Radius shape)
         {
-            var los = new RecursiveShadowcastingFOV(_losMap);
+            var los = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
             los.Calculate(_center.X, _center.Y, _radius, shape);
 
             var radArea = shape.PositionsInRadius(_center, _radius).ToHashSet();
@@ -51,7 +51,7 @@ namespace GoRogue.UnitTests.FOV
         public void VisibilityStoppedByWalls(Radius shape)
         {
             // FOV over open map
-            var fov = new RecursiveShadowcastingFOV(_losMapDoubleThickWalls);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMapDoubleThickWalls);
 
             // Calculate LOS with infinite radius
             fov.Calculate(_center, double.MaxValue, shape);
@@ -67,7 +67,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataEnumerable(nameof(Radii))]
         public void BooleanOutput(Radius shape)
         {
-            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
             fov.Calculate(_center, _radius, shape);
 
             _output.WriteLine("FOV for reference:");
@@ -85,7 +85,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataEnumerable(nameof(Radii))]
         public void CurrentHash(Radius shape)
         {
-            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
 
             fov.Calculate(_center, _radius, shape);
 
@@ -100,7 +100,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataEnumerable(nameof(Radii))]
         public void NewlySeenUnseen(Radius shape)
         {
-            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
 
             fov.Calculate(_center, _radius, shape);
             var prevFov = new HashSet<Point>(fov.CurrentFOV);
@@ -120,7 +120,7 @@ namespace GoRogue.UnitTests.FOV
         [Fact]
         public void AccessibleBeforeCalculate()
         {
-            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
             foreach (var pos in fov.DoubleResultView.Positions())
                 Assert.Equal(0.0, fov.DoubleResultView[pos]);
         }
@@ -129,7 +129,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataEnumerable(nameof(Radii))]
         public void MultipleFOVDistanceOverlap(Radius shape)
         {
-            var fov = new RecursiveShadowcastingFOV(_losMap);
+            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
             var decay = 1.0 / (_radius + 1);
             Distance dist = shape;
 

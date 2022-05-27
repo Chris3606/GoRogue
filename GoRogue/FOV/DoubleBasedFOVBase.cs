@@ -16,9 +16,6 @@ namespace GoRogue.FOV
     /// generally tend to take up more memory and may take more time to perform a call to the Calculate and CalculateAppend functions, however they will generally
     /// be able to retrieve values from <see cref="IReadOnlyFOV.DoubleResultView"/> more quickly.  Retrieving values from <see cref="IReadOnlyFOV.BooleanResultView"/>
     /// can be slightly slower than from DoubleResultView, since the boolean values are derived from the double values.
-    ///
-    /// If you have the same algorithm implemented based both on booleans and on doubles, the double version is usually a reasonable default, until/unless you have
-    /// a reason to the contrary.
     /// </remarks>
     [PublicAPI]
     public abstract class DoubleBasedFOVBase : FOVBase

@@ -40,7 +40,7 @@ namespace GoRogue.UnitTests.FOV
         public void FOVDoubleAndBooleanEquivalent(Point position, int radius, Radius radiusType, IGridView<bool> losMap)
         {
             // Create double and boolean variants of recursive shadowcasting with the same source map
-            var doubleBased = new RecursiveShadowcastingFOV(losMap);
+            var doubleBased = new RecursiveShadowcastingDoubleBasedFOV(losMap);
             var boolBased = new RecursiveShadowcastingFOV(losMap);
 
             // Calculate both maps from the center point

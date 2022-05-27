@@ -14,9 +14,6 @@ namespace GoRogue.FOV
     /// a function of the calculation's radius/distance.  FOV implementations using this method of determining the DoubleResultView values from the BooleanResultView values
     /// can typically use less memory and perform their Calculate function calls faster; but accessing values from DoubleResultView will be slower, especially when multiple
     /// CalculateAppend calls are used before values are retrieved.
-    ///
-    /// This tradeoff can be advantageous if you really only intend to access <see cref="IReadOnlyFOV.BooleanResultView"/> and don't have much use for the double values, and in
-    /// other situations which will depend on the size of your maps and FOV radii.
     /// </remarks>
     [PublicAPI]
     public class FOVBooleanToDoubleTranslationView : GridViewBase<double>
@@ -34,33 +31,32 @@ namespace GoRogue.FOV
             {
                 if (!_parent.BooleanResultView[pos]) return 0.0;
 
-                if (_parent.CalculationsPerformed.Count == 1)
+                int calculationsPerformedCount = _parent.CalculationsPerformed.Count;
+                if (calculationsPerformedCount == 1)
                 {
                     var calc = _parent.CalculationsPerformed[0];
                     var decay = 1.0 / (calc.Radius + 1);
                     return 1.0 - decay * calc.DistanceCalc.Calculate(calc.Origin, pos);
 
                 }
-                else
-                {
-                    var maxValue = 0.0;
-                    for (int i = 0; i < _parent.CalculationsPerformed.Count; i++)
-                    {
-                        var calc = _parent.CalculationsPerformed[i];
-                        var decay = 1.0 / (calc.Radius + 1);
-                        var bright = 1.0 - decay * calc.DistanceCalc.Calculate(calc.Origin, pos);
-                        if (bright > maxValue) maxValue = bright;
-                    }
 
-                    return maxValue;
+                var maxValue = 0.0;
+                for (int i = 0; i < calculationsPerformedCount; i++)
+                {
+                    var calc = _parent.CalculationsPerformed[i];
+                    var decay = 1.0 / (calc.Radius + 1);
+                    var bright = 1.0 - decay * calc.DistanceCalc.Calculate(calc.Origin, pos);
+                    if (bright > maxValue) maxValue = bright;
                 }
+
+                return maxValue;
             }
         }
 
         private IReadOnlyFOV _parent;
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
         /// <param name="parent">The <see cref="IReadOnlyFOV"/> instance for which this grid view is producing double values.</param>
         public FOVBooleanToDoubleTranslationView(IReadOnlyFOV parent)
@@ -80,15 +76,21 @@ namespace GoRogue.FOV
     /// instead.  If neither of those use cases fits your situation, feel free to use <see cref="FOVBase"/> or <see cref="IFOV"/> directly.
     ///
     /// Although it can vary by implementation, if all other things are equal, classes that use this implementation as opposed to <see cref="DoubleBasedFOVBase"/>
-    /// generally tend to take up less memory and may take less time to perform a call to the Calculate and CalculateAppend functions, however they will generally
+    /// generally tend to take up less memory and may take less time to perform a call to the Calculate and CalculateAppend functions, however they may
     /// take more time to retrieve values from <see cref="IReadOnlyFOV.DoubleResultView"/>.  Retrieving values from <see cref="IReadOnlyFOV.BooleanResultView"/>
     /// is generally faster than from DoubleResultView, since the double values are derived from the boolean values.
+    ///
+    /// Since typical use cases involve very few FOVs per object, this tradeoff represents a good default, especially since on larger map sizes, the performance _increase_
+    /// on the Calculate call tends to far outweigh the performance _decrease_ of retrieving values from DoubleResultView, assuming the double version involves clearing
+    /// an array of doubles the size of the map on each reset and that CalculateAppend is not extensively used.
     ///
     /// These tradeoffs can be advantageous if, for example, one or more of the following apply:
     ///     - You really only intend to access <see cref="IReadOnlyFOV.BooleanResultView"/> and don't have much use for the double values
     ///     - You have a very large map and thus storing an array of double values and clearing it before each call to Calculate (like <see cref="DoubleBasedFOVBase"/>
     ///       does) would carry a significant performance penalty
-    ///     - You intend to cache the result of DoubleResultView and use a cached version.
+    ///     - You don't use CalculateAppend much
+    ///
+    /// Library implementations typically provide versions of any given algorithm defined via both this class and <see cref="DoubleBasedFOVBase"/> where possible.
     /// </remarks>
     [PublicAPI]
     public abstract class BooleanBasedFOVBase : FOVBase

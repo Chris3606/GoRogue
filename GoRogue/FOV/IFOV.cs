@@ -93,7 +93,7 @@ namespace GoRogue.FOV
     /// Interface representing the capability to calculate a grid-based field of view for a map.
     /// </summary>
     /// <remarks>
-    /// If you want a concrete implementation of FOV, see the <see cref="RecursiveShadowcastingFOV"/> class.  If you're implementing your
+    /// If you want a concrete implementation of FOV, see the <see cref="RecursiveShadowcastingDoubleBasedFOV"/> class.  If you're implementing your
     /// own FOV system, you may want to consider inheriting from <see cref="FOVBase"/> if possible, as it implements
     /// much of the boilerplate code involved in implementing this interface.
     ///
