@@ -10,7 +10,7 @@ using ShaiRandom.Generators;
 using Xunit;
 using XUnit.ValueTuples;
 
-namespace GoRogue.UnitTests
+namespace GoRogue.UnitTests.FOV
 {
     public class FOVSenseMapEquivalenceTests
     {

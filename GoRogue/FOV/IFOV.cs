@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
 namespace GoRogue.FOV
 {
     /// <summary>
-    /// Arguments for event fired when FOV is recalculated.
+    /// Represents a set of parameters that were passed to a call to Calculate.
     /// </summary>
     [PublicAPI]
-    public class FOVRecalculatedEventArgs : EventArgs
+    public readonly struct FOVCalculateParameters
     {
         /// <summary>
         /// Position of the FOV origin point.
@@ -39,7 +40,7 @@ namespace GoRogue.FOV
         public readonly double Span;
 
         /// <summary>
-        /// Create and configure the event argument object.
+        /// Constructor.
         /// </summary>
         /// <param name="origin">Position of the FOV origin point.</param>
         /// <param name="radius">The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.</param>
@@ -55,14 +56,36 @@ namespace GoRogue.FOV
         /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
         /// <paramref name="span"/>> / 2 degrees are included on either side of the span line.
         /// </param>
-        public FOVRecalculatedEventArgs(Point origin, double radius, Distance distanceCalc,
-                                        double angle = 0.0, double span = 360.0)
+        public FOVCalculateParameters(Point origin, double radius, Distance distanceCalc, double angle = 0.0, double span = 360.0)
         {
             Origin = origin;
             Radius = radius;
             DistanceCalc = distanceCalc;
             Angle = angle;
             Span = span;
+        }
+
+        // TODO: Implicit conversions to tuple
+    }
+
+    /// <summary>
+    /// Arguments for event fired when FOV is recalculated.
+    /// </summary>
+    [PublicAPI]
+    public class FOVRecalculatedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The parameters (implicit and explicit) given to the Calculate call which triggered the event.
+        /// </summary>
+        public readonly FOVCalculateParameters CalculateParameters;
+
+        /// <summary>
+        /// Create and configure the event argument object.
+        /// </summary>
+        /// <param name="calculateParameters">The parameters given to the calculate function (explicit and implicit).</param>
+        public FOVRecalculatedEventArgs(FOVCalculateParameters calculateParameters)
+        {
+            CalculateParameters = calculateParameters;
         }
     }
 

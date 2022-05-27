@@ -9,7 +9,7 @@ using Xunit;
 using Xunit.Abstractions;
 using XUnit.ValueTuples;
 
-namespace GoRogue.UnitTests
+namespace GoRogue.UnitTests.FOV
 {
     public class FOVTests
     {

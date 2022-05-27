@@ -6,15 +6,21 @@ using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using SadRogue.Primitives.PointHashers;
+//using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests
 {
-    public enum PointHashAlgorithms
+    public enum PointHashAlgorithm
     {
         Default,
-        KnownSizeHasher
+        //KnownSizeHasher
     };
+
+    public enum FOVAlgorithmType
+    {
+        RSDefault,
+        RSBoolBased
+    }
 
     public class FOVAlgorithms
     {
@@ -32,7 +38,11 @@ namespace GoRogue.PerformanceTests
 
         [UsedImplicitly]
         [ParamsAllValues]
-        public PointHashAlgorithms PointComparer;
+        public PointHashAlgorithm PointComparer;
+
+        [UsedImplicitly]
+        [ParamsAllValues]
+        public FOVAlgorithmType FOVAlgorithm;
 
         [UsedImplicitly]
         [Params(Radius.Types.Diamond, Radius.Types.Square, Radius.Types.Circle)]
@@ -42,8 +52,20 @@ namespace GoRogue.PerformanceTests
 
         private IFOV _fov = null!;
 
-        [GlobalSetup]
-        public void GlobalSetup()
+        [GlobalSetup(Target = nameof(CalculateFOV))]
+        public void GlobalSetupCalculate()
+        {
+            CreateFOVAlgorithm();
+        }
+
+        [GlobalSetup(Target = nameof(SumDoubleResults))]
+        public void GlobalSetupResultInspection()
+        {
+            CreateFOVAlgorithm();
+            _fov.Calculate(_center, FOVRadius, (Radius)FOVShape);
+        }
+
+        private void CreateFOVAlgorithm()
         {
             // Center FOV in middle of open map
             _center = (MapWidth / 2, MapHeight / 2);
@@ -56,21 +78,40 @@ namespace GoRogue.PerformanceTests
             var transparencyView = gen.Context.GetFirst<IGridView<bool>>("WallFloor");
 
             // Create appropriate point hashing algorithm
-            var pointHasher = PointComparer switch
+            IEqualityComparer<Point>? pointHasher = PointComparer switch
             {
-                PointHashAlgorithms.Default => null,
-                PointHashAlgorithms.KnownSizeHasher => new KnownSizeHasher(transparencyView.Width),
+                PointHashAlgorithm.Default => null,
+                //PointHashAlgorithm.KnownSizeHasher => new KnownSizeHasher(transparencyView.Width),
                 _ => throw new Exception("Unsupported hashing algorithm.")
             };
 
             // Create FOV structure to use
-            _fov = new RecursiveShadowcastingFOV(transparencyView, pointHasher);
+            _fov = FOVAlgorithm switch
+            {
+                FOVAlgorithmType.RSDefault => new RecursiveShadowcastingFOV(transparencyView, pointHasher),
+                FOVAlgorithmType.RSBoolBased => new RecursiveShadowcastingBooleanBasedFOV(
+                    transparencyView, pointHasher),
+                _ => throw new Exception("Unsupported FOV algorithm.")
+            };
         }
 
         [Benchmark]
         public void CalculateFOV()
         {
             _fov.Calculate(_center, FOVRadius, (Radius)FOVShape);
+        }
+
+        [Benchmark]
+        public double SumDoubleResults()
+        {
+            double sum = 0;
+            for (int y = 0; y < _fov.DoubleResultView.Height; y++)
+            {
+                for (int x = 0; x < _fov.DoubleResultView.Width; x++)
+                    sum += _fov.DoubleResultView[x, y];
+            }
+
+            return sum;
         }
     }
 }
