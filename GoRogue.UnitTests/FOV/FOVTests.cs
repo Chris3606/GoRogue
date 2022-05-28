@@ -33,11 +33,19 @@ namespace GoRogue.UnitTests.FOV
         // Radius shapes to test
         public static readonly Radius[] Radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i).ToArray();
 
-        [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void OpenMapEqualToRadius(Radius shape)
+        // Types of FOV to test; must have constructor with 2 params; transparencyView and pointHasher
+        public static readonly Type[] Types =
         {
-            var los = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            typeof(RecursiveShadowcastingFOV), typeof(RecursiveShadowcastingDoubleBasedFOV)
+        };
+
+        public static readonly (Radius radiusShape, Type FOVType)[] TestData = Radii.Combinate(Types).ToArray();
+
+        [Theory]
+        [MemberDataTuple(nameof(TestData))]
+        public void OpenMapEqualToRadius(Radius shape, Type fovType)
+        {
+            var los = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
             los.Calculate(_center.X, _center.Y, _radius, shape);
 
             var radArea = shape.PositionsInRadius(_center, _radius).ToHashSet();
@@ -47,11 +55,11 @@ namespace GoRogue.UnitTests.FOV
         }
 
         [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void VisibilityStoppedByWalls(Radius shape)
+        [MemberDataTuple(nameof(TestData))]
+        public void VisibilityStoppedByWalls(Radius shape, Type fovType)
         {
             // FOV over open map
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMapDoubleThickWalls);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMapDoubleThickWalls, null)!;
 
             // Calculate LOS with infinite radius
             fov.Calculate(_center, double.MaxValue, shape);
@@ -64,10 +72,10 @@ namespace GoRogue.UnitTests.FOV
         }
 
         [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void BooleanOutput(Radius shape)
+        [MemberDataTuple(nameof(TestData))]
+        public void BooleanOutput(Radius shape, Type fovType)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
             fov.Calculate(_center, _radius, shape);
 
             _output.WriteLine("FOV for reference:");
@@ -82,10 +90,10 @@ namespace GoRogue.UnitTests.FOV
         }
 
         [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void CurrentHash(Radius shape)
+        [MemberDataTuple(nameof(TestData))]
+        public void CurrentHash(Radius shape, Type fovType)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
 
             fov.Calculate(_center, _radius, shape);
 
@@ -97,10 +105,10 @@ namespace GoRogue.UnitTests.FOV
         }
 
         [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void NewlySeenUnseen(Radius shape)
+        [MemberDataTuple(nameof(TestData))]
+        public void NewlySeenUnseen(Radius shape, Type fovType)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
 
             fov.Calculate(_center, _radius, shape);
             var prevFov = new HashSet<Point>(fov.CurrentFOV);
@@ -117,19 +125,20 @@ namespace GoRogue.UnitTests.FOV
                 Assert.NotEqual(prevFov.Contains(pos), newlySeen.Contains(pos));
         }
 
-        [Fact]
-        public void AccessibleBeforeCalculate()
+        [Theory]
+        [MemberDataEnumerable(nameof(Types))]
+        public void AccessibleBeforeCalculate(Type fovType)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
             foreach (var pos in fov.DoubleResultView.Positions())
                 Assert.Equal(0.0, fov.DoubleResultView[pos]);
         }
 
         [Theory]
-        [MemberDataEnumerable(nameof(Radii))]
-        public void MultipleFOVDistanceOverlap(Radius shape)
+        [MemberDataTuple(nameof(TestData))]
+        public void MultipleFOVDistanceOverlap(Radius shape, Type fovType)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(_losMap);
+            var fov = (IFOV)Activator.CreateInstance(fovType, _losMap, null)!;
             var decay = 1.0 / (_radius + 1);
             Distance dist = shape;
 
