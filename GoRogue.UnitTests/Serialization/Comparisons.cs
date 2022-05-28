@@ -18,7 +18,7 @@ namespace GoRogue.UnitTests.Serialization
     public static class Comparisons
     {
         // Dictionary of object types mapping them to custom methods to use in order to determine equality.
-        private static readonly Dictionary<Type, Func<object, object, bool>> _equalityMethods =
+        private static readonly Dictionary<Type, Func<object, object, bool>> s_equalityMethods =
             new Dictionary<Type, Func<object, object, bool>>()
             {
                 { typeof(ComponentCollection), CompareComponentCollections },
@@ -43,7 +43,7 @@ namespace GoRogue.UnitTests.Serialization
             };
 
         public static Func<object, object, bool> GetComparisonFunc(object obj)
-            => _equalityMethods.GetValueOrDefault(obj.GetType(), (o1, o2) => o1.Equals(o2));
+            => s_equalityMethods.GetValueOrDefault(obj.GetType(), (o1, o2) => o1.Equals(o2));
 
 
         private static bool CompareDiceExpressions(object o1, object o2)
@@ -144,7 +144,7 @@ namespace GoRogue.UnitTests.Serialization
 
 
             return ElementWiseEquality(d1.RoomsAndDoors.Cast<object>(), d2.RoomsAndDoors.Cast<object>(),
-                _equalityMethods[typeof(RoomDoorsSerialized)]);
+                s_equalityMethods[typeof(RoomDoorsSerialized)]);
         }
 
         private static bool CompareItemList(object o1, object o2)

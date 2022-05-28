@@ -5,69 +5,6 @@ using SadRogue.Primitives;
 namespace GoRogue.FOV
 {
     /// <summary>
-    /// Represents a set of parameters that were passed to a call to Calculate.
-    /// </summary>
-    [PublicAPI]
-    public readonly struct FOVCalculateParameters
-    {
-        /// <summary>
-        /// Position of the FOV origin point.
-        /// </summary>
-        public readonly Point Origin;
-
-        /// <summary>
-        /// The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.
-        /// </summary>
-        public readonly double Radius;
-
-        /// <summary>
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
-        /// </summary>
-        public readonly Distance DistanceCalc;
-
-        /// <summary>
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points upward, and increases move clockwise (like a compass)
-        /// </summary>
-        public readonly double Angle;
-
-        /// <summary>
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <see cref="Span"/> / 2 degrees are included on either side of the span line.
-        /// </summary>
-        public readonly double Span;
-
-        /// <summary>
-        /// Constructor.
-        /// </summary>
-        /// <param name="origin">Position of the FOV origin point.</param>
-        /// <param name="radius">The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.</param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
-        /// </param>
-        /// <param name="angle">
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points up, and increases move the cone clockwise (like a compass).
-        /// </param>
-        /// <param name="span">
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="span"/>> / 2 degrees are included on either side of the span line.
-        /// </param>
-        public FOVCalculateParameters(Point origin, double radius, Distance distanceCalc, double angle = 0.0, double span = 360.0)
-        {
-            Origin = origin;
-            Radius = radius;
-            DistanceCalc = distanceCalc;
-            Angle = angle;
-            Span = span;
-        }
-
-        // TODO: Implicit conversions to tuple
-    }
-
-    /// <summary>
     /// Arguments for event fired when FOV is recalculated.
     /// </summary>
     [PublicAPI]

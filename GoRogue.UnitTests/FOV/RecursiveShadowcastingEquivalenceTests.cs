@@ -10,8 +10,8 @@ namespace GoRogue.UnitTests.FOV
 {
     public class RecursiveShadowcastingEquivalenceTests
     {
-        private static readonly int MapSize = 50;
-        private static readonly int FOVRadius = 30;
+        private const int MapSize = 50;
+        private const int FOVRadius = 30;
 
         // Basic rectangle LOS map
         private static readonly IGridView<bool> s_losMap = MockMaps.Rectangle(MapSize, MapSize);

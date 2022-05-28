@@ -13,7 +13,7 @@ namespace GoRogue.UnitTests.Serialization
     {
         // Settings used for serialization/deserialization.  Ensures that things stored as polymorphic types (ex.
         // object in ComponentCollection) deserialize properly
-        private static readonly JsonSerializerSettings _settings =
+        private static readonly JsonSerializerSettings s_settings =
             new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
 
         #region Test Data
@@ -45,13 +45,13 @@ namespace GoRogue.UnitTests.Serialization
             Func<object, object, bool> equality = Comparisons.GetComparisonFunc(objToSerialize);
 
             // Serialize to JSON string
-            string json = JsonConvert.SerializeObject(objToSerialize, _settings);
+            string json = JsonConvert.SerializeObject(objToSerialize, s_settings);
 
             _output.WriteLine("Json:");
             _output.WriteLine(JToken.Parse(json).ToString(Formatting.Indented));
 
             // Deserialize to object
-            object? deSerialized = JsonConvert.DeserializeObject(json, objType, _settings);
+            object? deSerialized = JsonConvert.DeserializeObject(json, objType, s_settings);
             TestUtils.NotNull(deSerialized);
 
             // Make sure the deserialized object is equivalent to the one we serialized
@@ -68,7 +68,7 @@ namespace GoRogue.UnitTests.Serialization
         public void ExpectedFieldsSerialized(object objToSerialize)
         {
             // Serialize to JSON string
-            string json = JsonConvert.SerializeObject(objToSerialize, _settings);
+            string json = JsonConvert.SerializeObject(objToSerialize, s_settings);
 
             // Get fields in hash set
             var fields = JObject.Parse(json).Properties().Select(i => i.Name).ToHashSet();
@@ -88,7 +88,7 @@ namespace GoRogue.UnitTests.Serialization
         public void NonJsonObjectsSerializeToJsonArray(object objToSerialize)
         {
             // Serialize to JSON string
-            string json = JsonConvert.SerializeObject(objToSerialize, _settings);
+            string json = JsonConvert.SerializeObject(objToSerialize, s_settings);
 
             var array = JArray.Parse(json);
             Assert.NotNull(array);
