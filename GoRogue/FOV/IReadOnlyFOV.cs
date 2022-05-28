@@ -49,6 +49,12 @@ namespace GoRogue.FOV
         IEnumerable<Point> NewlyUnseen { get; }
 
         /// <summary>
+        /// A list of the parameters passed to each call to Calculate/CalculateAppend that has been performed since the last reset, in the order in which
+        /// they were called.
+        /// </summary>
+        public IReadOnlyList<FOVCalculateParameters> CalculationsPerformed { get; }
+
+        /// <summary>
         /// Returns a read-only representation of the field of view.
         /// </summary>
         /// <returns>This FOV object, as an <see cref="IReadOnlyFOV" /> instance.</returns>

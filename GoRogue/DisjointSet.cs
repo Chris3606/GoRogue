@@ -207,9 +207,9 @@ namespace GoRogue
     public class DisjointSet<T> : IReadOnlyDisjointSet<T>
         where T : notnull
     {
-        private DisjointSet _idSet;
-        private Dictionary<T, int> _indices;
-        private T[] _items;
+        private readonly DisjointSet _idSet;
+        private readonly Dictionary<T, int> _indices;
+        private readonly T[] _items;
 
         /// <inheritdoc />
         public event EventHandler<JoinedEventArgs<T>>? SetsJoined;

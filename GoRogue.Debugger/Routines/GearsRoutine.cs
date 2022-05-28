@@ -52,14 +52,14 @@ namespace GoRogue.Debugger.Routines
                 gear = Gear(corner, innerRadius, outerRadius);
                 _originalCounterClockWiseGearPositions.Add(gear);
                 _currentGearPositions.Add(gear);
-                windows = Windows(corner, 3, outerRadius - 4).ToArray();
+                // windows = Windows(corner, 3, outerRadius - 4).ToArray();
                 // _originalCounterClockWiseWindowPositions.AddRange(windows);
             }
 
             Draw();
         }
 
-        private IEnumerable<PolygonArea> Windows(Point center, int innerRadius, int outerRadius)
+        private static IEnumerable<PolygonArea> Windows(Point center, int innerRadius, int outerRadius)
         {
             var corners = new List<Point>(5);
             var start = center + (innerRadius, -innerRadius);
@@ -82,7 +82,7 @@ namespace GoRogue.Debugger.Routines
             yield return window.Rotate(270, center);
         }
 
-        private PolygonArea Gear(Point center, int innerRadius, int outerRadius)
+        private static PolygonArea Gear(Point center, int innerRadius, int outerRadius)
         {
             List<Point> corners = new List<Point>();
             for (int i = 0; i < 360; i += 15)
