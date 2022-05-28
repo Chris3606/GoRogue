@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
@@ -13,8 +12,6 @@ namespace GoRogue.Components
     /// </summary>
     [DataContract]
     [PublicAPI]
-    // Tuples do not resolve names properly; function is provided
-    [SuppressMessage("ReSharper", "CA2225")]
     public readonly struct ComponentTypeTagPair : IEquatable<ComponentTypeTagPair>, IMatchable<ComponentTypeTagPair>
     {
         /// <summary>

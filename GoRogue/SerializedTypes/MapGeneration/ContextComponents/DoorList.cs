@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.Serialization;
 using GoRogue.MapGeneration.ContextComponents;
@@ -12,7 +11,6 @@ namespace GoRogue.SerializedTypes.MapGeneration.ContextComponents
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct DoorListSerialized
     {
         /// <summary>

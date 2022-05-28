@@ -12,7 +12,6 @@ namespace GoRogue.SerializedTypes.MapGeneration.ContextComponents
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct ItemListSerialized<TItem> where TItem : notnull
     {
         /// <summary>

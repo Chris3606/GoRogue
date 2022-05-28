@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using GoRogue.DiceNotation;
 using JetBrains.Annotations;
 
@@ -10,7 +9,6 @@ namespace GoRogue.SerializedTypes.DiceNotation
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct DiceExpressionSerialized
     {
         /// <summary>

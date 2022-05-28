@@ -10,7 +10,6 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct AppendItemListsSerialized<TItem> where TItem : notnull
     {
         /// <summary>

@@ -35,7 +35,7 @@ namespace GoRogue.FOV
         /// <inheritdoc/>
         public event EventHandler? VisibilityReset;
 
-        private List<FOVCalculateParameters> _calculationsPerformed;
+        private readonly List<FOVCalculateParameters> _calculationsPerformed;
         /// <inheritdoc/>
         public IReadOnlyList<FOVCalculateParameters> CalculationsPerformed => _calculationsPerformed.AsReadOnly();
 
@@ -205,9 +205,6 @@ namespace GoRogue.FOV
             VisibilityReset?.Invoke(this, EventArgs.Empty);
         }
 
-        // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
-#pragma warning disable RECS0137
-
         // ReSharper disable once MethodOverloadWithOptionalParameter
         /// <summary>
         /// ToString overload that customizes the characters used to represent the map.
@@ -216,7 +213,6 @@ namespace GoRogue.FOV
         /// <param name="sourceValue">The character used for any location that is in FOV.</param>
         /// <returns>The string representation of FOV, using the specified characters.</returns>
         public string ToString(char normal = '-', char sourceValue = '+')
-#pragma warning restore RECS0137
         {
             string result = "";
 
