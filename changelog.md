@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Memory usage is also reduced significantly
     - Accessing values from `DoubleResultView` is typically a bit slower, but for many use cases the speed increase of `Calculate` will offset it
     - `DoubleResultView` does not perform as well as the previous implementation when there are multiple FOV calculations being appended together via `CalculateAppend`; in cases where this becomes problematic, usage of `RecursiveShadowcastingDoubleBasedFOV` is recommended
+- The `FOV.IFOV` interface's `Recalculated` event argument now contains a `FOVCalculateParameters` struct which contains all of the values that used to be on the arguments class directly
+    - `FOVRecalculatedEventArgs.Origin` => `FOVRecalculatedEventArgs.CalculateParameters.Origin`, etc
 
 ### Removed
 - `FOV.FOVBase` no longer defines a `ResultView`; this field is now defined as appropriate by its subclasses

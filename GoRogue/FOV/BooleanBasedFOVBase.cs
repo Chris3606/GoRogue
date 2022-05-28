@@ -53,7 +53,7 @@ namespace GoRogue.FOV
             }
         }
 
-        private IReadOnlyFOV _parent;
+        private readonly IReadOnlyFOV _parent;
 
         /// <summary>
         /// Constructor.

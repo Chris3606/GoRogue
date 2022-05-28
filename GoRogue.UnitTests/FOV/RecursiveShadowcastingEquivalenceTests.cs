@@ -10,28 +10,28 @@ namespace GoRogue.UnitTests.FOV
 {
     public class RecursiveShadowcastingEquivalenceTests
     {
-        public static readonly int MapSize = 50;
-        public static readonly int FOVRadius = 30;
+        private static readonly int MapSize = 50;
+        private static readonly int FOVRadius = 30;
 
         // Basic rectangle LOS map
-        private static readonly IGridView<bool> _losMap = MockMaps.Rectangle(MapSize, MapSize);
+        private static readonly IGridView<bool> s_losMap = MockMaps.Rectangle(MapSize, MapSize);
 
         // LOS map with double-thick walls
-        private static readonly IGridView<bool> _losMapDoubleThickWalls =
+        private static readonly IGridView<bool> s_losMapDoubleThickWalls =
             MockMaps.DoubleThickRectangle(MapSize, MapSize);
 
         // Radius shapes to test
-        public static readonly Radius[] Radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i).ToArray();
+        private static readonly Radius[] s_radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i).ToArray();
 
         // Center point of the map
-        public static Point Center = new Point(MapSize / 2, MapSize / 2);
+        private static readonly Point s_center = new Point(MapSize / 2, MapSize / 2);
 
         // Combinations of positions, radius values, radius types, and maps to test on
         public static (Point position, int radius, Radius radiusType, IGridView<bool> losMap)[] TestData
-            = Center.Yield()
+            = s_center.Yield()
                 .Combinate(FOVRadius.Yield())
-                .Combinate(Radii).ToArray().
-                Combinate(TestUtils.Enumerable(_losMap, _losMapDoubleThickWalls))
+                .Combinate(s_radii).ToArray().
+                Combinate(TestUtils.Enumerable(s_losMap, s_losMapDoubleThickWalls))
                 .ToArray();
 
 
