@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SadRogue.Primitives;
 using System.Linq;
 using GoRogue.Components;
 using GoRogue.DiceNotation;
@@ -16,6 +15,7 @@ using GoRogue.SerializedTypes.MapGeneration;
 using GoRogue.SerializedTypes.MapGeneration.ContextComponents;
 using GoRogue.SerializedTypes.MapGeneration.Steps.Translation;
 using GoRogue.UnitTests.Mocks;
+using SadRogue.Primitives;
 using SadRogue.Primitives.SerializedTypes;
 
 namespace GoRogue.UnitTests.Serialization

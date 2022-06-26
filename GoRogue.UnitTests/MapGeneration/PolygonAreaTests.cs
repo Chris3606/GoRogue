@@ -158,11 +158,11 @@ namespace GoRogue.UnitTests.MapGeneration
             var p5 = new Point(5, 7);
 
             var polygon = new PolygonArea(algorithm, p1, p2, p3, p4, p5);
-            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p1,p2, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p2,p3, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p3,p4, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p4,p5, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p5,p1, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p1, p2, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p2, p3, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p3, p4, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p4, p5, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.Get(p5, p1, algorithm))));
             _output.WriteLine(GetPolygonString(polygon));
         }
 
@@ -291,7 +291,7 @@ namespace GoRogue.UnitTests.MapGeneration
              *       # (6, 14)
              */
             float degrees = 45.0f;
-            Point centerOfRotation = new Point(6,14);
+            Point centerOfRotation = new Point(6, 14);
             PolygonArea prior = new PolygonArea(new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
             PolygonArea copyOfPrior = new PolygonArea(new Point(0, 0), new Point(0, 1), new Point(14, 6), centerOfRotation);
             PolygonArea post = prior.Rotate(degrees, centerOfRotation);
@@ -338,7 +338,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [Fact]
         public void TransposeTest() //around (0,0)
         {
-            var transposed = _area.Transpose(0,0);
+            var transposed = _area.Transpose(0, 0);
             _output.WriteLine("\nTransposed Region:");
             _output.WriteLine(GetPolygonString(transposed));
 
@@ -359,10 +359,10 @@ namespace GoRogue.UnitTests.MapGeneration
             _output.WriteLine("\nTranslated Region:");
             _output.WriteLine(GetPolygonString(translated));
 
-            Assert.Contains(_ne + (2,3), translated.Corners);
-            Assert.Contains(_nw + (2,3), translated.Corners);
-            Assert.Contains(_se + (2,3), translated.Corners);
-            Assert.Contains(_sw + (2,3), translated.Corners);
+            Assert.Contains(_ne + (2, 3), translated.Corners);
+            Assert.Contains(_nw + (2, 3), translated.Corners);
+            Assert.Contains(_se + (2, 3), translated.Corners);
+            Assert.Contains(_sw + (2, 3), translated.Corners);
         }
         #endregion
 

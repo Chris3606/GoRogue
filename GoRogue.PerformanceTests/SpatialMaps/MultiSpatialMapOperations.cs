@@ -20,7 +20,7 @@ namespace GoRogue.PerformanceTests.SpatialMaps
         [Params(1, 10, 50, 100)]
         public int NumEntities;
 
-        [GlobalSetup(Targets = new []{nameof(MoveTwice), nameof(TryMoveTwiceOriginal), nameof(TryMoveTwice),nameof(AddAndRemove), nameof(TryAddAndRemoveOriginal), nameof(TryAddAndRemove)})]
+        [GlobalSetup(Targets = new[] { nameof(MoveTwice), nameof(TryMoveTwiceOriginal), nameof(TryMoveTwice), nameof(AddAndRemove), nameof(TryAddAndRemoveOriginal), nameof(TryAddAndRemove) })]
         public void GlobalSetupObjectsAtMoveToLocation()
         {
             _testMap = new MultiSpatialMap<IDObject> { { _trackedObject, _initialPosition } };
@@ -34,7 +34,7 @@ namespace GoRogue.PerformanceTests.SpatialMaps
             }
         }
 
-        [GlobalSetup(Targets = new []{nameof(MoveAllTwice), nameof(MoveValidTwice), nameof(TryMoveAllTwice)})]
+        [GlobalSetup(Targets = new[] { nameof(MoveAllTwice), nameof(MoveValidTwice), nameof(TryMoveAllTwice) })]
         public void GlobalSetupNoObjectsAtMoveToLocation()
         {
             _testMap = new MultiSpatialMap<IDObject> { { _trackedObject, _initialPosition } };

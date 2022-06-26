@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
 using GoRogue.Components.ParentAware;
+using GoRogue.FOV;
 using GoRogue.Pathing;
+using GoRogue.Pooling;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using GoRogue.FOV;
-using GoRogue.Pooling;
 using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.GameFramework

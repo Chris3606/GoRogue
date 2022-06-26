@@ -49,9 +49,9 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
             SouthBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
             EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
             NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
-            OuterPoints = new MultiArea {WestBoundary, NorthBoundary, EastBoundary, SouthBoundary};
+            OuterPoints = new MultiArea { WestBoundary, NorthBoundary, EastBoundary, SouthBoundary };
             innerCreation(this);
-            Points = new MultiArea {OuterPoints, InnerPoints};
+            Points = new MultiArea { OuterPoints, InnerPoints };
         }
 
         public static RegionMock Rectangle(Rectangle r, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
@@ -59,31 +59,31 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY), innerCreation, algorithm);
 
 
-         public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
-         {
-             var negative = Direction.YIncreasesUpward ? -1 : 1;
+        public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        {
+            var negative = Direction.YIncreasesUpward ? -1 : 1;
 
-             Point nw = origin;
-             Point ne = origin + new Point(width, 0);
-             Point se = origin + new Point(width * 2, height * negative);
-             Point sw = origin + new Point(width, height * negative);
+            Point nw = origin;
+            Point ne = origin + new Point(width, 0);
+            Point se = origin + new Point(width * 2, height * negative);
+            Point sw = origin + new Point(width, height * negative);
 
-             return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
-         }
+            return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
+        }
 
-         public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
-         {
-             var negative = Direction.YIncreasesUpward ? 1 : -1;
+        public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        {
+            var negative = Direction.YIncreasesUpward ? 1 : -1;
 
-             Point nw = origin + (height, height * negative);
-             Point ne = origin + (height + width, height * negative);
-             Point se = origin + (width, 0);
-             Point sw = origin;
+            Point nw = origin + (height, height * negative);
+            Point ne = origin + (height + width, height * negative);
+            Point se = origin + (width, 0);
+            Point sw = origin;
 
-             return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
-         }
+            return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
+        }
 
-         public bool IsCorner(Point position)
-             => position == NorthEastCorner || position == NorthWestCorner || position == SouthEastCorner || position == SouthWestCorner;
+        public bool IsCorner(Point position)
+            => position == NorthEastCorner || position == NorthWestCorner || position == SouthEastCorner || position == SouthWestCorner;
     }
 }

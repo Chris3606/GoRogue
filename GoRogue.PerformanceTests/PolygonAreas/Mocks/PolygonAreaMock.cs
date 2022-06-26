@@ -80,7 +80,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
             if (fromTop && Direction.YIncreasesUpward)
                 height *= -1;
 
-            else if(!fromTop && !Direction.YIncreasesUpward)
+            else if (!fromTop && !Direction.YIncreasesUpward)
                 height *= -1;
 
 
@@ -101,7 +101,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
             var corners = new List<Point>(numberOfSides);
             var increment = 360.0 / numberOfSides;
 
-            for (int i = 0; i < numberOfSides; i ++)
+            for (int i = 0; i < numberOfSides; i++)
             {
                 var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);
                 var corner = new PolarCoordinate(radius, theta).ToCartesian();
@@ -129,7 +129,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
             var corners = new List<Point>(points);
             var increment = 360.0 / points;
 
-            for (int i = 0; i < points; i ++)
+            for (int i = 0; i < points; i++)
             {
                 var radius = i % 2 == 0 ? outerRadius : innerRadius;
                 var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);

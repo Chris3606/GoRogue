@@ -41,7 +41,7 @@ namespace GoRogue.FOV
             : base(transparencyView, new ArrayView<double>(transparencyView.Width, transparencyView.Height))
         {
             hasher ??= EqualityComparer<Point>.Default;
-            
+
             _currentFOV = new HashSet<Point>(hasher);
             _previousFOV = new HashSet<Point>(hasher);
         }

@@ -48,7 +48,7 @@ namespace GoRogue
         {
             if (lastAssigned && startingInt != uint.MaxValue)
                 throw new ArgumentException(
-                    $"If {lastAssigned} is true, then {startingInt} must by definition be equal to uint.MaxValue." ,nameof(lastAssigned));
+                    $"If {lastAssigned} is true, then {startingInt} must by definition be equal to uint.MaxValue.", nameof(lastAssigned));
 
             CurrentInteger = startingInt;
             LastAssigned = lastAssigned;

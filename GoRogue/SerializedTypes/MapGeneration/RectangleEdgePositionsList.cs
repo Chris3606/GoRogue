@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using SadRogue.Primitives.SerializedTypes;
 using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
+using SadRogue.Primitives.SerializedTypes;
 
 namespace GoRogue.SerializedTypes.MapGeneration
 {
@@ -50,7 +50,8 @@ namespace GoRogue.SerializedTypes.MapGeneration
             RectangleEdgePositionsList list)
             => new RectangleEdgePositionsListSerialized()
             {
-                Rectangle = list.Rectangle, Positions = list.Select(point => (PointSerialized)point).ToList()
+                Rectangle = list.Rectangle,
+                Positions = list.Select(point => (PointSerialized)point).ToList()
             };
 
         /// <summary>
