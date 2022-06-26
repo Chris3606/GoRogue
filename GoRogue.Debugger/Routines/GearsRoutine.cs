@@ -155,13 +155,13 @@ namespace GoRogue.Debugger.Routines
             _currentWindowPositions.Clear();
             _rotationDegrees += 5;
 
-            foreach(var gear in _originalClockWiseGearPositions)
+            foreach (var gear in _originalClockWiseGearPositions)
                 _currentGearPositions.Add(gear.Rotate(_rotationDegrees, _center));
 
-            foreach(var gear in _originalCounterClockWiseGearPositions)
+            foreach (var gear in _originalCounterClockWiseGearPositions)
                 _currentGearPositions.Add(gear.Rotate(-_rotationDegrees));
 
-            foreach(var window in _originalClockWiseWindowPositions)
+            foreach (var window in _originalClockWiseWindowPositions)
                 _currentWindowPositions.Add(window.Rotate(_rotationDegrees, _center));
 
             // foreach(var window in _originalCounterClockWiseWindowPositions)
@@ -174,7 +174,7 @@ namespace GoRogue.Debugger.Routines
             Erase();
             _currentGearPositions.Clear();
             _rotationDegrees -= 5;
-            foreach(var gear in _originalClockWiseGearPositions)
+            foreach (var gear in _originalClockWiseGearPositions)
                 _currentGearPositions.Add(gear.Rotate(_rotationDegrees));
 
             Draw();

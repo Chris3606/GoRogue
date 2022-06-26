@@ -184,7 +184,7 @@ namespace GoRogue.MapGeneration
             // The bulk of the performance gain that is achieved during creation specifically is achieved via caching
             // outer points in SetInnerPoints anyway.
             for (int i = 0; i < _corners.Count - 1; i++)
-                _outerPoints.Add(new Area(Lines.Get(_corners[i], _corners[i+1], LineAlgorithm)));
+                _outerPoints.Add(new Area(Lines.Get(_corners[i], _corners[i + 1], LineAlgorithm)));
 
             _outerPoints.Add(new Area(Lines.Get(_corners[^1], _corners[0], LineAlgorithm)));
         }
@@ -254,34 +254,34 @@ namespace GoRogue.MapGeneration
                 (rectangle.MinExtentX, rectangle.MaxExtentY));
 
         /// <summary>
-         /// Creates a new Polygon in the shape of a parallelogram.
-         /// </summary>
-         /// <param name="origin">Origin of the parallelogram.</param>
-         /// <param name="width">Width of the parallelogram.</param>
-         /// <param name="height">Height of the parallelogram.</param>
+        /// Creates a new Polygon in the shape of a parallelogram.
+        /// </summary>
+        /// <param name="origin">Origin of the parallelogram.</param>
+        /// <param name="width">Width of the parallelogram.</param>
+        /// <param name="height">Height of the parallelogram.</param>
         /// <param name="fromTop">Whether the parallelogram extends downward-right or upwards-right from the start</param>
-         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
+        /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-         /// <returns>A new Polygon in the shape of a parallelogram</returns>
-         public static PolygonArea Parallelogram(Point origin, int width, int height, bool fromTop = false,
-            Lines.Algorithm algorithm = Lines.Algorithm.DDA)
-         {
-             CheckAlgorithm(algorithm);
+        /// <returns>A new Polygon in the shape of a parallelogram</returns>
+        public static PolygonArea Parallelogram(Point origin, int width, int height, bool fromTop = false,
+           Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        {
+            CheckAlgorithm(algorithm);
 
-             if (fromTop && Direction.YIncreasesUpward)
-                 height *= -1;
+            if (fromTop && Direction.YIncreasesUpward)
+                height *= -1;
 
-             else if(!fromTop && !Direction.YIncreasesUpward)
-                 height *= -1;
+            else if (!fromTop && !Direction.YIncreasesUpward)
+                height *= -1;
 
 
-             Point p1 = origin;
-             Point p2 = origin + new Point(width, 0);
-             Point p3 = origin + new Point(width + Math.Abs(height), height);
-             Point p4 = origin + new Point(Math.Abs(height), height);
+            Point p1 = origin;
+            Point p2 = origin + new Point(width, 0);
+            Point p3 = origin + new Point(width + Math.Abs(height), height);
+            Point p4 = origin + new Point(Math.Abs(height), height);
 
-             return new PolygonArea(algorithm, p1, p2, p3, p4);
-         }
+            return new PolygonArea(algorithm, p1, p2, p3, p4);
+        }
 
         /// <summary>
         /// Creates a polygon whose sides are even-length
@@ -300,7 +300,7 @@ namespace GoRogue.MapGeneration
             var corners = new List<Point>(numberOfSides);
             var increment = 360.0 / numberOfSides;
 
-            for (int i = 0; i < numberOfSides; i ++)
+            for (int i = 0; i < numberOfSides; i++)
             {
                 var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);
                 var corner = new PolarCoordinate(radius, theta).ToCartesian();
@@ -335,7 +335,7 @@ namespace GoRogue.MapGeneration
             var corners = new List<Point>(points);
             var increment = 360.0 / points;
 
-            for (int i = 0; i < points; i ++)
+            for (int i = 0; i < points; i++)
             {
                 var radius = i % 2 == 0 ? outerRadius : innerRadius;
                 var theta = SadRogue.Primitives.MathHelpers.ToRadian(i * increment);
@@ -485,7 +485,7 @@ namespace GoRogue.MapGeneration
             var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
-                corners.Add((Corners[i] - (x,0)) * (-1, 1) + (x,0));
+                corners.Add((Corners[i] - (x, 0)) * (-1, 1) + (x, 0));
             }
 
             return new PolygonArea(ref corners);
@@ -500,7 +500,7 @@ namespace GoRogue.MapGeneration
             var corners = new List<Point>(_corners.Count);
             for (int i = 0; i < Corners.Count; i++)
             {
-                corners.Add((Corners[i] - (0,y)) * (1,-1) + (0,y));
+                corners.Add((Corners[i] - (0, y)) * (1, -1) + (0, y));
             }
 
             return new PolygonArea(ref corners);

@@ -12,7 +12,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
         public static void OriginalDefault(PolygonAreaMock polygon)
         {
             for (int i = 0; i < polygon.Corners.Count - 1; i++)
-                polygon.OuterPoints.Add(new Area(Lines.Get(polygon.Corners[i], polygon.Corners[i+1], polygon.LineAlgorithm)));
+                polygon.OuterPoints.Add(new Area(Lines.Get(polygon.Corners[i], polygon.Corners[i + 1], polygon.LineAlgorithm)));
 
             polygon.OuterPoints.Add(new Area(Lines.Get(polygon.Corners[^1], polygon.Corners[0], polygon.LineAlgorithm)));
         }

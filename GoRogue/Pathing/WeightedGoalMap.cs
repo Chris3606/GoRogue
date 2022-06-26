@@ -41,7 +41,7 @@ namespace GoRogue.Pathing
         /// <param name="map">The goal map.</param>
         public WeightedGoalMap(IGridView<double?> map)
         {
-            Weights = new List<GoalMapWeightPair>{ new GoalMapWeightPair( map, 1 ) };
+            Weights = new List<GoalMapWeightPair> { new GoalMapWeightPair(map, 1) };
             Width = map.Width;
             Height = map.Height;
         }

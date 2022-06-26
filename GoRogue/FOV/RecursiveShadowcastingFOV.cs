@@ -58,7 +58,7 @@ namespace GoRogue.FOV
 
             foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
             {
-                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY,ResultView, _currentFOV,
+                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY, ResultView, _currentFOV,
                     TransparencyView, distanceCalc);
                 ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, originX, originY, ResultView, _currentFOV,
                     TransparencyView, distanceCalc);
@@ -149,7 +149,7 @@ namespace GoRogue.FOV
                     {
                         lightMap[currentX, currentY] = true;
                         fovSet.Add(new Point(currentX, currentY));
-                        
+
                     }
 
                     if (blocked) // Previous cell was blocked

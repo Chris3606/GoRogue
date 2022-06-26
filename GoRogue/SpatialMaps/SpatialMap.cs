@@ -461,7 +461,7 @@ namespace GoRogue.SpatialMaps
             if (!_positionMapping.TryGetValue(position, out var item))
                 return new List<T>();
 
-            var result = new List<T>(1){item};
+            var result = new List<T>(1) { item };
 
             _positionMapping.Remove(position);
             _itemMapping.Remove(item);

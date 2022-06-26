@@ -1,6 +1,6 @@
 ﻿namespace GoRogue.PerformanceTests.SpatialMaps
 {
-    public class IDObject: IHasID
+    public class IDObject : IHasID
     {
         private static readonly IDGenerator s_idGenerator = new IDGenerator();
 
@@ -12,7 +12,7 @@
         public uint ID { get; }
     }
 
-    public class IDLayerObject: IHasID, IHasLayer
+    public class IDLayerObject : IHasID, IHasLayer
     {
         private static readonly IDGenerator s_idGenerator = new IDGenerator();
 
