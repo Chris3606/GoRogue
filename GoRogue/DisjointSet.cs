@@ -221,11 +221,17 @@ namespace GoRogue
         /// Creates a new disjoint set that is composed of the given items.  Each item will be its own
         /// unique set.
         /// </summary>
+        /// <remarks>
+        /// The items will be mapped to IDs in the range [0, <paramref name="items" />.Length - 1]
+        /// via a Dictionary, where the keys are hashed using the comparer specified, or the default hash function
+        /// if no comparer is specified.
+        /// </remarks>
         /// <param name="items">Items to place in the disjoint set.</param>
-        public DisjointSet(IEnumerable<T> items)
+        /// <param name="comparer">Optional comparer to use when hashing items.</param>
+        public DisjointSet(IEnumerable<T> items, IEqualityComparer<T>? comparer = null)
         {
             _items = items.ToArray();
-            _indices = new Dictionary<T, int>(_items.Length);
+            _indices = new Dictionary<T, int>(_items.Length, comparer ?? EqualityComparer<T>.Default);
             _idSet = new DisjointSet(_items.Length);
 
             // Create a mapping from item to index
