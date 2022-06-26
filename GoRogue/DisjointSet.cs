@@ -228,6 +228,10 @@ namespace GoRogue
             _indices = new Dictionary<T, int>(_items.Length);
             _idSet = new DisjointSet(_items.Length);
 
+            // Create a mapping from item to index
+            for (int i = 0; i < _items.Length; i++)
+                _indices[_items[i]] = i;
+
             _idSet.SetsJoined += IDSetOnSetsJoined;
         }
 
