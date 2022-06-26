@@ -13,8 +13,6 @@ namespace GoRogue.SpatialMaps
     /// <typeparam name="TItem">The type of item stored in the pairing.</typeparam>
     [DataContract]
     [PublicAPI]
-    // Tuples do not resolve names properly; function is provided
-    [SuppressMessage("ReSharper", "CA2225")]
     public readonly struct ItemPositionPair<TItem> : IEquatable<ItemPositionPair<TItem>>, IMatchable<ItemPositionPair<TItem>>
         where TItem : notnull
     {

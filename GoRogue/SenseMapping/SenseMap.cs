@@ -178,12 +178,6 @@ namespace GoRogue.SenseMapping
                 BlitSenseSource(senseSource, _senseMap, _currentSenseMap, _resMap);
         }
 
-        // Warning about hidden overload intentionally disabled -- the two methods are equivalent but
-        // the ToString method that takes 0, as opposed to all optional, parameters is necessary to
-        // override the one from base class object. That one calls this one so the "hidden" overload
-        // is of no harm.
-#pragma warning disable RECS0137
-
         // ReSharper disable once MethodOverloadWithOptionalParameter
         /// <summary>
         /// ToString that customizes the characters used to represent the map.
@@ -197,8 +191,6 @@ namespace GoRogue.SenseMapping
         /// </param>
         /// <returns>The string representation of the SenseMap, using the specified characters.</returns>
         public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')
-#pragma warning restore RECS0137
-
         {
             string result = "";
 

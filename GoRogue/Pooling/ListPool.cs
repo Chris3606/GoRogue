@@ -29,7 +29,7 @@ namespace GoRogue.Pooling
         /// </remarks>
         public int MaxCapacity { get; }
 
-        private List<List<T>> _lists;
+        private readonly List<List<T>> _lists;
 
         /// <summary>
         /// Constructs a new pool with the given parameters.

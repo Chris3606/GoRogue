@@ -77,12 +77,9 @@ namespace GoRogue.SenseMapping
         //private bool[,] _nearLight;
 
         // Pre-allocated list
-        private List<Point> _neighbors;
+        private readonly List<Point> _neighbors;
 
-        // Analyzer gets this wrong because it's returned by ref
-#pragma warning disable IDE0044
         private Point _position;
-#pragma warning restore IDE0044
         private double _radius;
         internal IGridView<double>? _resMap;
 
@@ -399,23 +396,14 @@ namespace GoRogue.SenseMapping
 
         private static int RippleValue(SourceType type)
         {
-            switch (type)
+            return type switch
             {
-                case SourceType.Ripple:
-                    return 2;
-
-                case SourceType.RippleLoose:
-                    return 3;
-
-                case SourceType.RippleTight:
-                    return 1;
-
-                case SourceType.RippleVeryLoose:
-                    return 6;
-
-                default:
-                    return RippleValue(SourceType.Ripple);
-            }
+                SourceType.Ripple => 2,
+                SourceType.RippleLoose => 3,
+                SourceType.RippleTight => 1,
+                SourceType.RippleVeryLoose => 6,
+                _ => RippleValue(SourceType.Ripple)
+            };
         }
 
         private void DoRippleFOV(int ripple, IGridView<double> map)

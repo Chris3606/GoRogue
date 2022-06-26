@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using GoRogue.MapGeneration.Steps.Translation;
 using JetBrains.Annotations;
 
@@ -10,7 +9,6 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct RectanglesToAreasSerialized
     {
         /// <summary>
@@ -54,7 +52,6 @@ namespace GoRogue.SerializedTypes.MapGeneration.Steps.Translation
         /// </summary>
         /// <param name="step"/>
         /// <returns/>
-        [SuppressMessage("ReSharper", "CA1000")] // Static method is required to implement implicit ops
         public static RectanglesToAreasSerialized FromRectanglesToAreas(RectanglesToAreas step)
             => new RectanglesToAreasSerialized
             {

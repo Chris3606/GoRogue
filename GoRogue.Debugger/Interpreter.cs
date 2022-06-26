@@ -15,16 +15,16 @@ namespace GoRogue.Debugger
     /// </summary>
     public static class Interpreter
     {
-        private static bool _exit; // Used to decide whether or not to exit the program
-        private static bool _dirty = true; // Whether or not to redraw the map
+        private static bool s_exit; // Used to decide whether or not to exit the program
+        private static bool s_dirty = true; // Whether or not to redraw the map
 
         // The routine that we're running in this test.  Null override because we initialize in Init
-        private static IRoutine _routine = null!;
+        private static IRoutine s_routine = null!;
 
         // Viewport of routine's map.  Null override because we initialize in Init
-        private static RoutineViewport _mapView = null!;
+        private static RoutineViewport s_mapView = null!;
 
-        private static IntPtr _window;
+        private static IntPtr s_window;
 
         #region Setup
 
@@ -34,18 +34,18 @@ namespace GoRogue.Debugger
         public static void Init()
         {
             // Initialize NCurses
-            _window = NCurses.InitScreen();
+            s_window = NCurses.InitScreen();
             NCurses.CBreak();
             NCurses.NoEcho();
-            NCurses.Keypad(_window, true);
+            NCurses.Keypad(s_window, true);
 
             // Pick routine, and generate its map and views
-            _routine = PickRoutine();
-            _routine.GenerateMap();
-            _routine.CreateViews();
+            s_routine = PickRoutine();
+            s_routine.GenerateMap();
+            s_routine.CreateViews();
 
             // Set up viewport, defaulting to first item in views list
-            _mapView = new RoutineViewport(_routine, Console.WindowWidth - 1, Console.WindowHeight - 1);
+            s_mapView = new RoutineViewport(s_routine, Console.WindowWidth - 1, Console.WindowHeight - 1);
         }
 
         /// <summary>
@@ -125,11 +125,6 @@ namespace GoRogue.Debugger
                 .Select(type => Activator.CreateInstance(type) as IRoutine)
                 .ToList()!;
 
-            // Null indicates Nullable types, which should not occur; IRoutines can't be a type that implements
-            // Nullable<T>
-            if (routineInstances.Any(inst => inst == null))
-                throw new Exception("Cannot use Nullable<T> instances as implementers of IRoutine.");
-
             // Sort the list by name then return
             routineInstances.Sort(
                 (r1, r2) => string.CompareOrdinal(r1.Name, r2.Name));
@@ -145,9 +140,9 @@ namespace GoRogue.Debugger
         /// </summary>
         public static void Run()
         {
-            while (!_exit)
+            while (!s_exit)
             {
-                if (_dirty)
+                if (s_dirty)
                     DrawMap();
 
                 InterpretKeyPress();
@@ -167,18 +162,18 @@ namespace GoRogue.Debugger
             switch (key)
             {
                 case CursesKey.ESC:
-                    _exit = true;
+                    s_exit = true;
                     break;
                 case ' ':
-                    _routine.NextTimeUnit();
-                    _dirty = true;
+                    s_routine.NextTimeUnit();
+                    s_dirty = true;
                     break;
                 // Backspace can be 3 different key-codes, depending on platform
                 case CursesKey.BACKSPACE:
                 case '\b':
                 case 127:
-                    _routine.LastTimeUnit();
-                    _dirty = true;
+                    s_routine.LastTimeUnit();
+                    s_dirty = true;
                     break;
                 case CursesKey.LEFT:
                     moveViewportDir = Direction.Left;
@@ -193,20 +188,20 @@ namespace GoRogue.Debugger
                     moveViewportDir = Direction.Down;
                     break;
                 case '+':
-                    _mapView.NextView();
-                    _dirty = true;
+                    s_mapView.NextView();
+                    s_dirty = true;
                     break;
                 case '-':
-                    _mapView.PreviousView();
-                    _dirty = true;
+                    s_mapView.PreviousView();
+                    s_dirty = true;
                     break;
                 default:
-                    _routine.InterpretKeyPress(key);
+                    s_routine.InterpretKeyPress(key);
                     break;
             }
 
             if (moveViewportDir != Direction.None)
-                _dirty = _mapView.CenterViewOn(_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
+                s_dirty = s_mapView.CenterViewOn(s_mapView.CurrentViewport.ViewArea.Center + moveViewportDir);
         }
 
         private static void DrawMap()
@@ -215,23 +210,23 @@ namespace GoRogue.Debugger
             NCurses.Erase();
 
             // Calculate available console space.
-            NCurses.GetMaxYX(_window, out int height, out int width);
+            NCurses.GetMaxYX(s_window, out int height, out int width);
 
             // Resize viewport as needed to match console size
-            _mapView.ResizeViewport(width, height);
+            s_mapView.ResizeViewport(width, height);
 
             // Change each character of the console as appropriate
-            foreach (var pos in _mapView.CurrentViewport.Positions())
+            foreach (var pos in s_mapView.CurrentViewport.Positions())
             {
                 NCurses.Move(pos.Y, pos.X);
-                NCurses.InsertChar(_mapView.CurrentViewport[pos]);
+                NCurses.InsertChar(s_mapView.CurrentViewport[pos]);
             }
 
             // Render data to screen
             NCurses.Refresh();
 
             // Reset dirty flag because we just drew
-            _dirty = false;
+            s_dirty = false;
         }
         #endregion
     }

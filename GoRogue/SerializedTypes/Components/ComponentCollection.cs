@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.Serialization;
 using GoRogue.Components;
 using JetBrains.Annotations;
@@ -11,7 +10,6 @@ namespace GoRogue.SerializedTypes.Components
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct ComponentCollectionSerialized
     {
         /// <summary>

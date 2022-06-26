@@ -35,6 +35,10 @@ namespace GoRogue.FOV
         /// <inheritdoc/>
         public event EventHandler? VisibilityReset;
 
+        private readonly List<FOVCalculateParameters> _calculationsPerformed;
+        /// <inheritdoc/>
+        public IReadOnlyList<FOVCalculateParameters> CalculationsPerformed => _calculationsPerformed.AsReadOnly();
+
         /// <inheritdoc/>
         public abstract IEnumerable<Point> CurrentFOV { get; }
 
@@ -52,29 +56,17 @@ namespace GoRogue.FOV
         /// non-blocking (transparent) to line of sight, while false values are considered
         /// to be blocking.
         /// </param>
-        /// <param name="resultView">The view in which FOV calculations are stored.</param>
-        protected FOVBase(IGridView<bool> transparencyView, ISettableGridView<double> resultView)
+        protected FOVBase(IGridView<bool> transparencyView)
         {
-            ResultView = resultView;
             TransparencyView = transparencyView;
-            BooleanResultView = new LambdaTranslationGridView<double, bool>(ResultView, val => val > 0.0);
+            _calculationsPerformed = new List<FOVCalculateParameters>();
         }
 
         /// <inheritdoc />
-        public IGridView<bool> BooleanResultView { get; }
-
-        /// <summary>
-        /// View in which the results of LOS calculations are stored.  The values in this view are used to derive
-        /// the public result views.
-        /// </summary>
-        /// <remarks>
-        /// The requirements for these values are identical to <see cref="DoubleResultView"/>.  DoubleResultView simply
-        /// exposes these values directly; BooleanResultView considers any location where ResultView > 0 to be true.
-        /// </remarks>
-        protected ISettableGridView<double> ResultView;
+        public abstract IGridView<bool> BooleanResultView { get; }
 
         /// <inheritdoc />
-        public IGridView<double> DoubleResultView => ResultView;
+        public abstract IGridView<double> DoubleResultView { get; }
 
         /// <inheritdoc />
         public IReadOnlyFOV AsReadOnly() => this;
@@ -163,8 +155,12 @@ namespace GoRogue.FOV
         /// <inheritdoc/>
         public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc)
         {
+            var calcParams = new FOVCalculateParameters(new Point(originX, originY), radius, distanceCalc);
+
             OnCalculate(originX, originY, radius, distanceCalc);
-            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc));
+            _calculationsPerformed.Add(calcParams);
+
+            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(calcParams));
         }
 
         /// <inheritdoc/>
@@ -185,8 +181,12 @@ namespace GoRogue.FOV
         /// <inheritdoc/>
         public void CalculateAppend(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
+            var calcParams = new FOVCalculateParameters(new Point(originX, originY), radius, distanceCalc, angle, span);
+
             OnCalculate(originX, originY, radius, distanceCalc, angle, span);
-            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(new Point(originX, originY), radius, distanceCalc, angle, span));
+            _calculationsPerformed.Add(calcParams);
+
+            Recalculated?.Invoke(this, new FOVRecalculatedEventArgs(calcParams));
         }
 
         /// <inheritdoc/>
@@ -201,11 +201,9 @@ namespace GoRogue.FOV
         public void Reset()
         {
             OnReset();
+            _calculationsPerformed.Clear();
             VisibilityReset?.Invoke(this, EventArgs.Empty);
         }
-
-        // Warning intentionally disabled -- see SenseMap.ToString for details as to why this is not bad.
-#pragma warning disable RECS0137
 
         // ReSharper disable once MethodOverloadWithOptionalParameter
         /// <summary>
@@ -215,7 +213,6 @@ namespace GoRogue.FOV
         /// <param name="sourceValue">The character used for any location that is in FOV.</param>
         /// <returns>The string representation of FOV, using the specified characters.</returns>
         public string ToString(char normal = '-', char sourceValue = '+')
-#pragma warning restore RECS0137
         {
             string result = "";
 
@@ -240,7 +237,7 @@ namespace GoRogue.FOV
         /// <param name="decimalPlaces">The number of decimal places to round to.</param>
         /// <returns>A string representation of FOV, rounded to the given number of decimal places.</returns>
         public string ToString(int decimalPlaces)
-            => ResultView.ExtendToString(elementStringifier: obj => obj.ToString("0." + "0".Multiply(decimalPlaces)));
+            => DoubleResultView.ExtendToString(elementStringifier: obj => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
         /// Returns a string representation of the map, where any location not in FOV is represented

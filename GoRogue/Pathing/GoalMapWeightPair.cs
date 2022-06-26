@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
@@ -11,8 +10,6 @@ namespace GoRogue.Pathing
     /// A goal map paired with a weight, designed to be used with <see cref="WeightedGoalMap"/>.
     /// </summary>
     [PublicAPI]
-    // Tuples do not resolve names properly; function is provided
-    [SuppressMessage("ReSharper", "CA2225")]
     public readonly struct GoalMapWeightPair : IEquatable<GoalMapWeightPair>, IMatchable<GoalMapWeightPair>
     {
         /// <summary>

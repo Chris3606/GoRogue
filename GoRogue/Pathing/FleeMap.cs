@@ -17,10 +17,8 @@ namespace GoRogue.Pathing
     /// recalculated when the underlying goal map is recalculated. Implements IDisposable, so ensure
     /// that it is disposed of properly after use.
     /// </remarks>
-#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
     [PublicAPI]
     public class FleeMap : GridViewBase<double?>, IDisposable
-#pragma warning restore CA1063
     {
         private readonly GoalMap _baseMap;
         private readonly ArrayView<double?> _goalMap;
@@ -211,9 +209,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Destructor for IDisposable implementation.
         /// </summary>
-#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
         ~FleeMap()
-#pragma warning restore CA1063
         {
             Dispose();
         }
@@ -221,9 +217,7 @@ namespace GoRogue.Pathing
         /// <summary>
         /// Function called to dispose of the class, automatically un-linking it from its goal map.
         /// </summary>
-#pragma warning disable CA1063 // We aren't really freeing unmanaged resources so the typical Dispose(false) call is irrelevant
         public void Dispose()
-#pragma warning restore CA1063
         {
             if (!_disposed)
             {

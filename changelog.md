@@ -8,6 +8,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None
 
+## [3.0.0-alpha13] - 2022-06-26
+
+### Added
+- `FOV.BooleanBasedFOVBase` which defines a `ResultView` as a `BitArray`, and `DoubleResultView` as a grid view that performs appropriate calculations based on that.
+- `FOV.DoubleBasedFOVBase` which defines `ResultView` and `BooleanResultView` exactly as `FOVBase` did previously
+- `FOV.IFOV` now defines a property which is a list of all the parameters for all the Calculate/CalculateAppend calls that have happened since the last reset
+    - This enables users to track what the source/radius was for each FOV calculation that makes up the current state
+- DisjointSet<T> now optionally accepts a custom hashing algorithm to use for the items.
+
+### Changed
+- `FOV.RecursiveShadowcastingFOV` now inherits from `BooleanBasedFOVBased`, and the base algorithm sets booleans rather than doubles
+    - This makes `Calculate` and `BooleanResultView` much faster, particularly so as the map size increases
+    - Memory usage is also reduced significantly
+    - Accessing values from `DoubleResultView` is typically a bit slower, but for many use cases the speed increase of `Calculate` will offset it
+    - `DoubleResultView` does not perform as well as the previous implementation when there are multiple FOV calculations being appended together via `CalculateAppend`; in cases where this becomes problematic, usage of `RecursiveShadowcastingDoubleBasedFOV` is recommended
+- The `FOV.IFOV` interface's `Recalculated` event argument now contains a `FOVCalculateParameters` struct which contains all of the values that used to be on the arguments class directly
+    - `FOVRecalculatedEventArgs.Origin` => `FOVRecalculatedEventArgs.CalculateParameters.Origin`, etc
+
+### Fixed
+- `DisjointSet<T>` correctly initializes when given an input array (fixes #266)
+
+### Removed
+- `FOV.FOVBase` no longer defines a `ResultView`; this field is now defined as appropriate by its subclasses
+
 
 ## [3.0.0-alpha12] - 2022-04-16
 

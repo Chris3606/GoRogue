@@ -12,7 +12,6 @@ namespace GoRogue.SerializedTypes.Factories
     /// </summary>
     [PublicAPI]
     [DataContract]
-    [SuppressMessage("ReSharper", "CA1815")] // Type should only be used for serialization
     public struct FactorySerialized<TProduced>
     {
         /// <summary>

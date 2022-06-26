@@ -11,58 +11,17 @@ namespace GoRogue.FOV
     public class FOVRecalculatedEventArgs : EventArgs
     {
         /// <summary>
-        /// Position of the FOV origin point.
+        /// The parameters (implicit and explicit) given to the Calculate call which triggered the event.
         /// </summary>
-        public readonly Point Origin;
-
-        /// <summary>
-        /// The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.
-        /// </summary>
-        public readonly double Radius;
-
-        /// <summary>
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
-        /// </summary>
-        public readonly Distance DistanceCalc;
-
-        /// <summary>
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points upward, and increases move clockwise (like a compass)
-        /// </summary>
-        public readonly double Angle;
-
-        /// <summary>
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <see cref="Span"/> / 2 degrees are included on either side of the span line.
-        /// </summary>
-        public readonly double Span;
+        public readonly FOVCalculateParameters CalculateParameters;
 
         /// <summary>
         /// Create and configure the event argument object.
         /// </summary>
-        /// <param name="origin">Position of the FOV origin point.</param>
-        /// <param name="radius">The maximum radius -- eg. the maximum distance of the field of view if completely unobstructed.</param>
-        /// <param name="distanceCalc">
-        /// The distance calculation used to determine what shape the radius has (or a type
-        /// implicitly convertible to <see cref="SadRogue.Primitives.Distance" />, eg. <see cref="SadRogue.Primitives.Radius" />).
-        /// </param>
-        /// <param name="angle">
-        /// The angle in degrees that specifies the outermost center point of the field of view cone. 0 degrees
-        /// points up, and increases move the cone clockwise (like a compass).
-        /// </param>
-        /// <param name="span">
-        /// The angle, in degrees, that specifies the full arc contained in the field of view cone --
-        /// <paramref name="span"/>> / 2 degrees are included on either side of the span line.
-        /// </param>
-        public FOVRecalculatedEventArgs(Point origin, double radius, Distance distanceCalc,
-                                        double angle = 0.0, double span = 360.0)
+        /// <param name="calculateParameters">The parameters given to the calculate function (explicit and implicit).</param>
+        public FOVRecalculatedEventArgs(FOVCalculateParameters calculateParameters)
         {
-            Origin = origin;
-            Radius = radius;
-            DistanceCalc = distanceCalc;
-            Angle = angle;
-            Span = span;
+            CalculateParameters = calculateParameters;
         }
     }
 
@@ -70,7 +29,7 @@ namespace GoRogue.FOV
     /// Interface representing the capability to calculate a grid-based field of view for a map.
     /// </summary>
     /// <remarks>
-    /// If you want a concrete implementation of FOV, see the <see cref="RecursiveShadowcastingFOV"/> class.  If you're implementing your
+    /// If you want a concrete implementation of FOV, see the <see cref="RecursiveShadowcastingDoubleBasedFOV"/> class.  If you're implementing your
     /// own FOV system, you may want to consider inheriting from <see cref="FOVBase"/> if possible, as it implements
     /// much of the boilerplate code involved in implementing this interface.
     ///

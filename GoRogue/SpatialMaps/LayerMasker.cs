@@ -22,7 +22,9 @@ namespace GoRogue.SpatialMaps
     public struct LayerCollectionEnumerable
     {
         private uint _mask;
+#pragma warning disable IDE0032 // Supress use auto property; we need to guarantee performance characteristics
         private int _current;
+#pragma warning restore IDE0032
         /// <summary>
         /// The current value for enumeration.
         /// </summary>
@@ -57,7 +59,7 @@ namespace GoRogue.SpatialMaps
             }
 
             // Mask out layer we're currently on so we don't count it next time, and return
-            _mask = _mask & 0x7FFFFFFF;
+            _mask &= 0x7FFFFFFF;
             return true;
         }
 
