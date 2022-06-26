@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None
+
+## [3.0.0-alpha13] - 2022-06-26
+
 ### Added
 - `FOV.BooleanBasedFOVBase` which defines a `ResultView` as a `BitArray`, and `DoubleResultView` as a grid view that performs appropriate calculations based on that.
 - `FOV.DoubleBasedFOVBase` which defines `ResultView` and `BooleanResultView` exactly as `FOVBase` did previously

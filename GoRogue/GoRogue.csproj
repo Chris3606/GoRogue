@@ -11,12 +11,12 @@
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha12</Version>
+    <Version>3.0.0-alpha13</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha12---2022-04-16.</PackageReleaseNotes>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/develop-3.0/changelog.md#300-alpha13---2022-06-26.</PackageReleaseNotes>
 	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
