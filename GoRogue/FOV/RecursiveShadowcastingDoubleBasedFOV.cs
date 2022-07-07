@@ -118,8 +118,8 @@ namespace GoRogue.FOV
             // Reset visibility
             if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
                 ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
-            else
-                ResultView.Fill(0);
+            else // ArrayView.Clear is faster than the generic Fill, so we'll cast and use that since we know ResultView is an ArrayView
+                ((ArrayView<double>)ResultView).Clear();
 
             // Cycle current and previous FOVs
             (_previousFOV, _currentFOV) = (_currentFOV, _previousFOV);
