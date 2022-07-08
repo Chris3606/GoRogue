@@ -21,7 +21,7 @@ namespace GoRogue.UnitTests
         {
             var items = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
             var set = new DisjointSet<int>(items);
-            
+
             foreach (int item in items)
                 Assert.Equal(item, set.Find(item));
         }
@@ -42,7 +42,7 @@ namespace GoRogue.UnitTests
 
             // All items should have the same parent after unions; not necessarily the first one (that's up to the algorithm)
             var parent = set.Find(items[0]);
-            
+
             Assert.Equal(1, set.Count);
             foreach (int item in items)
                 Assert.Equal(parent, set.Find(item));

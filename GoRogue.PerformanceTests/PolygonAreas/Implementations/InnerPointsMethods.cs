@@ -19,13 +19,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
                     {
@@ -40,8 +40,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -57,13 +57,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             polygon.InnerPoints = new Area(new KnownSizeHasher(bounds.MaxExtentX));
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
                     {
@@ -78,8 +78,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -95,13 +95,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
                     {
@@ -120,8 +120,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -138,13 +138,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
                     {
@@ -161,8 +161,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -178,13 +178,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new HashSet<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (polygon.OuterPoints.Contains(x, y))
                     {
@@ -199,8 +199,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -217,13 +217,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     bool foundInBoundary = false;
                     foreach (var boundary in GetBoundariesContaining(polygon, x, y))
@@ -238,8 +238,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     if (!foundInBoundary)
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -260,13 +260,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var bounds = polygon.OuterPoints.Bounds;
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (outerPointsSet.Contains(new Point(x, y)))
                     {
@@ -281,8 +281,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }
@@ -302,13 +302,13 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             var outerPointsSet = new HashSet<Point>(polygon.OuterPoints, new KnownRangeHasher(bounds.MinExtent, bounds.MaxExtent));
 
             // The top and bottom rows can never contain an inner point, so skip them.
-            for(int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
+            for (int y = bounds.MinExtentY + 1; y < bounds.MaxExtentY; y++)
             {
                 var linesEncountered = new List<IReadOnlyArea>();
 
                 // Must include MinExtentX so that it can accurately count lines encountered.
                 // Doesn't need MaxExtentX since no inner point can be equal to or greater than that.
-                for(int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
+                for (int x = bounds.MinExtentX; x < bounds.MaxExtentX; x++)
                 {
                     if (outerPointsSet.Contains(new Point(x, y)))
                     {
@@ -323,8 +323,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                     }
                     else
                     {
-                        if(linesEncountered.Count % 2 == 1)
-                            polygon.InnerPoints.Add(x,y);
+                        if (linesEncountered.Count % 2 == 1)
+                            polygon.InnerPoints.Add(x, y);
                     }
                 }
             }

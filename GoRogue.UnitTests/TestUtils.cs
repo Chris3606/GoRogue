@@ -198,7 +198,7 @@ namespace GoRogue.UnitTests
         /// analyzer understands that the object cannot be null after this function is called.
         /// </summary>
         /// <param name="obj">Object check for null</param>
-        public static void NotNull([NotNull]object? obj)
+        public static void NotNull([NotNull] object? obj)
         {
             Assert.NotNull(obj);
             if (obj == null)

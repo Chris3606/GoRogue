@@ -60,7 +60,7 @@ namespace GoRogue.Debugger.Routines
             // it to the list of transformed regions
             foreach (var polygon in _originalRegions)
             {
-                var rotated = polygon.Rotate(_rotation, (40,40));
+                var rotated = polygon.Rotate(_rotation, (40, 40));
                 _transformedRegions.Add(rotated);
             }
 
@@ -83,7 +83,7 @@ namespace GoRogue.Debugger.Routines
             // Rotate each original region by the new amount about its center, and add
             // it to the list of transformed regions
             foreach (var polygon in _originalRegions)
-                _transformedRegions.Add(polygon.Rotate(_rotation, (40,40)));
+                _transformedRegions.Add(polygon.Rotate(_rotation, (40, 40)));
 
             // Update map to reflect new regions
             ApplyRegionsToMap();

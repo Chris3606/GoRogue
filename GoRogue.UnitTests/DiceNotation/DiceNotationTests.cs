@@ -24,7 +24,7 @@ namespace GoRogue.UnitTests.DiceNotation
             }
         }
 
-        public static (string expr, int min, int max)[] DiceExpressions  = new[]
+        public static (string expr, int min, int max)[] DiceExpressions = new[]
         {
             // Advanced Dice Expression
             ("1d(1d12+4)+3", 4, 19),

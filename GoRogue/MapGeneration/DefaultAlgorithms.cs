@@ -175,7 +175,8 @@ namespace GoRogue.MapGeneration
             // 2. Generate mazes in the space between the rooms
             yield return new MazeGeneration
             {
-                RNG = rng, CrawlerChangeDirectionImprovement = crawlerChangeDirectionImprovement
+                RNG = rng,
+                CrawlerChangeDirectionImprovement = crawlerChangeDirectionImprovement
             };
 
             // 3. Make sure all the mazes are connected into a single maze.
@@ -186,10 +187,10 @@ namespace GoRogue.MapGeneration
             // so we give it a different tag.
             yield return new
                 ClosestMapAreaConnection(areasComponentTag: "Tunnels", tunnelsComponentTag: "MazeConnections")
-                {
-                    ConnectionPointSelector = new ClosestConnectionPointSelector(Distance.Manhattan),
-                    TunnelCreator = new HorizontalVerticalTunnelCreator(rng)
-                };
+            {
+                ConnectionPointSelector = new ClosestConnectionPointSelector(Distance.Manhattan),
+                TunnelCreator = new HorizontalVerticalTunnelCreator(rng)
+            };
 
             // 4. So that the tunnels are all in one component, add the MazeConnections to the tunnels, minus any overlapping points
             yield return new RemoveDuplicatePoints("Tunnels", "MazeConnections");
@@ -209,7 +210,9 @@ namespace GoRogue.MapGeneration
             // 6. Trim back dead ends in the maze to reduce the maze density
             yield return new TunnelDeadEndTrimming
             {
-                RNG = rng, SaveDeadEndChance = saveDeadEndChance, MaxTrimIterations = maxTrimIterations
+                RNG = rng,
+                SaveDeadEndChance = saveDeadEndChance,
+                MaxTrimIterations = maxTrimIterations
             };
         }
 

@@ -72,7 +72,7 @@ namespace GoRogue.GameFramework
         /// <typeparam name="T">Type of the property.</typeparam>
         public static void SafelySetProperty<T>(this IGameObject self, ref T propertyField, T newValue,
                                                 EventHandler<GameObjectPropertyChanged<T>>? changedEvent)
-            where T: notnull
+            where T : notnull
         {
             // Nothing to do; the value hasn't changed
             if (propertyField.Equals(newValue))
@@ -106,7 +106,7 @@ namespace GoRogue.GameFramework
         public static void SafelySetProperty<T>(this IGameObject self, ref T propertyField, T newValue,
                                                 EventHandler<GameObjectPropertyChanged<T>>? changingEvent,
                                                 EventHandler<GameObjectPropertyChanged<T>>? changedEvent)
-            where T: notnull
+            where T : notnull
         {
             // Nothing to do; the value hasn't changed
             if (propertyField.Equals(newValue))

@@ -34,7 +34,7 @@ namespace GoRogue.PerformanceTests.SpatialMaps
         [Params(1, 2, 3)]
         public int NumLayers;
 
-        [GlobalSetup(Targets = new []{nameof(MoveTwice), nameof(TryMoveTwiceOriginal), nameof(TryMoveTwice),nameof(AddAndRemove), nameof(TryAddAndRemoveOriginal), nameof(TryAddAndRemove)})]
+        [GlobalSetup(Targets = new[] { nameof(MoveTwice), nameof(TryMoveTwiceOriginal), nameof(TryMoveTwice), nameof(AddAndRemove), nameof(TryAddAndRemoveOriginal), nameof(TryAddAndRemove) })]
         public void GlobalSetupObjectsAtMoveToLocation()
         {
             _testMap = new LayeredSpatialMap<IDLayerObject>(NumLayers, layersSupportingMultipleItems: uint.MaxValue) { { _trackedObject, _initialPosition } };
@@ -53,7 +53,7 @@ namespace GoRogue.PerformanceTests.SpatialMaps
 
         }
 
-        [GlobalSetup(Targets = new []{nameof(MoveAllTwice), nameof(MoveValidTwice), nameof(TryMoveAllTwice)})]
+        [GlobalSetup(Targets = new[] { nameof(MoveAllTwice), nameof(MoveValidTwice), nameof(TryMoveAllTwice) })]
         public void GlobalSetupNoObjectsAtMoveToLocation()
         {
             _testMap = new LayeredSpatialMap<IDLayerObject>(NumLayers, layersSupportingMultipleItems: uint.MaxValue) { { _trackedObject, _initialPosition } };

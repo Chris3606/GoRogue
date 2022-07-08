@@ -73,7 +73,7 @@ namespace GoRogue.PerformanceTests.Messaging
             for (int i = 0; i < Messages; i++)
                 _originalBus.Send(Message);
         }
-        
+
         [Benchmark]
         public void NoForEach()
         {

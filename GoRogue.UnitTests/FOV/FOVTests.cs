@@ -36,7 +36,7 @@ namespace GoRogue.UnitTests.FOV
         // Types of FOV to test; must have constructor with 2 params; transparencyView and pointHasher
         public static readonly Type[] Types =
         {
-            typeof(RecursiveShadowcastingFOV), typeof(RecursiveShadowcastingDoubleBasedFOV)
+            typeof(RecursiveShadowcastingFOV), typeof(RecursiveShadowcastingBooleanBasedFOV)
         };
 
         public static readonly (Radius radiusShape, Type FOVType)[] TestData = Radii.Combinate(Types).ToArray();

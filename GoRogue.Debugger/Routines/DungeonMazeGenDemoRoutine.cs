@@ -11,7 +11,7 @@ namespace GoRogue.Debugger.Routines
     {
         public DungeonMazeGenDemoRoutine()
             : base("Dungeon Maze Map Generation")
-        {}
+        { }
 
         /// <inheritdoc />
         public override void CreateViews()

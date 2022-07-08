@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
 using GoRogue.Components.ParentAware;
+using GoRogue.FOV;
 using GoRogue.Pathing;
+using GoRogue.Pooling;
 using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-using GoRogue.FOV;
-using GoRogue.Pooling;
 using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.GameFramework
@@ -731,18 +731,37 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Adds the given entity (non-terrain object) to its recorded location, removing it from the map it is currently a part
+        /// Adds the given entity (non-terrain object) to this map, removing it from the map it is currently a part
         /// of.  Returns false if the entity could not be added (eg., collision detection would not allow it, etc.); true otherwise.
         /// </summary>
         /// <param name="entity">Entity to add.</param>
         /// <returns>True if the entity was successfully added; false otherwise.</returns>
-        public bool TryAddEntity(IGameObject entity)
+        public bool TryAddEntity(IGameObject entity) => TryAddEntityAt(entity, entity.Position);
+
+        /// <summary>
+        /// Adds the given entity (non-terrain object) to the location specified, removing it from the map it is currently a part
+        /// of.  Returns false if the entity could not be added (eg., collision detection would not allow it, etc.); true otherwise.
+        /// </summary>
+        /// <remarks>
+        /// The entity's Position property will be set to the location specified before it is added, but only if the function returns true.  No changes
+        /// will have been made to the entity if the function returns false; that is; you may assume that Moved events will not have fired,
+        /// the entity will not have been removed from any map it is already a part of, etc.
+        /// </remarks>
+        /// <param name="entity">Entity to add.</param>
+        /// <param name="position">Location to add the entity to.</param>
+        /// <returns>True if the entity was successfully added to the location specified; false otherwise.</returns>
+        public bool TryAddEntityAt(IGameObject entity, Point position)
         {
-            if (!CanAddEntity(entity)) return false;
+            if (!CanAddEntityAt(entity, position)) return false;
 
-            _entities.Add(entity, entity.Position);
-
+            // Remove the entity from its current map, if it is a part of one
             entity.CurrentMap?.RemoveEntity(entity);
+
+            // Update the entity's position field
+            entity.Position = position;
+
+            // Add the entity to this map
+            _entities.Add(entity, entity.Position);
             entity.OnMapChanged(this);
             entity.Moved += OnGameObjectMoved;
             entity.WalkabilityChanging += OnWalkabilityChanging;
@@ -751,11 +770,19 @@ namespace GoRogue.GameFramework
         }
 
         /// <summary>
-        /// Returns true if the entity given can be added to this map; false otherwise.
+        /// Returns true if the entity given can be added to this map at its current position; false otherwise.
         /// </summary>
         /// <param name="entity">The entity to add.</param>
-        /// <returns>true if the entity given can be added to this map; false otherwise.</returns>
-        public bool CanAddEntity(IGameObject entity)
+        /// <returns>true if the entity given can be added to this map at its current position; false otherwise.</returns>
+        public bool CanAddEntity(IGameObject entity) => CanAddEntityAt(entity, entity.Position);
+
+        /// <summary>
+        /// Returns true if the entity given can be added to this map at the position given; false otherwise.
+        /// </summary>
+        /// <param name="entity">The entity to add.</param>
+        /// <param name="position">The position to add the entity at.</param>
+        /// <returns>true if the entity given can be added to this map at the given position; false otherwise.</returns>
+        public bool CanAddEntityAt(IGameObject entity, Point position)
         {
             if (entity.CurrentMap == this)
                 return false;
@@ -763,21 +790,21 @@ namespace GoRogue.GameFramework
             if (entity.Layer < 1)
                 return false;
 
-            if (!this.Contains(entity.Position))
+            if (!this.Contains(position))
                 return false;
 
             if (!entity.IsWalkable)
             {
                 if (!LayerMasker.HasLayer(LayersBlockingWalkability, entity.Layer))
                     return false;
-                if (!WalkabilityView[entity.Position])
+                if (!WalkabilityView[position])
                     return false;
             }
 
             if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
                 return false;
 
-            return true;
+            return _entities.CanAdd(entity, position);
         }
 
         /// <summary>

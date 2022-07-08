@@ -27,7 +27,7 @@ namespace GoRogue.PerformanceTests
 
         private SenseMap _senseMap = null!;
 
-        [GlobalSetup(Target=nameof(CalculateSingleSource))]
+        [GlobalSetup(Target = nameof(CalculateSingleSource))]
         public void GlobalSetupSingleSource()
         {
             CreateSenseMap();
@@ -37,7 +37,7 @@ namespace GoRogue.PerformanceTests
             _senseMap.AddSenseSource(source);
         }
 
-        [GlobalSetup(Target=nameof(CalculateDoubleSource))]
+        [GlobalSetup(Target = nameof(CalculateDoubleSource))]
         public void GlobalSetupDoubleSource()
         {
             CreateSenseMap();

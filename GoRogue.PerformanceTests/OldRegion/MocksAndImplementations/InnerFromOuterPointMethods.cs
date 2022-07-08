@@ -27,12 +27,12 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
             for (int i = outerList[0].X; i < outerList[^1].X; i++)
             {
                 List<Point> row = outerList.Where(point => point.X == i).OrderBy(point => point.Y).ToList();
-                if(row.Count > 0)
+                if (row.Count > 0)
                 {
                     for (int j = row[0].Y; j <= row[^1].Y; j++)
                     {
                         var p = new Point(i, j);
-                        if(!region.OuterPoints.Contains(p) && !region.IsCorner(p))
+                        if (!region.OuterPoints.Contains(p) && !region.IsCorner(p))
                             region.InnerPoints.Add(p);
                     }
                 }

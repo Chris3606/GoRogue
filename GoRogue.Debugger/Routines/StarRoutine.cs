@@ -81,7 +81,7 @@ namespace GoRogue.Debugger.Routines
             foreach (var pos in _map.Positions())
                 _map[pos] = PolygonTileState.Exterior;
 
-            _polygons.Add(PolygonArea.RegularStar((_map.Width/2, _map.Height/2),_cornerAmount, _outerRadius, _innerRadius));
+            _polygons.Add(PolygonArea.RegularStar((_map.Width / 2, _map.Height / 2), _cornerAmount, _outerRadius, _innerRadius));
 
             // Update map values based on regions
             ApplyPolygonsToMap();
