@@ -59,7 +59,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataTuple(nameof(TestPositionsAndRadii))]
         public void SenseMapEquivalence(Point source, Radius shape)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(s_losMap);
+            var fov = new RecursiveShadowcastingFOV(s_losMap);
             var senseMap = new SenseMap(s_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)
@@ -85,7 +85,7 @@ namespace GoRogue.UnitTests.FOV
         [MemberDataTuple(nameof(AngleRestrictedShortTestPositionsAndRadii))]
         public void SenseMapAngleEquivalence(Point source, Radius shape, int angle, int span)
         {
-            var fov = new RecursiveShadowcastingDoubleBasedFOV(s_losMap);
+            var fov = new RecursiveShadowcastingFOV(s_losMap);
             var senseMap = new SenseMap(s_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)

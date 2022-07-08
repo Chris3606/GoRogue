@@ -88,8 +88,8 @@ namespace GoRogue.PerformanceTests
             // Create FOV structure to use
             _fov = FOVAlgorithm switch
             {
-                FOVAlgorithmType.RSDoubleBased => new RecursiveShadowcastingDoubleBasedFOV(transparencyView, pointHasher),
-                FOVAlgorithmType.RSBoolBased => new RecursiveShadowcastingFOV(
+                FOVAlgorithmType.RSDoubleBased => new RecursiveShadowcastingFOV(transparencyView, pointHasher),
+                FOVAlgorithmType.RSBoolBased => new RecursiveShadowcastingBooleanBasedFOV(
                     transparencyView, pointHasher),
                 _ => throw new Exception("Unsupported FOV algorithm.")
             };
