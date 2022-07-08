@@ -8,6 +8,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None
 
+## [3.0.0-alpha14] - 2022-07-07
+
+### Added
+- `GameFramework.Map` now contains `CanAddEntityAt` and `TryAddEntityAt` functions which allow you to specify a new position to check instead of using the entity's current one.
+
+### Changed
+- The double version of the recursive shadowcasting FOV algorithm is now much, much faster (about on par with the boolean version in typical cases)
+- `FOV.RecursiveShadowcastingFOV` now uses the double-based variation of the algorithm, since it now makes a more reasonable default
+
+### Fixed
+- The `CanAddEntity` function in `GameFramework.Map` now properly accounts for situations where the entity is being added to a layer which does not support multiple items at a given position 
+
 ## [3.0.0-alpha13] - 2022-06-26
 
 ### Added
