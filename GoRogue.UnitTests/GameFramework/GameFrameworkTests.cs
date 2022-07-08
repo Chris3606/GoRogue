@@ -236,6 +236,28 @@ namespace GoRogue.UnitTests.GameFramework
         }
 
         [Fact]
+        public void EntityAddedToSingleItemLayerCollisionError()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev, entityLayersSupportingMultipleItems: 0);
+            var obj = new GameObject((1, 1), 1);
+            var obj2 = new GameObject((1, 1), 1);
+
+            map.AddEntity(obj);
+            Assert.Throws<ArgumentException>(() => map.AddEntity(obj2));
+        }
+
+        [Fact]
+        public void CanAddEntityToSingleLayerExistingItem()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev, entityLayersSupportingMultipleItems: 0);
+            var obj = new GameObject((1, 1), 1);
+            var obj2 = new GameObject((1, 1), 1);
+
+            map.AddEntity(obj);
+            Assert.False(map.CanAddEntity(obj2));
+        }
+
+        [Fact]
         public void ValidEntityMove()
         {
             var map = new Map(10, 10, 1, Distance.Chebyshev);

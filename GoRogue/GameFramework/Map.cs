@@ -777,7 +777,7 @@ namespace GoRogue.GameFramework
             if (!entity.IsTransparent && !LayerMasker.HasLayer(LayersBlockingTransparency, entity.Layer))
                 return false;
 
-            return true;
+            return _entities.CanAdd(entity, entity.Position);
         }
 
         /// <summary>
