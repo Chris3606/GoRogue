@@ -9,6 +9,8 @@ namespace GoRogue.UnitTests.GameFramework
 {
     public class GameFrameworkTests
     {
+        public static int MovedTimesCalled;
+        
         [Fact]
         public void ApplyTerrainOverlay()
         {
@@ -224,6 +226,43 @@ namespace GoRogue.UnitTests.GameFramework
 
             map.AddEntity(obj);
             Assert.Single(map.Entities);
+        }
+
+        [Fact]
+        public void CanAddEntityAt()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1, false, false);
+            var obj2 = new GameObject((2, 2), 1, false, false);
+            map.AddEntity(obj);
+            Assert.Single(map.Entities);
+
+            Assert.True(map.CanAddEntity(obj2));
+            Assert.True(map.CanAddEntityAt(obj2, obj2.Position));
+
+            Assert.False(map.CanAddEntityAt(obj2, obj.Position));
+        }
+
+        [Fact]
+        public void TryAddEntityAt()
+        {
+            MovedTimesCalled = 0;
+            
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1, false, false);
+            var obj2 = new GameObject((2, 2), 1, false, false);
+            obj2.Moved += (s, e) => ++MovedTimesCalled;
+            
+            map.AddEntity(obj);
+            Assert.Single(map.Entities);
+
+            Assert.False(map.TryAddEntityAt(obj2, obj.Position));
+            Assert.Equal(new Point(2, 2), obj2.Position);
+            Assert.Equal(0, MovedTimesCalled);
+
+            Assert.True(map.TryAddEntityAt(obj2, (3, 3)));
+            Assert.Equal(new Point(3, 3), obj2.Position);
+            Assert.Equal(1, MovedTimesCalled);
         }
 
         [Fact]
