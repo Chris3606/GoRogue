@@ -11,12 +11,12 @@ namespace GoRogue.FOV
     /// Implements <see cref="IFOV"/> by using a recursive shadow-casting implementation.
     /// </summary>
     /// <remarks>
-    /// Compared to the functionally equivalent implementation of recursive shadowcasting, <see cref="RecursiveShadowcastingDoubleBasedFOV"/>, this version
-    /// is usually a reasonable default.  However, this version can perform poorly when there are a lot of FOV calculations being appended together (via multiple
-    /// calls to CalculateAppend) and you are using DoubleResultView a lot; in those cases, the other implementation may be a better choice.
+    /// Compared to the functionally equivalent implementation of recursive shadowcasting, <see cref="RecursiveShadowcastingBooleanBasedFOV"/>, this version
+    /// is usually a reasonable default.  However, this version can take up a great deal of memory for large maps; in these cases, you may prefer
+    /// <see cref="RecursiveShadowcastingBooleanBasedFOV"/> instead.
     /// </remarks>
     [PublicAPI]
-    public class RecursiveShadowcastingFOV : BooleanBasedFOVBase
+    public class RecursiveShadowcastingFOV : DoubleBasedFOVBase
     {
         private HashSet<Point> _currentFOV;
         private HashSet<Point> _previousFOV;
@@ -31,7 +31,7 @@ namespace GoRogue.FOV
         /// </param>
         /// <param name="hasher">The hashing algorithm to use for points in hash sets.  Defaults to the default hash algorithm for Points.</param>
         public RecursiveShadowcastingFOV(IGridView<bool> transparencyView, IEqualityComparer<Point>? hasher = null)
-            : base(transparencyView, new BitArrayView(transparencyView.Width, transparencyView.Height))
+            : base(transparencyView, new ArrayView<double>(transparencyView.Width, transparencyView.Height))
         {
             hasher ??= EqualityComparer<Point>.Default;
 
@@ -52,15 +52,16 @@ namespace GoRogue.FOV
         protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc)
         {
             radius = Math.Max(1, radius);
+            var decay = 1.0 / (radius + 1);
 
-            ResultView[originX, originY] = true;
+            ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
             foreach (var d in AdjacencyRule.Diagonals.DirectionsOfNeighbors())
             {
-                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY, ResultView, _currentFOV,
+                ShadowCast(1, 1.0, 0.0, 0, d.DeltaX, d.DeltaY, 0, radius, originX, originY, decay, ResultView, _currentFOV,
                     TransparencyView, distanceCalc);
-                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, originX, originY, ResultView, _currentFOV,
+                ShadowCast(1, 1.0, 0.0, d.DeltaX, 0, 0, d.DeltaY, radius, originX, originY, decay, ResultView, _currentFOV,
                     TransparencyView, distanceCalc);
             }
         }
@@ -69,6 +70,7 @@ namespace GoRogue.FOV
         protected override void OnCalculate(int originX, int originY, double radius, Distance distanceCalc, double angle, double span)
         {
             radius = Math.Max(1, radius);
+            var decay = 1.0 / (radius + 1);
 
             // Convert from 0 pointing up to 0 pointing right, which is what is expected by the ShadowCastLimited
             // implementation
@@ -79,27 +81,27 @@ namespace GoRogue.FOV
                     SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
             span *= SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
 
-            ResultView[originX, originY] = true;
+            ResultView[originX, originY] = 1; // Full power to starting space
             _currentFOV.Add(new Point(originX, originY));
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, 1, 0, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
-                distanceCalc, angle, span);
-
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
-                distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, 1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, 1, 0, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, 1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
 
-            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, 0, -1, -1, 0, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
-            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, ResultView, _currentFOV, TransparencyView,
+            ShadowCastLimited(1, 1.0, 0.0, -1, 0, 0, -1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
+                distanceCalc, angle, span);
+
+            ShadowCastLimited(1, 1.0, 0.0, 0, 1, -1, 0, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
+                distanceCalc, angle, span);
+            ShadowCastLimited(1, 1.0, 0.0, 1, 0, 0, -1, radius, originX, originY, decay, ResultView, _currentFOV, TransparencyView,
                 distanceCalc, angle, span);
         }
 
@@ -108,9 +110,9 @@ namespace GoRogue.FOV
         {
             // Reset visibility
             if (ResultView.Width != TransparencyView.Width || ResultView.Height != TransparencyView.Height)
-                ResultView = new BitArrayView(TransparencyView.Width, TransparencyView.Height);
-            else
-                ((BitArrayView)ResultView).Fill(false);
+                ResultView = new ArrayView<double>(TransparencyView.Width, TransparencyView.Height);
+            else // ArrayView.Clear is faster than the generic Fill, so we'll cast and use that since we know ResultView is an ArrayView
+                ((ArrayView<double>)ResultView).Clear();
 
             // Cycle current and previous FOVs
             (_previousFOV, _currentFOV) = (_currentFOV, _previousFOV);
@@ -118,7 +120,7 @@ namespace GoRogue.FOV
         }
 
         private static void ShadowCast(int row, double start, double end, int xx, int xy, int yx, int yy,
-                                       double radius, int startX, int startY, ISettableGridView<bool> lightMap,
+                                       double radius, int startX, int startY, double decay, ISettableGridView<double> lightMap,
                                        HashSet<Point> fovSet,
                                        IGridView<bool> map, Distance distanceStrategy)
         {
@@ -145,11 +147,14 @@ namespace GoRogue.FOV
 
                     var deltaRadius = distanceStrategy.Calculate(deltaX, deltaY);
                     // If within lightable area, light if needed
-                    if (deltaRadius <= radius && !lightMap[currentX, currentY])
+                    if (deltaRadius <= radius)
                     {
-                        lightMap[currentX, currentY] = true;
-                        fovSet.Add(new Point(currentX, currentY));
-
+                        var bright = 1 - decay * deltaRadius;
+                        if (bright > lightMap[currentX, currentY])
+                        {
+                            lightMap[currentX, currentY] = bright;
+                            fovSet.Add(new Point(currentX, currentY));
+                        }
                     }
 
                     if (blocked) // Previous cell was blocked
@@ -167,7 +172,7 @@ namespace GoRogue.FOV
                         if (map[currentX, currentY] || !(distance < radius)) continue;
 
                         blocked = true;
-                        ShadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY,
+                        ShadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay,
                             lightMap, fovSet, map, distanceStrategy);
                         newStart = rightSlope;
                     }
@@ -176,8 +181,8 @@ namespace GoRogue.FOV
         }
 
         private static void ShadowCastLimited(int row, double start, double end, int xx, int xy, int yx, int yy,
-                                              double radius, int startX, int startY,
-                                              ISettableGridView<bool> lightMap, HashSet<Point> fovSet, IGridView<bool> map,
+                                              double radius, int startX, int startY, double decay,
+                                              ISettableGridView<double> lightMap, HashSet<Point> fovSet, IGridView<bool> map,
                                               Distance distanceStrategy, double angle, double span)
         {
             double newStart = 0;
@@ -207,9 +212,10 @@ namespace GoRogue.FOV
                     // Check if within lightable area, light if needed
                     if (deltaRadius <= radius && (at2 <= span * 0.5 || at2 >= 1.0 - span * 0.5))
                     {
-                        if (!lightMap[currentX, currentY])
+                        var bright = 1 - decay * deltaRadius;
+                        if (bright > lightMap[currentX, currentY])
                         {
-                            lightMap[currentX, currentY] = true;
+                            lightMap[currentX, currentY] = bright;
                             fovSet.Add(new Point(currentX, currentY));
                         }
                     }
@@ -227,7 +233,7 @@ namespace GoRogue.FOV
                     else if (!map[currentX, currentY] && distance < radius) // Wall within line of sight
                     {
                         blocked = true;
-                        ShadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY,
+                        ShadowCastLimited(distance + 1, start, leftSlope, xx, xy, yx, yy, radius, startX, startY, decay,
                             lightMap, fovSet, map, distanceStrategy, angle, span);
                         newStart = rightSlope;
                     }

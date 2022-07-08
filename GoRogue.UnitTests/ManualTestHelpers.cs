@@ -162,7 +162,7 @@ namespace GoRogue.UnitTests
         public void ManualPrintFOV()
         {
             var map = MockMaps.Rectangle(_width, _height);
-            var myFov = new RecursiveShadowcastingDoubleBasedFOV(map);
+            var myFov = new RecursiveShadowcastingFOV(map);
             myFov.Calculate(5, 5, 3);
 
             _output.WriteLine(myFov.ToString());

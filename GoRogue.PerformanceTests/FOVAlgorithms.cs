@@ -6,14 +6,14 @@ using GoRogue.MapGeneration;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
-//using SadRogue.Primitives.PointHashers;
+using SadRogue.Primitives.PointHashers;
 
 namespace GoRogue.PerformanceTests
 {
     public enum PointHashAlgorithm
     {
         Default,
-        //KnownSizeHasher
+        KnownSizeHasher
     };
 
     public enum FOVAlgorithmType
@@ -58,7 +58,7 @@ namespace GoRogue.PerformanceTests
             CreateFOVAlgorithm();
         }
 
-        [GlobalSetup(Target = nameof(SumDoubleResults))]
+        [GlobalSetup(Targets = new[] { nameof(SumDoubleResults), nameof(SumBoolResults) })]
         public void GlobalSetupResultInspection()
         {
             CreateFOVAlgorithm();
@@ -81,15 +81,15 @@ namespace GoRogue.PerformanceTests
             IEqualityComparer<Point>? pointHasher = PointComparer switch
             {
                 PointHashAlgorithm.Default => null,
-                //PointHashAlgorithm.KnownSizeHasher => new KnownSizeHasher(transparencyView.Width),
+                PointHashAlgorithm.KnownSizeHasher => new KnownSizeHasher(transparencyView.Width),
                 _ => throw new Exception("Unsupported hashing algorithm.")
             };
 
             // Create FOV structure to use
             _fov = FOVAlgorithm switch
             {
-                FOVAlgorithmType.RSDoubleBased => new RecursiveShadowcastingDoubleBasedFOV(transparencyView, pointHasher),
-                FOVAlgorithmType.RSBoolBased => new RecursiveShadowcastingFOV(
+                FOVAlgorithmType.RSDoubleBased => new RecursiveShadowcastingFOV(transparencyView, pointHasher),
+                FOVAlgorithmType.RSBoolBased => new RecursiveShadowcastingBooleanBasedFOV(
                     transparencyView, pointHasher),
                 _ => throw new Exception("Unsupported FOV algorithm.")
             };
@@ -109,6 +109,19 @@ namespace GoRogue.PerformanceTests
             {
                 for (int x = 0; x < _fov.DoubleResultView.Width; x++)
                     sum += _fov.DoubleResultView[x, y];
+            }
+
+            return sum;
+        }
+
+        [Benchmark]
+        public double SumBoolResults()
+        {
+            int sum = 0;
+            for (int y = 0; y < _fov.DoubleResultView.Height; y++)
+            {
+                for (int x = 0; x < _fov.DoubleResultView.Width; x++)
+                    sum += _fov.BooleanResultView[x, y] ? 2 : 1;
             }
 
             return sum;

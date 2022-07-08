@@ -13,9 +13,9 @@ namespace GoRogue.FOV
     /// instead.  If neither of those use cases fits your situation, feel free to use <see cref="FOVBase"/> or <see cref="IFOV"/> directly.
     ///
     /// Although it can vary by implementation, if all other things are equal, classes that use this implementation as opposed to <see cref="BooleanBasedFOVBase"/>
-    /// generally tend to take up more memory and may take more time to perform a call to the Calculate and CalculateAppend functions, however they will generally
-    /// be able to retrieve values from <see cref="IReadOnlyFOV.DoubleResultView"/> more quickly.  Retrieving values from <see cref="IReadOnlyFOV.BooleanResultView"/>
-    /// can be slightly slower than from DoubleResultView, since the boolean values are derived from the double values.
+    /// generally tend to take up more memory, however they will generally be able to retrieve values from <see cref="IReadOnlyFOV.DoubleResultView"/> more quickly.
+    /// Retrieving values from <see cref="IReadOnlyFOV.BooleanResultView"/> can be slightly slower than from DoubleResultView, since the boolean values are derived
+    /// from the double values.
     /// </remarks>
     [PublicAPI]
     public abstract class DoubleBasedFOVBase : FOVBase
