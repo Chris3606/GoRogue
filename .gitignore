@@ -10,6 +10,9 @@
 # VSCode settings
 **/.vscode/*
 
+# Documentation Output directory
+docs/*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

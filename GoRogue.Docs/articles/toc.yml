@@ -2,20 +2,14 @@
   href: intro.md
 - name: Getting Started
   href: getting-started.md
+- name: 2.x to 3.0 Upgrade Guide
+  href: 2-to-3-upgrade-guide.md
 - name: 1.x to 2.0 Upgrade Guide
   href: 1-to-2-upgrade-guide.md
-- name: Grid System
-  href: grid-system.md
+- name: How-Tos
+  href: howtos/index.md
   items:
-    - name: 2D Point
-      href: grid_components/2d-points.md
-    - name: Directions and Defining a Coordinate Plane
-      href: grid_components/directions-defining-coordinate-plane.md
-    - name: Adjacency and Neighbors
-      href: grid_components/adjacency-and-neighbors.md
-    - name: Measuring Distance
-      href: grid_components/measuring-distance.md
-- name: Game Framework
-  href: game-framework.md
-- name: GoRogue 3.0 Alpha Map Generation
-  href: gr3-map-gen.md
+      - name: Using Dice Notation
+        href: howtos/dice-notation.md
+      - name: Using Map Generation
+        href: howtos/map-generation.md
