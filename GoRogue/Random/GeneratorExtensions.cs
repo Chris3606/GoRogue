@@ -495,5 +495,87 @@ namespace ShaiRandom.Generators
             return new Point(rng.NextInt(gridView.Width), rng.NextInt(gridView.Height));
         }
         #endregion
+
+        #region Random Selection - Rectangle
+
+        /// <summary>
+        /// Randomly selects a position within the Rectangle.
+        /// </summary>
+        /// <param name="rng"/>
+        /// <param name="rect">Rectangle to select a position from.</param>
+        /// <returns>A random position within the Rectangle.</returns>
+        public static Point RandomPosition(this IEnhancedRandom rng, Rectangle rect)
+        {
+            if (rect.Width == 0 || rect.Height == 0)
+                throw new ArgumentException("Cannot select random position from empty rectangle.", nameof(rect));
+
+            return new Point(rng.NextInt(rect.Width) + rect.MinExtentX, rng.NextInt(rect.Height) + rect.MinExtentY);
+        }
+
+        /// <summary>
+        /// Gets a random position in the rectangle, for which the selector returns true. Random
+        /// positions will continuously be generated until one that qualifies is found.
+        /// </summary>
+        /// <remarks>
+        /// This function will never return if no positions in the rectangle return true for the given selector, and could take
+        /// a very long time to execute if the rectangle is large and the selector returns true for very few of its positions.
+        /// For a more reliable termination, use the overload taking a maxTries parameter instead.
+        /// </remarks>
+        /// <exception cref="ArgumentException">An empty rectangle was given.</exception>
+        /// <param name="rng" />
+        /// <param name="rect">The Rectangle to select from.</param>
+        /// <param name="selector">
+        /// Function that takes a position, and returns true if it is an
+        /// acceptable selection, and false if not.
+        /// </param>
+        /// <returns>A random position in the Rectangle for which the selector returns true.</returns>
+        public static Point RandomPosition(this IEnhancedRandom rng, Rectangle rect,
+            Func<Point, bool> selector)
+        {
+            if (rect.Width == 0 || rect.Height == 0)
+                throw new ArgumentException("Cannot select random position from empty rectangle.", nameof(rect));
+
+            var pos = rng.RandomPosition(rect);
+            while (!selector(pos))
+                pos = rng.RandomPosition(rect);
+            return pos;
+        }
+
+        /// <summary>
+        /// Gets a random position in the rectangle, for which the selector returns true. Random
+        /// positions will continuously be generated until one that qualifies is found, or <paramref name="maxTries"/>
+        /// selections occur.
+        /// </summary>
+        /// <exception cref="ArgumentException">An empty rectangle was provided.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">A <paramref name="maxTries"/> value that was less than or equal to 0 was provided.</exception>
+        /// <exception cref="MaxAttemptsReachedException">A value was selected <paramref name="maxTries"/> times, and none of the selected positions returned true from <paramref name="selector"/>.</exception>
+        /// <param name="rng" />
+        /// <param name="rect">The Rectangle to select from.</param>
+        /// <param name="selector">
+        /// Function that takes a position, and returns true if it is an
+        /// acceptable selection, and false if not.
+        /// </param>
+        /// <param name="maxTries">Maximum number of selections to make before giving up and throwing an exception.</param>
+        /// <returns>A random position in the Rectangle for which the selector returns true.</returns>
+        public static Point RandomPosition(this IEnhancedRandom rng, Rectangle rect,
+            Func<Point, bool> selector, int maxTries)
+        {
+            if (maxTries <= 0)
+                throw new ArgumentOutOfRangeException(nameof(maxTries),
+                    $"Value must be > 0; for infinite retries, use the overload without a {nameof(maxTries)} parameter.");
+
+            int curTries = 0;
+            while (curTries < maxTries)
+            {
+                var pos = rng.RandomPosition(rect);
+                if (selector(pos))
+                    return pos;
+
+                curTries++;
+            }
+
+            throw new MaxAttemptsReachedException();
+        }
+        #endregion
     }
 }
