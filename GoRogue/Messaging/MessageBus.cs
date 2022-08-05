@@ -91,6 +91,15 @@ namespace GoRogue.Messaging
         public T RegisterAllSubscribers<T>(T subscriber)
             where T : notnull
         {
+            if (!TryRegisterAllSubscribers(subscriber))
+                throw new ArgumentException("Subscriber added to message bus which didn't implement ISubscriber<>.", nameof(subscriber));
+            
+            return subscriber;
+        }
+
+        public bool TryRegisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
             var interfaces = subscriber.GetType().GetInterfaces();
             bool added = false;
 
@@ -99,19 +108,24 @@ namespace GoRogue.Messaging
                 if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>))
                 {
                     added = true;
-                    
+
                     var messageType = i.GenericTypeArguments[0];
                     typeof(MessageBus).GetMethod(nameof(RegisterSubscriber))!.MakeGenericMethod(messageType).Invoke(this, new object[] { subscriber });
                 }
             }
 
-            if (!added)
-                throw new ArgumentException("Subscriber added to message bus which didn't implement ISubscriber<>.", nameof(subscriber));
-            
-            return subscriber;
+            return added;
         }
 
         public void UnregisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            if (!TryUnregisterAllSubscribers(subscriber))
+                throw new ArgumentException(
+                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that is not subscribed.");
+        }
+
+        public bool TryUnregisterAllSubscribers<T>(T subscriber)
             where T : notnull
         {
             var interfaces = subscriber.GetType().GetInterfaces();
@@ -129,12 +143,8 @@ namespace GoRogue.Messaging
                 }
             }
 
-            if (!unregistered)
-                throw new ArgumentException(
-                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that is not subscribed.");
+            return unregistered;
         }
-
-        // TODO: TryRegisterAllSubscribers and TryUnregisterAllSubscribers
 
         /// <summary>
         /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have

@@ -227,5 +227,24 @@ namespace GoRogue.UnitTests.Messaging
             _bus.Send(new MockMessage2());
             AssertHandleCounts();
         }
+
+        // Ensure that UnregisterAllSubscribers doesn't crash when given a handler which is partially registered
+        [Fact]
+        public void UnregisterAllHandlerPartial()
+        {
+            var sub = new MockSubscribers();
+            _bus.RegisterAllSubscribers(sub);
+
+            Assert.Equal(2, _bus.SubscriberCount);
+            _bus.UnregisterSubscriber<MockMessage1>(sub);
+            Assert.Equal(1, _bus.SubscriberCount);
+            
+            _bus.UnregisterAllSubscribers(sub);
+            Assert.Equal(0, _bus.SubscriberCount);
+
+            _bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage2());
+            AssertHandleCounts();
+        }
     }
 }
