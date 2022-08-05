@@ -39,7 +39,7 @@ namespace GoRogue.Messaging
         /// </summary>
         /// <remarks>
         /// Particularly if your handling class subscribes to multiple message types, you may want to consider using <see cref="RegisterAllSubscribers{T}"/>
-        /// instead; however this function uses reflection so would be slower than just calling this function once per implementation of ISubscriber.
+        /// instead; however that function uses reflection so will be slower than just calling this function once per implementation of ISubscriber.
         /// </remarks>
         /// <typeparam name="TMessage">
         /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
@@ -70,7 +70,7 @@ namespace GoRogue.Messaging
         /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
         /// variation of ISubscriber, or you need registration to happen as quickly as possible, then you should instead consider calling
         /// <see cref="RegisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.  This function
-        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow compared to RegisterSubscriber.
         /// </remarks>
         /// <typeparam name="T">
         /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
@@ -98,7 +98,7 @@ namespace GoRogue.Messaging
         /// </summary>
         /// <remarks>
         /// Particularly if your handling class subscribes to multiple message types, you may want to consider using <see cref="TryRegisterAllSubscribers{T}"/>
-        /// instead; however this function uses reflection so would be slower than just calling this function once per implementation of ISubscriber.
+        /// instead; however that function uses reflection so will be slower than just calling this function once per implementation of ISubscriber.
         /// </remarks>
         /// <typeparam name="TMessage">
         /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
@@ -135,7 +135,7 @@ namespace GoRogue.Messaging
         /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
         /// variation of ISubscriber, or you need registration to happen as quickly as possible, then you should instead consider calling
         /// <see cref="TryRegisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.  This function
-        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow compared to TryRegisterSubscriber.
         /// </remarks>
         /// <typeparam name="T">
         /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
@@ -194,10 +194,10 @@ namespace GoRogue.Messaging
         /// <remarks>
         /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
         /// variation of ISubscriber, or you need unregistration to happen as quickly as possible, then you should instead consider calling
-        /// <see cref="UnregisterAllSubscribers{T}(T)" /> once for each variation of ISubscriber your subscriber implements.  This function
-        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.  This
+        /// function uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow compared to UnregisterSubscriber.
         ///
-        /// You may call this function even if all of the subscriber's implementations of ISubscriber have not been registered with the bus; it will simply
+        /// You may call this function even if some of the subscriber's implementations of ISubscriber are not registered with the bus; it will simply
         /// unregister the ones that _have_ been registered.  An exception will be thrown if no implementations of ISubscriber were registered, however.
         /// </remarks>
         ///<typeparam name="T">
@@ -260,12 +260,13 @@ namespace GoRogue.Messaging
         /// <remarks>
         /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
         /// variation of ISubscriber, or you need unregistration to happen as quickly as possible, then you should instead consider calling
-        /// <see cref="TryUnregisterAllSubscribers{T}(T)" /> once for each variation of ISubscriber your subscriber implements.  This function
-        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// <see cref="TryUnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.
+        /// This function uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow compared to
+        /// TryUnregisterSubscriber.
         ///
-        /// You may call this function even if all of the subscriber's implementations of ISubscriber have not been registered with the bus; it will simply
-        /// unregister the ones that _have_ been registered, the function will still return true, as long as at least one subscriber was removed.  False will
-        /// only be returned if no ISubscriber implementations were unregistered.
+        /// You may call this function even if some of the subscriber's implementations of ISubscriber are not registered with the bus; it will simply
+        /// unregister the ones that _have_ been registered; and similarly the function will still return true, as long as at least one subscriber was removed.
+        /// False will only be returned if no ISubscriber implementations were unregistered.
         /// </remarks>
         ///<typeparam name="T">
         /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).

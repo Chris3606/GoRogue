@@ -214,7 +214,7 @@ namespace GoRogue.UnitTests.Messaging
 
         // Ensure that handlers which are unregistered via UnregisterAllSubscribers are not called anymore
         [Fact]
-        public void UnregisterAllHandler()
+        public void UnregisterAllHandlers()
         {
             var sub = new MockSubscribers();
             _bus.RegisterAllSubscribers(sub);
@@ -230,7 +230,7 @@ namespace GoRogue.UnitTests.Messaging
 
         // Ensure that UnregisterAllSubscribers doesn't crash when given a handler which is partially registered
         [Fact]
-        public void UnregisterAllHandlerPartial()
+        public void UnregisterAllHandlersPartial()
         {
             var sub = new MockSubscribers();
             _bus.RegisterAllSubscribers(sub);
