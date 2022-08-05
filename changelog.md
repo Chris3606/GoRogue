@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - RNG extension functions for generating random positions from Rectangles
+- `MessageBus` now has a `RegisterAllSubscribers` method which automatically registers _all_ variations of ISubscriber the parameter is subscribed to in one call.
+    - This is now a safer default than the old RegisterSubscribers function, but it uses reflection so may be slower.
+    - `TryRegisterAllSubscribers` is also included.
+- `MessageBus` now has a `UnregisterAllSubscribers` method which automatically unregisters _all_ variations of ISubscriber the parameter is subscribed to in one call.
+    - This is now a safer default than the old UnregisterSubscribers function, but it uses reflection so may be slower.
+    - `TryUnregisterAllSubscribers` is also included.
 
 ## [3.0.0-alpha14] - 2022-07-07
 
