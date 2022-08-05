@@ -88,6 +88,54 @@ namespace GoRogue.Messaging
             return true;
         }
 
+        public T RegisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            var interfaces = subscriber.GetType().GetInterfaces();
+            bool added = false;
+
+            foreach (var i in interfaces)
+            {
+                if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>))
+                {
+                    added = true;
+                    
+                    var messageType = i.GenericTypeArguments[0];
+                    typeof(MessageBus).GetMethod(nameof(RegisterSubscriber))!.MakeGenericMethod(messageType).Invoke(this, new object[] { subscriber });
+                }
+            }
+
+            if (!added)
+                throw new ArgumentException("Subscriber added to message bus which didn't implement ISubscriber<>.", nameof(subscriber));
+            
+            return subscriber;
+        }
+
+        public void UnregisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            var interfaces = subscriber.GetType().GetInterfaces();
+            bool unregistered = false;
+
+            foreach (var i in interfaces)
+            {
+                if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>))
+                {
+                    var messageType = i.GenericTypeArguments[0];
+                    // We can safely use the null-forgiving operator here since we control the class which we are reflecting on.
+                    var currentUnregisterResult = (bool)typeof(MessageBus).GetMethod(nameof(TryUnregisterSubscriber))!.MakeGenericMethod(messageType).Invoke(this, new object[] { subscriber })!;
+
+                    unregistered = unregistered || currentUnregisterResult;
+                }
+            }
+
+            if (!unregistered)
+                throw new ArgumentException(
+                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that is not subscribed.");
+        }
+
+        // TODO: TryRegisterAllSubscribers and TryUnregisterAllSubscribers
+
         /// <summary>
         /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
         /// a shorter lifetime than the

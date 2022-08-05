@@ -111,6 +111,22 @@ namespace GoRogue.UnitTests.Messaging
             AssertHandleCounts(mb2: 1);
         }
 
+        // Ensure RegisterAllSubscribers works as expected
+        [Fact]
+        public void MultiHandlerSubscribeAll()
+        {
+            var handler = new MockSubscribers();
+
+            _bus.RegisterAllSubscribers(handler);
+
+            _bus.Send(new MockMessage1());
+            AssertHandleCounts(mb1: 1);
+            ResetHandleCounts();
+
+            _bus.Send(new MockMessage2());
+            AssertHandleCounts(mb2: 1);
+        }
+
         // Test that each handler that wants a given type gets called
         [Fact]
         public void MultipleHandlersSameType()
@@ -193,6 +209,22 @@ namespace GoRogue.UnitTests.Messaging
             Assert.Equal(0, _bus.SubscriberCount);
 
             _bus.Send(new MockMessage1());
+            AssertHandleCounts();
+        }
+
+        // Ensure that handlers which are unregistered via UnregisterAllSubscribers are not called anymore
+        [Fact]
+        public void UnregisterAllHandler()
+        {
+            var sub = new MockSubscribers();
+            _bus.RegisterAllSubscribers(sub);
+
+            Assert.Equal(2, _bus.SubscriberCount);
+            _bus.UnregisterAllSubscribers(sub);
+            Assert.Equal(0, _bus.SubscriberCount);
+
+            _bus.Send(new MockMessage1());
+            _bus.Send(new MockMessage2());
             AssertHandleCounts();
         }
     }
