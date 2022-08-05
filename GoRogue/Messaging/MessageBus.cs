@@ -7,8 +7,7 @@ namespace GoRogue.Messaging
 {
     /// <summary>
     /// A messaging system that can have subscribers added to it, and send messages.  When messages are sent, it will call any
-    /// handlers that requested to handle messages
-    /// of the proper types, based on the type-tree/interface-tree of the messages.
+    /// handlers that requested to handle messages of the proper types, based on the type-tree/interface-tree of the messages.
     /// </summary>
     [PublicAPI]
     public class MessageBus
@@ -35,10 +34,13 @@ namespace GoRogue.Messaging
         /// Adds the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages
         /// that can cast to <typeparamref name="TMessage" /> are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
         /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
-        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> when they are disposed of, to avoid the bus
-        /// preventing
-        /// the handler from being garbage collected.
+        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> or another Unregister function when they are disposed
+        /// of, to avoid the bus preventing the handler from being garbage collected.
         /// </summary>
+        /// <remarks>
+        /// Particularly if your handling class subscribes to multiple message types, you may want to consider using <see cref="RegisterAllSubscribers{T}"/>
+        /// instead; however this function uses reflection so would be slower than just calling this function once per implementation of ISubscriber.
+        /// </remarks>
         /// <typeparam name="TMessage">
         /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
         /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
@@ -58,12 +60,46 @@ namespace GoRogue.Messaging
         }
 
         /// <summary>
+        /// Adds the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages of a type that
+        /// the subscriber is subscribed to are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
+        /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
+        /// <see cref="UnregisterAllSubscribers{T}(T)" /> or another Unregister function when they are disposed
+        /// of, to avoid the bus preventing the handler from being garbage collected.
+        /// </summary>
+        /// <remarks>
+        /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
+        /// variation of ISubscriber, or you need registration to happen as quickly as possible, then you should instead consider calling
+        /// <see cref="RegisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.  This function
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// </remarks>
+        /// <typeparam name="T">
+        /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to add.</param>
+        /// <returns>
+        /// The subscriber that was added, in case a reference is needed to later call
+        /// <see cref="UnregisterAllSubscribers{T}(T)" />.
+        /// </returns>
+        public T RegisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            if (!TryRegisterAllSubscribers(subscriber))
+                throw new ArgumentException("Subscriber added to message bus which didn't implement ISubscriber<>.", nameof(subscriber));
+
+            return subscriber;
+        }
+
+        /// <summary>
         /// Tries to add the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages
         /// that can cast to <typeparamref name="TMessage" /> are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
         /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
-        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> when they are disposed of, to avoid the bus
-        /// preventing the handler from being garbage collected.
+        /// <see cref="UnregisterSubscriber{TMessage}(ISubscriber{TMessage})" /> or another Unregister function when they are disposed of,
+        /// to avoid the bus preventing the handler from being garbage collected.
         /// </summary>
+        /// <remarks>
+        /// Particularly if your handling class subscribes to multiple message types, you may want to consider using <see cref="TryRegisterAllSubscribers{T}"/>
+        /// instead; however this function uses reflection so would be slower than just calling this function once per implementation of ISubscriber.
+        /// </remarks>
         /// <typeparam name="TMessage">
         /// Type of message the subscriber is handling.  This can typically be inferred by the compiler,
         /// barring the case detailed in the <see cref="ISubscriber{TMessage}" /> remarks where one class subscribes to multiple
@@ -88,15 +124,26 @@ namespace GoRogue.Messaging
             return true;
         }
 
-        public T RegisterAllSubscribers<T>(T subscriber)
-            where T : notnull
-        {
-            if (!TryRegisterAllSubscribers(subscriber))
-                throw new ArgumentException("Subscriber added to message bus which didn't implement ISubscriber<>.", nameof(subscriber));
-            
-            return subscriber;
-        }
-
+        /// <summary>
+        /// Tries to add the given subscriber to the message bus's handlers list, so its Handle function will be called when any messages of a type that
+        /// the subscriber is subscribed to are sent via the <see cref="Send{TMessage}(TMessage)" /> function.
+        /// Particularly when a handler is intended to have a shorter lifespan than the message bus, they MUST be unregistered via
+        /// <see cref="UnregisterAllSubscribers{T}(T)" /> or another Unregister function when they are disposed
+        /// of, to avoid the bus preventing the handler from being garbage collected.
+        /// </summary>
+        /// <remarks>
+        /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
+        /// variation of ISubscriber, or you need registration to happen as quickly as possible, then you should instead consider calling
+        /// <see cref="TryRegisterSubscriber{TMessage}(ISubscriber{TMessage})" /> once for each variation of ISubscriber your subscriber implements.  This function
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        /// </remarks>
+        /// <typeparam name="T">
+        /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to add.</param>
+        /// <returns>
+        /// True if the subscriber was added; false if it was already identically registered.
+        /// </returns>
         public bool TryRegisterAllSubscribers<T>(T subscriber)
             where T : notnull
         {
@@ -117,35 +164,6 @@ namespace GoRogue.Messaging
             return added;
         }
 
-        public void UnregisterAllSubscribers<T>(T subscriber)
-            where T : notnull
-        {
-            if (!TryUnregisterAllSubscribers(subscriber))
-                throw new ArgumentException(
-                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that is not subscribed.");
-        }
-
-        public bool TryUnregisterAllSubscribers<T>(T subscriber)
-            where T : notnull
-        {
-            var interfaces = subscriber.GetType().GetInterfaces();
-            bool unregistered = false;
-
-            foreach (var i in interfaces)
-            {
-                if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>))
-                {
-                    var messageType = i.GenericTypeArguments[0];
-                    // We can safely use the null-forgiving operator here since we control the class which we are reflecting on.
-                    var currentUnregisterResult = (bool)typeof(MessageBus).GetMethod(nameof(TryUnregisterSubscriber))!.MakeGenericMethod(messageType).Invoke(this, new object[] { subscriber })!;
-
-                    unregistered = unregistered || currentUnregisterResult;
-                }
-            }
-
-            return unregistered;
-        }
-
         /// <summary>
         /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
         /// a shorter lifetime than the
@@ -164,6 +182,34 @@ namespace GoRogue.Messaging
             if (!TryUnregisterSubscriber(subscriber))
                 throw new ArgumentException(
                     $"Tried to remove a subscriber from a {nameof(MessageBus)} that was never added.");
+        }
+
+        /// <summary>
+        /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
+        /// a shorter lifetime than the
+        /// MessageBus object it subscribed with, handlers MUST be removed when disposed of so they can be garbage collected -- an
+        /// object cannot be garbage-collected so long as it is registered as a subscriber to a message bus (unless the bus is also being
+        /// garbage-collected).
+        /// </summary>
+        /// <remarks>
+        /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
+        /// variation of ISubscriber, or you need unregistration to happen as quickly as possible, then you should instead consider calling
+        /// <see cref="UnregisterAllSubscribers{T}(T)" /> once for each variation of ISubscriber your subscriber implements.  This function
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        ///
+        /// You may call this function even if all of the subscriber's implementations of ISubscriber have not been registered with the bus; it will simply
+        /// unregister the ones that _have_ been registered.  An exception will be thrown if no implementations of ISubscriber were registered, however.
+        /// </remarks>
+        ///<typeparam name="T">
+        /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to remove.</param>
+        public void UnregisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            if (!TryUnregisterAllSubscribers(subscriber))
+                throw new ArgumentException(
+                    $"Tried to remove a subscriber from a {nameof(MessageBus)} that is not subscribed.");
         }
 
         /// <summary>
@@ -202,6 +248,49 @@ namespace GoRogue.Messaging
                 return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Removes the given subscriber from the message bus's handlers list.  Particularly when a subscriber is intended to have
+        /// a shorter lifetime than the
+        /// MessageBus object it subscribed with, handlers MUST be removed when disposed of so they can be garbage collected -- an
+        /// object cannot be garbage-collected so long as it is registered as a subscriber to a message bus (unless the bus is also being
+        /// garbage-collected).
+        /// </summary>
+        /// <remarks>
+        /// This is typically a good (safe) registration method to use by default.  However, if you know that your subscriber types will only implement one
+        /// variation of ISubscriber, or you need unregistration to happen as quickly as possible, then you should instead consider calling
+        /// <see cref="TryUnregisterAllSubscribers{T}(T)" /> once for each variation of ISubscriber your subscriber implements.  This function
+        /// uses reflection to figure out what versions of ISubscriber the parameter implements, so can be somewhat slow.
+        ///
+        /// You may call this function even if all of the subscriber's implementations of ISubscriber have not been registered with the bus; it will simply
+        /// unregister the ones that _have_ been registered, the function will still return true, as long as at least one subscriber was removed.  False will
+        /// only be returned if no ISubscriber implementations were unregistered.
+        /// </remarks>
+        ///<typeparam name="T">
+        /// Type of the subscriber.  This is typically inferred by the compiler, and really only affects the returned type (for chaining).
+        /// </typeparam>
+        /// <param name="subscriber">Subscriber to remove.</param>
+        /// <returns>True if at least one ISubscriber variation implemented by the type passed in was unregistered; false if none of its subscriber types were registered.</returns>
+        public bool TryUnregisterAllSubscribers<T>(T subscriber)
+            where T : notnull
+        {
+            var interfaces = subscriber.GetType().GetInterfaces();
+            bool unregistered = false;
+
+            foreach (var i in interfaces)
+            {
+                if (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ISubscriber<>))
+                {
+                    var messageType = i.GenericTypeArguments[0];
+                    // We can safely use the null-forgiving operator here since we control the class which we are reflecting on.
+                    var currentUnregisterResult = (bool)typeof(MessageBus).GetMethod(nameof(TryUnregisterSubscriber))!.MakeGenericMethod(messageType).Invoke(this, new object[] { subscriber })!;
+
+                    unregistered = unregistered || currentUnregisterResult;
+                }
+            }
+
+            return unregistered;
         }
 
         /// <summary>
