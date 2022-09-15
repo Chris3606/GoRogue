@@ -203,13 +203,11 @@ namespace GoRogue.SenseMapping.Sources
 
         private void DoRippleFOV(int ripple, double angle, double span)
         {
-            // TODO: Use dequeue for more speed; a circular array should have much better perf
-            LinkedList<Point> dq = new LinkedList<Point>();
-            dq.AddLast(new Point(Center, Center)); // Add starting point
+            Queue<Point> dq = new Queue<Point>();
+            dq.Enqueue(new Point(Center, Center)); // Add starting point
             while (dq.Count != 0)
             {
-                var p = dq.First!.Value;
-                dq.RemoveFirst();
+                var p = dq.Dequeue();
 
                 if (ResultViewBacking[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(Size)])
                     continue; // Nothing left to spread!
@@ -243,7 +241,7 @@ namespace GoRogue.SenseMapping.Sources
                     {
                         ResultViewBacking[x2, y2] = surroundingLight;
                         if (ResistanceMap[globalX2, globalY2] < Intensity) // Not a wall (fully blocking)
-                            dq.AddLast(new Point(x2,
+                            dq.Enqueue(new Point(x2,
                                 y2)); // Need to redo neighbors, since we just changed this entry's light.
                     }
                 }
