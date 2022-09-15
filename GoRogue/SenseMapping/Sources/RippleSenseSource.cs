@@ -47,6 +47,8 @@ namespace GoRogue.SenseMapping.Sources
         // Pre-allocated list so we don't re-allocate small arrays
         private readonly List<Point> _neighbors;
 
+        private readonly Queue<Point> _dq = new Queue<Point>();
+
         /// <summary>
         /// Creates a source which spreads outwards in all directions.
         /// </summary>
@@ -203,11 +205,11 @@ namespace GoRogue.SenseMapping.Sources
 
         private void DoRippleFOV(int ripple, double angle, double span)
         {
-            Queue<Point> dq = new Queue<Point>();
-            dq.Enqueue(new Point(Center, Center)); // Add starting point
-            while (dq.Count != 0)
+            //Queue<Point> dq = new Queue<Point>();
+            _dq.Enqueue(new Point(Center, Center)); // Add starting point
+            while (_dq.Count != 0)
             {
-                var p = dq.Dequeue();
+                var p = _dq.Dequeue();
 
                 if (ResultViewBacking[p.X, p.Y] <= 0 || _nearLight[p.ToIndex(Size)])
                     continue; // Nothing left to spread!
@@ -241,7 +243,7 @@ namespace GoRogue.SenseMapping.Sources
                     {
                         ResultViewBacking[x2, y2] = surroundingLight;
                         if (ResistanceMap[globalX2, globalY2] < Intensity) // Not a wall (fully blocking)
-                            dq.Enqueue(new Point(x2,
+                            _dq.Enqueue(new Point(x2,
                                 y2)); // Need to redo neighbors, since we just changed this entry's light.
                     }
                 }
