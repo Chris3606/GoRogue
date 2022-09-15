@@ -4,6 +4,7 @@ using GoRogue.FOV;
 using GoRogue.Random;
 using GoRogue.SenseMapping;
 using GoRogue.UnitTests.Mocks;
+using GoRogue.UnitTests.SenseMapping;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using ShaiRandom.Generators;
@@ -63,7 +64,7 @@ namespace GoRogue.UnitTests.FOV
             var senseMap = new SenseMap(s_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)
-            var lightSource = new SenseSource(SourceType.Shadow, source, Radius, shape);
+            var lightSource = AlgorithmFactory.CreateSenseSource(SourceType.Shadow, source, Radius, shape);
             senseMap.AddSenseSource(lightSource);
 
             // Calculate LOS and sense map
@@ -89,13 +90,9 @@ namespace GoRogue.UnitTests.FOV
             var senseMap = new SenseMap(s_resMap);
 
             // Set up sense source (using shadow-casting to match LOS)
-            var lightSource =
-                new SenseSource(SourceType.Shadow, source, Radius, shape)
-                {
-                    IsAngleRestricted = true,
-                    Angle = angle,
-                    Span = span
-                };
+            var lightSource = AlgorithmFactory.CreateSenseSource(SourceType.Shadow, source, Radius, shape);
+            lightSource.Angle = angle;
+            lightSource.Span = span;
             senseMap.AddSenseSource(lightSource);
 
             // Calculate LOS and sense map

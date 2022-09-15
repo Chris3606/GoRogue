@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -33,10 +34,10 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Read-only list of all sources currently considered part of the sense map. Some may have their
-        /// <see cref="SenseSource.Enabled" /> flag set to false, so all of these may or may not be counted
+        /// <see cref="ISenseSource.Enabled" /> flag set to false, so all of these may or may not be counted
         /// when Calculate is called.
         /// </summary>
-        IReadOnlyList<SenseSource> SenseSources { get; }
+        IReadOnlyList<ISenseSource> SenseSources { get; }
 
         /// <summary>
         /// Returns a read-only representation of the sensory map.

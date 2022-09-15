@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -16,14 +17,14 @@ namespace GoRogue.SenseMapping
     /// <remarks>
     /// Generally, this class can be used to model the result of applying ripple-like or shadow-casting like
     /// "spreading" of values from one or more sources through a map.  This can include modeling the spreading
-    /// of light, sound, heat for a heat-map, etc. through a map.  You create one or more <see cref="SenseSource" />
+    /// of light, sound, heat for a heat-map, etc. through a map.  You create one or more <see cref="ISenseSource" />
     /// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate" />
     /// when you wish to re-calculate the SenseMap.
     /// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IGridView that represents
     /// the map.  Specifically, it takes an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where the double value at each location
     /// represents the "resistance" that location has to the passing of source values through it.  The values must be >= 0.0,
     /// where 0.0 means that a location has no resistance to spreading of source values, and greater values represent greater
-    /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="SenseSource.Intensity" /> of
+    /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="ISenseSource.Intensity" /> of
     /// your sources.  As a source spreads through a given location, a value equal to the resistance value of that location
     /// is subtracted from the source's value (plus the normal fall-of for distance).
     /// The map can be calculated by calling the <see cref="Calculate" /> function.
@@ -37,7 +38,7 @@ namespace GoRogue.SenseMapping
     public class SenseMap : IReadOnlySenseMap
     {
         private readonly IGridView<double> _resMap;
-        private readonly List<SenseSource> _senseSources;
+        private readonly List<ISenseSource> _senseSources;
 
         private HashSet<Point> _currentSenseMap;
 
@@ -62,7 +63,7 @@ namespace GoRogue.SenseMapping
             _lastWidth = resMap.Width;
             _lastHeight = resMap.Height;
 
-            _senseSources = new List<SenseSource>();
+            _senseSources = new List<ISenseSource>();
 
             _previousSenseMap = new HashSet<Point>();
             _currentSenseMap = new HashSet<Point>();
@@ -88,7 +89,7 @@ namespace GoRogue.SenseMapping
         public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !_currentSenseMap.Contains(pos));
 
         /// <inheritdoc />
-        public IReadOnlyList<SenseSource> SenseSources => _senseSources.AsReadOnly();
+        public IReadOnlyList<ISenseSource> SenseSources => _senseSources.AsReadOnly();
 
         /// <summary>
         /// Width of the sense map.
@@ -139,14 +140,14 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Adds the given source to the list of sources. If the source has its
-        /// <see cref="SenseSource.Enabled" /> flag set when <see cref="Calculate" /> is next called, then
+        /// <see cref="ISenseSource.Enabled" /> flag set when <see cref="Calculate" /> is next called, then
         /// it will be counted as a source.
         /// </summary>
         /// <param name="senseSource">The source to add.</param>
-        public void AddSenseSource(SenseSource senseSource)
+        public void AddSenseSource(ISenseSource senseSource)
         {
             _senseSources.Add(senseSource);
-            senseSource._resMap = _resMap;
+            senseSource.SetResistanceMap(_resMap);
         }
 
         /// <summary>
@@ -235,17 +236,17 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Removes the given source from the list of sources. Generally, use this if a source is permanently removed
-        /// from a map. For temporary disabling, you should generally use the <see cref="SenseSource.Enabled" /> flag.
+        /// from a map. For temporary disabling, you should generally use the <see cref="ISenseSource.Enabled" /> flag.
         /// </summary>
         /// <remarks>
         /// The source values that this sense source was responsible for are NOT removed from the sensory output values
         /// until <see cref="Calculate" /> is next called.
         /// </remarks>
         /// <param name="senseSource">The source to remove.</param>
-        public void RemoveSenseSource(SenseSource senseSource)
+        public void RemoveSenseSource(ISenseSource senseSource)
         {
             _senseSources.Remove(senseSource);
-            senseSource._resMap = null;
+            senseSource.SetResistanceMap(null);
         }
 
         private bool IsACenter(int x, int y)
@@ -258,7 +259,7 @@ namespace GoRogue.SenseMapping
         }
 
         // Blits given source's lightMap onto the global light-map given
-        private static void BlitSenseSource(SenseSource source, double[,] destination, HashSet<Point> sourceMap,
+        private static void BlitSenseSource(ISenseSource source, double[,] destination, HashSet<Point> sourceMap,
                                             IGridView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
@@ -285,8 +286,9 @@ namespace GoRogue.SenseMapping
                     var gCur = gMin + c;
                     var lCur = lMin + c;
 
-                    destination[gCur.X, gCur.Y] =
-                        destination[gCur.X, gCur.Y] + source._light[lCur.X, lCur.Y]; // Add source values,
+                    // Null-forgiving because ResistanceMap is set when sources are added, so this can't occur unless somebody has been
+                    // messing with values they're not supposed to, and adding a check would cost performance.
+                    destination[gCur.X, gCur.Y] += source.ResultView[lCur.X, lCur.Y]; // Add source values
                     if (destination[gCur.X, gCur.Y] > 0.0)
                         sourceMap.Add(gCur);
                 }

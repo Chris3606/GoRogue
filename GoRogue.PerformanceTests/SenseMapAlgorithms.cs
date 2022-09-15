@@ -1,12 +1,23 @@
-﻿using BenchmarkDotNet.Attributes;
+﻿using System;
+using BenchmarkDotNet.Attributes;
 using GoRogue.MapGeneration;
 using GoRogue.SenseMapping;
+using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.PerformanceTests
 {
+    public enum SourceType
+    {
+        Ripple,
+        RippleLoose,
+        RippleTight,
+        RippleVeryLoose,
+        Shadow
+    }
+
     public class SenseMapAlgorithms
     {
         [UsedImplicitly]
@@ -33,7 +44,19 @@ namespace GoRogue.PerformanceTests
             CreateSenseMap();
 
             // Create single source at center
-            var source = new SenseSource(SourceAlgo, _senseMap.Bounds().Center, SourceRadius, (Radius)SourceShape);
+            ISenseSource source = SourceAlgo switch
+            {
+                SourceType.Ripple => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                    (Radius)SourceShape, RippleType.Regular),
+                SourceType.RippleLoose => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                    (Radius)SourceShape, RippleType.Loose),
+                SourceType.RippleVeryLoose => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                    (Radius)SourceShape, RippleType.VeryLoose),
+                SourceType.RippleTight => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                    (Radius)SourceShape, RippleType.Tight),
+                SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.Bounds().Center, SourceRadius, (Radius)SourceShape),
+                _ => throw new Exception($"Unsupported SenseSource type encountered: {SourceAlgo}")
+            };
             _senseMap.AddSenseSource(source);
         }
 
@@ -44,7 +67,19 @@ namespace GoRogue.PerformanceTests
 
             // Create two sources, equidistant on x axis
             foreach (var rect in _senseMap.Bounds().BisectVertically())
-                _senseMap.AddSenseSource(new SenseSource(SourceAlgo, rect.Center, SourceRadius, (Radius)SourceShape));
+            {
+                ISenseSource source = SourceAlgo switch
+                {
+                    SourceType.Ripple => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Regular),
+                    SourceType.RippleLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Loose),
+                    SourceType.RippleVeryLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.VeryLoose),
+                    SourceType.RippleTight => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Tight),
+                    SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.Bounds().Center, SourceRadius, (Radius)SourceShape),
+                    _ => throw new Exception($"Unsupported SenseSource type encountered: {SourceAlgo}")
+                };
+
+                _senseMap.AddSenseSource(source);
+            }
         }
 
         [Benchmark]

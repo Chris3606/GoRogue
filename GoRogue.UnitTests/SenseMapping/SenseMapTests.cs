@@ -12,39 +12,39 @@ namespace GoRogue.UnitTests.SenseMapping
     public class SenseMapTests
     {
         // Properties of the test map
-        private const int _height = 30;
-        private const int _width = 30;
-        private static readonly Point _center = (_width / 2, _height / 2);
-        private const int _radius = 10;
+        private const int Height = 30;
+        private const int Width = 30;
+        private static readonly Point s_center = (Width / 2, Height / 2);
+        private const int Radius = 10;
 
         // All implemented SenseSource algorithms
-        private static readonly SourceType[] _senseSourceAlgorithms = TestUtils.GetEnumValues<SourceType>();
+        private static readonly SourceType[] s_senseSourceAlgorithms = TestUtils.GetEnumValues<SourceType>();
 
         // Basic rectangle boolean/resistance map, one with double-tile-thick walls
-        private static readonly IGridView<double> _resMap = MockMaps.RectangleResMap(_width, _height);
+        private static readonly IGridView<double> s_resMap = MockMaps.RectangleResMap(Width, Height);
 
-        private static readonly IGridView<double> _resMapDoubleThickWalls =
-            MockMaps.RectangleDoubleThickResMap(_width, _height);
+        private static readonly IGridView<double> s_resMapDoubleThickWalls =
+            MockMaps.RectangleDoubleThickResMap(Width, Height);
 
         // Radius shapes to test
-        private static readonly Radius[] _radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i)
+        private static readonly Radius[] s_radii = TestUtils.GetEnumValues<Radius.Types>().Select(i => (Radius)i)
             .ToArray();
 
         // Radius shapes paired with each SenseSource algorithm
         public static IEnumerable<(Radius, SourceType)> RadiiWithSenseAlgorithms =
-            _radii.Combinate(_senseSourceAlgorithms);
+            s_radii.Combinate(s_senseSourceAlgorithms);
 
         [Theory]
         [MemberDataTuple(nameof(RadiiWithSenseAlgorithms))]
         public void SingleSourceOpenMapEqualToRadius(Radius shape, SourceType algorithm)
         {
-            var senseMap = new SenseMap(_resMap);
-            var lightSource = new SenseSource(algorithm, _center, _radius, shape);
+            var senseMap = new SenseMap(s_resMap);
+            var lightSource = AlgorithmFactory.CreateSenseSource(algorithm, s_center, Radius, shape);
             senseMap.AddSenseSource(lightSource);
             senseMap.Calculate();
 
             var losArea = senseMap.Positions().Where(pos => senseMap[pos] > 0.0).ToHashSet();
-            var radArea = shape.PositionsInRadius(_center, _radius).ToHashSet();
+            var radArea = shape.PositionsInRadius(s_center, Radius).ToHashSet();
 
             Assert.Equal(radArea, losArea);
         }
@@ -54,11 +54,11 @@ namespace GoRogue.UnitTests.SenseMapping
         public void WallsStopSpread(Radius shape, SourceType algorithm)
         {
             // SenseMap over open map
-            var senseMap = new SenseMap(_resMapDoubleThickWalls);
+            var senseMap = new SenseMap(s_resMapDoubleThickWalls);
 
             // Set up SenseSource for radius at least as big as map, to ensure spread isn't
             // limited by radius
-            var senseSource = new SenseSource(algorithm, _center, _width * _height, shape);
+            var senseSource = AlgorithmFactory.CreateSenseSource(algorithm, s_center, Width * Height, shape);
             senseMap.AddSenseSource(senseSource);
 
             // Calculate sense map
@@ -81,15 +81,15 @@ namespace GoRogue.UnitTests.SenseMapping
         [MemberDataTuple(nameof(RadiiWithSenseAlgorithms))]
         public void CurrentHash(Radius shape, SourceType algorithm)
         {
-            var senseMap = new SenseMap(_resMap);
-            senseMap.AddSenseSource(new SenseSource(algorithm, _center, _radius, shape));
+            var senseMap = new SenseMap(s_resMap);
+            senseMap.AddSenseSource(AlgorithmFactory.CreateSenseSource(algorithm, s_center, Radius, shape));
 
             senseMap.Calculate();
 
             // Inefficient copy but fine for testing
             var currentSenseMap = new HashSet<Point>(senseMap.CurrentSenseMap);
 
-            foreach (var pos in _resMap.Positions())
+            foreach (var pos in s_resMap.Positions())
                 Assert.Equal(senseMap[pos] > 0.0, currentSenseMap.Contains(pos));
         }
 
@@ -97,8 +97,8 @@ namespace GoRogue.UnitTests.SenseMapping
         [MemberDataTuple(nameof(RadiiWithSenseAlgorithms))]
         public void NewlyInAndOutOfSenseMap(Radius shape, SourceType algorithm)
         {
-            var senseMap = new SenseMap(_resMap);
-            var senseSource = new SenseSource(algorithm, _center, _radius, shape);
+            var senseMap = new SenseMap(s_resMap);
+            var senseSource = AlgorithmFactory.CreateSenseSource(algorithm, s_center, Radius, shape);
             senseMap.AddSenseSource(senseSource);
 
             senseMap.Calculate();
