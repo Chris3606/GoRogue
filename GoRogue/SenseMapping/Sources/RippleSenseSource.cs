@@ -65,6 +65,8 @@ namespace GoRogue.SenseMapping.Sources
             RippleType rippleType = RippleType.Regular, double intensity = 1)
             : base(position, radius, distanceCalc, intensity)
         {
+            RippleType = rippleType;
+
             _nearLight = new BitArray(Size * Size);
             RadiusChanged += OnRadiusChanged;
 
@@ -95,6 +97,8 @@ namespace GoRogue.SenseMapping.Sources
             RippleType rippleType = RippleType.Regular, double intensity = 1)
             : base(positionX, positionY, radius, distanceCalc, intensity)
         {
+            RippleType = rippleType;
+
             _nearLight = new BitArray(Size * Size);
             RadiusChanged += OnRadiusChanged;
 
@@ -128,6 +132,8 @@ namespace GoRogue.SenseMapping.Sources
             RippleType rippleType = RippleType.Regular, double intensity = 1)
             : base(position, radius, distanceCalc, angle, span, intensity)
         {
+            RippleType = rippleType;
+
             _nearLight = new BitArray(Size * Size);
             RadiusChanged += OnRadiusChanged;
 
@@ -162,6 +168,7 @@ namespace GoRogue.SenseMapping.Sources
             double span, RippleType rippleType = RippleType.Regular, double intensity = 1)
             : base(positionX, positionY, radius, distanceCalc, angle, span, intensity)
         {
+            RippleType = rippleType;
             _nearLight = new BitArray(Size * Size);
             RadiusChanged += OnRadiusChanged;
 
@@ -174,7 +181,7 @@ namespace GoRogue.SenseMapping.Sources
         {
             if (IsAngleRestricted)
             {
-                var angle = Angle * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
+                var angle = AngleInternal * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
                 var span = Span * SadRogue.Primitives.MathHelpers.DegreePctOfCircle;
                 DoRippleFOV(RippleValue(RippleType), angle, span);
             }

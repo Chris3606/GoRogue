@@ -228,8 +228,8 @@ namespace GoRogue.SenseMapping.Sources
                 throw new ArgumentOutOfRangeException(nameof(span),
                     "Span used to initialize a sense source must be in range [0, 360]");
 
-            IsAngleRestricted = true;
             Angle = angle;
+            // This also sets IsAngleRestricted appropriately.
             Span = span;
         }
 
