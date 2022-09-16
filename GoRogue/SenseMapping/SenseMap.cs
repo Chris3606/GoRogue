@@ -53,11 +53,14 @@ namespace GoRogue.SenseMapping
         private double[,] _senseMap;
 
         /// <summary>
-        /// Constructor. Takes the resistance map to use for calculations.
+        /// Constructor.
         /// </summary>
         /// <param name="resMap">The resistance map to use for calculations.</param>
-        public SenseMap(IGridView<double> resMap)
+        /// <param name="hasher">The hashing algorithm to use for points in hash sets.  Defaults to the default hash algorithm for Points.</param>
+        public SenseMap(IGridView<double> resMap, IEqualityComparer<Point>? hasher = null)
         {
+            hasher ??= EqualityComparer<Point>.Default;
+
             _resMap = resMap;
             _senseMap = new double[resMap.Width, resMap.Height];
             _lastWidth = resMap.Width;
@@ -65,8 +68,8 @@ namespace GoRogue.SenseMapping
 
             _senseSources = new List<ISenseSource>();
 
-            _previousSenseMap = new HashSet<Point>();
-            _currentSenseMap = new HashSet<Point>();
+            _previousSenseMap = new HashSet<Point>(hasher);
+            _currentSenseMap = new HashSet<Point>(hasher);
         }
 
         /// <summary>
@@ -165,8 +168,9 @@ namespace GoRogue.SenseMapping
             else
                 Array.Clear(_senseMap, 0, _senseMap.Length);
 
-            _previousSenseMap = _currentSenseMap;
-            _currentSenseMap = new HashSet<Point>();
+            // Cycle current and previous hash sets to avoid re-allocation of internal buffers
+            (_previousSenseMap, _currentSenseMap) = (_currentSenseMap, _previousSenseMap);
+            _currentSenseMap.Clear();
 
             if (_senseSources.Count > 1) // Probably not the proper condition, but useful for now.
                 Parallel.ForEach(_senseSources, senseSource => { senseSource.CalculateLight(); });
