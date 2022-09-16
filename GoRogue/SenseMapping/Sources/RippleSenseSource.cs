@@ -35,6 +35,15 @@ namespace GoRogue.SenseMapping.Sources
         VeryLoose
     }
 
+    /// <summary>
+    /// A sense source which performs its spreading calculations by using a "ripple" algorithm.
+    /// </summary>
+    /// <remarks>
+    /// Values spread out from the center, decreasing with distance and in accordance with the resistance for each cell they encounter.
+    ///
+    /// There are several variations of the algorithm provided, which produce slightly different spreading tendencies.  See the <see cref="RippleType"/>
+    /// value documentation for details.
+    /// </remarks>
     [PublicAPI]
     public class RippleSenseSource : SenseSourceBase
     {
@@ -46,7 +55,6 @@ namespace GoRogue.SenseMapping.Sources
         private BitArray _nearLight;
         // Pre-allocated list so we don't re-allocate small arrays
         private readonly List<Point> _neighbors;
-
         private readonly Queue<Point> _dq = new Queue<Point>();
 
         /// <summary>
