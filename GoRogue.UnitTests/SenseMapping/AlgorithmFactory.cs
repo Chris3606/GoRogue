@@ -18,6 +18,7 @@ namespace GoRogue.UnitTests.SenseMapping
         public static ISenseSource CreateSenseSource(SourceType algo, Point position, double radius, Radius shape)
             => algo switch
             {
+                // ReSharper disable once RedundantArgumentDefaultValue
                 SourceType.Ripple => new RippleSenseSource(position, radius, shape, RippleType.Regular),
                 SourceType.RippleLoose => new RippleSenseSource(position, radius, shape, RippleType.Loose),
                 SourceType.RippleTight => new RippleSenseSource(position, radius, shape, RippleType.Tight),

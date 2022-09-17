@@ -47,6 +47,7 @@ namespace GoRogue.PerformanceTests
             ISenseSource source = SourceAlgo switch
             {
                 SourceType.Ripple => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                    // ReSharper disable once RedundantArgumentDefaultValue
                     (Radius)SourceShape, RippleType.Regular),
                 SourceType.RippleLoose => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
                     (Radius)SourceShape, RippleType.Loose),
@@ -70,6 +71,7 @@ namespace GoRogue.PerformanceTests
             {
                 ISenseSource source = SourceAlgo switch
                 {
+                    // ReSharper disable once RedundantArgumentDefaultValue
                     SourceType.Ripple => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Regular),
                     SourceType.RippleLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Loose),
                     SourceType.RippleVeryLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.VeryLoose),
