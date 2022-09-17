@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
@@ -50,7 +51,7 @@ namespace GoRogue.SenseMapping
 
         // Making these 1D didn't really affect performance that much, though may be worth it on
         // large maps
-        private double[,] _senseMap;
+        private ArrayView<double> _senseMap;
 
         /// <summary>
         /// Constructor.
@@ -62,7 +63,7 @@ namespace GoRogue.SenseMapping
             hasher ??= EqualityComparer<Point>.Default;
 
             _resMap = resMap;
-            _senseMap = new double[resMap.Width, resMap.Height];
+            _senseMap = new ArrayView<double>(resMap.Width, resMap.Height);
             _lastWidth = resMap.Width;
             _lastHeight = resMap.Height;
 
@@ -161,18 +162,19 @@ namespace GoRogue.SenseMapping
         {
             if (_lastWidth != _resMap.Width || _lastHeight != _resMap.Height)
             {
-                _senseMap = new double[_resMap.Width, _resMap.Height];
+                _senseMap = new ArrayView<double>(_resMap.Width, _resMap.Height);
                 _lastWidth = _resMap.Width;
                 _lastHeight = _resMap.Height;
             }
             else
-                Array.Clear(_senseMap, 0, _senseMap.Length);
+                _senseMap.Clear();
 
             // Cycle current and previous hash sets to avoid re-allocation of internal buffers
             (_previousSenseMap, _currentSenseMap) = (_currentSenseMap, _previousSenseMap);
             _currentSenseMap.Clear();
 
-            if (_senseSources.Count > 1) // Probably not the proper condition, but useful for now.
+            // Anything past 1 sense source seems to benefit notably from parallel execution
+            if (_senseSources.Count > 1)
                 Parallel.ForEach(_senseSources, senseSource => { senseSource.CalculateLight(); });
             else
                 foreach (var senseSource in _senseSources)
@@ -197,24 +199,24 @@ namespace GoRogue.SenseMapping
         /// <returns>The string representation of the SenseMap, using the specified characters.</returns>
         public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')
         {
-            string result = "";
+            var result = new StringBuilder();
 
             for (var y = 0; y < _resMap.Height; y++)
             {
                 for (var x = 0; x < _resMap.Width; x++)
                 {
                     if (_senseMap[x, y] > 0.0)
-                        result += IsACenter(x, y) ? center : sourceValue;
+                        result.Append(IsACenter(x, y) ? center : sourceValue);
                     else
-                        result += normal;
+                        result.Append(normal);
 
-                    result += " ";
+                    result.Append(' ');
                 }
 
-                result += '\n';
+                result.Append('\n');
             }
 
-            return result;
+            return result.ToString();
         }
 
         /// <summary>
@@ -235,7 +237,7 @@ namespace GoRogue.SenseMapping
         /// A string representation of the map, rounded to the given number of decimal places.
         /// </returns>
         public string ToString(int decimalPlaces)
-            => _senseMap.ExtendToStringGrid(elementStringifier: obj
+            => _senseMap.ExtendToString(elementStringifier: obj
                 => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
@@ -263,7 +265,7 @@ namespace GoRogue.SenseMapping
         }
 
         // Blits given source's lightMap onto the global light-map given
-        private static void BlitSenseSource(ISenseSource source, double[,] destination, HashSet<Point> sourceMap,
+        private static void BlitSenseSource(ISenseSource source, ISettableGridView<double> destination, HashSet<Point> sourceMap,
                                             IGridView<double> resMap)
         {
             // Calculate actual radius bounds, given constraint based on location
@@ -282,7 +284,6 @@ namespace GoRogue.SenseMapping
             var lMax = new Point((int)source.Radius + maxX, (int)source.Radius + maxY);
 
             for (var xOffset = 0; xOffset <= lMax.X - lMin.X; xOffset++)
-                //Parallel.For(0, lMax.X - lMin.X + 1, xOffset => // By light radius 30 or so, there is enough work to get benefit here.  Manual thread splitting may also be an option.
                 for (var yOffset = 0; yOffset <= lMax.Y - lMin.Y; yOffset++)
                 {
                     // Offset local/current by proper amount, and update light-map
