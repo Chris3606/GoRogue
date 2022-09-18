@@ -43,7 +43,7 @@ namespace GoRogue.UnitTests.SenseMapping
             senseMap.AddSenseSource(lightSource);
             senseMap.Calculate();
 
-            var losArea = senseMap.Positions().Where(pos => senseMap[pos] > 0.0).ToHashSet();
+            var losArea = senseMap.ResultView.Positions().Where(pos => senseMap.ResultView[pos] > 0.0).ToHashSet();
             var radArea = shape.PositionsInRadius(s_center, Radius).ToHashSet();
 
             Assert.Equal(radArea, losArea);
@@ -66,15 +66,15 @@ namespace GoRogue.UnitTests.SenseMapping
 
             // Get lists of outer walls (totally unlit) and inner walls (some to all of which will be lit,
             // depending on how tight ripple is)
-            var outerPositions = senseMap.Bounds().PerimeterPositions().ToHashSet();
-            var innerPositions = senseMap.Bounds().Expand(-1, -1).PerimeterPositions();
+            var outerPositions = senseMap.ResultView.Bounds().PerimeterPositions().ToHashSet();
+            var innerPositions = senseMap.ResultView.Bounds().Expand(-1, -1).PerimeterPositions();
 
             // At least one of the inner walls must be lit (to prove that walls are appropriately lit)
-            Assert.Contains(innerPositions, i => senseMap[i] > 0.0);
+            Assert.Contains(innerPositions, i => senseMap.ResultView[i] > 0.0);
 
             // All of the outer walls should be unlit (as they're blocked by the inner walls)
             foreach (var pos in outerPositions)
-                Assert.Equal(0.0, senseMap[pos]);
+                Assert.Equal(0.0, senseMap.ResultView[pos]);
         }
 
         [Theory]
@@ -90,7 +90,7 @@ namespace GoRogue.UnitTests.SenseMapping
             var currentSenseMap = new HashSet<Point>(senseMap.CurrentSenseMap);
 
             foreach (var pos in s_resMap.Positions())
-                Assert.Equal(senseMap[pos] > 0.0, currentSenseMap.Contains(pos));
+                Assert.Equal(senseMap.ResultView[pos] > 0.0, currentSenseMap.Contains(pos));
         }
 
         [Theory]

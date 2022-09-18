@@ -141,7 +141,7 @@ namespace GoRogue.SenseMapping.Sources
         }
 
         /// <inheritdoc/>
-        public IGridView<double>? ResistanceMap { get; private set; }
+        public IGridView<double>? ResistanceView { get; private set; }
         /// <summary>
         /// Creates a source which spreads outwards in all directions.
         /// </summary>
@@ -169,7 +169,7 @@ namespace GoRogue.SenseMapping.Sources
             Radius = radius; // Arrays are initialized by this setter
             DistanceCalc = distanceCalc;
 
-            ResistanceMap = null;
+            ResistanceView = null;
             Enabled = true;
 
             IsAngleRestricted = false;
@@ -274,7 +274,7 @@ namespace GoRogue.SenseMapping.Sources
         {
             if (!Enabled) return;
 
-            if (ResistanceMap == null)
+            if (ResistanceView == null)
                 throw new InvalidOperationException(
                     "Attempted to calculate the light of a sense map without a resistance map.  This is almost certainly a bug in the implementation of the sense map.");
 
@@ -287,7 +287,7 @@ namespace GoRogue.SenseMapping.Sources
 
 
         /// <inheritdoc/>
-        public void SetResistanceMap(IGridView<double>? resMap) => ResistanceMap = resMap;
+        public void SetResistanceMap(IGridView<double>? resMap) => ResistanceView = resMap;
 
         /// <summary>
         /// Returns a string representation of the configuration of this SenseSource.

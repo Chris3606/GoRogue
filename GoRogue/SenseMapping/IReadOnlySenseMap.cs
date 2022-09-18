@@ -10,7 +10,7 @@ namespace GoRogue.SenseMapping
     /// Read-only interface of a <see cref="SenseMap" />.
     /// </summary>
     [PublicAPI]
-    public interface IReadOnlySenseMap : IEnumerable<double>, IGridView<double>
+    public interface IReadOnlySenseMap : IEnumerable<double>
     {
         /// <summary>
         /// IEnumerable of only positions currently "in" the sense map, eg. all positions that have a
@@ -38,6 +38,16 @@ namespace GoRogue.SenseMapping
         /// when Calculate is called.
         /// </summary>
         IReadOnlyList<ISenseSource> SenseSources { get; }
+
+        /// <summary>
+        /// The resistance map used to perform calculations.
+        /// </summary>
+        public IGridView<double> ResistanceView { get; }
+
+        /// <summary>
+        /// A view of the sense map's calculation results.
+        /// </summary>
+        public IGridView<double> ResultView { get; }
 
         /// <summary>
         /// Returns a read-only representation of the sensory map.

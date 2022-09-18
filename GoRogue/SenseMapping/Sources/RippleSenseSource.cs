@@ -231,9 +231,9 @@ namespace GoRogue.SenseMapping.Sources
                     var globalX2 = Position.X - (int)Radius + x2;
                     var globalY2 = Position.Y - (int)Radius + y2;
 
-                    // Null-forgiving is fine; OnCalculate cannot be called with a null ResistanceMap
-                    if (globalX2 < 0 || globalX2 >= ResistanceMap!.Width || globalY2 < 0 ||
-                        globalY2 >= ResistanceMap.Height || // Bounds check
+                    // Null-forgiving is fine; OnCalculate cannot be called with a null ResistanceView
+                    if (globalX2 < 0 || globalX2 >= ResistanceView!.Width || globalY2 < 0 ||
+                        globalY2 >= ResistanceView.Height || // Bounds check
                         DistanceCalc.Calculate(Center, Center, x2, y2) > Radius
                        ) // +1 covers starting tile at least
                         continue;
@@ -250,7 +250,7 @@ namespace GoRogue.SenseMapping.Sources
                     if (ResultViewBacking[x2, y2] < surroundingLight)
                     {
                         ResultViewBacking[x2, y2] = surroundingLight;
-                        if (ResistanceMap[globalX2, globalY2] < Intensity) // Not a wall (fully blocking)
+                        if (ResistanceView[globalX2, globalY2] < Intensity) // Not a wall (fully blocking)
                             _dq.Enqueue(new Point(x2,
                                 y2)); // Need to redo neighbors, since we just changed this entry's light.
                     }
@@ -277,9 +277,9 @@ namespace GoRogue.SenseMapping.Sources
                 var globalX2 = Position.X - (int)Radius + x2;
                 var globalY2 = Position.Y - (int)Radius + y2;
 
-                // Null forgiving because this can only be called from OnCalculate, and ResistanceMap cannot be null when that function
+                // Null forgiving because this can only be called from OnCalculate, and ResistanceView cannot be null when that function
                 // is called; adding a check would cost performance unnecessarily
-                if (globalX2 >= 0 && globalX2 < ResistanceMap!.Width && globalY2 >= 0 && globalY2 < ResistanceMap.Height)
+                if (globalX2 >= 0 && globalX2 < ResistanceView!.Width && globalY2 >= 0 && globalY2 < ResistanceView.Height)
                 {
                     var tmpDistance = DistanceCalc.Calculate(Center, Center, x2, y2);
                     int idx = 0;
@@ -325,7 +325,7 @@ namespace GoRogue.SenseMapping.Sources
                         indirects++;
 
                     var dist = DistanceCalc.Calculate(x, y, pointX, pointY);
-                    var resistance = ResistanceMap![gpx, gpy];
+                    var resistance = ResistanceView![gpx, gpy];
                     if (gpx == Position.X && gpy == Position.Y)
                         resistance = 0.0;
 
@@ -333,7 +333,7 @@ namespace GoRogue.SenseMapping.Sources
                 }
             }
 
-            if (ResistanceMap![globalX, globalY] >= Intensity || indirects >= lit)
+            if (ResistanceView![globalX, globalY] >= Intensity || indirects >= lit)
                 _nearLight[Point.ToIndex(x, y, Size)] = true;
 
             _neighbors.Clear();

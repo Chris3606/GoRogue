@@ -160,7 +160,7 @@ namespace GoRogue.SenseMapping.Sources
                     double leftSlope = (deltaX - 0.5f) / (deltaY + 0.5f);
                     double rightSlope = (deltaX + 0.5f) / (deltaY - 0.5f);
 
-                    if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < ResistanceMap!.Width && gCurrentY < ResistanceMap.Height) ||
+                    if (!(gCurrentX >= 0 && gCurrentY >= 0 && gCurrentX < ResistanceView!.Width && gCurrentY < ResistanceView.Height) ||
                         start < rightSlope)
                         continue;
 
@@ -182,7 +182,7 @@ namespace GoRogue.SenseMapping.Sources
                     }
 
                     if (blocked) // Previous cell was blocked
-                        if (ResistanceMap![gCurrentX, gCurrentY] >= Intensity) // Hit a wall...
+                        if (ResistanceView![gCurrentX, gCurrentY] >= Intensity) // Hit a wall...
                             newStart = rightSlope;
                         else
                         {
@@ -190,7 +190,7 @@ namespace GoRogue.SenseMapping.Sources
                             start = newStart;
                         }
                     else
-                        if (ResistanceMap![gCurrentX, gCurrentY] >= Intensity && distance < Radius) // Wall within FOV
+                        if (ResistanceView![gCurrentX, gCurrentY] >= Intensity && distance < Radius) // Wall within FOV
                         {
                             blocked = true;
                             ShadowCast(distance + 1, start, leftSlope, xx, xy, yx, yy, angle, span);

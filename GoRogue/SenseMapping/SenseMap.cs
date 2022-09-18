@@ -38,10 +38,16 @@ namespace GoRogue.SenseMapping
     [PublicAPI]
     public class SenseMap : IReadOnlySenseMap
     {
-        private readonly IGridView<double> _resMap;
+        /// <inheritdoc/>
+        public IGridView<double> ResistanceView { get; }
+
         private readonly List<ISenseSource> _senseSources;
+        /// <inheritdoc />
+        public IReadOnlyList<ISenseSource> SenseSources => _senseSources.AsReadOnly();
 
         private HashSet<Point> _currentSenseMap;
+        /// <inheritdoc />
+        public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
 
         private int _lastHeight;
 
@@ -49,23 +55,37 @@ namespace GoRogue.SenseMapping
 
         private HashSet<Point> _previousSenseMap;
 
-        // Making these 1D didn't really affect performance that much, though may be worth it on
-        // large maps
-        private ArrayView<double> _senseMap;
+        private ArrayView<double> _resultView;
+        /// <inheritdoc />
+        public IGridView<double> ResultView => _resultView;
+
+        /// <summary>
+        /// Whether or not to calculate each sense source's spread algorithm in parallel.  Has no effect if there is only one source added.
+        /// </summary>
+        /// <remarks>
+        /// When this is set to true, calling of <see cref="ISenseSource.CalculateLight"/> will happen in parallel via multiple threads.  A
+        /// Parallel.ForEach will be used, which will enable the use of a thread pool.
+        ///
+        /// In either case, sense sources always have their own result views on which they perform their calculations, so there is no concern with
+        /// overlapping sources.  This also does not affect the copying of sense source's values from its local result view to the sense map's one.
+        /// </remarks>
+        public bool ParallelCalculate { get; set; }
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resMap">The resistance map to use for calculations.</param>
+        /// <param name="resistanceMap">The resistance map to use for calculations.</param>
+        /// <param name="parallelCalculate">Whether or not to calculate the sense sources in parallel using Parallel.ForEach.  Has no effect if there is only one source added.</param>
         /// <param name="hasher">The hashing algorithm to use for points in hash sets.  Defaults to the default hash algorithm for Points.</param>
-        public SenseMap(IGridView<double> resMap, IEqualityComparer<Point>? hasher = null)
+        public SenseMap(IGridView<double> resistanceMap, bool parallelCalculate = true, IEqualityComparer<Point>? hasher = null)
         {
+            ParallelCalculate = parallelCalculate;
             hasher ??= EqualityComparer<Point>.Default;
 
-            _resMap = resMap;
-            _senseMap = new ArrayView<double>(resMap.Width, resMap.Height);
-            _lastWidth = resMap.Width;
-            _lastHeight = resMap.Height;
+            ResistanceView = resistanceMap;
+            _resultView = new ArrayView<double>(resistanceMap.Width, resistanceMap.Height);
+            _lastWidth = resistanceMap.Width;
+            _lastHeight = resistanceMap.Height;
 
             _senseSources = new List<ISenseSource>();
 
@@ -73,54 +93,11 @@ namespace GoRogue.SenseMapping
             _currentSenseMap = new HashSet<Point>(hasher);
         }
 
-        /// <summary>
-        /// Total number of tiles in the sense map.
-        /// </summary>
-        public int Count => Width * Height;
-
-        /// <inheritdoc />
-        public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
-
-        /// <summary>
-        /// Height of sense map.
-        /// </summary>
-        public int Height => _resMap.Height;
-
         /// <inheritdoc />
         public IEnumerable<Point> NewlyInSenseMap => _currentSenseMap.Where(pos => !_previousSenseMap.Contains(pos));
 
         /// <inheritdoc />
         public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !_currentSenseMap.Contains(pos));
-
-        /// <inheritdoc />
-        public IReadOnlyList<ISenseSource> SenseSources => _senseSources.AsReadOnly();
-
-        /// <summary>
-        /// Width of the sense map.
-        /// </summary>
-        public int Width => _resMap.Width;
-
-        /// <summary>
-        /// Returns the "sensory value" for the given position.
-        /// </summary>
-        /// <param name="index1D">Position to return the sensory value for, as a 1d-index-style value.</param>
-        /// <returns>The sense-map value for the given position.</returns>
-        public double this[int index1D] => _senseMap[Point.ToXValue(index1D, Width), Point.ToYValue(index1D, Width)];
-
-        /// <summary>
-        /// Returns the "sensory value" for the given position.
-        /// </summary>
-        /// <param name="pos">The position to return the sensory value for.</param>
-        /// <returns>The sensory value for the given position.</returns>
-        public double this[Point pos] => _senseMap[pos.X, pos.Y];
-
-        /// <summary>
-        /// Returns the "sensory value" for the given position.
-        /// </summary>
-        /// <param name="x">X-coordinate of the position to return the sensory value for.</param>
-        /// <param name="y">Y-coordinate of the position to return the sensory value for.</param>
-        /// <returns>The sensory value for the given position.</returns>
-        public double this[int x, int y] => _senseMap[x, y];
 
         /// <inheritdoc />
         public IReadOnlySenseMap AsReadOnly() => this;
@@ -131,9 +108,9 @@ namespace GoRogue.SenseMapping
         /// <returns>Enumerable of doubles (the sensory values).</returns>
         public IEnumerator<double> GetEnumerator()
         {
-            for (var y = 0; y < _resMap.Height; y++)
-                for (var x = 0; x < _resMap.Width; x++)
-                    yield return _senseMap[x, y];
+            for (var y = 0; y < ResistanceView.Height; y++)
+                for (var x = 0; x < ResistanceView.Width; x++)
+                    yield return _resultView[x, y];
         }
 
         /// <summary>
@@ -151,7 +128,7 @@ namespace GoRogue.SenseMapping
         public void AddSenseSource(ISenseSource senseSource)
         {
             _senseSources.Add(senseSource);
-            senseSource.SetResistanceMap(_resMap);
+            senseSource.SetResistanceMap(ResistanceView);
         }
 
         /// <summary>
@@ -160,21 +137,21 @@ namespace GoRogue.SenseMapping
         /// </summary>
         public void Calculate()
         {
-            if (_lastWidth != _resMap.Width || _lastHeight != _resMap.Height)
+            if (_lastWidth != ResistanceView.Width || _lastHeight != ResistanceView.Height)
             {
-                _senseMap = new ArrayView<double>(_resMap.Width, _resMap.Height);
-                _lastWidth = _resMap.Width;
-                _lastHeight = _resMap.Height;
+                _resultView = new ArrayView<double>(ResistanceView.Width, ResistanceView.Height);
+                _lastWidth = ResistanceView.Width;
+                _lastHeight = ResistanceView.Height;
             }
             else
-                _senseMap.Clear();
+                _resultView.Clear();
 
             // Cycle current and previous hash sets to avoid re-allocation of internal buffers
             (_previousSenseMap, _currentSenseMap) = (_currentSenseMap, _previousSenseMap);
             _currentSenseMap.Clear();
 
             // Anything past 1 sense source seems to benefit notably from parallel execution
-            if (_senseSources.Count > 1)
+            if (_senseSources.Count > 1 && ParallelCalculate)
                 Parallel.ForEach(_senseSources, senseSource => { senseSource.CalculateLight(); });
             else
                 foreach (var senseSource in _senseSources)
@@ -182,7 +159,7 @@ namespace GoRogue.SenseMapping
 
             // Flush sources to actual senseMap
             foreach (var senseSource in _senseSources)
-                BlitSenseSource(senseSource, _senseMap, _currentSenseMap, _resMap);
+                BlitSenseSource(senseSource, _resultView, _currentSenseMap, ResistanceView);
         }
 
         // ReSharper disable once MethodOverloadWithOptionalParameter
@@ -201,11 +178,11 @@ namespace GoRogue.SenseMapping
         {
             var result = new StringBuilder();
 
-            for (var y = 0; y < _resMap.Height; y++)
+            for (var y = 0; y < ResistanceView.Height; y++)
             {
-                for (var x = 0; x < _resMap.Width; x++)
+                for (var x = 0; x < ResistanceView.Width; x++)
                 {
-                    if (_senseMap[x, y] > 0.0)
+                    if (_resultView[x, y] > 0.0)
                         result.Append(IsACenter(x, y) ? center : sourceValue);
                     else
                         result.Append(normal);
@@ -237,7 +214,7 @@ namespace GoRogue.SenseMapping
         /// A string representation of the map, rounded to the given number of decimal places.
         /// </returns>
         public string ToString(int decimalPlaces)
-            => _senseMap.ExtendToString(elementStringifier: obj
+            => _resultView.ExtendToString(elementStringifier: obj
                 => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
         /// <summary>
@@ -291,7 +268,7 @@ namespace GoRogue.SenseMapping
                     var gCur = gMin + c;
                     var lCur = lMin + c;
 
-                    // Null-forgiving because ResistanceMap is set when sources are added, so this can't occur unless somebody has been
+                    // Null-forgiving because ResistanceView is set when sources are added, so this can't occur unless somebody has been
                     // messing with values they're not supposed to, and adding a check would cost performance.
                     destination[gCur.X, gCur.Y] += source.ResultView[lCur.X, lCur.Y]; // Add source values
                     if (destination[gCur.X, gCur.Y] > 0.0)

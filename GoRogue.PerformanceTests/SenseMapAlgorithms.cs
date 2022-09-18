@@ -46,16 +46,16 @@ namespace GoRogue.PerformanceTests
             // Create single source at center
             ISenseSource source = SourceAlgo switch
             {
-                SourceType.Ripple => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                SourceType.Ripple => new RippleSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius,
                     // ReSharper disable once RedundantArgumentDefaultValue
                     (Radius)SourceShape, RippleType.Regular),
-                SourceType.RippleLoose => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                SourceType.RippleLoose => new RippleSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius,
                     (Radius)SourceShape, RippleType.Loose),
-                SourceType.RippleVeryLoose => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                SourceType.RippleVeryLoose => new RippleSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius,
                     (Radius)SourceShape, RippleType.VeryLoose),
-                SourceType.RippleTight => new RippleSenseSource(_senseMap.Bounds().Center, SourceRadius,
+                SourceType.RippleTight => new RippleSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius,
                     (Radius)SourceShape, RippleType.Tight),
-                SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.Bounds().Center, SourceRadius, (Radius)SourceShape),
+                SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius, (Radius)SourceShape),
                 _ => throw new Exception($"Unsupported SenseSource type encountered: {SourceAlgo}")
             };
             _senseMap.AddSenseSource(source);
@@ -67,7 +67,7 @@ namespace GoRogue.PerformanceTests
             CreateSenseMap();
 
             // Create two sources, equidistant on x axis
-            foreach (var rect in _senseMap.Bounds().BisectVertically())
+            foreach (var rect in _senseMap.ResultView.Bounds().BisectVertically())
             {
                 ISenseSource source = SourceAlgo switch
                 {
@@ -76,7 +76,7 @@ namespace GoRogue.PerformanceTests
                     SourceType.RippleLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Loose),
                     SourceType.RippleVeryLoose => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.VeryLoose),
                     SourceType.RippleTight => new RippleSenseSource(rect.Center, SourceRadius, (Radius)SourceShape, RippleType.Tight),
-                    SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.Bounds().Center, SourceRadius, (Radius)SourceShape),
+                    SourceType.Shadow => new RecursiveShadowcastingSenseSource(_senseMap.ResultView.Bounds().Center, SourceRadius, (Radius)SourceShape),
                     _ => throw new Exception($"Unsupported SenseSource type encountered: {SourceAlgo}")
                 };
 

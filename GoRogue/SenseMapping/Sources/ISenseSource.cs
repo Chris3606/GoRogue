@@ -77,7 +77,7 @@ namespace GoRogue.SenseMapping.Sources
         /// Sense map implementations will set this to the sense map's resistance map prior to calculating.  This can be set via
         /// <see cref="SetResistanceMap"/>, but you shouldn't do this unless you're creating a custom sense map implementation.
         /// </remarks>
-        IGridView<double>? ResistanceMap { get; }
+        IGridView<double>? ResistanceView { get; }
 
         /// <summary>
         /// Fired when the radius of the source changes.

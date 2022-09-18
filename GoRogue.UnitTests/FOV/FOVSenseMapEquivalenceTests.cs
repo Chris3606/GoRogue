@@ -73,12 +73,12 @@ namespace GoRogue.UnitTests.FOV
 
             // Verify equivalence of LOS and SenseMap
             Assert.Equal(Width, fov.DoubleResultView.Width);
-            Assert.Equal(Width, senseMap.Width);
+            Assert.Equal(Width, senseMap.ResultView.Width);
             Assert.Equal(Height, fov.DoubleResultView.Height);
-            Assert.Equal(Height, senseMap.Height);
+            Assert.Equal(Height, senseMap.ResultView.Height);
 
             foreach (var pos in fov.DoubleResultView.Positions())
-                Assert.Equal(fov.DoubleResultView[pos], senseMap[pos]);
+                Assert.Equal(fov.DoubleResultView[pos], senseMap.ResultView[pos]);
         }
 
 
@@ -101,12 +101,12 @@ namespace GoRogue.UnitTests.FOV
 
             // Verify equivalence of LOS and SenseMap
             Assert.Equal(Width, fov.DoubleResultView.Width);
-            Assert.Equal(Width, senseMap.Width);
+            Assert.Equal(Width, senseMap.ResultView.Width);
             Assert.Equal(Height, fov.DoubleResultView.Height);
-            Assert.Equal(Height, senseMap.Height);
+            Assert.Equal(Height, senseMap.ResultView.Height);
 
             foreach (var pos in fov.DoubleResultView.Positions())
-                Assert.Equal(fov.DoubleResultView[pos], senseMap[pos]);
+                Assert.Equal(fov.DoubleResultView[pos], senseMap.ResultView[pos]);
         }
     }
 }
