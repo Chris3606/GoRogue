@@ -36,28 +36,36 @@ namespace GoRogue.SenseMapping
     /// that reached the given location.
     /// </remarks>
     [PublicAPI]
-    public class SenseMap : IReadOnlySenseMap
+    public class SenseMap : SenseMapBase
     {
-        /// <inheritdoc/>
-        public IGridView<double> ResistanceView { get; }
-
-        private readonly List<ISenseSource> _senseSources;
+        /// <summary>
+        /// A hash set which contains the positions which have non-0 values in the most current calculation result.
+        /// </summary>
+        /// <remarks>
+        /// This hash set is the backing structure for <see cref="NewlyInSenseMap"/> and <see cref="NewlyOutOfSenseMap"/>,
+        /// as well as <see cref="CurrentSenseMap"/>.
+        /// During <see cref="Calculate"/>, this value is cleared before the new calculations are performed.
+        ///
+        /// Typically you will only need to interact with this if you are overriding <see cref="Calculate"/>; in this case, if
+        /// you do not call this class's implementation, you will need to perform this clearing yourself.
+        ///
+        /// In order to preserve the use of whatever hasher was passed to the class at startup, it is recommended that you do _not_
+        /// re-allocate this structure entirely.  See <see cref="SenseMap.Calculate"/> for a way to manage both this and <see cref="_previousSenseMap"/>
+        /// that does not involve re-allocating.
+        /// </remarks>
+        protected HashSet<Point> CurrentSenseMapBacking;
         /// <inheritdoc />
-        public IReadOnlyList<ISenseSource> SenseSources => _senseSources.AsReadOnly();
+        public override IEnumerable<Point> CurrentSenseMap => CurrentSenseMapBacking;
 
-        private HashSet<Point> _currentSenseMap;
-        /// <inheritdoc />
-        public IEnumerable<Point> CurrentSenseMap => _currentSenseMap;
-
-        private int _lastHeight;
-
-        private int _lastWidth;
-
+        private Point _lastViewSize;
         private HashSet<Point> _previousSenseMap;
 
-        private ArrayView<double> _resultView;
+        /// <summary>
+        /// The actual ArrayView which is used to record results.
+        /// </summary>
+        protected ArrayView<double> ResultViewBacking;
         /// <inheritdoc />
-        public IGridView<double> ResultView => _resultView;
+        public override IGridView<double> ResultView => ResultViewBacking;
 
         /// <summary>
         /// Whether or not to calculate each sense source's spread algorithm in parallel.  Has no effect if there is only one source added.
@@ -83,72 +91,45 @@ namespace GoRogue.SenseMapping
             hasher ??= EqualityComparer<Point>.Default;
 
             ResistanceView = resistanceMap;
-            _resultView = new ArrayView<double>(resistanceMap.Width, resistanceMap.Height);
-            _lastWidth = resistanceMap.Width;
-            _lastHeight = resistanceMap.Height;
+            ResultViewBacking = new ArrayView<double>(resistanceMap.Width, resistanceMap.Height);
+            _lastViewSize = new Point(resistanceMap.Width, resistanceMap.Height);
 
             _senseSources = new List<ISenseSource>();
 
             _previousSenseMap = new HashSet<Point>(hasher);
-            _currentSenseMap = new HashSet<Point>(hasher);
+            CurrentSenseMapBacking = new HashSet<Point>(hasher);
         }
 
         /// <inheritdoc />
-        public IEnumerable<Point> NewlyInSenseMap => _currentSenseMap.Where(pos => !_previousSenseMap.Contains(pos));
+        public IEnumerable<Point> NewlyInSenseMap => CurrentSenseMapBacking.Where(pos => !_previousSenseMap.Contains(pos));
 
         /// <inheritdoc />
-        public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !_currentSenseMap.Contains(pos));
+        public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !CurrentSenseMapBacking.Contains(pos));
 
         /// <inheritdoc />
         public IReadOnlySenseMap AsReadOnly() => this;
 
-        /// <summary>
-        /// Enumerator, in case you want to use this as a list of doubles.
-        /// </summary>
-        /// <returns>Enumerable of doubles (the sensory values).</returns>
-        public IEnumerator<double> GetEnumerator()
-        {
-            for (var y = 0; y < ResistanceView.Height; y++)
-                for (var x = 0; x < ResistanceView.Width; x++)
-                    yield return _resultView[x, y];
-        }
-
-        /// <summary>
-        /// Generic enumerator.
-        /// </summary>
-        /// <returns>Enumerator for looping.</returns>
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        /// <summary>
-        /// Adds the given source to the list of sources. If the source has its
-        /// <see cref="ISenseSource.Enabled" /> flag set when <see cref="Calculate" /> is next called, then
-        /// it will be counted as a source.
-        /// </summary>
-        /// <param name="senseSource">The source to add.</param>
+        /// <inheritdoc/>
         public void AddSenseSource(ISenseSource senseSource)
         {
             _senseSources.Add(senseSource);
             senseSource.SetResistanceMap(ResistanceView);
         }
 
-        /// <summary>
-        /// Calculates the map.  For each enabled source in the source list, it calculates
-        /// the source's spreading, and puts them all together in the sense map's output.
-        /// </summary>
+        /// <inheritdoc/>
         public void Calculate()
         {
-            if (_lastWidth != ResistanceView.Width || _lastHeight != ResistanceView.Height)
+            if (_lastViewSize != new Point(ResistanceView.Width, ResistanceView.Height))
             {
-                _resultView = new ArrayView<double>(ResistanceView.Width, ResistanceView.Height);
-                _lastWidth = ResistanceView.Width;
-                _lastHeight = ResistanceView.Height;
+                ResultViewBacking = new ArrayView<double>(ResistanceView.Width, ResistanceView.Height);
+                _lastViewSize = new Point(ResistanceView.Width, ResistanceView.Height);
             }
             else
-                _resultView.Clear();
+                ResultViewBacking.Clear();
 
             // Cycle current and previous hash sets to avoid re-allocation of internal buffers
-            (_previousSenseMap, _currentSenseMap) = (_currentSenseMap, _previousSenseMap);
-            _currentSenseMap.Clear();
+            (_previousSenseMap, CurrentSenseMapBacking) = (CurrentSenseMapBacking, _previousSenseMap);
+            CurrentSenseMapBacking.Clear();
 
             // Anything past 1 sense source seems to benefit notably from parallel execution
             if (_senseSources.Count > 1 && ParallelCalculate)
@@ -159,7 +140,7 @@ namespace GoRogue.SenseMapping
 
             // Flush sources to actual senseMap
             foreach (var senseSource in _senseSources)
-                BlitSenseSource(senseSource, _resultView, _currentSenseMap, ResistanceView);
+                ApplySenseSourceToResult(senseSource);
         }
 
         // ReSharper disable once MethodOverloadWithOptionalParameter
@@ -182,7 +163,7 @@ namespace GoRogue.SenseMapping
             {
                 for (var x = 0; x < ResistanceView.Width; x++)
                 {
-                    if (_resultView[x, y] > 0.0)
+                    if (ResultViewBacking[x, y] > 0.0)
                         result.Append(IsACenter(x, y) ? center : sourceValue);
                     else
                         result.Append(normal);
@@ -214,18 +195,10 @@ namespace GoRogue.SenseMapping
         /// A string representation of the map, rounded to the given number of decimal places.
         /// </returns>
         public string ToString(int decimalPlaces)
-            => _resultView.ExtendToString(elementStringifier: obj
+            => ResultViewBacking.ExtendToString(elementStringifier: obj
                 => obj.ToString("0." + "0".Multiply(decimalPlaces)));
 
-        /// <summary>
-        /// Removes the given source from the list of sources. Generally, use this if a source is permanently removed
-        /// from a map. For temporary disabling, you should generally use the <see cref="ISenseSource.Enabled" /> flag.
-        /// </summary>
-        /// <remarks>
-        /// The source values that this sense source was responsible for are NOT removed from the sensory output values
-        /// until <see cref="Calculate" /> is next called.
-        /// </remarks>
-        /// <param name="senseSource">The source to remove.</param>
+        /// <inheritdoc/>
         public void RemoveSenseSource(ISenseSource senseSource)
         {
             _senseSources.Remove(senseSource);
@@ -241,19 +214,21 @@ namespace GoRogue.SenseMapping
             return false;
         }
 
-        // Blits given source's lightMap onto the global light-map given
-        private static void BlitSenseSource(ISenseSource source, ISettableGridView<double> destination, HashSet<Point> sourceMap,
-                                            IGridView<double> resMap)
+        /// <summary>
+        /// Takes the given source and applies its values to the appropriate sub-area of <see cref="ResultView"/>.  Adds any locations that
+        /// end up with non-0 values to the <see cref="CurrentSenseMapBacking"/> hash set.
+        /// </summary>
+        /// <param name="source">The source to apply.</param>
+        protected virtual void ApplySenseSourceToResult(ISenseSource source)
         {
             // Calculate actual radius bounds, given constraint based on location
             var minX = Math.Min((int)source.Radius, source.Position.X);
             var minY = Math.Min((int)source.Radius, source.Position.Y);
-            var maxX = Math.Min((int)source.Radius, resMap.Width - 1 - source.Position.X);
-            var maxY = Math.Min((int)source.Radius, resMap.Height - 1 - source.Position.Y);
+            var maxX = Math.Min((int)source.Radius, ResistanceView.Width - 1 - source.Position.X);
+            var maxY = Math.Min((int)source.Radius, ResistanceView.Height - 1 - source.Position.Y);
 
-            // Use radius bounds to extrapolate global coordinate scheme mins and maxes
+            // Use radius bounds to extrapolate global coordinate scheme mins
             var gMin = source.Position - new Point(minX, minY);
-            //Point gMax = source.Position + Point.Get(maxX, maxY);
 
             // Use radius bound to extrapolate light-local coordinate scheme min and max bounds that
             // are actually blitted
@@ -270,9 +245,9 @@ namespace GoRogue.SenseMapping
 
                     // Null-forgiving because ResistanceView is set when sources are added, so this can't occur unless somebody has been
                     // messing with values they're not supposed to, and adding a check would cost performance.
-                    destination[gCur.X, gCur.Y] += source.ResultView[lCur.X, lCur.Y]; // Add source values
-                    if (destination[gCur.X, gCur.Y] > 0.0)
-                        sourceMap.Add(gCur);
+                    ResultViewBacking[gCur.X, gCur.Y] += source.ResultView[lCur.X, lCur.Y]; // Add source values
+                    if (ResultViewBacking[gCur.X, gCur.Y] > 0.0)
+                        CurrentSenseMapBacking.Add(gCur);
                 }
         }
     }
