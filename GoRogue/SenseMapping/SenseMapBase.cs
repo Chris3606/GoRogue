@@ -99,7 +99,7 @@ namespace GoRogue.SenseMapping
         ///
         /// This function must return a view with all of its values set to 0.0, which has the given width and height.
         /// </param>
-        protected SenseMapBase(IGridView<double> resistanceView, CustomResultViewWithResize? resultViewAndResizer)
+        protected SenseMapBase(IGridView<double> resistanceView, CustomResultViewWithResize? resultViewAndResizer = null)
         {
             resultViewAndResizer ??= new CustomResultViewWithResize(
                 new ArrayView<double>(resistanceView.Width, resistanceView.Height),
@@ -138,7 +138,7 @@ namespace GoRogue.SenseMapping
         }
 
         /// <inheritdoc/>
-        public void Reset()
+        public virtual void Reset()
         {
             if (ResistanceView.Width != ResultViewBacking.Width || ResistanceView.Height != ResultViewBacking.Height)
                 ResultViewBacking = ResultViewResizer(ResistanceView.Width, ResistanceView.Height, ResultViewBacking);

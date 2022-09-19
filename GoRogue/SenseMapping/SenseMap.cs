@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
@@ -44,28 +42,20 @@ namespace GoRogue.SenseMapping
         /// <remarks>
         /// This hash set is the backing structure for <see cref="NewlyInSenseMap"/> and <see cref="NewlyOutOfSenseMap"/>,
         /// as well as <see cref="CurrentSenseMap"/>.
-        /// During <see cref="Calculate"/>, this value is cleared before the new calculations are performed.
+        /// During <see cref="ISenseMap.Calculate"/>, this value is cleared before the new calculations are performed.
         ///
-        /// Typically you will only need to interact with this if you are overriding <see cref="Calculate"/>; in this case, if
+        /// Typically you will only need to interact with this if you are overriding <see cref="ISenseMap.Calculate"/>; in this case, if
         /// you do not call this class's implementation, you will need to perform this clearing yourself.
         ///
         /// In order to preserve the use of whatever hasher was passed to the class at startup, it is recommended that you do _not_
-        /// re-allocate this structure entirely.  See <see cref="SenseMap.Calculate"/> for a way to manage both this and <see cref="_previousSenseMap"/>
+        /// re-allocate this structure entirely.  See <see cref="ISenseMap.Calculate"/> for a way to manage both this and <see cref="_previousSenseMap"/>
         /// that does not involve re-allocating.
         /// </remarks>
         protected HashSet<Point> CurrentSenseMapBacking;
         /// <inheritdoc />
         public override IEnumerable<Point> CurrentSenseMap => CurrentSenseMapBacking;
 
-        private Point _lastViewSize;
         private HashSet<Point> _previousSenseMap;
-
-        /// <summary>
-        /// The actual ArrayView which is used to record results.
-        /// </summary>
-        protected ArrayView<double> ResultViewBacking;
-        /// <inheritdoc />
-        public override IGridView<double> ResultView => ResultViewBacking;
 
         /// <summary>
         /// Whether or not to calculate each sense source's spread algorithm in parallel.  Has no effect if there is only one source added.
@@ -82,136 +72,57 @@ namespace GoRogue.SenseMapping
         /// <summary>
         /// Constructor.
         /// </summary>
-        /// <param name="resistanceMap">The resistance map to use for calculations.</param>
+        /// <param name="resistanceView">The resistance map to use for calculations.</param>
+        /// <param name="resultViewAndResizer">
+        /// The view in which SenseMap calculation results are stored, along with a method to use to resize it as needed.
+        ///
+        /// If unspecified, an ArrayView will be used for the result view, and the resize function will allocate a new
+        /// ArrayView of the appropriate size as needed.  This should be sufficient for most use cases.
+        ///
+        /// This function must return a view with all of its values set to 0.0, which has the given width and height.
+        /// </param>
         /// <param name="parallelCalculate">Whether or not to calculate the sense sources in parallel using Parallel.ForEach.  Has no effect if there is only one source added.</param>
         /// <param name="hasher">The hashing algorithm to use for points in hash sets.  Defaults to the default hash algorithm for Points.</param>
-        public SenseMap(IGridView<double> resistanceMap, bool parallelCalculate = true, IEqualityComparer<Point>? hasher = null)
+        public SenseMap(IGridView<double> resistanceView, CustomResultViewWithResize? resultViewAndResizer = null,
+            bool parallelCalculate = true, IEqualityComparer<Point>? hasher = null)
+            : base(resistanceView, resultViewAndResizer)
         {
             ParallelCalculate = parallelCalculate;
             hasher ??= EqualityComparer<Point>.Default;
-
-            ResistanceView = resistanceMap;
-            ResultViewBacking = new ArrayView<double>(resistanceMap.Width, resistanceMap.Height);
-            _lastViewSize = new Point(resistanceMap.Width, resistanceMap.Height);
-
-            _senseSources = new List<ISenseSource>();
 
             _previousSenseMap = new HashSet<Point>(hasher);
             CurrentSenseMapBacking = new HashSet<Point>(hasher);
         }
 
         /// <inheritdoc />
-        public IEnumerable<Point> NewlyInSenseMap => CurrentSenseMapBacking.Where(pos => !_previousSenseMap.Contains(pos));
+        public override IEnumerable<Point> NewlyInSenseMap => CurrentSenseMapBacking.Where(pos => !_previousSenseMap.Contains(pos));
 
         /// <inheritdoc />
-        public IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !CurrentSenseMapBacking.Contains(pos));
+        public override IEnumerable<Point> NewlyOutOfSenseMap => _previousSenseMap.Where(pos => !CurrentSenseMapBacking.Contains(pos));
 
         /// <inheritdoc />
-        public IReadOnlySenseMap AsReadOnly() => this;
-
-        /// <inheritdoc/>
-        public void AddSenseSource(ISenseSource senseSource)
+        public override void Reset()
         {
-            _senseSources.Add(senseSource);
-            senseSource.SetResistanceMap(ResistanceView);
-        }
-
-        /// <inheritdoc/>
-        public void Calculate()
-        {
-            if (_lastViewSize != new Point(ResistanceView.Width, ResistanceView.Height))
-            {
-                ResultViewBacking = new ArrayView<double>(ResistanceView.Width, ResistanceView.Height);
-                _lastViewSize = new Point(ResistanceView.Width, ResistanceView.Height);
-            }
-            else
-                ResultViewBacking.Clear();
+            base.Reset();
 
             // Cycle current and previous hash sets to avoid re-allocation of internal buffers
             (_previousSenseMap, CurrentSenseMapBacking) = (CurrentSenseMapBacking, _previousSenseMap);
             CurrentSenseMapBacking.Clear();
+        }
 
+        /// <inheritdoc />
+        protected override void OnCalculate()
+        {
             // Anything past 1 sense source seems to benefit notably from parallel execution
-            if (_senseSources.Count > 1 && ParallelCalculate)
-                Parallel.ForEach(_senseSources, senseSource => { senseSource.CalculateLight(); });
+            if (SenseSources.Count > 1 && ParallelCalculate)
+                Parallel.ForEach(SenseSources, senseSource => { senseSource.CalculateLight(); });
             else
-                foreach (var senseSource in _senseSources)
+                foreach (var senseSource in SenseSources)
                     senseSource.CalculateLight();
 
             // Flush sources to actual senseMap
-            foreach (var senseSource in _senseSources)
+            foreach (var senseSource in SenseSources)
                 ApplySenseSourceToResult(senseSource);
-        }
-
-        // ReSharper disable once MethodOverloadWithOptionalParameter
-        /// <summary>
-        /// ToString that customizes the characters used to represent the map.
-        /// </summary>
-        /// <param name="normal">The character used for any location not in the SenseMap.</param>
-        /// <param name="center">
-        /// The character used for any location that is the center-point of a source.
-        /// </param>
-        /// <param name="sourceValue">
-        /// The character used for any location that is in range of a source, but not a center point.
-        /// </param>
-        /// <returns>The string representation of the SenseMap, using the specified characters.</returns>
-        public string ToString(char normal = '-', char center = 'C', char sourceValue = 'S')
-        {
-            var result = new StringBuilder();
-
-            for (var y = 0; y < ResistanceView.Height; y++)
-            {
-                for (var x = 0; x < ResistanceView.Width; x++)
-                {
-                    if (ResultViewBacking[x, y] > 0.0)
-                        result.Append(IsACenter(x, y) ? center : sourceValue);
-                    else
-                        result.Append(normal);
-
-                    result.Append(' ');
-                }
-
-                result.Append('\n');
-            }
-
-            return result.ToString();
-        }
-
-        /// <summary>
-        /// Returns a string representation of the map, where any location not in the SenseMap is
-        /// represented by a '-' character, any position that is the center of some source is
-        /// represented by a 'C' character, and any position that has a non-zero value but is not a
-        /// center is represented by an 'S'.
-        /// </summary>
-        /// <returns>A (multi-line) string representation of the SenseMap.</returns>
-        public override string ToString() => ToString();
-
-        /// <summary>
-        /// Returns a string representation of the map, with the actual values in the SenseMap,
-        /// rounded to the given number of decimal places.
-        /// </summary>
-        /// <param name="decimalPlaces">The number of decimal places to round to.</param>
-        /// <returns>
-        /// A string representation of the map, rounded to the given number of decimal places.
-        /// </returns>
-        public string ToString(int decimalPlaces)
-            => ResultViewBacking.ExtendToString(elementStringifier: obj
-                => obj.ToString("0." + "0".Multiply(decimalPlaces)));
-
-        /// <inheritdoc/>
-        public void RemoveSenseSource(ISenseSource senseSource)
-        {
-            _senseSources.Remove(senseSource);
-            senseSource.SetResistanceMap(null);
-        }
-
-        private bool IsACenter(int x, int y)
-        {
-            foreach (var source in _senseSources)
-                if (source.Position.X == x && source.Position.Y == y)
-                    return true;
-
-            return false;
         }
 
         /// <summary>
