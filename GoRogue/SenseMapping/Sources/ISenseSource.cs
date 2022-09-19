@@ -42,7 +42,7 @@ namespace GoRogue.SenseMapping.Sources
         Distance DistanceCalc { get; set; }
 
         /// <summary>
-        /// Whether or not this source is enabled. If a source is disabled when <see cref="SenseMap.Calculate" />
+        /// Whether or not this source is enabled. If a source is disabled when <see cref="ISenseMap.Calculate" />
         /// is called, the source does not calculate values and is effectively assumed to be "off".
         /// </summary>
         bool Enabled { get; set; }

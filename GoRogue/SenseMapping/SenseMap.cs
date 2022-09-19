@@ -17,7 +17,7 @@ namespace GoRogue.SenseMapping
     /// Generally, this class can be used to model the result of applying ripple-like or shadow-casting like
     /// "spreading" of values from one or more sources through a map.  This can include modeling the spreading
     /// of light, sound, heat for a heat-map, etc. through a map.  You create one or more <see cref="ISenseSource" />
-    /// instances representing your various sources, add them to the SenseMap, and call <see cref="Calculate" />
+    /// instances representing your various sources, add them to the SenseMap, and call <see cref="ISenseMap.Calculate" />
     /// when you wish to re-calculate the SenseMap.
     /// Like most GoRogue algorithm implementations, SenseMap takes as a construction parameter an IGridView that represents
     /// the map.  Specifically, it takes an <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where the double value at each location
@@ -26,7 +26,7 @@ namespace GoRogue.SenseMapping
     /// resistance.  The scale of this resistance is arbitrary, and is related to the <see cref="ISenseSource.Intensity" /> of
     /// your sources.  As a source spreads through a given location, a value equal to the resistance value of that location
     /// is subtracted from the source's value (plus the normal fall-of for distance).
-    /// The map can be calculated by calling the <see cref="Calculate" /> function.
+    /// The map can be calculated by calling the <see cref="ISenseMap.Calculate" /> function.
     /// This class exposes the resulting sensory values values to you via indexers -- SenseMap implements
     /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" />, where 0.0 indicates no sources were able to spread to the given location (eg, either
     /// it was
@@ -126,7 +126,7 @@ namespace GoRogue.SenseMapping
         }
 
         /// <summary>
-        /// Takes the given source and applies its values to the appropriate sub-area of <see cref="ResultView"/>.  Adds any locations that
+        /// Takes the given source and applies its values to the appropriate sub-area of <see cref="SenseMapBase.ResultViewBacking"/>.  Adds any locations that
         /// end up with non-0 values to the <see cref="CurrentSenseMapBacking"/> hash set.
         /// </summary>
         /// <param name="source">The source to apply.</param>
