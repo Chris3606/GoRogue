@@ -7,7 +7,7 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.SenseMapping
 {
     /// <summary>
-    /// Read-only interface of a <see cref="SenseMap" />.
+    /// Read-only interface of an <see cref="ISenseMap" />.
     /// </summary>
     [PublicAPI]
     public interface IReadOnlySenseMap
@@ -53,6 +53,6 @@ namespace GoRogue.SenseMapping
         /// Returns a read-only representation of the sensory map.
         /// </summary>
         /// <returns>This sensory map object as <see cref="IReadOnlySenseMap" />.</returns>
-        public IReadOnlySenseMap AsReadOnly() => this;
+        public IReadOnlySenseMap AsReadOnly();
     }
 }

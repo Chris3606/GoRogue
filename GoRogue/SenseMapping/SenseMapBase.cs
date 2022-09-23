@@ -8,12 +8,37 @@ using SadRogue.Primitives.GridViews;
 
 namespace GoRogue.SenseMapping
 {
+    /// <summary>
+    /// A structure containing a grid view and a custom resize function to use in order to resize that grid view to a new size.
+    /// </summary>
+    /// <remarks>
+    /// <see cref="Resizer"/> takes in the new width/height required and the old grid view; and must return a new grid view of the appropriate
+    /// size.  It can return a new object or an existing one; the result in either case will be assigned to the result view of the sense map
+    /// when the resize takes place.  The resize function must also ensure that, when the new grid view is returned, it must have all values
+    /// set to 0.0.  This allows a clear operation to be avoided if underlying data structures were re-allocated and thus cells are implicitly
+    /// cleared.
+    ///
+    /// This structure also provides a <see cref="ArrayViewResizer"/>, which is an efficient resizer to use if the <see cref="ResultView"/> is an
+    /// ArrayView.
+    /// </remarks>
     [PublicAPI]
     public readonly struct CustomResultViewWithResize
     {
+        /// <summary>
+        /// The initial result view to use.
+        /// </summary>
         public readonly ISettableGridView<double> ResultView;
+
+        /// <summary>
+        /// The resizer function to use.  See the <see cref="CustomResultViewWithResize"/> class description for constraints on this function.
+        /// </summary>
         public readonly Func<int, int, ISettableGridView<double>, ISettableGridView<double>> Resizer;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="resultView">Result view to initially use.</param>
+        /// <param name="resizer">Resizer function which must clear, resize, and return the result view.</param>
         public CustomResultViewWithResize(ISettableGridView<double> resultView,
             Func<int, int, ISettableGridView<double>, ISettableGridView<double>> resizer)
         {
@@ -45,11 +70,30 @@ namespace GoRogue.SenseMapping
         }
     }
 
+    /// <summary>
+    /// Base class that is convenient for creating custom implementations of the <see cref="ISenseMap"/> interface.
+    /// </summary>
+    /// <remarks>
+    /// This class implements much of the boilerplate code required to implement <see cref="ISenseMap"/> properly, making
+    /// sure that the implementer has to implement only the minimal subset of functions and properties.
+    ///
+    /// An implementer should implement <see cref="OnCalculate"/> to perform the spread calculation for all sense sources
+    /// and aggregate it into <see cref="ResultView"/>.  Notably, the implementer SHOULD NOT call <see cref="Reset"/> nor perform
+    /// any equivalent functionality, and SHOULD NOT fire the <see cref="Recalculated"/> or <see cref="SenseMapReset"/> events.
+    /// All of this is taken care of the the <see cref="Calculate"/> function, which calls OnCalculate.
+    ///
+    /// Implementers may specify a custom grid view to use a a result, and must also supply a resizing function in the constructor.
+    /// This allows the sense map to resize the result view if the transparency view changes sizes.  Typically, an array view along with
+    /// a <see cref="CustomResultViewWithResize.ArrayViewResizer"/> as the resizer is sufficient.
+    ///
+    /// Finally, the implementer must implement the <see cref="CurrentSenseMap"/>, <see cref="NewlyInSenseMap"/>, and <see cref="NewlyOutOfSenseMap"/>
+    /// enumerables.  This allows the implementer to control the method of tracking it.
+    /// </remarks>
     [PublicAPI]
     public abstract class SenseMapBase : ISenseMap
     {
         /// <summary>
-        /// The actual grid view which is used to record results.  Exposed publicly via
+        /// The actual grid view which is used to record results.  Exposed publicly in a read-only fashion via
         /// <see cref="ResultView"/>.
         /// </summary>
         protected ISettableGridView<double> ResultViewBacking;
@@ -162,6 +206,13 @@ namespace GoRogue.SenseMapping
             SenseMapReset?.Invoke(this, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Performs <see cref="ISenseSource.CalculateLight"/> on all sources, and aggregates their results into <see cref="ResultViewBacking"/>.
+        /// </summary>
+        /// <remarks>
+        /// Custom implementations should implement this function to perform their calculation; the Calculate function
+        /// calls reset first, then calls this, automatically firing relevant events.
+        /// </remarks>
         protected abstract void OnCalculate();
 
         // ReSharper disable once MethodOverloadWithOptionalParameter
