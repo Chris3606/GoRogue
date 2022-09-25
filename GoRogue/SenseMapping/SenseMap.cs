@@ -50,7 +50,7 @@ namespace GoRogue.SenseMapping
         /// you do not call this class's implementation, you will need to perform this clearing yourself.
         ///
         /// In order to preserve the use of whatever hasher was passed to the class at startup, it is recommended that you do _not_
-        /// re-allocate this structure entirely.  See <see cref="OnCalculate"/> for a way to manage both this and <see cref="_previousSenseMap"/>
+        /// re-allocate this structure entirely.  See <see cref="OnCalculate"/> for a way to manage both this and <see cref="PreviousSenseMapBacking"/>
         /// that does not involve re-allocating.
         /// </remarks>
         protected HashSet<Point> CurrentSenseMapBacking;
