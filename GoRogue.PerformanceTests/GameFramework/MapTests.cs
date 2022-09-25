@@ -11,20 +11,23 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.PerformanceTests.GameFramework
 {
     /// <summary>
-    /// Performance tests for various Map operations
+    /// Performance tests for various Map operations on an open map.
     /// </summary>
-    public class OpenMapTests
+    public class MapTests
     {
         [UsedImplicitly]
-        [Params(50, 100, 200)]
+        //[Params(50, 100, 200)]
+        [Params(50, 200)]
         public int Size;
 
         [UsedImplicitly]
-        [Params(2, 10, 30)]
+        //[Params(2, 10, 30)]
+        [Params(30)]
         public int NumEntitySpawnLocations;
 
         [UsedImplicitly]
-        [Params(1, 2, 3)]
+        //[Params(1, 2, 3)]
+        [Params(1, 3)]
         public int NumEntitiesPerLocation;
 
         [UsedImplicitly]

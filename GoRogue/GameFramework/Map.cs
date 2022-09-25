@@ -261,13 +261,15 @@ namespace GoRogue.GameFramework
             _entities.ItemRemoved += (s, e) => ObjectRemoved?.Invoke(this, e);
             _entities.ItemMoved += (s, e) => ObjectMoved?.Invoke(this, e);
 
+            // We avoid the use of LambdaGridViews and similar here, in order to maximize performance since these
+            // grid views are used very frequently.
             TransparencyView = layersBlockingTransparency == 1
-                ? new LambdaGridView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsTransparent ?? true)
-                : new LambdaGridView<bool>(_terrain.Width, _terrain.Height, FullIsTransparent);
+                ? (IGridView<bool>)new TerrainOnlyMapTransparencyView(this)
+                : new FullMapTransparencyView(this);
 
-            WalkabilityView = layersBlockingWalkability == 1
-                ? new LambdaGridView<bool>(_terrain.Width, _terrain.Height, c => _terrain[c]?.IsWalkable ?? true)
-                : new LambdaGridView<bool>(_terrain.Width, _terrain.Height, FullIsWalkable);
+            WalkabilityView = layersBlockingTransparency == 1
+                ? (IGridView<bool>)new TerrainOnlyMapWalkabilityView(this)
+                : new FullMapWalkabilityView(this);
 
             _playerFOV = customPlayerFOV ?? new RecursiveShadowcastingFOV(TransparencyView);
             _playerFOV.Recalculated += On_FOVRecalculated;
@@ -1146,5 +1148,83 @@ namespace GoRogue.GameFramework
                     + "the map the object resides on.");
         }
         #endregion
+    }
+
+    public sealed class TerrainOnlyMapTransparencyView : GridViewBase<bool>
+    {
+        private readonly Map _map;
+
+        public override int Height => _map.Height;
+        public override int Width => _map.Width;
+
+        public override bool this[Point pos] => _map.Terrain[pos]?.IsTransparent ?? true;
+
+        public TerrainOnlyMapTransparencyView(Map map)
+        {
+            _map = map;
+        }
+    }
+
+    public sealed class FullMapTransparencyView : GridViewBase<bool>
+    {
+        private readonly Map _map;
+
+        public override int Height => _map.Height;
+        public override int Width => _map.Width;
+
+        public override bool this[Point pos] => FullIsTransparent(pos);
+
+        public FullMapTransparencyView(Map map)
+        {
+            _map = map;
+        }
+
+        private bool FullIsTransparent(Point position)
+        {
+            foreach (var item in _map.GetObjectsAt(position, _map.LayersBlockingTransparency))
+                if (!item.IsTransparent)
+                    return false;
+
+            return true;
+        }
+    }
+
+    public class TerrainOnlyMapWalkabilityView : GridViewBase<bool>
+    {
+        private readonly Map _map;
+
+        public override int Height => _map.Height;
+        public override int Width => _map.Width;
+
+        public override bool this[Point pos] => _map.Terrain[pos]?.IsWalkable ?? true;
+
+        public TerrainOnlyMapWalkabilityView(Map map)
+        {
+            _map = map;
+        }
+    }
+
+    public class FullMapWalkabilityView : GridViewBase<bool>
+    {
+        private readonly Map _map;
+
+        public override int Height => _map.Height;
+        public override int Width => _map.Width;
+
+        public override bool this[Point pos] => FullIsWalkable(pos);
+
+        public FullMapWalkabilityView(Map map)
+        {
+            _map = map;
+        }
+
+        private bool FullIsWalkable(Point position)
+        {
+            foreach (var item in _map.GetObjectsAt(position, _map.LayersBlockingWalkability))
+                if (!item.IsWalkable)
+                    return false;
+
+            return true;
+        }
     }
 }
