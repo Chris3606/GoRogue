@@ -16,18 +16,15 @@ namespace GoRogue.PerformanceTests.GameFramework
     public class MapTests
     {
         [UsedImplicitly]
-        //[Params(50, 100, 200)]
-        [Params(50, 200)]
+        [Params(50, 100, 200)]
         public int Size;
 
         [UsedImplicitly]
-        //[Params(2, 10, 30)]
-        [Params(30)]
+        [Params(2, 10, 30)]
         public int NumEntitySpawnLocations;
 
         [UsedImplicitly]
-        //[Params(1, 2, 3)]
-        [Params(1, 3)]
+        [Params(1, 2, 3)]
         public int NumEntitiesPerLocation;
 
         [UsedImplicitly]
