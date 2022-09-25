@@ -1,5 +1,4 @@
 ﻿using System;
-using GoRogue.FOV;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
