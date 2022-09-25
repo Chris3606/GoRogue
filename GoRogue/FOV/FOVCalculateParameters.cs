@@ -133,7 +133,7 @@ namespace GoRogue.FOV
         public bool Equals(FOVCalculateParameters other)
         {
             // ReSharper disable CompareOfFloatsByEqualityOperator
-            return Origin == other.Origin && Radius == other.Radius && DistanceCalc == other.DistanceCalc && Angle == other.Angle && Span == other.Span;
+            return Origin == other.Origin && Radius == other.Radius && DistanceCalc.Matches(other.DistanceCalc) && Angle == other.Angle && Span == other.Span;
             // ReSharper restore CompareOfFloatsByEqualityOperator
         }
 

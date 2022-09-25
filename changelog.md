@@ -27,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Custom sense source spread algorithms can be implemented by implementing `ISenseSource`
     - Sense maps now operate on arbitrary `ISenseSource` instances, rather than some concrete implementation
     - Sense maps no longer implement `IEnumerable` or `IGridView`; instead, they provide a `ResultView` which exposes the results.
+- Optimized Map
+    - TransparencyView and WalkabilityView now retrieve values faster
 
 ### Fixed
 - Fixed bug where changing the `Span` of a sense source might not update the `IsAngleRestricted` value correctly
