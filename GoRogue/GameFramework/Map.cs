@@ -1150,30 +1150,59 @@ namespace GoRogue.GameFramework
         #endregion
     }
 
+    /// <summary>
+    /// Grid view used as the <see cref="Map.TransparencyView"/> for a map when only the terrain layer can have non-transparent
+    /// tiles.
+    /// </summary>
+    /// <remarks>
+    /// This class is used instead of a <see cref="LambdaGridView{T}"/> in order to maximize performance.
+    /// </remarks>
     public sealed class TerrainOnlyMapTransparencyView : GridViewBase<bool>
     {
         private readonly Map _map;
 
+        /// <inheritdoc />
         public override int Height => _map.Height;
+
+        /// <inheritdoc />
         public override int Width => _map.Width;
 
+        /// <inheritdoc />
         public override bool this[Point pos] => _map.Terrain[pos]?.IsTransparent ?? true;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">Map which this grid view gets its data from.</param>
         public TerrainOnlyMapTransparencyView(Map map)
         {
             _map = map;
         }
     }
 
+    /// <summary>
+    /// Grid view used as the <see cref="Map.TransparencyView"/> for a map when non-terrain layers can have non-transparent objects.
+    /// </summary>
+    /// <remarks>
+    /// This class is used instead of a <see cref="LambdaGridView{T}"/> in order to maximize performance.
+    /// </remarks>
     public sealed class FullMapTransparencyView : GridViewBase<bool>
     {
         private readonly Map _map;
 
+        /// <inheritdoc />
         public override int Height => _map.Height;
+
+        /// <inheritdoc />
         public override int Width => _map.Width;
 
+        /// <inheritdoc />
         public override bool this[Point pos] => FullIsTransparent(pos);
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">Map which this grid view gets its data from.</param>
         public FullMapTransparencyView(Map map)
         {
             _map = map;
@@ -1189,30 +1218,59 @@ namespace GoRogue.GameFramework
         }
     }
 
+    /// <summary>
+    /// Grid view used as the <see cref="Map.WalkabilityView"/> for a map when only the terrain layer can have non-walkable
+    /// tiles.
+    /// </summary>
+    /// <remarks>
+    /// This class is used instead of a <see cref="LambdaGridView{T}"/> in order to maximize performance.
+    /// </remarks>
     public class TerrainOnlyMapWalkabilityView : GridViewBase<bool>
     {
         private readonly Map _map;
 
+        /// <inheritdoc />
         public override int Height => _map.Height;
+
+        /// <inheritdoc />
         public override int Width => _map.Width;
 
+        /// <inheritdoc />
         public override bool this[Point pos] => _map.Terrain[pos]?.IsWalkable ?? true;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">Map which this grid view gets its data from.</param>
         public TerrainOnlyMapWalkabilityView(Map map)
         {
             _map = map;
         }
     }
 
+    /// <summary>
+    /// Grid view used as the <see cref="Map.WalkabilityView"/> for a map when non-terrain layers can have non-walkable objects.
+    /// </summary>
+    /// <remarks>
+    /// This class is used instead of a <see cref="LambdaGridView{T}"/> in order to maximize performance.
+    /// </remarks>
     public class FullMapWalkabilityView : GridViewBase<bool>
     {
         private readonly Map _map;
 
+        /// <inheritdoc />
         public override int Height => _map.Height;
+
+        /// <inheritdoc />
         public override int Width => _map.Width;
 
+        /// <inheritdoc />
         public override bool this[Point pos] => FullIsWalkable(pos);
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="map">Map which this grid view gets its data from.</param>
         public FullMapWalkabilityView(Map map)
         {
             _map = map;
