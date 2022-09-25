@@ -43,10 +43,10 @@ namespace GoRogue.SenseMapping
         /// </summary>
         /// <remarks>
         /// This hash set is the backing structure for <see cref="NewlyInSenseMap"/> and <see cref="NewlyOutOfSenseMap"/>,
-        /// as well as <see cref="CurrentSenseMap"/>. During <see cref="ISenseMap.Calculate"/>, this value is cleared before
+        /// as well as <see cref="CurrentSenseMap"/>. During <see cref="OnCalculate"/>, this value is cleared before
         /// the new calculations are performed.
         ///
-        /// Typically you will only need to interact with this if you are overriding <see cref="ISenseMap.Calculate"/>; in this case, if
+        /// Typically you will only need to interact with this if you are overriding <see cref="OnCalculate"/>; in this case, if
         /// you do not call this class's implementation, you will need to perform this clearing yourself.
         ///
         /// In order to preserve the use of whatever hasher was passed to the class at startup, it is recommended that you do _not_
@@ -63,8 +63,8 @@ namespace GoRogue.SenseMapping
         /// <remarks>
         /// This hash set is the backing structure for <see cref="NewlyInSenseMap"/> and <see cref="NewlyOutOfSenseMap"/>.
         /// 
-        /// Typically you will only need to interact with this if you are overriding <see cref="ISenseMap.Calculate"/>; in this case, if
-        /// you do not call this class's implementation, you will need to ensure this is set as appropriate before the new calcluation is performed.
+        /// Typically you will only need to interact with this if you are overriding <see cref="OnCalculate"/>; in this case, if
+        /// you do not call this class's implementation, you will need to ensure this is set as appropriate before the new calculation is performed.
         ///
         /// In order to preserve the use of whatever hasher was passed to the class at startup, it is recommended that you do _not_
         /// re-allocate this structure entirely.  See <see cref="OnCalculate"/> for a way to manage both this and <see cref="CurrentSenseMapBacking"/>
