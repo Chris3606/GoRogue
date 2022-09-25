@@ -4,6 +4,7 @@ using System.Linq;
 using GoRogue.Components;
 using GoRogue.Components.ParentAware;
 using GoRogue.FOV;
+using GoRogue.GridViews;
 using GoRogue.Pathing;
 using GoRogue.Pooling;
 using GoRogue.SpatialMaps;
@@ -466,7 +467,7 @@ namespace GoRogue.GameFramework
             where T : class, IGameObject
         {
             // Assignment is fine here
-            var terrainMap = new LambdaSettableTranslationGridView<T?, IGameObject?>(terrainLayer, t => t, g => (T?)g);
+            var terrainMap = new InheritedTypeGridView<T?,IGameObject?>(terrainLayer);
             return new Map(terrainMap, numberOfEntityLayers, distanceMeasurement, customListPoolCreator,
                 layersBlockingWalkability, layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer,
                 customPlayerFOV, customPather, customComponentContainer);
