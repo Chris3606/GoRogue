@@ -22,6 +22,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Added the ability to customize aggregation of values and parallelization in the provided concrete sense map implementation
 
 ### Changed
+- Updated minimum version of TheSadRogue.Primitives to v1.4.1
+    - See this package's changelog for change list, which include performance increases
 - Redesigned sense maps (see added features)
     - Basis of sense map system is now the two interfaces `ISenseMap` and `ISenseSource`
     - Custom sense source spread algorithms can be implemented by implementing `ISenseSource`

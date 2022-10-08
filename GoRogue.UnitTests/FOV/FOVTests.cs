@@ -49,7 +49,7 @@ namespace GoRogue.UnitTests.FOV
             los.Calculate(s_center.X, s_center.Y, Radius, shape);
 
             var radArea = shape.PositionsInRadius(s_center, Radius).ToHashSet();
-            var losArea = los.DoubleResultView.Positions().Where(pos => los.DoubleResultView[pos] > 0.0).ToHashSet();
+            var losArea = los.DoubleResultView.Positions().ToEnumerable().Where(pos => los.DoubleResultView[pos] > 0.0).ToHashSet();
 
             Assert.Equal(radArea, losArea);
         }
