@@ -38,7 +38,7 @@ namespace GoRogue.UnitTests.Pathing
 
         public static IEnumerable<(bool, bool, bool, bool, Distance)> EndpointWalkableCases
             => _endpointWalkableCases.Combinate(
-                TestUtils.Enumerable(Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan));
+                TestUtils.Enumerable((Distance)Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan));
 
         private static readonly IGridView<bool>[] _testMaps =
         {
@@ -85,7 +85,7 @@ namespace GoRogue.UnitTests.Pathing
                     foreach (var (start, end) in testPoints)
                         mapAndPoints.Add((map, start, end));
 
-                return mapAndPoints.Combinate(TestUtils.Enumerable(Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan));
+                return mapAndPoints.Combinate(TestUtils.Enumerable((Distance)Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan));
             }
         }
 

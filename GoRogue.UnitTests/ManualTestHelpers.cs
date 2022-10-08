@@ -7,6 +7,7 @@ using GoRogue.Pathing;
 using GoRogue.SenseMapping;
 using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
+using GoRogue.UnitTests.SenseMapping;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using ShaiRandom.Generators;
@@ -20,10 +21,10 @@ namespace GoRogue.UnitTests
     {
         public ManualTestHelpers(ITestOutputHelper output) => _output = output;
 
-        private const int _width = 50;
-        private const int _height = 50;
-        private static readonly Point _start = (1, 2);
-        private static readonly Point _end = (17, 14);
+        private const int Width = 50;
+        private const int Height = 50;
+        private static readonly Point s_start = (1, 2);
+        private static readonly Point s_end = (17, 14);
         private readonly ITestOutputHelper _output;
 
         public static Distance[] Distances = { Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan };
@@ -49,10 +50,10 @@ namespace GoRogue.UnitTests
         [MemberDataEnumerable(nameof(Distances))]
         public void ManualPrintAStarPaths(Distance distanceCalc)
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
 
             var pathfinder = new AStar(map, distanceCalc);
-            var path = pathfinder.ShortestPath(_start, _end);
+            var path = pathfinder.ShortestPath(s_start, s_end);
             TestUtils.NotNull(path);
 
             TestUtils.PrintHighlightedPoints(map, path.StepsWithStart);
@@ -64,14 +65,14 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintGoalMap()
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
 
             var stateMap = new ArrayView<GoalState>(map.Width, map.Height);
             foreach (var pos in stateMap.Positions())
                 stateMap[pos] = map[pos] ? GoalState.Clear : GoalState.Obstacle;
 
-            stateMap[_width / 2, _height / 2] = GoalState.Goal;
-            stateMap[_width / 2 + 5, _height / 2 + 5] = GoalState.Goal;
+            stateMap[Width / 2, Height / 2] = GoalState.Goal;
+            stateMap[Width / 2 + 5, Height / 2 + 5] = GoalState.Goal;
 
             var goalMap = new GoalMap(stateMap, Distance.Euclidean);
             goalMap.Update();
@@ -137,12 +138,9 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintDictionary()
         {
-            var myDict = new Dictionary<int, string>();
-
-            myDict[1] = "On";
-            myDict[3] = "Three";
-            myDict[1] = "One";
-            myDict[2] = "Two";
+#pragma warning disable CA2244 // Duplicate indexed element initializations; performed on purpose here
+            var myDict = new Dictionary<int, string> { [1] = "On", [3] = "Three", [1] = "One", [2] = "Two" };
+#pragma warning restore CA2244 // Duplicate indexed element initializations
 
             _output.WriteLine(myDict.ExtendToString());
         }
@@ -161,7 +159,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintFOV()
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
             var myFov = new RecursiveShadowcastingFOV(map);
             myFov.Calculate(5, 5, 3);
 
@@ -173,12 +171,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintList()
         {
-            var myList = new List<int>();
-
-            myList.Add(1);
-            myList.Add(1);
-            myList.Add(3);
-            myList.Add(2);
+            var myList = new List<int> { 1, 1, 3, 2 };
 
             _output.WriteLine(myList.ExtendToString());
             _output.WriteLine("\nWith bar separators:");
@@ -188,19 +181,19 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintMockMap()
         {
-            ISettableGridView<bool> map = (ArrayView<bool>)MockMaps.Rectangle(_width, _height);
+            ISettableGridView<bool> map = (ArrayView<bool>)MockMaps.Rectangle(Width, Height);
             _output.WriteLine(map.ToString());
         }
 
         [Fact]
         public void ManualPrintMultiSpatialMap()
         {
-            var sm = new MultiSpatialMap<MyIDImpl>();
-
-            sm.Add(new MyIDImpl(1), 1, 2);
-            sm.Add(new MyIDImpl(2), 1, 2);
-
-            sm.Add(new MyIDImpl(3), 4, 5);
+            var sm = new MultiSpatialMap<MyIDImpl>
+            {
+                    { new MyIDImpl(1), 1, 2 },
+                    { new MyIDImpl(2), 1, 2 },
+                    { new MyIDImpl(3), 4, 5 }
+            };
 
             _output.WriteLine(sm.ToString());
         }
@@ -208,7 +201,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintPath()
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
             var pather = new AStar(map, Distance.Manhattan);
             var path = pather.ShortestPath(1, 2, 5, 6);
 
@@ -243,13 +236,13 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintSenseMap()
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
 
             var resMap = new ResMap(map);
             var senseMap = new SenseMap(resMap);
 
-            var source = new SenseSource(SourceType.Shadow, 12, 15, 10, Radius.Circle);
-            var source2 = new SenseSource(SourceType.Shadow, 18, 15, 10, Radius.Circle);
+            var source = AlgorithmFactory.CreateSenseSource(SourceType.Shadow, (12, 15), 10, Radius.Circle);
+            var source2 = AlgorithmFactory.CreateSenseSource(SourceType.Shadow, (18, 15), 10, Radius.Circle);
             senseMap.AddSenseSource(source);
             senseMap.AddSenseSource(source2);
 
@@ -265,12 +258,7 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintSet()
         {
-            var mySet = new HashSet<int>();
-
-            mySet.Add(1);
-            mySet.Add(1);
-            mySet.Add(3);
-            mySet.Add(2);
+            var mySet = new HashSet<int> { 1, 1, 3, 2 };
 
             _output.WriteLine(mySet.ExtendToString());
             _output.WriteLine("\nWith bar separators:");
@@ -280,11 +268,12 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ManualPrintSpatialMap()
         {
-            var sm = new SpatialMap<MyIDImpl>();
-
-            sm.Add(new MyIDImpl(1), 1, 2);
-            sm.Add(new MyIDImpl(2), 1, 3);
-            sm.Add(new MyIDImpl(3), 4, 5);
+            var sm = new SpatialMap<MyIDImpl>
+            {
+                    { new MyIDImpl(1), 1, 2 },
+                    { new MyIDImpl(2), 1, 3 },
+                    { new MyIDImpl(3), 4, 5 }
+            };
 
             _output.WriteLine(sm.ToString());
         }

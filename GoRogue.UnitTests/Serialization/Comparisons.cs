@@ -12,6 +12,7 @@ using GoRogue.SerializedTypes.Factories;
 using GoRogue.SerializedTypes.MapGeneration;
 using GoRogue.SerializedTypes.MapGeneration.ContextComponents;
 using GoRogue.UnitTests.Mocks;
+using SadRogue.Primitives;
 
 namespace GoRogue.UnitTests.Serialization
 {
@@ -24,6 +25,10 @@ namespace GoRogue.UnitTests.Serialization
                 { typeof(ComponentCollection), CompareComponentCollections },
                 { typeof(ComponentCollectionSerialized), CompareComponentCollectionSerialized },
                 { typeof(DiceExpression), CompareDiceExpressions },
+                { typeof(Distance), CompareDistance },
+                { typeof(ChebyshevDistance), CompareDistance },
+                { typeof(ManhattanDistance), CompareDistance },
+                { typeof(EuclideanDistance), CompareDistance },
                 { typeof(Factory<FactoryItem>), CompareFactory },
                 { typeof(FactorySerialized<FactoryItem>), CompareFactorySerialized },
                 { typeof(AdvancedFactory<int, FactoryItem>), CompareAdvancedFactory },
@@ -46,6 +51,14 @@ namespace GoRogue.UnitTests.Serialization
             => s_equalityMethods.GetValueOrDefault(obj.GetType(), (o1, o2) => o1.Equals(o2));
 
 
+        private static bool CompareDistance(object o1, object o2)
+        {
+            var d1 = (Distance)o1;
+            var d2 = (Distance)o2;
+
+            // ToString returns parsable expressions so this should suffice
+            return d1.Matches(d2);
+        }
         private static bool CompareDiceExpressions(object o1, object o2)
         {
             var e1 = (DiceExpression)o1;

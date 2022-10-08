@@ -27,7 +27,7 @@ namespace GoRogue.UnitTests.Pathing
             using var fleeMap = new FleeMap(goalMap);
             goalMap.Update();
 
-            foreach (var startPos in fleeMap.Positions().Where(p => map[p] && p != _goal))
+            foreach (var startPos in fleeMap.Positions().ToEnumerable().Where(p => map[p] && p != _goal))
             {
                 var pos = startPos;
                 var moves = 0;
