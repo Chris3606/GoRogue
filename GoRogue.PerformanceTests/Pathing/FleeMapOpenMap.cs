@@ -45,7 +45,7 @@ namespace GoRogue.PerformanceTests.Pathing
 
             var dualGoalView = new ArrayView<GoalState>(map.Width, map.Height);
             dualGoalView.ApplyOverlay(goalsBase);
-            foreach (var rect in dualGoalView.Bounds().BisectVertically())
+            foreach (var rect in dualGoalView.Bounds().BisectVertically().ToEnumerable())
                 dualGoalView[rect.Center] = GoalState.Goal;
 
             _dualGoalMap = new GoalMap(dualGoalView, DistanceCalc);

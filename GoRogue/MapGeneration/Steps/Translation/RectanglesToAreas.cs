@@ -71,7 +71,7 @@ namespace GoRogue.MapGeneration.Steps.Translation
 
             foreach (var rect in rectangles.Items)
             {
-                var area = new Area { rect.Positions() };
+                var area = new Area { rect.Positions().ToEnumerable() };
                 areas.Add(area, Name);
             }
 

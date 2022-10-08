@@ -30,7 +30,7 @@ namespace GoRogue.PerformanceTests.MapAreaFinders
             _rects = new ArrayView<bool>(Size, Size);
             _rects.Fill(true);
 
-            var sects = _rects.Bounds().BisectVertically().ToArray();
+            var sects = _rects.Bounds().BisectVertically().ToEnumerable().ToArray();
 
             foreach (var rect in sects)
             {

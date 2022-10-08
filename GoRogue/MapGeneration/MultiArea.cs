@@ -53,6 +53,9 @@ namespace GoRogue.MapGeneration
         /// </summary>
         public int Count => _subAreas.Sum(area => area.Count);
 
+        /// <inheritdoc/>
+        public bool UseIndexEnumeration => false;
+
         /// <summary>
         /// Returns positions from the area (via its sub-areas) in the same fashion you would via a list.
         /// </summary>
@@ -161,7 +164,7 @@ namespace GoRogue.MapGeneration
         {
             foreach (var area in _subAreas)
             {
-                foreach (var point in area)
+                foreach (var point in area.FastEnumerator())
                     yield return point;
             }
         }
@@ -244,7 +247,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Returns whether or not the given map area intersects any of this area's subareas. If you intend to
         /// determine/use the exact intersection based on this return value, it is best to instead
-        /// call <see cref="SadRogue.Primitives.Area.GetIntersection(IReadOnlyArea, IReadOnlyArea)"/>, and check the number
+        /// call <see cref="Area.GetIntersection"/>, and check the number
         /// of positions in the result (0 if no intersection).
         /// </summary>
         /// <param name="area">The area to check.</param>

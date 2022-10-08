@@ -45,7 +45,7 @@ namespace GoRogue.PerformanceTests.SenseMapping
             CreateSenseMap();
 
             // Create two sources, equidistant on x axis
-            foreach (var rect in _senseMap.ResultView.Bounds().BisectVertically())
+            foreach (var rect in _senseMap.ResultView.Bounds().BisectVertically().ToEnumerable())
             {
                 var source = AlgorithmFactory.CreateSenseSource(SourceAlgo, rect.Center, SourceRadius, SourceShape);
                 _senseMap.AddSenseSource(source);
