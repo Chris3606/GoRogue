@@ -3,10 +3,39 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-
 ## [Unreleased]
+None.
 
-None
+## [3.0.0-beta01] - 2022-10-07
+
+### Added
+- RNG extension functions for generating random positions from Rectangles have been added
+- `MessageBus` now has a `RegisterAllSubscribers` method which automatically registers _all_ variations of ISubscriber the parameter is subscribed to in one call.
+    - This is now a safer default than the old RegisterSubscribers function, but it uses reflection so may be slower.
+    - `TryRegisterAllSubscribers` is also included.
+- `MessageBus` now has a `UnregisterAllSubscribers` method which automatically unregisters _all_ variations of ISubscriber the parameter is subscribed to in one call.
+    - This is now a safer default than the old UnregisterSubscribers function, but it uses reflection so may be slower.
+    - `TryUnregisterAllSubscribers` is also included.
+- Added `ISenseMap` interface which captures the interface of a sense map
+- Added `SenseMapBase` which implements boilerplate for `ISenseMap` and provides an easy way to create a custom implementation of that interface
+- Added `ISenseSource` interface which captures the interface of a sense source
+- Added `SenseSourceBase` which implements boilerplate for `ISenseSource` and provides an easy way to create a custom implementation of that interface
+- Added the ability to implement custom sense source spreading algorithms
+- Added the ability to customize aggregation of values and parallelization in the provided concrete sense map implementation
+
+### Changed
+- Updated minimum version of TheSadRogue.Primitives to v1.4.1
+    - See this package's changelog for change list, which include performance increases
+- Redesigned sense maps (see added features)
+    - Basis of sense map system is now the two interfaces `ISenseMap` and `ISenseSource`
+    - Custom sense source spread algorithms can be implemented by implementing `ISenseSource`
+    - Sense maps now operate on arbitrary `ISenseSource` instances, rather than some concrete implementation
+    - Sense maps no longer implement `IEnumerable` or `IGridView`; instead, they provide a `ResultView` which exposes the results.
+- Optimized Map
+    - TransparencyView and WalkabilityView now retrieve values faster
+
+### Fixed
+- Fixed bug where changing the `Span` of a sense source might not update the `IsAngleRestricted` value correctly
 
 ## [3.0.0-alpha14] - 2022-07-07
 

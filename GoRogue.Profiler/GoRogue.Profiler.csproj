@@ -3,14 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <LangVersion>default</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.2" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\GoRogue\GoRogue.csproj" />

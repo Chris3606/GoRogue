@@ -26,7 +26,7 @@ namespace GoRogue.UnitTests.Pathing
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
             goalMap.Update();
 
-            foreach (var startPos in goalMap.Positions().Where(p => map[p] && p != _goal))
+            foreach (var startPos in goalMap.Positions().ToEnumerable().Where(p => map[p] && p != _goal))
             {
                 var pos = startPos;
                 while (true)

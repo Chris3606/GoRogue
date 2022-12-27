@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using GoRogue.SenseMapping.Sources;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -6,10 +7,10 @@ using SadRogue.Primitives.GridViews;
 namespace GoRogue.SenseMapping
 {
     /// <summary>
-    /// Read-only interface of a <see cref="SenseMap" />.
+    /// Read-only interface of an <see cref="ISenseMap" />.
     /// </summary>
     [PublicAPI]
-    public interface IReadOnlySenseMap : IEnumerable<double>, IGridView<double>
+    public interface IReadOnlySenseMap
     {
         /// <summary>
         /// IEnumerable of only positions currently "in" the sense map, eg. all positions that have a
@@ -33,15 +34,25 @@ namespace GoRogue.SenseMapping
 
         /// <summary>
         /// Read-only list of all sources currently considered part of the sense map. Some may have their
-        /// <see cref="SenseSource.Enabled" /> flag set to false, so all of these may or may not be counted
+        /// <see cref="ISenseSource.Enabled" /> flag set to false, so all of these may or may not be counted
         /// when Calculate is called.
         /// </summary>
-        IReadOnlyList<SenseSource> SenseSources { get; }
+        IReadOnlyList<ISenseSource> SenseSources { get; }
+
+        /// <summary>
+        /// The resistance map used to perform calculations.
+        /// </summary>
+        public IGridView<double> ResistanceView { get; }
+
+        /// <summary>
+        /// A view of the sense map's calculation results.
+        /// </summary>
+        public IGridView<double> ResultView { get; }
 
         /// <summary>
         /// Returns a read-only representation of the sensory map.
         /// </summary>
         /// <returns>This sensory map object as <see cref="IReadOnlySenseMap" />.</returns>
-        public IReadOnlySenseMap AsReadOnly() => this;
+        public IReadOnlySenseMap AsReadOnly();
     }
 }

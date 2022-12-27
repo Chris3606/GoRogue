@@ -11,12 +11,12 @@
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-alpha14</Version>
+    <Version>3.0.0-beta01</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
     <PackageId>GoRogue</PackageId>
-	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/master/changelog.md#300-alpha14---2022-07-07.</PackageReleaseNotes>
+	<PackageReleaseNotes>BREAKING CHANGES from v2!  See upgrade guide at http://www.roguelib.com/articles/2-to-3-upgrade-guide.html.  Changelog at https://github.com/Chris3606/GoRogue/blob/master/changelog.md#300-beta01---2022-10-07.</PackageReleaseNotes>
 	<PackageProjectUrl>http://www.roguelib.com</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/Chris3606/GoRogue/tree/develop-3.0</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
@@ -76,7 +76,7 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0">
@@ -85,8 +85,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
-    <PackageReference Include="ShaiRandom" Version="0.0.1-beta03" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.3.0" />
+    <PackageReference Include="ShaiRandom" Version="0.0.1" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.4.1" />
   </ItemGroup>
 
   <!-- When packing, copy the nuget files to the nuget output directory -->
