@@ -53,14 +53,13 @@ namespace GoRogue.UnitTests.MapGeneration
 
         public static readonly IEnumerable<Lines.Algorithm> OrderedAlgorithms = new List<Lines.Algorithm>()
         {
-            Lines.Algorithm.BresenhamOrdered,
+            Lines.Algorithm.Bresenham,
             Lines.Algorithm.DDA,
         };
 
         public static readonly IEnumerable<Lines.Algorithm> UnorderedAlgorithms = new List<Lines.Algorithm>
         {
             Lines.Algorithm.Orthogonal,
-            Lines.Algorithm.Bresenham,
         };
 
         public static readonly IEnumerable<int> PolygonPointCount = new List<int>

@@ -115,7 +115,7 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners.ToList(), algorithm) { }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">The corners of this polygon</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.DDA)
+        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners, algorithm) { }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="corners">The corners of the polygon</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.DDA) { }
+        public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.Bresenham) { }
 
         private PolygonArea(List<Point> corners, Lines.Algorithm algorithm)
         {
@@ -175,7 +175,7 @@ namespace GoRogue.MapGeneration
         private void CheckAlgorithm() => CheckAlgorithm(LineAlgorithm);
         private static void CheckAlgorithm(Lines.Algorithm algorithm)
         {
-            if (algorithm == Lines.Algorithm.Bresenham || algorithm == Lines.Algorithm.Orthogonal)
+            if (algorithm == Lines.Algorithm.Orthogonal)
                 throw new ArgumentException("Line Algorithm must produce ordered lines.");
         }
 

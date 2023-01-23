@@ -19,17 +19,10 @@ namespace GoRogue
         public enum Algorithm
         {
             /// <summary>
-            /// Bresenham line algorithm.
+            /// Bresenham line algorithm.  Points are guaranteed to be in order from
+            /// start to finish.
             /// </summary>
             Bresenham,
-
-            /// <summary>
-            /// Bresenham line algorithm, with the points guaranteed to be in start to finish
-            /// order. This may be significantly slower than <see cref="Algorithm.Bresenham" />, so if you really
-            /// need ordering, consider<see cref="Algorithm.DDA" /> instead, as it is both faster than Bresenham
-            /// and implicitly ordered.
-            /// </summary>
-            BresenhamOrdered,
 
             /// <summary>
             /// DDA line algorithm -- effectively an optimized algorithm for producing Bresenham-like
@@ -89,13 +82,6 @@ namespace GoRogue
                 case Algorithm.Bresenham:
                     return Bresenham(startX, startY, endX, endY);
 
-                case Algorithm.BresenhamOrdered:
-                    var line = Bresenham(startX, startY, endX, endY).Reverse().ToArray();
-                    if (line.Length == 0)
-                        return line;
-
-                    return line[0] == new Point(startX, startY) ? line : line.Reverse();
-
                 case Algorithm.DDA:
                     return DDA(startX, startY, endX, endY);
 
@@ -109,38 +95,36 @@ namespace GoRogue
 
         private static IEnumerable<Point> Bresenham(int startX, int startY, int endX, int endY)
         {
-            var steep = Math.Abs(endY - startY) > Math.Abs(endX - startX);
-            if (steep)
+            int w = endX - startX;
+            int h = endY - startY;
+            int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;
+            if (w < 0) dx1 = -1; else if (w > 0) dx1 = 1;
+            if (h < 0) dy1 = -1; else if (h > 0) dy1 = 1;
+            if (w < 0) dx2 = -1; else if (w > 0) dx2 = 1;
+            int longest = Math.Abs(w);
+            int shortest = Math.Abs(h);
+            if (!(longest > shortest))
             {
-                Utility.Swap(ref startX, ref startY);
-                Utility.Swap(ref endX, ref endY);
+                longest = Math.Abs(h);
+                shortest = Math.Abs(w);
+                if (h < 0) dy2 = -1; else if (h > 0) dy2 = 1;
+                dx2 = 0;
             }
-
-            if (startX > endX)
+            int numerator = longest >> 1;
+            for (int i = 0; i <= longest; i++)
             {
-                Utility.Swap(ref startX, ref endX);
-                Utility.Swap(ref startY, ref endY);
-            }
-
-            var dx = endX - startX;
-            var dy = Math.Abs(endY - startY);
-
-            var err = dx / 2;
-            var yStep = startY < endY ? 1 : -1;
-            var y = startY;
-
-            for (var x = startX; x <= endX; x++)
-            {
-                if (steep)
-                    yield return new Point(y, x);
-                else
-                    yield return new Point(x, y);
-
-                err -= dy;
-                if (err < 0)
+                yield return new Point(startX, startY);
+                numerator += shortest;
+                if (!(numerator < longest))
                 {
-                    y += yStep;
-                    err += dx;
+                    numerator -= longest;
+                    startX += dx1;
+                    startY += dy1;
+                }
+                else
+                {
+                    startX += dx2;
+                    startY += dy2;
                 }
             }
         }

@@ -12,7 +12,6 @@ namespace GoRogue.UnitTests
         private const int _mapHeight = 10;
         private const int _mapWidth = 10;
         private static readonly (int, int) _start = (1, 1);
-        private readonly System.Random _random = new System.Random();
         List<Point> _hardCodedRange = new List<Point>();
 
         private readonly Point sw = new Point(3, 4);
@@ -20,18 +19,14 @@ namespace GoRogue.UnitTests
         private readonly Point ne = new Point(5, 0);
         private readonly Point se = new Point(7, 3);
 
+        private readonly Rectangle _orderingTests = new Rectangle(1, 2, 20, 15);
+
         public LineTests()
         {
             _hardCodedRange.AddRange(Lines.Get(nw, ne));
             _hardCodedRange.AddRange(Lines.Get(ne, se));
             _hardCodedRange.AddRange(Lines.Get(se, sw));
             _hardCodedRange.AddRange(Lines.Get(sw, nw));
-        }
-        private Point RandomPosition()
-        {
-            var x = _random.Next(0, _mapWidth);
-            var y = _random.Next(0, _mapHeight);
-            return (x, y);
         }
 
         private static void DrawLine(Point start, Point end, int width, int height, Lines.Algorithm type)
@@ -66,21 +61,19 @@ namespace GoRogue.UnitTests
         [Fact]
         public void OrderedBresenhamTest()
         {
-            //Random. rand = Random.GlobalRandom.DefaultRNG;
-            for (var i = 0; i < 100; i++)
-            {
-                var start = RandomPosition();
-                var end = RandomPosition();
-
-                var line = Lines.Get(start, end, Lines.Algorithm.BresenhamOrdered).ToList();
-                Assert.Equal(start, line[0]);
-            }
+            foreach (var start in _orderingTests.Positions())
+                foreach (var end in _orderingTests.Positions())
+                {
+                    var line = Lines.Get(start, end, Lines.Algorithm.Bresenham).ToArray();
+                    Assert.Equal(start, line[0]);
+                    Assert.Equal(end, line[^1]);
+                }
         }
         [Fact]
         public void LeftAtTest()
         {
             Assert.Equal(nw.X, _hardCodedRange.LeftAt(nw.Y));
-            Assert.Equal(4, _hardCodedRange.LeftAt(0));
+            Assert.Equal(3, _hardCodedRange.LeftAt(0));
             Assert.Equal(3, _hardCodedRange.LeftAt(4));
         }
         [Fact]
