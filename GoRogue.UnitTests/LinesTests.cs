@@ -64,6 +64,7 @@ namespace GoRogue.UnitTests
             foreach (var start in _orderingTests.Positions())
                 foreach (var end in _orderingTests.Positions())
                 {
+                    // ReSharper disable once RedundantArgumentDefaultValue
                     var line = Lines.Get(start, end, Lines.Algorithm.Bresenham).ToArray();
                     Assert.Equal(start, line[0]);
                     Assert.Equal(end, line[^1]);

@@ -23,7 +23,9 @@ namespace GoRogue.Debugger.Routines
         }
 
         public void CreateViews()
-        { }
+        {
+            _views.Add(("Test View", new ArrayView<char>(10, 10)));
+        }
 
         public void InterpretKeyPress(int key) { }
     }
