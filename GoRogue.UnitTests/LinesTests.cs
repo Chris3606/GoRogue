@@ -59,7 +59,7 @@ namespace GoRogue.UnitTests
         public void ManualOrthoTest() => DrawLine(_start, _end, _mapWidth, _mapHeight, Lines.Algorithm.Orthogonal);
 
         [Fact]
-        public void OrderedBresenhamTest()
+        public void BresenhamIsOrderedTest()
         {
             foreach (var start in _orderingTests.Positions())
                 foreach (var end in _orderingTests.Positions())
