@@ -32,7 +32,7 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
         public Area EastBoundary;
         public Area WestBoundary;
 
-        public RegionMock(Point northWest, Point northEast, Point southEast, Point southWest, Action<RegionMock> innerCreation, Lines.Algorithm algoToUse = Lines.Algorithm.Bresenham)
+        public RegionMock(Point northWest, Point northEast, Point southEast, Point southWest, Action<RegionMock> innerCreation, SadRogue.Primitives.Lines.Algorithm algoToUse = SadRogue.Primitives.Lines.Algorithm.Bresenham)
         {
             SouthEastCorner = southEast;
             NorthEastCorner = northEast;
@@ -45,21 +45,21 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
             var hasher = new KnownSizeHasher(maxX);
 
             // Determine outer boundaries between each corner
-            WestBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, algoToUse), hasher);
-            SouthBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
-            EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
-            NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
+            WestBoundary = new Area(SadRogue.Primitives.Lines.GetLine(NorthWestCorner, SouthWestCorner, algoToUse), hasher);
+            SouthBoundary = new Area(SadRogue.Primitives.Lines.GetLine(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
+            EastBoundary = new Area(SadRogue.Primitives.Lines.GetLine(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
+            NorthBoundary = new Area(SadRogue.Primitives.Lines.GetLine(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
             OuterPoints = new MultiArea { WestBoundary, NorthBoundary, EastBoundary, SouthBoundary };
             innerCreation(this);
             Points = new MultiArea { OuterPoints, InnerPoints };
         }
 
-        public static RegionMock Rectangle(Rectangle r, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        public static RegionMock Rectangle(Rectangle r, Action<RegionMock> innerCreation, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
             => new RegionMock(r.MinExtent, (r.MaxExtentX, r.MinExtentY),
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY), innerCreation, algorithm);
 
 
-        public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        public static RegionMock ParallelogramFromTopCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
         {
             var negative = Direction.YIncreasesUpward ? -1 : 1;
 
@@ -71,7 +71,7 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
             return new RegionMock(nw, ne, se, sw, innerCreation, algorithm);
         }
 
-        public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
+        public static RegionMock ParallelogramFromBottomCorner(Point origin, int width, int height, Action<RegionMock> innerCreation, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
         {
             var negative = Direction.YIncreasesUpward ? 1 : -1;
 

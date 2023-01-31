@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GoRogue.FOV;
 using SadRogue.Primitives;
@@ -24,15 +25,13 @@ namespace GoRogue.Debugger.Routines
             _targetPositionsIdx = MathHelpers.WrapAround(_targetPositionsIdx + 1, _targetPositions.Length);
             _currentAngle = Point.BearingOfLine(_fov.TransparencyView.Bounds().Center,
                 _targetPositions[_targetPositionsIdx]);
-            CalculateFOV();
+            UpdateCone();
         }
 
         public void LastTimeUnit()
         {
             _targetPositionsIdx = MathHelpers.WrapAround(_targetPositionsIdx - 1, _targetPositions.Length);
-            _currentAngle = Point.BearingOfLine(_fov.TransparencyView.Bounds().Center,
-                _targetPositions[_targetPositionsIdx]);
-            CalculateFOV();
+            UpdateCone();
         }
 
         public void GenerateMap()
@@ -42,9 +41,12 @@ namespace GoRogue.Debugger.Routines
 
             _fov = new RecursiveShadowcastingFOV(map);
             _targetPositions = _fov.BooleanResultView.Bounds().PerimeterPositions().ToArray();
-            _targetPositionsIdx = 0;
-            _currentAngle = 0;
-            CalculateFOV();
+
+            // Find position at angle 0, since it won't be the first position at the rectangle.
+            var point = _fov.BooleanResultView.Bounds()
+                .PositionsOnSide(Direction.Up).First(i => i.X == _fov.BooleanResultView.Bounds().Center.X);
+            _targetPositionsIdx = Array.FindIndex(_targetPositions, i => i == point);
+            UpdateCone();
         }
 
         public void CreateViews()
@@ -55,10 +57,11 @@ namespace GoRogue.Debugger.Routines
 
         public void InterpretKeyPress(int key) { }
 
-        private void CalculateFOV()
+        private void UpdateCone()
         {
-            _targetPositionsIdx = MathHelpers.WrapAround(_targetPositionsIdx + 1, _targetPositions.Length);
-            _fov.Calculate(_fov.TransparencyView.Bounds().Center, 10, Distance.Chebyshev, _currentAngle, 30);
+            var center = _fov.TransparencyView.Bounds().Center;
+            _currentAngle = Point.BearingOfLine(center, _targetPositions[_targetPositionsIdx]);
+            _fov.Calculate(center, 10, Distance.Chebyshev, _currentAngle, 30);
         }
     }
 }

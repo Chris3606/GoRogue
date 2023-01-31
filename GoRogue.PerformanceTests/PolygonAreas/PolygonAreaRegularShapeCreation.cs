@@ -35,11 +35,11 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Params(40, 72, 73, 180)]
         public int ParameterizedRadius;
 
-        // Tests currently use DDA; note that we must limit ourselves ordered lines, so DDA or BresenhamOrdered
+        // Tests currently use Bresenham; note that we must limit ourselves ordered lines, so DDA or BresenhamOrdered
         // (Orthogonal requires further testing)
         [UsedImplicitly]
-        [Params(Lines.Algorithm.DDA)]
-        public Lines.Algorithm LineAlgorithm;
+        [Params(SadRogue.Primitives.Lines.Algorithm.Bresenham)]
+        public SadRogue.Primitives.Lines.Algorithm LineAlgorithm;
 
         // Center point for all shapes
         [UsedImplicitly]

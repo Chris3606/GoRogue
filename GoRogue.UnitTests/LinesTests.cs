@@ -23,53 +23,12 @@ namespace GoRogue.UnitTests
 
         public LineTests()
         {
-            _hardCodedRange.AddRange(Lines.Get(nw, ne));
-            _hardCodedRange.AddRange(Lines.Get(ne, se));
-            _hardCodedRange.AddRange(Lines.Get(se, sw));
-            _hardCodedRange.AddRange(Lines.Get(sw, nw));
+            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(nw, ne));
+            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(ne, se));
+            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(se, sw));
+            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(sw, nw));
         }
 
-        private static void DrawLine(Point start, Point end, int width, int height, Lines.Algorithm type)
-        {
-            var myChars = new char[width, height];
-
-            for (var x = 0; x < width; x++)
-                for (var y = 0; y < height; y++)
-                    myChars[x, y] = x == 0 || y == 0 || x == width - 1 || y == height - 1 ? '#' : '.';
-
-            foreach (var point in Lines.Get(start.X, start.Y, end.X, end.Y, type))
-                myChars[point.X, point.Y] = '*';
-
-            for (var y = 0; y < height; y++)
-            {
-                for (var x = 0; x < width; x++)
-                    Console.Write(myChars[x, y]);
-
-                Console.WriteLine();
-            }
-        }
-
-        [Fact]
-        public void ManualBresenhamTest() => DrawLine(_start, _end, _mapWidth, _mapHeight, Lines.Algorithm.Bresenham);
-
-        [Fact]
-        public void ManualDDATest() => DrawLine(_start, _end, _mapWidth, _mapHeight, Lines.Algorithm.DDA);
-
-        [Fact]
-        public void ManualOrthoTest() => DrawLine(_start, _end, _mapWidth, _mapHeight, Lines.Algorithm.Orthogonal);
-
-        [Fact]
-        public void BresenhamIsOrderedTest()
-        {
-            foreach (var start in _orderingTests.Positions())
-                foreach (var end in _orderingTests.Positions())
-                {
-                    // ReSharper disable once RedundantArgumentDefaultValue
-                    var line = Lines.Get(start, end, Lines.Algorithm.Bresenham).ToArray();
-                    Assert.Equal(start, line[0]);
-                    Assert.Equal(end, line[^1]);
-                }
-        }
         [Fact]
         public void LeftAtTest()
         {

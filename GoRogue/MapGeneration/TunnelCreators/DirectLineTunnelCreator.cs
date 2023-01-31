@@ -8,8 +8,8 @@ namespace GoRogue.MapGeneration.TunnelCreators
     /// <summary>
     /// Implements a tunnel creation algorithm that sets as walkable a direct line between the two
     /// points. In the case that <see cref="SadRogue.Primitives.Distance.Manhattan" /> is being used, the line is calculated via the
-    /// <see cref="Lines.Algorithm.Orthogonal" /> algorithm.  Otherwise, the line is calculated using
-    /// <see cref="Lines.Algorithm.Bresenham" />.
+    /// <see cref="SadRogue.Primitives.Lines.Algorithm.Orthogonal" /> algorithm.  Otherwise, the line is calculated using
+    /// <see cref="SadRogue.Primitives.Lines.Algorithm.Bresenham" />.
     /// </summary>
     [PublicAPI]
     public class DirectLineTunnelCreator : ITunnelCreator
@@ -18,8 +18,8 @@ namespace GoRogue.MapGeneration.TunnelCreators
         private readonly bool _doubleWideVertical;
 
         /// <summary>
-        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="Lines.Algorithm.Orthogonal" />
-        /// or <see cref="Lines.Algorithm.Bresenham" /> is used to create the tunnel.
+        /// Constructor. Takes the distance calculation to use, which determines whether <see cref="SadRogue.Primitives.Lines.Algorithm.Orthogonal" />
+        /// or <see cref="SadRogue.Primitives.Lines.Algorithm.Bresenham" /> is used to create the tunnel.
         /// </summary>
         /// <param name="adjacencyRule">
         /// Method of adjacency to respect when creating tunnels. Cannot be diagonal.
@@ -37,12 +37,12 @@ namespace GoRogue.MapGeneration.TunnelCreators
         public Area CreateTunnel(ISettableGridView<bool> map, Point start, Point end)
         {
             var lineAlgorithm = _adjacencyRule == AdjacencyRule.Cardinals
-                ? Lines.Algorithm.Orthogonal
-                : Lines.Algorithm.Bresenham;
+                ? SadRogue.Primitives.Lines.Algorithm.Orthogonal
+                : SadRogue.Primitives.Lines.Algorithm.Bresenham;
             var area = new Area();
 
             var previous = Point.None;
-            foreach (var pos in Lines.Get(start, end, lineAlgorithm))
+            foreach (var pos in SadRogue.Primitives.Lines.GetLine(start, end, lineAlgorithm))
             {
                 map[pos] = true;
                 area.Add(pos);
