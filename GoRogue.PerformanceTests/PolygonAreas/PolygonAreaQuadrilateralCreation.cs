@@ -31,10 +31,9 @@ namespace GoRogue.PerformanceTests.PolygonAreas
         [Params(10, 50, 100, 200, 500)]
         public int Size;
 
-        // Tests currently use DDA; note that we must limit ourselves ordered lines, so DDA or BresenhamOrdered
-        // (Orthogonal requires further testing)
+        // Tests currently use Bresenham; note that we must limit ourselves ordered lines
         [UsedImplicitly]
-        [Params(Lines.Algorithm.DDA)]
+        [Params(Lines.Algorithm.Bresenham)]
         public Lines.Algorithm LineAlgorithm;
 
         // Origin point for all shapes
