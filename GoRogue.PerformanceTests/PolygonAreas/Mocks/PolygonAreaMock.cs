@@ -18,7 +18,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
         #region Properties
         public readonly List<Point> Corners;
 
-        public readonly SadRogue.Primitives.Lines.Algorithm LineAlgorithm;
+        public readonly Lines.Algorithm LineAlgorithm;
 
         public readonly MultiArea OuterPoints;
 
@@ -30,22 +30,22 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
 
         // Constructors that mimic PolygonArea; with minimal modifications to allow full customization of performance-relevant portions
         #region Constructors
-        public PolygonAreaMock(IEnumerable<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public PolygonAreaMock(IEnumerable<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners.ToList(), drawFromCornersMethod, innerPointsCreationMethod, algorithm) { }
 
 
-        public PolygonAreaMock(ref List<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public PolygonAreaMock(ref List<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners, drawFromCornersMethod, innerPointsCreationMethod, algorithm) { }
 
-        public PolygonAreaMock(Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm, params Point[] corners)
+        public PolygonAreaMock(Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm, params Point[] corners)
             : this(corners, drawFromCornersMethod, innerPointsCreationMethod, algorithm) { }
 
 
         public PolygonAreaMock(Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, params Point[] corners)
             // ReSharper disable once RedundantArgumentDefaultValue
-            : this(corners, drawFromCornersMethod, innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm.Bresenham) { }
+            : this(corners, drawFromCornersMethod, innerPointsCreationMethod, Lines.Algorithm.Bresenham) { }
 
-        private PolygonAreaMock(List<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm)
+        private PolygonAreaMock(List<Point> corners, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm)
         {
             Corners = corners;
             LineAlgorithm = algorithm;
@@ -65,14 +65,14 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
 
         // Functions that generate PolygonAreaMocks that are equivalent to PolygonArea, for comparison
         #region Equivalent PolygonArea Creation
-        public static PolygonAreaMock Rectangle(Rectangle r, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public static PolygonAreaMock Rectangle(Rectangle r, Action<PolygonAreaMock> drawFromCornersMethod, Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             => new PolygonAreaMock(drawFromCornersMethod, innerPointsCreationMethod, algorithm, r.MinExtent, (r.MaxExtentX, r.MinExtentY),
                 r.MaxExtent, (r.MinExtentX, r.MaxExtentY));
 
         public static PolygonAreaMock Parallelogram(Point origin, int width, int height,
                                                     Action<PolygonAreaMock> drawFromCornersMethod,
                                                     Action<PolygonAreaMock> innerPointsCreationMethod,
-                                                    bool fromTop = false, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+                                                    bool fromTop = false, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             if (fromTop && Direction.YIncreasesUpward)
                 height *= -1;
@@ -90,7 +90,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
         }
 
         public static PolygonAreaMock RegularPolygon(Point center, int numberOfSides, double radius, Action<PolygonAreaMock> drawFromCornersMethod,
-                                                 Action<PolygonAreaMock> innerPointsCreationMethod, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+                                                 Action<PolygonAreaMock> innerPointsCreationMethod, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             CheckCorners(numberOfSides);
 
@@ -111,7 +111,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Mocks
         public static PolygonAreaMock RegularStar(Point center, int points, double outerRadius, double innerRadius,
                                                   Action<PolygonAreaMock> drawFromCornersMethod,
                                                   Action<PolygonAreaMock> innerPointsCreationMethod,
-                                                  SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+                                                  Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             CheckCorners(points);
 

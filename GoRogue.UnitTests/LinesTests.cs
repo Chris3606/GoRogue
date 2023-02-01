@@ -15,10 +15,10 @@ namespace GoRogue.UnitTests
 
         public LineTests()
         {
-            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(_nw, _ne));
-            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(_ne, _se));
-            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(_se, _sw));
-            _hardCodedRange.AddRange(SadRogue.Primitives.Lines.GetLine(_sw, _nw));
+            _hardCodedRange.AddRange(Lines.GetLine(_nw, _ne));
+            _hardCodedRange.AddRange(Lines.GetLine(_ne, _se));
+            _hardCodedRange.AddRange(Lines.GetLine(_se, _sw));
+            _hardCodedRange.AddRange(Lines.GetLine(_sw, _nw));
         }
 
         [Fact]

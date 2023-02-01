@@ -33,8 +33,8 @@ namespace GoRogue.PerformanceTests.PolygonAreas
 
         // Tests currently use Bresenham; note that we must limit ourselves ordered lines
         [UsedImplicitly]
-        [Params(SadRogue.Primitives.Lines.Algorithm.Bresenham)]
-        public SadRogue.Primitives.Lines.Algorithm LineAlgorithm;
+        [Params(Lines.Algorithm.Bresenham)]
+        public Lines.Algorithm LineAlgorithm;
 
         // Origin point for all shapes
         [UsedImplicitly]

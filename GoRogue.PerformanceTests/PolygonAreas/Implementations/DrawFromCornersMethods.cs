@@ -12,9 +12,9 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
         public static void OriginalDefault(PolygonAreaMock polygon)
         {
             for (int i = 0; i < polygon.Corners.Count - 1; i++)
-                polygon.OuterPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(polygon.Corners[i], polygon.Corners[i + 1], polygon.LineAlgorithm)));
+                polygon.OuterPoints.Add(new Area(Lines.GetLine(polygon.Corners[i], polygon.Corners[i + 1], polygon.LineAlgorithm)));
 
-            polygon.OuterPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(polygon.Corners[^1], polygon.Corners[0], polygon.LineAlgorithm)));
+            polygon.OuterPoints.Add(new Area(Lines.GetLine(polygon.Corners[^1], polygon.Corners[0], polygon.LineAlgorithm)));
         }
         #endregion
 
@@ -25,12 +25,12 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
             for (int i = 0; i < polygon.Corners.Count - 1; i++)
             {
                 var hasher = new KnownSizeHasher(Math.Max(polygon.Corners[i].X, polygon.Corners[i + 1].X));
-                polygon.OuterPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(polygon.Corners[i], polygon.Corners[i + 1],
+                polygon.OuterPoints.Add(new Area(Lines.GetLine(polygon.Corners[i], polygon.Corners[i + 1],
                     polygon.LineAlgorithm), hasher));
             }
 
             var hasherEnd = new KnownSizeHasher(Math.Max(polygon.Corners[^1].X, polygon.Corners[0].X));
-            polygon.OuterPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(polygon.Corners[^1], polygon.Corners[0], polygon.LineAlgorithm), hasherEnd));
+            polygon.OuterPoints.Add(new Area(Lines.GetLine(polygon.Corners[^1], polygon.Corners[0], polygon.LineAlgorithm), hasherEnd));
         }
         #endregion
     }

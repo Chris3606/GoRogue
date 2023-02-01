@@ -50,10 +50,11 @@ namespace GoRogue.UnitTests.MapGeneration
             }
         }
 
-        public static readonly IEnumerable<SadRogue.Primitives.Lines.Algorithm> OrderedAlgorithms = new List<SadRogue.Primitives.Lines.Algorithm>()
+        public static readonly IEnumerable<Lines.Algorithm> OrderedAlgorithms = new List<Lines.Algorithm>
         {
-            SadRogue.Primitives.Lines.Algorithm.Bresenham,
-            SadRogue.Primitives.Lines.Algorithm.DDA,
+            Lines.Algorithm.Bresenham,
+            Lines.Algorithm.DDA,
+            Lines.Algorithm.Orthogonal
         };
 
         public static readonly IEnumerable<int> PolygonPointCount = new List<int>
@@ -120,7 +121,7 @@ namespace GoRogue.UnitTests.MapGeneration
         [MemberDataEnumerable(nameof(PolygonTestCases))]
         public void PolygonSanityCheck(PolygonTestCase testCase)
         {
-            var polygon = new PolygonArea(SadRogue.Primitives.Lines.Algorithm.Bresenham, testCase.Corners);
+            var polygon = new PolygonArea(Lines.Algorithm.Bresenham, testCase.Corners);
             Assert.Equal(testCase.CornerCount, polygon.Corners.Count);
             Assert.Equal(testCase.ExpectedOuterPoints, polygon.OuterPoints.Count);
             Assert.Equal(testCase.ExpectedInnerPoints, polygon.InnerPoints.Count);
@@ -142,7 +143,7 @@ namespace GoRogue.UnitTests.MapGeneration
         #region creation tests
         [Theory]
         [MemberDataEnumerable(nameof(OrderedAlgorithms))]
-        public void PolygonAreaUsesSpecifiedAlgorithmTest(SadRogue.Primitives.Lines.Algorithm algorithm)
+        public void PolygonAreaUsesSpecifiedAlgorithmTest(Lines.Algorithm algorithm)
         {
             var p1 = new Point(1, 1);
             var p2 = new Point(12, 5);
@@ -151,11 +152,11 @@ namespace GoRogue.UnitTests.MapGeneration
             var p5 = new Point(5, 7);
 
             var polygon = new PolygonArea(algorithm, p1, p2, p3, p4, p5);
-            Assert.True(polygon.OuterPoints.Contains(new Area(SadRogue.Primitives.Lines.GetLine(p1, p2, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(SadRogue.Primitives.Lines.GetLine(p2, p3, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(SadRogue.Primitives.Lines.GetLine(p3, p4, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(SadRogue.Primitives.Lines.GetLine(p4, p5, algorithm))));
-            Assert.True(polygon.OuterPoints.Contains(new Area(SadRogue.Primitives.Lines.GetLine(p5, p1, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.GetLine(p1, p2, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.GetLine(p2, p3, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.GetLine(p3, p4, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.GetLine(p4, p5, algorithm))));
+            Assert.True(polygon.OuterPoints.Contains(new Area(Lines.GetLine(p5, p1, algorithm))));
             _output.WriteLine(GetPolygonString(polygon));
         }
 

@@ -39,7 +39,7 @@ namespace GoRogue.MapGeneration
         /// <summary>
         /// Which Line-Drawing algorithm to use
         /// </summary>
-        public readonly SadRogue.Primitives.Lines.Algorithm LineAlgorithm;
+        public readonly Lines.Algorithm LineAlgorithm;
 
         /// <inheritdoc/>
         public Rectangle Bounds => _points.Bounds;
@@ -115,7 +115,7 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">Each corner of the polygon, which is copied into a new list</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(IEnumerable<Point> corners, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public PolygonArea(IEnumerable<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners.ToList(), algorithm) { }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace GoRogue.MapGeneration
         /// <param name="corners">The corners of this polygon</param>
         /// <param name="algorithm">Which Line Algorithm to use</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(ref List<Point> corners, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public PolygonArea(ref List<Point> corners, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             : this(corners, algorithm) { }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace GoRogue.MapGeneration
         /// <param name="algorithm">Which Line-drawing algorithm to use</param>
         /// <param name="corners">The points which are corners for this polygon</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(SadRogue.Primitives.Lines.Algorithm algorithm, params Point[] corners)
+        public PolygonArea(Lines.Algorithm algorithm, params Point[] corners)
             : this(corners, algorithm) { }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace GoRogue.MapGeneration
         /// </summary>
         /// <param name="corners">The corners of the polygon</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
-        public PolygonArea(params Point[] corners) : this(corners, SadRogue.Primitives.Lines.Algorithm.Bresenham) { }
+        public PolygonArea(params Point[] corners) : this(corners, Lines.Algorithm.Bresenham) { }
 
-        private PolygonArea(List<Point> corners, SadRogue.Primitives.Lines.Algorithm algorithm)
+        private PolygonArea(List<Point> corners, Lines.Algorithm algorithm)
         {
             _corners = corners;
             LineAlgorithm = algorithm;
@@ -179,9 +179,9 @@ namespace GoRogue.MapGeneration
             // The bulk of the performance gain that is achieved during creation specifically is achieved via caching
             // outer points in SetInnerPoints anyway.
             for (int i = 0; i < _corners.Count - 1; i++)
-                _outerPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(_corners[i], _corners[i + 1], LineAlgorithm)));
+                _outerPoints.Add(new Area(Lines.GetLine(_corners[i], _corners[i + 1], LineAlgorithm)));
 
-            _outerPoints.Add(new Area(SadRogue.Primitives.Lines.GetLine(_corners[^1], _corners[0], LineAlgorithm)));
+            _outerPoints.Add(new Area(Lines.GetLine(_corners[^1], _corners[0], LineAlgorithm)));
         }
 
         // Uses an odd-even rule to determine whether we are in the area or not and fills InnerPoints accordingly
@@ -244,7 +244,7 @@ namespace GoRogue.MapGeneration
         /// <param name="algorithm">Line-drawing algorithm to use for finding boundaries.</param>
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
         /// <returns>A new Polygon in the shape of a rectangle</returns>
-        public static PolygonArea Rectangle(Rectangle rectangle, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public static PolygonArea Rectangle(Rectangle rectangle, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
             => new PolygonArea(algorithm, rectangle.MinExtent, (rectangle.MaxExtentX, rectangle.MinExtentY), rectangle.MaxExtent,
                 (rectangle.MinExtentX, rectangle.MaxExtentY));
 
@@ -259,7 +259,7 @@ namespace GoRogue.MapGeneration
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
         /// <returns>A new Polygon in the shape of a parallelogram</returns>
         public static PolygonArea Parallelogram(Point origin, int width, int height, bool fromTop = false,
-                                                SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+                                                Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             if (fromTop && Direction.YIncreasesUpward)
                 height *= -1;
@@ -285,7 +285,7 @@ namespace GoRogue.MapGeneration
         /// <exception cref="ArgumentException">Must have 3 or more corners; Algorithm must produce ordered lines.</exception>
         /// <param name="algorithm">Which line-drawing algorithm to use</param>
         /// <returns></returns>
-        public static PolygonArea RegularPolygon(Point center, int numberOfSides, double radius, SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+        public static PolygonArea RegularPolygon(Point center, int numberOfSides, double radius, Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             CheckCorners(numberOfSides);
 
@@ -313,7 +313,7 @@ namespace GoRogue.MapGeneration
         /// <param name="algorithm">Which line-drawing algorithm to use</param>
         /// <exception cref="ArgumentException">Stars must have 3 or more points; algorithm must be ordered; inner and outer radius must be positive</exception>
         public static PolygonArea RegularStar(Point center, int points, double outerRadius, double innerRadius,
-                                              SadRogue.Primitives.Lines.Algorithm algorithm = SadRogue.Primitives.Lines.Algorithm.Bresenham)
+                                              Lines.Algorithm algorithm = Lines.Algorithm.Bresenham)
         {
             CheckCorners(points);
 

@@ -37,12 +37,12 @@ namespace GoRogue.MapGeneration.TunnelCreators
         public Area CreateTunnel(ISettableGridView<bool> map, Point start, Point end)
         {
             var lineAlgorithm = _adjacencyRule == AdjacencyRule.Cardinals
-                ? SadRogue.Primitives.Lines.Algorithm.Orthogonal
-                : SadRogue.Primitives.Lines.Algorithm.Bresenham;
+                ? Lines.Algorithm.Orthogonal
+                : Lines.Algorithm.Bresenham;
             var area = new Area();
 
             var previous = Point.None;
-            foreach (var pos in SadRogue.Primitives.Lines.GetLine(start, end, lineAlgorithm))
+            foreach (var pos in Lines.GetLine(start, end, lineAlgorithm))
             {
                 map[pos] = true;
                 area.Add(pos);

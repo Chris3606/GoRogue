@@ -9,7 +9,7 @@ namespace GoRogue
     /// Provides implementations of various helper functions useful for gathering information from lines.
     /// </summary>
     [PublicAPI]
-    public static class Lines
+    public static class LineHelpers
     {
         #region IEnumerable<Point> Extensions
 
