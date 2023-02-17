@@ -6,6 +6,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 None.
 
+## [3.0.0-beta02] - 2023-02-01
+
+### Changed
+- `GoRogue.Lines` class renamed to `GoRogue.LineHelpers`
+- Line-drawing algorithms from `Lines` class moved to TheSadRogue.Primitives (under `Lines` class)
+    - Where you previously called `Lines.Get`, you should call line-specific functions (`GetBresenhamLine()`, `GetDDALine()`, or `GetOrthogonalLine()` where possible)
+    - If you need an IEnumerable type specifically or need a generic function you can pass an algorithm to, call `Lines.GetLine()`; but this will not perform as well as the algorithm-specific functions which use custom iterators!
+- `PolygonArea` now defaults to `Bresenham` lines, since they are ordered and generally faster
+- `PolygonArea` now allows `Orthogonal` lines since they are also ordered
+
+### Fixed
+- Bresenham lines (now in the primitives library) now break x/y ties the traditional way
+
+### Removed
+- `Lines.Get` method and all associated line drawing algorithms have been removed
+    - Refactored and moved to TheSadRogue.Primitives
+- `BresenhamOrdered` no longer exists (`Bresenham` is ordered now instead)
+
+
 ## [3.0.0-beta01] - 2022-10-07
 
 ### Added
@@ -47,7 +66,7 @@ None.
 - `FOV.RecursiveShadowcastingFOV` now uses the double-based variation of the algorithm, since it now makes a more reasonable default
 
 ### Fixed
-- The `CanAddEntity` function in `GameFramework.Map` now properly accounts for situations where the entity is being added to a layer which does not support multiple items at a given position 
+- The `CanAddEntity` function in `GameFramework.Map` now properly accounts for situations where the entity is being added to a layer which does not support multiple items at a given position
 
 ## [3.0.0-alpha13] - 2022-06-26
 
@@ -87,7 +106,7 @@ None.
 - `IDGenerator` constructor now supports specifying the boolean parameter used to record the "last ID assigned state" (useful mostly for serialization)
 
 ### Fixed
-- `ShaiRandom` will now function properly when debugging via SourceLink (bumped version to 0.0.1-beta03 which has appropriate symbols uploaded) 
+- `ShaiRandom` will now function properly when debugging via SourceLink (bumped version to 0.0.1-beta03 which has appropriate symbols uploaded)
 
 
 ## [3.0.0-alpha11] - 2022-03-26

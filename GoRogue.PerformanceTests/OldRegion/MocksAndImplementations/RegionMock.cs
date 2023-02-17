@@ -45,10 +45,10 @@ namespace GoRogue.PerformanceTests.OldRegion.MocksAndImplementations
             var hasher = new KnownSizeHasher(maxX);
 
             // Determine outer boundaries between each corner
-            WestBoundary = new Area(Lines.Get(NorthWestCorner, SouthWestCorner, algoToUse), hasher);
-            SouthBoundary = new Area(Lines.Get(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
-            EastBoundary = new Area(Lines.Get(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
-            NorthBoundary = new Area(Lines.Get(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
+            WestBoundary = new Area(Lines.GetLine(NorthWestCorner, SouthWestCorner, algoToUse), hasher);
+            SouthBoundary = new Area(Lines.GetLine(SouthWestCorner, SouthEastCorner, algoToUse), hasher);
+            EastBoundary = new Area(Lines.GetLine(SouthEastCorner, NorthEastCorner, algoToUse), hasher);
+            NorthBoundary = new Area(Lines.GetLine(NorthEastCorner, NorthWestCorner, algoToUse), hasher);
             OuterPoints = new MultiArea { WestBoundary, NorthBoundary, EastBoundary, SouthBoundary };
             innerCreation(this);
             Points = new MultiArea { OuterPoints, InnerPoints };
