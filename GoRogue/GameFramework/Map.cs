@@ -6,12 +6,12 @@ using GoRogue.Components.ParentAware;
 using GoRogue.FOV;
 using GoRogue.GridViews;
 using GoRogue.Pathing;
-using GoRogue.Pooling;
-using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using SadRogue.Primitives.PointHashers;
+using SadRogue.Primitives.Pooling;
+using SadRogue.Primitives.SpatialMaps;
 
 namespace GoRogue.GameFramework
 {
@@ -579,7 +579,7 @@ namespace GoRogue.GameFramework
             }
 
             terrain.OnMapChanged(this);
-            terrain.Moved += OnGameObjectMoved;
+            terrain.PositionChanging += OnGameObjectPositionChanging;
             terrain.WalkabilityChanging += OnWalkabilityChanging;
             if (performStandardChecks)
                 ObjectAdded?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
@@ -598,7 +598,7 @@ namespace GoRogue.GameFramework
 
             _terrain[terrain.Position] = null;
 
-            terrain.Moved -= OnGameObjectMoved;
+            terrain.PositionChanging -= OnGameObjectPositionChanging;
             terrain.WalkabilityChanging -= OnWalkabilityChanging;
             ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
             terrain.OnMapChanged(null);
@@ -729,7 +729,7 @@ namespace GoRogue.GameFramework
 
             entity.CurrentMap?.RemoveEntity(entity);
             entity.OnMapChanged(this);
-            entity.Moved += OnGameObjectMoved;
+            entity.PositionChanging += OnGameObjectPositionChanging;
             entity.WalkabilityChanging += OnWalkabilityChanging;
         }
 
@@ -766,7 +766,7 @@ namespace GoRogue.GameFramework
             // Add the entity to this map
             _entities.Add(entity, entity.Position);
             entity.OnMapChanged(this);
-            entity.Moved += OnGameObjectMoved;
+            entity.PositionChanging += OnGameObjectPositionChanging;
             entity.WalkabilityChanging += OnWalkabilityChanging;
 
             return true;
@@ -897,7 +897,7 @@ namespace GoRogue.GameFramework
         {
             _entities.Remove(entity);
             entity.OnMapChanged(null);
-            entity.Moved -= OnGameObjectMoved;
+            entity.PositionChanging -= OnGameObjectPositionChanging;
             entity.WalkabilityChanging -= OnWalkabilityChanging;
         }
 
@@ -912,7 +912,7 @@ namespace GoRogue.GameFramework
             if (!_entities.TryRemove(entity)) return false;
 
             entity.OnMapChanged(null);
-            entity.Moved -= OnGameObjectMoved;
+            entity.PositionChanging -= OnGameObjectPositionChanging;
             entity.WalkabilityChanging -= OnWalkabilityChanging;
             return true;
         }
@@ -1090,10 +1090,11 @@ namespace GoRogue.GameFramework
             return _entities.CanMove(gameObject, newPosition);
         }
 
-        private void OnGameObjectMoved(object? s, GameObjectPropertyChanged<Point> e)
+        private void OnGameObjectPositionChanging(object? s, ValueChangedEventArgs<Point> e)
         {
+            var item = (IGameObject)s!;
             // Ensure move is valid
-            if (e.Item.Layer == 0)
+            if (item.Layer == 0)
                 throw new InvalidOperationException(
                     "Tried to move a GameObject that was added to a map as terrain.  Terrain objects cannot "
                     + " be moved while they are added to a map.");
@@ -1102,7 +1103,7 @@ namespace GoRogue.GameFramework
                 throw new InvalidOperationException($"A GameObject tried to move to {e.NewValue}, which is "
                                                     + "outside the bounds of its map.");
 
-            if (!e.Item.IsWalkable && !WalkabilityView[e.NewValue])
+            if (!item.IsWalkable && !WalkabilityView[e.NewValue])
                 throw new InvalidOperationException("A non-walkable GameObject tried to move to a square where "
                                                     + "it would collide with another non-walkable object.");
 
@@ -1111,7 +1112,7 @@ namespace GoRogue.GameFramework
             // position value back to its original value if there is an error (via the SafelySetProperty function).
             try
             {
-                _entities.Move(e.Item, e.NewValue);
+                _entities.Move(item, e.NewValue);
             }
             catch (ArgumentException exc)
             {
@@ -1141,9 +1142,10 @@ namespace GoRogue.GameFramework
 
             return value || WalkabilityView[gameObject.Position];
         }
-        private void OnWalkabilityChanging(object? s, GameObjectPropertyChanged<bool> e)
+        private void OnWalkabilityChanging(object? s, ValueChangedEventArgs<bool> e)
         {
-            if (!e.NewValue && !WalkabilityView[e.Item.Position])
+            var item = (IGameObject)s!;
+            if (!e.NewValue && !WalkabilityView[item.Position])
                 throw new InvalidOperationException(
                     "Cannot set walkability of object to false; this would violate collision detection rules of "
                     + "the map the object resides on.");

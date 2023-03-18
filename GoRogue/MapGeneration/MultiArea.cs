@@ -164,7 +164,7 @@ namespace GoRogue.MapGeneration
         {
             foreach (var area in _subAreas)
             {
-                foreach (var point in area.FastEnumerator())
+                foreach (var point in area)
                     yield return point;
             }
         }

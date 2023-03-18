@@ -7,42 +7,6 @@ using SadRogue.Primitives;
 namespace GoRogue.GameFramework
 {
     /// <summary>
-    /// Event arguments for en event fired when IGameObject properties are changed.
-    /// </summary>
-    /// <typeparam name="T">Type of the property changed.</typeparam>
-    [PublicAPI]
-    public class GameObjectPropertyChanged<T> : EventArgs
-    {
-        /// <summary>
-        /// Game object whose property was changed.
-        /// </summary>
-        public readonly IGameObject Item;
-
-        /// <summary>
-        /// Previous value of property.
-        /// </summary>
-        public readonly T OldValue;
-
-        /// <summary>
-        /// New value of property.
-        /// </summary>
-        public readonly T NewValue;
-
-        /// <summary>
-        /// Creates a new change description object.
-        /// </summary>
-        /// <param name="item">Game object whose property was changed.</param>
-        /// <param name="oldValue">Previous value of property.</param>
-        /// <param name="newValue">New value of property.</param>
-        public GameObjectPropertyChanged(IGameObject item, T oldValue, T newValue)
-        {
-            Item = item;
-            OldValue = oldValue;
-            NewValue = newValue;
-        }
-    }
-
-    /// <summary>
     /// Event arguments for events fired when an <see cref="IGameObject"/> is added
     /// to/removed from a <see cref="Map"/>.
     /// </summary>
@@ -86,7 +50,7 @@ namespace GoRogue.GameFramework
     /// where TParent would be IGameObject or some class implementing that interface.
     /// </remarks>
     [PublicAPI]
-    public interface IGameObject : IHasID, IHasLayer, IObjectWithComponents
+    public interface IGameObject : IHasID, IHasLayer, IObjectWithComponents, IPositionable
     {
         /// <summary>
         /// The current <see cref="Map" /> which this object resides on.  Returns null if the object has not been added to a map.
@@ -113,12 +77,12 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Fired when <see cref="IsTransparent"/> is about to be changed.
         /// </summary>
-        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanging;
+        public event EventHandler<ValueChangedEventArgs<bool>>? TransparencyChanging;
 
         /// <summary>
         /// Fired when <see cref="IsTransparent"/> is changed.
         /// </summary>
-        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
+        public event EventHandler<ValueChangedEventArgs<bool>>? TransparencyChanged;
 
         /// <summary>
         /// Whether or not the object is to be considered "walkable", eg. whether or not the square it resides
@@ -130,24 +94,12 @@ namespace GoRogue.GameFramework
         /// <summary>
         /// Fired when <see cref="IsWalkable"/> is about to changed.
         /// </summary>
-        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanging;
+        public event EventHandler<ValueChangedEventArgs<bool>>? WalkabilityChanging;
 
         /// <summary>
         /// Fired when <see cref="IsWalkable"/> is changed.
         /// </summary>
-        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
-
-        /// <summary>
-        /// The position of this object on the grid. Any time this value is changed, the <see cref="Moved" /> event is
-        /// fired.
-        /// </summary>
-        Point Position { get; set; }
-
-        /// <summary>
-        /// Event fired whenever this object's grid position is successfully changed.  Fired regardless of whether
-        /// the object is part of a <see cref="Map" />.
-        /// </summary>
-        event EventHandler<GameObjectPropertyChanged<Point>>? Moved;
+        public event EventHandler<ValueChangedEventArgs<bool>>? WalkabilityChanged;
 
         /// <summary>
         /// Internal use only, do not call manually!  Must, at minimum, call <see cref="GameObjectExtensions.SafelySetCurrentMap"/>
