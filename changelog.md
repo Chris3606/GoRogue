@@ -18,6 +18,7 @@ None
     - Requires implementation of Position field (already was existing), as well as PositionChanged event (replaces Moved) and PositionChanging
 - Game objects now have a PositionChanging field which is fired before the value is actually changed
 - ToEnumerable() functions on custom iterators (Rectangle.Positions(), for example) are now obsolete
+- `IGameObject.Entities` is now synced to item's positions _before_ the item's `PositionChanged` event fires (via `PositionChanging`)
 
 ### Removed
 - The following code has been removed because it now exists in the primitives library GoRogue depends on:
