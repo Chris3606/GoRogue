@@ -1,7 +1,6 @@
 ﻿using System;
 using GoRogue.Components;
 using GoRogue.Random;
-using GoRogue.SpatialMaps;
 using JetBrains.Annotations;
 using SadRogue.Primitives;
 
@@ -27,7 +26,7 @@ namespace GoRogue.GameFramework
         /// <remarks>
         /// <paramref name="idGenerator" /> is used to generate an ID which is assigned to the <see cref="ID"/>
         /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
-        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
+        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="SadRogue.Primitives.SpatialMaps.ISpatialMap{T}" />
         /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
         /// implementation is required, override this function to return an appropriate ID. Keep in mind a relatively
         /// high degree of uniqueness is necessary for efficient placement in an ISpatialMap implementation.
@@ -66,7 +65,7 @@ namespace GoRogue.GameFramework
         /// <remarks>
         /// <paramref name="idGenerator" /> is used to generate an ID which is assigned to the <see cref="ID"/>
         /// field. When null is specified, the constructor simply assigns a random number in range of valid uints. This
-        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="ISpatialMap{T}" />
+        /// is sufficiently distinct for the purposes of placing the objects in an <see cref="SadRogue.Primitives.SpatialMaps.ISpatialMap{T}" />
         /// implementation, however obviously does NOT guarantee true uniqueness. If uniqueness or some other
         /// implementation is required, override this function to return an appropriate ID. Keep in mind a relatively
         /// high degree of uniqueness is necessary for efficient placement in an ISpatialMap implementation.
@@ -111,11 +110,14 @@ namespace GoRogue.GameFramework
         public Point Position
         {
             get => _position;
-            set => this.SafelySetProperty(ref _position, value, Moved);
+            set => this.SafelySetProperty(ref _position, value, PositionChanging, PositionChanged);
         }
 
         /// <inheritdoc />
-        public event EventHandler<GameObjectPropertyChanged<Point>>? Moved;
+        public event EventHandler<ValueChangedEventArgs<Point>>? PositionChanging;
+
+        /// <inheritdoc />
+        public event EventHandler<ValueChangedEventArgs<Point>>? PositionChanged;
 
         /// <inheritdoc />
         public bool IsWalkable
@@ -125,10 +127,10 @@ namespace GoRogue.GameFramework
         }
 
         /// <inheritdoc />
-        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanging;
+        public event EventHandler<ValueChangedEventArgs<bool>>? WalkabilityChanging;
 
         /// <inheritdoc />
-        public event EventHandler<GameObjectPropertyChanged<bool>>? WalkabilityChanged;
+        public event EventHandler<ValueChangedEventArgs<bool>>? WalkabilityChanged;
 
         private bool _isTransparent;
 
@@ -140,10 +142,10 @@ namespace GoRogue.GameFramework
         }
 
         /// <inheritdoc />
-        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanging;
+        public event EventHandler<ValueChangedEventArgs<bool>>? TransparencyChanging;
 
         /// <inheritdoc />
-        public event EventHandler<GameObjectPropertyChanged<bool>>? TransparencyChanged;
+        public event EventHandler<ValueChangedEventArgs<bool>>? TransparencyChanged;
 
         /// <inheritdoc />
         public uint ID { get; }

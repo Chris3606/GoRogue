@@ -9,24 +9,24 @@ namespace GoRogue.UnitTests.Pathing
 {
     public class GoalMapTests
     {
-        private const int _width = 40;
-        private const int _height = 35;
-        private static readonly Point _goal = (5, 5);
+        private const int Width = 40;
+        private const int Height = 35;
+        private static readonly Point s_goal = (5, 5);
 
         [Fact]
         public void GoalMapLeadsToGoal()
         {
-            var map = MockMaps.Rectangle(_width, _height);
+            var map = MockMaps.Rectangle(Width, Height);
 
             var goalMapData = new ArrayView<GoalState>(map.Width, map.Height);
             goalMapData.ApplyOverlay(
                 new LambdaTranslationGridView<bool, GoalState>(map, i => i ? GoalState.Clear : GoalState.Obstacle));
-            goalMapData[_goal] = GoalState.Goal;
+            goalMapData[s_goal] = GoalState.Goal;
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
             goalMap.Update();
 
-            foreach (var startPos in goalMap.Positions().ToEnumerable().Where(p => map[p] && p != _goal))
+            foreach (var startPos in goalMap.Positions().Where(p => map[p] && p != s_goal))
             {
                 var pos = startPos;
 
@@ -41,26 +41,26 @@ namespace GoRogue.UnitTests.Pathing
                     infiniteLoopBreakCount--;
                 }
 
-                Assert.Equal(_goal, pos);
+                Assert.Equal(s_goal, pos);
             }
         }
 
         [Fact]
         public void OpenEdgedMapSupported()
         {
-            var goalMapData = new ArrayView<GoalState>(_width, _height);
+            var goalMapData = new ArrayView<GoalState>(Width, Height);
             goalMapData.Fill(GoalState.Clear);
-            var goal = new Point(_width / 2, _height / 2);
+            var goal = new Point(Width / 2, Height / 2);
             goalMapData[goal] = GoalState.Goal;
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
             goalMap.Update();
 
-            foreach (var startPos in goalMap.Positions().ToEnumerable().Where(p => p != goal))
+            foreach (var startPos in goalMap.Positions().Where(p => p != goal))
             {
                 var pos = startPos;
 
-                var infiniteLoopBreakCount = _width * _height;
+                var infiniteLoopBreakCount = Width * Height;
                 while (infiniteLoopBreakCount > 0)
                 {
                     var dir = goalMap.GetDirectionOfMinValue(pos);
@@ -142,8 +142,6 @@ namespace GoRogue.UnitTests.Pathing
 
             var goalMap = new GoalMap(goalMapData, Distance.Chebyshev);
             goalMap.Update();
-
-            var maxValue = map.Width * map.Height;
 
             Assert.False(goalMap[0, 0]!.HasValue);
         }

@@ -187,21 +187,7 @@ namespace GoRogue.SenseMapping
             if (ResistanceView.Width != ResultViewBacking.Width || ResistanceView.Height != ResultViewBacking.Height)
                 ResultViewBacking = ResultViewResizer(ResistanceView.Width, ResistanceView.Height, ResultViewBacking);
             else
-            {
-                // TODO: Switch accounts for primitives library bug #76; remove when fixed
-                switch (ResultViewBacking)
-                {
-                    case ArrayView<double> arrayView:
-                        arrayView.Clear();
-                        break;
-                    case ArrayView2D<double> arrayView2d:
-                        arrayView2d.Clear();
-                        break;
-                    default:
-                        ResultViewBacking.Fill(0.0);
-                        break;
-                }
-            }
+                ResultViewBacking.Clear();
 
             SenseMapReset?.Invoke(this, EventArgs.Empty);
         }

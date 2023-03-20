@@ -10,7 +10,7 @@ namespace GoRogue.UnitTests.GameFramework
     public class GameFrameworkTests
     {
         public static int MovedTimesCalled;
-        
+
         [Fact]
         public void ApplyTerrainOverlay()
         {
@@ -247,12 +247,12 @@ namespace GoRogue.UnitTests.GameFramework
         public void TryAddEntityAt()
         {
             MovedTimesCalled = 0;
-            
+
             var map = new Map(10, 10, 1, Distance.Chebyshev);
             var obj = new GameObject((1, 1), 1, false, false);
             var obj2 = new GameObject((2, 2), 1, false, false);
-            obj2.Moved += (s, e) => ++MovedTimesCalled;
-            
+            obj2.PositionChanged += (s, e) => ++MovedTimesCalled;
+
             map.AddEntity(obj);
             Assert.Single(map.Entities);
 

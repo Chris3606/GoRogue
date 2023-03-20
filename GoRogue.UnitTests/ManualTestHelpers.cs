@@ -5,7 +5,6 @@ using GoRogue.FOV;
 using GoRogue.MapGeneration;
 using GoRogue.Pathing;
 using GoRogue.SenseMapping;
-using GoRogue.SpatialMaps;
 using GoRogue.UnitTests.Mocks;
 using GoRogue.UnitTests.SenseMapping;
 using SadRogue.Primitives;
@@ -28,23 +27,6 @@ namespace GoRogue.UnitTests
         private readonly ITestOutputHelper _output;
 
         public static Distance[] Distances = { Distance.Chebyshev, Distance.Euclidean, Distance.Manhattan };
-
-        [Fact]
-        public void ManualPrintLayeredSpatialMap()
-        {
-            var map = new LayeredSpatialMap<MockSpatialMapItem>(3, startingLayer: 1,
-                layersSupportingMultipleItems: LayerMasker.Default.Mask(2))
-            {
-                { new MockSpatialMapItem(1), (1, 2) },
-                { new MockSpatialMapItem(1), (3, 4) },
-                { new MockSpatialMapItem(2), (1, 1) },
-                { new MockSpatialMapItem(3), (0, 0) }
-            };
-
-
-            _output.WriteLine("LayeredSpatialMap: ");
-            _output.WriteLine(map.ToString());
-        }
 
         [Theory]
         [MemberDataEnumerable(nameof(Distances))]
@@ -186,19 +168,6 @@ namespace GoRogue.UnitTests
         }
 
         [Fact]
-        public void ManualPrintMultiSpatialMap()
-        {
-            var sm = new MultiSpatialMap<MyIDImpl>
-            {
-                    { new MyIDImpl(1), 1, 2 },
-                    { new MyIDImpl(2), 1, 2 },
-                    { new MyIDImpl(3), 4, 5 }
-            };
-
-            _output.WriteLine(sm.ToString());
-        }
-
-        [Fact]
         public void ManualPrintPath()
         {
             var map = MockMaps.Rectangle(Width, Height);
@@ -263,19 +232,6 @@ namespace GoRogue.UnitTests
             _output.WriteLine(mySet.ExtendToString());
             _output.WriteLine("\nWith bar separators:");
             _output.WriteLine(mySet.ExtendToString(separator: " | "));
-        }
-
-        [Fact]
-        public void ManualPrintSpatialMap()
-        {
-            var sm = new SpatialMap<MyIDImpl>
-            {
-                    { new MyIDImpl(1), 1, 2 },
-                    { new MyIDImpl(2), 1, 3 },
-                    { new MyIDImpl(3), 4, 5 }
-            };
-
-            _output.WriteLine(sm.ToString());
         }
     }
 }

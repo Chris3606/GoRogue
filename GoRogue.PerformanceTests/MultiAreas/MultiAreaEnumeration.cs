@@ -67,7 +67,7 @@ namespace GoRogue.PerformanceTests.MultiAreas
         public int EnumeratePositionsFastEnumerator()
         {
             int sum = 0;
-            foreach (var pos in _multiArea.FastEnumerator())
+            foreach (var pos in new ReadOnlyAreaPositionsEnumerator(_multiArea))
                 sum += pos.X + pos.Y;
 
             return sum;

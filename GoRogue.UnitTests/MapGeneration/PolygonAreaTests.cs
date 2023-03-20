@@ -169,7 +169,7 @@ namespace GoRogue.UnitTests.MapGeneration
             //Each Corner is included in two boundaries, so total number of points is offset by 4
             Assert.Equal(rect.Area + 4, polygon.Count);
             Assert.Equal(rect.PerimeterPositions().Count() + 4, polygon.OuterPoints.Count);
-            Assert.Equal(new HashSet<Point>(rect.Expand(-1, -1).Positions().ToEnumerable()), new HashSet<Point>(polygon.InnerPoints));
+            Assert.Equal(new HashSet<Point>(rect.Expand(-1, -1).Positions()), new HashSet<Point>(polygon.InnerPoints));
             _output.WriteLine(GetPolygonString(polygon));
         }
 
