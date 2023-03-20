@@ -14,7 +14,7 @@ namespace GoRogue.GameFramework
         /// Returns true if the object can be moved to the location specified; false otherwise.
         /// </summary>
         /// <remarks>
-        /// This function should return false in exactly any case where setting the <see cref="IGameObject.Position" />
+        /// This function should return false in exactly any case where setting the <see cref="IPositionable.Position" />
         /// property to the value specified would fail.
         /// </remarks>
         /// <param name="self" />
@@ -60,78 +60,6 @@ namespace GoRogue.GameFramework
         /// false otherwise.
         /// </returns>
         public static bool CanToggleWalkability(this IGameObject self) => self.CanSetWalkability(!self.IsWalkable);
-
-        /// <summary>
-        /// Sets the given field to the new value, and fires the corresponding event.  The value will be properly
-        /// reverted to the old value if the event handler throws InvalidOperationException.
-        /// </summary>
-        /// <param name="self" />
-        /// <param name="propertyField">Field to set.</param>
-        /// <param name="newValue">New value to set to given field.</param>
-        /// <param name="changedEvent">Event to fire when change occurs.</param>
-        /// <typeparam name="T">Type of the property.</typeparam>
-        public static void SafelySetProperty<T>(this IGameObject self, ref T propertyField, T newValue,
-                                                EventHandler<GameObjectPropertyChanged<T>>? changedEvent)
-            where T : notnull
-        {
-            // Nothing to do; the value hasn't changed
-            if (propertyField.Equals(newValue))
-                return;
-
-            // Set new value and fire event
-            var oldValue = propertyField;
-            propertyField = newValue;
-            try
-            {
-                changedEvent?.Invoke(self, new GameObjectPropertyChanged<T>(self, oldValue, newValue));
-            }
-            catch (InvalidOperationException)
-            {
-                // If exception, preserve old value for future
-                propertyField = oldValue;
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Sets the given field to the new value, and fires the corresponding events.  The value will be properly
-        /// reverted to the old value if the Changed event handler throws InvalidOperationException.
-        /// </summary>
-        /// <param name="self" />
-        /// <param name="propertyField">Field to set.</param>
-        /// <param name="newValue">New value to set to given field.</param>
-        /// <param name="changingEvent">Event to fire when change is about to occur.</param>
-        /// <param name="changedEvent">Event to fire after change occurs.</param>
-        /// <typeparam name="T">Type of the property.</typeparam>
-        public static void SafelySetProperty<T>(this IGameObject self, ref T propertyField, T newValue,
-                                                EventHandler<GameObjectPropertyChanged<T>>? changingEvent,
-                                                EventHandler<GameObjectPropertyChanged<T>>? changedEvent)
-            where T : notnull
-        {
-            // Nothing to do; the value hasn't changed
-            if (propertyField.Equals(newValue))
-                return;
-
-            // Create event arguments
-            var eventArguments = new GameObjectPropertyChanged<T>(self, propertyField, newValue);
-
-            // Fire "pre-change" event
-            changingEvent?.Invoke(self, eventArguments);
-
-            // Set new value and fire event
-            var oldValue = propertyField;
-            propertyField = newValue;
-            try
-            {
-                changedEvent?.Invoke(self, eventArguments);
-            }
-            catch (InvalidOperationException)
-            {
-                // If exception, preserve old value for future
-                propertyField = oldValue;
-                throw;
-            }
-        }
 
         /// <summary>
         /// Sets the given map field to the given value, and fires the AddedToMap event and RemovedFromMap

@@ -43,7 +43,7 @@ namespace GoRogue.UnitTests.SenseMapping
             senseMap.AddSenseSource(lightSource);
             senseMap.Calculate();
 
-            var losArea = senseMap.ResultView.Positions().ToEnumerable().Where(pos => senseMap.ResultView[pos] > 0.0).ToHashSet();
+            var losArea = senseMap.ResultView.Positions().Where(pos => senseMap.ResultView[pos] > 0.0).ToHashSet();
             var radArea = shape.PositionsInRadius(s_center, Radius).ToHashSet();
 
             Assert.Equal(radArea, losArea);

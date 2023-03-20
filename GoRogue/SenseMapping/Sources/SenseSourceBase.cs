@@ -108,14 +108,13 @@ namespace GoRogue.SenseMapping.Sources
         /// </summary>
         protected double AngleInternal;
 
-        // TODO: This definition is wrong.  +90 should be clockwise, -90 should be counter?
         /// <inheritdoc/>
         public double Angle
         {
             get => IsAngleRestricted ? MathHelpers.WrapAround(AngleInternal + 90, 360.0) : 0.0;
             set
             {
-                // Offset internal angle to 90 degrees being up instead of right
+                // Offset internal angle to 0 degrees being right instead of up
                 AngleInternal = value - 90;
 
                 // Wrap angle to proper degrees
