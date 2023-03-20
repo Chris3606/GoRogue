@@ -4,7 +4,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-None.
+
+None
+
+## [3.0.0-beta03] - 2023-03-20
+
+### Added
+- Primitives library now contains `IPositionable` interface (implemented by `IGameObject`) and contains auto-syncing spatial maps that don't require manual sync
+
+### Changed
+- Spatial map movement-related functions now tolerate a source location the same as a destination location
+- `IGameObject` now requires you to implement `IPositionable`
+    - Requires implementation of Position field (already was existing), as well as PositionChanged event (replaces Moved) and PositionChanging
+- Game objects now have a PositionChanging field which is fired before the value is actually changed
+- ToEnumerable() functions on custom iterators (Rectangle.Positions(), for example) are now obsolete
+
+### Removed
+- The following code has been removed because it now exists in the primitives library GoRogue depends on:
+    - Spatial maps
+    - LayerMasker
+    - IHasID
+    - IHasLayer
+
+### Fixed
+- LayeredSpatialMap.TryMoveAll (in primitives library) now handles cases where items on some layers won't move properly by returning false
+- LayeredSpatialMap.GetLayersInMask (in primitives library) now returns the correct layers
 
 ## [3.0.0-beta02] - 2023-02-01
 

@@ -9,7 +9,6 @@ using ShaiRandom.Generators;
 
 namespace GoRogue.MapGeneration.Steps
 {
-    // TODO: Fix docs on ratios
     /// <summary>
     /// Carves out non-overlapping rooms in a map.  Rooms generated will not overlap with themselves, or any existing open
     /// areas in the map.
@@ -96,12 +95,12 @@ namespace GoRogue.MapGeneration.Steps
         public int RoomMinSize = 3;
 
         /// <summary>
-        /// The ratio of the room width to the height. Defaults to 1.0.
+        /// The ratio of the room width compared to a base generated size. Defaults to 1.0.
         /// </summary>
         public float RoomSizeRatioX = 1f;
 
         /// <summary>
-        /// The ratio of the room height to the width. Defaults to 1.0.
+        /// The ratio of the room height to a base generated size. Defaults to 1.0.
         /// </summary>
         public float RoomSizeRatioY = 1f;
 
