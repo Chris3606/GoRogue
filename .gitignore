@@ -37,6 +37,9 @@ bld/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# BenchmarkDotNet test Results
+BenchmarkDotNet.Artifacts/
+
 # NUNIT
 *.VisualState.xml
 TestResult.xml

@@ -124,6 +124,10 @@ namespace GoRogue.GameFramework
         /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
         /// ComponentCollection is sufficient for nearly all use cases.
         /// </param>
+        /// <param name="useCachedGridViews">
+        /// Whether or not to use cached grid views for <see cref="TransparencyView"/> and <see cref="WalkabilityView"/>,
+        /// rather than calculating values on the fly.  Calculating on the fly is notably slower, but takes up less memory.
+        /// </param>
         public Map(int width, int height, int numberOfEntityLayers, Distance distanceMeasurement,
                    Func<int, IListPool<IGameObject>>? customListPoolCreator = null,
                    uint layersBlockingWalkability = uint.MaxValue,
@@ -132,10 +136,11 @@ namespace GoRogue.GameFramework
                    IEqualityComparer<Point>? pointComparer = null,
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   IComponentCollection? customComponentCollection = null)
+                   IComponentCollection? customComponentCollection = null,
+                   bool useCachedGridViews = true)
             : this(new ArrayView<IGameObject?>(width, height), distanceMeasurement, numberOfEntityLayers,
                 customListPoolCreator, layersBlockingWalkability, layersBlockingTransparency,
-                entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather, customComponentCollection)
+                entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV, customPather, customComponentCollection, useCachedGridViews)
         { }
 
         /// <summary>
@@ -215,6 +220,10 @@ namespace GoRogue.GameFramework
         /// <see cref="ComponentCollection"/> is used.  Typically you will not need to specify this, as a
         /// ComponentCollection is sufficient for nearly all use cases.
         /// </param>
+        /// <param name="useCachedGridViews">
+        /// Whether or not to use cached grid views for <see cref="TransparencyView"/> and <see cref="WalkabilityView"/>,
+        /// rather than calculating values on the fly.  Calculating on the fly is notably slower, but takes up less memory.
+        /// </param>
         public Map(ISettableGridView<IGameObject?> terrainLayer, int numberOfEntityLayers, Distance distanceMeasurement,
                    Func<int, IListPool<IGameObject>>? customListPoolCreator = null,
                    uint layersBlockingWalkability = uint.MaxValue,
@@ -223,10 +232,11 @@ namespace GoRogue.GameFramework
                    IEqualityComparer<Point>? pointComparer = null,
                    IFOV? customPlayerFOV = null,
                    AStar? customPather = null,
-                   IComponentCollection? customComponentCollection = null)
+                   IComponentCollection? customComponentCollection = null,
+                   bool useCachedGridViews = true)
             : this(terrainLayer, distanceMeasurement, numberOfEntityLayers, customListPoolCreator, layersBlockingWalkability,
                 layersBlockingTransparency, entityLayersSupportingMultipleItems, pointComparer, customPlayerFOV,
-                customPather, customComponentCollection)
+                customPather, customComponentCollection, useCachedGridViews)
         {
             // Ensure any initial terrain from the grid view gets initialized properly
             foreach (var pos in terrainLayer.Positions())
@@ -246,7 +256,7 @@ namespace GoRogue.GameFramework
                     Func<int, IListPool<IGameObject>>? customListPoolCreator, uint layersBlockingWalkability,
                     uint layersBlockingTransparency, uint entityLayersSupportingMultipleItems,
                    IEqualityComparer<Point>? pointComparer, IFOV? customPlayerFOV, AStar? customPather,
-                   IComponentCollection? customComponentCollection)
+                   IComponentCollection? customComponentCollection, bool useCachedGridViews)
         {
             _terrain = terrainLayer;
             PlayerExplored = new ArrayView<bool>(_terrain.Width, _terrain.Height);
@@ -264,13 +274,32 @@ namespace GoRogue.GameFramework
 
             // We avoid the use of LambdaGridViews and similar here, in order to maximize performance since these
             // grid views are used very frequently.
-            TransparencyView = layersBlockingTransparency == 1
-                ? (IGridView<bool>)new TerrainOnlyMapTransparencyView(this)
-                : new FullMapTransparencyView(this);
 
-            WalkabilityView = layersBlockingTransparency == 1
-                ? (IGridView<bool>)new TerrainOnlyMapWalkabilityView(this)
-                : new FullMapWalkabilityView(this);
+            if (useCachedGridViews)
+            {
+                
+                _cachedTransparencyView = new BitArrayView(_terrain.Width, _terrain.Height);
+                TransparencyView = _cachedTransparencyView;
+                _cachedWalkabilityView = new BitArrayView(_terrain.Width, _terrain.Height);
+                WalkabilityView = _cachedWalkabilityView;
+
+                _cachedTransparencyView.Fill(true);
+                _cachedWalkabilityView.Fill(true);
+
+                ObjectAdded += Map_ObjectAddedSyncViews;
+                ObjectMoved += Map_ObjectMovedSyncViews;
+                ObjectRemoved += Map_ObjectRemovedSyncViews;
+            }
+            else
+            {
+                TransparencyView = layersBlockingTransparency == 1
+                    ? (IGridView<bool>)new TerrainOnlyMapTransparencyView(this)
+                    : new FullMapTransparencyView(this);
+
+                WalkabilityView = layersBlockingWalkability == 1
+                    ? (IGridView<bool>)new TerrainOnlyMapWalkabilityView(this)
+                    : new FullMapWalkabilityView(this);
+            }
 
             _playerFOV = customPlayerFOV ?? new RecursiveShadowcastingFOV(TransparencyView);
             _playerFOV.Recalculated += On_FOVRecalculated;
@@ -280,6 +309,66 @@ namespace GoRogue.GameFramework
             GoRogueComponents = customComponentCollection ?? new ComponentCollection();
             GoRogueComponents.ParentForAddedComponents = this;
         }
+
+        #region Cached View Syncing
+        private void Map_ObjectAddedSyncViews(object? sender, ItemEventArgs<IGameObject> e)
+        {
+            if (!e.Item.IsWalkable)
+                _cachedWalkabilityView![e.Position] = false;
+
+            if (!e.Item.IsTransparent)
+                _cachedTransparencyView![e.Position] = false;
+
+            e.Item.WalkabilityChanged += Item_WalkabilityChangedSyncView;
+            e.Item.TransparencyChanged += Item_TransparencyChangedSyncView;
+        }
+
+        private void Map_ObjectMovedSyncViews(object? sender, ItemMovedEventArgs<IGameObject> e)
+        {
+            // Only one non-walkable item can be at any location by definition of collision detection; so setting to true instead of checking if there are any other non-walkable items at the location is ok
+            if (!e.Item.IsWalkable)
+            {
+                _cachedWalkabilityView![e.OldPosition] = true;
+                _cachedWalkabilityView![e.NewPosition] = false;
+            }
+
+            // Multiple non-transparent items can be at any location; so we need to check if there are any other non-transparent items at the old location
+            if (!e.Item.IsTransparent)
+            {
+                _cachedTransparencyView![e.OldPosition] = LayersBlockingTransparency == 1
+                    ? _terrain[e.OldPosition]?.IsTransparent ?? true
+                    : FullIsTransparent(e.OldPosition);
+                _cachedTransparencyView![e.NewPosition] = false;
+            }
+        }
+
+        private void Map_ObjectRemovedSyncViews(object? sender, ItemEventArgs<IGameObject> e)
+        {
+            // Only one non-walkable item can be at any location by definition of collision detection; so setting to true instead of checking if there are any other non-walkable items at the location is ok
+            if (!e.Item.IsWalkable)
+                _cachedWalkabilityView![e.Position] = true;
+
+            // Multiple non-transparent items can be at any location; so we need to check if there are any other non-transparent items at the location
+            if (!e.Item.IsTransparent)
+                _cachedTransparencyView![e.Position] = LayersBlockingTransparency == 1
+                    ? _terrain[e.Position]?.IsTransparent ?? true
+                    : FullIsTransparent(e.Position);
+
+            e.Item.WalkabilityChanged -= Item_WalkabilityChangedSyncView;
+            e.Item.TransparencyChanged += Item_TransparencyChangedSyncView;
+        }
+
+        private void Item_WalkabilityChangedSyncView(object? sender, ValueChangedEventArgs<bool> e) => _cachedWalkabilityView![((IGameObject)sender!).Position] = e.NewValue;
+
+        private void Item_TransparencyChangedSyncView(object? sender, ValueChangedEventArgs<bool> e)
+        {
+            var obj = (IGameObject)sender!;
+            if (e.NewValue)
+                _cachedTransparencyView![obj.Position] = LayersBlockingTransparency == 1
+                    ? _terrain[obj.Position]?.IsTransparent ?? true
+                    : FullIsTransparent(obj.Position);
+        }
+        #endregion
 
         /// <summary>
         /// Terrain of the map.  Terrain at each location may be set via the <see cref="SetTerrain(IGameObject)" /> function.
@@ -308,12 +397,14 @@ namespace GoRogue.GameFramework
         /// </summary>
         public uint LayersBlockingTransparency { get; }
 
+        private readonly BitArrayView? _cachedTransparencyView;
         /// <summary>
         /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> representing transparency values for each tile.  Each location returns true
         /// if the location is transparent (there are no non-transparent objects at that location), and false otherwise.
         /// </summary>
         public IGridView<bool> TransparencyView { get; }
 
+        private readonly BitArrayView? _cachedWalkabilityView;
         /// <summary>
         /// <see cref="SadRogue.Primitives.GridViews.IGridView{T}" /> representing walkability values for each tile.  Each location is true if
         /// the location is walkable (there are no non-walkable objects at that location), and false otherwise.
