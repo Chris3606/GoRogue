@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None
+
+## [3.0.0-beta04] - 2023-03-24
+
 ### Fixed
 - Fixed bug where `Map` would not correctly enforce collision detection if the `layersBlockingTransparency` parameter was set to only the terrain layer.
 
