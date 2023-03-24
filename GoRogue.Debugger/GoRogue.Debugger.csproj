@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -60,6 +60,7 @@
 	</ItemGroup>
 
     <ItemGroup>
+      <!-- ReSharper disable once VulnerablePackage -->
       <PackageReference Include="dotnet-curses" Version="1.0.2" />
       <PackageReference Include="JetBrains.Annotations" Version="2022.3.1">
 	  <PrivateAssets>all</PrivateAssets>
