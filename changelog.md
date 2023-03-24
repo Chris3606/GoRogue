@@ -5,7 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-None
+### Fixed
+- Fixed bug where `Map` would not correctly enforce collision detection if the `layersBlockingTransparency` parameter was set to only the terrain layer.
+
+### Changed
+- `Map` now, by default, keeps a cached `BitArrayView` to support `WalkabilityView` and `TransparencyView`, rather than calculating those values on the fly
+    - This is much faster for operations which use these grid views (pathing ~9x faster in some test cases, FOV ~4x), although uses slightly more memory and makes adding/removing/moving objects around on the map slightly slower.
+    - If needed, you can disable this behavior and get the old calculate-on-the-fly behavior instead by passing `false` to the `cacheGridViews` parameter of the `Map` constructor.
 
 ## [3.0.0-beta03] - 2023-03-20
 

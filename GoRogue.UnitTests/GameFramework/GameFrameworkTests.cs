@@ -369,5 +369,148 @@ namespace GoRogue.UnitTests.GameFramework
             // Should have reset the IsWalkable to true so the error is recoverable
             Assert.True(obj.IsWalkable);
         }
+
+        [Fact]
+        public void WalkabilityViewUpdatesOnAdd()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            Assert.True(map.WalkabilityView[1, 1]);
+
+            map.SetTerrain(new GameObject((1, 1), 0, false, isTransparent: true));
+            Assert.False(map.WalkabilityView[1, 1]);
+
+            map.AddEntity(new GameObject((1, 2), 1, true, false));
+            Assert.True(map.WalkabilityView[1, 2]);
+        }
+
+        [Fact]
+        public void WalkabilityViewUpdatesOnMove()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1, false, isTransparent: true);
+            map.AddEntity(obj);
+
+            var obj2 = new GameObject((1, 2), 1, false, isTransparent: true);
+            map.AddEntity(obj2);
+
+            Assert.False(map.WalkabilityView[obj.Position]);
+            Assert.False(map.WalkabilityView[obj2.Position]);
+
+            obj.Position = (2, 2);
+            Assert.Equal(new Point(2, 2), obj.Position);
+            Assert.True(map.WalkabilityView[1, 1]);
+            Assert.False(map.WalkabilityView[obj.Position]);
+            Assert.False(map.WalkabilityView[obj2.Position]);
+
+            obj2.Position = (5, 6);
+            Assert.Equal(new Point(5, 6), obj2.Position);
+            Assert.True(map.WalkabilityView[1, 2]);
+            Assert.False(map.WalkabilityView[obj2.Position]);
+            Assert.False(map.WalkabilityView[obj.Position]);
+        }
+
+        [Fact]
+        public void WalkabilityViewUpdatesOnRemove()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+
+            var obj = new GameObject((1, 1), 0, false, isTransparent: true);
+            map.SetTerrain(obj);
+
+            var obj2 = new GameObject((1, 2), 1, true, false);
+            map.AddEntity(obj2);
+
+            Assert.False(map.WalkabilityView[1, 1]);
+            Assert.True(map.WalkabilityView[1, 2]);
+
+            map.RemoveEntity(obj2);
+            Assert.False(map.WalkabilityView[1, 1]);
+            Assert.True(map.WalkabilityView[1, 2]);
+
+            map.RemoveTerrain(obj);
+            Assert.True(map.WalkabilityView[1, 1]);
+            Assert.True(map.WalkabilityView[1, 2]);
+        }
+
+        [Fact]
+        public void TransparencyViewUpdatesOnAdd()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            Assert.True(map.TransparencyView[1, 1]);
+
+            map.SetTerrain(new GameObject((1, 1), 0, isWalkable: false, isTransparent: true));
+            Assert.True(map.TransparencyView[1, 1]);
+
+            map.SetTerrain(new GameObject((1, 1), 0, isWalkable: true, isTransparent: false));
+            Assert.False(map.TransparencyView[1, 1]);
+
+            map.AddEntity(new GameObject((1, 2), 1, isWalkable: false, isTransparent: true));
+            Assert.True(map.TransparencyView[1, 2]);
+
+            map.AddEntity(new GameObject((1, 2), 1, isWalkable: true, isTransparent: false));
+            Assert.False(map.TransparencyView[1, 2]);
+        }
+
+        [Fact]
+        public void TransparencyViewUpdatesOnMove()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+            var obj = new GameObject((1, 1), 1, true, false);
+            map.AddEntity(obj);
+
+            var obj2 = new GameObject((1, 2), 1, true, false);
+            map.AddEntity(obj2);
+
+            var obj3 = new GameObject((1, 3), 1, isWalkable: true, isTransparent: true);
+            map.AddEntity(obj3);
+
+            Assert.False(map.TransparencyView[obj.Position]);
+            Assert.False(map.TransparencyView[obj2.Position]);
+            Assert.True(map.TransparencyView[obj3.Position]);
+
+            obj.Position = obj3.Position;
+            Assert.Equal(obj3.Position, obj.Position);
+            Assert.True(map.TransparencyView[1, 1]);
+            Assert.False(map.TransparencyView[obj2.Position]);
+            Assert.False(map.TransparencyView[obj3.Position]); // Changed to false
+
+            obj.Position = obj2.Position;
+            Assert.Equal(obj2.Position, obj.Position);
+            Assert.True(map.TransparencyView[1, 1]);
+            Assert.False(map.TransparencyView[obj2.Position]);
+            Assert.True(map.TransparencyView[obj3.Position]); // Back to true
+
+            obj.Position = (1, 1);
+            Assert.Equal(new Point(1, 1), obj.Position);
+            Assert.False(map.TransparencyView[obj.Position]);
+            Assert.False(map.TransparencyView[obj2.Position]);
+            Assert.True(map.TransparencyView[obj3.Position]);
+        }
+
+        [Fact]
+        public void TransparencyViewUpdatesOnRemove()
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev);
+
+            var obj = new GameObject((1, 1), 0, false, isTransparent: true);
+            map.SetTerrain(obj);
+
+            var obj2 = new GameObject((1, 1), 1, true, false);
+            map.AddEntity(obj2);
+
+            Assert.False(map.TransparencyView[1, 1]);
+
+            map.RemoveEntity(obj2);
+            Assert.True(map.TransparencyView[1, 1]);
+
+            map.AddEntity(obj2);
+            Assert.False(map.TransparencyView[1, 1]);
+
+            map.RemoveTerrain(obj);
+            Assert.False(map.TransparencyView[1, 1]);
+
+            map.RemoveEntity(obj2);
+            Assert.True(map.TransparencyView[1, 1]);
+        }
     }
 }
