@@ -953,9 +953,9 @@ namespace GoRogue.GameFramework
         /// layer
         /// in the mask downward.
         /// </returns>
-        public IEnumerable<TEntity> GetEntitiesAt<TEntity>(Point position, uint layerMask = uint.MaxValue)
+        public MapEntitiesAtCastEnumerator<TEntity> GetEntitiesAt<TEntity>(Point position, uint layerMask = uint.MaxValue)
             where TEntity : IGameObject
-            => GetEntitiesAt<TEntity>(position.X, position.Y, layerMask);
+            => new MapEntitiesAtCastEnumerator<TEntity>(this, position, layerMask);
 
         /// <summary>
         /// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from
@@ -971,13 +971,9 @@ namespace GoRogue.GameFramework
         /// layer
         /// in the mask downward.
         /// </returns>
-        public IEnumerable<TEntity> GetEntitiesAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue)
+        public MapEntitiesAtCastEnumerator<TEntity> GetEntitiesAt<TEntity>(int x, int y, uint layerMask = uint.MaxValue)
             where TEntity : IGameObject
-        {
-            foreach (var entity in Entities.GetItemsAt(x, y, layerMask))
-                if (entity is TEntity e)
-                    yield return e;
-        }
+            => GetEntitiesAt<TEntity>(new Point(x, y), layerMask);
 
         /// <summary>
         /// Removes the given entity (non-terrain object) from the map.  Throws ArgumentException if the entity was not
