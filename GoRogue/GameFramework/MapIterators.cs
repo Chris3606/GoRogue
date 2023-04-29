@@ -97,12 +97,73 @@ namespace GoRogue.GameFramework
     }
 
     [PublicAPI]
-    public struct MapObjectsAtCastEnumerator<T>
+    public struct MapObjectsAtCastEnumerator<T> : IEnumerable<T>, IEnumerator<T>
         where T : IGameObject
     {
+        // Suppress warning stating to use auto-property because we want to guarantee micro-performance
+        // characteristics.
+#pragma warning disable IDE0032 // Use auto property
+        private T _current;
+#pragma warning restore IDE0032 // Use auto property
 
+        /// <summary>
+        /// The current value for enumeration.
+        /// </summary>
+        public T Current => _current;
+
+        private MapObjectsAtEnumerator _allObjectsEnumerator;
+
+        object IEnumerator.Current => _current;
+
+        public MapObjectsAtCastEnumerator(Map map, Point position, uint layerMask)
+        {
+            _allObjectsEnumerator = new MapObjectsAtEnumerator(map, position, layerMask);
+            _current = default!;
+        }
+
+        public bool MoveNext()
+        {
+            while (_allObjectsEnumerator.MoveNext())
+            {
+                if (_allObjectsEnumerator.Current is T t)
+                {
+                    _current = t;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns this enumerator.
+        /// </summary>
+        /// <returns>This enumerator.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public MapObjectsAtCastEnumerator<T> GetEnumerator() => this;
+
+        // Explicitly implemented to ensure we prefer the non-boxing versions where possible
+
+        #region Explicit Interface Implementations
+
+        /// <inheritdoc />
+        void IEnumerator.Reset()
+        {
+            ((IEnumerator)_allObjectsEnumerator).Reset();
+        }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+        IEnumerator IEnumerable.GetEnumerator() => this;
+
+        void IDisposable.Dispose()
+        {
+            ((IDisposable)_allObjectsEnumerator).Dispose();
+        }
+
+        #endregion
     }
 
+    // TODO:
     [PublicAPI]
     public struct MapEntitiesAtCastEnumerator<T>
         where T : IGameObject
