@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
@@ -48,6 +47,8 @@ namespace GoRogue.Components
     [DataContract]
     public class ComponentCollection : IComponentCollection
     {
+        private static List<object> s_emptyList = new List<object>();
+
         private readonly Dictionary<Type, List<object>> _components;
 
         // Needed for finding tag by item to remove from _tagsToComponents without iteration when components are
@@ -297,25 +298,24 @@ namespace GoRogue.Components
         public bool Contains<T>(string? tag = null) where T : class => Contains((typeof(T), tag));
 
         /// <inheritdoc />
-        [return: MaybeNull]
-        public T GetFirstOrDefault<T>(string? tag = null) where T : class
+        public T? GetFirstOrDefault<T>(string? tag = null) where T : class
         {
             Type typeOfT = typeof(T);
 
             if (tag == null)
             {
-                if (!_components.ContainsKey(typeOfT))
+                if (!_components.TryGetValue(typeOfT, out var componentsOfType))
                     return default;
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-                return (T)_components[typeOfT][0];
+                return (T)componentsOfType[0];
             }
 
-            if (!_tagsToComponents.ContainsKey(tag))
+            if (!_tagsToComponents.TryGetValue(tag, out var componentWithTag))
                 return default;
 
-            if (_tagsToComponents[tag] is T item)
+            if (componentWithTag is T item)
                 return item;
 
             return default;
@@ -328,34 +328,38 @@ namespace GoRogue.Components
 
             if (tag == null)
             {
-                if (!_components.ContainsKey(typeOfT))
+                // TODO: Optimize to avoid ContainsKey and just re-throw exception from KeyError instead?
+                if (!_components.TryGetValue(typeOfT, out var componentList))
                     throw new ArgumentException($"No component of type {typeof(T).Name} has been added to the {nameof(ComponentCollection)}.");
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-                return (T)_components[typeOfT][0];
+                return (T)componentList[0];
             }
 
-            if (!_tagsToComponents.ContainsKey(tag))
+            if (!_tagsToComponents.TryGetValue(tag, out var componentWithTag))
                 throw new ArgumentException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.", nameof(tag));
 
-            if (_tagsToComponents[tag] is T item)
+            if (componentWithTag is T item)
                 return item;
 
             throw new ArgumentException($"Component of type {typeof(T).Name} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.", nameof(tag));
         }
 
-        /// <inheritdoc />
-        public IEnumerable<T> GetAll<T>() where T : class
+        // TODO: Custom docs
+        public ObjectListCastEnumerator<T> GetAll<T>() where T : class
         {
             Type typeOfT = typeof(T);
 
-            if (!_components.ContainsKey(typeOfT)) yield break;
+            if (!_components.TryGetValue(typeOfT, out var componentList))
+                return new ObjectListCastEnumerator<T>(s_emptyList);
 
-            // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-            foreach (var component in _components[typeOfT])
-                yield return (T)component;
+            // Casts will succeed because the dictionary is literally keyed by types and type can't change after compile-time
+            return new ObjectListCastEnumerator<T>(componentList);
         }
+
+        /// <inheritdoc />
+        IEnumerable<T> IComponentCollection.GetAll<T>() where T : class => GetAll<T>();
 
         // Insert in appropriate order to list based on what its SortOrder is
         private static void InsertComponent(ISortedComponent component, List<object> componentList)
