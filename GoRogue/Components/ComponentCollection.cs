@@ -347,15 +347,15 @@ namespace GoRogue.Components
         }
 
         // TODO: Custom docs
-        public ObjectListCastEnumerator<T> GetAll<T>() where T : class
+        public ObjectListCastEnumerator<object, T> GetAll<T>() where T : class
         {
             Type typeOfT = typeof(T);
 
             if (!_components.TryGetValue(typeOfT, out var componentList))
-                return new ObjectListCastEnumerator<T>(s_emptyList);
+                return new ObjectListCastEnumerator<object, T>(s_emptyList);
 
             // Casts will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-            return new ObjectListCastEnumerator<T>(componentList);
+            return new ObjectListCastEnumerator<object, T>(componentList);
         }
 
         /// <inheritdoc />

@@ -18,18 +18,20 @@ namespace GoRogue
     /// can be a good option.  This type does implement IEnumerable, and as such can be used directly with functions that
     /// require one (for example, System.LINQ).  However, this will have reduced performance due to boxing of the iterator.
     /// </remarks>
-    /// <typeparam name="T">Actual type of items in the list.</typeparam>
+    /// <typeparam name="TBase">Type items in the list are stored as.</typeparam>
+    /// <typeparam name="TItem">Actual type of items in the list.</typeparam>
     [PublicAPI]
-    public struct ObjectListCastEnumerator<T> : IEnumerator<T>, IEnumerable<T>
+    public struct ObjectListCastEnumerator<TBase, TItem> : IEnumerator<TItem>, IEnumerable<TItem>
+        where TItem : TBase
     {
-        private List<object>.Enumerator _enumerator;
-        private T _current;
+        private List<TBase>.Enumerator _enumerator;
+        private TItem _current;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="list">List to iterate over.</param>
-        public ObjectListCastEnumerator(List<object> list)
+        public ObjectListCastEnumerator(List<TBase> list)
         {
             _enumerator = list.GetEnumerator();
             _current = default!;
@@ -46,12 +48,12 @@ namespace GoRogue
         {
             if (!_enumerator.MoveNext()) return false;
 
-            _current = (T)_enumerator.Current;
+            _current = (TItem)_enumerator.Current!;
             return true;
         }
 
         /// <inheritdoc/>
-        public T Current => _current;
+        public TItem Current => _current;
 
         object? IEnumerator.Current => _current;
 
@@ -64,9 +66,9 @@ namespace GoRogue
         /// Returns this enumerator.
         /// </summary>
         /// <returns>This enumerator.</returns>
-        public ObjectListCastEnumerator<T> GetEnumerator() => this;
+        public ObjectListCastEnumerator<TBase, TItem> GetEnumerator() => this;
 
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+        IEnumerator<TItem> IEnumerable<TItem>.GetEnumerator() => this;
 
         IEnumerator IEnumerable.GetEnumerator() => this;
     }
