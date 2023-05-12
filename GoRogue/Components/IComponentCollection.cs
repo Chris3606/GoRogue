@@ -187,8 +187,7 @@ namespace GoRogue.Components
         /// <typeparam name="T">Type of component to retrieve.</typeparam>
         /// <param name="tag">Tag for component to retrieve.  If null is specified, no particular tag is checked for.</param>
         /// <returns/>
-        [return: MaybeNull]
-        T GetFirstOrDefault<T>(string? tag = null) where T : class;
+        T? GetFirstOrDefault<T>(string? tag = null) where T : class;
 
         /// <summary>
         /// Gets all components of type T that have been added, with components having a lower
