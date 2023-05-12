@@ -346,16 +346,29 @@ namespace GoRogue.Components
             throw new ArgumentException($"Component of type {typeof(T).Name} with tag {tag} was requested from the {nameof(ComponentCollection)}, but the component with that tag is not of that type.", nameof(tag));
         }
 
-        // TODO: Custom docs
-        public ObjectListCastEnumerator<object, T> GetAll<T>() where T : class
+        /// <summary>
+        /// Gets all components of type T that have been added, with components having a lower
+        /// <see cref="ISortedComponent.SortOrder"/> being returned first.  Components that do not implement
+        /// <see cref="ISortedComponent"/> are returned after any that do.  Among components with equal sort orders
+        /// or components that do not implement <see cref="ISortedComponent"/>, components are returned in the order
+        /// they were added.
+        /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
+        /// <typeparam name="T">Type of components to retrieve.</typeparam>
+        /// <returns/>
+        public ListCastEnumerator<object, T> GetAll<T>() where T : class
         {
             Type typeOfT = typeof(T);
 
             if (!_components.TryGetValue(typeOfT, out var componentList))
-                return new ObjectListCastEnumerator<object, T>(s_emptyList);
+                return new ListCastEnumerator<object, T>(s_emptyList);
 
             // Casts will succeed because the dictionary is literally keyed by types and type can't change after compile-time
-            return new ObjectListCastEnumerator<object, T>(componentList);
+            return new ListCastEnumerator<object, T>(componentList);
         }
 
         /// <inheritdoc />

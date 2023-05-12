@@ -40,7 +40,7 @@ namespace GoRogue.GameFramework
     /// where TParent would be Map or some class inheriting from it.
     /// </remarks>
     [PublicAPI]
-    public class Map : GridViewBase<IEnumerable<IGameObject>>, IObjectWithComponents
+    public class Map : GridViewBase<MapObjectsAtEnumerator>, IObjectWithComponents
     {
         private readonly LayeredSpatialMap<IGameObject> _entities;
         private readonly ISettableGridView<IGameObject?> _terrain;
@@ -438,7 +438,7 @@ namespace GoRogue.GameFramework
         /// </summary>
         /// <param name="pos">The position to retrieve objects for.</param>
         /// <returns>All objects at the given location, in order from highest layer to lowest layer.</returns>
-        public override IEnumerable<IGameObject> this[Point pos] => GetObjectsAt(pos);
+        public override MapObjectsAtEnumerator this[Point pos] => GetObjectsAt(pos);
 
         /// <summary>
         /// Event that is fired whenever some object is added to the map.
@@ -942,9 +942,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from
-        /// the highest existing layer
-        /// in the layer mask downward.  Layer mask defaults to all layers.
+        /// the highest existing layer in the layer mask downward.  Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <typeparam name="TEntity">Type of entities to return.</typeparam>
         /// <param name="position">Position to get entities for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
@@ -959,9 +963,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all (non-terrain) entities encountered at the given position that are castable to type EntityType, in order from
-        /// the highest existing layer
-        /// in the layer mask downward.  Layer mask defaults to all layers.
+        /// the highest existing layer in the layer mask downward.  Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <typeparam name="TEntity">Type of entities to return.</typeparam>
         /// <param name="x">X-value of the position to get entities for.</param>
         /// <param name="y">Y-value of the position to get entities for.</param>
@@ -1010,8 +1018,7 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets the first object encountered at the given position, moving from the highest existing layer in the layer mask
-        /// downward.  Layer mask defaults
-        /// to all layers.
+        /// downward.  Layer mask defaults to all layers.
         /// </summary>
         /// <param name="position">Position to get object for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
@@ -1082,9 +1089,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask
-        /// downward.  Layer mask defaults
-        /// to all layers.
+        /// downward.  Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <param name="position">Position to get objects for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
         /// <returns>All objects encountered at the given position, in order from the highest existing layer in the mask downward.</returns>
@@ -1093,9 +1104,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest
-        /// existing layer in the layer
-        /// mask downward. Layer mask defaults to all layers.
+        /// existing layer in the layer mask downward. Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <typeparam name="TObject">Type of objects to return.</typeparam>
         /// <param name="position">Position to get objects for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
@@ -1110,9 +1125,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all objects encountered at the given position, in order from the highest existing layer in the layer mask
-        /// downward.  Layer mask defaults
-        /// to all layers.
+        /// downward.  Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <param name="x">X-value of the position to get objects for.</param>
         /// <param name="y">Y-value of the position to get objects for.</param>
         /// <param name="layerMask">Layer mask for which layers can return an object.  Defaults to all layers.</param>
@@ -1122,9 +1141,13 @@ namespace GoRogue.GameFramework
 
         /// <summary>
         /// Gets all objects encountered at the given position that are castable to type ObjectType, in order from the highest
-        /// existing layer in the layer
-        /// mask downward. Layer mask defaults to all layers.
+        /// existing layer in the layer mask downward. Layer mask defaults to all layers.
         /// </summary>
+        /// <remarks>
+        /// This function returns a custom iterator which is very fast when used in a foreach loop.
+        /// If you need an IEnumerable to use with LINQ or other code, the returned struct does implement that interface;
+        /// however note that iterating over it this way will not perform as well as iterating directly over this object.
+        /// </remarks>
         /// <typeparam name="TObject">Type of objects to return.</typeparam>
         /// <param name="x">X-value of the position to get objects for.</param>
         /// <param name="y">Y-value of the position to get objects for.</param>
