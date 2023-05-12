@@ -372,7 +372,21 @@ namespace GoRogue.Components
         }
 
         /// <inheritdoc />
-        IEnumerable<T> IComponentCollection.GetAll<T>() where T : class => GetAll<T>();
+        IEnumerable<T> IComponentCollection.GetAll<T>() where T : class
+        {
+            // NOTE: Re-implementing this function using "yield return" instead of just calling the public GetAll<T>() is, for some reason,
+            // faster, even though the struct iterator itself is much faster in the case of a concrete type.
+            // Likely, this is because it avoids boxing or some virtual method call which the compiler can't devirtualize.
+            Type typeOfT = typeof(T);
+
+            if (!_components.TryGetValue(typeOfT, out var componentList))
+                yield break;
+
+            // Casts will succeed because the dictionary is literally keyed by types and type can't change after compile-time
+            int len = componentList.Count;
+            for (int i = 0; i < len; i++)
+                yield return (T)componentList[i];
+        }
 
         // Insert in appropriate order to list based on what its SortOrder is
         private static void InsertComponent(ISortedComponent component, List<object> componentList)
