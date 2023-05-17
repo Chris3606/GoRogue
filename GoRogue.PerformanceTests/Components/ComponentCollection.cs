@@ -34,7 +34,7 @@ namespace GoRogue.PerformanceTests.Components
         public int TypesOfComponents;
 
         [UsedImplicitly]
-        //[Params(2, 10, 100
+        //[Params(2, 10, 100)]
         [Params(2, 10)]
         public int ComponentsPerType;
 
@@ -59,11 +59,11 @@ namespace GoRogue.PerformanceTests.Components
                     _collection.Add(new MockComponentC{ Value = i });
         }
 
-        //[Benchmark]
-        //public bool ContainsMockA() => _collection.Contains<MockComponentA>();
+        [Benchmark]
+        public bool ContainsMockA() => _collection.Contains<MockComponentA>();
 
-        //[Benchmark]
-        //public bool ContainsIMock() => _collection.Contains<IMockComponent>();
+        [Benchmark]
+        public bool ContainsIMock() => _collection.Contains<IMockComponent>();
 
         [Benchmark]
         public MockComponentA GetFirstMockA() => _collection.GetFirst<MockComponentA>();
@@ -77,56 +77,56 @@ namespace GoRogue.PerformanceTests.Components
         [Benchmark]
         public IMockComponent GetFirstIMockViaInterface() => _iCollection.GetFirst<IMockComponent>();
 
-        //[Benchmark]
-        //public MockComponentA? GetFirstOrDefaultMockA() => _collection.GetFirstOrDefault<MockComponentA>();
+        [Benchmark]
+        public MockComponentA? GetFirstOrDefaultMockA() => _collection.GetFirstOrDefault<MockComponentA>();
 
-        //[Benchmark]
-        //public MockComponentA? GetFirstOrDefaultMockAViaInterface() => _iCollection.GetFirstOrDefault<MockComponentA>();
+        [Benchmark]
+        public MockComponentA? GetFirstOrDefaultMockAViaInterface() => _iCollection.GetFirstOrDefault<MockComponentA>();
 
-        //[Benchmark]
-        //public IMockComponent? GetFirstOrDefaultIMock() => _collection.GetFirstOrDefault<IMockComponent>();
+        [Benchmark]
+        public IMockComponent? GetFirstOrDefaultIMock() => _collection.GetFirstOrDefault<IMockComponent>();
 
-        //[Benchmark]
-        //public IMockComponent? GetFirstOrDefaultIMockViaInterface() => _iCollection.GetFirstOrDefault<IMockComponent>();
+        [Benchmark]
+        public IMockComponent? GetFirstOrDefaultIMockViaInterface() => _iCollection.GetFirstOrDefault<IMockComponent>();
 
-        //[Benchmark]
-        //public int GetAllMockA()
-        //{
-        //    int sum = 0;
-        //    foreach (var component in _collection.GetAll<MockComponentA>())
-        //        sum += component.Value;
+        [Benchmark]
+        public int GetAllMockA()
+        {
+            int sum = 0;
+            foreach (var component in _collection.GetAll<MockComponentA>())
+                sum += component.Value;
 
-        //    return sum;
-        //}
+            return sum;
+        }
 
-        //[Benchmark]
-        //public int GetAllMockAViaInterface()
-        //{
-        //    int sum = 0;
-        //    foreach (var component in _iCollection.GetAll<MockComponentA>())
-        //        sum += component.Value;
+        [Benchmark]
+        public int GetAllMockAViaInterface()
+        {
+            int sum = 0;
+            foreach (var component in _iCollection.GetAll<MockComponentA>())
+                sum += component.Value;
 
-        //    return sum;
-        //}
+            return sum;
+        }
 
-        //[Benchmark]
-        //public int GetAllIMock()
-        //{
-        //    int sum = 0;
-        //    foreach (var component in _collection.GetAll<IMockComponent>())
-        //        sum += component.Value;
+        [Benchmark]
+        public int GetAllIMock()
+        {
+            int sum = 0;
+            foreach (var component in _collection.GetAll<IMockComponent>())
+                sum += component.Value;
 
-        //    return sum;
-        //}
+            return sum;
+        }
 
-        //[Benchmark]
-        //public int GetAllIMockViaInterface()
-        //{
-        //    int sum = 0;
-        //    foreach (var component in _iCollection.GetAll<IMockComponent>())
-        //        sum += component.Value;
+        [Benchmark]
+        public int GetAllIMockViaInterface()
+        {
+            int sum = 0;
+            foreach (var component in _iCollection.GetAll<IMockComponent>())
+                sum += component.Value;
 
-        //    return sum;
-        //}
+            return sum;
+        }
     }
 }
