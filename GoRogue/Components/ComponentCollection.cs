@@ -328,17 +328,30 @@ namespace GoRogue.Components
 
             if (tag == null)
             {
-                // TODO: Optimize to avoid ContainsKey and just re-throw exception from KeyError instead?
-                if (!_components.TryGetValue(typeOfT, out var componentList))
+                List<object> componentList;
+                try
+                {
+                    componentList = _components[typeOfT];
+                }
+                catch (KeyNotFoundException e)
+                {
                     throw new ArgumentException($"No component of type {typeof(T).Name} has been added to the {nameof(ComponentCollection)}.");
+                }
 
                 // We can know there is at least 1 element, because remove functions don't leave empty lists in the Dictionary.
                 // Cast will succeed because the dictionary is literally keyed by types and type can't change after compile-time
                 return (T)componentList[0];
             }
 
-            if (!_tagsToComponents.TryGetValue(tag, out var componentWithTag))
+            object componentWithTag;
+            try
+            {
+                componentWithTag = _tagsToComponents[tag];
+            }
+            catch (KeyNotFoundException e)
+            {
                 throw new ArgumentException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.", nameof(tag));
+            }
 
             if (componentWithTag is T item)
                 return item;

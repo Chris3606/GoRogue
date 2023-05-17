@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using GoRogue.Components.ParentAware;
 using JetBrains.Annotations;
 
