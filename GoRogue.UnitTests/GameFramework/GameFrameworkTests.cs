@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using GoRogue.GameFramework;
 using GoRogue.MapGeneration;
+using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using Xunit;
@@ -511,6 +513,144 @@ namespace GoRogue.UnitTests.GameFramework
 
             map.RemoveEntity(obj2);
             Assert.True(map.TransparencyView[1, 1]);
+        }
+
+        [Fact]
+        public void GetObjectsAt()
+        {
+            var map = new Map(10, 10, 4, Distance.Chebyshev);
+            var objectsAtValid = new IGameObject[]
+            {
+                new GameObject((1, 1), 4),
+                new GameObject((1, 1), 2),
+                new GameObject((1, 1), 1),
+                new GameObject((1, 1), 0)
+            };
+            var objectsAtInvalid = new IGameObject[] { new GameObject((1, 2), 1), new GameObject((1, 2), 0) };
+
+            foreach (var obj in objectsAtValid[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtValid[^1]);
+
+            foreach (var obj in objectsAtInvalid[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtInvalid[^1]);
+
+            // Test GetObjectsAt
+            var objects = map.GetObjectsAt((1, 1)).ToArray();
+            Assert.Equal(objectsAtValid, objects);
+
+            // Mask with layer which has no items, and missing one which does have items
+            objects = map.GetObjectsAt((1, 1), map.LayerMasker.Mask(3, 2, 1, 0)).ToArray();
+            Assert.Equal(objectsAtValid[1..], objects);
+
+            // No terrain
+            objects = map.GetObjectsAt((1, 1), map.LayerMasker.MaskAllAbove(1)).ToArray();
+            Assert.Equal(objectsAtValid[..^1], objects);
+
+            // Only terrain
+            objects = map.GetObjectsAt((1, 1), map.LayerMasker.Mask(0)).ToArray();
+            Assert.Equal(objectsAtValid[^1..], objects);
+
+            // No items
+            objects = map.GetObjectsAt((1, 1), 0u).ToArray();
+            Assert.Equal(Array.Empty<IGameObject>(), objects);
+        }
+
+        [Fact]
+        public void GetObjectsAtCast()
+        {
+            var map = new Map(10, 10, 4, Distance.Chebyshev);
+            var objectsAtValidSubclass = new[]
+            {
+                new MockGameObject((1, 1), 3),
+                new MockGameObject((1, 1), 1),
+                new MockGameObject((1, 1), 0)
+            };
+            var objectsAtValidRegular = new IGameObject[]
+            {
+                new GameObject((1, 1), 4),
+                new GameObject((1, 1), 2),
+            };
+            var objectsAtInvalid = new IGameObject[] { new GameObject((1, 2), 1), new GameObject((1, 2), 0) };
+
+            foreach (var obj in objectsAtValidSubclass[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtValidSubclass[^1]);
+
+            foreach (var obj in objectsAtValidRegular)
+                map.AddEntity(obj);
+
+            foreach (var obj in objectsAtInvalid[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtInvalid[^1]);
+
+            // Test GetObjectsAt
+            var objects = map.GetObjectsAt<MockGameObject>((1, 1)).ToArray();
+            Assert.Equal(objectsAtValidSubclass, objects);
+
+            // Mask with layer which has no items, and missing one which does have items
+            objects = map.GetObjectsAt<MockGameObject>((1, 1), map.LayerMasker.Mask(4, 2, 1, 0)).ToArray();
+            Assert.Equal(objectsAtValidSubclass[1..], objects);
+
+            // No terrain
+            objects = map.GetObjectsAt<MockGameObject>((1, 1), map.LayerMasker.MaskAllAbove(1)).ToArray();
+            Assert.Equal(objectsAtValidSubclass[..^1], objects);
+
+            // Only terrain
+            objects = map.GetObjectsAt<MockGameObject>((1, 1), map.LayerMasker.Mask(0)).ToArray();
+            Assert.Equal(objectsAtValidSubclass[^1..], objects);
+
+            // No items
+            objects = map.GetObjectsAt<MockGameObject>((1, 1), map.LayerMasker.Mask(2)).ToArray();
+            Assert.Equal(Array.Empty<MockGameObject>(), objects);
+        }
+
+        [Fact]
+        public void GetEntitiesAtCast()
+        {
+            var map = new Map(10, 10, 4, Distance.Chebyshev);
+            var objectsAtValidSubclass = new[]
+            {
+                new MockGameObject((1, 1), 3),
+                new MockGameObject((1, 1), 1),
+            };
+            var objectsAtValidRegular = new IGameObject[]
+            {
+                new GameObject((1, 1), 4),
+                new GameObject((1, 1), 2),
+                new GameObject((1, 1), 0)
+            };
+            var objectsAtInvalid = new IGameObject[] { new GameObject((1, 2), 1), new GameObject((1, 2), 0) };
+
+            foreach (var obj in objectsAtValidSubclass)
+                map.AddEntity(obj);
+
+            foreach (var obj in objectsAtValidRegular[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtValidRegular[^1]);
+
+            foreach (var obj in objectsAtInvalid[..^1])
+                map.AddEntity(obj);
+
+            map.SetTerrain(objectsAtInvalid[^1]);
+
+            // Test GetEntitiesAt
+            var objects = map.GetEntitiesAt<MockGameObject>((1, 1)).ToArray();
+            Assert.Equal(objectsAtValidSubclass, objects);
+
+            // Mask with layer which has no items, and missing one which does have items
+            objects = map.GetEntitiesAt<MockGameObject>((1, 1), map.LayerMasker.Mask(4, 2, 1, 0)).ToArray();
+            Assert.Equal(objectsAtValidSubclass[1..], objects);
+
+            // No items
+            objects = map.GetEntitiesAt<MockGameObject>((1, 1), map.LayerMasker.Mask(2)).ToArray();
+            Assert.Equal(Array.Empty<MockGameObject>(), objects);
         }
     }
 }

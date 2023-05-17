@@ -16,20 +16,27 @@ namespace GoRogue.PerformanceTests.GameFramework
     public class MapTests
     {
         [UsedImplicitly]
-        [Params(50, 100, 200)]
+        //[Params(50, 100, 200)]
+        [Params(50, 200)]
         public int Size;
 
         [UsedImplicitly]
-        [Params(2, 10, 30)]
+        //[Params(2, 10, 30)]
+        [Params(10)]
         public int NumEntitySpawnLocations;
 
         [UsedImplicitly]
-        [Params(1, 2, 3)]
+        //[Params(1, 2, 3)]
+        [Params(3)]
         public int NumEntitiesPerLocation;
 
         [UsedImplicitly]
         [Params(1, 2, 3)]
         public int NumEntityLayers;
+
+        [UsedImplicitly]
+        [Params(true, false)]
+        public bool UseCachedGridViews;
 
         private Map _map = null!;
         private Point _positionWithEntities;
@@ -45,7 +52,7 @@ namespace GoRogue.PerformanceTests.GameFramework
                 .Context.GetFirst<IGridView<bool>>("WallFloor");
 
             // Create real map and apply terrain
-            _map = new Map(Size, Size, NumEntityLayers, Distance.Chebyshev);
+            _map = new Map(Size, Size, NumEntityLayers, Distance.Chebyshev, useCachedGridViews: UseCachedGridViews);
             _map.ApplyTerrainOverlay(wallFloor, (pos, val) => new GameObject(pos, 0, val, val));
 
             // Spawn correct number of entities
@@ -135,6 +142,58 @@ namespace GoRogue.PerformanceTests.GameFramework
             unchecked
             {
                 foreach (var entity in _map.GetObjectsAt(_positionWithoutEntities))
+                    sum += entity.ID;
+            }
+
+            return sum;
+        }
+
+        [Benchmark]
+        public uint GetEntitiesAtWithEntities()
+        {
+            uint sum = 0;
+            unchecked
+            {
+                foreach (var entity in _map.Entities.GetItemsAt(_positionWithEntities))
+                    sum += entity.ID;
+            }
+
+            return sum;
+        }
+
+        [Benchmark]
+        public uint GetEntitiesAtWithoutEntities()
+        {
+            uint sum = 0;
+            unchecked
+            {
+                foreach (var entity in _map.Entities.GetItemsAt(_positionWithoutEntities))
+                    sum += entity.ID;
+            }
+
+            return sum;
+        }
+
+        [Benchmark]
+        public uint GetEntitiesAtCastWithEntities()
+        {
+            uint sum = 0;
+            unchecked
+            {
+                foreach (var entity in _map.GetEntitiesAt<IGameObject>(_positionWithEntities))
+                    sum += entity.ID;
+            }
+
+            return sum;
+        }
+
+        [Benchmark]
+        public uint GetEntitiesAtCastWithoutEntities()
+        {
+            uint sum = 0;
+            unchecked
+            {
+                foreach (var entity in _map.GetEntitiesAt<IGameObject>(_positionWithoutEntities))
                     sum += entity.ID;
             }
 

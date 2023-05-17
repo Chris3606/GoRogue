@@ -3,7 +3,7 @@ using GoRogue.Components;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
 
-namespace GoRogue.UnitTests
+namespace GoRogue.UnitTests.Components
 {
     public class ComponentCollectionTests
     {
@@ -224,8 +224,8 @@ namespace GoRogue.UnitTests
         [Fact]
         public void GetFirstOrDefaultTag()
         {
-            string tag1 = "Component1";
-            string tag2 = "NotComponent1";
+            var tag1 = "Component1";
+            var tag2 = "NotComponent1";
 
             // Create and add a component
             var component = new Component1();
@@ -289,8 +289,8 @@ namespace GoRogue.UnitTests
         [Fact]
         public void ContainsTag()
         {
-            string tag1 = "Component1";
-            string tag2 = "NotComponent1";
+            var tag1 = "Component1";
+            var tag2 = "NotComponent1";
 
             // Create and add a component
             var component = new Component1();
