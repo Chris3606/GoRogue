@@ -47,7 +47,7 @@ namespace GoRogue.Components
     [DataContract]
     public class ComponentCollection : IComponentCollection
     {
-        private static List<object> s_emptyList = new List<object>();
+        private static readonly List<object> s_emptyList = new List<object>();
 
         private readonly Dictionary<Type, List<object>> _components;
 
@@ -333,7 +333,7 @@ namespace GoRogue.Components
                 {
                     componentList = _components[typeOfT];
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     throw new ArgumentException($"No component of type {typeof(T).Name} has been added to the {nameof(ComponentCollection)}.");
                 }
@@ -348,7 +348,7 @@ namespace GoRogue.Components
             {
                 componentWithTag = _tagsToComponents[tag];
             }
-            catch (KeyNotFoundException e)
+            catch (KeyNotFoundException)
             {
                 throw new ArgumentException($"No component with the tag {tag} has been added to the {nameof(ComponentCollection)}.", nameof(tag));
             }
