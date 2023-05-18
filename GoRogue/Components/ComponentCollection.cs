@@ -47,7 +47,7 @@ namespace GoRogue.Components
     [DataContract]
     public class ComponentCollection : IComponentCollection
     {
-        private static List<object> s_emptyList = new List<object>();
+        private static readonly List<object> s_emptyList = new List<object>();
 
         private readonly Dictionary<Type, List<object>> _components;
 
