@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 None
 
+## [3.0.0-beta06] - 2023-05-22
+
+### Changed
+- `IParentAwareComponent` and `ParentAwareComponentBase` now record the parent as type `object`
+- `ParentAwareComponentBase<T>` no longer has type restrictions on type T; it can now accept any type as the parent.
+    - This makes integration into other component systems more feasible since `IObjectWithComponents` is no longer required
+
 ## [3.0.0-beta05] - 2023-05-17
 
 ### Added
