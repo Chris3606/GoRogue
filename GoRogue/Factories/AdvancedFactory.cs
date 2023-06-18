@@ -67,10 +67,17 @@ namespace GoRogue.Factories
         /// <returns>A new object.</returns>
         public TProduced Create(string factoryId, TBlueprintConfig blueprintConfig)
         {
-            if (!_blueprints.ContainsKey(factoryId))
+            IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> blueprint;
+            try
+            {
+                blueprint = _blueprints[factoryId];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ItemNotDefinedException(factoryId);
+            }
 
-            var obj = _blueprints[factoryId].Create(blueprintConfig);
+            var obj = blueprint.Create(blueprintConfig);
             if (obj is IFactoryObject factoryObj)
                 factoryObj.DefinitionId = factoryId;
 
@@ -92,10 +99,14 @@ namespace GoRogue.Factories
         /// <exception cref="ItemNotDefinedException">Thrown if the factory identifier does not exist.</exception>
         public IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> GetBlueprint(string factoryId)
         {
-            if (!_blueprints.ContainsKey(factoryId))
+            try
+            {
+                return _blueprints[factoryId];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ItemNotDefinedException(factoryId);
-
-            return _blueprints[factoryId];
+            }
         }
     }
 }

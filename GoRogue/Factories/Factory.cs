@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using JetBrains.Annotations;
@@ -59,10 +60,17 @@ namespace GoRogue.Factories
         /// <returns>A new object.</returns>
         public TProduced Create(string factoryId)
         {
-            if (!_blueprints.ContainsKey(factoryId))
+            IFactoryBlueprint<TProduced> blueprint;
+            try
+            {
+                blueprint = _blueprints[factoryId];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ItemNotDefinedException(factoryId);
+            }
 
-            var obj = _blueprints[factoryId].Create();
+            var obj = blueprint.Create();
             if (obj is IFactoryObject factoryObj)
                 factoryObj.DefinitionId = factoryId;
 
@@ -84,10 +92,14 @@ namespace GoRogue.Factories
         /// <exception cref="ItemNotDefinedException">Thrown if the factory identifier does not exist.</exception>
         public IFactoryBlueprint<TProduced> GetBlueprint(string factoryId)
         {
-            if (!_blueprints.ContainsKey(factoryId))
+            try
+            {
+                return _blueprints[factoryId];
+            }
+            catch (KeyNotFoundException)
+            {
                 throw new ItemNotDefinedException(factoryId);
-
-            return _blueprints[factoryId];
+            }
         }
     }
 }
