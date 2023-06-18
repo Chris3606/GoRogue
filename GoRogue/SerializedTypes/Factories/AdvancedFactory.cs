@@ -8,54 +8,55 @@ using JetBrains.Annotations;
 namespace GoRogue.SerializedTypes.Factories
 {
     /// <summary>
-    /// Serializable (pure-data) object representing a <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>
+    /// Serializable (pure-data) object representing a <see cref="AdvancedFactory{TBlueprintID, TBlueprintConfig, TProduced}"/>
     /// </summary>
     [PublicAPI]
     [DataContract]
-    public struct AdvancedFactorySerialized<TBlueprintConfig, TProduced>
+    public struct AdvancedFactorySerialized<TBlueprintID, TBlueprintConfig, TProduced>
+        where TBlueprintID : notnull
     {
         /// <summary>
         /// Blueprints in the factory.
         /// </summary>
-        [DataMember] public List<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> Blueprints;
+        [DataMember] public List<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> Blueprints;
 
         /// <summary>
-        /// Converts <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/> to
-        /// <see cref="AdvancedFactorySerialized{TBlueprintConfig, TProduced}"/>.
+        /// Converts <see cref="AdvancedFactory{TBlueprintID, TBlueprintConfig, TProduced}"/> to
+        /// <see cref="AdvancedFactorySerialized{TBlueprintID, TBlueprintConfig, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
-        public static implicit operator AdvancedFactorySerialized<TBlueprintConfig, TProduced>(
-            AdvancedFactory<TBlueprintConfig, TProduced> factory)
+        public static implicit operator AdvancedFactorySerialized<TBlueprintID, TBlueprintConfig, TProduced>(
+            AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced> factory)
             => FromAdvancedFactory(factory);
 
         /// <summary>
-        /// Converts <see cref="AdvancedFactorySerialized{TBlueprintConfig, TProduced}"/> to
-        /// <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>.
+        /// Converts <see cref="AdvancedFactorySerialized{TBlueprintID, TBlueprintConfig, TProduced}"/> to
+        /// <see cref="AdvancedFactory{TBlueprintID, TBlueprintConfig, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
-        public static implicit operator AdvancedFactory<TBlueprintConfig, TProduced>(
-            AdvancedFactorySerialized<TBlueprintConfig, TProduced> factory)
+        public static implicit operator AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced>(
+            AdvancedFactorySerialized<TBlueprintID, TBlueprintConfig, TProduced> factory)
             => factory.ToAdvancedFactory();
 
         /// <summary>
-        /// Converts <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/> to
-        /// <see cref="AdvancedFactorySerialized{TBlueprintConfig, TProduced}"/>.
+        /// Converts <see cref="AdvancedFactory{TBlueprintID, TBlueprintConfig, TProduced}"/> to
+        /// <see cref="AdvancedFactorySerialized{TBlueprintID, TBlueprintConfig, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
         [SuppressMessage("ReSharper", "CA1000")] // Static method is required to implement implicit ops
-        public static AdvancedFactorySerialized<TBlueprintConfig, TProduced> FromAdvancedFactory(
-            AdvancedFactory<TBlueprintConfig, TProduced> factory)
-            => new AdvancedFactorySerialized<TBlueprintConfig, TProduced> { Blueprints = factory.ToList() };
+        public static AdvancedFactorySerialized<TBlueprintID, TBlueprintConfig, TProduced> FromAdvancedFactory(
+            AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced> factory)
+            => new AdvancedFactorySerialized<TBlueprintID, TBlueprintConfig, TProduced> { Blueprints = factory.ToList() };
 
         /// <summary>
-        /// Converts <see cref="AdvancedFactorySerialized{TBlueprintConfig, TProduced}"/> to
-        /// <see cref="AdvancedFactory{TBlueprintConfig, TProduced}"/>.
+        /// Converts <see cref="AdvancedFactorySerialized{TBlueprintID, TBlueprintConfig, TProduced}"/> to
+        /// <see cref="AdvancedFactory{TBlueprintID, TBlueprintConfig, TProduced}"/>.
         /// </summary>
         /// <returns/>
-        public AdvancedFactory<TBlueprintConfig, TProduced> ToAdvancedFactory()
-            => new AdvancedFactory<TBlueprintConfig, TProduced>(Blueprints);
+        public AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced> ToAdvancedFactory()
+            => new AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced>(Blueprints);
     }
 }
