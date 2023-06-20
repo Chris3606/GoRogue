@@ -61,6 +61,16 @@ namespace GoRogue.Factories
             => _blueprints[blueprint.Id] = blueprint;
 
         /// <summary>
+        /// Adds the given blueprints to the factory.
+        /// </summary>
+        /// <param name="blueprints">The blueprints to add.</param>
+        public void AddRange(IEnumerable<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> blueprints)
+        {
+            foreach (var blueprint in blueprints)
+                Add(blueprint);
+        }
+
+        /// <summary>
         /// Creates a <typeparamref name="TProduced" /> object using the blueprint with the given factory id, and the given
         /// settings object.
         /// </summary>
