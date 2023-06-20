@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - The `Factories` namespace now contains `LambdaFactoryBlueprint` and `LambdaAdvancedFactoryBlueprint` which allow the user to create a blueprint by specifying a function to create the object as a constructor parameter, rather than having to create a class that implements `IFactoryBlueprint`/`IAdvancedFactoryBlueprint`.
+- Factories now have an `AddRange` function which allows you to add many blueprints at once.
 
 ### Changed
 - `Factories.Factory` and `Factories.AdvancedFactory` now take a type parameter which specifies the type of object used as the key for blueprints (rather than forcing string). This allows factories to use other keys for blueprints, like enum values.
