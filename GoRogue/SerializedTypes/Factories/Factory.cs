@@ -8,46 +8,47 @@ using JetBrains.Annotations;
 namespace GoRogue.SerializedTypes.Factories
 {
     /// <summary>
-    /// Serializable (pure-data) object representing a <see cref="Factory{TProduced}"/>
+    /// Serializable (pure-data) object representing a <see cref="Factory{TBlueprintID, TProduced}"/>
     /// </summary>
     [PublicAPI]
     [DataContract]
-    public struct FactorySerialized<TProduced>
+    public struct FactorySerialized<TBlueprintID, TProduced>
+        where TBlueprintID : notnull
     {
         /// <summary>
         /// Blueprints in the factory.
         /// </summary>
-        [DataMember] public List<IFactoryBlueprint<TProduced>> Blueprints;
+        [DataMember] public List<IFactoryBlueprint<TBlueprintID, TProduced>> Blueprints;
 
         /// <summary>
-        /// Converts <see cref="Factory{TProduced}"/> to <see cref="FactorySerialized{TProduced}"/>.
+        /// Converts <see cref="Factory{TBlueprintID, TProduced}"/> to <see cref="FactorySerialized{TBlueprintID, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
-        public static implicit operator FactorySerialized<TProduced>(Factory<TProduced> factory)
+        public static implicit operator FactorySerialized<TBlueprintID, TProduced>(Factory<TBlueprintID, TProduced> factory)
             => FromFactory(factory);
 
         /// <summary>
-        /// Converts <see cref="FactorySerialized{TProduced}"/> to <see cref="Factory{TProduced}"/>.
+        /// Converts <see cref="FactorySerialized{TBlueprintID, TProduced}"/> to <see cref="Factory{TBlueprintID, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
-        public static implicit operator Factory<TProduced>(FactorySerialized<TProduced> factory)
+        public static implicit operator Factory<TBlueprintID, TProduced>(FactorySerialized<TBlueprintID, TProduced> factory)
             => factory.ToFactory();
 
         /// <summary>
-        /// Converts <see cref="Factory{TProduced}"/> to <see cref="FactorySerialized{TProduced}"/>.
+        /// Converts <see cref="Factory{TBlueprintID, TProduced}"/> to <see cref="FactorySerialized{TBlueprintID, TProduced}"/>.
         /// </summary>
         /// <param name="factory"/>
         /// <returns/>
         [SuppressMessage("ReSharper", "CA1000")] // Static method is required to implement implicit ops
-        public static FactorySerialized<TProduced> FromFactory(Factory<TProduced> factory)
-            => new FactorySerialized<TProduced> { Blueprints = factory.ToList() };
+        public static FactorySerialized<TBlueprintID, TProduced> FromFactory(Factory<TBlueprintID, TProduced> factory)
+            => new FactorySerialized<TBlueprintID, TProduced> { Blueprints = factory.ToList() };
 
         /// <summary>
-        /// Converts <see cref="FactorySerialized{TProduced}"/> to <see cref="Factory{TProduced}"/>.
+        /// Converts <see cref="FactorySerialized{TBlueprintID, TProduced}"/> to <see cref="Factory{TBlueprintID, TProduced}"/>.
         /// </summary>
         /// <returns/>
-        public Factory<TProduced> ToFactory() => new Factory<TProduced>(Blueprints);
+        public Factory<TBlueprintID, TProduced> ToFactory() => new Factory<TBlueprintID, TProduced>(Blueprints);
     }
 }

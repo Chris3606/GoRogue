@@ -10,7 +10,7 @@ namespace GoRogue.UnitTests.Mocks
     }
 
     [Serializable]
-    internal class FactoryItemBlueprint : IFactoryBlueprint<FactoryItem>
+    internal class FactoryItemBlueprint : IFactoryBlueprint<string, FactoryItem>
     {
         public string Id { get; }
 
@@ -24,7 +24,7 @@ namespace GoRogue.UnitTests.Mocks
     }
 
     [Serializable]
-    internal class AdvancedFactoryItemBlueprint : IAdvancedFactoryBlueprint<int, FactoryItem>
+    internal class AdvancedFactoryItemBlueprint : IAdvancedFactoryBlueprint<string, int, FactoryItem>
     {
         public string Id { get; }
 
