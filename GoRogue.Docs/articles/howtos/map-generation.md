@@ -10,17 +10,8 @@ Getting started with GoRogue map generation requires only a few lines of code.  
 
 ## Generating the Map
 For example, to generate a basic roguelike dungeon with rectangular rooms connected by a maze, you would write the following code:
-```CSharp
-// The map will have a width of 60 and height of 40
-var generator = new Generator(60, 40);
 
-// Add the steps to generate a map using the DungeonMazeMap built-in algorithm,
-// and generate the map.
-generator.ConfigAndGenerateSafe(gen =>
-{
-    gen.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps());
-});
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#GeneratingMap)]
 
 The functions in `DefaultAlgorithms`, including `DungeonMazeMapSteps()`, have a number of optional arguments that allow you to control the parameters of the map generated.  The API documentation for those functions will explain exactly how the algorithms generate their maps, and what each parameter does.  You can substitute the call to `DungeonMazeMapSteps` above for any of the functions in `DefaultAlgorithms` to generate that type of map instead.
 
@@ -28,16 +19,8 @@ The functions in `DefaultAlgorithms`, including `DungeonMazeMapSteps()`, have a 
 After the map has been generated, the data that describes the map is stored within the `generator.Context` field.  This field is effectively a collection of components that each have data pertaining to the map.  The components can vary widely based on the generation algorithm used, but all built-in generation algorithms leave, at minimum, a component of `ISettableGridView<bool>` on the context with a tag of "WallFloor", where a value of `true` for a location describes a floor (walkable) tile of the map, and a value of `false` describes a wall (non-walkable) tile of the map.
 
 So, after `generator.ConfigAndGenerateSafe()` above, we can access the simplest data of the map like this:
-```CSharp
-var wallFloorValues = generator.Context.GetFirst<ISettableMapView<bool>>("WallFloor");
-foreach (var pos in wallFloorValues.Positions())
-{
-    if (wallFloorValues[pos])
-        Console.WriteLine($"{pos} is a floor.");
-    else
-        Console.WriteLine($"{pos} is a wall.");
-}
-```
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#AccessingMap)]
 
 Other data about the map, such as the locations of doors, rectangles representing rooms generated, and more can be found in other components on the context.  The components present will depend on the map generation algorithm, so refer to the `DefaultAlgorithms` function documentation, which will list the components that will be placed on the context and the data they store.
 
@@ -70,42 +53,7 @@ GoRogue provides each element of the default map generation algorithms as an ind
 
 Most of the functions of a `Generator`, including `AddStep`, return the `this` instance, so you can chain calls of them together.  This makes it syntactically convenient to add many steps to a generator.  The following example creates a simple map generation algorithm that simply generates rooms, then draws tunnels between rooms closest to each other to connect them.
 
-```CSharp
-const int mapWidth = 60;
-const int mapHeight = 40;
-
-var generator = new Generator(mapWidth, mapHeight);
-
-// Specify initial configuration for steps, and execute steps added.  If any of the steps
-// raise RegenerateMapException, the context and steps will be removed, then regenerated
-// according to the specified configuration, and generation will be re-run.
-generator.ConfigAndGenerateSafe(gen =>
-{
-    gen.AddStep
-        (
-            // Sets custom values for some parameters, leaves others at their default
-            new RoomsGeneration()
-            {
-                MinRooms = 2,
-                MaxRooms = 8,
-                RoomMinSize = 3,
-                RoomMaxSize = 9
-            }
-        )
-        // According to the documentation, RoomsGenerationStep records the rooms it creates in an
-        // ItemList<Room> component, with the tag "Rooms" (unless changed via constructor
-        // parameter).  However, the area connection algorithm we want to run operates on an
-        // ItemList<Area>, with the tag "Areas", by default.  So, we have a "translation step" that
-        // creates areas from rectangles, and adds them to a new component.  We specify the tags of
-        // components to input from and output to, to match what the previous generation step
-        // creates the the next one expects
-        .AddStep(new RectanglesToAreas("Rooms", "Areas"))
-        // Connects areas together.  This component by default uses the component with the tag
-        // "Areas" for areas to connect, so since we haven't changed it,  it will connect the areas
-        // representing our rooms.
-        .AddStep(new ClosestMapAreaConnection());
-});
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#UsingGenerationSteps)]
 
 ## Tags for Components
 The steps that are built-in to GoRogue can all operate on components with a specific tag.  They'll have reasonable defaults, but allow you to customize them via constructor parameter (as we did with `RectanglesToAreas` in the above example).  In most cases, `null` can be specified as the tag to indicate that any object of the correct type should qualify (although doing this is not recommended as it can make issues difficult to debug).
@@ -133,115 +81,60 @@ If an improper value is given to a field, as soon as `generator.Generate` is cal
 >Similar to the component management exceptions, the exception constructor allowing these exception messages is exposed to the user, and can be very useful when creating your own generation steps.
 
 ## Translation Steps
-Particularly when using steps in customized arrangements, or creating your own steps, it can be necessary to "translate" data from one form to another to allow steps to operate with each other.  For example, you might want to join two lists of items together, or translate `Rectangles` to `Areas` like we did in the example above.  For these situations, a few different "translation steps" are provided in the `GoRogue.MapGeneration.Steps.Translation` namespace.  These are `GenerationSteps` whose sole purpose is to translate data in this way.
+Particularly when using steps in customized arrangements, or creating your own steps, it can be necessary to "translate" data from one form to another in order to allow steps to operate with each other.  For example, you might want to join two lists of items together, or translate `Rectangles` to `Areas` like we did in the example above.  For these situations, a few different "translation steps" are provided in the `GoRogue.MapGeneration.Steps.Translation` namespace.  These are `GenerationSteps` whose sole purpose is to translate data in this way.
 
 In the example above, we use the `RectanglesToAreas` translation step to take the `ItemList<Rectangle>` component created by the `RoomsGeneration` step, and translate it to an `ItemList<Area>` that the `ClosestMapAreaConnection` step can understand.
 
 # Creating Custom Generation Algorithms
-Creating completely custom map generation algorithms involves simply implementing one or more `GenerationSteps` that represent the steps to take to generate the map.  This involves creating a class that inherits from `GenerationStep` and implements its required method `OnPerform` to actually perform the generation step and add its results to the context.  However, there are a number of paradigms that are common when doing this, and as such there are a number of features and helper methods in `GenerationContext` and `GenerationStep` to help with this.
+Creating completely custom map generation algorithms involves simply implementing one or more `GenerationSteps` that represent the steps to take to generate the map.  This involves creating a class that inherits from `GenerationStep` and implements its required method `OnPerform` to actually perform the generation step and add its results to the context.  There are a number of paradigms that are common when doing this, so there are a number of features and helper methods in `GenerationContext` and `GenerationStep` that you may find helpful.  These are discussed below.
 
 ## Requiring Components to be Present on the Generation Context
 When creating custom generation steps, it is common to require certain data as input.  For example, a generation step that connects areas of a map to each other might need to take as input a list of areas to connect and/or a grid view representing tiles as wall/floor.  In GoRogue's map generation framework, this requirement is represented by requiring the generation context to have a component that contains the data a step needs when it is called upon to perform its work.
 
-This approach could lead to a lot of repetitive code in generation steps to the effect of `if(!context.Contains(typeof(Type1), typeof(Type2)) throw Exception("message")` in generation steps, and as well can lead to not-helpful exceptions (`NullReferenceExcpeption`, potentially) if the checks are forgotten.  To alleviate this, `GenerationStep` implements functionality that allows you to express this pattern of requiring components easily.  You simply pass the types (and, optionally, tags) of the components that are required to the constructor, and it will check for them automatically when `GenerationStep.Perform` is called.  If a component is missing, a detailed exception showing which component is missing is raised.  Since all of this happens before the virtual method `GenerationStep.OnPerform` (where you implement the step) is called, this method can safely assume that the components it wants are present.
+This approach could lead to a lot of repetitive code in generation steps to the effect of `if(!context.Contains(typeof(Type1), typeof(Type2)) throw Exception("message")` in generation steps, and as well can lead to not-helpful exceptions (`NullReferenceExcpeption`, potentially) if the checks are forgotten.  To alleviate this, `GenerationStep` implements functionality that allows you to express this pattern of requiring components easily.  You simply pass the types (and, optionally, tags) of the components that are required to the constructor, and it will check for them automatically when `GenerationStep.Perform` is called.  If a component is missing, a detailed exception showing which component is missing is raised.  Since all of this happens before the virtual method `GenerationStep.OnPerform` (where you implement the step) is called, your code can safely assume that the components it wants are present.
 
 The following is an example generation step that utilizes this functionality:
-```CSharp
-public class MyGenerationStep : GenerationStep
-{
-    public MyGenerationStep()
-        // This generation step is requiring the context to have a component of type
-        // RequiredComponentType1, that has the tag "Component1Tag".  Additionally,
-        // it is required to have a component of type "RequiredComponentType2", with no
-        // particular tag (any object of that type, with or without a tag, will work)
-        : base((typeof(RequiredComponentType1), "Component1Tag"), (typeof(RequiredComponent2), null) { }
 
-    public IEnumerator<object?> OnPerform(GenerationContext context)
-    {
-        // Both of these functions are guaranteed to return a component successfully,
-        // because the components were specified in the constructor as required
-        var requiredComponent1 = context.GetFirst<RequiredComponentType1>("Component1Tag");
-        var requiredComponent2 = context.GetFirst<RequiredComponentType2>();
-
-        // Do generation
-    }
-}
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepRequiringComponents)]
 
 ## Creating New Components Only if Not Present
-Some generation steps might want to use an existing component on the context, if an appropriate one is present, but if it isn't there, then add a new one.  For example, an algorithm that creates and places rooms on a map might require a map view it can set walkable tiles to, and a list of rooms to add the rooms it generates to.  However, instead of outright requiring those components to be present, since it doesn't actually _need_ any of the data for them for inputs (it's just for storing results), it's more convenient if the algorithm simply creates and adds those components if they're not already there.  Since this again leads to repetitive code, the helper method `GenerationContext.GetFirstOrNew<T>` exists for this.  It is exactly like `GenerationContext.GetFirst<T>`, except it also takes a function that returns a new object of the proper type, and if it can't find the component it calls the function, and adds the component it returns to the context, then returns that component.
+Some generation steps might want to use an existing component on the context, if an appropriate one is present, but if it isn't there, then add a new one.  For example, an algorithm that creates and places rooms on a map might require a map view it can set walkable tiles to, and a list of rooms to add the rooms it generates to.  However, instead of outright requiring those components to be present, since it doesn't actually _need_ any of the data for them for inputs (it's just for storing results), it's more convenient if the algorithm simply creates and adds those components if they're not already there.  Since this again leads to repetitive code, the helper method `GenerationContext.GetFirstOrNew<T>` exists for this.  It is exactly like `GenerationContext.GetFirst<T>`, except it also takes a function that returns a new object of the proper type, and if it can't find the component it calls the function, and adds the component it returns to the context, then returns the new component.
 
 The following example uses this functionality to "require" two components:
-```CSharp
-public class MyGenerationStep : GenerationStep
-{
-    public IEnumerator<object?> OnPerform(GenerationContext context)
-    {
-        // Get an ItemList<Rectangle> component with the tag "Rooms" if it exists;
-        // otherwise create a new one, add it, and return that
-        var roomsList = context.GetFirstOrNew(() => new ItemList<Rectangle>(), "Rooms");
-        // Get an ISettableMapView<bool> component with the tag "WallFloor" if it
-        // exists; otherwise create a new ArrayView of the appropriate size
-        // (which is a subclass of ISettableMapView), add it, and return that
-        var wallFloor = context.GetFirstOrNew<ISettableMapView<bool>>(
-            () => new ArrayView<bool>(context.Width, context.Height),
-            "WallFloor");
 
-        // Do generation
-    }
-}
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepUseOrAddComponent)]
 
 ## Invalidating a Map
-If a generation step encounters an invalid state that is not due to configuration error but rather due to incompatible inputs (eg, rare RNG, etc), ideally the map generation step would simply fix the issue, or otherwise account for that state.  In some cases, however, that is impossible, and one alternative (provided the cause of the issue is known to be RNG-related and it does not occur with a high probability), is to simply throw away the map and regenerate it.  GoRogue's map generation system does have built-in functionality to enable this.
+If a generation step encounters an invalid state that is not due to configuration error but rather due to rare corner cases ("bad rng", etc), ideally the map generation step would simply fix the issue, or otherwise account for that state.  In some cases, however, that is impossible, and one alternative (provided the cause of the issue is known to be RNG-related and it does not occur with a high probability), is to simply throw away the map and regenerate it.  GoRogue's map generation system does have built-in functionality to enable this.
 
-Generation steps may choose to throw a `RegenerateMapException` from their `OnPerform` function when they encounter states that require the current map to be discarded.  The `Generator.ConfigAndGenerateSafe` function (as well as the `Generator.ConfigAndGetStageEnumeratorSafe` function discussed below) automatically detect this exception, and when it occurs, it performs the following:
-1. Remove all context components and steps
-2. Re-perform the specified configuration function in order to add new steps.
+Generation steps may choose to throw a `RegenerateMapException` from their `OnPerform` function when they encounter states that require the current map to be discarded.  The `Generator.ConfigAndGenerateSafe` function (as well as the `Generator.ConfigAndGetStageEnumeratorSafe` function discussed below) automatically detects this exception, and when it occurs, it performs the following:
+1. Removes all context components and steps
+2. Re-performs the specified configuration function in order to add new steps.
 3. Calls `Generator.Generate` again to re-generate the map.
 
 Those functions also accept a `maxAttempts` parameter that indicates a maximum number of attempts at generating the map before it throws an exception back to the caller.  This defaults to infinity, however, since default generation steps should obviously not cause infinite loops or issues here.
 
 ## Breaking OnPerform into Stages
-The `GenerationStep.OnPerform` method, where you implement the logic for you generation step, allows you to break the step up into one or more "stages", which are points at which generation is pausable so you can review information in the context.  This is implemented via the return type of this method, which is `IEnumerator<object?>`.  This allows you to utilize the [yield functionality in C#](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield) to indicate points where the algorithm is "pausable", which can be extremely useful for debugging or creating animations composed of map generation steps.
+The `GenerationStep.OnPerform` method, where you implement the logic for you generation step, allows you to break the step up into one or more "stages", which are points at which generation is pausable so you can review information in the context.  This is implemented via the return type of this method, which is `IEnumerator<object?>`.  This allows you to utilize the [yield functionality in C#](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/yield) to indicate points where the algorithm can "pause", which can be extremely useful for debugging or creating animations composed of map generation steps.
 
-For example, if you had an algorithm that places rectangular rooms in a map, you might want to use a `yield return` statement after each room is placed.  An `OnPerform` implementation that does this might look something like this:
-```CSharp
-public IEnumerator<object?> OnPerform(GenerationContext context)
-{
-    // Get required components
-    var roomsList = /* Get proper context component */;
-    var wallFloor = /* Get proper context component */;
+For example, if you had an algorithm that places rectangular rooms in a map, you might want to use a `yield return` statement after each room is placed.  A generation step with an `OnPerform` implementation that does this might look something like this:
 
-    for (int i = 0; i < numRooms; i++)
-    {
-        var roomInfo = /* Generate size/position of room */
-
-        // Modify context components to add the room
-
-        // Use "yield" to break the algorithm up in between generated rooms
-        yield return null;
-    }
-}
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepPauseViaEnumerable)]
 
 Note that the typical `Generator.ConfigAndGenerateSafe()` method used to execute steps of map generation is written to execute all stages for all generation steps automatically, so the stages will not be evident.  If you need to execute your map generation in stages, there is additional support provided (see next section).
 
 ### Completing Generation Algorithms Stage-by-Stage
 To execute a set of generation steps on a `Generator` stage-by-stage, the `Generator.ConfigAndGetStageEnumeratorSafe()` is provided.  It returns an `IEnumerator` that you can iterate through to complete the steps one at a time:
 
-```CSharp
-var iterator = myGenerator.ConfigAndGetStageEnumeratorSafe(...);
-while (iterator.MoveNext()) { /* Stage complete */ }
-```
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#GenerateMapStageByStage)]
 
-There also exists a `Generator.GetStageEnumerator` function that does the same thing, except assumes steps are already added to the generator and does not handle `RegenerateMapException`.
+There also exists a `Generator.GetStageEnumerator` function that does the same thing, except assumes steps are already added to the generator and does not handle `RegenerateMapException` (similar to `Generator.Generate`).
 
-It is worthy of note, however, that the above example is likely an over-simplification of logic you might write for typical use cases.  The stage functionality is very useful, but it does not guarantee that each context component has changed at each stage (or even that any components have changed in a stage, as a blank `OnPerform` function still has at least one stage).  As such, you may need to iterate through multiple stages until you see a change you wish to react to.  The `GoRogue.Debugger` project has a [class located here](https://github.com/Chris3606/GoRogue/blob/develop-3.0/GoRogue.Debugger/Routines/MapGenDemoRoutine.cs#L67) that does exactly this and provides a good example of how the functionality can be used.
+It is worthy of note, however, that the above example is likely an over-simplification of logic you might write for typical use cases.  The stage functionality is very useful, but it does not guarantee that each context component has changed at each stage (or even that any components have changed in a stage, as a blank `OnPerform` function still has at least one stage).  As such, you may need to iterate through multiple stages until you see a change you wish to react to.  The `GoRogue.Debugger` project has a [class located here](https://github.com/Chris3606/GoRogue/blob/master/GoRogue.Debugger/Routines/MapGenDemoRoutine.cs) that does exactly this and provides a good example of how this functionality can be used.
 
 ## Lists of Items
 Basic grid views might form relatively common components for generation contexts, but it is also common to want to record a list of items.  For example, a generation step that creates/places rooms in a map might want to add a list of `Rectangles` representing the rooms that it creates.  A simple `List<Rectangle>` component would suffice, but it can also be useful to record which generation step added which item in the list.  For this, the framework provides generation step names and the [ItemList<T>](xref:GoRogue.MapGeneration.ContextComponents.ItemList`1) class.
 
-Each generation step has a `Name` field.  If not given a value via the constructor, it defaults to the subclass's name.  For example, in the case of a class `public class MyGenerationStep : GenerationStep`, if a name was not given to the `base` constructor, the step's `Name` field would be initialized to `"MyGenerationStep"`.  Most built-in generation steps will optionally take a `Name` value as a parameter and simply pass it along to the base class.  Although this is not required, it can be helpful as it allows a user of the step to specify a custom name for it.
+Each generation step has a `Name` field.  If not given a value via the constructor, it defaults to the class's name.  For example, in the case of a class `public class MyGenerationStep : GenerationStep`, if a name was not given to the `base` constructor, the step's `Name` field would be initialized to `"MyGenerationStep"`.  Most built-in generation steps will optionally take a `Name` value as a parameter and simply pass it along to the base class.  Although this is not required, it can be helpful as it allows a user of the step to specify a custom name for it.
 
 This `Name` field is used by `ItemList`.  An `ItemList<T>` is basically just an augmented `List<T>`, that takes the `Name` of the generation step adding items to it as a parameter.  It keeps a normal list of items but also keeps track of which step added which item, and allows you to retrieve this information later.

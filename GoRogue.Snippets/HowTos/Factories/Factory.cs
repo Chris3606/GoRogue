@@ -1,9 +1,9 @@
 ﻿using GoRogue.Factories;
 
-namespace GoRogue.Snippets.HowTos;
+namespace GoRogue.Snippets.HowTos.Factories;
 
-#region FactoryBasicExample
-public static class FactoryBasicExample
+#region BasicExample
+public static class BasicExample
 {
     // Arbitrary class we want to create instances of.  Implementing the IFactoryObject
     // interface is optional, however when we do the DefinitionID field will automatically
@@ -34,8 +34,8 @@ public static class FactoryBasicExample
 }
 #endregion
 
-#region FactorySubclassExample
-public static class FactorySubclassExample
+#region SubclassExample
+public static class SubclassExample
 {
     record Terrain(int Glyph, bool IsWalkable, bool IsTransparent) : IFactoryObject<string>
     {
@@ -64,9 +64,9 @@ public static class FactorySubclassExample
 }
 #endregion
 
-#region FactoryCustomBlueprintExample
+#region CustomBlueprintExample
 
-public static class FactoryCustomBlueprintExample
+public static class CustomBlueprintExample
 {
     record Terrain(int Glyph, bool IsWalkable, bool IsTransparent) : IFactoryObject<string>
     {

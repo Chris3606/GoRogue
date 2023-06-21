@@ -1,10 +1,10 @@
 ﻿using GoRogue.Factories;
 using SadRogue.Primitives;
 
-namespace GoRogue.Snippets.HowTos;
+namespace GoRogue.Snippets.HowTos.Factories;
 
-#region AdvancedFactoryBasicExample
-public static class AdvancedFactoryBasicExample
+#region AdvancedFactoryExample
+public static class AdvancedFactoryExample
 {
     record Terrain(Point Position, int Glyph, bool IsWalkable, bool IsTransparent)
         : IFactoryObject<string>

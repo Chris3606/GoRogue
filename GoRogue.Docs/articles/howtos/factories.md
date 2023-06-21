@@ -11,22 +11,22 @@ The GoRogue factory implementations consists of two components; the factory clas
 # Basic Usage
 The simplest way to use the factory system, is to create a `Factory` which consists of `LambdaFactoryBlueprint` instances, which allow you to specify the creation function as a `Func<TProduced>`:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories.cs#FactoryBasicExample)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories/Factory.cs#BasicExample)]
 
 You could also create a subclass of `Factory` and have the creation functions be (static or non-static) methods on that subclass, if you prefer:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories.cs#FactorySubclassExample)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories/Factory.cs#SubclassExample)]
 
 This may be cleaner than anonymous functions if your creation methods are more complex and entail a fair a bit of code.
 
 `LambdaFactoryBlueprint` instances work best as your blueprint type when your blueprints have no state or wrapper code associated with them.  If you do have some state, have more advanced customization or parameterization you wish to do, or simply prefer creating subclasses for each item type, the blueprint types need only implement `IFactoryBlueprint`; so you may create your own subclass:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories.cs#FactoryCustomBlueprintExample)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories/Factory.cs#CustomBlueprintExample)]
 
 In some cases, you may wish to pass some parameters and/or state to the blueprint when the `Create()` method is called, rather than when the blueprint is created.  For this, you should use `AdvancedFactory` instead of `Factory`.  `AdvancedFactory` is identical to `Factory` except that it lets you specify an additional type parameter which is the type of a parameter you pass to the factory's `Create` function.  This parameter is, in turn, passed to the blueprint.
 
 Below is an example which aims to pass a Point to the `Create()` function which specifies the object's initial position:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/AdvancedFactories.cs#AdvancedFactoryBasicExample)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/Factories/AdvancedFactory.cs#AdvancedFactoryExample)]
 
 You may also implement an `AdvancedFactory` subclass if you wish, or create custom blueprints by implementing the `IAdvancedFactoryBlueprint` interface yourself, just like the above examples which use `Factory` do.
