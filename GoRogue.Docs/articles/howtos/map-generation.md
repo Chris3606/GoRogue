@@ -119,7 +119,7 @@ Each generation step will have in its class API documentation a list of componen
 
 If a step cannot find one of its required components, a `MissingContextComponentException` is raised, with a detailed exception message that tells you exactly what step required what component that it could not find.  This exception will be raised as soon as `generator.Generate()` is called.  The built-in steps also avoid very tricky scenarios like components that are "conditionally" required -- a component is either required or it is not.  These features should make debugging algorithms composed of these steps much easier.
 
->[!NOTE]
+>[!TIP]
 >The framework allowing for the creation of these messages is exposed to the user, and can be very useful when creating your own generation steps.  This will be covered in a later section.
 
 ## Configuration of Steps
@@ -129,7 +129,7 @@ In the example above, we use C#'s convenient initializer list syntax to pass cus
 
 If an improper value is given to a field, as soon as `generator.Generate` is called an `InvalidConfigurationException` will be raised.  This exception will have a detailed exception messages that specifies exactly what value of what generation step was invalid, and what the restrictions on that value are.
 
->[!NOTE]
+>[!TIP]
 >Similar to the component management exceptions, the exception constructor allowing these exception messages is exposed to the user, and can be very useful when creating your own generation steps.
 
 ## Translation Steps
