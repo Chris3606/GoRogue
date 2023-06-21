@@ -12,8 +12,9 @@ namespace GoRogue.MapGeneration.Steps
     /// <summary>
     /// Carves out non-overlapping rooms in a map.  Rooms generated will not overlap with themselves, or any existing open
     /// areas in the map.
-    /// Context Components Required:
-    /// - None
+    /// 
+    /// Context Components Required: None
+    /// 
     /// Context Components Added/Used:
     /// <list type="table">
     ///     <listheader>
@@ -31,16 +32,16 @@ namespace GoRogue.MapGeneration.Steps
     ///         <description>"WallFloor"</description>
     ///     </item>
     /// </list>
+    /// 
     /// In the case of both components, existing components are used if they are present; new ones are added if not.
     /// </summary>
     /// <remarks>
     /// This generation step generates rooms, and adds the rooms generated to the
     /// <see cref="ContextComponents.ItemList{Rectangle}" /> context component with the given tag
     /// in the <see cref="GenerationContext" />.  If such a component does not exist, a new one is created.  It also sets the
-    /// interior positions to true in the map context's
-    /// map view with the given tag.  If the GenerationContext has an existing map view context component, that component is
-    /// used.  If not, an <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" />
-    /// where T is bool is created and added to the map context, whose width/height match
+    /// interior positions to true in the map context's grid view with the given tag.  If the GenerationContext has an existing grid
+    /// view context component, that component is used.  If not, an <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" />
+    /// is created and added to the map context, whose width/height match
     /// <see cref="GenerationContext.Width" />/<see cref="GenerationContext.Height" />.
     /// </remarks>
     [PublicAPI]

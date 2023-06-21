@@ -16,7 +16,7 @@ namespace GoRogue.Factories
         TBlueprintID Id { get; }
 
         /// <summary>
-        /// Creates a <typeparamref name="TProduced" /> object.
+        /// Creates an object of the type specified by TProduced.
         /// </summary>
         /// <returns>The created object.</returns>
         TProduced Create();
