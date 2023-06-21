@@ -19,7 +19,7 @@ namespace GoRogue.Factories
     public class LambdaAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> : IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>
     {
         /// <inheritdoc />
-        public TBlueprintID Id { get; }
+        public TBlueprintID ID { get; }
 
         private readonly Func<TBlueprintConfig, TProduced> _factoryMethod;
 
@@ -30,7 +30,7 @@ namespace GoRogue.Factories
         /// <param name="factoryMethod">The method to call when <see cref="Create"/> is used in order to get the object to return.</param>
         public LambdaAdvancedFactoryBlueprint(TBlueprintID id, Func<TBlueprintConfig, TProduced> factoryMethod)
         {
-            Id = id;
+            ID = id;
             _factoryMethod = factoryMethod;
         }
 

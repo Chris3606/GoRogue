@@ -58,7 +58,7 @@ namespace GoRogue.Factories
         /// </summary>
         /// <param name="blueprint">The blueprint to add.</param>
         public void Add(IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> blueprint)
-            => _blueprints[blueprint.Id] = blueprint;
+            => _blueprints[blueprint.ID] = blueprint;
 
         /// <summary>
         /// Adds the given blueprints to the factory.
@@ -74,24 +74,24 @@ namespace GoRogue.Factories
         /// Creates a <typeparamref name="TProduced" /> object using the blueprint with the given factory id, and the given
         /// settings object.
         /// </summary>
-        /// <param name="factoryId">The factory id of a blueprint.</param>
+        /// <param name="blueprintID">The factory id of a blueprint.</param>
         /// <param name="blueprintConfig">A settings object passed to the Create function of the blueprint.</param>
         /// <returns>A new object.</returns>
-        public TProduced Create(TBlueprintID factoryId, TBlueprintConfig blueprintConfig)
+        public TProduced Create(TBlueprintID blueprintID, TBlueprintConfig blueprintConfig)
         {
             IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> blueprint;
             try
             {
-                blueprint = _blueprints[factoryId];
+                blueprint = _blueprints[blueprintID];
             }
             catch (KeyNotFoundException)
             {
-                throw new ItemNotDefinedException<TBlueprintID>(factoryId);
+                throw new ItemNotDefinedException<TBlueprintID>(blueprintID);
             }
 
             var obj = blueprint.Create(blueprintConfig);
             if (obj is IFactoryObject<TBlueprintID> factoryObj)
-                factoryObj.DefinitionId = factoryId;
+                factoryObj.DefinitionID = blueprintID;
 
             return obj;
         }
@@ -99,25 +99,25 @@ namespace GoRogue.Factories
         /// <summary>
         /// Checks if a blueprint exists.
         /// </summary>
-        /// <param name="factoryId">The blueprint to check for.</param>
-        /// <returns>Returns true when the specified <paramref name="factoryId" /> exists; otherwise false.</returns>
-        public bool BlueprintExists(TBlueprintID factoryId) => _blueprints.ContainsKey(factoryId);
+        /// <param name="blueprintID">The blueprint to check for.</param>
+        /// <returns>Returns true when the specified <paramref name="blueprintID" /> exists; otherwise false.</returns>
+        public bool BlueprintExists(TBlueprintID blueprintID) => _blueprints.ContainsKey(blueprintID);
 
         /// <summary>
         /// Gets a blueprint by identifier.
         /// </summary>
-        /// <param name="factoryId">The blueprint identifier to get.</param>
+        /// <param name="blueprintID">The blueprint identifier to get.</param>
         /// <returns>The blueprint of the object.</returns>
         /// <exception cref="ItemNotDefinedException{TBlueprintID}">Thrown if the factory identifier does not exist.</exception>
-        public IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> GetBlueprint(TBlueprintID factoryId)
+        public IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> GetBlueprint(TBlueprintID blueprintID)
         {
             try
             {
-                return _blueprints[factoryId];
+                return _blueprints[blueprintID];
             }
             catch (KeyNotFoundException)
             {
-                throw new ItemNotDefinedException<TBlueprintID>(factoryId);
+                throw new ItemNotDefinedException<TBlueprintID>(blueprintID);
             }
         }
     }
