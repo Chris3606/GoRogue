@@ -13,18 +13,19 @@ For example, to generate a basic roguelike dungeon with rectangular rooms connec
 ```CSharp
 // The map will have a width of 60 and height of 40
 var generator = new Generator(60, 40);
+
 // Add the steps to generate a map using the DungeonMazeMap built-in algorithm,
 // and generate the map.
 generator.ConfigAndGenerateSafe(gen =>
 {
-    gen.AddSteps(DefaultAlgorithms.DungeonMazeMap());
+    gen.AddSteps(DefaultAlgorithms.DungeonMazeMapSteps());
 });
 ```
 
-The functions in `DefaultAlgorithms`, including `DungeonMazeMap()`, have a number of optional arguments that allow you to control the parameters of the map generated.  The API documentation for those functions will explain exactly how the algorithms generate their maps, and what each parameter does.  You can substitute the call to `DungeonMazeMap` above for any of the functions in `DefaultAlgorithms` to generate that type of map instead.
+The functions in `DefaultAlgorithms`, including `DungeonMazeMapSteps()`, have a number of optional arguments that allow you to control the parameters of the map generated.  The API documentation for those functions will explain exactly how the algorithms generate their maps, and what each parameter does.  You can substitute the call to `DungeonMazeMapSteps` above for any of the functions in `DefaultAlgorithms` to generate that type of map instead.
 
 ## Accessing the Map
-After the map has been generated, the data that describes the map is stored within the `generator.Context` field.  This field is effectively a collection of components that each have data pertaining to the map.  The components can vary widely based on the generation algorithm used, but all built-in generation algorithms leave a component of `ISettableMapView<bool>` on the context with a tag of "WallFloor", where a value of `true` for a location describes a floor (walkable) tile of the map, and a value of `false` describes a wall (non-walkable) tile of the map.
+After the map has been generated, the data that describes the map is stored within the `generator.Context` field.  This field is effectively a collection of components that each have data pertaining to the map.  The components can vary widely based on the generation algorithm used, but all built-in generation algorithms leave, at minimum, a component of `ISettableGridView<bool>` on the context with a tag of "WallFloor", where a value of `true` for a location describes a floor (walkable) tile of the map, and a value of `false` describes a wall (non-walkable) tile of the map.
 
 So, after `generator.ConfigAndGenerateSafe()` above, we can access the simplest data of the map like this:
 ```CSharp
@@ -62,7 +63,7 @@ The framework consists first of a [GenerationContext](xref:GoRogue.MapGeneration
 A [Generator](xref:GoRogue.MapGeneration.Generator) is the final component, and is simply a wrapper around a generation context and a set of steps to apply to that context.  You create the generator (which in turn creates a context) and add one or more generation steps to that generator.  When you call `generator.Generate()`, it simply loops through all the generation steps that have been added to it (in the order they were added), and performs them.  Normally, you will call `generator.ConfigAndGenerateSafe(...)` instead of calling `Generate` directly.  It is simply a wrapper that adds one or more steps and/or components, and then calls `Generate`, adding in some exception handling to properly deal with `RegenerateMapException`.
 
 # Default Algorithms
-Usage of the default algorithms is nearly completely covered in the [getting-started](#getting-started) section.  You create a `Generator`, then configure it via a call to `ConfigAndGenerateSafe`.  You pass generation steps to the generator inside of the configuration function by first calling one of the functions in `DefaultAlgorithms`, which produces a set of generation steps, configured with the values passed to the function.  You then pass the result to `Generator.AddSteps`.  Then, `Generator.Generate` is called automatically to generate the map data.  If one of the map generation steps indicates the map ended in an invalid state via a `RegenerateMapException`, the map data is cleaned, the steps re-created as per the configuration function, and generation is performed again.  Each function in `DefaultAlgorithms` documents the procedure used to create the map and what each parameter controls.
+Usage of the default algorithms is nearly completely covered in the [getting-started](#getting-started) section.  You create a `Generator`, then configure it with generation steps and generate the map via a call to `ConfigAndGenerateSafe`.  You pass generation steps to the generator inside of the configuration function by first calling one of the functions in `DefaultAlgorithms`, which produces a set of generation steps, configured with the values passed to the function.  You then pass the result to `Generator.AddSteps`.  Then, `Generator.Generate` is called automatically to generate the map data.  If one of the map generation steps indicates the map ended in an invalid state via a `RegenerateMapException`, the map data is cleaned, the steps re-created as per the configuration function, and generation is performed again.  Each function in `DefaultAlgorithms` documents the procedure used to create the map and what each parameter controls.
 
 # Built-in Map Generation Steps
 GoRogue provides each element of the default map generation algorithms as an independent `GenerationStep`, in the `GoRogue.MapGeneration.Steps` namespace.  Each step documents the components it requires to be present on the generation context it is given, and the components it modifies/adds to the context.  Using this as a guide, you can combine the steps in an arbitrary order, or combine them with your own custom generation steps (see below), to produce a map.
@@ -70,6 +71,9 @@ GoRogue provides each element of the default map generation algorithms as an ind
 Most of the functions of a `Generator`, including `AddStep`, return the `this` instance, so you can chain calls of them together.  This makes it syntactically convenient to add many steps to a generator.  The following example creates a simple map generation algorithm that simply generates rooms, then draws tunnels between rooms closest to each other to connect them.
 
 ```CSharp
+const int mapWidth = 60;
+const int mapHeight = 40;
+
 var generator = new Generator(mapWidth, mapHeight);
 
 // Specify initial configuration for steps, and execute steps added.  If any of the steps
@@ -80,7 +84,7 @@ generator.ConfigAndGenerateSafe(gen =>
     gen.AddStep
         (
             // Sets custom values for some parameters, leaves others at their default
-            new RoomsGenerationStep()
+            new RoomsGeneration()
             {
                 MinRooms = 2,
                 MaxRooms = 8,
@@ -88,18 +92,18 @@ generator.ConfigAndGenerateSafe(gen =>
                 RoomMaxSize = 9
             }
         )
-    // According to the documentation, RoomsGenerationStep records the rooms it creates in an
-    // ItemList<Room> component, with the tag "Rooms" (unless changed via constructor
-    // parameter).  However, the area connection algorithm we want to run operates on an
-    // ItemList<Area>, with the tag "Areas", by default.  So, we have a "translation step" that
-    // creates areas from rectangles, and adds them to a new component.  We specify the tags of
-    // components to input from and output to, to match what the previous generation step
-    // creates the the next one expects
-    .AddStep(new RectanglesToAreas("Rooms", "Areas"))
-    // Connects areas together.  This component by default uses the component with the tag
-    // "Areas" for areas to connect, so since we haven't changed it,  it will connect the areas
-    // representing our rooms.
-    .AddStep(new ClosestMapAreaConnection());
+        // According to the documentation, RoomsGenerationStep records the rooms it creates in an
+        // ItemList<Room> component, with the tag "Rooms" (unless changed via constructor
+        // parameter).  However, the area connection algorithm we want to run operates on an
+        // ItemList<Area>, with the tag "Areas", by default.  So, we have a "translation step" that
+        // creates areas from rectangles, and adds them to a new component.  We specify the tags of
+        // components to input from and output to, to match what the previous generation step
+        // creates the the next one expects
+        .AddStep(new RectanglesToAreas("Rooms", "Areas"))
+        // Connects areas together.  This component by default uses the component with the tag
+        // "Areas" for areas to connect, so since we haven't changed it,  it will connect the areas
+        // representing our rooms.
+        .AddStep(new ClosestMapAreaConnection());
 });
 ```
 
