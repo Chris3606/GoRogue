@@ -41,6 +41,7 @@ public static class SubclassExample
     {
         public string DefinitionID { get; set; } = "";
     }
+
     class MyFactory : Factory<string, Terrain>
     {
         public MyFactory()

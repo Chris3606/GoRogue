@@ -1,12 +1,12 @@
 ---
-title: Using Factories
+title: Factories
 ---
 
 # Factory Classes
 One common paradigm in development is to have a "factory" whose responsibility is to produce objects of a given type.  This can be as simple as a class with static methods whose name corresponds to the name of the object it creates; for example, you could have an `EnemyFactory` class which has methods `Orc()`, `Goblin()`, etc; however implementations which conveniently allow for serialization and/or customization via user-readable data files can become more complex.  GoRogue provides a set of pre-built classes which provide one possible way of implementing this paradigm.
 
 # Factories in Concept
-The GoRogue factory implementations consists of two components; the factory class, and blueprints.  A blueprint is simply a unique identifier which denotes the type of item it creates, paired with a function which, when called, creates an object of that type.  One or more blueprints are added to a factory class.  After blueprints have been added, factories have a `Create()` function which can be passed a type of item as a parameter, and will call the appropriate blueprint's `Create()` function in order to create an item of that type and return it to you.
+The GoRogue factory implementations consist of two components; the factory class, and blueprints.  A blueprint is simply a unique identifier which denotes the type of item it creates, paired with a function which, when called, creates an object of that type.  One or more blueprints are added to a factory class.  After blueprints have been added, you call the `Create()` function on the factory.  This function is  passed a type of item as a parameter (eg. the identifier of a blueprint), and will call the appropriate blueprint's `Create()` function in order to create an item of that type and return it to you.
 
 # Basic Usage
 The simplest way to use the factory system, is to create a `Factory` which consists of `LambdaFactoryBlueprint` instances, which allow you to specify the creation function as a `Func<TProduced>`:
