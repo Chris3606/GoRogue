@@ -9,7 +9,9 @@
 - name: How-Tos
   href: howtos/index.md
   items:
-      - name: Using Dice Notation
-        href: howtos/dice-notation.md
-      - name: Using Map Generation
+      - name: Factories
+        href: howtos/factories.md
+      - name: Map Generation
         href: howtos/map-generation.md
+      - name: Rolling Dice
+        href: howtos/rolling-dice.md

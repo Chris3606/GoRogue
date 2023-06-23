@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - `Factories.Factory` and `Factories.AdvancedFactory` now take a type parameter which specifies the type of object used as the key for blueprints (rather than forcing string). This allows factories to use other keys for blueprints, like enum values.
+- Factory blueprint's Id property has been renamed to ID.
 
 ## [3.0.0-beta06] - 2023-05-22
 

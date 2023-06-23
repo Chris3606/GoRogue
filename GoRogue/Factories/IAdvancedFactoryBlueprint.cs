@@ -18,10 +18,10 @@ namespace GoRogue.Factories
         /// <summary>
         /// A unique identifier of this factory definition.
         /// </summary>
-        TBlueprintID Id { get; }
+        TBlueprintID ID { get; }
 
         /// <summary>
-        /// Creates a <typeparamref name="TProduced" /> object.
+        /// Creates an object of the type specified by TProduced using the given configuration parameters.
         /// </summary>
         /// <param name="config">Configuration parameters used to create the object.</param>
         /// <returns>The created object.</returns>
