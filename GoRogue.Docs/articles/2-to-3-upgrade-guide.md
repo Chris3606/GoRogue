@@ -18,7 +18,7 @@ A benefit of the shift to .NET Standard 2.1 is that it has enabled GoRogue 3 to 
 This will not break any code that chooses not to enable the nullable reference types feature; such code will simply receive no benefit.  For projects that do enable it, however, it provides an extremely useful extra layer of compile-time safety.
 
 # Core Features Moved to TheSadRogue.Primitives
-Another significant change is that a number of features that were in GoRogue 2 have been moved to a new library called [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives).  These types include:
+Another significant change is that a number of features which were in GoRogue 2 have been moved to a new library called [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives).  These types include:
 - `Coord` (now called `Point`)
 - `Direction`
 - `AdjacencyRule`, `Distance`, and `Radius`
@@ -28,6 +28,8 @@ Another significant change is that a number of features that were in GoRogue 2 h
 - `MapArea` (now called `Area`) and `IReadOnlyMapArea` (now called `IReadOnlyArea`)
 - `BoundedRectangle`
 - `Rectangle`
+- All spatial map related interfaces and implementations (moved to the `SadRogue.Primitives.SpatialMaps` namespace)
+- `IHasID` and `IHasLayer` interfaces
 - Most of the `MathHelpers` static class
 
 `TheSadRogue.Primitives` is open source, and maintained by [Thraka](https://github.com/Thraka) and I.  It is compatible with all platforms that GoRogue is.  Additionally, GoRogue depends on this library, so it will be automatically installed via NuGet when GoRogue is.  Many changes will simply involve changing namespaces referred to from the GoRogue namespaces items were in, to `SadRogue.Primitives`.
@@ -56,7 +58,11 @@ Therefore, `Equals`, `operator==`, and `GetHashCode` implementations for any mut
 With the exception of custom iterators, all value types in GoRogue 3 are immutable, and immutable value types such as `Point` and `Rectangle` still implement `Equals`, `GetHashCode`, and `IEquatable<T>` as they previously did.  However, they also implement `IMatchable` in a way equivalent to their `Equals` function, for consistency.
 
 # Some Functions Return Custom Iterators Instead of IEnumerable<T>
-In GoRogue 2, a number of classes and structures had functions that returned `IEnumerable<T>` in order to provide a list of items.  Many functions still do this in GoRogue 3, as the concept works particularly well for creating a flexible API; the results work with LINQ and can easily be converted to List, array, and other data structures when needed.  However, the use of `IEnumerable<T>` can have negative effects on performance in some cases.  This is primarily due to the fact that `IEnumerable` is an interface, and therefore requires TODO:
+In GoRogue 2, a number of classes and structures had functions that returned `IEnumerable<T>` in order to provide a list of items.  Many functions still do this in GoRogue 3, as the concept works particularly well for creating a flexible API; the results work with LINQ and can easily be converted to List, array, and other data structures when needed.  However, the use of `IEnumerable<T>` can have negative effects on performance in some cases.  This is primarily due to the fact that `IEnumerable` is an interface, and therefore requires boxing and/or state to function, which creates work for the GC.
+
+Therefore, in GoRogue 3, some such functions instead use a concept very similar to `List<T>` to mitigate this.  Instead of returning an `IEnumerable`, they instead return a value type which is a custom iterator, whose name typically ends in `Enumerator`; for example, `RectanglePositionsEnumerator`.  The return types of these functions implement `IEnumerator<T>` and `IEnumerable<T>`, so they can be used in a foreach loop and even can be used with LINQ if needed; however the performance, particularly when used directly in a foreach loop, is notably better because the compiler no longer has to box a value type into an interface reference.  `Rectangle.Positions()` is one such function, for example:
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#CustomEnumerators)]
 
 # Naming Conventions for Static Variables and Enums Changed
 Names of various enumerations and static variables have been changed, to bring them more in accordance with recommended C# naming conventions.  Effectively, this just results in ALL_CAPS style names being removed, and replaced with UpperFirstLetter style names; eg. `Radius.SQUARE` has been changed to `Radius.Square`.
@@ -90,13 +96,13 @@ These classes may optionally be inherited from as an alternative to `IGridView` 
 ## New IGridView Properties
 `IGridView` and `ISettableGridView` now require implementations of a `Count` property, which should be equal to `Width * Height` (the number of tiles in the view).  This property allows `IGridView` to support [indices](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#indices-and-ranges) as introduced in C# 8.  The base classes discussed above implement this property automatically.
 
-# TODO: Resume here
-
 ## New/Refactored Helper Functions
 A number of useful extension methods for `ISettableGridView` implementations have also been added/refactored.  First, the `ArrayMap.SetToDefault` function was changed to `ArrayView.Clear()` to match more typical naming conventions for arrays.  Additionally, an `ApplyOverlay` overload has been added as an extension for `ISettableGridView` that takes a `Func<Point, T>` to use for determine overlay values, to avoid the need to use a `LambdaGridView` in these cases.  Finally, a `Fill` extension method has been added that sets each location in an `ISettableGridView` to a specified value.
 
-## New IGridView Implementation
-Additionally, `TheSadRogue.Primitives` contains one additional concrete implementation of `ISettableGridView` that was not included in GoRogue 2; the `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
+## New IGridView Implementations
+Additionally, `TheSadRogue.Primitives` contains a number of additional concrete implementation of `ISettableGridView` that were not included in GoRogue 2.  The first is `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
+
+The other is `BitArrayView`, which is an `ISettableGridView<bool>` implementation which is based on C#'s `BitArray`.  This should be used instead of `ArrayView<bool>` in nearly all cases (unless your data is already an array and you're just creating a grid view wrapper), because its memory usage will be up to 8x less with a negligible difference in the performance of its operations.
 
 # Map Generation Rewritten
 The map generation system has been completely rewritten from the ground up in GoRogue 3.  It functions in a notably different manner, so it is recommended that you review [this article](~/articles/howtos/map-generation.md) which explains the new system's concepts and components.
@@ -211,7 +217,9 @@ Both are still possible in GoRogue 3, however because the interface for `Compone
 ### Interface for Attaching Components
 In order to conveniently support common use cases where you want to "attach" components to an object using this new approach, the `IObjectWithComponents` interface has been added in the `GoRogue.Components.ParentAware` namespace.  This interface defines a single properly called `GoRogueComponents`, of type `IComponentCollection`.  This accurately represents an object that has an associated `ComponentCollection` which stores components attached to it.
 
-The `GoRogue.Components.ParentAware` namespace also contains an interface called `IParentAwareComponent`.  This interface specifies a single `Parent` field, of type `IObjectWithComponents`.  This is designed to capture the concept of a component which is aware of the parent object it's attached to.  The `ParentAwareComponentBase` class in the same namespace takes this farther by implementing this interface, and also providing events fired when it is attached to/detached from an object.  It also provides useful functionality for using those events to enforce certain invariants upon components.  `ParentAwareComponentBase<T>` adds onto the non-generic class by automatically enforcing that the object it's attached to is of a particular type, and exposing the `Parent` field as that type, which is useful to avoid constantly needing to cast the `Parent` field to the type you need.
+The `GoRogue.Components.ParentAware` namespace also contains an interface called `IParentAwareComponent`.  This interface specifies a single `Parent` field, of type `object?`.  This is designed to capture the concept of a component which is aware of the parent object it's attached to.  The `ParentAwareComponentBase` class in the same namespace takes this farther by implementing this interface, and also providing events fired when it is attached to/detached from an object.  It also provides useful functionality for using those events to enforce certain invariants upon components.  `ParentAwareComponentBase<T>` adds onto the non-generic class by automatically enforcing that the object it's attached to is of a particular type, and exposing the `Parent` field as that type, which is useful to avoid constantly needing to cast the `Parent` field to the type you need.
+
+# TODO: Resume here
 
 The above concepts conveniently represent interfaces involved in attaching components to an object; to complete the implementation, `ComponentCollection` has built-in support for these interfaces.  `ComponentCollection` takes an optional parameter at construction of type `IObjectWithComponents`.  If this parameter is specified, the value given is automatically set to the `Parent` field of any `IParentAwareComponent` that is added to it.  Similarly, the `Parent` field is set to `null` when the component is removed.  Components that do not implement this interface are still allowed, however ones that do implement it have their `Parent` property automatically updated.
 
