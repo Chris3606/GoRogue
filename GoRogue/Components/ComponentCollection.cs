@@ -61,10 +61,10 @@ namespace GoRogue.Components
         /// <inheritdoc/>
         public int Count => _componentsToTags.Count;
 
-        private IObjectWithComponents? _parentForAddedComponents;
+        private object? _parentForAddedComponents;
 
         /// <inheritdoc/>
-        public IObjectWithComponents? ParentForAddedComponents
+        public object? ParentForAddedComponents
         {
             get => _parentForAddedComponents;
             set
@@ -99,7 +99,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IObjectWithComponents? parentForAddedComponents = null)
+        public ComponentCollection(object? parentForAddedComponents = null)
         {
             _components = new Dictionary<Type, List<object>>();
             _componentsToTags = new Dictionary<object, string?>(new ReferenceEqualityComparer());
@@ -118,7 +118,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IEnumerable<object> objects, IObjectWithComponents? parentForAddedComponents = null)
+        public ComponentCollection(IEnumerable<object> objects, object? parentForAddedComponents = null)
             : this(parentForAddedComponents)
         {
             foreach (var obj in objects)
@@ -150,7 +150,7 @@ namespace GoRogue.Components
         /// Parent value to use for any <see cref="IParentAwareComponent"/> instances
         /// added to the collection.  If null is specified, nothing is set to the Parent field.
         /// </param>
-        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags, IObjectWithComponents? parentForAddedComponents)
+        public ComponentCollection(IEnumerable<ComponentTagPair> objectsAndTags, object? parentForAddedComponents)
             : this(parentForAddedComponents)
         {
             foreach (var (component, tag) in objectsAndTags)
