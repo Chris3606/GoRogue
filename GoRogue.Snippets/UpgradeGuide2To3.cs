@@ -1,4 +1,5 @@
 ﻿using SadRogue.Primitives;
+// ReSharper disable UnusedVariable
 
 namespace GoRogue.Snippets
 {

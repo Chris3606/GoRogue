@@ -1,4 +1,6 @@
 ﻿using GoRogue.Factories;
+// ReSharper disable NotAccessedPositionalProperty.Local
+// ReSharper disable UnusedVariable
 
 namespace GoRogue.Snippets.HowTos.Factories;
 
