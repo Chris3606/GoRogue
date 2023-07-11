@@ -57,18 +57,18 @@ namespace GoRogue.UnitTests.Serialization
             // DiceExpression
             new DiceExpressionSerialized { Expression = "3d(1d12)k2+4" },
             // Factories
-            new FactorySerialized<FactoryItem>
+            new FactorySerialized<string, FactoryItem>
             {
-                Blueprints = new List<IFactoryBlueprint<FactoryItem>>
+                Blueprints = new List<IFactoryBlueprint<string, FactoryItem >>
                 {
                     new FactoryItemBlueprint("1"),
                     new FactoryItemBlueprint("2"),
                     new FactoryItemBlueprint("3")
                 }
             },
-            new AdvancedFactorySerialized<int, FactoryItem>
+            new AdvancedFactorySerialized<string, int, FactoryItem>
             {
-                Blueprints = new List<IAdvancedFactoryBlueprint<int, FactoryItem>>
+                Blueprints = new List<IAdvancedFactoryBlueprint<string, int, FactoryItem>>
                 {
                     new AdvancedFactoryItemBlueprint("1"),
                     new AdvancedFactoryItemBlueprint("2"),
@@ -177,8 +177,8 @@ namespace GoRogue.UnitTests.Serialization
             { typeof(ComponentCollectionSerialized), new []{ "Components" } },
             { typeof(DiceExpression), new [] { "RootTerm" } },
             { typeof(DiceExpressionSerialized), new [] { "Expression" } },
-            { typeof(FactorySerialized<FactoryItem>), new [] { "Blueprints" } },
-            { typeof(AdvancedFactorySerialized<int, FactoryItem>), new [] { "Blueprints" } },
+            { typeof(FactorySerialized<string, FactoryItem>), new [] { "Blueprints" } },
+            { typeof(AdvancedFactorySerialized<string, int, FactoryItem>), new [] { "Blueprints" } },
             { typeof(IDGenerator), new[] { "CurrentInteger", "LastAssigned" } },
             { typeof(ItemStepPair<string>), new []{ "Item", "Step" } },
             { typeof(ItemListSerialized<string>), new []{ "Items" } },
@@ -205,13 +205,13 @@ namespace GoRogue.UnitTests.Serialization
                 new Component2() { Value = 3}
             },
             // Factories with serializable blueprints
-            new Factory<FactoryItem>
+            new Factory<string, FactoryItem>
             {
                 new FactoryItemBlueprint("1"),
                 new FactoryItemBlueprint("2"),
                 new FactoryItemBlueprint("3")
             },
-            new AdvancedFactory<int, FactoryItem>
+            new AdvancedFactory<string, int, FactoryItem>
             {
                 new AdvancedFactoryItemBlueprint("1"),
                 new AdvancedFactoryItemBlueprint("2"),
@@ -232,8 +232,8 @@ namespace GoRogue.UnitTests.Serialization
         {
             { typeof(ComponentCollection), typeof(ComponentCollectionSerialized) },
             { typeof(DiceExpression), typeof(DiceExpressionSerialized) },
-            { typeof(Factory<FactoryItem>), typeof(FactorySerialized<FactoryItem>) },
-            { typeof(AdvancedFactory<int, FactoryItem>), typeof(AdvancedFactorySerialized<int, FactoryItem>) },
+            { typeof(Factory<string, FactoryItem>), typeof(FactorySerialized<string, FactoryItem>) },
+            { typeof(AdvancedFactory<string, int, FactoryItem>), typeof(AdvancedFactorySerialized<string, int, FactoryItem>) },
             { typeof(DoorList), typeof(DoorListSerialized) },
             { typeof(ItemList<string>), typeof(ItemListSerialized<string>) },
             { typeof(RoomDoors), typeof(RoomDoorsSerialized) },

@@ -191,10 +191,7 @@ namespace GoRogue.PerformanceTests.PolygonAreas.Implementations
                         foreach (var boundary in GetBoundariesContaining(polygon, x, y))
                         {
                             if (boundary.Any(p => p.Y < y))
-                            {
-                                if (!linesEncountered.Contains(boundary))
-                                    linesEncountered.Add(boundary);
-                            }
+                                linesEncountered.Add(boundary);
                         }
                     }
                     else

@@ -12,36 +12,40 @@ namespace GoRogue.MapGeneration.Steps
     /// <summary>
     /// Carves out non-overlapping rooms in a map.  Rooms generated will not overlap with themselves, or any existing open
     /// areas in the map.
-    /// Context Components Required:
-    /// - None
-    /// Context Components Added/Used:
+    /// 
+    /// <b>Context Components Required:</b> None
+    /// 
+    /// <b>Context Components Added/Used:</b>
     /// <list type="table">
     ///     <listheader>
     ///         <term>Component</term>
-    ///         <description>Default Tag</description>
+    ///         <term>Default Tag</term>
+    ///         <term>Description</term>
     ///     </listheader>
     ///     <item>
     ///         <term>
-    ///             <see cref="ContextComponents.ItemList{Rectangle}" />
+    ///             <see cref="ContextComponents.ItemList{Rectangle}">ItemList&lt;Rectangle&gt;</see>
     ///         </term>
-    ///         <description>"Rooms"</description>
+    ///         <term>"Rooms"</term>
+    ///         <term>A list of <see cref="Rectangle"/> instances which denote the rooms that were created.</term>
     ///     </item>
     ///     <item>
-    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}" /> where T is bool</term>
-    ///         <description>"WallFloor"</description>
+    ///         <term><see cref="SadRogue.Primitives.GridViews.ISettableGridView{T}">ISettableGridView&lt;bool&gt;</see></term>
+    ///         <term>"WallFloor"</term>
+    ///         <term>A grid view of boolean values the size of the map where "true" indicates a tile is passable, and "false" indicates it is not.</term>
     ///     </item>
     /// </list>
+    /// 
     /// In the case of both components, existing components are used if they are present; new ones are added if not.
     /// </summary>
     /// <remarks>
     /// This generation step generates rooms, and adds the rooms generated to the
-    /// <see cref="ContextComponents.ItemList{Rectangle}" /> context component with the given tag
+    /// <see cref="ContextComponents.ItemList{Rectangle}">ItemList&lt;Rectangle&gt;</see> context component with the given tag
     /// in the <see cref="GenerationContext" />.  If such a component does not exist, a new one is created.  It also sets the
-    /// interior positions to true in the map context's
-    /// map view with the given tag.  If the GenerationContext has an existing map view context component, that component is
-    /// used.  If not, an <see cref="SadRogue.Primitives.GridViews.ArrayView{T}" />
-    /// where T is bool is created and added to the map context, whose width/height match
-    /// <see cref="GenerationContext.Width" />/<see cref="GenerationContext.Height" />.
+    /// interior positions to true in the map context's grid view with the given tag.  If the GenerationContext has an existing grid
+    /// view context component, with the appropriate tag, that component is used.  If not, an
+    /// <see cref="SadRogue.Primitives.GridViews.ArrayView{T}">ArrayView&lt;bool&gt;</see> is created and added to the map context, whose
+    /// width/height match <see cref="GenerationContext.Width" />/<see cref="GenerationContext.Height" />.
     /// </remarks>
     [PublicAPI]
     public class RoomsGeneration : GenerationStep

@@ -10,29 +10,29 @@ namespace GoRogue.UnitTests.Mocks
     }
 
     [Serializable]
-    internal class FactoryItemBlueprint : IFactoryBlueprint<FactoryItem>
+    internal class FactoryItemBlueprint : IFactoryBlueprint<string, FactoryItem>
     {
-        public string Id { get; }
+        public string ID { get; }
 
-        public FactoryItemBlueprint(string id) => Id = id;
+        public FactoryItemBlueprint(string id) => ID = id;
 
         public FactoryItem Create() => new FactoryItem();
 
-        public override bool Equals(object? obj) => obj is FactoryItemBlueprint f && f.Id == Id;
+        public override bool Equals(object? obj) => obj is FactoryItemBlueprint f && f.ID == ID;
 
-        public override int GetHashCode() => Id.GetHashCode();
+        public override int GetHashCode() => ID.GetHashCode();
     }
 
     [Serializable]
-    internal class AdvancedFactoryItemBlueprint : IAdvancedFactoryBlueprint<int, FactoryItem>
+    internal class AdvancedFactoryItemBlueprint : IAdvancedFactoryBlueprint<string, int, FactoryItem>
     {
-        public string Id { get; }
+        public string ID { get; }
 
-        public AdvancedFactoryItemBlueprint(string id) => Id = id;
+        public AdvancedFactoryItemBlueprint(string id) => ID = id;
         public FactoryItem Create(int config) => new FactoryItem { Value = config };
 
-        public override bool Equals(object? obj) => obj is AdvancedFactoryItemBlueprint f && f.Id == Id;
+        public override bool Equals(object? obj) => obj is AdvancedFactoryItemBlueprint f && f.ID == ID;
 
-        public override int GetHashCode() => Id.GetHashCode();
+        public override int GetHashCode() => ID.GetHashCode();
     }
 }

@@ -62,7 +62,7 @@ namespace GoRogue.Components
         /// Useful if you have components associated with an object.  This defaults to null, and if its value is null,
         /// no parent is set when components are added.
         /// </summary>
-        public IObjectWithComponents? ParentForAddedComponents { get; set; }
+        public object? ParentForAddedComponents { get; set; }
 
         /// <summary>
         /// Removes all components from the collection.

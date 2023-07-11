@@ -29,10 +29,10 @@ namespace GoRogue.UnitTests.Serialization
                 { typeof(ChebyshevDistance), CompareDistance },
                 { typeof(ManhattanDistance), CompareDistance },
                 { typeof(EuclideanDistance), CompareDistance },
-                { typeof(Factory<FactoryItem>), CompareFactory },
-                { typeof(FactorySerialized<FactoryItem>), CompareFactorySerialized },
-                { typeof(AdvancedFactory<int, FactoryItem>), CompareAdvancedFactory },
-                { typeof(AdvancedFactorySerialized<int, FactoryItem>), CompareAdvancedFactorySerialized },
+                { typeof(Factory<string, FactoryItem>), CompareFactory<string> },
+                { typeof(FactorySerialized<string, FactoryItem>), CompareFactorySerialized<string> },
+                { typeof(AdvancedFactory<string, int, FactoryItem>), CompareAdvancedFactory<string> },
+                { typeof(AdvancedFactorySerialized<string, int, FactoryItem>), CompareAdvancedFactorySerialized<string> },
                 { typeof(DoorList), CompareDoorList },
                 { typeof(DoorListSerialized), CompareDoorListSerialized },
                 { typeof(ItemList<string>), CompareItemList },
@@ -87,34 +87,38 @@ namespace GoRogue.UnitTests.Serialization
             return ElementWiseEquality(c1.Components, c2.Components);
         }
 
-        private static bool CompareFactory(object o1, object o2)
+        private static bool CompareFactory<TBlueprintID>(object o1, object o2)
+            where TBlueprintID : notnull
         {
-            var f1 = (Factory<FactoryItem>)o1;
-            var f2 = (Factory<FactoryItem>)o2;
+            var f1 = (Factory<TBlueprintID, FactoryItem>)o1;
+            var f2 = (Factory<TBlueprintID, FactoryItem>)o2;
 
             return HashSetEquality(f1.ToHashSet(), f2.ToHashSet());
         }
 
-        private static bool CompareFactorySerialized(object o1, object o2)
+        private static bool CompareFactorySerialized<TBlueprintID>(object o1, object o2)
+            where TBlueprintID : notnull
         {
-            var f1 = (FactorySerialized<FactoryItem>)o1;
-            var f2 = (FactorySerialized<FactoryItem>)o2;
+            var f1 = (FactorySerialized<TBlueprintID, FactoryItem>)o1;
+            var f2 = (FactorySerialized<TBlueprintID, FactoryItem>)o2;
 
             return HashSetEquality(f1.Blueprints.ToHashSet(), f2.Blueprints.ToHashSet());
         }
 
-        private static bool CompareAdvancedFactory(object o1, object o2)
+        private static bool CompareAdvancedFactory<TBlueprintID>(object o1, object o2)
+            where TBlueprintID : notnull
         {
-            var f1 = (AdvancedFactory<int, FactoryItem>)o1;
-            var f2 = (AdvancedFactory<int, FactoryItem>)o2;
+            var f1 = (AdvancedFactory<TBlueprintID, int, FactoryItem>)o1;
+            var f2 = (AdvancedFactory<TBlueprintID, int, FactoryItem>)o2;
 
             return HashSetEquality(f1.ToHashSet(), f2.ToHashSet());
         }
 
-        private static bool CompareAdvancedFactorySerialized(object o1, object o2)
+        private static bool CompareAdvancedFactorySerialized<TBlueprintID>(object o1, object o2)
+            where TBlueprintID : notnull
         {
-            var f1 = (AdvancedFactorySerialized<int, FactoryItem>)o1;
-            var f2 = (AdvancedFactorySerialized<int, FactoryItem>)o2;
+            var f1 = (AdvancedFactorySerialized<TBlueprintID, int, FactoryItem>)o1;
+            var f2 = (AdvancedFactorySerialized<TBlueprintID, int, FactoryItem>)o2;
 
             return HashSetEquality(f1.Blueprints.ToHashSet(), f2.Blueprints.ToHashSet());
         }

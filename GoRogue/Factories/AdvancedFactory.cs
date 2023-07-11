@@ -9,29 +9,31 @@ namespace GoRogue.Factories
     /// A more advanced factory that produces a type of object based on a blueprint and a set of configuration parameters.
     /// </summary>
     /// <typeparam name="TBlueprintConfig">
-    /// The type of parameter passed to the <see cref="Create(string, TBlueprintConfig)" />
+    /// The type of parameter passed to the <see cref="Create(TBlueprintID, TBlueprintConfig)" />
     /// function each time an object is created.
     /// </typeparam>
+    /// <typeparam name="TBlueprintID">The type used to uniquely identify blueprints.</typeparam>
     /// <typeparam name="TProduced">The type of object this factory creates.</typeparam>
     [PublicAPI]
     [DataContract]
-    public class AdvancedFactory<TBlueprintConfig, TProduced>
-        : IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>
+    public class AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced>
+        : IEnumerable<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>>
+    where TBlueprintID : notnull
     {
-        private readonly Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> _blueprints;
+        private readonly Dictionary<TBlueprintID, IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> _blueprints;
 
         /// <summary>
         /// Constructor.
         /// </summary>
         public AdvancedFactory()
         {
-            _blueprints = new Dictionary<string, IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>>();
+            _blueprints = new Dictionary<TBlueprintID, IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>>();
         }
         /// <summary>
         /// Constructor.  Takes some initial blueprints to add.
         /// </summary>
         /// <param name="initialBlueprints">Initial blueprints to add.</param>
-        public AdvancedFactory(IEnumerable<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> initialBlueprints)
+        public AdvancedFactory(IEnumerable<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> initialBlueprints)
             : this()
         {
             foreach (var blueprint in initialBlueprints)
@@ -42,7 +44,7 @@ namespace GoRogue.Factories
         /// Gets an enumerator of all of the blueprints in the factory.
         /// </summary>
         /// <returns>An enumeration of the blueprints.</returns>
-        public IEnumerator<IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced>> GetEnumerator()
+        public IEnumerator<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> GetEnumerator()
             => _blueprints.Values.GetEnumerator();
 
         /// <summary>
@@ -55,24 +57,41 @@ namespace GoRogue.Factories
         /// Adds a blueprint to the factory.
         /// </summary>
         /// <param name="blueprint">The blueprint to add.</param>
-        public void Add(IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> blueprint)
-            => _blueprints[blueprint.Id] = blueprint;
+        public void Add(IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> blueprint)
+            => _blueprints[blueprint.ID] = blueprint;
+
+        /// <summary>
+        /// Adds the given blueprints to the factory.
+        /// </summary>
+        /// <param name="blueprints">The blueprints to add.</param>
+        public void AddRange(IEnumerable<IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>> blueprints)
+        {
+            foreach (var blueprint in blueprints)
+                Add(blueprint);
+        }
 
         /// <summary>
         /// Creates a <typeparamref name="TProduced" /> object using the blueprint with the given factory id, and the given
         /// settings object.
         /// </summary>
-        /// <param name="factoryId">The factory id of a blueprint.</param>
+        /// <param name="blueprintID">The factory id of a blueprint.</param>
         /// <param name="blueprintConfig">A settings object passed to the Create function of the blueprint.</param>
         /// <returns>A new object.</returns>
-        public TProduced Create(string factoryId, TBlueprintConfig blueprintConfig)
+        public TProduced Create(TBlueprintID blueprintID, TBlueprintConfig blueprintConfig)
         {
-            if (!_blueprints.ContainsKey(factoryId))
-                throw new ItemNotDefinedException(factoryId);
+            IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> blueprint;
+            try
+            {
+                blueprint = _blueprints[blueprintID];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ItemNotDefinedException<TBlueprintID>(blueprintID);
+            }
 
-            var obj = _blueprints[factoryId].Create(blueprintConfig);
-            if (obj is IFactoryObject factoryObj)
-                factoryObj.DefinitionId = factoryId;
+            var obj = blueprint.Create(blueprintConfig);
+            if (obj is IFactoryObject<TBlueprintID> factoryObj)
+                factoryObj.DefinitionID = blueprintID;
 
             return obj;
         }
@@ -80,22 +99,26 @@ namespace GoRogue.Factories
         /// <summary>
         /// Checks if a blueprint exists.
         /// </summary>
-        /// <param name="factoryId">The blueprint to check for.</param>
-        /// <returns>Returns true when the specified <paramref name="factoryId" /> exists; otherwise false.</returns>
-        public bool BlueprintExists(string factoryId) => _blueprints.ContainsKey(factoryId);
+        /// <param name="blueprintID">The blueprint to check for.</param>
+        /// <returns>Returns true when the specified <paramref name="blueprintID" /> exists; otherwise false.</returns>
+        public bool BlueprintExists(TBlueprintID blueprintID) => _blueprints.ContainsKey(blueprintID);
 
         /// <summary>
         /// Gets a blueprint by identifier.
         /// </summary>
-        /// <param name="factoryId">The blueprint identifier to get.</param>
+        /// <param name="blueprintID">The blueprint identifier to get.</param>
         /// <returns>The blueprint of the object.</returns>
-        /// <exception cref="ItemNotDefinedException">Thrown if the factory identifier does not exist.</exception>
-        public IAdvancedFactoryBlueprint<TBlueprintConfig, TProduced> GetBlueprint(string factoryId)
+        /// <exception cref="ItemNotDefinedException{TBlueprintID}">Thrown if the factory identifier does not exist.</exception>
+        public IAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced> GetBlueprint(TBlueprintID blueprintID)
         {
-            if (!_blueprints.ContainsKey(factoryId))
-                throw new ItemNotDefinedException(factoryId);
-
-            return _blueprints[factoryId];
+            try
+            {
+                return _blueprints[blueprintID];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new ItemNotDefinedException<TBlueprintID>(blueprintID);
+            }
         }
     }
 }
