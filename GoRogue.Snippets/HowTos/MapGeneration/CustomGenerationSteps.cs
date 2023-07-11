@@ -2,6 +2,8 @@
 using GoRogue.MapGeneration.ContextComponents;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+// ReSharper disable UnusedVariable
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 
 namespace GoRogue.Snippets.HowTos.MapGeneration;
 

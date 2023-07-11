@@ -10,9 +10,7 @@ One of the biggest changes in GoRogue 3 is that it has moved to support a minimu
 
 One of the biggest takeaways from this change is that support for .NET Framework has been removed entirely, as .NET Framework does not support .NET Standard 2.1 and there are no future plans for it to do so.  Microsoft has [officially pivoted away](https://devblogs.microsoft.com/dotnet/announcing-net-5-0/) from adding new features to .NET Framework, and has committed to providing equivalent platform and feature support to their new .NET unified platform (previously .NET Core).  GoRogue 3 does support .NET 5+ and .NET Core 3.0+.
 
-For those of you that still have .NET Framework projects, you may be surprised at how easy it can be to upgrade; so this may not be a big issue.  Some users, however (Unity users, for example), may have toolkit limitations that prevent an upgrade to a platform that supports .NET Standard 2.1 at the current time.  Virtually all .NET runtimes, including Mono and the Unity compiler, have either already upgraded to support this version, or have stated that they have definitive plans to do so.  Many game engines, including Unity, Godot, and Stride, have also either already upgraded or have stated that they will upgrade to a version of their runtime that will support it.
-
-In either case, I intend to provide maintenance updates to GoRogue 2.x (to include primarily bugfixes) until such time as these upgrades are complete.
+For those of you that still have .NET Framework projects, you may be surprised at how easy it can be to upgrade; so this may not be a big issue.  Some users, however, may have toolkit limitations that prevent an upgrade to a platform that supports .NET Standard 2.1 at the current time.  Virtually all .NET runtimes, including Mono and the Unity compiler, have either already upgraded to support this version, or have stated that they have definitive plans to do so.  Many game engines, including Unity, Godot, and Stride, have also either already upgraded or have stated that they will upgrade to a version of their runtime that will support it.
 
 ## Support for C# 8 Nullable Reference Types
 A benefit of the shift to .NET Standard 2.1 is that it has enabled GoRogue 3 to be annotated to support [nullable reference types](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references), which were introduced in C# 8.  GoRogue's entire API now has annotations indicating proper nullability.
@@ -20,44 +18,54 @@ A benefit of the shift to .NET Standard 2.1 is that it has enabled GoRogue 3 to 
 This will not break any code that chooses not to enable the nullable reference types feature; such code will simply receive no benefit.  For projects that do enable it, however, it provides an extremely useful extra layer of compile-time safety.
 
 # Core Features Moved to TheSadRogue.Primitives
-Another significant change is that a number of features that were in GoRogue 2 have been moved to a new library called [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives).  These types include:
+Another significant change is that a number of features which were in GoRogue 2 have been moved to a new library called [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives).  These types include:
 - `Coord` (now called `Point`)
 - `Direction`
 - `AdjacencyRule`, `Distance`, and `Radius`
+- The Lines class (with a slightly modified API)
 - `RadiusAreaProvider` (moved to `Radius` functions)
 - Everything in the `GoRogue.MapViews` namespace (renamed to `GridViews`)
 - `MapArea` (now called `Area`) and `IReadOnlyMapArea` (now called `IReadOnlyArea`)
 - `BoundedRectangle`
 - `Rectangle`
+- All spatial map related interfaces and implementations (moved to the `SadRogue.Primitives.SpatialMaps` namespace)
+- `IHasID` and `IHasLayer` interfaces
 - Most of the `MathHelpers` static class
 
 `TheSadRogue.Primitives` is open source, and maintained by [Thraka](https://github.com/Thraka) and I.  It is compatible with all platforms that GoRogue is.  Additionally, GoRogue depends on this library, so it will be automatically installed via NuGet when GoRogue is.  Many changes will simply involve changing namespaces referred to from the GoRogue namespaces items were in, to `SadRogue.Primitives`.
 
 The primitives library also has some basic classes that weren't in GoRogue 2, such as `Color`, `Gradient`, `Palette`, and `PolarCoordinate`.  These may be useful to replace equivalent types, and as well provide new distinct features.
 
-The primitives library also has extension packages that allow its types to easily convert to the equivalent types in MonoGame, SFML, and some others; none of these extensions are required to use GoRogue but may be useful if you are using those libraries with GoRogue.
+The primitives library also has extension packages that allow its types to easily convert to the equivalent types in MonoGame, SFML, and some others; none of these extensions are required to use GoRogue, but they may be useful if you are using those libraries with GoRogue.
 
 [SadConsole](https://github.com/Thraka/SadConsole), Thraka's console-emulation library, also uses `TheSadRogue.Primitives` for its types as of v9, so those of you using GoRogue with SadConsole will enjoy benefits there as well.
 
 ## Implicit Conversions to Equivalent MonoGame Types Removed
-In GoRogue 2, types such as `Coord` and `Rectangle` had implicit conversions defined to their equivalent types in other libraries such as MonoGame, so that if you were using those libraries it was easy to convert between the two.  These conversions were included in such a way as to not create a hard dependency; unfortunately, however, some compilers (such as Unity's) did not parse the tags properly and considered these libraries hard dependencies regardless.  Thus, "MinimalDependency" versions were created and released for users that ran into these scenarios, which made getting started more complex.
+In GoRogue 2, types such as `Coord` and `Rectangle` had implicit conversions defined to their equivalent types in other libraries such as MonoGame, so that if you were using those libraries it was easy to convert between the two.  These conversions were included in such a way as to not create a dependency on other libraries; unfortunately, however, some compilers (such as Unity's) did not parse the tags properly and considered these libraries required dependencies regardless.  Thus, "MinimalDependency" versions were created and released for users that ran into these scenarios, which made getting started more complex.
 
 In GoRogue 3, the implicit conversions have been removed.  The types that had such conversions were moved to [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives), and the conversions themselves have been replaced by the extension packages for that library.  These extension packages define similar (explicit) conversion functions.  See that library's documentation for details.
 
 # Value Tuples Removed from Public Interface
-GoRogue 2 used value tuples introduced in C# 7 in some of its API; for example, the return type of the `MapGeneration.Connectors.RoomDoorDonnector.ConnectRooms` function was a series of value tuples.  Value _types_ are very good for performance when used correctly, and value _tuples_ make a convenient way of creating a basic value type.  However, it can make serialization more challenging, and is nowhere near as convenient to work with in other .NET languages.  Therefore, GoRogue elects not to use value tuples in its public API, although it makes extensive use of value _types_.
+GoRogue 2 used value tuples introduced in C# 7 in some of its API; for example, the return type of the `MapGeneration.Connectors.RoomDoorDonnector.ConnectRooms` function was a series of value tuples.  Value _types_ are very good for performance when used correctly, and value _tuples_ make a convenient way of creating a basic value type.  However, value tuples can make serialization more challenging, and are nowhere near as convenient to work with in other .NET languages.  Therefore, GoRogue elects not to use value tuples in its public API, although it makes extensive use of value _types_.
 
-Instead of returning or taking as input a value tuple, GoRogue algorithms take a class whose name ends in "Pair"; for example, `ItemStepPair` or `AreaConnectionPointPair`.  These classes are implicitly convertible to and from a tuple of the two items, and implement support for [deconstruction syntax](https://docs.microsoft.com/en-us/dotnet/csharp/deconstruct#deconstructing-tuple-elements-with-discards).  Therefore, they provide all the benefits of value tuples for C# users, and in fact can be used as if they _are_ value tuples in most cases; but they also provide the benefits of serialization control and strongly-named values for non C# users.
+Instead of returning or taking as input a value tuple, GoRogue algorithms take a class whose name typically ends in "Pair"; for example, `ItemStepPair` or `AreaConnectionPointPair`.  These classes are implicitly convertible to and from a tuple of the two items, and implement support for [deconstruction syntax](https://docs.microsoft.com/en-us/dotnet/csharp/deconstruct#deconstructing-tuple-elements-with-discards).  Therefore, they provide all the benefits of value tuples for C# users, and in fact can be used as if they _are_ value tuples in most cases; but they also provide the benefits of serialization control and strongly-named values for non C# users.
 
 # Mutable Types No Longer Implement Equals/GetHashCode
-In GoRogue 2, a number of mutable reference types implemented `Equals`, `operator==`, and `GetHashCode`, such as `MapArea`.  However, according to [Microsoft guidance](https://docs.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-5.0), types that are mutable should not implement `Equals`, due to semantics of the requirement to also implement `GetHashCode`.  Since `Equals`, `operator==` and `GetHashCode` are supposed to be implemented in tandem for things to work correctly, such classes should ideally not implement any of those functions.
+In GoRogue 2, a number of mutable reference types implemented `Equals`, `operator==`, and `GetHashCode`, such as `MapArea`.  However, according to [Microsoft guidance](https://docs.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-6.0), types that are mutable should not implement `Equals`, due to semantics of the requirement to also implement `GetHashCode`.  Since `Equals`, `operator==` and `GetHashCode` are supposed to be implemented in tandem for things to work correctly, such classes should ideally not implement any of those functions.
 
-Therefore, `Equals`, `operator==`, and `GetHashCode` implementations for any mutable types in GoRogue (including types in `TheSadRogue.Primitives` library) have been removed.  Instead, mutable types implement a new interface `IMatchable`.  It provides a function `Matches`, whose signature is identical to `IEquatable.Equals` (except for the difference in names).  This function can be used to perform the comparisons previously performed by the `Equals` function implementations.  Effectively, any calls on such types that in GoRogue 2 used the `==` operator or `.Equals` for a custom comparison can now use `.Matches`.
+Therefore, `Equals`, `operator==`, and `GetHashCode` implementations for any mutable types in GoRogue (including types in `TheSadRogue.Primitives` library) have been removed.  Instead, mutable types implement a new interface `IMatchable`.  It provides a function `Matches`, whose signature is identical to `IEquatable<T>.Equals` (except for the difference in names).  This function can be used to perform the comparisons previously performed by the `Equals` function implementations.  Effectively, any calls on such types that in GoRogue 2 used the `==` operator or `.Equals` for a custom comparison should now use `.Matches`.
 
-All value types in GoRogue 3 are immutable, and immutable value types such as `Point` and `Rectangle` do implement `Equals`, `GetHashCode`, and `IEquatable` as they previously did.  However, they also implement `IMatchable` in a way equivalent to their `Equals` function, for consistency.
+With the exception of custom iterators, all value types in GoRogue 3 are immutable, and immutable value types such as `Point` and `Rectangle` still implement `Equals`, `GetHashCode`, and `IEquatable<T>` as they previously did.  However, they also implement `IMatchable` in a way equivalent to their `Equals` function, for consistency.
+
+# Some Functions Return Custom Iterators Instead of IEnumerable<T>
+In GoRogue 2, a number of classes and structures had functions that returned `IEnumerable<T>` in order to provide a list of items.  Many functions still do this in GoRogue 3, as the concept works particularly well for creating a flexible API; the results work with LINQ and can easily be converted to List, array, and other data structures when needed.  However, the use of `IEnumerable<T>` can have negative effects on performance in some cases.  This is primarily due to the fact that `IEnumerable` is an interface, and therefore requires boxing and/or state to function, which creates work for the GC.
+
+Therefore, in GoRogue 3, some such functions instead use a concept very similar to `List<T>.Enumerator` to mitigate this.  Instead of returning an `IEnumerable`, they instead return a value type which is a custom iterator, whose name typically ends in `Enumerator`; for example, `RectanglePositionsEnumerator`.  The return types of these functions implement `IEnumerator<T>` and `IEnumerable<T>`, so they can be used in a foreach loop and even can be used with LINQ if needed; however the performance, particularly when used directly in a foreach loop, is notably better because the compiler no longer has to box a value type into an interface reference.  `Rectangle.Positions()` is one such function, for example:
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#CustomEnumerators)]
 
 # Naming Conventions for Static Variables and Enums Changed
-Names of various enumerations and static variables have been changed, to bring them more in accordance with recommended C# naming conventions.  Effectively, this just results in ALL_CAPS style names being removed, and replaced with UpperFirstLetter style names; eg. `SourceType.RIPPLE` has been changed to `SourceType.Ripple`, and `Radius.SQUARE` has been changed to `Radius.Square`.
+Names of various enumerations and static variables have been changed, to bring them more in accordance with recommended C# naming conventions.  Effectively, this just results in ALL_CAPS style names being removed, and replaced with UpperFirstLetter style names; eg. `Radius.SQUARE` has been changed to `Radius.Square`.
 
 # MapView Changes (Now Called GridViews)
 MapViews have undergone a refactor in GoRogue 3 as well.
@@ -80,19 +88,21 @@ First, the term "map view" has been replaced by "grid view", and all of the clas
 
 Additionally, all of these classes have been moved to [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives) library, and reside under the namespace `SadRogue.Primitives.GridViews`.
 
-## New GridView Base Class
-There is also a new base class that will make many custom `IGridView` implementations simpler.  In GoRogue 2, `IMapView` implementations often contained repetitive code that implemented one or more indexers in terms of the others.  To help alleviate this, `TheSadRogue.Primitives` library that now contains grid views has the abstract classes `GridViewBase` and `SettableGridViewBase`.
+## New GridView Base Classes
+There is also a new base class that will make many custom `IGridView` implementations simpler.  In GoRogue 2, `IMapView` implementations often contained repetitive code that implemented one or more indexers in terms of the others.  To help alleviate this, `TheSadRogue.Primitives` library that now contains grid views has the abstract classes `GridViewBase`, `SettableGridViewBase`, `GridView1DIndexBase`, and `SettableGridView1DIndexBase`.
 
-These classes may optionally be inherited from as an alternative to `IGridView` and `ISettableGridView`, respectively, and implement the repetitive code to define the location indexers in terms of a single, abstract indexer taking `Point`.  For cases where there is nothing preventing your custom implementations from inheriting from a base class, this is much more convenient, as you need only implement the basic properties, and a single indexer; the other indexers are implemented based on that one.
+These classes may optionally be inherited from as an alternative to manually implementing `IGridView` and `ISettableGridView`, respectively, and implement the repetitive code to define the location indexers in terms of a single, abstract indexer taking `Point`.  In the cases of the classes with "1DIndex" in the name, all indexers are implemented in terms of the one which takes a 1D index; the others implement all indexers in terms of the one which takes a `Point`.  For cases where there is nothing preventing your custom implementations from inheriting from a base class, this is much more convenient, as you need only implement the basic properties, and a single indexer; the other indexers are implemented based on that one.
 
 ## New IGridView Properties
-`IGridView` and `ISettableGridView` now require implementations of a `Count` property, which should be equal to `Width * Height` (the number of tiles in the view).  This property allows `IGridView` to support [indices](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#indices-and-ranges) as introduced in C# 8.  The `GridViewBase` and `SettableGridViewBase` implement this property automatically.
+`IGridView` and `ISettableGridView` now require implementations of a `Count` property, which should be equal to `Width * Height` (the number of tiles in the view).  This property allows `IGridView` to support [indices](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8#indices-and-ranges) as introduced in C# 8.  The base classes discussed above implement this property automatically.
 
 ## New/Refactored Helper Functions
 A number of useful extension methods for `ISettableGridView` implementations have also been added/refactored.  First, the `ArrayMap.SetToDefault` function was changed to `ArrayView.Clear()` to match more typical naming conventions for arrays.  Additionally, an `ApplyOverlay` overload has been added as an extension for `ISettableGridView` that takes a `Func<Point, T>` to use for determine overlay values, to avoid the need to use a `LambdaGridView` in these cases.  Finally, a `Fill` extension method has been added that sets each location in an `ISettableGridView` to a specified value.
 
-## New IGridView Implementation
-Additionally, `TheSadRogue.Primitives` contains one additional concrete implementation of `ISettableGridView` that was not included in GoRogue 2; the `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
+## New IGridView Implementations
+Additionally, `TheSadRogue.Primitives` contains a number of additional concrete implementation of `ISettableGridView` that were not included in GoRogue 2.  The first is `DiffAwareGridView`.  This grid view may be useful for situations where you are using a grid view or array of value types, and want to interact with or display incremental (groups of) changes to that grid view/array.  See the class documentation for details.
+
+The other is `BitArrayView`, which is an `ISettableGridView<bool>` implementation which is based on C#'s `BitArray`.  This should be used instead of `ArrayView<bool>` in nearly all cases (unless your data is already an array and you're just creating a grid view wrapper), because its memory usage will be up to 8x less with a negligible difference in the performance of its operations.
 
 # Map Generation Rewritten
 The map generation system has been completely rewritten from the ground up in GoRogue 3.  It functions in a notably different manner, so it is recommended that you review [this article](~/articles/howtos/map-generation.md) which explains the new system's concepts and components.
@@ -101,7 +111,7 @@ The map generation system has been completely rewritten from the ground up in Go
 The basic map generation algorithms that were present in GoRogue 2 are all present in some form in GoRogue 3, but not at a level that produces full implementation parity.  Therefore, the new implementations of those algorithms are not guaranteed to produce the same level from a given seed that was produced in GoRogue 2.
 
 ### Quick Generators
-The "full-map generation" algorithms that were present in GoRogue `GoRogue.MapGeneration.QuickGenerators` are represented in GoRogue 3 as functions in `GoRogue.MapGeneration.DefaultAlgorithms`.  These functions produce a set of generation steps that, when executed in a `Generator`, follow a roughly equivalent process:
+The "full-map generation" algorithms that were present in GoRogue 2 as functions in `GoRogue.MapGeneration.QuickGenerators` are represented in GoRogue 3 as functions in `GoRogue.MapGeneration.DefaultAlgorithms`.  These functions produce a set of generation steps that, when executed in a `Generator`, follow a roughly equivalent process:
 
 | Old QuickGenerator | DefaultAlgorithm |
 | ------------------ | --------------- |
@@ -207,36 +217,47 @@ Both are still possible in GoRogue 3, however because the interface for `Compone
 ### Interface for Attaching Components
 In order to conveniently support common use cases where you want to "attach" components to an object using this new approach, the `IObjectWithComponents` interface has been added in the `GoRogue.Components.ParentAware` namespace.  This interface defines a single properly called `GoRogueComponents`, of type `IComponentCollection`.  This accurately represents an object that has an associated `ComponentCollection` which stores components attached to it.
 
-The `GoRogue.Components.ParentAware` namespace also contains an interface called `IParentAwareComponent`.  This interface specifies a single `Parent` field, of type `IObjectWithComponents`.  This is designed to capture the concept of a component which is aware of the parent object it's attached to.  The `ParentAwareComponentBase` class in the same namespace takes this farther by implementing this interface, and also providing events fired when it is attached to/detached from an object.  It also provides useful functionality for using those events to enforce certain invariants upon components.  `ParentAwareComponentBase<T>` adds onto the non-generic class by automatically enforcing that the object it's attached to is of a particular type, and exposing the `Parent` field as that type, which is useful to avoid constantly needing to cast the `Parent` field to the type you need.
+The `GoRogue.Components.ParentAware` namespace also contains an interface called `IParentAwareComponent`.  This interface specifies a single `Parent` field, of type `object?`.  This is designed to capture the concept of a component which is aware of the parent object it's attached to.  The `ParentAwareComponentBase` class in the same namespace takes this farther by implementing this interface, and also providing events fired when it is attached to/detached from an object.  It also provides useful functionality for using those events to enforce certain invariants upon components.  `ParentAwareComponentBase<T>` adds onto the non-generic class by automatically enforcing that the object it's attached to is of a particular type, and exposing the `Parent` field as that type, which is useful to avoid constantly needing to cast the `Parent` field to the type you need.
 
-The above concepts conveniently represent interfaces involved in attaching components to an object; to complete the implementation, `ComponentCollection` has built-in support for these interfaces.  `ComponentCollection` takes an optional parameter at construction of type `IObjectWithComponents`.  If this parameter is specified, the value given is automatically set to the `Parent` field of any `IParentAwareComponent` that is added to it.  Similarly, the `Parent` field is set to `null` when the component is removed.  Components that do not implement this interface are still allowed, however ones that do implement it have their `Parent` property automatically updated.
+The above concepts conveniently represent interfaces involved in attaching components to an object; to complete the implementation, `ComponentCollection` has built-in support for these interfaces.  `ComponentCollection` takes an optional parameter at construction of type `object?`.  If this parameter is specified, the value given is automatically set to the `Parent` field of any `IParentAwareComponent` that is added to it.  Similarly, the `Parent` field is set to `null` when the component is removed.  Components that do not implement this interface are still allowed, however ones that do implement it have their `Parent` property automatically updated.
 
 Putting these features together allows you to write components that are attached to an arbitrary object, and are aware of their "Parent" and capable of interacting with it.  See GoRogue's `GameFramework.GameObject` and `GameFramework.Map` classes for examples of how to create such objects.
 
 # Factory System Changes
 The factory system in GoRogue 3 has been refactored to address some naming/usability concerns.  First, note that the `GoRogue.Factory` namespace is now `GoRogue.Factories`, which more accurately matches naming conventions elsewhere in the library.
 
+Additionally, factory classes can now support blueprint IDs of arbitrary types, rather than only strings.  This is implemented via an additional type parameter passed to the factory classes called `TBlueprintID`.
+
 The remaining factory changes fall in line with splitting out the class structures for the two main use cases of factories; to create items when additional configuration information per instance _is_ needed, and to create items when such information _is not_ needed.  In GoRogue 2, both use cases were supported but the class structure for supporting this was somewhat unintuitive; it utilized an arbitrary class `BlueprintConfig` for a base configuration object, that served no purpose other than to provide a default value.  In GoRogue 3, the factory classes have been split out as follows:
-- `Factory<TProduced>`
+- `Factory<TBlueprintID, TProduced>`
     - Produces objects of type `TProduced` via `IFactoryBlueprint` objects that DO NOT take a configuration object in the `Create` function.
     - Useful for cases that would previously have involved `SimpleBlueprint`
-- `AdvancedFactory<TBlueprintConfig, TProduced>`
+- `AdvancedFactory<TBlueprintID, TBlueprintConfig, TProduced>`
     - Produces objects of type `TProduced` via `IAdvancedFactoryBlueprint` objects that DO accept a configuration object of type `TBlueprintConfig` in the `Create` function.
     - Useful for cases that would have previously involved passing a configuration object of some type that subclassed `BlueprintConfig`
     - In GoRogue 3, there is NO required base class for configuration objects; it can be an arbitrary type
 
 `IFactoryObject` will function the same way as it did, whether objects that implement it are created in a `Factory` or `AdvancedFactory`.  As well, a new `ItemNotDefinedException` with a useful message is thrown when their `Create` or `GetBlueprint` methods are called with a blueprint name that does not exist.
 
-# Spatial Map Changes
-A number of changes have been made to the interface for spatial maps in GoRogue 3.  First, all spatial map implementations and related interfaces have been moved to the `GoRogue.SpatialMaps` namespace, in order to clean up the root namespace.  There are also a number of API changes.
+Additionally, some helper classes were added that make blueprints signifincantly easier to implement.  These include
+[LambdaFactoryBlueprint<TBlueprintID, TProduced>](xref:GoRogue.Factories.LambdaFactoryBlueprint`2) and [LambdaAdvancedFactoryBlueprint<TBlueprintID, TBlueprintConfig, TProduced>](xref:GoRogue.Factories.LambdaAdvancedFactoryBlueprint`3).  These classes allow you to specify the `Create` function as a `Func`, which enables you to avoid implementing the blueprint interfaces via a subclass in many cases.  Details on their intended usage can be found in the [Factories how-to article](~/articles/howtos/factories.md).
 
+# Spatial Map Changes
+A number of changes have been made to the interface for spatial maps in GoRogue 3.  First, all spatial map implementations and related interfaces have been moved to the TheSadRogue.Primitives, under the namespace `SadRogue.Primitives.SpatialMaps`.  There are also a number of API changes.
+
+## API Refactor
 In GoRogue 2, functions for spatial maps like `Add` and `Move` simply returned `false` if an operation failed.  This design had some useful properties, but ultimately turned out to be a poor design decision, which didn't fit well with the rest of the library and was the source of many known bugs/desyncs that users, and I, accidentally created in code. Therefore, the `ISpatialMap` interface and all implementing classes have been modified such that, if their functions fail, they throw an `ArgumentException` with an error message that tells you exactly what went wrong.  Functions that work in this way now include `GetPositionOf` (previously called `GetPosition`), `Add`, `Move`, `MoveAll`, and `Remove`.
 
 This change makes it much more obvious to the user when something unexpected happens.  For situations where you _do_ potentially expect the operation to fail, versions of the functions are provided that begin with `Try`; eg. `TryMove`, `TryAdd`, `TryRemove` `TryGetPositionOf`, etc.  These default to the old behavior returning true or false based on success.  If you simply need to check whether an operation is possible, the interface also provides functions for this; these functions include `CanAdd`, `CanMove`, `CanMoveAll`, etc.
 
-Another associated change to spatial maps is the separation of the functionality for moving _all_ items at a location vs. moving only the ones that _can_ move.  In addition to `Move(T item)`, `ISpatialMap` now also contains `MoveAll` and `MoveValid` functions.  `MoveAll` attempts to move all items at a given location to the target location, throwing an `ArgumentException` if this fails.  `MoveValid` only moves the items that can move, returning precisely which items were moved.
+Another associated change to spatial maps is the separation of the functionality for moving _all_ items at a location vs. moving only the ones that _can_ move.  In addition to `Move(T item)`, `ISpatialMap` now also contains `MoveAll` and `MoveValid` functions.  `MoveAll` attempts to move all items at a given location to the target location, throwing an `ArgumentException` if this fails.  There is also a `TryMoveAll` function, which returns false instead of throwing an exception.  `MoveValid` only moves the items that can move, returning precisely which items were moved.
 
 Finally, note that, as implied above, `GetPosition` has been renamed to `GetPositionOf`.  There are also a number of similar methods provided that handle the case where the position does not exist differently; these include `GetPositionOfOrNull` and `TryGetPositionOf`.
+
+## Position Syncing
+In GoRogue, spatial maps store a position for each object stored within them.  The `Move` functions and similar modify this position.  This is useful because it allows spatial maps to be self-contained; objects added to them don't have to have their own position field or meet any sort of arbitrary interface.  However, it also adds complexity to their usage for some use cases, because it is common that map objects will store their own position inside of a field.  When such objects are used in spatial maps, care must be taken to ensure that the spatial map's position for that object, and the position within the object's field, remain in sync.
+
+In GoRogue 3, some new variants of spatial maps have been added to help make these use cases easier to manage.  These include `AutoSyncSpatialMap`, `AutoSyncMultiSpatialMap`, and `AutoSyncLayeredSpatialMap`.  These variants require that the items in them implement the new `IPositionable` interface, which contains a `Position` property and some events that are fired when that property changes.  It uses these events to automatically keep the `Position` property, and the spatial map's internal record of the object's position, in sync.  You may modify the `Position` property directly, or call any of the spatial map's move functions; and in either case, both the field and the spatial map's record update automatically.
 
 # FOV Changes
 In GoRogue 2, FOV functionality consisted of a single class, `FOV`, which implemented a recursive shadowcasting FOV algorithm.  GoRogue 2 also contained the `IReadOnlyFOV` interface, which was useful for exposing the result of FOV without allowing modification.
@@ -249,7 +270,7 @@ GoRogue 3 addresses this by introducing a customizable abstraction for FOV calcu
 In turn, `Map` now has a property of type `IFOV` for the player's FOV.  This allows a user to implement a custom FOV calculation and use it within the map framework.
 
 ## Change in Interface
-Additionally, the fov classes no longer implement `IMapView<double>`.  Instead, there is a `DoubleResultView` property that exposes the results of the FOV calculation as a map.  Similarly, the `BooleanFOV` property has been renamed to `BooleanResultView`.  This change more easily facilitated the abstraction that was introduced, and as well provided a more consistent interface.
+In GoRogue 2, FOV classes implemented `IMapView<double>` in order to allow you to access the results.  In GoRogue 3, this is no longer the case; instead, there is a `DoubleResultView` property that exposes the results of the FOV calculation as a grid view.  Similarly, the `BooleanFOV` property has been renamed to `BooleanResultView`.  This change more easily facilitated the abstraction that was introduced, and as well provided a more consistent interface.
 
 # GameFramework Namespace Refactored
 A number of refactors have been performed on the `GoRogue.GameFramework` namespace.
@@ -260,12 +281,12 @@ A number of refactors have been performed on the `GoRogue.GameFramework` namespa
 ### Simplification of IGameObject Implementation
 The class structure for `GameFramework.GameObject` has been simplified in GoRogue 3.  In GoRogue 2, support for use cases where you were unable to inherit from `GameObject` involved writing fairly complex code.  You had to implement `IGameObject` in these cases; but, since implementation of the functionality defined by `IGameObject` was closely coupled with the code for `GameFramework.Map`, this was non-trivial.  The recommended approach for this in GoRogue 2 was to use a `GameObject` instance as a private backing field for your `IGameObject` implementation; and in fact GoRogue 2 had special support for this built into `GameObject` in the form of the `parent` parameter to the constructor.
 
-However, this approach proved to be somewhat error prone, and very easily led to non-intuitive/difficult to debug behavior in error cases.  Further, it added complexity to code that needed to implement `IGameObject` instead of inheriting from `GameObject`.  So, in GoRogue 3, the `parent` parameter in the `GameObject` constructor has been removed, and it is no longer recommended (and in many cases no longer possible) to implement `IGameObject` via a backing field of type `GameObject`.
+However, this approach proved to be somewhat error prone, and very easily led to non-intuitive/difficult to debug behavior in error cases.  Furthermore, it added complexity to code that needed to implement `IGameObject` instead of inheriting from `GameObject`.  So, in GoRogue 3, the `parent` parameter in the `GameObject` constructor has been removed, and it is no longer recommended (and in many cases no longer possible) to implement `IGameObject` via a backing field of type `GameObject`.
 
 Instead, a focus was placed on decoupling the code required to implement `IGameObject` from the internal code in `Map`, which ultimately resulted in `IGameObject` being much easier to implement the more traditional way.  Helper functions have been provided that make implementing most functions in the `IGameObject` interface a one-line endeavor.  As such, if you need to implement `IGameObject` yourself, you should be able to more or less copy-paste the code from `GameObject`, and use it for the implementation, without making your code unintuitive or unnecessarily long.
 
 ### Removed IsStatic
-In GoRogue 2, game objects had an `IsStatic` flag, that could be set via a constructor parameter to indicate that they could not move.  Objects on the terrain layer of a map (layer 0) were _required_ to have `IsStatic` set, to allow for some optimization by allowing them to reside on a grid view as opposed to a spatial map.  This was useful for performance, but inconvenient at times for users; particularly if a user wanted to use something like GoRogue's factory system for creation of terrain.  The position could only be set at construction due to the `IsStatic` flag being set, which meant that the position had to be known exactly when the instance was created.  Furthermore, the restriction of terrain objects being unable to move at all is actually more stringent than required; the only required portion for optimization is that they not move _while they are part of a map_.
+In GoRogue 2, `GameObject` instances had an `IsStatic` flag, that could be set via a constructor parameter to indicate that they could not move.  Objects on the terrain layer of a map (layer 0) were _required_ to have `IsStatic` set, to allow for some optimization by allowing them to reside on a grid view as opposed to a spatial map.  This was useful for performance, but inconvenient at times for users; particularly if a user wanted to use something like GoRogue's factory system for creation of terrain.  The position could only be set at construction due to the `IsStatic` flag being set, which meant that the position had to be known exactly when the instance was created.  Furthermore, the restriction of terrain objects being unable to move at all is actually more stringent than required; the only required portion for optimization is that they not move _while they are part of a map_.
 
 Therefore, in GoRogue 3 the `IsStatic` flag has been removed.  Instead, if an object is on layer 0 of a map and it is moved, an exception will be thrown by the `Map`. Objects on layer 0 that are not added to a `Map` can be moved freely.  This allows the optimization to stay, but makes creation of objects more convenient for a user.
 
@@ -313,7 +334,7 @@ In GoRogue 3, spatial maps have been changed to throw exceptions in cases where 
 
 The `AddEntity`, `RemoveEntity`, `SetTerrain`, `RemoveTerrain` and `RemoveTerrainAt` functions all return `void` and throw `ArgumentException` if they are called with a value that doesn't meet the necessary criteria, with an exception message detailing exactly what the issue was.  Similarly, `Map` is configured in such a way that if an object's `Position` or `IsWalkable` properties are set to something that is invalid, then an `InvalidOperationException` with a message detailing the issue will be thrown.
 
-There are also extension methods provided for `IGameObject` that return a boolean value indicating whether it is valid to set the object's `Position` or an `IsWalkable` property a certain way.  the `CanMove` function returns whether or not an object's position can be set; `CanMoveIn` is similar, except it takes a direction and returns whether or not the object can move in that direction.  Similarly, `CanSetWalkability` and `CanToggleWalkability` return information about whether or not `IsWalkable` can be set.
+There are also extension methods provided for `IGameObject` that return a boolean value indicating whether it is valid to set the object's `Position` or an `IsWalkable` property a certain way.  The `CanMove` function returns whether or not an object's position can be set; `CanMoveIn` is similar, except it takes a direction and returns whether or not the object can move in that direction.  Similarly, `CanSetWalkability` and `CanToggleWalkability` return information about whether or not `IsWalkable` can be set.
 
 # RadiusAreaProvider Functionality Moved
 The functionality of `RadiusAreaProvider` was moved to `TheSadRogue.Primitives`, and merged into the `Radius` class in the form of `Radius.PositionsInRadius` functions.
@@ -331,7 +352,7 @@ In GoRogue 2, random number generation was handled by way of the [Troscheutz.Ran
 - Troschuetz's API does not directly expose functionality to generate longs, ulongs, floats, or decimals.
 
 ## ShaiRandom Overview
-In an effort to provide better solutions to these issues, GoRogue 3 has moved away from Troschuetz, and instead uses a random number generation library called ShaiRandom.  In addition to implementing a completely different set of generation algorithms it provides a number of other benefits:
+In an effort to provide better solutions to these issues, GoRogue 3 has moved away from Troschuetz, and instead uses a random number generation library called ShaiRandom.  In addition to implementing a completely different set of generation algorithms, it provides a number of other benefits:
 - Generator states are publicly exposed, and settable.
     - This allows much more fine-tuned manipulation of generators, for both testing and serialization purposes.
 - Generators all support a method of serializing to and from a string
@@ -391,7 +412,7 @@ Similar logic applies for functions that take _two_ bounds.  Troschuetz asserts 
 | inner == outer | `inner` |
 | inner > outer | `(outer, inner]` (eg. `outer` (exclusive) to `inner` (inclusive)) |
 
-Note that the inclusivity and exclusivity of the bounds as outlined above refers to the bounds for "typical" functions; eg. the bounds for `NextInt`, `NextUInt`, `NextDouble`, etc; anything that does not have `Inclusive` or `Exclusive` specifically in the function name.  ShaiRandom does provide a number of functions for generating floating point numbers that specify otherwise; for example, `NextInclusiveDouble` follows the same logic but considers both bounds as inclusive, and `NextInclusiveDouble` is similar but considers both bounds to be exclusive.  These functions will clearly note how they interpret the bounds in the API documentation.
+Note that the inclusivity and exclusivity of the bounds as outlined above refers to the bounds for "typical" functions; eg. the bounds for `NextInt`, `NextUInt`, `NextDouble`, etc; anything that does not have `Inclusive` or `Exclusive` specifically in the function name.  ShaiRandom does provide a number of functions for generating floating point numbers that specify otherwise; for example, `NextInclusiveDouble` follows the same logic but considers both bounds as inclusive, and `NextExclusiveDouble` is similar but considers both bounds to be exclusive.  These functions will clearly note how they interpret the bounds in the API documentation.
 
 ### Seeding and Serialization
 In Troschuetz, generators exposed a `Seed` property, which you could use to query the seed used to initialize a random number generator.  In ShaiRandom, the state is exposed directly, and can be accessed via either the `IEnhancedRandom.SelectState` function, or various properties specific to generator implementations.  Because of this, the API handles seeding from a single value differently than Troschuetz.
@@ -401,7 +422,7 @@ In ShaiRandom, you may call the `IEnhancedRandom.Seed(ulong)` function on any ge
 Functionally, nothing is lost here.  In fact, ShaiRandom offers a lot of other APIs to interact with generator state directly; and so ShaiRandom is functionally _more_ robust than Troschuetz in this context.  Nevertheless, this may affect existing code in that it may change how it serializes data or initializes generators to a particular state.
 
 There are two main ways you can go about replicating and controlling a generator's state:
-1. Utilize the serialization ShaiRandom provides.  For any generator, the `StringSerialize()` function will produce a string of ASCII characters which encompasses the generators entire state.  This string can be passed to the `AbstractRandom.Deserialize()` function, which will create a new generator of the same type, with exactly the same state that was serialized.
+1. Utilize the serialization ShaiRandom provides.  For any generator, the `StringSerialize()` function will produce a string of ASCII characters which encompasses the generators entire state.  This string can be passed to the `AbstractRandom.Deserialize()` function, which will create a new generator of the same type, with exactly the same state as the one that was serialized.
 2. Initialize the generator context with the `Seed(ulong)` function, and record the seed used before you pass it, so that you may use it again in the future.  Although not as flexible as other methods, it is relatively similar to the method of recording the `Seed` property value on Troschuetz generators.
 
 Furthermore, you can also control a generator's state directly via IEnhancedRandom's `SetState`, `SetSelectedState`, and `SelectState` functions, as well as properties specific to each generator implementation.  The `PreviousULong` and `Skip` methods may also be useful for controlling generator state.  ShaiRandom's API documentation provides more specific information on these methods.
@@ -416,28 +437,7 @@ An `ArchivalWrapper` generator exists in the `ShaiRandom.Wrappers` namespace, wh
 
 This can be extremely useful for debugging and unit testing, because it requires you to have no knowledge of the inner workings of an algorithm to reliably reproduce an issue with it; and the ability to reproduce that issue is completely independent of any RNG implementation, and anything else that RNG instance is used for before/after the problematic algorithm used it.  The following highlights this with some example (pseudo) code:
 
-```CS
-// Assume we have an algorithm which uses an RNG, and has a bug
-// which causes it to sometimes fail
-public SomeResult AlgorithmThatSometimesFails(IEnhancedRandom rng) {...}
-
-// Find an issue that occurs sometimes, and get a way to reproduce it
-public string FindAndReproduceProblem()
-{
-    KnownSeriesRandom sequence = null;
-    while (sequence == null)
-    {
-        var wrapper = new ArchivalWrapper(GoRogue.Random.GlobalRandom.DefaultRNG);
-        var result = AlgorithmThatSometimesFails(wrapper);
-        if (algorithmFailed)
-            sequence = wrapper.MakeArchivedSeries();
-    }
-
-    // This string, when deserialized, produces a KnownSeriesRandom that will
-    // always produce the problem we found
-    return sequence.StringSerialize();
-}
-```
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#ArchivalWrapper)]
 
 You can, of course, create a similar result by simply serializing the state of the underlying generator directly before each run of the problematic algorithm, and thus avoid using `KnownSeriesRandom` or `ArchivalWrapper` at all; however, the resulting serialized generator will only continue to reproduce the problem so long as the implementation of the RNG used to create it does not change; the `KnownSeriesRandom` approach removes the original RNG entirely from the replication process.
 
@@ -454,16 +454,15 @@ GoRogue 2 also provided an array of extension methods for built-in C# types, whi
 | `RandomItem<T>` | `RandomElement<T>` |
 | `RandomIndex<T>` | `RandomIndex<T>` |
 
-Additionally, these methods are new extension methods of `IEnhancedRandom`, rather than being extension methods of the built-in C# type they interact with.  So, whereas in GoRogue 2 you would write:
+Additionally, these methods are now extension methods of `IEnhancedRandom`, rather than being extension methods of the built-in C# type they interact with.  So, whereas in GoRogue 2 you would write:
 
 ```CS
 myList.FisherYatesShuffle(myRNG);
 ```
 
 In GoRogue 3, you would write this instead:
-```CS
-myRNG.Shuffle(myList);
-```
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#ShuffleListExample)]
 
 This helps to consolidate similar functions into a single namespace.  Note that you will need to have `using ShaiRandom;` in the code file to be able to call these methods.
 
@@ -472,14 +471,12 @@ GoRogue 2 also provided methods equivalent to `RandomItem` and `RandomIndex`, wh
 
 ```CS
 var itemFromList = myList.RandomItem(myRNG);
-var itemFromArea = myArea.RandomPosition(myRNG);
+var itemFromRect = myRect.RandomPosition(myRNG);
 ```
 
 These extension methods still exist in GoRogue 3; however since the ones for built-in C# types are now extension methods for _generators_ instead of the container type (as explained in the above section), the methods on these GoRogue defined classes have been refactored to match.  So, given the above code in GoRogue 2, you would write it the following way in GoRogue 3:
-```CS
-var itemFromList = myRNG.RandomItem(myList);
-var itemFromArea = myRNG.RandomPosition(myArea);
-```
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#RNGExtensionsCustomTypes)]
 
 Note that although these extension methods are defined by GoRogue, they are still defined within the `ShaiRandom.Generators` namespace, so you will need to have `using ShaiRandom.Generators;` in your code files to be able to access them. 
 

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GoRogue.DiceNotation;
+﻿using GoRogue.DiceNotation;
+// ReSharper disable UnusedVariable
 
 namespace GoRogue.Snippets.HowTos;
 public static class DiceNotation
