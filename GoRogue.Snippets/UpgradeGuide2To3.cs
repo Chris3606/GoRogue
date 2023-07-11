@@ -10,8 +10,8 @@ namespace GoRogue.Snippets
             #region CustomEnumerators
             var rect = new Rectangle(1, 2, 3, 4);
 
-            // Positions() returns a RectanglePositionsEnumerator, but you can use it exactly as if it returned
-            // IEnumerable
+            // Positions() returns a RectanglePositionsEnumerator, but you can use it exactly as if it
+            // returned IEnumerable
             foreach (var pos in rect.Positions())
                 Console.WriteLine(pos);
 
