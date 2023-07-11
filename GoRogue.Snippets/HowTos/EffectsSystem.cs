@@ -1,4 +1,5 @@
 ﻿using GoRogue.DiceNotation;
+using GoRogue.Effects;
 
 namespace GoRogue.Snippets.HowTos
 {

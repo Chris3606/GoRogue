@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Effects
 {
     /// <summary>
     /// Default argument for any effect. Any class that is used as the template argument for an

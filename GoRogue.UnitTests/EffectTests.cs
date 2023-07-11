@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Effects;
 using GoRogue.UnitTests.Mocks;
 using Xunit;
 

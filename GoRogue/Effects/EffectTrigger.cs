@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace GoRogue
+namespace GoRogue.Effects
 {
     /// <summary>
     /// Represents an "event" that can automatically trigger and manage one or more

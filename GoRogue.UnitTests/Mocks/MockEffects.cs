@@ -1,4 +1,5 @@
 ﻿using System;
+using GoRogue.Effects;
 
 namespace GoRogue.UnitTests.Mocks
 {
