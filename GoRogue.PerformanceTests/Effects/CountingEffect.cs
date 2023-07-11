@@ -2,13 +2,17 @@
 
 namespace GoRogue.PerformanceTests.Effects
 {
-    public class CountingEffect : Effect<EffectArgs?>
+    public class CountingEffect : Effect
     {
         public static int Count;
 
         public CountingEffect(int duration) : base("CountingEffect", duration)
         { }
 
-        protected override void OnTrigger(EffectArgs? e) => Count++;
+        protected override void OnTrigger(out bool cancelTrigger)
+        {
+            Count++;
+            cancelTrigger = false;
+        }
     }
 }

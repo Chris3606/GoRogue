@@ -5,26 +5,28 @@ namespace GoRogue.PerformanceTests.Effects
 {
     public class EffectTests
     {
-        private Effect<EffectArgs?> _effect = null!;
+        private Effect _effect = null!;
+        private AdvancedEffect<int> _advancedEffect = null!;
 
         [GlobalSetup]
         public void GlobalSetup()
         {
-            _effect = new CountingEffect(CountingEffect.Instant);
+            _effect = new CountingEffect(EffectDuration.Instant);
+            _advancedEffect = new AdvancedCountingEffect(EffectDuration.Instant);
         }
 
         [Benchmark]
         public int TriggerEffect()
         {
-            _effect.Trigger(new EffectArgs());
+            _effect.Trigger(out bool _);
             return CountingEffect.Count;
         }
 
         [Benchmark]
-        public int TriggerEffectNullArgs()
+        public int TriggerAdvancedEffect()
         {
-            _effect.Trigger(null);
-            return CountingEffect.Count;
+            _advancedEffect.Trigger(out bool _, 1);
+            return AdvancedCountingEffect.Count;
         }
     }
 }
