@@ -437,28 +437,7 @@ An `ArchivalWrapper` generator exists in the `ShaiRandom.Wrappers` namespace, wh
 
 This can be extremely useful for debugging and unit testing, because it requires you to have no knowledge of the inner workings of an algorithm to reliably reproduce an issue with it; and the ability to reproduce that issue is completely independent of any RNG implementation, and anything else that RNG instance is used for before/after the problematic algorithm used it.  The following highlights this with some example (pseudo) code:
 
-```CS
-// Assume we have an algorithm which uses an RNG, and has a bug
-// which causes it to sometimes fail
-public SomeResult AlgorithmThatSometimesFails(IEnhancedRandom rng) {...}
-
-// Find an issue that occurs sometimes, and get a way to reproduce it
-public string FindAndReproduceProblem()
-{
-    KnownSeriesRandom sequence = null;
-    while (sequence == null)
-    {
-        var wrapper = new ArchivalWrapper(GoRogue.Random.GlobalRandom.DefaultRNG);
-        var result = AlgorithmThatSometimesFails(wrapper);
-        if (algorithmFailed)
-            sequence = wrapper.MakeArchivedSeries();
-    }
-
-    // This string, when deserialized, produces a KnownSeriesRandom that will
-    // always produce the problem we found
-    return sequence.StringSerialize();
-}
-```
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#ArchivalWrapper)]
 
 You can, of course, create a similar result by simply serializing the state of the underlying generator directly before each run of the problematic algorithm, and thus avoid using `KnownSeriesRandom` or `ArchivalWrapper` at all; however, the resulting serialized generator will only continue to reproduce the problem so long as the implementation of the RNG used to create it does not change; the `KnownSeriesRandom` approach removes the original RNG entirely from the replication process.
 
@@ -482,9 +461,8 @@ myList.FisherYatesShuffle(myRNG);
 ```
 
 In GoRogue 3, you would write this instead:
-```CS
-myRNG.Shuffle(myList);
-```
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#ShuffleListExample)]
 
 This helps to consolidate similar functions into a single namespace.  Note that you will need to have `using ShaiRandom;` in the code file to be able to call these methods.
 
@@ -493,14 +471,12 @@ GoRogue 2 also provided methods equivalent to `RandomItem` and `RandomIndex`, wh
 
 ```CS
 var itemFromList = myList.RandomItem(myRNG);
-var itemFromArea = myArea.RandomPosition(myRNG);
+var itemFromRect = myRect.RandomPosition(myRNG);
 ```
 
 These extension methods still exist in GoRogue 3; however since the ones for built-in C# types are now extension methods for _generators_ instead of the container type (as explained in the above section), the methods on these GoRogue defined classes have been refactored to match.  So, given the above code in GoRogue 2, you would write it the following way in GoRogue 3:
-```CS
-var itemFromList = myRNG.RandomItem(myList);
-var itemFromArea = myRNG.RandomPosition(myArea);
-```
+
+[!code-csharp[](../../GoRogue.Snippets/UpgradeGuide2To3.cs#RNGExtensionsCustomTypes)]
 
 Note that although these extension methods are defined by GoRogue, they are still defined within the `ShaiRandom.Generators` namespace, so you will need to have `using ShaiRandom.Generators;` in your code files to be able to access them. 
 
