@@ -38,7 +38,7 @@ namespace GoRogue
     /// function of any Effect added to this EffectTrigger.
     /// </typeparam>
     [PublicAPI]
-    public class EffectTrigger<TTriggerArgs> where TTriggerArgs : EffectArgs
+    public class EffectTrigger<TTriggerArgs> where TTriggerArgs : EffectArgs?
     {
         private readonly List<Effect<TTriggerArgs>> _effects;
 
@@ -97,13 +97,13 @@ namespace GoRogue
         /// Argument to pass to the <see cref="Effect{TriggerArgs}.Trigger(TriggerArgs)" /> function
         /// of each effect.
         /// </param>
-        public void TriggerEffects(TTriggerArgs? args)
+        public void TriggerEffects(TTriggerArgs args)
         {
             foreach (var effect in _effects)
                 if (effect.Duration != 0)
                 {
                     effect.Trigger(args);
-                    if (args != null && args.CancelTrigger)
+                    if (args?.CancelTrigger ?? false)
                         break;
                 }
 

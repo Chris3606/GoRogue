@@ -34,16 +34,16 @@ namespace GoRogue.UnitTests
         [Fact]
         public void EffectToString()
         {
-            string NAME = "Int Effect 1";
-            var DURATION = 5;
-            var intEffect = new IntEffect(NAME, DURATION);
-            Assert.Equal(intEffect.ToString(), $"{NAME}: {DURATION} duration remaining");
+            const string name = "Int Effect 1";
+            const int duration = 5;
+            var intEffect = new IntEffect(name, duration);
+            Assert.Equal(intEffect.ToString(), $"{name}: {duration} duration remaining");
         }
 
         [Fact]
         public void EffectTriggerAdd()
         {
-            var effectTrigger = new EffectTrigger<EffectArgs>();
+            var effectTrigger = new EffectTrigger<EffectArgs?>();
             Assert.Equal(0, effectTrigger.Effects.Count);
 
             effectTrigger.Add(new IntEffect("Test Effect 1", 1));
@@ -62,7 +62,7 @@ namespace GoRogue.UnitTests
         public void EffectTriggerEffects()
         {
             const int multiDuration = 3;
-            var effectTrigger = new EffectTrigger<EffectArgs>();
+            var effectTrigger = new EffectTrigger<EffectArgs?>();
 
             var effect1 = new IntEffect("Int Effect 1", 1);
             var effect2 = new IntEffect("Int Effect 3", multiDuration);
@@ -84,7 +84,7 @@ namespace GoRogue.UnitTests
             Assert.Equal(multiDuration - 2, effectTrigger.Effects[0].Duration);
             Assert.Equal(IntEffect.Infinite, effectTrigger.Effects[1].Duration);
 
-            var secEffectTrigger = new EffectTrigger<EffectArgs>();
+            var secEffectTrigger = new EffectTrigger<EffectArgs?>();
             var testEffect = new IntEffect("Int effect dummy", 1);
             var cancelingEffect = new CancelingIntEffect("Int effect 3", 1);
             secEffectTrigger.Add(cancelingEffect);

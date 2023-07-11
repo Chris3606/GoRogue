@@ -2,7 +2,7 @@
 
 namespace GoRogue.UnitTests.Mocks
 {
-    public class IntEffect : Effect<EffectArgs>
+    public class IntEffect : Effect<EffectArgs?>
     {
         public IntEffect(string name, int startingDuration)
             : base(name, startingDuration)

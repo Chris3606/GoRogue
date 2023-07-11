@@ -59,7 +59,7 @@ namespace GoRogue
     /// The type of the parameter that will be specified to the <see cref="Effect{T}.Trigger(T)" /> function when called.
     /// </typeparam>
     [PublicAPI]
-    public abstract class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs
+    public abstract class Effect<TTriggerArgs> where TTriggerArgs : EffectArgs?
     {
         /// <summary>
         /// The value one should specify as the effect duration for an infinite effect, eg. an effect
@@ -134,7 +134,7 @@ namespace GoRogue
         /// Parameters that are passed to <see cref="OnTrigger(TTriggerArgs)" />.
         /// Can be null.
         /// </param>
-        public void Trigger(TTriggerArgs? args)
+        public void Trigger(TTriggerArgs args)
         {
             OnTrigger(args);
 
@@ -147,7 +147,7 @@ namespace GoRogue
         /// This function is called automatically when <see cref="Trigger" /> is called.
         /// </summary>
         /// <param name="e">Class containing all arguments <see cref="OnTrigger" /> requires to function.</param>
-        protected abstract void OnTrigger(TTriggerArgs? e);
+        protected abstract void OnTrigger(TTriggerArgs e);
 
         /// <summary>
         /// Returns a string of the effect's name and duration.
