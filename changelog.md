@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+- None
+
+## [3.0.0-beta08] - 2023-07-12
+
 ### Added
 - `AdvancedEffect` and `AdvancedEffectTrigger` have been added, and have a `Trigger` function that takes a parameter of the type you specify, which allows the effect to be triggered with additional context information.
     - This is equivalent to the old method of passing parameters which entailed creating a subclass of `EffectArgs`.
