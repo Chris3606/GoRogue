@@ -488,3 +488,29 @@ Note that this function is quite similar to the `NextBool(float chance)` method 
 2. `PercentageCheck` will throw an exception if an out-of-range percent is given, whereas `NextBool` will tolerate arbitrary values.
 
 Both behaviors can be useful depending on the situation; other than these differences, the two methods perform the same function.
+
+# Effects System Refactored
+GoRogue 2 contained an "effects" system designed to help users implemented game mechanics such as damage, armor, healing, etc in an extensible way.  It consisted of an `Effect<T>` class and an `EffectTrigger<T>` class, where the `Effect<T>` class would be subclassed to implement an effect, and effect instances could then be added to an `EffectTrigger<T>` instance, which represented an event and could trigger any added effects.
+
+In GoRogue 3, this system still exists, but has been refactored to address some usability and performance concerns.  The implementation in GoRogue v2 had a few main issues:
+
+1. The type parameter made usage unnecessarily complex for simple use cases, and could be initially misleading to users.   Primarily, this is because the type parameters given to `Effect`, and the parameters given to an `EffectTrigger` it is added to, had to match; only effects that take the same parameter to their `Trigger()` functions can be added to a given `EffectTrigger`.  The basic implementation having this type parameter tended to encourage using it to pass parameters that were better passed as constructor parameters to the `Effect` subclass, and would get users into trouble due to type mismatches.
+
+2. The API was confusing for those using only `Effect` that didn't need a parameter, and without an `EffectTrigger`, because the parameter was completely useless. 
+
+3. The type used for the type parameter needed to be a reference type.  This has a number of performance implications due to the allocation of new types constantly.
+
+These concerns have been addressed in GoRogue 3 via the following changes.
+
+## Effects Namespace
+First, all effect-related classes have been moved to the `GoRogue.Effects` namespace.  This on its own is a relatively minor change, and is mostly a side effect of there being more classes related to effects in the new implementation.
+
+## Effect and EffectTrigger Do Not Take Type Parameters
+The biggest change, is that `Effect` and `EffectTrigger` no longer take any type parameters.  Instead, `Effect.Trigger` and `Effect.OnTrigger` take an `out bool` parameter, which you set to `true` if you want to cancel a trigger.  This is the equivalent of setting `args.CancelTrigger` to `true` in the old implementation.  `EffectTrigger.TriggerEffects` doesn't take any parameter at all; instead, it creates a boolean internally and passes it as the `out bool` parameter to `Trigger`.
+
+Additionally, there is an overload of `Effect.Trigger` which takes no parameter at all.  This is simply meant as a convenience for when you're calling `Trigger` manually for an instantaneous effect and don't care about the parameter value.
+
+This change removes the ability for you to pass custom parameters to `Effect.OnTrigger`.  If you do need to do so, you will instead need to use the new classes introduced into `GoRogue.Effects`; `AdvancedEffect<TTriggerArgs>`, and `AdvancedEffectTrigger<TTriggerArgs>`.  These classes are identical to `Effect` and `EffectTrigger`, respectively, except that they take an additional parameter to their trigger-related functions of type `TTriggerArgs`.  This is functionally equivalent to `Effect<T>` and `EffectTrigger<T>` from GoRogue 2; except that the `TTriggerArgs` type can be of any type (value or reference type), and therefore the `out bool` parameter still exists to allow for cancellation.
+
+Examples that use both `Effect`/`EffectTrigger` and `AdvancedEffect<TTriggerArgs>`/`AdvancedEffectTrigger<TTriggerArgs>` can be found in the [effects system how-to article](~/articles/howtos/effects-system.md).
+
