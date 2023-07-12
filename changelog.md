@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - These classes accept a parameter of an arbitrary type, rather than forcing you to subclass `EffectArgs` to pass parameters.
 
 ### Changed
+- All classes related to the effects system have been moved to the `GoRogue.Effects` namespace.
 - `Effect` and `EffectTrigger` no longer accept type parameters
     - Versions called `AdvancedEffect` and `AdvancedEffectTrigger` have been added which do accept type parameters
 - Cancellation of a trigger from an effect is now handled via an `out bool` parameter given to `Trigger` and `OnTrigger`
