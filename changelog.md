@@ -7,6 +7,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - None
 
+## [3.0.0-beta08] - 2023-07-12
+
+### Added
+- `AdvancedEffect` and `AdvancedEffectTrigger` have been added, and have a `Trigger` function that takes a parameter of the type you specify, which allows the effect to be triggered with additional context information.
+    - This is equivalent to the old method of passing parameters which entailed creating a subclass of `EffectArgs`.
+    - These classes accept a parameter of an arbitrary type, rather than forcing you to subclass `EffectArgs` to pass parameters.
+
+### Changed
+- All classes related to the effects system have been moved to the `GoRogue.Effects` namespace.
+- `Effect` and `EffectTrigger` no longer accept type parameters
+    - Versions called `AdvancedEffect` and `AdvancedEffectTrigger` have been added which do accept type parameters
+- Cancellation of a trigger from an effect is now handled via an `out bool` parameter given to `Trigger` and `OnTrigger`
+    - Set this boolean value to true to cancel the trigger
+
+### Removed
+- `EffectArgs` has been removed.
+    - Parameters to `AdvancedEffect` and `AdvancedEffectTrigger` can now be of an arbitrary type.
+
 ## [3.0.0-beta07] - 2023-07-11
 ### Added
 - The `Factories` namespace now contains `LambdaFactoryBlueprint` and `LambdaAdvancedFactoryBlueprint` which allow the user to create a blueprint by specifying a function to create the object as a constructor parameter, rather than having to create a class that implements `IFactoryBlueprint`/`IAdvancedFactoryBlueprint`.
