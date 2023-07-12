@@ -9,6 +9,8 @@
 - name: How-Tos
   href: howtos/index.md
   items:
+      - name: Effects System
+        href: howtos/effects-system.md
       - name: Factories
         href: howtos/factories.md
       - name: Map Generation
