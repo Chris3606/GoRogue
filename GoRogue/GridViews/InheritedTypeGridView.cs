@@ -8,7 +8,7 @@ namespace GoRogue.GridViews
     /// </summary>
     /// <remarks>
     /// This is useful to implement full co-variance/contra-variance with grid views, if you know that values that will be
-    /// put into the map will be of a particular type.  An exception will occur if casting a value to T2 fails.
+    /// put into the grid will be of a particular type.  An exception will occur if casting a value to T2 fails.
     /// </remarks>
     /// <typeparam name="T1">Base type of grid view to implement.</typeparam>
     /// <typeparam name="T2">Value inheriting from/implementing T1.</typeparam>

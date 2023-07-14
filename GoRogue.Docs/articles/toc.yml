@@ -13,6 +13,8 @@
         href: howtos/effects-system.md
       - name: Factories
         href: howtos/factories.md
+      - name: Grid View Concepts
+        href: howtos/grid-view-concepts.md
       - name: Map Generation
         href: howtos/map-generation.md
       - name: Rolling Dice
