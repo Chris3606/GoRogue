@@ -3,4 +3,4 @@
 using GoRogue.Snippets.HowTos;
 
 Console.WriteLine("This project exists only to contain snippets for the documentation.");
-AdvancedEffectsExample.ExampleCode();
+ViewportDemonstration.ExampleCode();

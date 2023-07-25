@@ -7,7 +7,7 @@ GoRogue offers many different algorithms that either help to generate or operate
 
 For example, in the case of A* pathfinding, the algorithm might view a grid as a single boolean value per location, saying whether or not that location is passable -- this is the only data about a grid that the algorithm needs to function. By contrast, however, goal-map pathfinding might view each location in the grid as one of three values; clear space, obstacle space, or goal.  Sense mapping is different still; it might view the grid as a double value per location, which gives its resistance to spreading values. While the data in these examples may be inter-related, each algorithm views the grid as a different set of values.
 
-GoRogue provides implementations of all the algorithms above (and more), and is designed to be a highly portable library that doesn't require the use of any particular code architecture or arrangement of data to function.  So, its algorithms must view the grid in the appropriate way without any real knowledge of or guarantees about how the data is stored or acquired. For example, in the case of A*, its boolean data described above could be stored in a simple 2D array of boolean values. It could also be a boolean value out of some Tile or GameObject class which is stored in an array or spatial map; or, it could be acquired as the result of a complex operation operation such as ray-casting.  One of the goals of GoRogue is to allow all these options (and any other that a user might create) to be valid, without necessitating code modifications, and without being difficult to use and requiring you to specify data in a particular format.  To accomplish this, GoRogue algorithms view the map via an abstraction called a "grid view".
+GoRogue provides implementations of all the algorithms above (and more), and is designed to be a highly portable library that doesn't require the use of any particular code architecture or arrangement of data to function.  So, its algorithms must view the grid in the appropriate way without any real knowledge of or guarantees about how the data is stored or acquired. For example, in the case of A*, its boolean data described above could be stored in a simple 2D array of boolean values. It could also be a boolean value out of some `Tile` or `GameObject` class which is stored in an array or spatial map; or, it could be acquired as the result of a complex operation operation such as ray-casting.  One of the goals of GoRogue is to allow all these options (and any other that a user might create) to be valid, without necessitating code modifications, and without being difficult to use and requiring you to duplicate data in order to specify it in a particular format.  To accomplish this, GoRogue algorithms view the map via an abstraction called a "grid view".
 
 >[!TIP]
 >Although a relatively simple concept, the "grid view" abstraction is considered to be foundational knowledge for using GoRogue.  All features of the library that implement an algorithm of some sort on a grid will ask for grid views as input, produce them as output, or both.  We recommend that you, at minimum, familiarize yourself with the concept and some of the built-in implementations, before digging too deep into other features of the library like pathfinding and FOV.
@@ -15,7 +15,7 @@ GoRogue provides implementations of all the algorithms above (and more), and is 
 ## Important Knowledge and Disclaimers
 Before digging into the grid view concept, it is worthy to note a few bits of background knowledge.
 
-First, **the concept of "grid views" is not defined by GoRogue**; it is defined by [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives), also known as the "primitives" library, which is a dependency of GoRogue.  This library is open-source and maintained in large part by the same author as GoRogue.  However, this article will focus on the grid view concept, and some common scenarios users may encounter when using GoRogue.  It is **not** designed to be a comprehensive guide on grid views; there will be implementations provided by TheSadRogue.Primitives which are not mentioned here.  If a built-in implementation is not mentioned here, it does **not** mean you won't find it useful; just that it wasn't necessary to understand the concept, and was not picked as one of the examples used to demonstrate those concepts.  Therefore, you may find it very beneficial to dig though the [API documentation for grid view implementations](https://thesadrogue.github.io/TheSadRogue.Primitives/api/SadRogue.Primitives.GridViews.html) to get a feel for what implementations are already provided.
+First, **the concept of "grid views" is not defined by GoRogue**; it is defined by [TheSadRogue.Primitives](https://github.com/thesadrogue/TheSadRogue.Primitives), also known as the "primitives" library, which is a dependency of GoRogue.  This library is open-source and maintained in large part by the same author as GoRogue.  However, this article will focus on the grid view concept, and some common scenarios users may encounter when using GoRogue.  It is **not** designed to be a comprehensive guide on grid views; there will be implementations provided by TheSadRogue.Primitives which are not mentioned here.  If a built-in implementation is not mentioned here, it does **not** mean you won't find it useful; just that it wasn't necessary to understand the concept, and was not picked as one of the examples used to demonstrate those concepts.  Therefore, you may find it very beneficial to look though the [API documentation for grid view implementations](https://thesadrogue.github.io/TheSadRogue.Primitives/api/SadRogue.Primitives.GridViews.html) to get a feel for what implementations are already provided.
 
 Similarly, **this article is not meant as a tutorial on how to use specific GoRogue features**, such as pathfinding or FOV.  Specific features will have their own articles dedicated to them.  This article is **only** intended to introduce basic knowledge of what grid views are, and a few ways GoRogue commonly uses them.  So, when this article mentions other features, it is doing so only as a use case/example, and it will gloss over specifics of those features.  If you're interested in those features, you should check out their dedicated articles; however, keep in mind that those dedicated articles won't spend much time explaining what a grid view is and how to create one; so our recommendation is to familiarize yourself with grid views _first_ (via this article), then check out specific articles for features that use them.
 
@@ -34,6 +34,8 @@ This simple abstraction solves the problem of grid representation for algorithms
 
 ## ISettableGridView
 `IGridView<T>` works very well with algorithms such as A* pathfinding, where the algorithm does not modify the grid. However, some algorithms (like ones that pertain to map generation, for instance) will need to modify values in the grid as well.  To support abstraction in these cases, [ISettableGridView&lt;T&gt;](xref:SadRogue.Primitives.GridViews.ISettableGridView`1) is provided. This interface is exactly like `IGridView<T>` (in fact, it itself implements `IGridView<T>`), however its indexers must also define `set` functions. These functions take a value of type `T`, and apply whatever changes are necessary to underlying data structures to implement that change.
+
+`ISettableGridView<T>` also defines a `Clear()` function and a `Fill(T value)` function, which can be used to clear the grid to a default value or fill it with a given value, respectively.
 
 One key concept to emphasize, is that **`ISettableGridView<T>` implements `IGridView<T>`**; you should think of `ISettableGridView` as an extension of `IGridView` that simply adds the functionality to set values to locations.  This is important because any built-in grid view implementations that _can_ implement `ISettableGridView<T>` generally _will_; and this does not preclude them from being used as `IGridView<T>` instances if needed.
 
@@ -63,7 +65,71 @@ Some use cases may also require you to make your own implementations; this will 
 ## BitArrayView
 `BitArrayView` is another provided grid view implementation.  It implements `ISettableGridView<bool>`, and is based on C#'s `BitArray`, which represents an series of boolean values using 1 bit for each value.  Like `ArrayView<T>`, when you create one you can either give it give it a width and a height, in which case it will create a new `BitArray` and expose that array to you via its indexer functions, or you can give it an existing `BitArray` and a width, and it will calculate a height and use the `BitArray` you gave it (without copying).  It is also implicitly convertible to `BitArray` (without copying).
 
-It uses up to 8x less memory than an `ArrayView<bool>`, but otherwise is typically the same in terms of raw performance.  Therefore, it is useful for the same cases where `ArrayView<bool>` is ([discussed here](#common-uses)).  If those reasons fit your use case, and you do _not_ need to wrap some already existing `bool[]`, you can probably use `BitArray` instead and save yourself some memory without a notable performance loss.
+It uses up to 8x less memory than an `ArrayView<bool>`, but otherwise is typically the same in terms of raw performance.  Therefore, it is useful for the same cases where `ArrayView<bool>` is ([discussed here](#common-uses)).  If those reasons fit your use case, and you do _not_ need to wrap some already existing `bool[]`, you can probably use `BitArrayView` instead and save yourself some memory without a notable performance loss.
 
-# LambdaGridView&lt;T&gt;
-TODO: Here
+## LambdaGridView&lt;T&gt; and LambdaSettableGridView&lt;T&gt;
+
+`LambdaGridView<T>` is a simple implementation of `IGridView<T>` which implements the indexers by taking a `Func<Point, T>` in its constructor, and calling the function to retrieve a value every time an indexer is used.
+
+There is also a `LambdaSettableGridView<T>`, which is the same except for it implements `ISettableGridView<T>` and takes an extra parameter; an `Action<Point, T>` which is called to "assign" a value to a location.
+
+For GoRogue algorithms, the bulk of the use for these will involve `LambdaGridView<T>`, because it is a convenient implementation to use in cases where retrieving a value appropriate for a grid view is a simple matter of calling an existing function, or accessing a property from a simple structure or class.
+
+>[!NOTE]
+>Although `LambdaGridView<T>` can be convenient, be aware that it may have performance implications.  Generally, GoRogue algorithms which take grid views _by design_ do not introduce any sort of intermediate caching between the grid view you provide and the algorithm.  So, if you specify a `LambdaGridView<T>`, _every time_ an algorithm needs to retrieve a value, it will call your function; so the faster your function, the faster the algorithm, and conversely the slower your function the slower the algorithm.  Particularly since some algorithms can access grid views many times during their operations, you may find that a `LambdaGridView<T>` results in a much slower algorithm compared to something like an `ArrayView<T>`.  GoRogue leaves this performance determination up to you; if you find that a `LambdaGridView<T>` is fast enough, you can use it; if not, you can create your own cache via `ArrayView<T>` or some other structure and maintain it.  This gives you the most overall control over the performance characteristics and tradeoffs. 
+
+### Code Example
+As an example, we'll consider a relatively common case where a user might have an array of `Tile` structures which represent their terrain, and they need to generate data for a grid view by accessing a field in the proper tile structure.
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#LambdaGridViewExample)]
+
+## Translation Grid Views
+The primitives library also implements a number of "translation views", which are grid views designed to map values of one grid view to values in a grid view of a different type.  The most common translation grid view is `LambdaTranslationGridView<T1, T2>`, which works very similarly to the above `LambdaGridView<T>`; it implements `ISettableGridView<T2>`, and you specify a function at construction which, given a position and value, translates that value to the new type `T2`.  There is also `LambdaSettableTranslationView<T1, T2>`, which is the same except it implements `ISettableGridView<T2>` and you specify a "set" function.
+
+### Basic Code Example
+The following code example re-implements the above translation from `Tile` instances, but uses a `LambdaTranslationGridView` instead.
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#LambdaTranslationGridViewExample)]
+
+### Subclasses
+If you want to implement a translation grid view via a subclass, rather than by specifying a function, the "primitives" library also provides `TranslationGridView<T1, T2>`.  This class specifies two protected, virtual functions; `T2 TranslationGet(T1 value)` and `T2 TranslationGet(Point position, T1 value)`.  You should override exactly _one_ of these to implement the translation from one value to another.  It does not matter which one you override; the functions are configured such that whichever of the two functions you override will be called.
+
+There is also a `LambdaSettableTranslationGridView<T1, T2>` class which, again, implements the same concept but there is a pair of functions `TranslateSet` which you may override as well.
+
+### Subclass Code Example
+The following example implements the same translation the above one does, but uses the subclass method instead.  There is no real need to use a subclass here, other than for the sake of an example and/or personal preference; the functionality is exactly the same as before:
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#SubclassTranslationGridViewExample)]
+
+## Viewport
+The "primitives" library also provides grid views designed to represent "sub-areas" of other grid views.  This can be useful for representing very large maps to algorithms, where you only want an algorithm to consider a small portion of the map.  The primary reason you might want to do this, is performance.  Consider `GoalMap`, for instance, which is a fairly expensive algorithm.  On a very large map, you may only need to calculate the dijkstra map for a portion of the map.  A viewport can help facilitate this.
+
+>[!WARNING]
+>The viewport is a very basic concept which may leave some to be desired in certain situations.  Note that `Viewport` _only_ implements indexers that take coordinates in that viewport's "coordinate space", and most algorithms have no concept of if they're operating on a viewport or some other grid view implementation.  So if you give an algorithm a viewport, it will expect coordinates to be given to it in the _viewport_ coordinate scheme; and similarly, it will produce its output in that viewport's coordinate space.  It remains the user's responsibility to do any translation as it pertains to translating between "actual" positions and viewport positions.  An example will be specified below which demonstrates this.
+
+Note that a more advanced "coordinate space translation" abstraction is planned for the primitives library in the feature, which may take the place of this for many use cases.  You can track its progress on [this issue](https://github.com/Chris3606/GoRogue/issues/281).
+
+There are also two other viewport-related grid views provided.  The first is `SettableViewport<T>`, which is identical to `Viewport<T>` except for it implements `ISettableGridView<T>` and therefore allows you to set values via the viewport.  The second is `UnboundedViewport<T>`.  `UnboundedViewport<T>` is similar to `Viewport<T>`, but instead of throwing an exception if you access elements outside of the current viewing area, it will instead return a default value.
+
+### Code Example
+The following code example uses a viewport to create a `GoalMap` which is based on a much larger grid view.  The semantics of how a goal map work are unimportant; goal maps are covered in their own article; for the purposes of this example, just note that the result of a goal map is a map where the value of each square is its distance from the nearest "goal".  The main intent is to demonstrate the semantics of a viewport and its limitations.
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#ViewportDemonstration)]
+
+# Creating Custom Grid Views
+In some cases, you may want to create a custom implementation of `IGridView<T>` or `ISettableGridView<T>`.  In these cases, you may simply implement these interfaces; however, there is some repetitive code involved.  As outlined above, the `IGridView<T>` interface involves defining 3 indexers; one which takes a `Point`, one which takes a position as an x and y value, and one that takes an index and uses it as if it is encoded using the formula `Y * Width + X`.  In most cases, these indexers can be defined in terms of each other; an index and an X and Y value can both be converted to a `Point`, for example, given a grid view with known width.  Furthermore, the interface has you define a `Count` property which should be equal to `Width * Height`.
+
+In order to alleviate this type of repetitive boilerplate code, some base classes are provided that you can inherit from instead of implementing the interface directly.  These classes implement `IGridView<T>` by having you define only the width, height, and a single indexer; and the remaining properties are defined in terms of those.
+
+The first such class is `GridViewBase<T>`.  It has you define an indexer taking a `Point`, and the other indexers are defined in terms of that one.  The following is a code example which defines a simple custom grid view using this class as the base.
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#GridViewBaseExample)]
+
+There is also a `GridView1DIndexBase<T>` class.  This is identical to `GridViewBase<T>`, but instead of implementing an indexer which takes a `Point`, you implement an indexer which takes a 1D index.  This may be more useful if you are wrapping an array or some structure that presents itself like an array.
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/GridViewConcepts.cs#GridView1DIndexBaseExample)]
+
+There are also equivalents of these classes for implementing `ISettableGridView<T>`; these are `SettableGridViewBase<T>` and `SettableGridView1DIndexBase<T>`, respectively.
+
+# Useful Extension Methods
+There are many useful and well-optimized extension methods provided for grid views; most of which are quite simple.  We will not cover them all individual here; you should look through the API documentation for [IGridView](xref:SadRogue.Primitives.GridViews.IGridView`1) and [ISettableGridView](xref:SadRogue.Primitives.GridViews.ISettableGridView`1) for details.  Particularly useful methods include `Positions()`, `Bounds()` and `ApplyOverlay()`.  There are also extensions to ShaiRandom's `IEnhancedRandom` interface, [which GoRogue provides](xref:ShaiRandom.Generators.GoRogueEnhancedRandomExtensions).  Although many extensions are provided, the grid-view related functions include various overloads of `RandomPosition()`, which focus on selection of random positions from within the bounds of the grid view (which may optionally be required to meet certain parameters).
