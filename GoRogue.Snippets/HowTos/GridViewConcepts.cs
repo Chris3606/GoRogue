@@ -1,4 +1,4 @@
-﻿using GoRogue.MapGeneration;
+﻿// ReSharper disable NotAccessedPositionalProperty.Local
 using GoRogue.Pathing;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
@@ -8,14 +8,14 @@ namespace GoRogue.Snippets.HowTos;
 #region LambdaGridViewExample
 public static class LambdaGridViewExample
 {
-    // Represents some attributes about the terrain at each location.  A real Terrain
+    // Represents some attributes about the terrain at each location.  A real Tile
     // structure might have different values, or you might use an enum instead of a struct
     // for each location; but this suffices for a simple example.
-    record struct Terrain(bool IsWalkable, bool IsTransparent);
+    record struct Tile(bool IsWalkable, bool IsTransparent);
 
     public static void ExampleCode()
     {
-        var tiles = new ArrayView<Terrain>(10, 10);
+        var tiles = new ArrayView<Tile>(10, 10);
 
         // In this example, suppose we want a grid view where "true" indicates a tile can
         // be passed through (like a floor), and "false" indicates a tile is impassable
@@ -33,18 +33,18 @@ public static class LambdaGridViewExample
 #region LambdaTranslationGridViewExample
 public static class LambdaTranslationGridViewExample
 {
-    record struct Terrain(bool IsWalkable, bool IsTransparent);
+    record struct Tile(bool IsWalkable, bool IsTransparent);
 
     public static void ExampleCode()
     {
-        var tiles = new ArrayView<Terrain>(10, 10);
+        var tiles = new ArrayView<Tile>(10, 10);
 
         // Similar to last time, the grid view we create should have a value of "true" for
         // passable tiles, and false otherwise.  We only need a "tile" value, not a
         // position, to determine if a tile is passable; but if we wanted the position as
         // well, we could change the function we pass to take two parameters; a position
         // and a value.
-        var gridView = new LambdaTranslationGridView<Terrain, bool>(
+        var gridView = new LambdaTranslationGridView<Tile, bool>(
             tiles,
             t => t.IsWalkable);
         Console.WriteLine(gridView.ExtendToString(elementStringifier: b => b ? "T" : "F"));
@@ -55,22 +55,22 @@ public static class LambdaTranslationGridViewExample
 #region SubclassTranslationGridViewExample
 public static class SubclassTranslationGridViewExample
 {
-    record struct Terrain(bool IsWalkable, bool IsTransparent);
+    record struct Tile(bool IsWalkable, bool IsTransparent);
 
-    class TerrainWalkabilityView : TranslationGridView<Terrain, bool>
+    class TerrainWalkabilityView : TranslationGridView<Tile, bool>
     {
-        public TerrainWalkabilityView(IGridView<Terrain> baseGrid)
+        public TerrainWalkabilityView(IGridView<Tile> baseGrid)
             : base(baseGrid)
         { }
 
         // Again, in this case, we don't need the position; but we could override
-        // TranslateGet(Point position, Terrain value) instead if we did.
-        protected override bool TranslateGet(Terrain value) => value.IsWalkable;
+        // TranslateGet(Point position, Tile value) instead if we did.
+        protected override bool TranslateGet(Tile value) => value.IsWalkable;
     }
 
     public static void ExampleCode()
     {
-        var tiles = new ArrayView<Terrain>(10, 10);
+        var tiles = new ArrayView<Tile>(10, 10);
 
         var gridView = new TerrainWalkabilityView(tiles);
         Console.WriteLine(gridView.ExtendToString(elementStringifier: b => b ? "T" : "F"));

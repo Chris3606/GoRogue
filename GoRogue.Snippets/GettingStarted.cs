@@ -8,7 +8,7 @@
             Console.WriteLine(new SadRogue.Primitives.Point(1, 2));
 
             // Used to stop window from closing until a key is pressed.
-            int c = Console.Read();
+            Console.Read();
             #endregion
         }
     }
