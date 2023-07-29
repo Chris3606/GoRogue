@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using GoRogue.Snippets.HowTos;
+using GoRogue.Snippets;
 
-Console.WriteLine("This project exists only to contain snippets for the documentation.");
-ViewportDemonstration.ExampleCode();
+// Console.WriteLine("This project exists only to contain snippets for the documentation.");
+GettingStarted.ExampleCode();

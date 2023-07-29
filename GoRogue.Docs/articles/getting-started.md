@@ -5,7 +5,7 @@ title: Getting Started
 # Getting Started
 GoRogue is a .NET Standard library, and as such, can be used with any .NET projects running on a platform that supports .NET Standard 2.1.  Compatible platforms include, but are not limited to, .NET Core 3.0 or higher, Mono 6.4 or higher, and .NET 5 or higher.  Additional compatibility information for .NET Standard 2.1 can be found at Microsoft's site [here](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
 
-Note that GoRogue is _not_ a full game engine on its own; it's a collection of tools, data structures, and algorithms which are helpful in creating a 2D grid-based game and can easily integrate with other frameworks.  There are a number of crucial "game engine" features which GoRogue, by design, does not provide any facilities for, including rendering and playing audio.  The intent is for you to pair GoRogue with some other framework or library which handles those aspects.  An all-inclusive list will not be provided here; but if you're looking for suggestions, some compatible options include [SadConsole](), [MonoGame](https://www.monogame.net/), [Unity](https://unity.com/), [Godot](https://godotengine.org/), and [Stride](https://www.stride3d.net/).  GoRogue is distributed as a NuGet package which provides targets for .NET Standard 2.1 compatible platforms, which includes the Mono, .NET, and .NET Core runtimes; so it will generally be compatible with any framework using these platforms.
+Note that GoRogue is _not_ a full game engine; it's a collection of tools, data structures, and algorithms which are helpful in creating a 2D grid-based game and can easily integrate with other frameworks.  There are a number of crucial "game engine" features which GoRogue, by design, does not provide any facilities for, including rendering and playing audio.  The intent is for you to pair GoRogue with some other framework or library which handles those aspects.  An all-inclusive list will not be provided here; but if you're looking for suggestions, some compatible options include [SadConsole](), [MonoGame](https://www.monogame.net/), [Unity](https://unity.com/), [Godot](https://godotengine.org/), and [Stride](https://www.stride3d.net/).  GoRogue is distributed as a NuGet package which provides targets for .NET Standard 2.1 compatible platforms, which includes the Mono, .NET, and .NET Core runtimes; so it will generally be compatible with any framework using these platforms.
 
 Because the library is distributed as a NuGet package, installation is straightforward.  Instructions below outline the process for popular platforms/runtimes; however it really is as simple as "install the NuGet package" in the vast majority of circumstances.
 
@@ -19,11 +19,12 @@ GoRogue may be easily introduced into a new or existing project created using Vi
 ![create project](~/images/getting_started/ide_project/1_Core_Create_Project.PNG)
 
 2. Give the project a name and location, and finish project creation.
+
 3. Next, you must add the GoRogue NuGet package.  Right click on the project in the Solution explorer, and choose **Manage NuGet Packages**.
 
 ![manage nuget](~/images/getting_started/ide_project/2_Manage_Nuget.PNG)
 
-4. Ensure that the **Browse** tab is selected, and that **Package Source** is set to nuget.org, then search **GoRogue**.  Install the package.
+4. Ensure that the **Browse** tab is selected, and that **Package Source** is set to nuget.org, and ensure "include prereleases" is checked (this is required because GoRogue v3 is still in beta).  Then, search **GoRogue**.  Select a version which **does not end in -debug**, and install the package.
 
 ![install nuget](~/images/getting_started/ide_project/3_Install_Nuget.PNG)
 
@@ -31,7 +32,12 @@ GoRogue may be easily introduced into a new or existing project created using Vi
 
 [!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#ExampleMainFunction)]
 
-6. Run the project and you should see the coordinate printed out; this should validate that GoRogue and its dependencies are installed properly.
+
+Note that the above code assumes the following "using" statements are present in the file in which it was placed:
+
+[!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#RequiredIncludes)]
+
+6. Run the project and you should see a grid filled with "T" (true values) printed out; this should validate that GoRogue and its dependencies are installed properly.
 
 ![run program](~/images/getting_started/ide_project/4_Run_Program.PNG)
 
@@ -47,13 +53,17 @@ cd GoRogueTestProject
 
 This creates a new console project called "GoRogueTestProject".  Any .NET project type should allow the installation of GoRogue; "console" is simply chosen here for simplicity.
 
-2. ext, you must add the GoRogue NuGet package.  Run the command `dotnet package add GoRogue`.
+2. Next, you must add the GoRogue NuGet package.  Run the command `dotnet add package GoRogue -v 3.0.0-beta08`.  Note that until GoRogue v3 is out of beta, you will **must** manually specify the version in order to install GoRogue v3 (since the NuGet package is marked as a "prerelease").
 
 3. Replace the `Main` function (or top level statements, if you're using them) in `Program.cs` with the following:
 
 [!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#ExampleMainFunction)]
 
-4. Run the project with `dotnet run`.  You should see the coordinate printed out; this should validate that GoRogue and its dependencies are installed properly.
+Note that the above code assumes the following "using" statements are present in the file in which it was placed:
+
+[!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#RequiredIncludes)]
+
+4. Run the project with `dotnet run`.  You should see a grid filled with "T" (true values) printed out; this should validate that GoRogue and its dependencies are installed properly.
 
 ![run_program dotnet core](~/images/getting_started/dotnet_cli_project/4_Core_Run_Program.PNG)
 ***
