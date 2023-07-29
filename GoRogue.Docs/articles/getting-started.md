@@ -5,10 +5,12 @@ title: Getting Started
 # Getting Started
 GoRogue is a .NET Standard library, and as such, can be used with any .NET projects running on a platform that supports .NET Standard 2.1.  Compatible platforms include, but are not limited to, .NET Core 3.0 or higher, Mono 6.4 or higher, and .NET 5 or higher.  Additional compatibility information for .NET Standard 2.1 can be found at Microsoft's site [here](https://docs.microsoft.com/en-us/dotnet/standard/net-standard).
 
-The library is distributed as a NuGet package, so installation is exactly like that of any other NuGet package.  Instructions below outline the process for popular platforms.
+Note that GoRogue is _not_ a full game engine on its own; it's a collection of tools, data structures, and algorithms which are helpful in creating a 2D grid-based game and can easily integrate with other frameworks.  There are a number of crucial "game engine" features which GoRogue, by design, does not provide any facilities for, including rendering and playing audio.  The intent is for you to pair GoRogue with some other framework or library which handles those aspects.  An all-inclusive list will not be provided here; but if you're looking for suggestions, some compatible options include [SadConsole](), [MonoGame](https://www.monogame.net/), [Unity](https://unity.com/), [Godot](https://godotengine.org/), and [Stride](https://www.stride3d.net/).  GoRogue is distributed as a NuGet package which provides targets for .NET Standard 2.1 compatible platforms, which includes the Mono, .NET, and .NET Core runtimes; so it will generally be compatible with any framework using these platforms.
+
+Because the library is distributed as a NuGet package, installation is straightforward.  Instructions below outline the process for popular platforms/runtimes; however it really is as simple as "install the NuGet package" in the vast majority of circumstances.
 
 ## Traditional Dotnet Projects
-GoRogue may be used in a .NET project like any other compatible NuGet package.  Because GoRogue targets .NET Standard 2.1, .NET Core 3+ or .NET 5+ is required.
+GoRogue may be used in a traditional .NET project like any other compatible NuGet package.  Because GoRogue targets .NET Standard 2.1, .NET Core 3+ or .NET 5+ is required.
 
 # [New Project UI](#tab/tabid-new-project-ui)
 GoRogue may be easily introduced into a new or existing project created using Visual Studio (which can be downloaded [here](https://www.visualstudio.com/downloads/)) or any other supported IDE.  The following steps outline the process with Visual Studio 2019, although other versions of Visual Studio and other IDEs will have similar project creation steps:
@@ -57,17 +59,22 @@ This creates a new console project called "GoRogueTestProject".  Any .NET projec
 ***
 
 ## Usage With SadConsole
-Although GoRogue is designed to be portable and function in any supported .NET environment, users of [SadConsole](https://sadconsole.com/) should be aware that there are some extra dotnet templates and projects which may be helpful.  One option is to simply follow SadConsole's "getting started" instructions, then install GoRogue into the created project; however there is also an "integration" library which is designed to help integrate the two libraries, as well as several code examples showing common ways to integrate the two.  Although not applicable to all use cases, it may be useful to look through some of these.  Details can be found [here](https://github.com/Chris3606/SadConsole_RogueLike_Info).
+Users which choose to use GoRogue with [SadConsole](https://sadconsole.com/) should be aware that there are some extra dotnet templates and projects which may be helpful.  One option is to simply follow SadConsole's "getting started" instructions, then install GoRogue into the created project; however there is also an "integration" library which is designed to help integrate the two libraries, as well as several code examples showing ways to use them together.  Although not applicable to all use cases, the integration library and its examples may be useful when getting started, even if just as a reference.
+
+Details on using GoRogue and SadConsole together (both with and without the integration library) can be found [here](https://github.com/Chris3606/SadConsole_RogueLike_Info).
+
+## Unity
+GoRogue is compatible with modern versions of Unity; however it is not distributed on the Unity Asset Store, and Unity does not have built-in support for NuGet.  Two possible options for using GoRogue with Unity are:
+
+1. There is a [third-party package for Unity](https://github.com/GlitchEnzo/NuGetForUnity) which allows the installation of NuGet packages.  This is, in many cases, the easiest way to use GoRogue in Unity.
+
+2. On GoRogue's GitHub, in the [releases section](https://github.com/Chris3606/GoRogue/releases), each release will have .zip file attached to it.  This .zip file will contain all DLLs and XML documentation files for both GoRogue itself, and all of its dependencies (assuming a .NET Standard 2.1 target).  You can simply download this .zip file, and add the DLLs to your Unity project via drag and drop.
 
 ## Other Engines/Platforms/Runtimes
-Any platform which supports .NET Standard 2.1 or higher will generally be compatible with GoRogue.  This includes (but is not limited to) frameworks such as MonoGame,a s well as game engines like Godot, Stride, and Unity.  Specific instructions for these platforms aren't provided here; however as outlined above, usage will typically be as simple as adding the NuGet package to the project.  Refer to your engine's specific documentation for installation of NuGet packages for details.
+Any platform which supports .NET Standard 2.1 or higher will generally be compatible with GoRogue.  This includes (but is not limited to) frameworks such as MonoGame, as well as game engines like Godot, Stride, and Unity.  Specific instructions for these platforms aren't provided here; however as outlined above, usage will typically be as simple as adding the NuGet package to the project.  Refer to your engine's specific documentation for installation of NuGet packages for details.
 
-## Godot
-Because it supports .NET Standard 2.1 for its C# scripting, GoRogue also fully functions within the Godot game engine:
-
-1. Make sure you have a version of Godot that supports C#/.NET Standard 2.1 or higher.
-
-2. Add the GoRogue NuGet package.  See the [Godot docs](https://docs.godotengine.org/en/4.1/tutorials/scripting/c_sharp/c_sharp_basics.html#using-nuget-packages-in-godot) on using nuget packages for details.
+### Platforms Not Supporting NuGet
+If your platform does not support NuGet, in the ["Releases" section of GoRogue's GitHub](https://github.com/Chris3606/GoRogue/releases), each release will have .zip file attached to it.  This .zip file will contain all DLLs and XML documentation files for both GoRogue itself, and all of its dependencies (assuming a .NET Standard 2.1 target); so you may manually add references to the DLLs.
 
 ## Enabling SourceLink (Optional)
 GoRogue natively supports [SourceLink](https://github.com/dotnet/sourcelink), and distributes debugging symbols packages with each release in the form of _.snuget_ packages.  Enabling this functionality is optional, but if enabled it will allow you to step into GoRogue code using the debugger, just as you would your own code.  This may be extremely helpful for identifying and tracking down issues with your code.  The use of this feature requires Visual Studio 2017 version 15.9 or greater, or another IDE/platform supporting SourceLink.  The following instructions will assume you are using Visual Studio.
