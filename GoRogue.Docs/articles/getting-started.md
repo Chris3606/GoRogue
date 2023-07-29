@@ -32,7 +32,6 @@ GoRogue may be easily introduced into a new or existing project created using Vi
 
 [!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#ExampleMainFunction)]
 
-
 Note that the above code assumes the following "using" statements are present in the file in which it was placed:
 
 [!code-csharp[](../../GoRogue.Snippets/GettingStarted.cs#RequiredIncludes)]
