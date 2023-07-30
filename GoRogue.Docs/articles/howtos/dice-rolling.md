@@ -1,5 +1,5 @@
 ﻿---
-title: Rolling Dice
+title: Dice Rolling
 ---
 
 # Dice Notation Parser
