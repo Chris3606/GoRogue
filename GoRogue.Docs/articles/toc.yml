@@ -11,23 +11,21 @@
   items:
       - name: Grid View Concepts
         href: howtos/grid-view-concepts.md
-      
       - name: Dice Rolling
         href: howtos/dice-rolling.md
       - name: Effects System
         href: howtos/effects-system.md
       - name: Factories
         href: howtos/factories.md
+      - name: Field of View
+        href: howtos/fov.md
       - name: Map Generation
         href: howtos/map-generation.md
-      
       - name: Articles Coming Soon
         href: howtos/comingsoon/index.md
         items:
           - name: Component System
             href: howtos/comingsoon/component-system.md
-          - name: Field of View
-            href: howtos/comingsoon/fov.md
           - name: Game Framework
             href: howtos/comingsoon/game-framework.md
           - name: Message Bus
@@ -38,3 +36,5 @@
             href: howtos/comingsoon/rng.md
           - name: Sense Maps
             href: howtos/comingsoon/sense-maps.md
+          - name: Spatial Maps
+            href: howtos/comingsoon/spatial-maps.md
