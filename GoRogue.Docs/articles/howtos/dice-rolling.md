@@ -5,6 +5,9 @@ title: Dice Rolling
 # Dice Notation Parser
 GoRogue contains a versatile [dice notation](https://en.wikipedia.org/wiki/Dice_notation) parser that allows you to roll virtual dice.  The parser allows you to enter complex dice notation expressions, and emulate the result of rolling them via GoRogue's random number generation framework.
 
+The code examples below will assume that the following "using" statements are in scope:
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/DiceNotation.cs#Usings)]
+
 # Rolling Dice Expressions
 The simplest way to use the dice roller is to use the provided `Roll` method:
 

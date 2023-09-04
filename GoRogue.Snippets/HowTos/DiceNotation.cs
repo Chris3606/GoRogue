@@ -1,5 +1,7 @@
-﻿using GoRogue.DiceNotation;
-// ReSharper disable UnusedVariable
+﻿// ReSharper disable UnusedVariable
+#region Usings
+using GoRogue.DiceNotation;
+#endregion
 
 namespace GoRogue.Snippets.HowTos;
 public static class DiceNotation

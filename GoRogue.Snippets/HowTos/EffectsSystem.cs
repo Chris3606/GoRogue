@@ -1,9 +1,11 @@
-﻿using GoRogue.DiceNotation;
-using GoRogue.Effects;
+﻿// ReSharper disable RedundantNameQualifier
 
 namespace GoRogue.Snippets.HowTos
 {
     #region EffectsBasicExample
+    using GoRogue.DiceNotation;
+    using GoRogue.Effects;
+
     public static class EffectsBasicExample
     {
         class Monster
@@ -65,9 +67,16 @@ namespace GoRogue.Snippets.HowTos
             myDamage.Trigger();
         }
     }
-    #endregion
 
+    #endregion
+}
+
+namespace GoRogue.Snippets.HowTos
+{
     #region EffectTriggersAndDurationsExample
+    using GoRogue.DiceNotation;
+    using GoRogue.Effects;
+
     public static class EffectTriggersAndDurationsExample
     {
         class Monster
@@ -139,9 +148,16 @@ namespace GoRogue.Snippets.HowTos
 
         }
     }
-    #endregion
 
+    #endregion
+}
+
+namespace GoRogue.Snippets.HowTos
+{
     #region AdvancedEffectsExample
+    using GoRogue.DiceNotation;
+    using GoRogue.Effects;
+
     public static class AdvancedEffectsExample
     {
         // This will be the class we use to pass information to our effect's Trigger function.
@@ -236,7 +252,8 @@ namespace GoRogue.Snippets.HowTos
 
                 int originalDamage = args.DamageTaken;
                 args.DamageTaken = (int)(args.DamageTaken * (1f - ReductionPct));
-                Console.WriteLine($"Damage taken reduced from {originalDamage} to {args.DamageTaken} by armor.");
+                Console.WriteLine(
+                    $"Damage taken reduced from {originalDamage} to {args.DamageTaken} by armor.");
             }
         }
 

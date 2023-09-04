@@ -1,7 +1,9 @@
-﻿using GoRogue.FOV;
+﻿#region Usings
+using GoRogue.FOV;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
+#endregion
 
 namespace GoRogue.Snippets.HowTos
 {
