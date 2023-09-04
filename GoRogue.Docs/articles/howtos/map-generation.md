@@ -3,7 +3,11 @@ title: Map Generation
 ---
 
 # Map Generation
-The map generation framework has undergone a complete redesign in GoRogue 3.0.  The new framework is designed to drastically increase the flexibility of the system by making it easier to design, debug, and use modular algorithms that perform various elements of map generation.  It aims to maintain an API that is easy to get started with, but also to provide users with the ability to easily use the built-in algorithms in a custom order, and even allow users to create their own map generation methods, all within the provided sytem.
+The map generation framework has undergone a complete redesign in GoRogue 3.0.  The new framework is designed to drastically increase the flexibility of the system by making it easier to design, debug, and use modular algorithms that perform various elements of map generation.  It aims to maintain an API that is easy to get started with, but also to provide users with the ability to easily use the built-in algorithms in a custom order, and even allow users to create their own map generation methods, all within the provided system.
+
+Note that the code examples in this article will assume the following "using" statements are within scope:
+
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#Usings)]
 
 # Getting Started
 Getting started with GoRogue map generation requires only a few lines of code.  GoRogue provides built-in generation algorithms to generate various types of maps in its [DefaultAlgorithms](xref:GoRogue.MapGeneration.DefaultAlgorithms) static class.  Each pre-built algorithm is a function you can call that retrieves a list of [GenerationSteps](xref:GoRogue.MapGeneration.GenerationStep) that you simply pass to a generator and use to generate your map.
@@ -11,7 +15,7 @@ Getting started with GoRogue map generation requires only a few lines of code.  
 ## Generating the Map
 For example, to generate a basic roguelike dungeon with rectangular rooms connected by a maze, you would write the following code:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#GeneratingMap)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#GeneratingMap)]
 
 The functions in `DefaultAlgorithms`, including `DungeonMazeMapSteps()`, have a number of optional arguments that allow you to control the parameters of the map generated.  The API documentation for those functions will explain exactly how the algorithms generate their maps, and what each parameter does.  You can substitute the call to `DungeonMazeMapSteps` above for any of the functions in `DefaultAlgorithms` to generate that type of map instead.
 
@@ -20,7 +24,7 @@ After the map has been generated, the data that describes the map is stored with
 
 So, after `generator.ConfigAndGenerateSafe()` above, we can access the simplest data of the map like this:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#AccessingMap)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#AccessingMap)]
 
 Other data about the map, such as the locations of doors, rectangles representing rooms generated, and more can be found in other components on the context.  The components present will depend on the map generation algorithm, so refer to the `DefaultAlgorithms` function documentation, which will list the components that will be placed on the context and the data they store.
 
@@ -53,7 +57,7 @@ GoRogue provides each element of the default map generation algorithms as an ind
 
 Most of the functions of a `Generator`, including `AddStep`, return the `this` instance, so you can chain calls of them together.  This makes it syntactically convenient to add many steps to a generator.  The following example creates a simple map generation algorithm that simply generates rooms, then draws tunnels between rooms closest to each other to connect them.
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#UsingGenerationSteps)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#UsingGenerationSteps)]
 
 ## Tags for Components
 The steps that are built-in to GoRogue can all operate on components with a specific tag.  They'll have reasonable defaults, but allow you to customize them via constructor parameter (as we did with `RectanglesToAreas` in the above example).  In most cases, `null` can be specified as the tag to indicate that any object of the correct type should qualify (although doing this is not recommended as it can make issues difficult to debug).
@@ -95,14 +99,14 @@ This approach could lead to a lot of repetitive code in generation steps to the 
 
 The following is an example generation step that utilizes this functionality:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepRequiringComponents)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#GenerationStepRequiringComponents)]
 
 ## Creating New Components Only if Not Present
 Some generation steps might want to use an existing component on the context, if an appropriate one is present, but if it isn't there, then add a new one.  For example, an algorithm that creates and places rooms on a map might require a map view it can set walkable tiles to, and a list of rooms to add the rooms it generates to.  However, instead of outright requiring those components to be present, since it doesn't actually _need_ any of the data for them for inputs (it's just for storing results), it's more convenient if the algorithm simply creates and adds those components if they're not already there.  Since this again leads to repetitive code, the helper method `GenerationContext.GetFirstOrNew<T>` exists for this.  It is exactly like `GenerationContext.GetFirst<T>`, except it also takes a function that returns a new object of the proper type, and if it can't find the component it calls the function, and adds the component it returns to the context, then returns the new component.
 
 The following example uses this functionality to "require" two components:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepUseOrAddComponent)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#GenerationStepUseOrAddComponent)]
 
 ## Invalidating a Map
 If a generation step encounters an invalid state that is not due to configuration error but rather due to rare corner cases ("bad rng", etc), ideally the map generation step would simply fix the issue, or otherwise account for that state.  In some cases, however, that is impossible, and one alternative (provided the cause of the issue is known to be RNG-related and it does not occur with a high probability), is to simply throw away the map and regenerate it.  GoRogue's map generation system does have built-in functionality to enable this.
@@ -119,14 +123,14 @@ The `GenerationStep.OnPerform` method, where you implement the logic for you gen
 
 For example, if you had an algorithm that places rectangular rooms in a map, you might want to use a `yield return` statement after each room is placed.  A generation step with an `OnPerform` implementation that does this might look something like this:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/CustomGenerationSteps.cs#GenerationStepPauseViaEnumerable)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#GenerationStepPauseViaEnumerable)]
 
 Note that the typical `Generator.ConfigAndGenerateSafe()` method used to execute steps of map generation is written to execute all stages for all generation steps automatically, so the stages will not be evident.  If you need to execute your map generation in stages, there is additional support provided (see next section).
 
 ### Completing Generation Algorithms Stage-by-Stage
 To execute a set of generation steps on a `Generator` stage-by-stage, the `Generator.ConfigAndGetStageEnumeratorSafe()` is provided.  It returns an `IEnumerator` that you can iterate through to complete the steps one at a time:
 
-[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/Basic.cs#GenerateMapStageByStage)]
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/MapGeneration/MapGeneration.cs#GenerateMapStageByStage)]
 
 There also exists a `Generator.GetStageEnumerator` function that does the same thing, except assumes steps are already added to the generator and does not handle `RegenerateMapException` (similar to `Generator.Generate`).
 

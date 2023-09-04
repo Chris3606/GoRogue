@@ -7,6 +7,9 @@ GoRogue offers algorithms for calculating [field of view](https://www.roguebasin
 
 FOV algorithms, like most algorithms in GoRogue, depend on [grid views](~/articles/howtos/grid-view-concepts.md) to take input and produce output.  Grid views are an abstraction over a 2D grid which is explained in detail at the article linked above; it is recommended that you review this article first if you are unfamiliar with grid views.  The code examples here will gloss over the details of grid views, and will instead focus on FOV itself.
 
+Also note that the code examples in this article will assume the following "using" statements are within scope:
+[!code-csharp[](../../../GoRogue.Snippets/HowTos/FOV.cs#Usings)]
+
 >[!NOTE]
 > If you are using classes from the `GoRogue.GameFramework` namespace, please note that `Map` has a built-in property called `PlayerFOV`.  This field uses the FOV abstraction discussed here, and will by default be set to an FOV implementation which gets its grid data based on the objects on the map.  When using `GoRogue.GameFramework`, this article will be helpful in terms of teaching you how FOV works, but note that you do not have to create the instance yourself unless you want to use a different algorithm.
 

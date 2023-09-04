@@ -1,37 +1,40 @@
-﻿using GoRogue.Factories;
-using SadRogue.Primitives;
-// ReSharper disable NotAccessedPositionalProperty.Local
+﻿// ReSharper disable NotAccessedPositionalProperty.Local
 // ReSharper disable UnusedVariable
 
-namespace GoRogue.Snippets.HowTos.Factories;
-
-#region AdvancedFactoryExample
-public static class AdvancedFactoryExample
+namespace GoRogue.Snippets.HowTos.Factories
 {
-    record Terrain(Point Position, int Glyph, bool IsWalkable, bool IsTransparent)
-        : IFactoryObject<string>
-    {
-        public string DefinitionID { get; set; } = "";
-    }
+    #region AdvancedFactoryExample
+    using GoRogue.Factories;
+    using SadRogue.Primitives;
 
-    public static void ExampleCode()
+    public static class AdvancedFactoryExample
     {
-        // LambdaAdvancedFactoryBlueprint is the same as LambdaFactoryBlueprint but
-        // implements IAdvancedFactoryBlueprint instead, which allows its creation
-        // function to take parameters. This is useful, for example, to create objects
-        // that require parameters to be passed to their constructor.
-        var factory = new AdvancedFactory<string, Point, Terrain>
+        record Terrain(Point Position, int Glyph, bool IsWalkable, bool IsTransparent)
+            : IFactoryObject<string>
         {
-            new LambdaAdvancedFactoryBlueprint<string, Point, Terrain>(
-                "Floor",
-                pos => new Terrain(pos, '.', true, true)),
-            new LambdaAdvancedFactoryBlueprint<string, Point, Terrain>(
-                "Wall",
-                pos => new Terrain(pos, '#', false, false))
-        };
+            public string DefinitionID { get; set; } = "";
+        }
 
-        var floorTile = factory.Create("Floor", new Point(1, 2));
-        var wallTile = factory.Create("Wall", new Point(3, 4));
+        public static void ExampleCode()
+        {
+            // LambdaAdvancedFactoryBlueprint is the same as LambdaFactoryBlueprint but
+            // implements IAdvancedFactoryBlueprint instead, which allows its creation
+            // function to take parameters. This is useful, for example, to create objects
+            // that require parameters to be passed to their constructor.
+            var factory = new AdvancedFactory<string, Point, Terrain>
+            {
+                new LambdaAdvancedFactoryBlueprint<string, Point, Terrain>(
+                    "Floor",
+                    pos => new Terrain(pos, '.', true, true)),
+                new LambdaAdvancedFactoryBlueprint<string, Point, Terrain>(
+                    "Wall",
+                    pos => new Terrain(pos, '#', false, false))
+            };
+
+            var floorTile = factory.Create("Floor", new Point(1, 2));
+            var wallTile = factory.Create("Wall", new Point(3, 4));
+        }
     }
+
+    #endregion
 }
-#endregion
