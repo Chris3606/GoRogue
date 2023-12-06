@@ -1,4 +1,5 @@
-﻿#region Usings
+﻿// ReSharper disable NotAccessedPositionalProperty.Local
+#region Usings
 using GoRogue.FOV;
 using GoRogue.MapGeneration;
 using SadRogue.Primitives;
