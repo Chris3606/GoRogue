@@ -21,6 +21,8 @@
         href: howtos/fov.md
       - name: Map Generation
         href: howtos/map-generation.md
+      - name: Sense Maps
+        href: howtos/sense-maps.md
       - name: Articles Coming Soon
         href: howtos/comingsoon/index.md
         items:
@@ -34,7 +36,5 @@
             href: howtos/comingsoon/pathfinding.md
           - name: Random Number Generation
             href: howtos/comingsoon/rng.md
-          - name: Sense Maps
-            href: howtos/comingsoon/sense-maps.md
           - name: Spatial Maps
             href: howtos/comingsoon/spatial-maps.md

@@ -189,7 +189,7 @@ Current FOV: [(5,5), (5,6), (6,7), (5,7), (6,8), (5,8), (7,9), (6,9), (5,9), (7,
 The code above uses the `Calculate()` function to calculate the FOV.  As shown, when `Calculate()` is called, the current result data is overridden with the results of the new calculation.  For some use cases, however, you may want to add onto the existing result data, rather than overriding it.  One use case for this might be to implement something that gives the player temporary vision on a part of the map which they don't currently occupy.  To support this, GoRogue's FOV interface provides the `CalculateAppend()` methods.
 
 >[!TIP]
->If you are trying to implement something akin to multiple "light sources", [sense maps](~/articles/howtos/comingsoon/sense-maps.md) may be a better choice than using an FOV algorithm and CalculateAppend.
+>If you are trying to implement something akin to multiple "light sources", [sense maps](~/articles/howtos/sense-maps.md) may be a better choice than using an FOV algorithm and CalculateAppend.
 
 The `CalculateAppend()` methods work exactly like the `Calculate()` methods, except for the current result data is not erased before the calculation is performed:
 
