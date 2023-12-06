@@ -67,7 +67,9 @@ namespace GoRogue.GameFramework
 
             if (_entitiesEnumerator.MoveNext())
             {
-                _current = _entitiesEnumerator.Current;
+                // Suppression is required by .NET 8
+                // ReSharper disable once RedundantSuppressNullableWarningExpression
+                _current = _entitiesEnumerator.Current!;
                 return true;
             }
 

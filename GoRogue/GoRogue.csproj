@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Basic package info -->
-    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netcoreapp3.1;net5.0;net6.0;net7.0;net8.0</TargetFrameworks>
 	<RootNamespace>GoRogue</RootNamespace>
 	<Authors>Chris3606</Authors>
 	<Copyright>Copyright © 2023 Christopher Ridley (Chris3606)</Copyright>
@@ -11,7 +11,7 @@
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-beta08</Version>
+    <Version>3.0.0-beta09</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
@@ -79,10 +79,10 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1">
+    <PackageReference Include="JetBrains.Annotations" Version="2023.3.0">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.3">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

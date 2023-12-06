@@ -7,6 +7,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - None
 
+## [3.0.0-beta09] - 2023-12-05
+### Removed
+- `ExtendToString` and `ExtendToStringGrid` extension methods from `Utility` class are removed (they now exist in the primitives library instead)
+
 ## [3.0.0-beta08] - 2023-07-12
 
 ### Added
