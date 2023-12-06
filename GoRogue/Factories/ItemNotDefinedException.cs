@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace GoRogue.Factories
@@ -26,15 +25,6 @@ namespace GoRogue.Factories
         /// <param name="innerException">Exception that caused this exception</param>
         public ItemNotDefinedException(string message, Exception innerException)
             : base(message, innerException)
-        { }
-
-        /// <summary>
-        /// Creates an exception based on serialization context.
-        /// </summary>
-        /// <param name="info" />
-        /// <param name="context" />
-        protected ItemNotDefinedException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         { }
 
         /// <summary>
