@@ -45,7 +45,13 @@ namespace GoRogue.UnitTests.DiceNotation
             // Single dice with add and multiply
             ("3*(1d6+2)", 9, 24),
             // Single dice with multiply
-            ("1d6*3", 3, 18)
+            ("1d6*3", 3, 18),
+            // Unary negation
+            ("-1", -1, -1),
+            // Negative combined with other operators
+            ("1d6+-1", 0, 5),
+            // Negative combined with minus
+            ("1d6--1", 2, 7)
         };
 
         [Theory]
