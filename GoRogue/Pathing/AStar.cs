@@ -227,7 +227,7 @@ namespace GoRogue.Pathing
             if (start == end)
             {
                 var retVal = new List<Point> { start };
-                return new Path(retVal);
+                return new Path(retVal, 0);
             }
 
             // Update min weight if it has changed
@@ -275,7 +275,7 @@ namespace GoRogue.Pathing
                 if (current.Position == end) // We found the end, cleanup and return the path
                 {
                     _openNodes.Clear();
-
+                    double cost = current.G;
                     do
                     {
                         result.Add(current.Position);
@@ -285,7 +285,7 @@ namespace GoRogue.Pathing
                     } while (current.Position != start);
 
                     result.Add(start);
-                    return new Path(result);
+                    return new Path(result, cost);
                 }
 
                 for (int i = 0; i < adjacencyRule.DirectionsOfNeighborsCache.Length; i++)
@@ -376,6 +376,7 @@ namespace GoRogue.Pathing
     [PublicAPI]
     public class Path
     {
+        private double _cost;
         private readonly IReadOnlyList<Point> _steps;
         private bool _inOriginalOrder;
 
@@ -388,14 +389,16 @@ namespace GoRogue.Pathing
         public Path(Path pathToCopy, bool reverse = false)
         {
             _steps = pathToCopy._steps;
+            _cost = pathToCopy._cost;
             _inOriginalOrder = reverse ? !pathToCopy._inOriginalOrder : pathToCopy._inOriginalOrder;
         }
 
         // Create based on internal list
-        internal Path(IReadOnlyList<Point> steps)
+        internal Path(IReadOnlyList<Point> steps, double cost)
         {
             _steps = steps;
             _inOriginalOrder = true;
+            _cost = cost;
         }
 
         /// <summary>
@@ -418,6 +421,10 @@ namespace GoRogue.Pathing
         /// </summary>
         public Point Start => _inOriginalOrder ? _steps[^1] : _steps[0];
 
+        /// <summary>
+        /// The weighted cost of the path.
+        /// </summary>
+        public double Cost => _cost;
 
         /// <summary>
         /// The coordinates that constitute the path (in order), NOT including the starting point.
