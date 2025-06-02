@@ -277,7 +277,7 @@ namespace GoRogue.GameFramework
 
             if (useCachedGridViews)
             {
-                
+
                 _cachedTransparencyView = new BitArrayView(_terrain.Width, _terrain.Height);
                 TransparencyView = _cachedTransparencyView;
                 _cachedWalkabilityView = new BitArrayView(_terrain.Width, _terrain.Height);
@@ -363,7 +363,7 @@ namespace GoRogue.GameFramework
         private void Item_TransparencyChangedSyncView(object? sender, ValueChangedEventArgs<bool> e)
         {
             var obj = (IGameObject)sender!;
-            if (e.NewValue)
+            if (e.NewValue != e.OldValue)
                 _cachedTransparencyView![obj.Position] = LayersBlockingTransparency == 1
                     ? _terrain[obj.Position]?.IsTransparent ?? true
                     : FullIsTransparent(obj.Position);
