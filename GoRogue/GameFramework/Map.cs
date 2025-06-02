@@ -277,7 +277,6 @@ namespace GoRogue.GameFramework
 
             if (useCachedGridViews)
             {
-
                 _cachedTransparencyView = new BitArrayView(_terrain.Width, _terrain.Height);
                 TransparencyView = _cachedTransparencyView;
                 _cachedWalkabilityView = new BitArrayView(_terrain.Width, _terrain.Height);
