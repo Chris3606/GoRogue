@@ -1,18 +1,25 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GoRogue.Pathing;
 using GoRogue.UnitTests.Mocks;
 using SadRogue.Primitives;
 using SadRogue.Primitives.GridViews;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace GoRogue.UnitTests.Pathing
 {
     public class FleeMapTests
     {
+        private readonly ITestOutputHelper output;
         private const int _width = 40;
         private const int _height = 35;
         private static readonly Point _goal = (5, 5);
 
+        public FleeMapTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
         [Fact]
         public void FleeMapDoesNotLeadToGoal()
         {
@@ -60,6 +67,39 @@ namespace GoRogue.UnitTests.Pathing
                 Assert.NotNull(fleeMap[pos]);
 
             // TODO: Verify flee map leads away from goal
+        }
+
+        [Theory]
+        [InlineData(1.2)] //go right
+        [InlineData(1.6)] //go right
+        [InlineData(1.7)] //go left !?
+        public void test(double magnitude)
+        {
+            //map:
+            //  #
+            // #C
+            //  #
+            // Character (C) at (5,5) should flee threats (#) by going right
+            var threatsCells = new List<SadRogue.Primitives.Point>
+            {
+                (5,4),
+                (4,5),
+                (5,6)
+            };
+
+            var gridView = new LambdaGridView<GoalState>(11, 11, cell => threatsCells.Contains(cell) ? GoalState.Goal : GoalState.Clear);
+            var goalMap = new GoalMap(gridView, Distance.Manhattan);
+            var fleeMap = new FleeMap(goalMap, magnitude);
+            var currentCell = new SadRogue.Primitives.Point(5, 5);
+
+
+            output.WriteLine(fleeMap.ToString(4));
+
+            //Direction direction = fleeMap.GetDirectionOfMinValue(currentCell, AdjacencyRule.Cardinals);
+
+
+
+            //Assert.Equal(Direction.Right, direction);
         }
     }
 }
