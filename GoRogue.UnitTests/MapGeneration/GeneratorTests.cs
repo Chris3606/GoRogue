@@ -51,7 +51,7 @@ namespace GoRogue.UnitTests.MapGeneration
             Assert.Equal(height, generator.Context.Height);
 
             Assert.NotNull(generator.GenerationSteps);
-            Assert.Equal(0, generator.GenerationSteps.Count);
+            Assert.Empty(generator.GenerationSteps);
         }
 
         [Theory]
@@ -125,7 +125,7 @@ namespace GoRogue.UnitTests.MapGeneration
             var step = new MockGenerationStep(null);
 
             _generator.AddStep(step);
-            Assert.Equal(1, _generator.GenerationSteps.Count);
+            Assert.Single(_generator.GenerationSteps);
             Assert.Same(step, _generator.GenerationSteps[0]);
 
             var step2 = new MockGenerationStep(null);

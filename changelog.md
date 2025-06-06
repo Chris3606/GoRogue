@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-- None
+### Added
+- Added .NET 8 and 9 explicit multi-targets
+
+### Fixed
+- `GameFramework.Map` now handles transparency changes properly (thanks Sofistico!)
+- `DiceNotation.Parser` now handles negative numbers correctly
 
 ## [3.0.0-beta09] - 2023-12-05
 ### Removed
