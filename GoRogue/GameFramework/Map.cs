@@ -354,7 +354,7 @@ namespace GoRogue.GameFramework
                     : FullIsTransparent(e.Position);
 
             e.Item.WalkabilityChanged -= Item_WalkabilityChangedSyncView;
-            e.Item.TransparencyChanged += Item_TransparencyChangedSyncView;
+            e.Item.TransparencyChanged -= Item_TransparencyChangedSyncView;
         }
 
         private void Item_WalkabilityChangedSyncView(object? sender, ValueChangedEventArgs<bool> e) => _cachedWalkabilityView![((IGameObject)sender!).Position] = e.NewValue;

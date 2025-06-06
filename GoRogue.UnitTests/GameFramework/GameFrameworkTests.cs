@@ -515,6 +515,28 @@ namespace GoRogue.UnitTests.GameFramework
             Assert.True(map.TransparencyView[1, 1]);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void TransparencyViewUpdatesOnChange(bool useCachedGridViews)
+        {
+            var map = new Map(10, 10, 1, Distance.Chebyshev, useCachedGridViews: useCachedGridViews);
+
+            var obj = new GameObject((1, 1), 0, false, isTransparent: true);
+            map.SetTerrain(obj);
+
+            var obj2 = new GameObject((1, 1), 1, true, false);
+            map.AddEntity(obj2);
+
+            Assert.False(map.TransparencyView[obj2.Position]);
+
+            obj2.IsTransparent = true;
+            Assert.True(map.TransparencyView[obj2.Position]);
+
+            obj2.IsTransparent = false;
+            Assert.False(map.TransparencyView[obj2.Position]);
+        }
+
         [Fact]
         public void GetObjectsAt()
         {
