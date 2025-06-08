@@ -25,7 +25,7 @@ string valid = $"{numberOfDice}d{sidesOnDie}";
 Some examples of valid expressions to roll include:
 * Roll 3 six-sided dice: `3d6`
 * Roll an eight-sided die and add 2 to the result: `1d8+2`
-* Roll a twelve-sided die, double the result, and add 3: `d12*2+3`
+* Roll a twelve-sided die, double the result, and add 3: `1d12*2+3`
 * Roll a twelve-sided die, halve the result, and subtract 1: `1d12/2-1`
 * Roll 10 ten-sided die, and only keep the top three: `10d10k3`
 * Roll 4 six-sided die, add 1 to the entire roll, and only keep the top three: `4d6+1k3`
