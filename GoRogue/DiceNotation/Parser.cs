@@ -49,7 +49,7 @@ namespace GoRogue.DiceNotation
             var operands = new Stack<ITerm>();
 
             foreach (var str in postfix)
-                if (char.IsDigit(str[0]))
+                if (char.IsDigit(str[0]) || str.Length > 1) // Operators are all 1 character so > 1 must mean a number like -10
                     operands.Push(new ConstantTerm(int.Parse(str)));
                 else // Is an operator
                 {
@@ -113,10 +113,16 @@ namespace GoRogue.DiceNotation
             var operators = new Stack<char>();
 
             var charIndex = 0;
+            var lastWasOperator = true;
             while (charIndex < infix.Length)
-                if (char.IsDigit(infix[charIndex])) // Is an operand
+                if (char.IsDigit(infix[charIndex]) || (lastWasOperator && infix[charIndex] == '-')) // Is an operand
                 {
+                    lastWasOperator = false;
+
                     string number = "";
+                    number += infix[charIndex];
+                    charIndex++;
+
                     while (charIndex < infix.Length && char.IsDigit(infix[charIndex]))
                     {
                         number += infix[charIndex];
@@ -127,6 +133,7 @@ namespace GoRogue.DiceNotation
                 }
                 else // Separate so we can increment charIndex differently
                 {
+                    lastWasOperator = true;
                     switch (infix[charIndex])
                     {
                         case '(':

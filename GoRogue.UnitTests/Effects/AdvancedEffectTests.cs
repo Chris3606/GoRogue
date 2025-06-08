@@ -53,10 +53,10 @@ namespace GoRogue.UnitTests.Effects
         public void EffectTriggerAdd()
         {
             var effectTrigger = new AdvancedEffectTrigger<int>();
-            Assert.Equal(0, effectTrigger.Effects.Count);
+            Assert.Empty(effectTrigger.Effects);
 
             effectTrigger.Add(new AdvancedIntEffect("Test Effect 1", 1, Args));
-            Assert.Equal(1, effectTrigger.Effects.Count);
+            Assert.Single(effectTrigger.Effects);
 
             effectTrigger.Add(new AdvancedIntEffect("Test Effect 2", 2, Args));
             Assert.Equal(2, effectTrigger.Effects.Count);
@@ -80,7 +80,7 @@ namespace GoRogue.UnitTests.Effects
 
             effectTrigger.Add(effect2);
             effectTrigger.TriggerEffects(5);
-            Assert.Equal(1, effectTrigger.Effects.Count);
+            Assert.Single(effectTrigger.Effects);
             Assert.Equal(multiDuration - 1, effectTrigger.Effects[0].Duration);
             Assert.Equal(1, effect1.Duration);
 
@@ -101,7 +101,7 @@ namespace GoRogue.UnitTests.Effects
             Assert.Equal(2, secEffectTrigger.Effects.Count);
 
             secEffectTrigger.TriggerEffects(5);
-            Assert.Equal(1, secEffectTrigger.Effects.Count);
+            Assert.Single(secEffectTrigger.Effects);
             Assert.Equal(1, secEffectTrigger.Effects[0].Duration); // Must have cancelled
         }
     }

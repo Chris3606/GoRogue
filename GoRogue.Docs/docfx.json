@@ -70,9 +70,6 @@
     "disableGitFeatures": false,
     "xref": [
       "https://thesadrogue.github.io/TheSadRogue.Primitives/xrefmap.yml"
-    ],
-    "xrefService": [
-      "https://xref.docs.microsoft.com/query?uid={uid}"
-    ],
+    ]
   }
 }
