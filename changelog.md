@@ -5,7 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+None
+
+# [3.0.0-beta11] - 2025-12-28
+
 ## Added
+- Added .NET 10 explicit multi-target
 - AStar path objects now record the weight of the path that was found as part of the structure (thanks BoThompson!)
 
 ## [3.0.0-beta10] - 2025-06-08

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <!-- Basic package info -->
-    <TargetFrameworks>net5.0;net6.0;net7.0;net8.0;;net9.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0;net7.0;net8.0;;net9.0;net10.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
 	<RootNamespace>GoRogue</RootNamespace>
 	<Authors>Chris3606</Authors>
 	<Copyright>Copyright © 2025 Christopher Ridley (Chris3606)</Copyright>
@@ -11,7 +11,7 @@
     Configure versioning information, making sure to append "debug" to Debug version to allow publishing
     to NuGet seperately from Release version.
     -->
-    <Version>3.0.0-beta10</Version>
+    <Version>3.0.0-beta11</Version>
     <Version Condition="'$(Configuration)'=='Debug'">$(Version)-debug</Version>
 
 	<!-- More nuget package settings-->
@@ -79,17 +79,17 @@
 
   <!-- Dependencies -->
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2025.2.4">
 	  <PrivateAssets>all</PrivateAssets>
 	</PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="9.0.0">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.101">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="OptimizedPriorityQueue" Version="4.2.0" />
     <PackageReference Include="ShaiRandom" Version="0.0.2" />
-    <PackageReference Include="TheSadRogue.Primitives" Version="1.6.0-rc3" />
+    <PackageReference Include="TheSadRogue.Primitives" Version="1.6.0" />
   </ItemGroup>
 
   <!-- When packing, copy the nuget files to the nuget output directory -->
