@@ -133,6 +133,9 @@ namespace GoRogue.DiceNotation
                 }
                 else // Separate so we can increment charIndex differently
                 {
+                    if (infix[charIndex] == 'd' && lastWasOperator)
+                        output.Add("1");
+
                     lastWasOperator = true;
                     switch (infix[charIndex])
                     {

@@ -48,6 +48,10 @@ namespace GoRogue.UnitTests.DiceNotation
             ("3*2d6", 6, 36),
             // Single dice
             ("1d6", 1, 6),
+            // Single die shorthand
+            ("d6", 1, 6),
+            // Single die shorthand with multiply and add
+            ("d12*2+3", 5, 27),
             // Single dice with add
             ("1d6+3", 4, 9),
             // Single dice with add and multiply
