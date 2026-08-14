@@ -52,6 +52,10 @@ namespace GoRogue.UnitTests.DiceNotation
             ("d6", 1, 6),
             // Single die shorthand with multiply and add
             ("d12*2+3", 5, 27),
+            // Parenthesized expression as dice count
+            ("(3+2)d10", 5, 50),
+            // Whitespace before dice operator
+            ("2 d6", 2, 12),
             // Single dice with add
             ("1d6+3", 4, 9),
             // Single dice with add and multiply
