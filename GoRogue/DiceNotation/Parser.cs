@@ -133,10 +133,10 @@ namespace GoRogue.DiceNotation
                 }
                 else // Separate so we can increment charIndex differently
                 {
-                    lastWasOperator = true;
                     switch (infix[charIndex])
                     {
                         case '(':
+                            lastWasOperator = true;
                             operators.Push(infix[charIndex]);
                             break;
                         case ')':
@@ -148,17 +148,22 @@ namespace GoRogue.DiceNotation
                                 op = operators.Pop();
                             }
 
+                            lastWasOperator = false;
                             break;
                         }
                         default:
                         {
                             if (s_operatorPrecedence.ContainsKey(infix[charIndex]))
                             {
+                                if (infix[charIndex] == 'd' && lastWasOperator)
+                                    output.Add("1");
+
                                 while (operators.Count > 0 && s_operatorPrecedence[operators.Peek()] >=
                                     s_operatorPrecedence[infix[charIndex]])
                                     output.Add(operators.Pop().ToString());
 
                                 operators.Push(infix[charIndex]);
+                                lastWasOperator = true;
                             }
 
                             break;
