@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
@@ -141,6 +141,8 @@ namespace GoRogue.Pathing
             AdjacencyRule adjacencyRule = _baseMap.DistanceMeasurement;
 
             var mapBounds = _goalMap.Bounds();
+
+            _goalMap.Clear();
 
             var walkable = _baseMap.Walkable;
             for (int i = 0; i < walkable.Count; i++)
