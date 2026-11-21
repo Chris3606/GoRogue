@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -138,7 +138,8 @@ namespace GoRogue.SenseMapping
 
             // Flush sources to actual senseMap
             foreach (var senseSource in SenseSources)
-                ApplySenseSourceToResult(senseSource);
+                if (senseSource.Enabled)
+                    ApplySenseSourceToResult(senseSource);
         }
 
         /// <summary>
