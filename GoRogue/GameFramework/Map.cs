@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GoRogue.Components;
@@ -708,9 +708,7 @@ namespace GoRogue.GameFramework
                 throw new ArgumentException("Cannot remove terrain at given location because no terrain at that location has been added",
                     nameof(position));
 
-            ObjectRemoved?.Invoke(this, new ItemEventArgs<IGameObject>(terrain, terrain.Position));
-            terrain.OnMapChanged(null);
-
+            RemoveTerrain(terrain);
             return terrain;
         }
 
